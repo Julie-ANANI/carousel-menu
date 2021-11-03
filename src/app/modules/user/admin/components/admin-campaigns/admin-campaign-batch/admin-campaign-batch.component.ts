@@ -10,7 +10,7 @@ import { Campaign } from '../../../../../../models/campaign';
 import { CampaignService } from '../../../../../../services/campaign/campaign.service';
 import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
 import { Batch } from '../../../../../../models/batch';
-import { Table } from '../../../../../table/models/table';
+import { Table } from '@umius/umi-common-component/models';
 import { SidebarInterface } from '../../../../../sidebars/interfaces/sidebar-interface';
 import { CampaignFrontService } from '../../../../../../services/campaign/campaign-front.service';
 import { FormGroup } from '@angular/forms';

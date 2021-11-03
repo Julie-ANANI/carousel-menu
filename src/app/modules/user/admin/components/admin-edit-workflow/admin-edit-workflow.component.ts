@@ -3,9 +3,7 @@ import { EmailScenario } from '../../../../../models/email-scenario';
 import { EmailTemplate } from '../../../../../models/email-template';
 import { SidebarInterface } from '../../../../sidebars/interfaces/sidebar-interface';
 import { EmailSignature } from '../../../../../models/email-signature';
-import { Config } from '../../../../../models/config';
-import { Column } from '../../../../table/models/column';
-import { Table } from '../../../../table/models/table';
+import { Config, Column, Table } from '@umius/umi-common-component/models';
 
 @Component({
   selector: 'app-admin-edit-workflow',

@@ -38,6 +38,10 @@
     padding: 10px;
   }
 
+  &.is-fullwidth::before {
+    max-width: unset;
+  }
+
   &::after {
     z-index: 299;
     width: 0;

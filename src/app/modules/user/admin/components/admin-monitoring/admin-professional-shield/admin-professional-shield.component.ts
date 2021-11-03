@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
-import { Table } from '../../../../../table/models/table';
+import { Table, Config } from '@umius/umi-common-component/models';
 import { Subject } from 'rxjs';
 import { first } from 'rxjs/operators';
 import { ShieldService } from '../../../../../../services/shield/shield.service';
-import { Config } from '../../../../../../models/config';
 
 @Component({
   selector: 'app-admin-professional-shield',

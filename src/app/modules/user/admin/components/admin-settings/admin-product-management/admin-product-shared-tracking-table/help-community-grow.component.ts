@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Table } from '../../../../../../table/models/table';
+import { Table } from '@umius/umi-common-component/models';
 import { RolesFrontService } from '../../../../../../../services/roles/roles-front.service';
 import { TrackingService } from '../../../../../../../services/tracking/tracking.service';
 import { AdminProductSharedTrackingTableComponent } from './admin-product-shared-tracking-table.component';

@@ -10,30 +10,29 @@ import { SharedFilterInputModule } from '../shared-filter-input/shared-filter-in
 import { PaginationTemplate1Module } from '../../../utility/paginations/pagination-template-1/pagination-template-1.module';
 import { SharedSearchMultiModule } from '../shared-search-multi/shared-search-multi.module';
 import { CountryFlagModule } from '../../../utility/country-flag/country-flag.module';
-import { TableModule } from "../../../table/table.module";
-import { SidebarModule } from "../../../sidebars/templates/sidebar/sidebar.module";
-import { SidebarSearchHistoryModule } from "../../../sidebars/components/sidebar-search-history/sidebar-search-history.module";
-import { AutoCompleteInputModule } from "../../../utility/auto-complete-input/auto-complete-input.module";
-import { ModalModule } from "../../../utility/modals/modal/modal.module";
-import {SharedTargetingWorldModule} from "../shared-targeting-world/shared-targeting-world.module";
-
+import { SidebarModule } from '../../../sidebars/templates/sidebar/sidebar.module';
+import { SidebarSearchHistoryModule } from '../../../sidebars/components/sidebar-search-history/sidebar-search-history.module';
+import { AutoCompleteInputModule } from '../../../utility/auto-complete-input/auto-complete-input.module';
+import { ModalModule } from '../../../utility/modals/modal/modal.module';
+import {SharedTargetingWorldModule} from '../shared-targeting-world/shared-targeting-world.module';
+import { TableComponentsModule } from '@umius/umi-common-component/table';
 @NgModule({
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    RouterModule,
-    SharedFilterInputModule,
-    TranslateModule.forChild(),
-    PaginationTemplate1Module,
-    SharedSearchMultiModule,
-    CountryFlagModule,
-    TableModule,
-    SidebarModule,
-    SidebarSearchHistoryModule,
-    AutoCompleteInputModule,
-    ModalModule,
-    SharedTargetingWorldModule
-  ],
+    imports: [
+        CommonModule,
+        ReactiveFormsModule,
+        RouterModule,
+        SharedFilterInputModule,
+        TranslateModule.forChild(),
+        PaginationTemplate1Module,
+        SharedSearchMultiModule,
+        CountryFlagModule,
+        SidebarModule,
+        SidebarSearchHistoryModule,
+        AutoCompleteInputModule,
+        ModalModule,
+        SharedTargetingWorldModule,
+        TableComponentsModule
+    ],
   declarations: [
     SharedSearchHistoryComponent,
   ],

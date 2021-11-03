@@ -1,13 +1,12 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { first } from 'rxjs/operators';
 import { SearchService } from '../../../../services/search/search.service';
-import { Table } from '../../../table/models/table';
-import { Config } from '../../../../models/config';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { RolesFrontService } from '../../../../services/roles/roles-front.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorFrontService } from '../../../../services/error/error-front.service';
 import { JobConfig } from '../../../../models/targetPros';
+import { Table, Config } from '@umius/umi-common-component/models';
 
 @Component({
   selector: 'app-sidebar-search-history',

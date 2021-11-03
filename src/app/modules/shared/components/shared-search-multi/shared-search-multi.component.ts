@@ -1,7 +1,5 @@
 import {Component, Input, Output, EventEmitter} from '@angular/core';
-import {Column, types} from '../../../table/models/column';
-import {Choice} from '../../../table/models/choice';
-import {Config} from '../../../../models/config';
+import { Choice, Column, types, Config } from '@umius/umi-common-component/models';
 
 @Component({
   selector: 'app-shared-search-filter',
@@ -183,11 +181,11 @@ export class SharedSearchMultiComponent {
     return column._choices || [];
   }
 
-  getChoiceName(choice: Choice): string {
+  getChoiceName(choice: Choice): string | number {
     return choice._name;
   }
 
-  getChoiceAlias(choice: Choice): string {
+  getChoiceAlias(choice: Choice): any {
     return choice._alias || choice._name;
   }
 

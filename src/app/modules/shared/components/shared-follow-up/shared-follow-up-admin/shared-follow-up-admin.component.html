@@ -109,13 +109,13 @@
     </h6>
 
     <div>
-      <app-shared-table
+      <umius-table
         (dropdownAction)="assignObjective($event)"
         (editRow)="seeAnswer($event)"
         (performAction)="performActions($event)"
         [(config)]="config"
         [data]="tableInfos">
-      </app-shared-table>
+      </umius-table>
     </div>
 
   </div>

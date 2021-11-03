@@ -46,8 +46,10 @@ export class AppComponent implements OnInit, OnDestroy {
     initTranslation(this._translateService);
 
     if (isPlatformServer(this._platformId)) {
-      console.log('The server has made connection with the UMI Front Application.');
-    } else if (isPlatformBrowser(this._platformId)) {
+      console.log('New connection has been made with the front.');
+    }
+
+    if (isPlatformBrowser(this._platformId)) {
       this._initializeSession();
     }
   }

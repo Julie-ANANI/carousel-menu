@@ -125,6 +125,7 @@ export const COMMON = {
     'FROM': 'De',
     'TO': 'À',
     'SUBJECT': 'Sujet',
+    'PENDING': 'En attente',
     'TENTATIVE_LEFT': 'tentative(s) restante(s)',
     'FEEDBACK_COLLECTION': 'Collecte de feedback',
     'RSETITUTION': 'Restitution',

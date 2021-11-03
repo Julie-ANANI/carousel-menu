@@ -23,11 +23,11 @@
           </button>
         </div>
         <div class="p-top-40">
-          <app-shared-table
+          <umius-table
             (editRow)="seeAnswer($event)"
             [(config)]="config"
             [data]="tableInfos">
-          </app-shared-table>
+          </umius-table>
         </div>
       </div>
     </div>
@@ -106,12 +106,12 @@
 
             <!-- step select -->
             <div [hidden]="contactFields[currentStep] !== 'STEP_SELECT'" class="p-top-30">
-              <app-shared-table
+              <umius-table
                 (editRow)="seeAnswer($event)"
                 (selectRows)="rowsSelected($event)"
                 [(config)]="config"
                 [data]="tableInfos">
-              </app-shared-table>
+              </umius-table>
             </div>
             <!-- /step select -->
 
@@ -120,7 +120,7 @@
               <div class="step_send_wrapper d-flex">
 
                 <div class="step_send_left p-no-bottom">
-                  <app-shared-table [(config)]="finalConfig" [data]="finalTableInfos"></app-shared-table>
+                  <umius-table [(config)]="finalConfig" [data]="finalTableInfos"></umius-table>
                 </div>
 
                 <div class="step_send_right relative">
@@ -238,13 +238,6 @@
                         class="form-input is-shadowed is-sm"
                         type="text">
                     </div>
-                    <!--<div
-                      (click)="updateEntity()"
-                      *ngIf="toUpdateCompany && !!isValidCompany"
-                      [id]="'sharedFollowUpClient-btn-update-entity'"
-                      class="text-community text-sm text-hover-underline c-hand p-top-2">
-                      {{ 'COMMON.BUTTON.UPDATE' | translate }}
-                    </div>-->
                     <p *ngIf="!isValidCompany" class="form-error">
                       {{ 'SHARED_FOLLOW_UP.REQUIRED_ENTITY' | translate }}
                     </p>

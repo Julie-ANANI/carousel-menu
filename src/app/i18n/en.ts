@@ -22,7 +22,6 @@ import { HEADER } from '../modules/common/header/i18n/en';
 import { RESET_PASSWORD } from '../modules/common/login/components/reset-password/i18n/en';
 import { FORGET_PASSWORD } from '../modules/common/login/components/forget-password/i18n/en';
 import { EDIT_WORKFLOW } from '../modules/user/admin/components/admin-edit-workflow/i18n/en';
-import { TABLE } from '../modules/table/i18n/en';
 import { SIDEBAR } from '../modules/sidebars/i18n/en';
 import { SHARED_PROJECT_SETTINGS } from '../modules/shared/components/shared-project-settings-component/i18n/en';
 import { SHOWCASE } from '../modules/demo/components/showcase/i18n/en';
@@ -45,9 +44,11 @@ import { COMMENT_CARD } from '../modules/sidebars/components/comment-card/i18n/e
 import { SHARED_TEXT_ZONE } from '../modules/shared/components/shared-editors/i18n/en';
 import { MARKET_TEST_OBJECTIVES } from '../modules/user/client/components/market-test-objectives/i18n/en';
 import { MARKET_TEST_METHODOLOGY } from '../modules/user/client/components/market-test-methodology/i18n/en';
+import { TABLE_EN } from './table-en';
 
 export const en = {
   'COMMON': COMMON,
+  'TABLE': TABLE_EN,
   'CONTINENTS': CONTINENTS,
   'ERROR': ERROR,
   'MARKET_REPORT': MARKET_REPORT,
@@ -73,7 +74,6 @@ export const en = {
   'RESET_PASSWORD': RESET_PASSWORD,
   'FORGET_PASSWORD': FORGET_PASSWORD,
   'EDIT_WORKFLOW': EDIT_WORKFLOW,
-  'TABLE': TABLE,
   'SIDEBAR': SIDEBAR,
   'SHARED_PROJECT_SETTINGS': SHARED_PROJECT_SETTINGS,
   'SHOWCASE': SHOWCASE,

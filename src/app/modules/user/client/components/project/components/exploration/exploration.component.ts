@@ -6,14 +6,13 @@ import { TranslateNotificationsService } from '../../../../../../../services/not
 import { Answer } from '../../../../../../../models/answer';
 // import { Campaign } from '../../../../../../../models/campaign';
 import { Innovation } from '../../../../../../../models/innovation';
-import { Table } from '../../../../../../table/models/table';
 import { SidebarInterface } from '../../../../../../sidebars/interfaces/sidebar-interface';
 import { first, takeUntil } from 'rxjs/operators';
-import { Config } from '../../../../../../../models/config';
 import { InnovationFrontService } from '../../../../../../../services/innovation/innovation-front.service';
 import { Subject } from 'rxjs';
 import {HttpErrorResponse} from '@angular/common/http';
 import {ErrorFrontService} from '../../../../../../../services/error/error-front.service';
+import { Config, Table } from '@umius/umi-common-component/models';
 
 @Component({
   templateUrl: 'exploration.component.html',

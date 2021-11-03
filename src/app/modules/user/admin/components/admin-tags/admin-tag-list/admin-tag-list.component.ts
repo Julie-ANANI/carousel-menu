@@ -7,7 +7,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
 import {Pagination} from '../../../../../utility/paginations/interfaces/pagination';
 import { first } from 'rxjs/operators';
-import { Config } from '../../../../../../models/config';
+import { Config } from '@umius/umi-common-component/models';
 
 
 @Component({

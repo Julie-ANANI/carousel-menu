@@ -37,6 +37,10 @@ interface Section {
 
 export class SettingsComponent implements OnInit, OnDestroy {
 
+  get pendingCollaborators(): Array<string> {
+    return this._pendingCollaborators;
+  }
+
   get objectiveConsent(): boolean {
     return this._objectiveConsent;
   }
@@ -153,6 +157,10 @@ export class SettingsComponent implements OnInit, OnDestroy {
    */
   private _objectiveConsent = true;
 
+  private _pendingCollaborators: Array<string> = [];
+
+  private _getCollaborators = true;
+
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _authService: AuthService,
               private _translateService: TranslateService,
@@ -177,8 +185,26 @@ export class SettingsComponent implements OnInit, OnDestroy {
         this._clientProject = <ClientProject>this._innovation.clientProject;
       }
 
+      this._getPendingCollaborators();
       this._initSections();
     });
+  }
+
+  private _getPendingCollaborators() {
+    if (this._innovation._id && isPlatformBrowser(this._platformId) && this._getCollaborators) {
+      this._getCollaborators = false;
+      this._innovationService.getPendingCollaborators(this._innovation._id)
+        .pipe(first())
+        .subscribe((response) => {
+          if (response && response.result && response.result.length) {
+            this._pendingCollaborators = response.result.map((_res) => _res.invitee_email);
+          }
+          }, (err: HttpErrorResponse) => {
+          this._getCollaborators = true;
+          this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+          console.error(err);
+        });
+    }
   }
 
   /**
@@ -370,10 +396,11 @@ export class SettingsComponent implements OnInit, OnDestroy {
    * @param event
    * @param section
    * @param value
+   * @param type
    */
-  public openDeleteModal(event: Event, section: Section, value: any) {
+  public openDeleteModal(event: Event, section: Section, value: any, type: any = null) {
     event.preventDefault();
-    this._selectedValue = value;
+    this._selectedValue = !!type ? {value, type} : value;
     this._activeModalSection = section;
     this._showDeleteModal = true;
   }
@@ -390,7 +417,11 @@ export class SettingsComponent implements OnInit, OnDestroy {
     switch (this._activeModalSection.name) {
 
       case 'COLLABORATORS':
-        this._deleteCollaborator(this._selectedValue);
+        if (this._selectedValue.type === 'PENDING_COLLABORATOR') {
+          this._removePendingCollaborator();
+        } else {
+          this._deleteCollaborator(this._selectedValue);
+        }
         break;
 
       case 'LANGUAGE':
@@ -682,25 +713,24 @@ export class SettingsComponent implements OnInit, OnDestroy {
     if (this._selectedValue.email && emailRegEx.test(this._selectedValue.email)) {
       this._innovationService.inviteCollaborators(this._innovation._id, this._selectedValue.email)
         .pipe(first()).subscribe((collaborator: Collaborator = <Collaborator>{}) => {
-          this._innovation.collaborators = this._innovation.collaborators.concat(collaborator.usersAdded);
 
-          const collaboratorToList = collaborator.invitationsToSend.concat(collaborator.invitationsToSendAgain);
-          collaboratorToList.map((_invite) => {
-            const find = this._innovation.collaborators.some((_collab) => _collab.email === _invite);
-            if (!find) {
-              const newCollaborator = <User>{};
-              newCollaborator.email = _invite;
-              this._innovation.collaborators.push(newCollaborator);
-            }
-          });
-          this._innovationFrontService.setInnovation(this._innovation);
-          this.closeModal();
-
-          if (collaboratorToList && collaboratorToList.length) {
-            this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.SEND_EMAILS_OK');
-          } else {
+          if (collaborator.usersAdded.length) {
+            this._innovation.collaborators = this._innovation.collaborators.concat(collaborator.usersAdded);
+            this._innovationFrontService.setInnovation(this._innovation);
             this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.COLLABORATORS_ADDED');
           }
+
+          if (collaborator.invitationsToSendAgain.length || collaborator.invitationsToSend.length) {
+            collaborator.invitationsToSend.concat(collaborator.invitationsToSendAgain).map((_invite) => {
+              const find = this._pendingCollaborators.some((_collaborator) => _collaborator === _invite);
+              if (!find) {
+                this._pendingCollaborators.push(_invite);
+              }
+            });
+            this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.SEND_EMAILS_OK');
+          }
+
+          this.closeModal();
           }, (err: HttpErrorResponse) => {
           this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
           this._isSaving = false;
@@ -710,6 +740,8 @@ export class SettingsComponent implements OnInit, OnDestroy {
       this._translateNotificationsService.error('ERROR.ERROR', 'COMMON.INVALID.EMAIL');
     }
   }
+
+
 
   /***
    * when the user changes the secondary objectives.
@@ -754,18 +786,35 @@ export class SettingsComponent implements OnInit, OnDestroy {
     }
   }
 
+  private _removePendingCollaborator() {
+    this._innovationService.removePendingCollaborator(this._selectedValue.value, this._innovation._id)
+      .pipe(first())
+      .subscribe(() => {
+        this._pendingCollaborators = this._pendingCollaborators.filter((_collaborator) => {
+          return _collaborator !== this._selectedValue.value;
+        });
+        this.closeModal();
+        this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.COLLABORATOR_DELETED');
+      }, (err: HttpErrorResponse) => {
+        console.error(err);
+        this._isDeleting = false;
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      });
+  }
+
   /***
    * this deletes the collaborator.
    * @param collaborator
    * @private
    */
   private _deleteCollaborator(collaborator: User) {
-    this._innovationService.removeCollaborator(this._innovation._id, collaborator).pipe(first())
+    this._innovationService.removeCollaborator(this._innovation._id, collaborator)
+      .pipe(first())
       .subscribe((collaborators: Array<User>) => {
         this._innovation.collaborators = collaborators;
         this._innovationFrontService.setInnovation(this._innovation);
         this.closeModal();
-        this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.SAVED_TEXT');
+        this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.COLLABORATOR_DELETED');
       }, (err: HttpErrorResponse) => {
         console.error(err);
         this._isDeleting = false;

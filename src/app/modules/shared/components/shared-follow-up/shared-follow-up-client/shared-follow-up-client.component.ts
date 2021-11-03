@@ -1,7 +1,6 @@
 import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {Answer} from '../../../../../models/answer';
-import {Table} from '../../../../table/models/table';
-import {Config} from '../../../../../models/config';
+import {Table, Config} from '@umius/umi-common-component/models';
 import {Innovation, InnovationFollowUpEmails, InnovationFollowUpEmailsCc} from '../../../../../models/innovation';
 import {MissionQuestion} from '../../../../../models/mission';
 import {SidebarInterface} from '../../../../sidebars/interfaces/sidebar-interface';
@@ -31,14 +30,6 @@ export class SharedFollowUpClientComponent implements OnInit, OnDestroy {
 
   get answersCanBeSelected(): number {
     return this._answers.filter((_answer) => !SharedFollowUpClientComponent._isRowDisabled(_answer)).length;
-  }
-
-  set toUpdateCompany(value: boolean) {
-    this._toUpdateCompany = value;
-  }
-
-  get toUpdateCompany(): boolean {
-    return this._toUpdateCompany;
   }
 
   get platformLang(): string {
@@ -208,7 +199,7 @@ export class SharedFollowUpClientComponent implements OnInit, OnDestroy {
         return !this._selectedIds.length;
 
       case 'STEP_CONFIGURE':
-        return !this.isValidCompany || this._toUpdateCompany || !this._selectedCC.length;
+        return !this.isValidCompany || !this._selectedCC.length;
 
       default:
         return false;
@@ -336,8 +327,6 @@ export class SharedFollowUpClientComponent implements OnInit, OnDestroy {
 
   private _subscribe: Subject<any> = new Subject<any>();
 
-  private _toUpdateCompany = false;
-
   private static _isRowDisabled(answer: Answer): boolean {
     return !!(answer.followUp && answer.followUp.date);
   }
@@ -415,7 +404,6 @@ export class SharedFollowUpClientComponent implements OnInit, OnDestroy {
 
   public updateEntity() {
     this._saveProject({followUpEmails: this._followUpObj('entity')}).then(() => {
-      this._toUpdateCompany = false;
       this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.UPDATED_COMPANY');
     }).catch((err: HttpErrorResponse) => {
       this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
@@ -432,12 +420,12 @@ export class SharedFollowUpClientComponent implements OnInit, OnDestroy {
           this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.SEND_EMAILS_OK');
           this._isSending = false;
           this.toggleStartContact(false);
-          }, (err: HttpErrorResponse) => {
+        }, (err: HttpErrorResponse) => {
           this._isSending = false;
           this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
           console.error(err);
         });
-        }, (err: HttpErrorResponse) => {
+      }, (err: HttpErrorResponse) => {
         this._isSending = false;
         this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
         console.error(err);
@@ -468,7 +456,7 @@ export class SharedFollowUpClientComponent implements OnInit, OnDestroy {
       followUp.cc = this._selectedCC;
     }
     if (update === 'entity') {
-      followUp.entity = this.companyName;
+      followUp.entity = this._companyName;
     }
     return followUp;
   }
@@ -578,7 +566,7 @@ export class SharedFollowUpClientComponent implements OnInit, OnDestroy {
   }
 
   public initEmailObject() {
-    this._emailsObject = JSON.parse(JSON.stringify(this._project.followUpEmails[this._selectedPhrase.toLocaleLowerCase()]))
+    this._emailsObject = JSON.parse(JSON.stringify(this._project.followUpEmails[this._selectedPhrase.toLocaleLowerCase()] || {}))
       || {};
     this._emailsObjectReplaced = null;
     this._emailsObjectReplaced = JSON.parse(JSON.stringify(this._emailsObject));
@@ -594,12 +582,12 @@ export class SharedFollowUpClientComponent implements OnInit, OnDestroy {
   }
 
   private _highlightFields(lang: string, card: InnovCard, cc: string) {
-    this._emailsObject[lang].subject = this._emailsObject[lang].subject
+    this._emailsObject[lang]['subject'] = this._emailsObject[lang]['subject']
       .replace(/\*\|TITLE\|\*/g,
-      `<span class="label is-mail width-120 is-sm m-h text-xs text-background m-no-right">${card.title}</span>`
-    );
+        `<span class="label is-mail width-120 is-sm m-h text-xs text-background m-no-right">${card.title}</span>`
+      );
 
-    this._emailsObject[lang].content = this._emailsObject[lang].content
+    this._emailsObject[lang]['content'] = this._emailsObject[lang]['content']
       .replace(/\*\|COMPANY_NAME\|\*/g, `<span class="label is-mail width-120 is-sm text-xs
        text-background m-h m-no-right">${new ScrapeHTMLTags().transform(this.companyName.trim())}</span>`)
       .replace(/\*\|CLIENT_NAME\|\*/g, `<span class="label is-mail width-120 is-sm text-xs text-background m-h m-no-right">${cc}</span>`)
@@ -607,11 +595,10 @@ export class SharedFollowUpClientComponent implements OnInit, OnDestroy {
   }
 
   private _replaceVariables(lang: string, card: InnovCard, cc: string) {
-    console.log('replacing shit');
-    this._emailsObjectReplaced[lang].subject = this._emailsObjectReplaced[lang].subject.
+    this._emailsObjectReplaced[lang]['subject'] = this._emailsObjectReplaced[lang]['subject'].
     replace(/\*\|TITLE\|\*/g, card.title);
 
-    this._emailsObjectReplaced[lang].content = this._emailsObjectReplaced[lang].content
+    this._emailsObjectReplaced[lang]['content'] = this._emailsObjectReplaced[lang]['content']
       .replace(/\*\|COMPANY_NAME\|\*/g, new ScrapeHTMLTags().transform(this.companyName.trim()))
       .replace(/\*\|CLIENT_NAME\|\*/g, cc)
       .replace(/\*\|TITLE\|\*/g, `${card.title}`);

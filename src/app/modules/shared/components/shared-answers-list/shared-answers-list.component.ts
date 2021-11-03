@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Answer } from '../../../../models/answer';
-import { Table } from '../../../table/models/table';
 import { AnswerService } from '../../../../services/answer/answer.service';
+import { Table } from '@umius/umi-common-component/models';
 
 @Component({
   selector: 'app-shared-answers-list',

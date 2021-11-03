@@ -2,16 +2,15 @@ import { Component, Inject, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core
 import { TagsService } from '../../../../../../services/tags/tags.service';
 import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
 import { Innovation } from '../../../../../../models/innovation';
-import { Table } from '../../../../../table/models/table';
+import { Table, Config } from '@umius/umi-common-component/models';
 import { Tag } from '../../../../../../models/tag';
 import { SidebarInterface } from '../../../../../sidebars/interfaces/sidebar-interface';
-import { Config } from '../../../../../../models/config';
 import { first, takeUntil } from 'rxjs/operators';
 import { isPlatformBrowser } from '@angular/common';
-import { ConfigService } from '../../../../../../services/config/config.service';
-import { RolesFrontService } from "../../../../../../services/roles/roles-front.service";
-import { HttpErrorResponse } from "@angular/common/http";
-import { ErrorFrontService } from "../../../../../../services/error/error-front.service";
+import {ConfigService} from '@umius/umi-common-component/services/config';
+import { RolesFrontService } from '../../../../../../services/roles/roles-front.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ErrorFrontService } from '../../../../../../services/error/error-front.service';
 import { InnovationFrontService } from '../../../../../../services/innovation/innovation-front.service';
 import { Subject } from 'rxjs';
 
@@ -94,7 +93,7 @@ export class AdminProjectTagsPoolComponent implements OnInit, OnDestroy {
           ]
         }
       ],
-    }
+    };
   }
 
   public canAccess(path?: Array<string>) {
@@ -158,7 +157,7 @@ export class AdminProjectTagsPoolComponent implements OnInit, OnDestroy {
           } else {
             this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
           }
-        })
+        });
       });
     }
   }

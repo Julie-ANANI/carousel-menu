@@ -190,14 +190,14 @@
             {{ fullAnswer.answers[question.identifier] }}
             <button
               (click)="showQuestionTranslation = true"
-              *ngIf="adminMode && fullAnswer.used_language != currentLang"
+              *ngIf="adminMode && (fullAnswer.used_language.toLowerCase() !== platformLang)"
               class="button is-secondary is-xs is-link">
               {{ 'COMMON.TRANSLATE' | translate }}
             </button>
           </ng-container>
 
           <ng-container *ngIf="showQuestionTranslation">
-            {{ fullAnswer.answers_translations[question.identifier][currentLang] }}
+            {{ fullAnswer.answers_translations[question.identifier][platformLang] }}
             <button
               (click)="showQuestionTranslation = false"
               *ngIf="adminMode"
@@ -352,14 +352,14 @@
       {{ fullAnswer.answers[question.identifier + 'Comment'] }}
       <button
         (click)="showCommentTranslation = true"
-        *ngIf="adminMode && fullAnswer.used_language != currentLang"
+        *ngIf="adminMode && (fullAnswer.used_language.toLowerCase() !== platformLang)"
         class="button is-secondary is-xs is-link">
         {{ 'COMMON.TRANSLATE' | translate }}
       </button>
     </div>
 
     <div *ngIf="showCommentTranslation" class="p-top-10 text-primary-dark">
-      {{ fullAnswer.answers_translations[question.identifier + 'Comment'][currentLang] }}
+      {{ fullAnswer.answers_translations[question.identifier + 'Comment'][platformLang] }}
       <button
         (click)="showCommentTranslation = false"
         *ngIf="adminMode"

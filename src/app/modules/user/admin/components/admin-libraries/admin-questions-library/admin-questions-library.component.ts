@@ -1,6 +1,5 @@
 import {Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
-import {Table} from '../../../../../table/models/table';
-import {Config} from '../../../../../../models/config';
+import {Table, Config} from '@umius/umi-common-component/models';
 import {RolesFrontService} from '../../../../../../services/roles/roles-front.service';
 import {TranslateService} from '@ngx-translate/core';
 import {TranslateNotificationsService} from '../../../../../../services/notifications/notifications.service';
@@ -11,7 +10,7 @@ import {Router} from '@angular/router';
 import {isPlatformBrowser} from '@angular/common';
 import {first} from 'rxjs/operators';
 import {ErrorFrontService} from '../../../../../../services/error/error-front.service';
-import {ConfigService} from '../../../../../../services/config/config.service';
+import {ConfigService} from '@umius/umi-common-component/services/config';
 import {HttpErrorResponse} from '@angular/common/http';
 
 interface NewQuestion {

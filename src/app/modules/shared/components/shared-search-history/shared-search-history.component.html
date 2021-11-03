@@ -35,12 +35,12 @@
 
   <!-- table -->
   <section>
-    <app-shared-table
+    <umius-table
       (editRow)="openSidebar($event)"
       (performAction)="onClickActions($event)"
       [(config)]="config"
       [data]="tableInfos"
-    ></app-shared-table>
+    ></umius-table>
   </section>
   <!-- /table -->
 

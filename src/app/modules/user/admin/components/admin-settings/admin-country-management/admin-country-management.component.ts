@@ -3,12 +3,11 @@ import {first} from 'rxjs/operators';
 import {SidebarInterface} from '../../../../../sidebars/interfaces/sidebar-interface';
 import {TranslateNotificationsService} from '../../../../../../services/notifications/notifications.service';
 import {EmailService} from '../../../../../../services/email/email.service';
-import {Table} from '../../../../../table/models/table';
-import {Config} from '../../../../../../models/config';
 import {isPlatformBrowser} from '@angular/common';
 import {HttpErrorResponse} from '@angular/common/http';
 import {ErrorFrontService} from '../../../../../../services/error/error-front.service';
 import {RolesFrontService} from '../../../../../../services/roles/roles-front.service';
+import { Table, Config } from '@umius/umi-common-component/models';
 
 @Component({
   templateUrl: './admin-country-management.component.html',

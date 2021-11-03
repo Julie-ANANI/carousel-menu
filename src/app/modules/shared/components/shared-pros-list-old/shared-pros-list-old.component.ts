@@ -4,7 +4,7 @@ import { Campaign } from '../../../../models/campaign';
 import { Professional } from '../../../../models/professional';
 import { first } from 'rxjs/operators';
 import {Pagination} from '../../../utility/paginations/interfaces/pagination';
-import {Config} from '../../../../models/config';
+import { Config } from '@umius/umi-common-component/models';
 
 export interface SelectedProfessional extends Professional {
   isSelected: boolean;

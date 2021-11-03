@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import {AdminProjectTagsPoolComponent} from './admin-project-tags-pool.component';
 import {MessageErrorModule} from '../../../../../utility/messages/message-error/message-error.module';
-import {TableModule} from '../../../../../table/table.module';
+import {TableComponentsModule} from '@umius/umi-common-component/table';
 import {SidebarModule} from '../../../../../sidebars/templates/sidebar/sidebar.module';
 import {SidebarTagsModule} from '../../../../../sidebars/components/sidebar-tags/sidebar-tags.module';
 
@@ -11,7 +11,7 @@ import {SidebarTagsModule} from '../../../../../sidebars/components/sidebar-tags
   imports: [
     CommonModule,
     MessageErrorModule,
-    TableModule,
+    TableComponentsModule,
     SidebarModule,
     SidebarTagsModule
   ],
