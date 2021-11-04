@@ -96,8 +96,10 @@ $button-disabled-border-color: #CED4E2 !default;
 
 
 // box shadow variables
+$box-shadow: 1px 2px 4px 0 rgba(0, 0, 0, 0.37) !default;
 $box-shadow-menu: 0 4px 16px rgba(20,23,28,0.25) !default;
 $box-shadow-form: 0 4px 10px 0 rgba(189,199,222,0.23) !default;
+$box-shadow-card: 0 5px 20px rgba(48,55,66,.15) !default;
 
 // Fonts
 $base-font-family: 'Open Sans', sans-serif !default;

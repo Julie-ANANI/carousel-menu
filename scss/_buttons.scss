@@ -112,16 +112,13 @@
 
   &.is-white {
     @include button-default-variant($white-color);
-    color: $dark-color !important;
 
     &.is-outlined {
       @include button-outline-variant($white-color);
-      color: $dark-color !important;
     }
 
     &.is-link {
       @include button-link-variant($white-color);
-      color: $dark-color !important;
     }
 
   }

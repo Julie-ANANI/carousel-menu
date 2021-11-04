@@ -36,8 +36,8 @@ a {
   text-decoration: none;
   cursor: pointer;
 
-  &:focus, &:hover, &:active, &.active {
-    color: inherit;
+  &:not(.button):focus, &:not(.button):hover, &:not(.button):active, &:not(.button).active {
+    color: $link-color;
     text-decoration: underline;
   }
 

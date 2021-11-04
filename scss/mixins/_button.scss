@@ -14,7 +14,7 @@
 }
 
 @mixin button-default-variant($bg-color: $primary-color) {
-  color: $white-color !important;
+  color: $white-color;
   background-color: $bg-color;
   border-color: $bg-color;
 
@@ -27,12 +27,21 @@
       border-color: lighten($bg-color, 15%);
     }
 
+    @if $bg-color == $white-color {
+      color: $dark-color;
+    }
+
   }
 
   &:focus, &.active, &:active  {
     color: $white-color;
     background-color: $bg-color;
     border-color: $bg-color;
+
+    @if $bg-color == $white-color {
+      color: $dark-color;
+    }
+
   }
 
   &[disabled], &:disabled, &.disabled {
@@ -42,7 +51,7 @@
 }
 
 @mixin button-outline-variant($color: $primary-color) {
-  color: $color !important;
+  color: $color;
   border-color: $color;
   border-width: $border-width-lg;
   background-color: transparent;
@@ -60,6 +69,7 @@
 
     @if $color == $white-color {
       background-color: $white-dark-color;
+      color: $dark-color;
     }
 
     @if $color == $dark-color {
@@ -96,7 +106,7 @@
 }
 
 @mixin button-link-variant($color: $primary-color) {
-  color: $color !important;
+  color: $color;
   border: none;
   background-color: transparent;
 
@@ -105,12 +115,22 @@
     border: none;
     text-decoration: underline;
     background-color: transparent;
+
+    @if $color == $white-color {
+      color: $dark-color;
+    }
+
   }
 
   &.active, &:active  {
     color: $color;
     border: none;
     background-color: transparent;
+
+    @if $color == $white-color {
+      color: $dark-color;
+    }
+
   }
 
   &[disabled], &:disabled, &.disabled {

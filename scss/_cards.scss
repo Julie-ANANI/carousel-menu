@@ -37,7 +37,7 @@
 
   &.is-shadow, &.is-hover-effect {
     border: 0;
-    box-shadow: 0 5px 20px rgba(48,55,66,.15);
+    box-shadow: $box-shadow-card;
   }
 
   &.is-hover-effect:hover {
@@ -148,17 +148,14 @@
     max-width: calc(100% - 20px) !important;
   }
 
-}
-
-@media screen and (max-width: $size-xs) {
-
   .card-responsive {
-    margin-right: unset;
-  }
+    justify-content: center;
 
-  .card-responsive .card.is-mobile {
-    max-width: 100% !important;
-    margin-right: 0 !important;
+    .card {
+      max-width: 320px !important;
+      margin: auto 20px 20px;
+    }
+
   }
 
 }
