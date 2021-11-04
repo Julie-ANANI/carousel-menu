@@ -1,9 +1,10 @@
 import {Component, Input, Output, EventEmitter, ViewChild, ElementRef} from '@angular/core';
 import { FileSystemFileEntry } from 'ngx-file-drop';
-import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import {HttpErrorResponse} from '@angular/common/http';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import {ErrorFrontService} from '../../../../services/error/error-front.service';
 import {first} from 'rxjs/operators';
+import {MediaService} from '../../../../services/media/media.service';
 
 @Component({
   selector: 'app-shared-upload-zone-photo',
@@ -32,7 +33,7 @@ export class SharedUploadZonePhotoComponent {
   private _isWrongSize = false;
 
   constructor(private _translateNotificationsService: TranslateNotificationsService,
-              private _httpClient: HttpClient) { }
+              private _mediaService: MediaService) { }
 
   public dropped(event: any) {
     if (!this._isUploading) {
@@ -74,14 +75,14 @@ export class SharedUploadZonePhotoComponent {
         if (this.uploadCloudinary) {
           const _formData = new FormData();
           _formData.append('file', file, file.name);
-          this._httpClient.post(this.uri, _formData).pipe(first()).subscribe((data: any) => {
+          this._mediaService.upload(this.uri, _formData).pipe(first()).subscribe((data: any) => {
             // Sanitized image returned from backend.
             this.cbFn.emit(data);
             this._isUploading = false;
           }, (err: HttpErrorResponse) => {
             this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
             this._isUploading = false;
-            console.error(err.message);
+            console.error(err);
           });
         } else {
           this.cbFn.emit(file);
