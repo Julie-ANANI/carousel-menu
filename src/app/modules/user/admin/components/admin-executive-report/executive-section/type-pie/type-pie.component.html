@@ -82,7 +82,7 @@
               (keyup)="textColor('label' + (i + 1))"
               [(ngModel)]="pie.legend"
               [attr.placeholder]="'ADMIN_EXECUTIVE_REPORT.PIE_SECTION.LEGEND_' + (i + 1) | translate"
-              maxlength="13"
+              maxlength="20"
               class="form-input"
               type="text">
 
@@ -90,7 +90,7 @@
               [ngStyle]="{ 'color': i === 0 ? legend1Color : i === 1 ? legend2Color : i === 2
               ? legend3Color : legend4Color  }"
               class="text-limit-wrapper">
-              {{ 13 - pie.legend.length }}
+              {{ 20 - pie.legend.length }}
             </span>
 
           </label>
