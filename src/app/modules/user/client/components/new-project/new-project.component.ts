@@ -10,7 +10,6 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
 import { ErrorFrontService } from '../../../../../services/error/error-front.service';
 import { Router } from '@angular/router';
-import {AuthService} from '../../../../../services/auth/auth.service';
 import {NewInnovation} from '../../../../../models/innovation';
 import {MissionService} from '../../../../../services/mission/mission.service';
 import {isPlatformBrowser} from '@angular/common';
@@ -164,8 +163,7 @@ export class NewProjectComponent implements OnInit, OnDestroy {
               private _translateTitleService: TranslateTitleService,
               private _translateNotificationsService: TranslateNotificationsService,
               private _router: Router,
-              private _clientProjectService: ClientProjectService,
-              private _authService: AuthService) {
+              private _clientProjectService: ClientProjectService) {
     this._translateTitleService.setTitle('COMMON.PAGE_TITLE.NEW_PROJECT');
   }
 
@@ -273,11 +271,8 @@ export class NewProjectComponent implements OnInit, OnDestroy {
     this._clientProjectService.create(this._clientProject, this._mission, newInnovation)
       .pipe(first())
       .subscribe((response) => {
-        // Reload session to refresh etherpad cookies and accesses for this new project
-        this._authService.initializeSession().pipe(first()).subscribe(() => {
-          this._router.navigate([`/user/projects/${response['innovation']['_id']}/settings`]);
-        });
-        }, (err: HttpErrorResponse) => {
+        this._router.navigate([`/user/projects/${response['innovation']['_id']}/settings`]);
+      }, (err: HttpErrorResponse) => {
         this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
         this._isCreating = false;
         console.error(err);
