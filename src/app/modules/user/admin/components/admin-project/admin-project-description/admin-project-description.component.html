@@ -1,6 +1,6 @@
 <div class="container fluid grid-2xl" id="admin-project-description">
   <div class="column col-sm-12 col-11 col-mx-auto p-top-30 p-bottom-30">
-    <div class="d-flex align-center sticky bg-white" style="top: 49px; z-index: 99">
+    <div class="d-flex align-center justify-start flex-wrap sticky bg-white" style="top: 49px; z-index: 99">
       <ng-container *ngFor="let section of activeInnovCard.sections; let i=index;">
         <a pageScroll [pageScrollOffset]="100" class="button is-link is-sm is-draft"
            [href]="'#'+section.type.toUpperCase()+'-'+i + 1+'href'"
@@ -59,7 +59,9 @@
                   *ngIf=" isEditable"
                   [attr.data-tooltip]="!(getPadPreviewMode(i.toString()))? 'Preview':'Edit'"
                   (click)="padPreviewModeOnChange(i.toString())"
-                  class="button tooltip is-circled is-action is-outlined text-no-underline is-info is-xxs text-sm op-text text-notify m-left-auto"
+                  class="button tooltip is-circled is-action is-outlined text-no-underline is-info
+                  m-right-15
+                  is-xxs text-sm op-text text-notify"
                   type="button">
                   <i class="fas fa-pencil-alt"
                      *ngIf="getPadPreviewMode(i.toString())"></i>
@@ -69,28 +71,30 @@
 
               </div>
 
-              <!-- visibility -->
-              <div
-                *ngIf="isEditable"
-                (click)="toggleVisibility($event, i)"
-                [ngClass]="{'m-right-15': section.type === 'OTHER'}"
-                class="icon-container is-overlay">
+              <div class="d-flex align-center justify-center m-left-auto">
+                <!-- visibility -->
+                <div
+                  *ngIf="isEditable"
+                  (click)="toggleVisibility($event, i)"
+                  [ngClass]="{'m-right-15': section.type === 'OTHER'}"
+                  class="icon-container is-overlay">
                 <span class="tooltip" [attr.data-tooltip]="section.visibility ? 'Hide section' : 'Unhide section'">
                   <i [ngClass]="section.visibility ? 'fas fa-eye' : 'fas fa-eye-slash'" class="text-alert"></i>
                 </span>
-              </div>
-              <!-- /visibility -->
+                </div>
+                <!-- /visibility -->
 
-              <!-- delete -->
-              <div
-                *ngIf="isEditable && section.type === 'OTHER'"
-                (click)="openModal($event, 'DELETE_SECTION', i)"
-                class="icon-container is-overlay">
+                <!-- delete -->
+                <div
+                  *ngIf="isEditable && section.type === 'OTHER'"
+                  (click)="openModal($event, 'DELETE_SECTION', i)"
+                  class="icon-container is-overlay">
                 <span class="tooltip" data-tooltip="Delete section">
                   <i class="text-alert icon icon-delete"></i>
                 </span>
+                </div>
+                <!-- /delete -->
               </div>
-              <!-- /delete -->
 
             </div>
             <!-- /label / actions -->
@@ -232,7 +236,7 @@
                 *ngIf=" isEditable"
                 [attr.data-tooltip]="!(getPadPreviewMode('title'))? 'Preview':'Edit'"
                 (click)="padPreviewModeOnChange('title')"
-                class="button tooltip is-circled is-action is-outlined text-no-underline is-info is-xxs text-sm op-text text-notify m-left-auto"
+                class="button tooltip is-circled is-action is-outlined text-no-underline is-info is-xxs text-sm op-text text-notify m-left-20"
                 type="button">
                 <i class="fas fa-pencil-alt"
                    *ngIf="getPadPreviewMode('title')"></i>
@@ -355,7 +359,7 @@
                 *ngIf="isEditable"
                 [attr.data-tooltip]="!(getPadPreviewMode('summary'))? 'Preview':'Edit'"
                 (click)="padPreviewModeOnChange('summary')"
-                class="button tooltip is-circled is-action is-outlined text-no-underline is-info is-xxs text-sm op-text text-notify m-left-auto"
+                class="button tooltip is-circled is-action is-outlined text-no-underline is-info is-xxs text-sm op-text text-notify m-left-15"
                 type="button">
                 <i class="fas fa-pencil-alt"
                    *ngIf="getPadPreviewMode('summary')"></i>
