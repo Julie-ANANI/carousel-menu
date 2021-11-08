@@ -1,6 +1,24 @@
 <div class="container fluid grid-2xl" id="admin-project-description">
   <div class="column col-sm-12 col-11 col-mx-auto p-top-30 p-bottom-30">
-
+    <div class="d-flex align-center sticky bg-white" style="top: 49px; z-index: 99">
+      <ng-container *ngFor="let section of activeInnovCard.sections; let i=index;">
+        <a pageScroll [pageScrollOffset]="100" class="button is-link is-sm is-draft"
+           [href]="'#'+section.type.toUpperCase()+'-'+i + 1+'href'"
+        >{{ i + 1 }}.{{ section.title }}</a>
+        <span> | </span>
+      </ng-container>
+      <a pageScroll [pageScrollOffset]="100" class="button is-link is-sm is-draft" href="#project-title-href">{{activeInnovCard.sections.length + 1}}.Title</a>
+      <span> | </span>
+      <a pageScroll [pageScrollOffset]="100" class="button is-link is-sm is-draft" href="#project-summary-href">{{activeInnovCard.sections.length + 2}}
+        .Summary</a>
+      <span> | </span>
+      <a pageScroll [pageScrollOffset]="100" class="button is-link is-sm is-draft"
+         href="#project-media-href">{{ activeInnovCard.sections && activeInnovCard.sections.length + 3 || 4 }}.Media</a>
+      <button class="button is-outlined m-left-auto is-sm m-right-20"
+              (click)="openModal($event, 'NEW_SECTION')">
+        Add new section <i class="fas fa-plus"></i>
+      </button>
+    </div>
 
     <!-- sections dynamic -->
     <section
@@ -19,6 +37,7 @@
               <div class="d-flex align-center flex-wrap title-wrapper m-no-bottom">
 
                 <label
+                  [id]="section.type.toUpperCase()+'-'+i + 1+'href'"
                   [for]="section.type+i"
                   [ngClass]="innovation.innovationCards.length > 1 && isEditable ? 'm-right-10' : 'm-right-30'"
                   class="form-label">
@@ -91,14 +110,6 @@
                  class="width-100 mce-tinymce pad-preview-mode text-15"
                  [innerHTML]="activeInnovCard.sections[i].content | cleanHtml">
             </div>
-<!--            &lt;!&ndash; remaining text &ndash;&gt;-->
-<!--            <div-->
-<!--              *ngIf="isEditable"-->
-<!--              [ngStyle]="{'color': remaining(section.type, i)}"-->
-<!--              class="text-right text-medium p-top-1 text-xs">-->
-<!--              {{ section.content | characterCountdown:1000 }} characters remaining-->
-<!--            </div>-->
-<!--            &lt;!&ndash; /remaining text &ndash;&gt;-->
 
             <p *ngIf="!isEditable" [innerHTML]="section.content" class="text-15"></p>
 
@@ -196,17 +207,6 @@
     </section>
     <!-- /sections dynamic -->
 
-    <!-- add new section -->
-    <section *ngIf="isEditable" class="section-wrapper text-center has-border p-bottom-50">
-      <button
-        (click)="openModal($event, 'NEW_SECTION')"
-        class="button is-primary is-lg"
-        type="button">
-        Add new section
-      </button>
-    </section>
-    <!-- /add new section -->
-
     <!-- section title -->
     <section
       [ngStyle]="{ 'animation-duration': '110ms' }"
@@ -220,6 +220,7 @@
             <div class="d-flex align-center flex-wrap title-wrapper">
 
               <label
+                id="project-title-href"
                 [ngClass]="{'m-right-10': innovation.innovationCards.length > 1 && isEditable}"
                 class="form-label"
                 for="project-title">
@@ -255,15 +256,6 @@
             <div *ngIf="getPadPreviewMode('title')"
                  class="width-100 mce-tinymce pad-preview-mode text-15" [innerHTML]="activeInnovCard.title | cleanHtml">
             </div>
-
-<!--            &lt;!&ndash; remaining text &ndash;&gt;-->
-<!--            <div-->
-<!--              *ngIf="isEditable"-->
-<!--              [ngStyle]="{'color': remaining('TITLE')}"-->
-<!--              class="text-right text-medium p-top-1 text-xs">-->
-<!--              {{ activeInnovCard.title | characterCountdown:100 }} characters remaining-->
-<!--            </div>-->
-<!--            &lt;!&ndash; /remaining text &ndash;&gt;-->
 
             <p *ngIf="!isEditable" [innerHTML]="activeInnovCard.title" class="text-15"></p>
 
@@ -351,6 +343,7 @@
             <div class="d-flex align-center flex-wrap title-wrapper">
 
               <label
+                id="project-summary-href"
                 [ngClass]="{'m-right-10': innovation.innovationCards.length > 1 && isEditable}"
                 class="form-label"
                 for="project-summary">
@@ -389,14 +382,14 @@
                  [innerHTML]="activeInnovCard.summary | cleanHtml">
             </div>
 
-<!--            &lt;!&ndash; remaining text &ndash;&gt;-->
-<!--            <div-->
-<!--              *ngIf="isEditable"-->
-<!--              [ngStyle]="{'color': remaining('SUMMARY')}"-->
-<!--              class="text-right text-medium p-top-1 text-xs">-->
-<!--              {{ activeInnovCard.summary | characterCountdown:500 }} characters remaining-->
-<!--            </div>-->
-<!--            &lt;!&ndash; /remaining text &ndash;&gt;-->
+            <!--            &lt;!&ndash; remaining text &ndash;&gt;-->
+            <!--            <div-->
+            <!--              *ngIf="isEditable"-->
+            <!--              [ngStyle]="{'color': remaining('SUMMARY')}"-->
+            <!--              class="text-right text-medium p-top-1 text-xs">-->
+            <!--              {{ activeInnovCard.summary | characterCountdown:500 }} characters remaining-->
+            <!--            </div>-->
+            <!--            &lt;!&ndash; /remaining text &ndash;&gt;-->
 
             <p *ngIf="!isEditable" [innerHTML]="activeInnovCard.summary" class="text-15"></p>
 
@@ -477,6 +470,7 @@
 
     <!-- section media -->
     <section
+      id="project-media"
       [ngStyle]="{ 'animation-duration': ((activeInnovCard.sections.length) * 110) + 'ms' }"
       class="section-wrapper has-border p-no-bottom">
 
@@ -486,7 +480,7 @@
         <div class="section-content">
           <div class="form-group">
             <div class="title-wrapper">
-              <label class="form-label">
+              <label class="form-label" id="project-media-href">
                 <span class="shape is-rounded bg-draft">
                   {{ activeInnovCard.sections && activeInnovCard.sections.length + 3 || 4 }}
                 </span>
