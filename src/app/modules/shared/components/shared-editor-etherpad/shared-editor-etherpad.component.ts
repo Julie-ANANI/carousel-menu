@@ -128,7 +128,7 @@ export class SharedEditorEtherpadComponent implements OnInit, OnDestroy {
     _iframe.setAttribute('src', CommonService.etherpadSrc(this._etherpad));
     _iframe.setAttribute('id', this._etherpad.padID);
     _iframe.style.height = this.minHeight;
-    _iframe.style.resize = 'vertical';
+    // _iframe.style.resize = 'vertical';
     this.sharedEditorEtherpad.nativeElement.appendChild(_iframe);
     this._isLoading = false;
   }
