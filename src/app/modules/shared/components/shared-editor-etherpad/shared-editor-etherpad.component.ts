@@ -67,12 +67,9 @@ export class SharedEditorEtherpadComponent implements OnInit, OnDestroy {
     this._detectEtherpadServerDown();
     this._etherpadService.pingServer().pipe(first())
       .subscribe(() => {
-        if (!this.isEtherpadUp()) {
-          // Reload session to refresh etherpad cookies and accesses after server working again
-          this._authService.initializeSession().subscribe(() => {
-            this._createEtherpad();
-          });
-        }
+        this._authService.initializeSession().subscribe(() => {
+          this._createEtherpad();
+        });
       }, () => {
         this.disableEtherpad();
       });
