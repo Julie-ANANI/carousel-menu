@@ -8,7 +8,7 @@ import { CookieServerInterceptor } from './interceptors/cookie-server.intercepto
 import { ErrorService } from './services/error/error.service';
 import { ErrorBackendService } from './services/error/errorBackend.service';
 import { LocalStorageBackendService } from './services/localStorage/localStorageBackend.service';
-import { LocalStorageService } from './services/localStorage/localStorage.service';
+import { LocalStorageService } from '@umius/umi-common-component/services/localStorage';
 import { SocketService } from './services/socket/socket.service';
 import { SocketSsrService } from './services/socket/socket-ssr.service';
 

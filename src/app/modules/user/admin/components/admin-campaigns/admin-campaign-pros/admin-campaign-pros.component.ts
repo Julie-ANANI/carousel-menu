@@ -136,6 +136,7 @@ export class AdminCampaignProsComponent implements OnInit {
         .subscribe(
           (response: Response) => {
             this._professionals = (response && response.result) || [];
+            console.log(this._professionals);
             this._total =
               response._metadata.totalCount || response.result.length;
           },

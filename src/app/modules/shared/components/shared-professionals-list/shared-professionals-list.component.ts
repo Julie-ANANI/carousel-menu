@@ -117,6 +117,7 @@ export class SharedProfessionalsListComponent {
   }
 
   private _initializeTable() {
+    console.log(this._professionals);
     this._table = {
       _selector: this.tableSelector,
       _title: 'professionals',
@@ -229,6 +230,7 @@ export class SharedProfessionalsListComponent {
           _width: '120px',
         },
       ],
+
     };
 
     if (this._table._selector === 'admin-campaign-pros-limit') {
