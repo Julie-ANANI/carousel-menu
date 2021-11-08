@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { LocalStorageService } from '../localStorage/localStorage.service';
+import { LocalStorageService } from '@umius/umi-common-component/services/localStorage';
 
 @Injectable({providedIn: 'root'})
 export class ConfigService {

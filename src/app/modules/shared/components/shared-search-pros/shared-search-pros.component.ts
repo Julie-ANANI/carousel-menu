@@ -10,7 +10,7 @@ import { RolesFrontService } from '../../../../services/roles/roles-front.servic
 import { isPlatformBrowser } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorFrontService } from '../../../../services/error/error-front.service';
-import { LocalStorageService } from '../../../../services/localStorage/localStorage.service';
+import { LocalStorageService } from '@umius/umi-common-component/services/localStorage';
 import { CampaignService } from '../../../../services/campaign/campaign.service';
 import { TargetPros } from '../../../../models/targetPros';
 import { JobsFrontService } from '../../../../services/jobs/jobs-front.service';

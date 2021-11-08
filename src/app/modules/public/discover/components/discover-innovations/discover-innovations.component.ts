@@ -10,7 +10,7 @@ import { Config } from '@umius/umi-common-component/models';
 import {isPlatformBrowser} from '@angular/common';
 import {first} from 'rxjs/operators';
 import {Response} from '../../../../../models/response';
-import {LocalStorageService} from '../../../../../services/localStorage/localStorage.service';
+import { LocalStorageService } from '@umius/umi-common-component/services/localStorage';
 
 @Component({
   templateUrl: './discover-innovations.component.html',

@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { Pagination } from '../interfaces/pagination';
-import { LocalStorageService } from '../../../../services/localStorage/localStorage.service';
+import { LocalStorageService } from '@umius/umi-common-component/services/localStorage';
 
 @Component({
   selector: 'app-pagination',

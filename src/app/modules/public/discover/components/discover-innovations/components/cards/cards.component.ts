@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Inject, Input, Output, PLATFORM_ID} from '@angular/core';
 import { Innovation } from '../../../../../../../models/innovation';
-import { LocalStorageService } from '../../../../../../../services/localStorage/localStorage.service';
+import { LocalStorageService } from '@umius/umi-common-component/services/localStorage';
 import { InnovCard } from '../../../../../../../models/innov-card';
 import { TranslateService } from '@ngx-translate/core';
 import { InnovationFrontService } from '../../../../../../../services/innovation/innovation-front.service';
