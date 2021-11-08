@@ -13,22 +13,24 @@ import {SharedEditorsModule} from '../../../../../shared/components/shared-edito
 import { CleanHtmlModule } from '../../../../../../pipe/cleanHtml/cleanHtml.module';
 import {PipeModule} from '../../../../../../pipe/pipe.module';
 import { ModalMediaModule } from '../../../../../utility/modals/modal-media/modal-media.module';
+import { NgxPageScrollModule } from "ngx-page-scroll";
 
 @NgModule({
-  imports: [
-    CommonModule,
-    RouterModule,
-    FormsModule,
-    SharedEditorTinymceModule,
-    ModalEmptyModule,
-    SharedUploadZonePhotoModule,
-    SharedUploadZoneVideoModule,
-    SharedEditorsModule,
-    CommentListModule,
-    CleanHtmlModule,
-    PipeModule,
-    ModalMediaModule,
-  ],
+    imports: [
+        CommonModule,
+        RouterModule,
+        FormsModule,
+        SharedEditorTinymceModule,
+        ModalEmptyModule,
+        SharedUploadZonePhotoModule,
+        SharedUploadZoneVideoModule,
+        SharedEditorsModule,
+        CommentListModule,
+        CleanHtmlModule,
+        PipeModule,
+        ModalMediaModule,
+        NgxPageScrollModule,
+    ],
   declarations: [
     AdminProjectDescriptionComponent,
   ]

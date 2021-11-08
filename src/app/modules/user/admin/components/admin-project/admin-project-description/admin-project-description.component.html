@@ -1,6 +1,24 @@
 <div class="container fluid grid-2xl" id="admin-project-description">
   <div class="column col-sm-12 col-11 col-mx-auto p-top-30 p-bottom-30">
-
+    <div class="d-flex align-center justify-start flex-wrap sticky bg-white" style="top: 49px; z-index: 99">
+      <ng-container *ngFor="let section of activeInnovCard.sections; let i=index;">
+        <a pageScroll [pageScrollOffset]="100" class="button is-link is-sm is-draft"
+           [href]="'#'+section.type.toUpperCase()+'-'+i + 1+'href'"
+        >{{ i + 1 }}.{{ section.title }}</a>
+        <span> | </span>
+      </ng-container>
+      <a pageScroll [pageScrollOffset]="100" class="button is-link is-sm is-draft" href="#project-title-href">{{activeInnovCard.sections.length + 1}}.Title</a>
+      <span> | </span>
+      <a pageScroll [pageScrollOffset]="100" class="button is-link is-sm is-draft" href="#project-summary-href">{{activeInnovCard.sections.length + 2}}
+        .Summary</a>
+      <span> | </span>
+      <a pageScroll [pageScrollOffset]="100" class="button is-link is-sm is-draft"
+         href="#project-media-href">{{ activeInnovCard.sections && activeInnovCard.sections.length + 3 || 4 }}.Media</a>
+      <button class="button is-outlined m-left-auto is-sm m-right-20"
+              (click)="openModal($event, 'NEW_SECTION')">
+        Add new section <i class="fas fa-plus"></i>
+      </button>
+    </div>
 
     <!-- sections dynamic -->
     <section
@@ -19,6 +37,7 @@
               <div class="d-flex align-center flex-wrap title-wrapper m-no-bottom">
 
                 <label
+                  [id]="section.type.toUpperCase()+'-'+i + 1+'href'"
                   [for]="section.type+i"
                   [ngClass]="innovation.innovationCards.length > 1 && isEditable ? 'm-right-10' : 'm-right-30'"
                   class="form-label">
@@ -40,7 +59,9 @@
                   *ngIf=" isEditable"
                   [attr.data-tooltip]="!(getPadPreviewMode(i.toString()))? 'Preview':'Edit'"
                   (click)="padPreviewModeOnChange(i.toString())"
-                  class="button tooltip is-circled is-action is-outlined text-no-underline is-info is-xxs text-sm op-text text-notify m-left-auto"
+                  class="button tooltip is-circled is-action is-outlined text-no-underline is-info
+                  m-right-15
+                  is-xxs text-sm op-text text-notify"
                   type="button">
                   <i class="fas fa-pencil-alt"
                      *ngIf="getPadPreviewMode(i.toString())"></i>
@@ -50,28 +71,41 @@
 
               </div>
 
-              <!-- visibility -->
-              <div
-                *ngIf="isEditable"
-                (click)="toggleVisibility($event, i)"
-                [ngClass]="{'m-right-15': section.type === 'OTHER'}"
-                class="icon-container is-overlay">
+              <div class="d-flex align-center justify-center">
+                <a pageScroll [pageScrollOffset]="100"
+                   [href]="'#'+section.type.toUpperCase()+'-'+i + 1+'href-comment'"
+                   class="button text-secondary is-link is-sm is-draft">
+                  comment</a>
+                <a pageScroll [pageScrollOffset]="100"
+                   [href]="'#'+section.type.toUpperCase()+'-'+i + 1+'href-suggestion'"
+                   class="button text-secondary is-link is-sm is-draft">
+                  suggestion</a>
+              </div>
+
+              <div class="d-flex align-center justify-center m-left-auto">
+                <!-- visibility -->
+                <div
+                  *ngIf="isEditable"
+                  (click)="toggleVisibility($event, i)"
+                  [ngClass]="{'m-right-15': section.type === 'OTHER'}"
+                  class="icon-container is-overlay">
                 <span class="tooltip" [attr.data-tooltip]="section.visibility ? 'Hide section' : 'Unhide section'">
                   <i [ngClass]="section.visibility ? 'fas fa-eye' : 'fas fa-eye-slash'" class="text-alert"></i>
                 </span>
-              </div>
-              <!-- /visibility -->
+                </div>
+                <!-- /visibility -->
 
-              <!-- delete -->
-              <div
-                *ngIf="isEditable && section.type === 'OTHER'"
-                (click)="openModal($event, 'DELETE_SECTION', i)"
-                class="icon-container is-overlay">
+                <!-- delete -->
+                <div
+                  *ngIf="isEditable && section.type === 'OTHER'"
+                  (click)="openModal($event, 'DELETE_SECTION', i)"
+                  class="icon-container is-overlay">
                 <span class="tooltip" data-tooltip="Delete section">
                   <i class="text-alert icon icon-delete"></i>
                 </span>
+                </div>
+                <!-- /delete -->
               </div>
-              <!-- /delete -->
 
             </div>
             <!-- /label / actions -->
@@ -91,14 +125,6 @@
                  class="width-100 mce-tinymce pad-preview-mode text-15"
                  [innerHTML]="activeInnovCard.sections[i].content | cleanHtml">
             </div>
-<!--            &lt;!&ndash; remaining text &ndash;&gt;-->
-<!--            <div-->
-<!--              *ngIf="isEditable"-->
-<!--              [ngStyle]="{'color': remaining(section.type, i)}"-->
-<!--              class="text-right text-medium p-top-1 text-xs">-->
-<!--              {{ section.content | characterCountdown:1000 }} characters remaining-->
-<!--            </div>-->
-<!--            &lt;!&ndash; /remaining text &ndash;&gt;-->
 
             <p *ngIf="!isEditable" [innerHTML]="section.content" class="text-15"></p>
 
@@ -110,7 +136,7 @@
         <div class="section-suggestion">
 
           <!-- comment -->
-          <div class="m-bottom-25">
+          <div class="m-bottom-25" [id]="section.type.toUpperCase()+'-'+i + 1+'href-comment'">
             <div class="d-flex align-center">
               <div
                 (click)="onToggleComment($event, i.toString(10))"
@@ -149,7 +175,7 @@
           <!-- /comment -->
 
           <!-- suggestion -->
-          <div>
+          <div [id]="section.type.toUpperCase()+'-'+i + 1+'href-suggestion'">
             <div class="d-flex align-center">
               <div
                 (click)="onToggleSuggestion($event, i.toString(10))"
@@ -196,17 +222,6 @@
     </section>
     <!-- /sections dynamic -->
 
-    <!-- add new section -->
-    <section *ngIf="isEditable" class="section-wrapper text-center has-border p-bottom-50">
-      <button
-        (click)="openModal($event, 'NEW_SECTION')"
-        class="button is-primary is-lg"
-        type="button">
-        Add new section
-      </button>
-    </section>
-    <!-- /add new section -->
-
     <!-- section title -->
     <section
       [ngStyle]="{ 'animation-duration': '110ms' }"
@@ -220,6 +235,7 @@
             <div class="d-flex align-center flex-wrap title-wrapper">
 
               <label
+                id="project-title-href"
                 [ngClass]="{'m-right-10': innovation.innovationCards.length > 1 && isEditable}"
                 class="form-label"
                 for="project-title">
@@ -231,13 +247,24 @@
                 *ngIf=" isEditable"
                 [attr.data-tooltip]="!(getPadPreviewMode('title'))? 'Preview':'Edit'"
                 (click)="padPreviewModeOnChange('title')"
-                class="button tooltip is-circled is-action is-outlined text-no-underline is-info is-xxs text-sm op-text text-notify m-left-auto"
+                class="button tooltip is-circled is-action is-outlined text-no-underline is-info is-xxs text-sm op-text text-notify m-left-20"
                 type="button">
                 <i class="fas fa-pencil-alt"
                    *ngIf="getPadPreviewMode('title')"></i>
                 <i class="fas fa-eye" *ngIf="!getPadPreviewMode('title')"></i>
               </button>
               <!-- /edit-preview button -->
+
+              <div class="d-flex align-center justify-center m-left-15">
+                <a pageScroll [pageScrollOffset]="100"
+                   [href]="'#project-title-href-comment'"
+                   class="button text-secondary is-link is-sm is-draft">
+                  comment</a>
+                <a pageScroll [pageScrollOffset]="100"
+                   [href]="'#project-title-href-suggestion'"
+                   class="button text-secondary is-link is-sm is-draft">
+                  suggestion</a>
+              </div>
 
             </div>
 
@@ -256,15 +283,6 @@
                  class="width-100 mce-tinymce pad-preview-mode text-15" [innerHTML]="activeInnovCard.title | cleanHtml">
             </div>
 
-<!--            &lt;!&ndash; remaining text &ndash;&gt;-->
-<!--            <div-->
-<!--              *ngIf="isEditable"-->
-<!--              [ngStyle]="{'color': remaining('TITLE')}"-->
-<!--              class="text-right text-medium p-top-1 text-xs">-->
-<!--              {{ activeInnovCard.title | characterCountdown:100 }} characters remaining-->
-<!--            </div>-->
-<!--            &lt;!&ndash; /remaining text &ndash;&gt;-->
-
             <p *ngIf="!isEditable" [innerHTML]="activeInnovCard.title" class="text-15"></p>
 
           </div>
@@ -275,7 +293,7 @@
         <div class="section-suggestion">
 
           <!-- comment -->
-          <div class="m-bottom-25">
+          <div class="m-bottom-25" [id]="'project-title-href-comment'">
             <div class="d-flex align-center">
               <div (click)="onToggleComment($event, 'title')" class="icon-container is-sm is-overlay m-right-1">
                 <i
@@ -302,7 +320,7 @@
           <!-- /comment -->
 
           <!-- suggestion -->
-          <div>
+          <div [id]="'project-title-href-suggestion'">
             <div class="d-flex align-center">
               <div
                 (click)="onToggleSuggestion($event, 'title')"
@@ -351,6 +369,7 @@
             <div class="d-flex align-center flex-wrap title-wrapper">
 
               <label
+                id="project-summary-href"
                 [ngClass]="{'m-right-10': innovation.innovationCards.length > 1 && isEditable}"
                 class="form-label"
                 for="project-summary">
@@ -361,14 +380,25 @@
               <button
                 *ngIf="isEditable"
                 [attr.data-tooltip]="!(getPadPreviewMode('summary'))? 'Preview':'Edit'"
-                (click)="padPreviewModeOnChange('summary')"
-                class="button tooltip is-circled is-action is-outlined text-no-underline is-info is-xxs text-sm op-text text-notify m-left-auto"
+                (click)="padPreviewModeOnChange('c')"
+                class="button tooltip is-circled is-action is-outlined text-no-underline is-info is-xxs text-sm op-text text-notify m-left-15"
                 type="button">
                 <i class="fas fa-pencil-alt"
                    *ngIf="getPadPreviewMode('summary')"></i>
                 <i class="fas fa-eye" *ngIf="!getPadPreviewMode('summary')"></i>
               </button>
               <!-- /edit-preview button -->
+
+              <div class="d-flex align-center justify-center m-left-15">
+                <a pageScroll [pageScrollOffset]="100"
+                   [href]="'#project-summary-href-comment'"
+                   class="button text-secondary is-link is-sm is-draft">
+                  comment</a>
+                <a pageScroll [pageScrollOffset]="100"
+                   [href]="'#project-summary-href-suggestion'"
+                   class="button text-secondary is-link is-sm is-draft">
+                  suggestion</a>
+              </div>
 
             </div>
 
@@ -389,15 +419,6 @@
                  [innerHTML]="activeInnovCard.summary | cleanHtml">
             </div>
 
-<!--            &lt;!&ndash; remaining text &ndash;&gt;-->
-<!--            <div-->
-<!--              *ngIf="isEditable"-->
-<!--              [ngStyle]="{'color': remaining('SUMMARY')}"-->
-<!--              class="text-right text-medium p-top-1 text-xs">-->
-<!--              {{ activeInnovCard.summary | characterCountdown:500 }} characters remaining-->
-<!--            </div>-->
-<!--            &lt;!&ndash; /remaining text &ndash;&gt;-->
-
             <p *ngIf="!isEditable" [innerHTML]="activeInnovCard.summary" class="text-15"></p>
 
           </div>
@@ -408,7 +429,7 @@
         <div class="section-suggestion">
 
           <!-- comment -->
-          <div class="m-bottom-25">
+          <div class="m-bottom-25" [id]="'project-summary-href-comment'">
             <div class="d-flex align-center">
               <div
                 (click)="onToggleComment($event, 'summary')"
@@ -437,7 +458,7 @@
           <!-- /comment -->
 
           <!-- suggestion -->
-          <div>
+          <div [id]="'project-summary-href-suggestion'">
             <div class="d-flex align-center">
               <div
                 (click)="onToggleSuggestion($event, 'summary')"
@@ -477,16 +498,17 @@
 
     <!-- section media -->
     <section
+      id="project-media"
       [ngStyle]="{ 'animation-duration': ((activeInnovCard.sections.length) * 110) + 'ms' }"
       class="section-wrapper has-border p-no-bottom">
 
-      <div class="section-body">
+      <div class="section-body" style="flex-direction: row">
 
         <!-- image -->
         <div class="section-content">
           <div class="form-group">
             <div class="title-wrapper">
-              <label class="form-label">
+              <label class="form-label" id="project-media-href">
                 <span class="shape is-rounded bg-draft">
                   {{ activeInnovCard.sections && activeInnovCard.sections.length + 3 || 4 }}
                 </span>

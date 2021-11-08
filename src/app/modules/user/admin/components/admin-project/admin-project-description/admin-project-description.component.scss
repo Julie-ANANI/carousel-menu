@@ -33,6 +33,7 @@
 
     .section-body {
       display: flex;
+      flex-direction: column;
 
       .section-content, .section-suggestion {
         flex: 1;
