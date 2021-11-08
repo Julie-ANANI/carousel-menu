@@ -71,6 +71,17 @@
 
               </div>
 
+              <div class="d-flex align-center justify-center">
+                <a pageScroll [pageScrollOffset]="100"
+                   [href]="'#'+section.type.toUpperCase()+'-'+i + 1+'href-comment'"
+                   class="button text-secondary is-link is-sm is-draft">
+                  comment</a>
+                <a pageScroll [pageScrollOffset]="100"
+                   [href]="'#'+section.type.toUpperCase()+'-'+i + 1+'href-suggestion'"
+                   class="button text-secondary is-link is-sm is-draft">
+                  suggestion</a>
+              </div>
+
               <div class="d-flex align-center justify-center m-left-auto">
                 <!-- visibility -->
                 <div
@@ -125,7 +136,7 @@
         <div class="section-suggestion">
 
           <!-- comment -->
-          <div class="m-bottom-25">
+          <div class="m-bottom-25" [id]="section.type.toUpperCase()+'-'+i + 1+'href-comment'">
             <div class="d-flex align-center">
               <div
                 (click)="onToggleComment($event, i.toString(10))"
@@ -164,7 +175,7 @@
           <!-- /comment -->
 
           <!-- suggestion -->
-          <div>
+          <div [id]="section.type.toUpperCase()+'-'+i + 1+'href-suggestion'">
             <div class="d-flex align-center">
               <div
                 (click)="onToggleSuggestion($event, i.toString(10))"
@@ -244,6 +255,17 @@
               </button>
               <!-- /edit-preview button -->
 
+              <div class="d-flex align-center justify-center m-left-15">
+                <a pageScroll [pageScrollOffset]="100"
+                   [href]="'#project-title-href-comment'"
+                   class="button text-secondary is-link is-sm is-draft">
+                  comment</a>
+                <a pageScroll [pageScrollOffset]="100"
+                   [href]="'#project-title-href-suggestion'"
+                   class="button text-secondary is-link is-sm is-draft">
+                  suggestion</a>
+              </div>
+
             </div>
 
             <app-shared-editors
@@ -271,7 +293,7 @@
         <div class="section-suggestion">
 
           <!-- comment -->
-          <div class="m-bottom-25">
+          <div class="m-bottom-25" [id]="'project-title-href-comment'">
             <div class="d-flex align-center">
               <div (click)="onToggleComment($event, 'title')" class="icon-container is-sm is-overlay m-right-1">
                 <i
@@ -298,7 +320,7 @@
           <!-- /comment -->
 
           <!-- suggestion -->
-          <div>
+          <div [id]="'project-title-href-suggestion'">
             <div class="d-flex align-center">
               <div
                 (click)="onToggleSuggestion($event, 'title')"
@@ -358,7 +380,7 @@
               <button
                 *ngIf="isEditable"
                 [attr.data-tooltip]="!(getPadPreviewMode('summary'))? 'Preview':'Edit'"
-                (click)="padPreviewModeOnChange('summary')"
+                (click)="padPreviewModeOnChange('c')"
                 class="button tooltip is-circled is-action is-outlined text-no-underline is-info is-xxs text-sm op-text text-notify m-left-15"
                 type="button">
                 <i class="fas fa-pencil-alt"
@@ -366,6 +388,17 @@
                 <i class="fas fa-eye" *ngIf="!getPadPreviewMode('summary')"></i>
               </button>
               <!-- /edit-preview button -->
+
+              <div class="d-flex align-center justify-center m-left-15">
+                <a pageScroll [pageScrollOffset]="100"
+                   [href]="'#project-summary-href-comment'"
+                   class="button text-secondary is-link is-sm is-draft">
+                  comment</a>
+                <a pageScroll [pageScrollOffset]="100"
+                   [href]="'#project-summary-href-suggestion'"
+                   class="button text-secondary is-link is-sm is-draft">
+                  suggestion</a>
+              </div>
 
             </div>
 
@@ -386,15 +419,6 @@
                  [innerHTML]="activeInnovCard.summary | cleanHtml">
             </div>
 
-            <!--            &lt;!&ndash; remaining text &ndash;&gt;-->
-            <!--            <div-->
-            <!--              *ngIf="isEditable"-->
-            <!--              [ngStyle]="{'color': remaining('SUMMARY')}"-->
-            <!--              class="text-right text-medium p-top-1 text-xs">-->
-            <!--              {{ activeInnovCard.summary | characterCountdown:500 }} characters remaining-->
-            <!--            </div>-->
-            <!--            &lt;!&ndash; /remaining text &ndash;&gt;-->
-
             <p *ngIf="!isEditable" [innerHTML]="activeInnovCard.summary" class="text-15"></p>
 
           </div>
@@ -405,7 +429,7 @@
         <div class="section-suggestion">
 
           <!-- comment -->
-          <div class="m-bottom-25">
+          <div class="m-bottom-25" [id]="'project-summary-href-comment'">
             <div class="d-flex align-center">
               <div
                 (click)="onToggleComment($event, 'summary')"
@@ -434,7 +458,7 @@
           <!-- /comment -->
 
           <!-- suggestion -->
-          <div>
+          <div [id]="'project-summary-href-suggestion'">
             <div class="d-flex align-center">
               <div
                 (click)="onToggleSuggestion($event, 'summary')"
