@@ -80,7 +80,7 @@ export class AdminProjectQuestionnaireComponent implements OnInit, OnDestroy {
 
     this._innovation.innovationCards.forEach(card => {
       if (card.sections) {
-        if (card.sections.some(section => section.type === 'OTHER')) {
+        if (card.sections.some(section => section.type === 'OTHER' && !!section.visibility)) {
           customSection = true;
         }
         const titles = card.sections.map(s => s.title);
