@@ -1,16 +1,16 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {MissionQuestion, MissionTemplateSection} from '../../../../../models/mission';
-import {picto, Picto} from '../../../../../models/static-data/picto';
-import {TranslateService} from '@ngx-translate/core';
-import {MissionQuestionService} from '../../../../../services/mission/mission-question.service';
-import {RolesFrontService} from '../../../../../services/roles/roles-front.service';
-import {AutoSuggestionConfig} from '../../../../utility/auto-suggestion/interface/auto-suggestion-config';
-import {MissionFrontService} from '../../../../../services/mission/mission-front.service';
-import {MissionService} from '../../../../../services/mission/mission.service';
-import {first} from 'rxjs/operators';
-import {HttpErrorResponse} from '@angular/common/http';
-import {ErrorFrontService} from '../../../../../services/error/error-front.service';
-import {TranslateNotificationsService} from '../../../../../services/notifications/notifications.service';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { MissionQuestion, MissionTemplateSection } from '../../../../../models/mission';
+import { picto, Picto } from '../../../../../models/static-data/picto';
+import { TranslateService } from '@ngx-translate/core';
+import { MissionQuestionService } from '../../../../../services/mission/mission-question.service';
+import { RolesFrontService } from '../../../../../services/roles/roles-front.service';
+import { AutoSuggestionConfig } from '../../../../utility/auto-suggestion/interface/auto-suggestion-config';
+import { MissionFrontService } from '../../../../../services/mission/mission-front.service';
+import { MissionService } from '../../../../../services/mission/mission.service';
+import { first } from 'rxjs/operators';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ErrorFrontService } from '../../../../../services/error/error-front.service';
+import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
 
 interface AddQuestion {
   from: 'SCRATCH' | 'LIBRARY';
@@ -179,7 +179,8 @@ export class SharedQuestionnaireSectionComponent implements OnInit {
               private _rolesFrontService: RolesFrontService,
               private _missionService: MissionService,
               private _translateNotificationsService: TranslateNotificationsService,
-              private _missionQuestionService: MissionQuestionService) { }
+              private _missionQuestionService: MissionQuestionService) {
+  }
 
   ngOnInit() {
   }
@@ -209,6 +210,15 @@ export class SharedQuestionnaireSectionComponent implements OnInit {
   }
 
   public sectionName(lang: string): string {
+    const index = lang === 'en' ? 0 : 1;
+    if (this.sectionIdentifier()) {
+      const titles = this.sectionIdentifier().split('||');
+      if (titles[index] === 'No section' || titles[index] === 'Pas de section') {
+        return MissionQuestionService.entryInfo(this._section, lang)['name'] || '';
+      } else {
+        return titles[index];
+      }
+    }
     return MissionQuestionService.entryInfo(this._section, lang)['name'] || '';
   }
 
@@ -287,7 +297,7 @@ export class SharedQuestionnaireSectionComponent implements OnInit {
    *
    * @param event
    */
-  public questionSelected(event: {label: string, question: MissionQuestion}) {
+  public questionSelected(event: { label: string, question: MissionQuestion }) {
     const questionId = event.question && event.question._id;
 
     if (!!questionId && MissionFrontService.hasMissionQuestion(this._missionQuestionService.template, (questionId))) {
