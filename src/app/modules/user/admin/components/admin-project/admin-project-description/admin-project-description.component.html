@@ -35,7 +35,7 @@
             <!-- label / actions -->
             <div [ngStyle]="{'margin-bottom': isEditable ? '10px' : '11px'}" class="d-flex align-center flex-wrap">
 
-              <div class="d-flex align-center flex-wrap title-wrapper m-no-bottom">
+              <div class="d-flex align-center flex-wrap title-wrapper m-no-bottom" style="min-width: 100%">
 
                 <label
                   [id]="section.type.toUpperCase()+'-'+i + 1+'href'"
@@ -70,38 +70,37 @@
                 </button>
                 <!-- /edit-preview button -->
 
-              </div>
-
-
-              <div class="d-flex align-center justify-center m-left-auto">
-                <!-- visibility -->
-                <div
-                  *ngIf="isEditable"
-                  (click)="toggleVisibility($event, i)"
-                  [ngClass]="{'m-right-15': section.type === 'OTHER'}"
-                  class="icon-container is-overlay">
+                <div class="d-flex align-center justify-center m-left-auto">
+                  <!-- visibility -->
+                  <div
+                    *ngIf="isEditable"
+                    (click)="toggleVisibility($event, i)"
+                    [ngClass]="{'m-right-15': section.type === 'OTHER'}"
+                    class="icon-container is-overlay">
                 <span class="tooltip" [attr.data-tooltip]="section.visibility ? 'Hide section' : 'Unhide section'">
                   <i [ngClass]="section.visibility ? 'fas fa-eye' : 'fas fa-eye-slash'" class="text-alert"></i>
                 </span>
-                </div>
-                <!-- /visibility -->
+                  </div>
+                  <!-- /visibility -->
 
-                <!-- delete -->
-                <div
-                  *ngIf="isEditable && section.type === 'OTHER'"
-                  (click)="openModal($event, 'DELETE_SECTION', i)"
-                  class="icon-container is-overlay">
+                  <!-- delete -->
+                  <div
+                    *ngIf="isEditable && section.type === 'OTHER'"
+                    (click)="openModal($event, 'DELETE_SECTION', i)"
+                    class="icon-container is-overlay">
                 <span class="tooltip" data-tooltip="Delete section">
                   <i class="text-alert icon icon-delete"></i>
                 </span>
-                </div>
-                <!-- /delete -->
+                  </div>
+                  <!-- /delete -->
 
-                <div class="label is-primary is-sm tooltip"
-                     data-tooltip="comment & suggestion"
-                     style="cursor: pointer"
-                     (click)="onToggleCommentSuggestion($event, i.toString(10))">UMI
+                  <div class="label is-primary is-sm tooltip"
+                       data-tooltip="comment & suggestion"
+                       style="cursor: pointer"
+                       (click)="onToggleCommentSuggestion($event, i.toString(10))">UMI
+                  </div>
                 </div>
+
               </div>
 
             </div>
