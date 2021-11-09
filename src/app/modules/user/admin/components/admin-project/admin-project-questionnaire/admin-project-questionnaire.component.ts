@@ -83,7 +83,7 @@ export class AdminProjectQuestionnaireComponent implements OnInit, OnDestroy {
         if (card.sections.some(section => section.type === 'OTHER' && !!section.visibility)) {
           customSection = true;
         }
-        const titles = card.sections.map(s => s.title);
+        const titles = card.sections.filter(s => !!s.visibility).map(s => s.title);
         if (card.lang === 'fr') {
           frenchTitles = titles;
         } else {
