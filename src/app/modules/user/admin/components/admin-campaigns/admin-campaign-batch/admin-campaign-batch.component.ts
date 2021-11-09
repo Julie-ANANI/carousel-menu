@@ -492,14 +492,16 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
           _attrs: ['Date'],
           _name: 'Date',
           _type: 'DATE',
-          _isEditable: this.canAccess(['canEdit', 'date']),
+          _isEditable: false,
+          // _isEditable: this.canAccess(['canEdit', 'date']),
           _editType: 'DATE'
         },
         {
           _attrs: ['Time'],
           _name: 'Time',
           _type: 'TEXT',
-          _isEditable: this.canAccess(['canEdit', 'time']),
+          _isEditable: false,
+          // _isEditable: this.canAccess(['canEdit', 'time']),
           _editType: 'DATE_TIME'
         },
         {

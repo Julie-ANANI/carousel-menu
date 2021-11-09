@@ -140,7 +140,8 @@ export class AdminProjectsComponent implements OnInit {
               {_name: 'EVALUATING', _alias: 'Evaluating', _class: 'label is-progress'},
               {_name: 'DONE', _alias: 'Done', _class: 'label is-success'},
             ],
-            _isEditable: this.canAccess(['canEdit', 'status']),
+            _isEditable:false,
+            // _isEditable: this.canAccess(['canEdit', 'status']),
             _editType: 'MULTI-CHOICES'
           },
           {
@@ -174,7 +175,8 @@ export class AdminProjectsComponent implements OnInit {
             _type: 'TEXT',
             _width: '230px',
             _isHidden: !this.canAccess(['tableColumns', 'owner']),
-            _isEditable: this.canAccess(['canEdit', 'owner']),
+            // _isEditable: this.canAccess(['canEdit', 'owner']),
+            _isEditable: false,
             _editType: 'USER-INPUT'
           },
           {
@@ -199,7 +201,7 @@ export class AdminProjectsComponent implements OnInit {
             _isSortable: true,
             _isHidden: !this.canAccess(['tableColumns', 'type']),
             _width: '200px',
-            _isEditable: this.canAccess(['canEdit', 'type']),
+            _isEditable: false,
             _editType: 'MULTI-CHOICES',
             _choices: [
               {_name: 'USER', _alias: 'User'},
@@ -326,7 +328,7 @@ export class AdminProjectsComponent implements OnInit {
             _isSortable: true,
             _isHidden: !this.canAccess(['tableColumns', 'type']),
             _width: '200px',
-            _isEditable: this.canAccess(['canEdit', 'type']),
+            _isEditable: false,
             _editType: 'MULTI-CHOICES',
             _choices: [
               {_name: 'USER', _alias: 'User'},
@@ -494,7 +496,7 @@ export class AdminProjectsComponent implements OnInit {
             _type: 'TEXT',
             _width: '230px',
             _isHidden: !this.canAccess(['tableColumns', 'owner']),
-            _isEditable: this.canAccess(['canEdit', 'owner']),
+            _isEditable: false,
             _editType: 'USER-INPUT'
           },
           {
@@ -512,7 +514,7 @@ export class AdminProjectsComponent implements OnInit {
             _isSortable: true,
             _isHidden: !this.canAccess(['tableColumns', 'type']),
             _width: '180px',
-            _isEditable: this.canAccess(['canEdit', 'type']),
+            _isEditable: false,
             _editType: 'MULTI-CHOICES',
             _choices: [
               {_name: 'USER', _alias: 'User'},
@@ -573,7 +575,7 @@ export class AdminProjectsComponent implements OnInit {
               {_name: 'EVALUATING', _alias: 'Evaluating', _class: 'label is-progress'},
               {_name: 'DONE', _alias: 'Done', _class: 'label is-success'},
             ],
-            _isEditable: this.canAccess(['canEdit', 'status']),
+            _isEditable: false,
             _editType: 'MULTI-CHOICES'
           },
           {
