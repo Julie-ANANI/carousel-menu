@@ -1,31 +1,32 @@
 <div class="container fluid grid-2xl" id="admin-project-description">
+  <!--  </div>-->
   <div class="column col-sm-12 col-11 col-mx-auto p-top-30 p-bottom-30">
-    <div class="d-flex align-center justify-start flex-wrap sticky bg-white" style="top: 49px; z-index: 99">
-      <ng-container *ngFor="let section of activeInnovCard.sections; let i=index;">
-        <a pageScroll [pageScrollOffset]="100" class="button is-link is-sm is-draft"
-           [href]="'#'+section.type.toUpperCase()+'-'+i + 1+'href'"
-        >{{ i + 1 }}.{{ section.title }}</a>
-        <span> | </span>
-      </ng-container>
-      <a pageScroll [pageScrollOffset]="100" class="button is-link is-sm is-draft" href="#project-title-href">{{activeInnovCard.sections.length + 1}}.Title</a>
-      <span> | </span>
-      <a pageScroll [pageScrollOffset]="100" class="button is-link is-sm is-draft" href="#project-summary-href">{{activeInnovCard.sections.length + 2}}
-        .Summary</a>
-      <span> | </span>
-      <a pageScroll [pageScrollOffset]="100" class="button is-link is-sm is-draft"
-         href="#project-media-href">{{ activeInnovCard.sections && activeInnovCard.sections.length + 3 || 4 }}.Media</a>
-      <button class="button is-outlined m-left-auto is-sm m-right-20"
-              (click)="openModal($event, 'NEW_SECTION')">
-        Add new section <i class="fas fa-plus"></i>
-      </button>
-    </div>
+    <!--    <div class="d-flex align-center justify-start flex-wrap sticky bg-white" style="top: 49px; z-index: 99">-->
+    <!--      <ng-container *ngFor="let section of activeInnovCard.sections; let i=index;">-->
+    <!--        <a pageScroll [pageScrollOffset]="100" class="button is-link is-sm is-draft"-->
+    <!--           [href]="'#'+section.type.toUpperCase()+'-'+i + 1+'href'"-->
+    <!--        >{{ i + 1 }}.{{ section.title }}</a>-->
+    <!--        <span> | </span>-->
+    <!--      </ng-container>-->
+    <!--      <a pageScroll [pageScrollOffset]="100" class="button is-link is-sm is-draft" href="#project-title-href">{{activeInnovCard.sections.length + 1}}.Title</a>-->
+    <!--      <span> | </span>-->
+    <!--      <a pageScroll [pageScrollOffset]="100" class="button is-link is-sm is-draft" href="#project-summary-href">{{activeInnovCard.sections.length + 2}}-->
+    <!--        .Summary</a>-->
+    <!--      <span> | </span>-->
+    <!--      <a pageScroll [pageScrollOffset]="100" class="button is-link is-sm is-draft"-->
+    <!--         href="#project-media-href">{{ activeInnovCard.sections && activeInnovCard.sections.length + 3 || 4 }}.Media</a>-->
+    <!--      <button class="button is-outlined m-left-auto is-sm m-right-20"-->
+    <!--              (click)="openModal($event, 'NEW_SECTION')">-->
+    <!--        Add new section <i class="fas fa-plus"></i>-->
+    <!--      </button>-->
+    <!--    </div>-->
 
     <!-- sections dynamic -->
     <section
       *ngFor="let section of activeInnovCard.sections; let i=index;"
       [ngStyle]="{ 'animation-duration': ((i + 1) * 110) + 'ms' }"
       class="animate-slide slide-down section-wrapper has-border">
-      <div class="section-body">
+      <div class="section-body" [ngClass]="{'flex-d-column': !toggleCommentSuggestion[i.toString(10)]}">
 
         <!-- content -->
         <div class="section-content">
@@ -71,16 +72,6 @@
 
               </div>
 
-              <div class="d-flex align-center justify-center">
-                <a pageScroll [pageScrollOffset]="100"
-                   [href]="'#'+section.type.toUpperCase()+'-'+i + 1+'href-comment'"
-                   class="button text-secondary is-link is-sm is-draft">
-                  comment</a>
-                <a pageScroll [pageScrollOffset]="100"
-                   [href]="'#'+section.type.toUpperCase()+'-'+i + 1+'href-suggestion'"
-                   class="button text-secondary is-link is-sm is-draft">
-                  suggestion</a>
-              </div>
 
               <div class="d-flex align-center justify-center m-left-auto">
                 <!-- visibility -->
@@ -105,10 +96,17 @@
                 </span>
                 </div>
                 <!-- /delete -->
+
+                <div class="label is-primary is-sm tooltip"
+                     data-tooltip="comment & suggestion"
+                     style="cursor: pointer"
+                     (click)="onToggleCommentSuggestion($event, i.toString(10))">UMI
+                </div>
               </div>
 
             </div>
             <!-- /label / actions -->
+
 
             <div *ngIf="isEditable && !getPadPreviewMode(i.toString())">
               <app-shared-editors
@@ -133,10 +131,11 @@
         <!-- /content -->
 
         <!-- suggestion / comments -->
-        <div class="section-suggestion">
+        <div class="section-suggestion" *ngIf="toggleCommentSuggestion[i.toString(10)]">
 
           <!-- comment -->
-          <div class="m-bottom-25" [id]="section.type.toUpperCase()+'-'+i + 1+'href-comment'">
+          <div class="m-bottom-25"
+               [id]="section.type.toUpperCase()+'-'+i + 1+'href-comment'">
             <div class="d-flex align-center">
               <div
                 (click)="onToggleComment($event, i.toString(10))"
@@ -147,7 +146,6 @@
                 </i>
               </div>
               <span (click)="onToggleComment($event, i.toString(10))" class="spec-text-op">Comment</span>
-              <div class="label is-primary is-sm">UMI</div>
             </div>
             <div class="m-top-20">
               <div
@@ -175,7 +173,7 @@
           <!-- /comment -->
 
           <!-- suggestion -->
-          <div [id]="section.type.toUpperCase()+'-'+i + 1+'href-suggestion'">
+          <div>
             <div class="d-flex align-center">
               <div
                 (click)="onToggleSuggestion($event, i.toString(10))"
@@ -186,7 +184,6 @@
                 </i>
               </div>
               <span (click)="onToggleSuggestion($event, i.toString(10))" class="spec-text-op">Suggestion</span>
-              <div class="label is-primary is-sm">UMI</div>
             </div>
             <div class="m-top-20">
               <div
@@ -222,17 +219,29 @@
     </section>
     <!-- /sections dynamic -->
 
+    <!-- add new section -->
+    <section *ngIf="isEditable" class="section-wrapper text-center has-border p-bottom-50">
+      <button
+        (click)="openModal($event, 'NEW_SECTION')"
+        class="button is-primary is-lg"
+        type="button">
+        Add new section
+      </button>
+    </section>
+    <!-- /add new section -->
+
     <!-- section title -->
     <section
       [ngStyle]="{ 'animation-duration': '110ms' }"
       class="animate-slide slide-down section-wrapper p-top-20">
-      <div class="section-body">
+      <div class="section-body"
+           [ngClass]="{'flex-d-column': !toggleCommentSuggestion.title}">
 
         <!-- content -->
         <div class="section-content">
           <div class="form-group">
 
-            <div class="d-flex align-center flex-wrap title-wrapper">
+            <div class="d-flex align-center flex-wrap title-wrapper" style="min-width: 100%">
 
               <label
                 id="project-title-href"
@@ -255,15 +264,10 @@
               </button>
               <!-- /edit-preview button -->
 
-              <div class="d-flex align-center justify-center m-left-15">
-                <a pageScroll [pageScrollOffset]="100"
-                   [href]="'#project-title-href-comment'"
-                   class="button text-secondary is-link is-sm is-draft">
-                  comment</a>
-                <a pageScroll [pageScrollOffset]="100"
-                   [href]="'#project-title-href-suggestion'"
-                   class="button text-secondary is-link is-sm is-draft">
-                  suggestion</a>
+              <div class="label is-primary is-sm tooltip m-left-auto"
+                   data-tooltip="comment & suggestion"
+                   style="cursor: pointer"
+                   (click)="onToggleCommentSuggestion($event, 'title')">UMI
               </div>
 
             </div>
@@ -290,7 +294,8 @@
         <!-- /content -->
 
         <!-- suggestion / comments -->
-        <div class="section-suggestion">
+        <div class="section-suggestion"
+             *ngIf="toggleCommentSuggestion.title">
 
           <!-- comment -->
           <div class="m-bottom-25" [id]="'project-title-href-comment'">
@@ -302,7 +307,6 @@
                 </i>
               </div>
               <span (click)="onToggleComment($event, 'title')" class="spec-text-op">Comment</span>
-              <div class="label is-primary is-sm">UMI</div>
             </div>
             <div class="m-top-20">
               <div [hidden]="!isEditableComment" [ngClass]="{'is-hidden': !toggleComment.title}" class="box-shadow">
@@ -331,7 +335,6 @@
                 </i>
               </div>
               <span (click)="onToggleSuggestion($event, 'title')" class="spec-text-op">Suggestion</span>
-              <div class="label is-primary is-sm">UMI</div>
             </div>
             <div class="m-top-20">
               <div *ngIf="isEditableComment" [ngClass]="{'is-hidden': !toggleSuggestion.title}">
@@ -360,13 +363,13 @@
 
     <!-- section summary -->
     <section [ngStyle]="{ 'animation-duration': '220ms' }" class="animate-slide slide-down has-border section-wrapper">
-      <div class="section-body">
+      <div class="section-body" [ngClass]="{'flex-d-column': !toggleCommentSuggestion.summary}">
 
         <!-- content -->
         <div class="section-content">
           <div class="form-group">
 
-            <div class="d-flex align-center flex-wrap title-wrapper">
+            <div class="d-flex align-center flex-wrap title-wrapper" style="min-width: 100%">
 
               <label
                 id="project-summary-href"
@@ -389,44 +392,40 @@
               </button>
               <!-- /edit-preview button -->
 
-              <div class="d-flex align-center justify-center m-left-15">
-                <a pageScroll [pageScrollOffset]="100"
-                   [href]="'#project-summary-href-comment'"
-                   class="button text-secondary is-link is-sm is-draft">
-                  comment</a>
-                <a pageScroll [pageScrollOffset]="100"
-                   [href]="'#project-summary-href-suggestion'"
-                   class="button text-secondary is-link is-sm is-draft">
-                  suggestion</a>
+              <div class="label is-primary is-sm tooltip m-left-auto"
+                   data-tooltip="comment & suggestion"
+                   style="cursor: pointer"
+                   (click)="onToggleCommentSuggestion($event, 'summary')">UMI
               </div>
-
             </div>
-
-            <div *ngIf="isEditable && !getPadPreviewMode('summary')" class="text-15">
-              <app-shared-editors
-                id="project-summary"
-                (textChange)="onContentChange($event, 'summary')"
-                [text]="activeInnovCard.summary"
-                [innovationId]="innovation._id"
-                [elementId]="'summary-' + currentLang"
-                [isEditable]="isEditable"
-                [type]="'pitch'">
-              </app-shared-editors>
-            </div>
-
-            <div *ngIf="getPadPreviewMode('summary')"
-                 class="width-100 mce-tinymce pad-preview-mode text-15"
-                 [innerHTML]="activeInnovCard.summary | cleanHtml">
-            </div>
-
-            <p *ngIf="!isEditable" [innerHTML]="activeInnovCard.summary" class="text-15"></p>
 
           </div>
+
+          <div *ngIf="isEditable && !getPadPreviewMode('summary')" class="text-15">
+            <app-shared-editors
+              id="project-summary"
+              (textChange)="onContentChange($event, 'summary')"
+              [text]="activeInnovCard.summary"
+              [innovationId]="innovation._id"
+              [elementId]="'summary-' + currentLang"
+              [isEditable]="isEditable"
+              [type]="'pitch'">
+            </app-shared-editors>
+          </div>
+
+          <div *ngIf="getPadPreviewMode('summary')"
+               class="width-100 mce-tinymce pad-preview-mode text-15"
+               [innerHTML]="activeInnovCard.summary | cleanHtml">
+          </div>
+
+          <p *ngIf="!isEditable" [innerHTML]="activeInnovCard.summary" class="text-15"></p>
+
         </div>
         <!-- /content -->
 
         <!-- suggestion / comments -->
-        <div class="section-suggestion">
+        <div class="section-suggestion"
+             *ngIf="toggleCommentSuggestion.summary">
 
           <!-- comment -->
           <div class="m-bottom-25" [id]="'project-summary-href-comment'">
@@ -440,7 +439,6 @@
                 </i>
               </div>
               <span (click)="onToggleComment($event, 'summary')" class="spec-text-op">Comment</span>
-              <div class="label is-primary is-sm">UMI</div>
             </div>
             <div class="m-top-20">
               <div [hidden]="!isEditableComment" [ngClass]="{'is-hidden': !toggleComment.summary}" class="box-shadow">
@@ -469,7 +467,6 @@
                 </i>
               </div>
               <span (click)="onToggleSuggestion($event, 'summary')" class="spec-text-op">Suggestion</span>
-              <div class="label is-primary is-sm">UMI</div>
             </div>
             <div class="m-top-20">
               <div *ngIf="isEditableComment" [ngClass]="{'is-hidden': !toggleSuggestion.summary}">
@@ -488,11 +485,10 @@
             </div>
           </div>
           <!-- /suggestion -->
-
         </div>
-        <!-- /suggestion / comments -->
 
       </div>
+      <!-- /suggestion / comments -->
     </section>
     <!-- /section summary -->
 

@@ -33,11 +33,11 @@
 
     .section-body {
       display: flex;
-      flex-direction: column;
 
       .section-content, .section-suggestion {
         flex: 1;
         padding-bottom: 30px;
+        transition: all 4s ease-in-out;
 
         .box-shadow {
           box-shadow: $box-shadow-form;

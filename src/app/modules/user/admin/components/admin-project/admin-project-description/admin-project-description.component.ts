@@ -1,18 +1,18 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {InnovationFrontService} from '../../../../../../services/innovation/innovation-front.service';
-import {Innovation} from '../../../../../../models/innovation';
-import {Subject} from 'rxjs';
-import {first, takeUntil} from 'rxjs/operators';
-import {CardSectionTypes, InnovCard, InnovCardSection} from '../../../../../../models/innov-card';
-import {Media, Video} from '../../../../../../models/media';
-import {InnovationService} from '../../../../../../services/innovation/innovation.service';
-import {HttpErrorResponse} from '@angular/common/http';
-import {TranslateNotificationsService} from '../../../../../../services/notifications/notifications.service';
-import {ErrorFrontService} from '../../../../../../services/error/error-front.service';
-import {CommonService} from '../../../../../../services/common/common.service';
-import {RolesFrontService} from '../../../../../../services/roles/roles-front.service';
-import {EtherpadFrontService} from '../../../../../../services/etherpad/etherpad-front.service';
-import {MediaFrontService} from '../../../../../../services/media/media-front.service';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { InnovationFrontService } from '../../../../../../services/innovation/innovation-front.service';
+import { Innovation } from '../../../../../../models/innovation';
+import { Subject } from 'rxjs';
+import { first, takeUntil } from 'rxjs/operators';
+import { CardSectionTypes, InnovCard, InnovCardSection } from '../../../../../../models/innov-card';
+import { Media, Video } from '../../../../../../models/media';
+import { InnovationService } from '../../../../../../services/innovation/innovation.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
+import { ErrorFrontService } from '../../../../../../services/error/error-front.service';
+import { CommonService } from '../../../../../../services/common/common.service';
+import { RolesFrontService } from '../../../../../../services/roles/roles-front.service';
+import { EtherpadFrontService } from '../../../../../../services/etherpad/etherpad-front.service';
+import { MediaFrontService } from '../../../../../../services/media/media-front.service';
 
 type modalType = 'NEW_SECTION' | 'DELETE_SECTION' | '';
 
@@ -52,6 +52,11 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
   };
 
   private _toggleSuggestion: Toggle = {
+    title: false,
+    summary: false
+  };
+
+  private _toggleCommentSuggestion: Toggle = {
     title: false,
     summary: false
   };
@@ -220,6 +225,10 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
       return !!etherpadId && !!_comment.sectionId ? (_comment.sectionId === etherpadId && sectionType === _comment.type)
         : (sectionType === _comment.type);
     });
+  }
+
+  public onToggleCommentSuggestion(event: Event, property: string) {
+    this._toggleCommentSuggestion[property] = !this._toggleCommentSuggestion[property];
   }
 
   public onToggleComment(event: Event, property: string) {
@@ -523,6 +532,10 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
 
   get selectedMedia(): string {
     return this._selectedMedia;
+  }
+
+  get toggleCommentSuggestion(): Toggle {
+    return this._toggleCommentSuggestion;
   }
 
   ngOnDestroy(): void {
