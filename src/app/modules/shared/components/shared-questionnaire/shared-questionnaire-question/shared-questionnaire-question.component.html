@@ -2,8 +2,8 @@
 
 
   <!-- header -->
-  <div [ngClass]="{'is-edit-mode': editMode, 'essentialBg': questionType === 'ESSENTIAL',
-  'complementaryBg': questionType === 'COMPLEMENTARY'}" class="header-wrapper flex-between">
+  <div [ngClass]="{'is-edit-mode': editMode, 'essentialBg': question.isTagged && questionType === 'ESSENTIAL',
+  'complementaryBg': question.isTagged && questionType === 'COMPLEMENTARY', 'costumedBg': !question.isTagged}" class="header-wrapper flex-between">
 
     <!-- move / select / type / label-->
     <div class="d-flex align-center">
