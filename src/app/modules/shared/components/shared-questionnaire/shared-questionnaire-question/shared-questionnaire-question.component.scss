@@ -26,11 +26,18 @@
 
     .buttons-wrapper {
       position: absolute;
-      background-color: $meta-color;
       padding: 10px 14px 10px 20px;
       right: 12px;
     }
 
+  }
+
+  .complementaryBg{
+    background-color: #75B9D3;
+  }
+
+  .essentialBg{
+    background-color: #7498BC;
   }
 
   .move-arrows {
@@ -170,3 +177,4 @@
   }
 
 }
+

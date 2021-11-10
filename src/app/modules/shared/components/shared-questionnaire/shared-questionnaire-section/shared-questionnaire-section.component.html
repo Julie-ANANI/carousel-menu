@@ -142,6 +142,7 @@
   <!-- questions -->
   <ng-container *ngIf="section.questions.length > 0">
     <div
+
       *ngFor="let ques of section.questions; let i = index;"
       [ngStyle]="{'width': '95%', 'display': isCollapsed ? 'none' : 'block'}"
       class="m-top-2 m-left-auto">

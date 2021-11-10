@@ -139,6 +139,7 @@ export class SharedQuestionnaireSectionComponent implements OnInit {
 
   @Input() set section(value: MissionTemplateSection) {
     this._section = value || <MissionTemplateSection>{};
+    console.log(this._section);
   }
 
   /**

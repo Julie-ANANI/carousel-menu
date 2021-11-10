@@ -1,7 +1,9 @@
 <div [id]="'question-' + questionIndex" class="shared-questionnaire-question">
 
+
   <!-- header -->
-  <div [ngClass]="{'is-edit-mode': editMode}" class="header-wrapper flex-between">
+  <div [ngClass]="{'is-edit-mode': editMode, 'essentialBg': questionType === 'ESSENTIAL',
+  'complementaryBg': questionType === 'COMPLEMENTARY'}" class="header-wrapper flex-between">
 
     <!-- move / select / type / label-->
     <div class="d-flex align-center">
