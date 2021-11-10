@@ -104,7 +104,6 @@ export class SharedScrapingComponent implements OnInit {
             this._isWarning = false;
           }
           this.updateAttributes();
-          this._showResultScraping = true;
         }
       },
       (error) => {
@@ -145,7 +144,6 @@ export class SharedScrapingComponent implements OnInit {
             this._isWarning = false;
           }
           this.updateAttributes();
-          this._showResultScraping = true;
         }
 
       },
@@ -164,7 +162,7 @@ export class SharedScrapingComponent implements OnInit {
   public startKeepInformed() {
     this._refreshIntervalId = setInterval(() => {
       this.autoKeepInformed();
-    }, 1000);
+    }, 2000);
   }
 
   public stopKeepInformed() {
@@ -198,6 +196,8 @@ export class SharedScrapingComponent implements OnInit {
     this._scrapingService.checkScraping(this.getJsonId()).subscribe(
       (value) => {
         this._keepInformed = value['info'];
+        this._result = value;
+        this.updateAttributes();
       },
       (error) => {
         console.log('Uh-oh, an error occurred! : ', error);
@@ -255,6 +255,7 @@ export class SharedScrapingComponent implements OnInit {
       if (isRawData) {
         this._attributes.push('raw data');
       }
+      this._showResultScraping = true;
     }
   }
 
