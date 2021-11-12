@@ -140,6 +140,11 @@ question.isTagged && questionType === 'ESSENTIAL'? 'Essential questions are requ
           'Custom'
       }}</span>
 
+    <div class="text-sm m-bottom-10 m-top-10" *ngIf="question.entry && question.entry.length && question.entry[0].objective">
+      <p class="text-bold">Objective</p>
+      <p class="m-left-15">{{question.entry[0].objective}}</p>
+    </div>
+
     <!-- toolbar -->
     <div class="question-toolbar m-bottom-10 m-top-10">
       <div class="d-flex align-center">
