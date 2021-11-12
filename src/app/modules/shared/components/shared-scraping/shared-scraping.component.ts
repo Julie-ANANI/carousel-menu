@@ -41,6 +41,8 @@ export class SharedScrapingComponent implements OnInit {
 
   private _isCancel = false;
 
+  private _runningScrapings: Array<{id: string, url: string}> = [];
+
   constructor(private _rolesFrontService: RolesFrontService,
               private _scrapingService: ScrapingService,
               private _translateNotificationsService: TranslateNotificationsService) { }
@@ -91,7 +93,6 @@ export class SharedScrapingComponent implements OnInit {
       (value) => {
         this._isScraping = false;
         this._result = value;
-        console.log('Result : ', this._result);
         if ('error' in this._result) {
           this._isError = true;
           this._error = this._result['error'];
@@ -107,10 +108,9 @@ export class SharedScrapingComponent implements OnInit {
         }
       },
       (error) => {
-        console.log('Uh-oh, an error occurred! : ', error);
+        this._translateNotificationsService.error('Uh-oh, an error occurred!', error);
       },
       () => {
-        console.log('Observable complete!');
         this.stopKeepInformed();
       });
   }
@@ -123,15 +123,12 @@ export class SharedScrapingComponent implements OnInit {
     this._isError = false;
     this._isWarning = false;
     const scrapeParams = this._params;
-    console.log('url :', scrapeParams['url']);
-    console.log('scrape options :', scrapeParams);
     this.startKeepInformed();
     this._scrapingService.getScraping(scrapeParams).subscribe(
       (value) => {
         this._showKeepInformed = false;
         this._isScraping = false;
         this._result = value;
-        console.log('Result : ', this._result);
         if ('error' in this._result) {
           this._isError = true;
           this._error = this._result['error'];
@@ -148,10 +145,9 @@ export class SharedScrapingComponent implements OnInit {
 
       },
       (error) => {
-        console.log('Uh-oh, an error occurred! : ', error);
+        this._translateNotificationsService.error('Uh-oh, an error occurred!', error);
       },
       () => {
-        console.log('Observable complete!');
         this.stopKeepInformed();
         this._isCancel = false;
       }
@@ -159,7 +155,11 @@ export class SharedScrapingComponent implements OnInit {
     // this.autoKeepInformed();
   }
 
-  public startKeepInformed() {
+  public startKeepInformed(id?: string) {
+    if (id) {
+      this._params.id = id;
+      this._isScraping = true;
+    }
     this._refreshIntervalId = setInterval(() => {
       this.autoKeepInformed();
     }, 2000);
@@ -171,19 +171,15 @@ export class SharedScrapingComponent implements OnInit {
   }
 
   onClickCancel(): void {
-    console.log('send Cancel to ', this.getJsonId());
     this._isCancel = true;
     this.stopKeepInformed();
     this._showKeepInformed = false;
     this._scrapingService.cancelScraping(this.getJsonId()).subscribe(
       (value) => {
-        console.log('Result : ', value);
+        this._translateNotificationsService.success('Cancel request', 'Request has been canceled');
       },
       (error) => {
-        console.log('Uh-oh, an error occurred! : ', error);
-      },
-      () => {
-        console.log('Observable complete!');
+        this._translateNotificationsService.error('Uh-oh, an error occurred!', error);
       }
     );
   }
@@ -200,7 +196,7 @@ export class SharedScrapingComponent implements OnInit {
         this.updateAttributes();
       },
       (error) => {
-        console.log('Uh-oh, an error occurred! : ', error);
+        this._translateNotificationsService.error('Uh-oh, an error occurred!', error);
       },
       () => {
       }
@@ -239,6 +235,10 @@ export class SharedScrapingComponent implements OnInit {
     return this._result.pros;
   }
 
+  get runningScrapings(): Array<{id: string, url: string}> {
+    return this._runningScrapings;
+  }
+
   public updateAttributes(): void {
     this._attributes = ['email'];
     const pros = Object.values(this._result.pros);
@@ -274,7 +274,6 @@ export class SharedScrapingComponent implements OnInit {
   }
 
   public onClickCopy(): void {
-    console.log('Click Copy!');
     const range = document.createRange();
     range.selectNodeContents(document.getElementById('result'));
     const selection = window.getSelection();
@@ -293,6 +292,9 @@ export class SharedScrapingComponent implements OnInit {
   }
 
   private _initParams() {
+    this._scrapingService.getRunningScrapings().subscribe(runningScrapings => {
+      this._runningScrapings = runningScrapings;
+    });
     this._params = {
       url: '',
       rawData: false,

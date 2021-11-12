@@ -2,6 +2,17 @@
   <!-- search wrapper -->
   <div class="search-wrapper">
 
+    <!-- running scraping -->
+    <div *ngIf="runningScrapings.length">
+      <p class="title-secondary-scraping text-bold">Running scrapings:</p>
+      <ul>
+        <li *ngFor="let scraping of runningScrapings"
+            (click)="startKeepInformed(scraping.id)"
+            class="text-sm text-link">{{ scraping.url }}</li>
+      </ul>
+    </div>
+    <!-- /running scraping -->
+
     <!-- heading -->
     <div class="heading-wrapper">
       <p class="title-secondary-scraping text-bold">Scraping by URL</p>
