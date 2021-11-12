@@ -1,7 +1,9 @@
 <div [id]="'question-' + questionIndex" class="shared-questionnaire-question">
 
+
   <!-- header -->
-  <div [ngClass]="{'is-edit-mode': editMode}" class="header-wrapper flex-between">
+  <div [ngClass]="{'is-edit-mode': editMode, 'essentialBg': question.isTagged && questionType === 'ESSENTIAL',
+  'complementaryBg': question.isTagged && questionType === 'COMPLEMENTARY', 'costumedBg': !question.isTagged}" class="header-wrapper flex-between">
 
     <!-- move / select / type / label-->
     <div class="d-flex align-center">
@@ -30,12 +32,6 @@
           </div>
         </ng-container>
         <!-- /question type specific to template -->
-
-        <!-- identifier -->
-        <div class="label is-rounded is-tag is-sm m-no m-right-20 tooltip" data-tooltip="Unique identifier">
-          #{{question.identifier}}
-        </div>
-        <!-- /identifier -->
 
       </ng-container>
       <!-- /not edit mode -->
@@ -130,9 +126,27 @@
 
   <!-- question edition -->
   <div *ngIf="editMode" class="question-body">
+    <span class="label is-rounded text-white tooltip"
+          [attr.data-tooltip]="
+question.isTagged && questionType === 'ESSENTIAL'? 'Essential questions are required \n to ensure the right answer \n to the use case':
+        question.isTagged && questionType === 'COMPLEMENTARY'? 'Secondary questions complete \n the main result coming \n from essential questions' :
+          'Custom questions are specific \n to a client project'
+"
+          [ngClass]="{'is-edit-mode': editMode, 'essentialBg': question.isTagged && questionType === 'ESSENTIAL',
+  'complementaryBg': question.isTagged && questionType === 'COMPLEMENTARY', 'costumedBg': !question.isTagged}"
+    >{{
+      question.isTagged && questionType === 'ESSENTIAL'? 'Essential':
+        question.isTagged && questionType === 'COMPLEMENTARY'? 'Secondary' :
+          'Custom'
+      }}</span>
+
+    <div class="text-sm m-bottom-10 m-top-10" *ngIf="question.entry && question.entry.length && question.entry[0].objective">
+      <p class="text-bold">Objective</p>
+      <p class="m-left-15">{{question.entry[0].objective}}</p>
+    </div>
 
     <!-- toolbar -->
-    <div class="question-toolbar m-bottom-10">
+    <div class="question-toolbar m-bottom-10 m-top-10">
       <div class="d-flex align-center">
 
         <!-- add comment -->

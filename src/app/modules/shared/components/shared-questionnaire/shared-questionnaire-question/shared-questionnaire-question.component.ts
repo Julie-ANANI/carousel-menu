@@ -90,6 +90,7 @@ export class SharedQuestionnaireQuestionComponent implements OnInit {
 
   @Input() set question(value: MissionQuestion) {
     this._question = value;
+    this._questionType = value.type;
     this._isTaggedQuestion = this._missionQuestionService.isTaggedQuestion(value.identifier);
 
     if (!this._question.sensitiveAnswerData) {
@@ -129,11 +130,17 @@ export class SharedQuestionnaireQuestionComponent implements OnInit {
 
   private _picto: Picto = picto;
 
+  private _questionType = '';
+
   constructor(private _missionQuestionService: MissionQuestionService,
               private _rolesFrontService: RolesFrontService,
               private _translateService: TranslateService) { }
 
   ngOnInit() {
+  }
+
+  get questionType(): string {
+    return this._questionType;
   }
 
   @HostListener('keydown', ['$event'])
