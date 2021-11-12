@@ -90,7 +90,6 @@ export class SharedQuestionnaireQuestionComponent implements OnInit {
 
   @Input() set question(value: MissionQuestion) {
     this._question = value;
-    console.log(value);
     this._questionType = value.type;
     this._isTaggedQuestion = this._missionQuestionService.isTaggedQuestion(value.identifier);
 

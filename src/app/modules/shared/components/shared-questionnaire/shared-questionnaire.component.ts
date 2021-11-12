@@ -43,7 +43,6 @@ export class SharedQuestionnaireComponent implements OnInit {
    */
   @Input() set template(value: MissionTemplate) {
     this._missionQuestionService.template = value;
-    console.log(value);
   }
 
   /**
