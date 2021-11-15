@@ -1,9 +1,8 @@
 <div [id]="'question-' + questionIndex" class="shared-questionnaire-question">
 
-
   <!-- header -->
-  <div [ngClass]="{'is-edit-mode': editMode, 'essentialBg': question.isTagged && questionType === 'ESSENTIAL',
-  'complementaryBg': question.isTagged && questionType === 'COMPLEMENTARY', 'costumedBg': !question.isTagged}" class="header-wrapper flex-between">
+  <div [ngClass]="{'is-edit-mode': editMode, 'essentialBg': question.isTagged && isEssential,
+  'complementaryBg': question.isTagged && !isEssential, 'costumedBg': !question.isTagged}" class="header-wrapper flex-between">
 
     <!-- move / select / type / label-->
     <div class="d-flex align-center">
@@ -124,19 +123,20 @@
   </div>
   <!-- /header -->
 
+
   <!-- question edition -->
   <div *ngIf="editMode" class="question-body">
     <span class="label is-rounded text-white tooltip"
           [attr.data-tooltip]="
-question.isTagged && questionType === 'ESSENTIAL'? 'Essential questions are required \n to ensure the right answer \n to the use case':
-        question.isTagged && questionType === 'COMPLEMENTARY'? 'Secondary questions complete \n the main result coming \n from essential questions' :
+question.isTagged && isEssential? 'Essential questions are required \n to ensure the right answer \n to the use case':
+        question.isTagged && !isEssential? 'Secondary questions complete \n the main result coming \n from essential questions' :
           'Custom questions are specific \n to a client project'
 "
-          [ngClass]="{'is-edit-mode': editMode, 'essentialBg': question.isTagged && questionType === 'ESSENTIAL',
-  'complementaryBg': question.isTagged && questionType === 'COMPLEMENTARY', 'costumedBg': !question.isTagged}"
+          [ngClass]="{'is-edit-mode': editMode, 'essentialBg': question.isTagged && isEssential,
+  'complementaryBg': question.isTagged && !isEssential, 'costumedBg': !question.isTagged}"
     >{{
-      question.isTagged && questionType === 'ESSENTIAL'? 'Essential':
-        question.isTagged && questionType === 'COMPLEMENTARY'? 'Secondary' :
+      question.isTagged && isEssential? 'Essential':
+        question.isTagged && !isEssential? 'Secondary' :
           'Custom'
       }}</span>
 
