@@ -47,26 +47,15 @@
       <!-- edit -->
       <ng-container *ngIf="editSection">
 
-        <ng-container *ngIf="sectionsNames.length > 0; else types">
+        <ng-container *ngIf="accessPath.length && !canAccess(['section', 'edit', 'type']); else defSEditType">
+          <p class="m-right-20 m-no-bottom">{{ section.type }}</p>
+        </ng-container>
+        <ng-template #defSEditType>
           <label class="m-right-20">
-            <select (change)="notifyChanges()" [(ngModel)]="section.identifier" class="form-select is-sm">
-              <option *ngFor="let name of sectionsNames; let idx = index" [ngValue]="idx">{{ name }}</option>
-              <option [ngValue]="'nothing'">Nothing</option>
+            <select (change)="notifyChanges()" [(ngModel)]="section.type" class="form-select is-sm">
+              <option *ngFor="let type of sectionTypes" [ngValue]="type">{{type | titlecase}}</option>
             </select>
           </label>
-        </ng-container>
-
-        <ng-template #types>
-          <ng-container *ngIf="accessPath.length && !canAccess(['section', 'edit', 'type']); else defSEditType">
-            <p class="m-right-20 m-no-bottom">{{ section.type }}</p>
-          </ng-container>
-          <ng-template #defSEditType>
-            <label class="m-right-20">
-              <select (change)="notifyChanges()" [(ngModel)]="section.type" class="form-select is-sm">
-                <option *ngFor="let type of sectionTypes" [ngValue]="type">{{type | titlecase}}</option>
-              </select>
-            </label>
-          </ng-template>
         </ng-template>
 
         <!-- name -->

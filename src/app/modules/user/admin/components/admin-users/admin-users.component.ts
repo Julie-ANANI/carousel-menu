@@ -129,8 +129,8 @@ export class AdminUsersComponent implements OnInit {
           _isSortable: true,
           _isSearchable: this.canAccess(['searchBy', 'job']),
           _isHidden: !this.canAccess(['tableColumns', 'job']),
-          _isEditable: true,
-          _editType: 'TEXT',
+          // _isEditable: true,
+          // _editType: 'TEXT',
         },
         {
           _attrs: ['company.name'],

@@ -73,7 +73,8 @@ app.use(compression());
 
 // All regular routes use the Universal engine
 app.get('*', (req, res) => {
-  res.render('index', {
+  res.sendFile(join(DIST_FOLDER, 'browser/index.html')); // TODO remove SSR support for now
+  /*res.render('index', {
     req: req,
     res: res,
     providers: [
@@ -92,7 +93,7 @@ app.get('*', (req, res) => {
     }
     console.log(`Rendering ${html.substring(0, 128)}`); // TODO
     res.send(html);
-  });
+  });*/
 });
 
 // Start up the Node server

@@ -217,7 +217,7 @@ export class AdminEnterpriseManagementComponent implements OnInit {
             _isSortable: true,
             _isSearchable: this.canAccess(['searchBy', 'domain']),
             _isHidden: !this.canAccess(['tableColumns', 'domain']),
-            _isEditable: true,
+            _isEditable: false,
             _editType: 'TEXT',
           },
           {
@@ -236,7 +236,7 @@ export class AdminEnterpriseManagementComponent implements OnInit {
             _isSortable: true,
             _enableTooltip: true,
             _isHidden: !this.canAccess(['tableColumns', 'url']),
-            _isEditable: true,
+            _isEditable: false,
             _editType: 'TEXT',
           },
           {
@@ -286,7 +286,7 @@ export class AdminEnterpriseManagementComponent implements OnInit {
             _enableTooltip: true,
             _width: '280px',
             _isHidden: !this.canAccess(['tableColumns', 'industry']),
-            _isEditable: true,
+            _isEditable: false,
             _editType: 'MULTI-INPUT',
             _label: 'label',
             _multiInput: {
@@ -312,7 +312,7 @@ export class AdminEnterpriseManagementComponent implements OnInit {
             _isSortable: true,
             _enableTooltip: true,
             _isHidden: !this.canAccess(['tableColumns', 'type']),
-            _isEditable: true,
+            _isEditable: false,
             _choices: [
               {_name: 'Publique', _alias: 'Publique'},
               {_name: 'Privée', _alias: 'Privée'},
@@ -337,7 +337,7 @@ export class AdminEnterpriseManagementComponent implements OnInit {
             _isSortable: true,
             _enableTooltip: true,
             _isHidden: !this.canAccess(['tableColumns', 'valueChain']),
-            _isEditable: true,
+            _isEditable: false,
             _editType: 'MULTI-INPUT',
             _tooltip: 'When editing, enter a comma (,)' + '\n' + ' to enable the search',
             _multiInput: {
@@ -351,7 +351,7 @@ export class AdminEnterpriseManagementComponent implements OnInit {
             _width: '190px',
             _isSortable: true,
             _isHidden: !this.canAccess(['tableColumns', 'size']),
-            _isEditable: true,
+            _isEditable: false,
             _choices: [
               {_name: 'TPE', _alias: 'Tpe'},
               {_name: 'PME', _alias: 'Pme'},
