@@ -20,7 +20,6 @@ import { AuthService } from '../../../../../services/auth/auth.service';
 import { InnovCard } from '../../../../../models/innov-card';
 import { environment } from '../../../../../../environments/environment';
 import { CommonService } from '../../../../../services/common/common.service';
-import { NavigationFrontService } from '../../../../../services/navigation/navigation-front.service';
 import { Response } from '../../../../../models/response';
 import { Campaign } from '../../../../../models/campaign';
 import { analysisSubTubs, preparationSubTabs } from '../../../../../models/static-data/subtabs';
@@ -107,7 +106,6 @@ export class AdminProjectComponent implements OnInit, OnDestroy {
               private _innovationFrontService: InnovationFrontService,
               private _rolesFrontService: RolesFrontService,
               private _authService: AuthService,
-              private _navigationFrontService: NavigationFrontService,
               private _commonService: CommonService,
               private _socketService: SocketService) {
     this._project = this._activatedRoute.snapshot.data['innovation'];
@@ -494,16 +492,56 @@ export class AdminProjectComponent implements OnInit, OnDestroy {
     this._ngUnsubscribe.complete();
   }
 
+  setPageTitle(isCampaignTabs: boolean, path: string) {
+    if (isCampaignTabs) {
+      this._translateTitleService.setTitle(`${path.toUpperCase()}
+      | Campaign | Campaigns | Preparation | ${this._project.name}`);
+    } else {
+      this._translateTitleService.setTitle(`${path.toUpperCase()}
+      | Preparation | ${this._project.name}`);
+    }
+  }
+
   navigateTo(event: Event, tab: Tab, item: any) {
     event.preventDefault();
-    if (item.path.indexOf('/') !== -1) {
-      const path = item.path.split('/');
+    if (item.parent === 'analyse') {
+      this.navigateToAnalyseSubTabs(item.path);
+    } else {
+      this.navigateToPreparationSubTabs(item.path);
+    }
+  }
+
+  navigateToAnalyseSubTabs(paths: string) {
+    this._translateTitleService.setTitle(`${paths.toUpperCase()}
+      | Analysis | ${this._project.name}`);
+    setTimeout(() => {
+      this._router.navigate([`/user/admin/projects/project/${
+        this._project._id
+      }/analysis/${paths}`]);
+    }, 0);
+  }
+
+  navigateToPreparationSubTabs(paths: string) {
+    let route = '';
+    if (paths.indexOf('/') !== -1) {
+      const path = paths.split('/');
       this._campaignFrontService.setActiveCampaignTab(path[path.length - 1]);
       this._campaignFrontService.setShowCampaignTabs(true);
       this._campaignFrontService.defaultCampaign = this._allCampaigns[0];
       this._campaignFrontService.setAllCampaigns(this._allCampaigns);
+      this.setPageTitle(true, path[path.length - 1]);
+      route = `/user/admin/projects/project/${
+        this._project._id
+      }/preparation/campaigns/campaign/${this._allCampaigns[0]._id}/${path[path.length - 1]}`;
+    } else {
+      this.setPageTitle(false, paths);
+      route = `/user/admin/projects/project/${
+        this._project._id
+      }/preparation/${paths}`;
     }
-    this._navigationFrontService.setNavigation({tab: tab, item: item});
+    setTimeout(() => {
+      this._router.navigate([route]);
+    }, 0);
   }
 
 }
