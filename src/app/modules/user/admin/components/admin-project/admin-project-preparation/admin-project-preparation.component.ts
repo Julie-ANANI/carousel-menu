@@ -20,7 +20,6 @@ import { MissionService } from '../../../../../../services/mission/mission.servi
 import { Mission } from '../../../../../../models/mission';
 import { environment } from '../../../../../../../environments/environment';
 import { ErrorFrontService } from '../../../../../../services/error/error-front.service';
-import { NavigationFrontService } from '../../../../../../services/navigation/navigation-front.service';
 
 @Component({
   templateUrl: './admin-project-preparation.component.html',
@@ -80,7 +79,6 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
               private _innovationFrontService: InnovationFrontService,
               private _rolesFrontService: RolesFrontService,
               private _translateNotificationsService: TranslateNotificationsService,
-              private _navigationFrontService: NavigationFrontService,
               private _translateTitleService: TranslateTitleService,
               private _socketService: SocketService) {
   }
@@ -135,31 +133,6 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
     this._campaignFrontService.loadingCampaign().pipe(takeUntil(this._ngUnsubscribe)).subscribe((loading) => {
       this._isLoadingCampaign = loading;
     });
-
-    this._navigationFrontService.navigation().pipe(takeUntil(this._ngUnsubscribe)).subscribe(value => {
-      if (value && value.item && value.tab.name === 'Preparation' && value.item.name.indexOf('/') === -1) {
-        setTimeout(() => {
-          this.navigateTo(value.item.path);
-          this._navigationFrontService.setNavigation({});
-        }, 0);
-      } else if (value && value.item && value.tab.name === 'Preparation' && value.item.name.indexOf('/') !== -1) {
-        if (this._campaignFrontService.defaultCampaign && this._campaignFrontService.defaultCampaign._id) {
-          this._showCampaignTabs = true;
-          const path = value.item.path.split('/');
-          this._activeTab = path[path.length - 1];
-          this._selectedCampaign = this._campaignFrontService.defaultCampaign;
-          setTimeout(() => {
-            this._router.navigate([
-              `/user/admin/projects/project/${
-                this._project._id
-              }/preparation/campaigns/campaign/${this._selectedCampaign._id}/${path[path.length - 1]}`
-            ]);
-            this._navigationFrontService.setNavigation({});
-          }, 0);
-        }
-      }
-    });
-
   }
 
   private _setInnovation() {
