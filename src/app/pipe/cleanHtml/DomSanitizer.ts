@@ -36,7 +36,7 @@ export class DomSanitizerPipe implements PipeTransform {
   extractVideoFromHref(html: string) {
     // Youtube doesn't authorize cross-platforms iframes
     // const youtubeInHrefTagRegex = /<a.*href="((?:(?:http|https)?:\/\/)?(?:www.youtube\.com\/\S*(?:(?:\/e(?:mbed))?\/|watch\?(?:\S*?&?v=))|youtu\.be\/)(?:[a-zA-Z0-9_-]{6,11}))" .*<\/a>/gm;
-    const vimeoInHrefTagRegex = /<a[^>]*href="((?:http|https)?:\/\/(www\.|player\.)?vimeo\.com\/(?:channels\/(?:\w+\/)?|groups\/([^\/]*)\/videos\/|video\/|)(\d+)(?:|\/\?))" .*?<\/a>/gm;
+    const vimeoInHrefTagRegex = /<a[^>]*href="((?:http|https)?:\/\/(www\.|player\.)?vimeo\.com\/(?:channels\/(?:\w+\/)?|groups\/([^\/]*)\/videos\/|video\/|)(\d+)(?:|\?.*?))" .*?<\/a>/gm;
     const htmlToTransform = html;
     let m;
 
