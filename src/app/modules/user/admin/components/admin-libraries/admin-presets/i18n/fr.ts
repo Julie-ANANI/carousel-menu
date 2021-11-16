@@ -109,7 +109,8 @@ export const PRESETS = {
       'textarea': 'Texte',
       'toggle': 'Toggle',
       'checkbox': 'Choix multiples',
-      'ranking': 'Classement'
+      'ranking': 'Classement',
+      'likert-scale': 'Likert scale'
     },
     'EDIT': {
       'TITLE': 'Titre dans l\'infographie',

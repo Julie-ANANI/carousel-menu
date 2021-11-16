@@ -40,6 +40,7 @@
       <!-- edit mode -->
       <ng-container *ngIf="editMode">
 
+       <!---DONE : add new type likert for list drop down  -->
         <!-- type -->
         <ng-container *ngIf="(!isTaggedQuestion && isEditable) || canAccess(['edit', 'type']) || isEditable">
           <label class="m-right-20">
@@ -53,6 +54,7 @@
               <option value="scale">{{ 'COMMON.QUESTIONNAIRE_TYPE.scale' | translate }}</option>
               <option value="stars">{{ 'COMMON.QUESTIONNAIRE_TYPE.stars' | translate }}</option>
               <option value="ranking">{{ 'COMMON.QUESTIONNAIRE_TYPE.ranking' | translate }}</option>
+              <option value="likert-scale">{{ 'COMMON.QUESTIONNAIRE_TYPE.likert-scale' | translate }}</option>
             </select>
           </label>
         </ng-container>
@@ -333,7 +335,7 @@
 
         <!-- question types -->
         <ng-container *ngIf="question.controlType === 'radio' || question.controlType === 'checkbox'
-          || question.controlType === 'stars' || question.controlType === 'ranking'">
+          || question.controlType === 'stars' || question.controlType === 'ranking' || question.controlType === 'likert-scale'">
 
           <!-- options -->
           <div [ngClass]="{'has-single-option': questionnaireLangs.length === 1}" class="options-wrapper">
@@ -407,6 +409,7 @@
     </div>
     <!-- /question content -->
 
+<!--  DONE : type likert-scale ici ?  -->
     <!-- add item -->
     <ng-container *ngIf="(isEditable || canAccess(['edit', 'options', 'add']))
     && (question.controlType === 'radio' || question.controlType === 'checkbox'

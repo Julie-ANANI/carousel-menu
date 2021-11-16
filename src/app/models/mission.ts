@@ -6,9 +6,10 @@ import { InnovCardSection } from './innov-card';
 
 export type MissionType = 'USER' | 'CLIENT' | 'DEMO' | 'TEST';
 export type MissionTemplateSectionType = 'NOTHING' | 'ISSUE' | 'SOLUTION' | 'OTHER' | 'CONTEXT';
-export type MissionQuestionType = 'checkbox' | 'radio' | 'stars' | 'textarea' | 'ranking' | 'scale';
+export type MissionQuestionType = 'checkbox' | 'radio' | 'stars' | 'textarea' | 'ranking' | 'scale' | 'likert-scale';
 export type MissionQuestionParameterType = 'color' | 'date' |'datetime-local' | 'email' | 'month' | 'number'
   | 'password' | 'tel' | 'text' | 'time' | 'url' | 'week' | '';
+export type AttitudeMeasureType = 'agreement' | 'frequency' | 'satisfaction' | 'use'| 'quality' | 'relevance';
 
 
 export interface MissionCardTitle {
@@ -175,6 +176,11 @@ export interface MissionQuestion {
    */
   controlType: MissionQuestionType;
 
+
+  /**
+   * Comes from the preset model.
+   */
+  attitudeMeasure?: AttitudeMeasureType;
   /**
    * used this to activate/deactivate a field or legend or anything
    * For example: Activate/Deactivate "x% favourable responses" for type === 'radio'

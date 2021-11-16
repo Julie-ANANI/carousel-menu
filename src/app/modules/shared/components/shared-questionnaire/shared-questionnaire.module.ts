@@ -9,6 +9,9 @@ import { SharedQuestionnaireSectionComponent } from './shared-questionnaire-sect
 import {ModalEmptyModule} from '../../../utility/modals/modal-empty/modal-empty.module';
 import {SharedQuestionnaireQuestionComponent} from './shared-questionnaire-question/shared-questionnaire-question.component';
 import {AutoSuggestionModule} from '../../../utility/auto-suggestion/auto-suggestion.module';
+import { SharedQuestionnaireQuestionLikertComponent } from './shared-questionnaire-question-likert/shared-questionnaire-question-likert.component';
+import { ChildComponent } from './child/child.component';
+import { ParentComponent } from './parent/parent.component';
 import {TextareaAutoResizeModule} from '../../../../directives/textareaAutoResize/textarea-auto-resize.module';
 
 @NgModule({
@@ -24,7 +27,10 @@ import {TextareaAutoResizeModule} from '../../../../directives/textareaAutoResiz
   declarations: [
     SharedQuestionnaireComponent,
     SharedQuestionnaireSectionComponent,
-    SharedQuestionnaireQuestionComponent
+    SharedQuestionnaireQuestionComponent,
+    SharedQuestionnaireQuestionLikertComponent,
+    ChildComponent,
+    ParentComponent
   ],
   exports: [
     SharedQuestionnaireComponent

@@ -513,7 +513,8 @@ export const COMMON = {
     'textarea': 'Text',
     'toggle': 'Toggle',
     'checkbox': 'Multiple choice',
-    'ranking': 'Ranking'
+    'ranking': 'Ranking',
+    'likert-scale': 'Likert scale'
   }
 
 };

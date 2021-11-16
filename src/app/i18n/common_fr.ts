@@ -509,7 +509,8 @@ export const COMMON = {
     'textarea': 'Texte',
     'toggle': 'Toggle',
     'checkbox': 'Choix multiples',
-    'ranking': 'Ranking'
+    'ranking': 'Ranking',
+    'likert-scale': 'Likert-scale'
   }
 
 };

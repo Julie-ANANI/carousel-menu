@@ -109,7 +109,8 @@ export const PRESETS = {
       'textarea': 'Text',
       'toggle': 'Toggle',
       'checkbox': 'Multiple choice',
-      'ranking': 'Ranking'
+      'ranking': 'Ranking',
+      'likert-scale': 'Likert scale'
     },
     'EDIT': {
       'SAVE': 'Save the question',

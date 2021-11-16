@@ -1,0 +1,53 @@
+<p>lLE COMPONENT EST RELIE : OK</p>
+
+<!-- Pseudo code
+
+// relier avec une variable ce nouveau composant qui represente les types de mesure d'attitudes
+//ce composant sera relié à son par parent qui est shared-questionnaire-question
+// Ce composant doit etre lié avec le choix d'option likert scale
+// ce composant doit afficher les types sous forme de liste
+// ce composant doit etre physiquement etre a coté des choix des types de question
+//ce composant doit afficher 5 option de choix non editable et non changeable ou ne peuvent pas etre deplacer
+// aucune option ne peut etre rajoutée
+//en fonction du type choisi le composant affiche les choix relié à cette sélection
+
+// ce composant à deux parents le shared-questinnaire-component et  [(ngModel)]="question.controlType"
+//
+-->
+
+<div [id]="'question-' + questionIndex" class="shared-questionnaire-question-likert">
+
+  <!-- header -->
+  <div [ngClass]="{'is-edit-mode': editMode}" class="header-wrapper flex-between">
+
+    <!-- move / select / type / label-->
+    <div class="d-flex align-center">
+
+      <!---DONE : add new type likert for list drop down  -->
+      <!-- type -->
+      <ng-container *ngIf="(!isTaggedQuestion && isEditable) || canAccess(['edit', 'type']) || isEditable">
+        <label class="m-right-20">
+    <!--          <select
+                  (ngModelChange)="onChangeQuestionType($event)"
+                  [(ngModel)]="question.attitudeMeasure"
+                  class="form-select is-sm">
+                  <option value="test">{{ 'COMMON.QUESTIONNAIRE_TYPE.radio' | translate }}</option>
+                  <option value="checkbox">{{ 'COMMON.QUESTIONNAIRE_TYPE.checkbox' | translate }}</option>
+                  <option value="textarea">{{ 'COMMON.QUESTIONNAIRE_TYPE.textarea' | translate }}</option>
+                  <option value="scale">{{ 'COMMON.QUESTIONNAIRE_TYPE.scale' | translate }}</option>
+                  <option value="stars">{{ 'COMMON.QUESTIONNAIRE_TYPE.stars' | translate }}</option>
+                  <option value="ranking">{{ 'COMMON.QUESTIONNAIRE_TYPE.ranking' | translate }}</option>
+                  <option value="likert-scale">{{ 'COMMON.QUESTIONNAIRE_TYPE.likert-scale' | translate }}</option>
+                </select>-->
+        </label>
+      </ng-container>
+      <!-- /type -->
+
+    </div>
+    <!--   </ng-container>-->
+    <!-- /add item -->
+
+  </div>
+  <!-- /question edition -->
+
+</div>
