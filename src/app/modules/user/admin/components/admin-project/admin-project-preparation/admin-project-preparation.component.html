@@ -99,6 +99,7 @@
             <!-- quiz preview -->
             <ng-container *ngIf="activeTab === 'questionnaire' || activeTab === 'description'">
               <a
+                *ngIf="project.quizId"
                 [href]="quizPreviewLink"
                 [id]="'admin-btn-preview-quiz'"
                 class="button is-link is-sm m-right-10"
