@@ -3,11 +3,8 @@
 
     <!-- button create -->
     <section *ngIf="canAccess(['add'])" class="text-right p-bottom-30">
-      <button
-        (click)="openSidebar($event, 'CREATE')"
-        class="button is-primary is-outlined is-sm"
-        id="btn-create"
-        type="button">
+      <button (click)="openSidebar($event, 'CREATE')" class="button is-primary is-sm" type="button">
+        <i class="fas fa-plus m-no-left"></i>
         Create enterprise
       </button>
     </section>

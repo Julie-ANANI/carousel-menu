@@ -21,9 +21,9 @@
             <h4 [innerText]="'COMMON.SIGNATURES.NO_SIGNATURES_ADMIN'" class="text-background" translate></h4>
 
             <div class="m-top-25">
-              <button (click)="onClickAdd()" class="btn btn-primary rounded shadow" type="button">
+              <button (click)="onClickAdd()" class="button is-primary is-sm" type="button">
                 <i class="fas fa-plus m-no-left"></i>
-                {{ 'COMMON.BUTTON.ADD' | translate }} signature
+                Add signature
               </button>
             </div>
 
@@ -40,9 +40,12 @@
 
       <!-- add button -->
       <div class="text-right p-bottom-25">
-        <button (click)="onClickAdd()" class="btn btn-primary btn-sm" type="button">
-          {{ 'COMMON.BUTTON.ADD' | translate }} signature
-        </button>
+        <div class="m-top-25">
+          <button (click)="onClickAdd()" class="button is-primary is-sm" type="button">
+            <i class="fas fa-plus m-no-left"></i>
+            Add signature
+          </button>
+        </div>
       </div>
       <!-- /add button -->
 
