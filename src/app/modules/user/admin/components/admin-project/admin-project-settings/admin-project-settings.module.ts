@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {FormsModule} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import {AdminProjectSettingsComponent} from './admin-project-settings.component';
 
@@ -29,7 +29,8 @@ import { AutoSuggestionUserModule } from "../../../../../utility/auto-suggestion
         ModalModule,
         TextInputModule,
         SharedUploadZonePhotoModule,
-        AutoSuggestionUserModule
+        AutoSuggestionUserModule,
+        ReactiveFormsModule
     ],
   declarations: [
     AdminProjectSettingsComponent,

@@ -49,6 +49,7 @@ import { ErrorFrontService } from '../../../../../../services/error/error-front.
 import {Blacklist, BlacklistDomain} from '../../../../../../models/blacklist';
 import {AnswerService} from '../../../../../../services/answer/answer.service';
 import {ActivatedRoute} from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 
 export interface UserSuggestion {
   name: string;
@@ -89,6 +90,8 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
   private _operators: Array<User> = [];
 
   private _isAddMilestone = false;
+
+  private _milestoneForm: FormGroup;
 
   private _commercials: Array<User> = [];
 
@@ -156,12 +159,17 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
     private _clientProjectService: ClientProjectService,
     private _translateNotificationsService: TranslateNotificationsService,
     private _innovationFrontService: InnovationFrontService,
-    private _statsReferentsService: StatsReferentsService
+    private _statsReferentsService: StatsReferentsService,
+    private _formBuilder: FormBuilder,
   ) {
   }
 
   ngOnInit() {
     if (isPlatformBrowser(this._platformId)) {
+      this._milestoneForm = this._formBuilder.group( {
+        name: ['', [Validators.required]],
+        dueDate: ['', [Validators.required]],
+      });
       this._isLoading = false;
       this._getValidAnswers();
       this._getOperators();
@@ -908,6 +916,7 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
   }
 
   set mission(value: Mission) {
+    console.log(value);
     this._mission = value;
   }
 
@@ -1026,6 +1035,10 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
     }
   }
 
+  get milestoneForm(): FormGroup {
+    return this._milestoneForm;
+  }
+
   addMilestone(event: Event) {
     event.preventDefault();
     console.log('add a milestone');
@@ -1034,6 +1047,8 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
 
   confirmAddMileStone(event: Event) {
     this._isAddMilestone = false;
+    console.log(this.milestoneForm.get('name').value);
+    console.log(this.milestoneForm.get('dueDate').value);
   }
 
   cancelAddMileStone(event: Event) {
