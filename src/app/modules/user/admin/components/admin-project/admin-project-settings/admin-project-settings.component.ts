@@ -88,6 +88,8 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
 
   private _operators: Array<User> = [];
 
+  private _isAddMilestone = false;
+
   private _commercials: Array<User> = [];
 
   private _clientProject: ClientProject = <ClientProject>{};
@@ -1008,6 +1010,10 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
   }
 
 
+  get isAddMilestone(): boolean {
+    return this._isAddMilestone;
+  }
+
   ngOnDestroy(): void {
     this._ngUnsubscribe.next();
     this._ngUnsubscribe.complete();
@@ -1018,5 +1024,19 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
     if (this.quizLink) {
       window.open(this.quizLink, '_blank');
     }
+  }
+
+  addMilestone(event: Event) {
+    event.preventDefault();
+    console.log('add a milestone');
+    this._isAddMilestone = true;
+  }
+
+  confirmAddMileStone(event: Event) {
+    this._isAddMilestone = false;
+  }
+
+  cancelAddMileStone(event: Event) {
+    this._isAddMilestone = false;
   }
 }

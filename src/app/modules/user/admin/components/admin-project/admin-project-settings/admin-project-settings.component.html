@@ -360,18 +360,18 @@
 
               <label>Roadmap</label>
 
-              <div class="edit-wrapper">
-
-                <ul *ngIf="mission.milestoneDates && mission.milestoneDates.length" class="roadmap-wrapper w-full">
-                  <li *ngIf="mission.milestoneDates.length > 1" class="active">
+              <div class="d-flex flex-d-column">
+                <div class="edit-wrapper">
+                  <ul *ngIf="mission.milestoneDates && mission.milestoneDates.length" class="roadmap-wrapper w-full">
+                    <li *ngIf="mission.milestoneDates.length > 1" class="active">
                     <span [ngStyle]="{'margin-top': '3px'}" class="d-flex flex-d-column align-center">
                       <span class="shape is-circle"></span>
                       <span class="divider-vert active"></span>
                     </span>
-                    {{ innovation.created | date:dateFormat }} - Preparation
-                  </li>
-                  <ng-container *ngFor="let milestone of milestones; let i = index;">
-                    <li *ngIf="milestone.dueDate" [ngClass]="{ 'active': isMilestoneReached(milestone.dueDate) }">
+                      {{ innovation.created | date:dateFormat }} - Preparation
+                    </li>
+                    <ng-container *ngFor="let milestone of milestones; let i = index;">
+                      <li *ngIf="milestone.dueDate" [ngClass]="{ 'active': isMilestoneReached(milestone.dueDate) }">
                       <span [ngStyle]="{'margin-top': '3px'}" class="d-flex flex-d-column align-center">
                         <span class="shape is-circle"></span>
                         <span
@@ -380,28 +380,57 @@
                           class="divider-vert">
                         </span>
                       </span>
-                      {{ milestone.dueDate | date:dateFormat }} - {{ milestone.name }}
-                    </li>
-                  </ng-container>
-                </ul>
+                        {{ milestone.dueDate | date:dateFormat }} - {{ milestone.name }}
+                      </li>
+                    </ng-container>
 
-                <span *ngIf="!(mission.milestoneDates && mission.milestoneDates.length)" class="is-text">
+                  </ul>
+
+                  <span *ngIf="!(mission.milestoneDates && mission.milestoneDates.length)" class="is-text">
                   No milestones defined
                 </span>
 
-                <div
-                  (click)="onEdit('ROADMAP')"
-                  *ngIf="canAccess(['edit', 'roadmap'])"
-                  class="icon-container m-left-20">
+                  <div
+                    (click)="onEdit('ROADMAP')"
+                    *ngIf="canAccess(['edit', 'roadmap'])"
+                    class="icon-container m-left-20">
                   <span data-tooltip="Edit roadmap" class="tooltip">
                     <img
                       [src]="picto.edit.blue"
                       alt="Edit"
                       class="img-responsive">
                   </span>
+                  </div>
                 </div>
 
+                <div class="m-top-15">
+                  <ng-container *ngIf="!isAddMilestone; else addMileStone">
+                    <div>
+                      <button
+                        (click)="addMilestone($event)"
+                        class="button is-primary is-circled is-xs"><i class="fas fa-plus"></i></button>
+                    </div>
+                  </ng-container>
+                </div>
               </div>
+
+              <ng-template #addMileStone>
+                <div class="add-milestone-container d-flex w-full align-center">
+                  <div class="form-group d-flex align-center">
+                    <input type="text" class="form-input is-xs" placeholder="Name" id="name">
+                  </div>
+                  <div class="form-group m-left-1">
+                    <input
+                      style="max-width: 137px"
+                      class="form-input is-xs"
+                      type="date">
+                  </div>
+                  <button class="button is-primary is-circled m-left-auto is-xxs"
+                          (click)="confirmAddMileStone($event)"><i class="fas fa-check"></i></button>
+                  <button class="button is-danger is-circled m-left-auto is-xxs" (click)="cancelAddMileStone($event)"><i class="fas fa-times"></i></button>
+                </div>
+              </ng-template>
+
 
             </div>
             <!-- /roadmap -->
