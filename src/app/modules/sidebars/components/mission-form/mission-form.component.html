@@ -3,12 +3,12 @@
     <form novalidate [formGroup]="missionForm" (ngSubmit)="onSave($event)" autocomplete="off">
 
       <!-- save button -->
-      <div class="save-wrapper text-right">
+      <div class="save-wrapper text-right m-top-15">
         <button class="btn btn-primary" type="submit">{{ 'COMMON.BUTTON.SAVE' | translate }}</button>
       </div>
 
       <!-- campaign name -->
-      <div class="form-group">
+      <div class="form-group m-top-15">
         <label class="form-label" for="mission-name">{{ 'COMMON.LABEL.NAME' | translate }}</label>
         <input
           class="form-input"
@@ -27,17 +27,17 @@
       </div>-->
 
       <!-- milestones -->
-      <div formArrayName="milestoneDates">
+      <div formArrayName="milestoneDates" class="m-top-30">
         <h5 class="title is-5" translate [innerText]="'PROJECT_MODULE.SETUP.ROADMAP'"></h5>
         <ng-container *ngFor="let milestone of milestoneDates.controls; index as i">
           <div *ngIf="milestone.get('code').value !== 'FC0'">
-            <div [formGroupName]="i" class="columns">
+            <div [formGroupName]="i" class="columns d-flex align-end">
               <div class="column col-5">
                 <div class="form-group">
                   <label class="form-label"
                          for="mission-milestone-{{i}}-name">{{ 'COMMON.LABEL.NAME' | translate }}</label>
                   <input
-                    class="form-input"
+                    class="form-input is-sm"
                     formControlName="name"
                     id="mission-milestone-{{i}}-name"
                     type="text"
@@ -49,7 +49,7 @@
                   <label class="form-label"
                          for="mission-milestone-{{i}}-date">{{ 'COMMON.LABEL.DATE' | translate }}</label>
                   <input
-                    class="form-input"
+                    class="form-input is-sm"
                     formControlName="dueDate"
                     id="mission-milestone-{{i}}-date"
                     type="date">
@@ -63,13 +63,13 @@
             </div>
           </div>
         </ng-container>
-        <div class="add-milestone" (click)="newMilestone($event)">
-          <button class="btn btn-round btn-primary"><i class="fas fa-plus"></i></button>
+        <div class="add-milestone m-top-15">
+          <button class="button is-primary is-circled is-sm" (click)="newMilestone($event)"><i class="fas fa-plus"></i></button>
         </div>
       </div>
 
       <!-- Mail service/domain configuration -->
-      <div formArrayName="mailConf">
+      <div formArrayName="mailConf" class="m-top-30">
         <div class="form-group">
           <h5 class="title is-5" translate [innerText]="'PROJECT_MODULE.SETUP.EMAIL_DOMAINS'"></h5>
           <ng-container *ngFor="let config of mailServicesConfigurations.controls; index as i">

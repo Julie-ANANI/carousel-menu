@@ -659,6 +659,9 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
       type: type,
       title: title,
     };
+    if (type === 'ROADMAP') {
+      this._sidebarValue.size = '600px';
+    }
   }
 
   public selectOwner(value: UserSuggestion) {
