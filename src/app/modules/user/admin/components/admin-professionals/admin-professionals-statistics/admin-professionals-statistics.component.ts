@@ -125,13 +125,17 @@ export class AdminProfessionalsStatisticsComponent implements OnInit {
 
   ngOnInit() {
     this._initYears();
+    this._getClassificationsByEmailConfidences();
+  }
+
+  private _getClassificationsByEmailConfidences() {
     Promise.all([
-      this._getSeniorityLevelsClassification({emailConfidence: 'RISKY'}),
-      this._getSeniorityLevelsClassification({emailConfidence: 'GOOD'}),
-      this._getSeniorityLevelsClassification({emailConfidence: 'ALL'}),
-      this._getJobsClassification({emailConfidence: 'RISKY'}),
-      this._getJobsClassification({emailConfidence: 'GOOD'}),
-      this._getJobsClassification({emailConfidence: 'ALL'})
+      this._getSeniorityLevelsClassification({...this._config, emailConfidence: 'RISKY'}),
+      this._getSeniorityLevelsClassification({...this._config, emailConfidence: 'GOOD'}),
+      this._getSeniorityLevelsClassification({...this._config, emailConfidence: 'ALL'}),
+      this._getJobsClassification({...this._config, emailConfidence: 'RISKY'}),
+      this._getJobsClassification({...this._config, emailConfidence: 'GOOD'}),
+      this._getJobsClassification({...this._config, emailConfidence: 'ALL'})
     ]).then((values) => {
       this.selectEmailConfidenceType('ALL');
       this.computeEmailConfidenceStats();
@@ -149,6 +153,8 @@ export class AdminProfessionalsStatisticsComponent implements OnInit {
         this._selectedMonth = value;
         if (!!value) {
           this._config.month = this.dropdownMonths.indexOf(value) + 1;
+          delete (this._config.week);
+          this._selectedWeek = '';
         } else {
           delete (this._config.month);
         }
@@ -157,6 +163,10 @@ export class AdminProfessionalsStatisticsComponent implements OnInit {
         this._selectedYear = value;
         if (!!value) {
           this._config.year = parseInt(value, 0);
+          delete (this._config.week);
+          this._selectedWeek = '';
+          delete (this._config.month);
+          this._selectedMonth = '';
         } else {
           delete (this._config.year);
         }
@@ -177,12 +187,7 @@ export class AdminProfessionalsStatisticsComponent implements OnInit {
 
     this._isLoading = true;
     this._config.emailConfidence = this.selectedEmailConfidenceType;
-    Promise.all([this._getSeniorityLevelsClassification(this._config), this._getJobsClassification(this._config)]).then((values) => {
-      this._isLoading = false;
-    }).catch(err => {
-      console.log(err);
-      this._isLoading = false;
-    });
+    this._getClassificationsByEmailConfidences();
   }
 
   public selectEmailConfidenceType(type: EmailType) {
