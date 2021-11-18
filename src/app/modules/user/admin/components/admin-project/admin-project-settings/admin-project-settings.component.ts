@@ -919,7 +919,6 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
   }
 
   set mission(value: Mission) {
-    console.log(value);
     this._mission = value;
   }
 
@@ -1014,7 +1013,6 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
       }
     }
     this._innovation.settings.blacklist.domains = JSON.parse(JSON.stringify(this._blacklistDomains));
-    console.log(this._innovation.settings.blacklist.domains);
   }
 
   set isPublishingCommunity(value: boolean) {
@@ -1044,16 +1042,12 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
 
   addMilestone(event: Event) {
     event.preventDefault();
-    console.log('add a milestone');
     this._isAddMilestone = true;
   }
 
   confirmAddMileStone(event: Event) {
     event.preventDefault();
     this._isAddMilestone = false;
-    console.log(this.milestoneForm.get('name').value);
-    console.log(this.milestoneForm.get('dueDate').value);
-    console.log(this._innovation.mission);
     const milestone = {
       name: this.milestoneForm.get('name').value,
       dueDate: this.milestoneForm.get('dueDate').value,
@@ -1075,5 +1069,6 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
   cancelAddMileStone(event: Event) {
     event.preventDefault();
     this._isAddMilestone = false;
+    this._milestoneForm.reset();
   }
 }
