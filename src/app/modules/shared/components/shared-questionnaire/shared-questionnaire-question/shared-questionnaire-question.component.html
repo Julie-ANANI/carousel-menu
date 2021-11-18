@@ -43,20 +43,23 @@
        <!---DONE : add new type likert for list drop down  -->
         <!-- type -->
         <ng-container *ngIf="(!isTaggedQuestion && isEditable) || canAccess(['edit', 'type']) || isEditable">
-          <label class="m-right-20">
-            <select
-              (ngModelChange)="onChangeQuestionType($event)"
-              [(ngModel)]="question.controlType"
-              class="form-select is-sm">
-              <option value="radio">{{ 'COMMON.QUESTIONNAIRE_TYPE.radio' | translate }}</option>
-              <option value="checkbox">{{ 'COMMON.QUESTIONNAIRE_TYPE.checkbox' | translate }}</option>
-              <option value="textarea">{{ 'COMMON.QUESTIONNAIRE_TYPE.textarea' | translate }}</option>
-              <option value="scale">{{ 'COMMON.QUESTIONNAIRE_TYPE.scale' | translate }}</option>
-              <option value="stars">{{ 'COMMON.QUESTIONNAIRE_TYPE.stars' | translate }}</option>
-              <option value="ranking">{{ 'COMMON.QUESTIONNAIRE_TYPE.ranking' | translate }}</option>
-              <option value="likert-scale">{{ 'COMMON.QUESTIONNAIRE_TYPE.likert-scale' | translate }}</option>
-            </select>
-          </label>
+          <div class="d-flex m-3">
+            <label class="m-right-20">
+              <select
+                (ngModelChange)="onChangeQuestionType($event)"
+                [(ngModel)]="question.controlType"
+                class="form-select is-sm">
+                <option value="radio">{{ 'COMMON.QUESTIONNAIRE_TYPE.radio' | translate }}</option>
+                <option value="checkbox">{{ 'COMMON.QUESTIONNAIRE_TYPE.checkbox' | translate }}</option>
+                <option value="textarea">{{ 'COMMON.QUESTIONNAIRE_TYPE.textarea' | translate }}</option>
+                <option value="scale">{{ 'COMMON.QUESTIONNAIRE_TYPE.scale' | translate }}</option>
+                <option value="stars">{{ 'COMMON.QUESTIONNAIRE_TYPE.stars' | translate }}</option>
+                <option value="ranking">{{ 'COMMON.QUESTIONNAIRE_TYPE.ranking' | translate }}</option>
+                <option value="likert-scale">{{ 'COMMON.QUESTIONNAIRE_TYPE.likert-scale' | translate }}</option>
+              </select>
+            </label>
+            <app-shared-questionnaire-question-likert [question]="question"></app-shared-questionnaire-question-likert>
+          </div>
         </ng-container>
         <!-- /type -->
 
@@ -335,11 +338,12 @@
 
         <!-- question types -->
         <ng-container *ngIf="question.controlType === 'radio' || question.controlType === 'checkbox'
-          || question.controlType === 'stars' || question.controlType === 'ranking' || question.controlType === 'likert-scale'">
+          || question.controlType === 'stars' || question.controlType === 'ranking' || question.controlType === 'likert-scale' && question.attitudeMeasure === 'frequency'">
 
           <!-- options -->
           <div [ngClass]="{'has-single-option': questionnaireLangs.length === 1}" class="options-wrapper">
             <div
+
               *ngFor="let option of question.options; let optionIndex = index;"
               [ngClass]="{'is-editable': isEditable || canAccess(['edit', 'options'])}"
               class="card">

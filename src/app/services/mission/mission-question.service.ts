@@ -7,7 +7,14 @@ import {
   MissionQuestionOption,
   MissionQuestionType,
   MissionTemplate,
-  MissionTemplateSection
+  MissionTemplateSection,
+/*  AttitudeMeasureType,
+  MeasureAgreementType,
+  MeasureFrenquencyType,
+  MeasureSatisfactionType,
+  MeasureUseType,
+  MeasureQualityType,
+  MeasureRelevanceType*/
 } from '../../models/mission';
 import { Subject } from 'rxjs/Subject';
 import { colors } from '../../utils/chartColors';
@@ -371,7 +378,7 @@ export class MissionQuestionService {
     question.options = [];
 
     if (question.controlType === 'checkbox' || question.controlType === 'radio'
-      || question.controlType === 'stars' || question.controlType === 'ranking') {
+      || question.controlType === 'stars' || question.controlType === 'ranking' ) {
       for (let i = 0; i < 4; i++) {
         question.options.push(this.addOption(question, oldOptions));
       }
@@ -416,6 +423,46 @@ export class MissionQuestionService {
           };
         })
       };
+    /*} else if(question.controlType === 'likert-scale') {
+      switch (question.attitudeMeasure) {
+        case 'agreement':
+          return {
+            question.MeasureAgreementType,
+          };
+
+        case 'frequency':
+          return {
+            question.MeasureFrequencyType
+          };
+
+        case 'satisfaction':
+          return {
+            question.MeasureSatisfactionType
+          };
+
+        case 'use':
+          return {
+            question.MeasureUseType
+          };
+
+        case 'quality':
+          return {
+            question.MeasureQualityType
+          };
+
+        case 'relevance':
+          return {
+            question.MeasureRelevanceType
+          };
+
+        default:
+          return {
+            question.MeasureAgreementType: '',
+          };
+      }
+
+
+      }*/
     }
 
     return <MissionQuestionOption>{};

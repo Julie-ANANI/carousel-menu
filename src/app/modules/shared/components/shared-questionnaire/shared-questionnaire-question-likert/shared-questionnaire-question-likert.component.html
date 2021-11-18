@@ -1,4 +1,32 @@
-<p>lLE COMPONENT EST RELIE : OK</p>
+<ng-container>
+  <div class="d-flex m-3">
+  <label class="m-right-20">
+    <select class="form-select is-sm" [(ngModel)]="question.attitudeMeasure">
+<!--      <option value="">{{ 'COMMON.LIKERT_TYPE.CHOOSE' | translate }}</option>
+      <option value="agreement">{{ 'COMMON.LIKERT_TYPE.AGREEMENT' | translate }}</option>
+      <option value="satisfaction">{{ 'COMMON.LIKERT_TYPE.FREQUENCY' | translate }}</option>
+      <option value="frequency">{{ 'COMMON.LIKERT_TYPE.FREQUENCY' | translate }}</option>
+      <option value="use">{{ 'COMMON.LIKERT_TYPE.USE' | translate }}</option>
+      <option value="quality">{{ 'COMMON.LIKERT_TYPE.QUALITY' | translate }}</option>
+      <option value="relevance">{{ 'COMMON.LIKERT_TYPE.RELEVANCE' | translate }}</option>-->
+      <option *ngFor="let type of measuresOptions[question.attitudeMeasure]" [ngValue]="type">{{'COMMON.LIKERT_TYPE.'| translate }}</option>
+     <!-- <option *ngFor="let type of sectionTypes" [ngValue]="type">{{type | titlecase}}</option>-->
+    </select>
+
+    <!--{{question.attitudeMeasure}}-->
+
+  <!--  <option [ngValue]="true">Essential</option>
+    <option>{{ 'PRESETS.QUESTION.TYPE.' + question.controlType | translate }}</option>-->
+
+
+    <p>{{question.attitudeMeasure}} cliqué !</p>
+
+    <div *ngIf="question.attitudeMeasure" class="choice">
+      <h1 *ngFor="let element of measuresOptions[question.attitudeMeasure]">{{element}}</h1>
+    </div>
+  </label>
+  </div>
+</ng-container>
 
 <!-- Pseudo code
 
@@ -13,41 +41,7 @@
 
 // ce composant à deux parents le shared-questinnaire-component et  [(ngModel)]="question.controlType"
 //
+
 -->
-
-<div [id]="'question-' + questionIndex" class="shared-questionnaire-question-likert">
-
-  <!-- header -->
-  <div [ngClass]="{'is-edit-mode': editMode}" class="header-wrapper flex-between">
-
-    <!-- move / select / type / label-->
-    <div class="d-flex align-center">
-
-      <!---DONE : add new type likert for list drop down  -->
-      <!-- type -->
-      <ng-container *ngIf="(!isTaggedQuestion && isEditable) || canAccess(['edit', 'type']) || isEditable">
-        <label class="m-right-20">
-    <!--          <select
-                  (ngModelChange)="onChangeQuestionType($event)"
-                  [(ngModel)]="question.attitudeMeasure"
-                  class="form-select is-sm">
-                  <option value="test">{{ 'COMMON.QUESTIONNAIRE_TYPE.radio' | translate }}</option>
-                  <option value="checkbox">{{ 'COMMON.QUESTIONNAIRE_TYPE.checkbox' | translate }}</option>
-                  <option value="textarea">{{ 'COMMON.QUESTIONNAIRE_TYPE.textarea' | translate }}</option>
-                  <option value="scale">{{ 'COMMON.QUESTIONNAIRE_TYPE.scale' | translate }}</option>
-                  <option value="stars">{{ 'COMMON.QUESTIONNAIRE_TYPE.stars' | translate }}</option>
-                  <option value="ranking">{{ 'COMMON.QUESTIONNAIRE_TYPE.ranking' | translate }}</option>
-                  <option value="likert-scale">{{ 'COMMON.QUESTIONNAIRE_TYPE.likert-scale' | translate }}</option>
-                </select>-->
-        </label>
-      </ng-container>
-      <!-- /type -->
-
-    </div>
-    <!--   </ng-container>-->
-    <!-- /add item -->
-
-  </div>
-  <!-- /question edition -->
-
-</div>
+<!--<div [id]="'question-' + questionIndex" class="shared-questionnaire-question-likert">
+  <div [ngClass]="{'is-edit-mode': editMode}" class="header-wrapper flex-between">-->

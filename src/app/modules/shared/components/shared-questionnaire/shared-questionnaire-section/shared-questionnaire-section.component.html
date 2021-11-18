@@ -48,6 +48,18 @@
       <ng-container *ngIf="editSection">
 
         <ng-container *ngIf="isLibraryView; else defCardSection">
+        <ng-container *ngIf="sectionsNames.length > 0; else types">
+          <label class="m-right-20">
+
+            <!-- TODO : A décortiquer-->
+            <select (change)="notifyChanges()" [(ngModel)]="section.identifier" class="form-select is-sm">
+              <option *ngFor="let name of sectionsNames; let idx = index" [ngValue]="idx">{{ name }}</option>
+              <option [ngValue]="'nothing'">Nothing</option>
+            </select>
+          </label>
+        </ng-container>
+
+        <ng-template #types>
           <ng-container *ngIf="accessPath.length && !canAccess(['section', 'edit', 'type']); else defSEditType">
             <p class="m-right-20 m-no-bottom">{{ section.type | titlecase }}</p>
           </ng-container>

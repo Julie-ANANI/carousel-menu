@@ -11,6 +11,13 @@ export type MissionQuestionParameterType = 'color' | 'date' |'datetime-local' | 
   | 'password' | 'tel' | 'text' | 'time' | 'url' | 'week' | '';
 export type AttitudeMeasureType = 'agreement' | 'frequency' | 'satisfaction' | 'use'| 'quality' | 'relevance';
 
+export type MeasureAgreementType = 'Strongly disagree' | 'Strongly disagree' | 'satisfaction' | 'Strongly disagree'| 'quality' | 'Strongly disagree';
+export type MeasureFrequencyType = 'agreement' | 'Strongly disagree' | 'satisfaction' | 'Strongly disagree'| 'quality' | 'relevance';
+export type MeasureSatisfactionType = 'agreement' | 'frequency' | 'satisfaction' | 'use'| 'quality' | 'relevance';
+export type MeasureUseType = 'agreement' | 'frequency' | 'satisfaction' | 'use'| 'quality' | 'relevance';
+export type MeasureQualityType = 'agreement' | 'frequency' | 'satisfaction' | 'use'| 'quality' | 'relevance';
+export type MeasureRelevanceType = 'agreement' | 'frequency' | 'satisfaction' | 'use'| 'quality' | 'relevance';
+
 
 export interface MissionCardTitle {
   en: Array<InnovCardSection>;
@@ -176,11 +183,11 @@ export interface MissionQuestion {
    */
   controlType: MissionQuestionType;
 
-
   /**
    * Comes from the preset model.
    */
   attitudeMeasure?: AttitudeMeasureType;
+
   /**
    * used this to activate/deactivate a field or legend or anything
    * For example: Activate/Deactivate "x% favourable responses" for type === 'radio'
