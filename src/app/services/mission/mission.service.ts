@@ -1,16 +1,17 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import {Mission, MissionQuestion, MissionTemplate} from '../../models/mission';
+import { Mission, MissionQuestion, MissionTemplate } from '../../models/mission';
 import { Observable } from 'rxjs';
 import { Innovation } from '../../models/innovation';
 import { Multiling } from '../../models/multiling';
-import {Response} from '../../models/response';
-import {Config} from '../../models/config';
+import { Response } from '../../models/response';
+import { Config } from '../../models/config';
 
 @Injectable({providedIn: 'root'})
 export class MissionService {
 
-  constructor(private _http: HttpClient) { }
+  constructor(private _http: HttpClient) {
+  }
 
   /**
    * will return the list of all the questions.
@@ -113,8 +114,8 @@ export class MissionService {
     return this._http.get<Mission>('/mission/' + id);
   }
 
-  public getAll(config: {[header: string]: string | string[]}): Observable<{result: Array<Mission>, _metadata: any}> {
-    return this._http.get<{result: Array<Mission>, _metadata: any}>('/mission/', {params: config});
+  public getAll(config: { [header: string]: string | string[] }): Observable<{ result: Array<Mission>, _metadata: any }> {
+    return this._http.get<{ result: Array<Mission>, _metadata: any }>('/mission/', {params: config});
   }
 
   public remove(missionId: string): Observable<Mission> {
@@ -136,8 +137,12 @@ export class MissionService {
    * @param missionId
    * @param data
    */
-  public updateTemplate(missionId: string, data: {template: MissionTemplate, comment: string}): Observable<Innovation> {
+  public updateTemplate(missionId: string, data: { template: MissionTemplate, comment: string }): Observable<Innovation> {
     return this._http.put<Innovation>(`/mission/${missionId}/updateTemplate`, {data: data});
+  }
+
+  public addMilestone(missionId: string, data: any): Observable<Mission> {
+    return this._http.put<Mission>(`/mission/${missionId}/addMilestone`, data);
   }
 
 }

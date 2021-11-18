@@ -120,6 +120,7 @@ export class MissionFormComponent {
       mailConf: mission.mailConf,
       milestoneDates: mission.milestoneDates,
     };
+    console.log(missionObject);
     this.missionService.save(mission._id, missionObject).subscribe(
       (savedMission) => {
         this.missionChange.emit(savedMission);

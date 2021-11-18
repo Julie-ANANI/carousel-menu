@@ -46,9 +46,9 @@ import { picto, Picto } from '../../../../../../models/static-data/picto';
 import { StatsReferentsService } from '../../../../../../services/stats-referents/stats-referents.service';
 import { Community } from '../../../../../../models/community';
 import { ErrorFrontService } from '../../../../../../services/error/error-front.service';
-import {Blacklist, BlacklistDomain} from '../../../../../../models/blacklist';
-import {AnswerService} from '../../../../../../services/answer/answer.service';
-import {ActivatedRoute} from '@angular/router';
+import { Blacklist, BlacklistDomain } from '../../../../../../models/blacklist';
+import { AnswerService } from '../../../../../../services/answer/answer.service';
+import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 
 export interface UserSuggestion {
@@ -166,7 +166,7 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     if (isPlatformBrowser(this._platformId)) {
-      this._milestoneForm = this._formBuilder.group( {
+      this._milestoneForm = this._formBuilder.group({
         name: ['', [Validators.required]],
         dueDate: ['', [Validators.required]],
       });
@@ -795,8 +795,8 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
   }
 
   public onChangeAnonymous(event: Event) {
-    if ( this._innovation._metadata ) {
-      if ( this._innovation._metadata['campaign'] ) {
+    if (this._innovation._metadata) {
+      if (this._innovation._metadata['campaign']) {
         this._innovation._metadata['campaign']['anonymous_answers'] = (event.target as HTMLInputElement).checked;
       } else {
         this._innovation._metadata['campaign'] = {
@@ -1046,12 +1046,31 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
   }
 
   confirmAddMileStone(event: Event) {
+    event.preventDefault();
     this._isAddMilestone = false;
     console.log(this.milestoneForm.get('name').value);
     console.log(this.milestoneForm.get('dueDate').value);
+    console.log(this._innovation.mission);
+    const milestone = {
+      name: this.milestoneForm.get('name').value,
+      dueDate: this.milestoneForm.get('dueDate').value,
+      code: '',
+      comment: ''
+    };
+
+    this._missionService.addMilestone(this._mission._id, milestone).pipe(first()).subscribe(res => {
+      this._mission.milestoneDates.push(milestone);
+      this._milestoneForm.reset();
+      this._translateNotificationsService.success('Success', 'Add a milestone in mission');
+    }, (err: HttpErrorResponse) => {
+      this._translateNotificationsService.error('Project Error...', ErrorFrontService.adminErrorMessage(err));
+      console.error(err);
+    });
   }
 
+
   cancelAddMileStone(event: Event) {
+    event.preventDefault();
     this._isAddMilestone = false;
   }
 }
