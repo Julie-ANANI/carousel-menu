@@ -7,7 +7,7 @@
         <!-- fetching error -->
         <section *ngIf="fetchingError">
           <div class="d-d-error-wrapper d-flex align-center">
-            <app-utility-error-template-1 [errorMessage]="'ERROR.FETCHING_ERROR'" [ngStyle]="{ 'width': '100%' }">
+            <app-utility-error-template-1 [errorMessage]="'ERROR.FETCHING_ERROR'" style="width: 100%" [ngStyle]="{ 'width': '100%' }">
               <p [innerText]="'ERROR.ERRORS.PROJECT_FETCHING_ERROR'" translate></p>
             </app-utility-error-template-1>
           </div>
@@ -31,7 +31,7 @@
             </div>
 
             <!-- innovation title -->
-            <h1 class="d-d-title m-no-bottom" [ngStyle]="{ 'font-size': '2.3rem' }">{{ innovationCard.title }}</h1>
+            <h1 class="d-d-title m-no-bottom" style="font-size: 2.3rem">{{ innovationCard.title }}</h1>
 
             <!-- innovation tags -->
             <div *ngIf="tags.length > 0" class="d-d-tags-wrapper">
@@ -69,7 +69,7 @@
               <ng-container >
                 <iframe
                   *ngIf="media?.type === 'VIDEO'"
-                  [ngStyle]="{ 'left': 'O', 'width': '280px', 'border-width': '0' }"
+                  style="left: 0; width: 280px; border-width: 0"
                   [src]="domSanitizer.bypassSecurityTrustResourceUrl(media.video.embeddableUrl)"
                   allowfullscreen
                   height="177">
@@ -84,7 +84,7 @@
           <!-- benefits -->
           <section *ngIf="innovationCard.advantages && innovationCard.advantages.length > 0" class="p-bottom-20">
             <h2 class="d-d-title-secondary" [innerText]="'DISCOVERDESCRIPTION.BENEFITS'" translate></h2>
-            <ul [ngStyle]="{ 'font-size': '0.75rem' }" class="m-top-3 m-no-bottom">
+            <ul style="font-size: 0.75rem" class="m-top-3 m-no-bottom">
               <li *ngFor="let advantage of innovationCard.advantages" class="text-background">
                 {{ advantage.text | FormatText }}
               </li>

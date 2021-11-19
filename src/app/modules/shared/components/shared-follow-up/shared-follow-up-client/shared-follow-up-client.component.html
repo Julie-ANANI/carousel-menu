@@ -40,7 +40,7 @@
 
           <!-- sidebar -->
           <ng-container *ngSwitchCase="'STEP_SELECT'">
-            <aside [ngStyle]="{'max-width': '285px'}" class="sidebar-wrapper">
+            <aside style="max-width: 285px" class="sidebar-wrapper">
               <app-sidebar-in-page [(sidebarTemplate)]="sidebarTemplate">
                 <app-sidebar-filter-answers
                   (selectedAnswers)="updateAnswers($event)"
@@ -341,8 +341,9 @@
                   </ng-container>
                   <ng-container *ngIf="contactFields[currentStep] === 'STEP_SEND'">
                     <img
-                      [ngStyle]="{'height': '17px', 'width': '19px'}"
                       [src]="planeImage"
+                      width="19"
+                      height="17"
                       alt=""
                       class="m-right-2 img-responsive">
                     {{ 'SHARED_FOLLOW_UP.BUTTON.READY_SEND' | translate }}
@@ -387,8 +388,8 @@
     <h2 class="title is-4 text-center text-bold m-bottom-30">
       {{ 'SHARED_FOLLOW_UP.MODAL.READY_TO_SEND' | translate }}
     </h2>
-    <div [ngStyle]="{'width': '280px'}" class="m-left-auto m-right-auto text-center">
-      <p [ngStyle]="{'color': '#9E9E9E'}" class="text-lg m-bottom-25">
+    <div style="width: 280px" class="m-left-auto m-right-auto text-center">
+      <p style="color: #9E9E9E" class="text-lg m-bottom-25">
         {{ 'SHARED_FOLLOW_UP.MODAL.READY_TO_SEND_SUBHEADING.A' | translate }}
         {{ selectedIds.length }}
         {{ 'SHARED_FOLLOW_UP.MODAL.READY_TO_SEND_SUBHEADING.B' | translate }}

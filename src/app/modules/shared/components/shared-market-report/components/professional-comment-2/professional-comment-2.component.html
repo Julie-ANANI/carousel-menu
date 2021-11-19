@@ -16,7 +16,7 @@
     <!-- /name -->
 
     <!-- tag button -->
-    <div *ngIf="answerTags.length > 0 || canEditQuestionTags" [ngStyle]="{'margin': '-2px'}" class="m-bottom-2">
+    <div *ngIf="answerTags.length > 0 || canEditQuestionTags" style="margin: -2px" class="m-bottom-2">
       <app-shared-tags
         (addTag)="addTag($event)"
         (createTag)="createTag($event)"

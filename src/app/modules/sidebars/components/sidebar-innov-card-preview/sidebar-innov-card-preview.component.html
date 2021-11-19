@@ -33,14 +33,15 @@
 
     <!-- medias -->
     <ng-container *ngIf="innovCard.media && innovCard.media.length">
-      <section [ngStyle]="{'margin-bottom': '-20px'}" class="d-flex justify-center flex-wrap p-top-25">
+      <section style="margin-bottom: -20px" class="d-flex justify-center flex-wrap p-top-25">
         <div *ngFor="let media of innovCard.media" class="media-wrapper">
 
           <!-- image -->
           <ng-container *ngIf="!!(media.type && media.type === 'PHOTO')">
             <img
-              [ngStyle]="{ 'width': '180px', 'height': '119px' }"
               [src]="imageSrc(media)"
+              width="180"
+              height="119"
               alt="">
           </ng-container>
           <!-- /image -->
@@ -48,7 +49,7 @@
           <!-- video -->
           <ng-container *ngIf="!!(media.type && media.type === 'VIDEO')">
             <iframe
-              [ngStyle]="{ 'left': 'O', 'width': '180px', 'border-width': '0' }"
+              style="width: 180px; left: 0; border-width: 0"
               [src]="domSanitizer.bypassSecurityTrustResourceUrl(media.video.embeddableUrl)"
               height="119px">
             </iframe>

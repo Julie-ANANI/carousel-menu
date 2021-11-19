@@ -6,7 +6,7 @@
       <span class="text-notify text-md">{{ 'MARKET_REPORT.GRADE' | translateIn: reportingLang }}: {{ note.percentage }}</span>
     </div>
 
-    <div *ngIf="note.sum; else noteText" [ngStyle]="{'height': '12px'}" class="bar">
+    <div *ngIf="note.sum; else noteText" style="height: 12px" class="bar">
       <div
         [attr.data-tooltip]="note.sum"
         [ngStyle]="{ 'width': note.percentage, 'background': '#2ECC71' }"

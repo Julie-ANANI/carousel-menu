@@ -12,12 +12,12 @@
   <!-- project status done or preview mode or not editing -->
   <div
     *ngIf="innovation.status === 'DONE' || previewMode || (innovation.status !== 'EDITING' && adminSide)"
-    [ngStyle]="{'background-color': '#F5F5F5'}">
+    style="background-color: #F5F5F5">
     <div class="container fluid grid-2xl animate-fade is-5">
       <div class="pws-wrapper">
 
         <!-- sidebar -->
-        <aside [ngStyle]="{'max-width': '297px'}" class="sidebar-wrapper">
+        <aside style="max-width: 297px" class="sidebar-wrapper">
           <app-sidebar-in-page [(sidebarTemplate)]="leftSidebarTemplateValue">
             <app-sidebar-filter-answers
               *ngIf="displayFilters"

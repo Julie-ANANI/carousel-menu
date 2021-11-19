@@ -8,20 +8,20 @@
 
       <!-- appointment -->
       <div class="email-content">
-        <div [ngStyle]="{ 'line-height': '1' }" class="text-bold m-bottom-2">
-          <span [ngStyle]="{ 'color': '#1E3147' }" class="text-sm m-right-2">
+        <div style="line-height: 1" class="text-bold m-bottom-2">
+          <span style="color: #1E3147" class="text-sm m-right-2">
             {{ 'SHARED_FOLLOW_UP.INTERVIEW' | translate }}
           </span>
           <span
             (click)="onClickSee($event, 'interview')"
             *ngIf="canAccess(['workflow', 'view']) || canAccess(['workflow', 'edit'])"
-            [ngStyle]="{ 'margin-top': '3px' }"
+            style="margin-top: 3px"
             class="text-link text-xs">
             {{ 'SHARED_FOLLOW_UP.BUTTON_SEE' | translate }}
           </span>
         </div>
 
-        <div [ngStyle]="{ 'font-size': '13px', 'line-height': '1' }" class="text-notify text-medium">
+        <div style="line-height: 1" class="text-notify text-medium text-13">
           <span>{{ prosInterview.length }} {{ 'SHARED_FOLLOW_UP.CONTACTS_ADDED' | translate }} | </span>
           <span>{{ prosInterviewSent.length }} {{ 'SHARED_FOLLOW_UP.EMAILS_SENT' | translate }} </span>
         </div>
@@ -32,20 +32,20 @@
 
       <!-- open -->
       <div class="email-content">
-        <div [ngStyle]="{ 'line-height': '1' }" class="text-bold m-bottom-2">
-          <span [ngStyle]="{ 'color': '#1E3147' }" class="text-sm m-right-2">
+        <div style="line-height: 1" class="text-bold m-bottom-2">
+          <span style="color: #1E3147" class="text-sm m-right-2">
             {{ 'SHARED_FOLLOW_UP.OPENING' | translate }}
           </span>
           <span
             (click)="onClickSee($event, 'opening')"
             *ngIf="canAccess(['workflow', 'view']) || canAccess(['workflow', 'edit'])"
-            [ngStyle]="{ 'margin-top': '3px' }"
+            style="margin-top: 3px"
             class="text-link text-xs">
             {{ 'SHARED_FOLLOW_UP.BUTTON_SEE' | translate }}
           </span>
         </div>
 
-        <div [ngStyle]="{ 'font-size': '13px', 'line-height': '1' }" class="text-notify text-medium">
+        <div style="line-height: 1" class="text-notify text-medium text-13">
           <span>{{ prosOpening.length }} {{ 'SHARED_FOLLOW_UP.CONTACTS_ADDED' | translate }} | </span>
           <span>{{ prosOpeningSent.length }} {{ 'SHARED_FOLLOW_UP.EMAILS_SENT' | translate }} </span>
         </div>
@@ -56,20 +56,20 @@
 
       <!-- thank -->
       <div class="email-content">
-        <div [ngStyle]="{ 'line-height': '1' }" class="text-bold m-bottom-2">
-          <span [ngStyle]="{ 'color': '#1E3147' }" class="text-sm m-right-2">
+        <div style="line-height: 1"   class="text-bold m-bottom-2">
+          <span style="color: #1E3147" class="text-sm m-right-2">
             {{ 'SHARED_FOLLOW_UP.NOFOLLOW' | translate }}
           </span>
           <span
             (click)="onClickSee($event, 'noFollow')"
             *ngIf="canAccess(['workflow', 'view']) || canAccess(['workflow', 'edit'])"
-            [ngStyle]="{ 'margin-top': '3px' }"
+            style="margin-top: 3px"
             class="text-link text-xs">
             {{ 'SHARED_FOLLOW_UP.BUTTON_SEE' | translate }}
           </span>
         </div>
 
-        <div [ngStyle]="{ 'font-size': '13px', 'line-height': '1' }" class="text-notify text-medium">
+        <div style="line-height: 1" class="text-notify text-medium text-13">
           <span>{{ prosNoFollow.length }} {{ 'SHARED_FOLLOW_UP.CONTACTS_ADDED' | translate }} | </span>
           <span>{{ prosNoFollowSent.length }} {{ 'SHARED_FOLLOW_UP.EMAILS_SENT' | translate }} </span>
         </div>
@@ -164,7 +164,7 @@
       <!-- /heading -->
 
       <!-- close button -->
-      <div [ngStyle]="{ 'right': '15px', 'top': '21px' }" class="absolute">
+      <div style="right: 15px; top: 21px" class="absolute">
         <button (click)="closeModal($event)" class="close text-notify" type="button"></button>
       </div>
       <!-- /close button -->
@@ -188,7 +188,8 @@
       <div *ngIf="canAccess(['workflow', 'edit'])" class="text-center">
         <button
           (click)="saveProject()"
-          [ngStyle]="{ 'min-width': '141px' }"
+
+          style="width: 141px"
           class="button is-primary">
           {{ 'COMMON.BUTTON.SAVE' | translate }}
         </button>
@@ -240,13 +241,13 @@
       <!-- /heading -->
 
       <!-- close button -->
-      <div [ngStyle]="{ 'right': '15px', 'top': '21px' }" class="absolute">
+      <div style="right: 15px; top: 21px" class="absolute">
         <button (click)="closeModal($event)" class="close text-notify" type="button"></button>
       </div>
       <!-- /close button -->
 
       <!-- content -->
-      <div [ngStyle]="{ 'min-height': '150px' }" class="p-bottom-20">
+      <div style="width: 150px" class="p-bottom-20">
         <div class="columns">
 
           <!-- image -->
@@ -267,11 +268,11 @@
               <!-- appointment -->
               <div class="p-top-1 p-bottom-3">
 
-                <div [ngStyle]="{ 'line-height': '1', 'color': '#1E3147' }" class="text-bold m-bottom-2 text-sm">
+                <div style="line-height: 1; color:#1E3147" class="text-bold m-bottom-2 text-sm">
                   {{ 'SHARED_FOLLOW_UP.INTERVIEW' | translate }}
                 </div>
 
-                <div [ngStyle]="{ 'font-size': '13px', 'line-height': '1' }" class="text-notify text-medium">
+                <div style="line-height: 1" class="text-notify text-medium">
                   {{ prosInterview.length }} {{ 'SHARED_FOLLOW_UP.CONTACTS_ADDED' | translate }}
                 </div>
 
@@ -283,11 +284,11 @@
               <!-- open -->
               <div class="p-top-2 p-bottom-3">
 
-                <div [ngStyle]="{ 'line-height': '1', 'color': '#1E3147' }" class="text-bold m-bottom-2 text-sm">
+                <div style="line-height: 1; color:#1E3147" class="text-bold m-bottom-2 text-sm">
                   {{ 'SHARED_FOLLOW_UP.OPENING' | translate }}
                 </div>
 
-                <div [ngStyle]="{ 'font-size': '13px', 'line-height': '1' }" class="text-notify text-medium">
+                <div style="line-height: 1" class="text-notify text-medium">
                   {{ prosOpening.length }} {{ 'SHARED_FOLLOW_UP.CONTACTS_ADDED' | translate }}
                 </div>
 
@@ -299,11 +300,11 @@
               <!-- thank -->
               <div class="p-top-2 p-bottom-3">
 
-                <div [ngStyle]="{ 'line-height': '1', 'color': '#1E3147' }" class="text-bold m-bottom-2 text-sm">
+                <div style="line-height: 1; color:#1E3147" class="text-bold m-bottom-2 text-sm">
                   {{ 'SHARED_FOLLOW_UP.NOFOLLOW' | translate }}
                 </div>
 
-                <div [ngStyle]="{ 'font-size': '13px', 'line-height': '1' }" class="text-notify text-medium">
+                <div style="line-height: 1" class="text-notify text-medium">
                   {{ prosNoFollow.length }} {{ 'SHARED_FOLLOW_UP.CONTACTS_ADDED' | translate }}
                 </div>
 

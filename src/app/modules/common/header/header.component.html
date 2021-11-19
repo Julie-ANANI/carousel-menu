@@ -8,7 +8,7 @@
           <a routerLink="/" class="gtm-menu-logo navbar-item m-no">
             <img
               [alt]="company"
-              [ngStyle]="{'width': '85px', 'height': '44.48px', 'margin-top': '-1px'}"
+              style="margin-top: -1px"
               [src]="logo"
               height="44.48"
               width="85">
@@ -98,7 +98,7 @@
               <img
                 [src]="'https://res.cloudinary.com/umi/image/upload/c_fill,h_11,w_16/app/flags/'+flag+'.png'"
                 [alt]="currentLang.toUpperCase()">
-                <i [ngStyle]="{'font-size': '10px'}" class="icon icon-arrow-down"></i>
+                <i style="font-size: 10px" class="icon icon-arrow-down"></i>
             </a>
           </span>
 
@@ -135,7 +135,7 @@
             <!-- /user confirmed -->
 
             <!-- options -->
-            <div [ngStyle]="{'width': '300px'}" class="navbar-dropdown">
+            <div style="width: 300px" class="navbar-dropdown">
 
               <a
                 *ngIf="user && user.state === 'confirmed'"
@@ -149,7 +149,7 @@
 
                 <div class="d-flex info">
                   <span class="text-medium text-ellipsis">{{ userName }}</span>
-                  <span [ngStyle]="{'font-size': '13px'}" class="text-ellipsis">{{ user.email }}</span>
+                  <span class="text-ellipsis text-13">{{ user.email }}</span>
                 </div>
 
               </a>
@@ -238,7 +238,7 @@
           </figure>
           <div class="d-flex info">
             <span class="text-ellipsis">{{ userName }}</span>
-            <span [ngStyle]="{'font-size': '13px'}" class="text-ellipsis text-normal">{{ user.email }}</span>
+            <span class="text-ellipsis text-normal text-13">{{ user.email }}</span>
           </div>
         </a>
         <!-- /account and pic -->
