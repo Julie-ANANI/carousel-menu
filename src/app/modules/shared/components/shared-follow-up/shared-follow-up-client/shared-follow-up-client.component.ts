@@ -216,6 +216,7 @@ export class SharedFollowUpClientComponent implements OnInit, OnDestroy {
       this._initVariables();
     }
     this._startContactProcess = value;
+    console.log(this._startContactProcess);
   }
 
   @Input() questions: Array<MissionQuestion> = [];
@@ -340,6 +341,7 @@ export class SharedFollowUpClientComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this._initTable(this._answers, -1);
+    console.log(this._startContactProcess);
   }
 
   private _initFilter() {
