@@ -11,10 +11,10 @@
   <!-- header -->
   <section [ngClass]="{'header_sticky': scrollOn}" class="container grid-2xl fluid p-top-10 bg-white">
     <div class="column col-sm-12 col-11 col-mx-auto">
-      <div [ngStyle]="{'min-height': '60px'}" class="flex-between flex-wrap">
+      <div style="min-height: 60px" class="flex-between flex-wrap">
 
         <!-- title -->
-        <h2 [ngStyle]="{'font-size': '22px'}" class="title m-bottom-15">
+        <h2  style="font-size: 22px" class="title m-bottom-15">
           {{ 'PROJECT_SETUP.TITLE' | translate }}
         </h2>
         <!-- /title -->
@@ -29,8 +29,8 @@
             class="button is-link is-sm m-bottom-15 p-no"
             id="btn-quiz-example">
             <img
-              [ngStyle]="{'width': '18px'}"
               alt=""
+              width="18"
               class="icon-left"
               src="https://res.cloudinary.com/umi/image/upload/app/default-images/pictos/picto-example.svg">
             {{ 'COMMON.BUTTON.EXAMPLE' | translate }}
@@ -46,7 +46,7 @@
             id="btn-preview"
             target="_blank">
             <img
-              [ngStyle]="{'width': '20px'}"
+              width="20"
               src="https://res.cloudinary.com/umi/image/upload/app/default-images/pictos/picto-eye.svg"
               alt=""
               class="icon-left">
@@ -100,7 +100,7 @@
           <button
             (click)="onSaveProject($event)"
             [disabled]="isSavingProject"
-            [ngStyle]="{'min-width': '100px'}"
+            style="min-width: 100px"
             class="button is-primary is-sm badge is-icon"
             [ngClass]="{'is-active': activeSaveBadge}"
             id="btn-project-save">

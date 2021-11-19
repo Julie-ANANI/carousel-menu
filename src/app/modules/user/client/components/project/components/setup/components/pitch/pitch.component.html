@@ -22,7 +22,7 @@
           <button
             (click)="onRequestProofreading($event)"
             [disabled]="isRequesting || isSaving || isSubmitting"
-            [ngStyle]="{ 'min-height': '46px', 'min-width': '226px' }"
+            style="min-width: 226px; min-height: 46px"
             class="button is-community is-sm is-outlined"
             id="btn-request">
             <ng-container *ngIf="!isRequesting; else defReqText">
@@ -48,7 +48,7 @@
         <button
           (click)="onOpenModal($event)"
           [disabled]="isRequesting || isSaving || isSubmitting"
-          [ngStyle]="{ 'min-height': '46px', 'min-width': '226px' }"
+          style="min-width: 226px; min-height: 46px"
           class="button is-community is-sm m-bottom-15"
           id="btn-submit">
           {{ 'COMMON.BUTTON.VALIDATE_DEFINITIVELY' | translate }}
@@ -108,7 +108,7 @@
           <!-- content for section === 'MEDIA' -->
           <div
             *ngIf="section.type === 'MEDIA'"
-            [ngStyle]="{ 'margin-left': '-10px', 'margin-right': '-15px' }"
+            style="margin-left: -10px; margin-right: -15px"
             class="m-top-10 d-flex flex-wrap">
 
             <!-- principal media -->
