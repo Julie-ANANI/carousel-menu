@@ -26,7 +26,7 @@
 
 
     <!-- abstract -->
-    <div [ngStyle]="{ 'margin-bottom': '46px' }">
+    <div style="margin-bottom: 46px">
       <label>
 
         <textarea
@@ -127,11 +127,11 @@
   <!-- view side -->
   <div class="content-wrapper has-border is-justify text-center is-fixed">
 
-    <h4 [ngStyle]="{ 'margin-bottom': '48px' }">{{ section.title }}</h4>
+    <h4 style="margin-bottom: 48px">{{ section.title }}</h4>
 
     <!-- kpi / legend -->
-    <div [ngStyle]="{ 'min-height': '116px' }" class="m-bottom-10">
-      <h5 [ngStyle]="{ 'font-size': '85px', 'line-height': '75px' }" class="text-medium m-no-bottom">
+    <div style="min-height: 116px" class="m-bottom-10">
+      <h5 style="font-size: 85px; line-height: 75px" class="text-medium m-no-bottom">
         {{ content.kpi }}
       </h5>
       <p class="text-lg text-medium">{{ content.legend }}</p>
@@ -140,7 +140,7 @@
 
 
     <!-- examples -->
-    <div [ngStyle]="{ 'min-height': '38px' }" class="text-sm m-bottom-15">
+    <div style="min-height: 38px" class="text-sm m-bottom-15">
       {{ content.examples }}
     </div>
     <!-- /examples -->

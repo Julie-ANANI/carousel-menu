@@ -355,8 +355,7 @@
             <!-- roadmap -->
             <div
               *ngIf="canAccess(['view', 'roadmap']) || canAccess(['edit', 'roadmap'])"
-              [ngStyle]="{'align-items': 'flex-start'}"
-              class="content">
+              class="content align-start">
 
               <label>Roadmap</label>
 
@@ -364,7 +363,7 @@
                 <div class="edit-wrapper">
                   <ul *ngIf="mission.milestoneDates && mission.milestoneDates.length" class="roadmap-wrapper w-full">
                     <li *ngIf="mission.milestoneDates.length > 1" class="active">
-                    <span [ngStyle]="{'margin-top': '3px'}" class="d-flex flex-d-column align-center">
+                    <span style="margin-top: 3px" class="d-flex flex-d-column align-center">
                       <span class="shape is-circle"></span>
                       <span class="divider-vert active"></span>
                     </span>
@@ -372,7 +371,7 @@
                     </li>
                     <ng-container *ngFor="let milestone of milestones; let i = index;">
                       <li *ngIf="milestone.dueDate" [ngClass]="{ 'active': isMilestoneReached(milestone.dueDate) }">
-                      <span [ngStyle]="{'margin-top': '3px'}" class="d-flex flex-d-column align-center">
+                      <span style="margin-top: 3px" class="d-flex flex-d-column align-center">
                         <span class="shape is-circle"></span>
                         <span
                           *ngIf="i < mission.milestoneDates.length - 1"
