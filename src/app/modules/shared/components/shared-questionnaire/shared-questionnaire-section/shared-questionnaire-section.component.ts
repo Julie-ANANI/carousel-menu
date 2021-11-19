@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {MissionQuestion, MissionTemplateSection} from '../../../../../models/mission';
+import {MissionCardTitle, MissionQuestion, MissionTemplateSection} from '../../../../../models/mission';
 import {picto, Picto} from '../../../../../models/static-data/picto';
 import {TranslateService} from '@ngx-translate/core';
 import {MissionQuestionService} from '../../../../../services/mission/mission-question.service';
@@ -11,6 +11,7 @@ import {first} from 'rxjs/operators';
 import {HttpErrorResponse} from '@angular/common/http';
 import {ErrorFrontService} from '../../../../../services/error/error-front.service';
 import {TranslateNotificationsService} from '../../../../../services/notifications/notifications.service';
+import {InnovCardSection} from '../../../../../models/innov-card';
 
 interface AddQuestion {
   from: 'SCRATCH' | 'LIBRARY';
@@ -28,6 +29,10 @@ interface IdentifierError {
   styleUrls: ['./shared-questionnaire-section.component.scss']
 })
 export class SharedQuestionnaireSectionComponent implements OnInit {
+
+  get showTitlesLang(): string {
+    return this._showTitlesLang;
+  }
 
   get isCheckingAvailability(): boolean {
     return this._isCheckingAvailability;
@@ -75,8 +80,8 @@ export class SharedQuestionnaireSectionComponent implements OnInit {
     return this._missionQuestionService.questionnaireLangs;
   }
 
-  get sectionsNames(): Array<string> {
-    return this._missionQuestionService.sectionsNames;
+  get cardsSections(): MissionCardTitle {
+    return this._missionQuestionService.cardsSections;
   }
 
   get sections(): Array<MissionTemplateSection> {
@@ -175,6 +180,8 @@ export class SharedQuestionnaireSectionComponent implements OnInit {
 
   private _isCheckingAvailability = false;
 
+  private _showTitlesLang = this.questionnaireLangs.length ? this.questionnaireLangs[0] : 'en';
+
   constructor(private _translateService: TranslateService,
               private _rolesFrontService: RolesFrontService,
               private _missionService: MissionService,
@@ -226,8 +233,47 @@ export class SharedQuestionnaireSectionComponent implements OnInit {
     }
   }
 
-  public sectionIdentifier(): string {
-    return this.sectionsNames.length > 0 ? this.sectionsNames[Number(this._section.identifier)] : this._section.identifier;
+  public changeTitlesLang() {
+    this._showTitlesLang = this._showTitlesLang === 'fr' ? 'en' : 'fr';
+  }
+
+  public onChangeCardSection(value: string) {
+    this._section.identifier = '';
+
+    if (value === 'NOTHING') {
+      this._section.type = 'NOTHING';
+    } else {
+      const _find = this.cardsSections[this._showTitlesLang].find((_section: InnovCardSection) => _section._id === value);
+      if (_find.type === 'OTHER') {
+        this._section.identifier = _find.title;
+      }
+      this._section.type = (_find.type) as any;
+    }
+
+    this.notifyChanges();
+  }
+
+  public cardSectionName(): string {
+    if (this.isLibraryView) {
+      return this._section.type;
+    }
+
+    if (!!this.cardsSections[this._showTitlesLang].length) {
+      const _find = this.cardsSections[this._showTitlesLang].find((_section: InnovCardSection) => {
+        return (_section.title === this._section.identifier) || (_section.type === this._section.type);
+      });
+      return _find && _find.title ? _find.title : this._section.type;
+    }
+
+    return this._section.type;
+  }
+
+  public cardSectionTitle(): string {
+    if (this._section.identifier) {
+      return this._section.identifier;
+    }
+    const _find = this.cardsSections[this._showTitlesLang].find((_section: InnovCardSection) => _section.type === this._section.type);
+    return _find && _find.title ? _find.title : this._section.type;
   }
 
   public notifyChanges() {

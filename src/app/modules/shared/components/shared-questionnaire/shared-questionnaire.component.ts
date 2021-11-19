@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {MissionTemplate} from '../../../../models/mission';
+import {MissionCardTitle, MissionTemplate} from '../../../../models/mission';
 import {MissionQuestionService} from '../../../../services/mission/mission-question.service';
 import {takeUntil} from 'rxjs/operators';
 import {Subject} from 'rxjs';
@@ -50,8 +50,8 @@ export class SharedQuestionnaireComponent implements OnInit {
    * so for that to identify which section belongs to which we assign the section name of card as an identifier.
    * @param value
    */
-  @Input() set sectionsNames(value: Array<string>) {
-    this._missionQuestionService.sectionsNames = value;
+  @Input() set cardsSections(value: MissionCardTitle) {
+    this._missionQuestionService.cardsSections = value;
   }
 
   @Output() templateChange: EventEmitter<MissionTemplate> = new EventEmitter<MissionTemplate>();

@@ -23,7 +23,7 @@
 
         <label class="tooltip m-right-20" data-tooltip="Section type">
           <select class="form-select is-sm" disabled>
-            <option>{{ sectionIdentifier() || section.type | titlecase }}</option>
+            <option>{{ cardSectionName() | titlecase }}</option>
           </select>
         </label>
 
@@ -47,15 +47,49 @@
       <!-- edit -->
       <ng-container *ngIf="editSection">
 
-        <ng-container *ngIf="accessPath.length && !canAccess(['section', 'edit', 'type']); else defSEditType">
-          <p class="m-right-20 m-no-bottom">{{ section.type }}</p>
+        <ng-container *ngIf="isLibraryView; else defCardSection">
+          <ng-container *ngIf="accessPath.length && !canAccess(['section', 'edit', 'type']); else defSEditType">
+            <p class="m-right-20 m-no-bottom">{{ section.type | titlecase }}</p>
+          </ng-container>
+          <ng-template #defSEditType>
+            <label class="m-right-20">
+              <select (change)="notifyChanges()" [(ngModel)]="section.type" class="form-select is-sm">
+                <option *ngFor="let type of sectionTypes" [ngValue]="type">{{type | titlecase}}</option>
+              </select>
+            </label>
+          </ng-template>
         </ng-container>
-        <ng-template #defSEditType>
-          <label class="m-right-20">
-            <select (change)="notifyChanges()" [(ngModel)]="section.type" class="form-select is-sm">
-              <option *ngFor="let type of sectionTypes" [ngValue]="type">{{type | titlecase}}</option>
+
+        <ng-template #defCardSection>
+          <label [ngClass]="{'m-right-20': questionnaireLangs.length === 1}">
+            <select
+              #identifier
+              (change)="onChangeCardSection(identifier.value)"
+              [id]="section.type | lowercase"
+              class="form-select is-sm">
+              <option>{{ cardSectionTitle() | titlecase }}</option>
+              <option>--------------</option>
+              <ng-container *ngFor="let cardSection of cardsSections[showTitlesLang]">
+                <ng-container *ngIf="cardSectionTitle() !== cardSection.title">
+                  <option [value]="cardSection._id">{{ cardSection.title }}</option>
+                </ng-container>
+              </ng-container>
+              <option *ngIf="section.type !== 'NOTHING'" [value]="'NOTHING'">Nothing</option>
             </select>
           </label>
+
+          <ng-container *ngIf="questionnaireLangs.length > 1">
+            <div class="m-right-20">
+              <div (click)="changeTitlesLang()" class="icon-container is-overlay">
+              <span
+                [attr.data-tooltip]="'Show card titles of ' + (showTitlesLang === 'fr' ? 'English' : 'French')"
+                class="tooltip">
+                <i class="fas fa-sync text-white"></i>
+              </span>
+              </div>
+            </div>
+          </ng-container>
+
         </ng-template>
 
         <!-- name -->

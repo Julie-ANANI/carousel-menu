@@ -1,6 +1,7 @@
 import { Innovation } from './innovation';
 import { User } from './user.model';
 import { Multiling } from './multiling';
+import { InnovCardSection } from './innov-card';
 
 
 export type MissionType = 'USER' | 'CLIENT' | 'DEMO' | 'TEST';
@@ -9,6 +10,11 @@ export type MissionQuestionType = 'checkbox' | 'radio' | 'stars' | 'textarea' | 
 export type MissionQuestionParameterType = 'color' | 'date' |'datetime-local' | 'email' | 'month' | 'number'
   | 'password' | 'tel' | 'text' | 'time' | 'url' | 'week' | '';
 
+
+export interface MissionCardTitle {
+  en: Array<InnovCardSection>;
+  fr: Array<InnovCardSection>;
+}
 
 export interface MissionTemplateSectionEntry {
   name: string;

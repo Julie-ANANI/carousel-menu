@@ -59,9 +59,9 @@
       <ng-container *ngIf="hasMissionTemplate; else oldPresets">
         <app-shared-questionnaire
           (templateChange)="updatePreset($event, 'TEMPLATE')"
+          [cardsSections]="cardsSections"
           [isEditable]="canAccess(['edit'])"
           [questionnaireLanguages]="cardsLanguages"
-          [sectionsNames]="sectionsNames"
           [template]="mission.template">
         </app-shared-questionnaire>
       </ng-container>

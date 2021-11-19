@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import {
+  MissionCardTitle,
   MissionQuestion,
   MissionQuestionEntry,
   MissionQuestionOption,
@@ -14,6 +15,14 @@ import { replaceNumberRegex } from '../../utils/regex';
 
 @Injectable({providedIn: 'root'})
 export class MissionQuestionService {
+
+  get cardsSections(): MissionCardTitle {
+    return this._cardsSections;
+  }
+
+  set cardsSections(value: MissionCardTitle) {
+    this._cardsSections = value;
+  }
 
   get allQuestions(): Array<MissionQuestion> {
     return this._allQuestions;
@@ -101,9 +110,17 @@ export class MissionQuestionService {
 
   /**
    * name of the sections in the innovation card.
+   * for the old presets.
    * @private
    */
   private _sectionsNames: Array<string> = [];
+
+  /**
+   * store the info of all cards of innovation.
+   * instead of showing the section type we show the Section name and behind we change the section type.
+   * @private
+   */
+  private _cardsSections: MissionCardTitle = <MissionCardTitle>{};
 
   private _questionnaireLangs: Array<string> = ['en', 'fr'];
 

@@ -12,7 +12,7 @@ import {first, takeUntil} from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
 import { InnovationFrontService } from '../../../../../../services/innovation/innovation-front.service';
 import {isPlatformBrowser} from '@angular/common';
-import {Mission, MissionTemplate} from '../../../../../../models/mission';
+import {Mission, MissionCardTitle, MissionTemplate} from '../../../../../../models/mission';
 import {ErrorFrontService} from '../../../../../../services/error/error-front.service';
 
 @Component({
@@ -21,6 +21,10 @@ import {ErrorFrontService} from '../../../../../../services/error/error-front.se
 })
 
 export class AdminProjectQuestionnaireComponent implements OnInit, OnDestroy {
+
+  get cardsSections(): MissionCardTitle {
+    return this._cardsSections;
+  }
 
   private _innovation: Innovation = <Innovation>{};
 
@@ -32,11 +36,13 @@ export class AdminProjectQuestionnaireComponent implements OnInit, OnDestroy {
 
   private _chosenPreset: Preset = <Preset>{};
 
-  private _sectionsNames: Array<string>;
+  private _sectionsNames: Array<string> = [];
 
   private _ngUnsubscribe: Subject<any> = new Subject<any>();
 
   private _cardsLanguages: Array<string> = [];
+
+  private _cardsSections: MissionCardTitle = <MissionCardTitle>{};
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _autocompleteService: AutocompleteService,
@@ -77,28 +83,37 @@ export class AdminProjectQuestionnaireComponent implements OnInit, OnDestroy {
     let customSection = false;
     let frenchTitles: Array<string> = [];
     let englishTitles: Array<string> = [];
+    this._cardsSections = {
+      en: [],
+      fr: [],
+    };
 
     this._innovation.innovationCards.forEach(card => {
       if (card.sections) {
-        if (card.sections.some(section => section.type === 'OTHER' && !!section.visibility)) {
-          customSection = true;
-        }
-        const titles = card.sections.filter(s => !!s.visibility).map(s => s.title);
-        if (card.lang === 'fr') {
-          frenchTitles = titles;
+        if (this.hasMissionTemplate) {
+          this._cardsSections[card.lang] = card.sections.filter((_section) => !!_section.visibility);
         } else {
-          englishTitles = titles;
+          if (card.sections.some(section => section.type === 'OTHER')) {
+            customSection = true;
+          }
+          const titles = card.sections.map(s => s.title);
+          if (card.lang === 'fr') {
+            frenchTitles = titles;
+          } else {
+            englishTitles = titles;
+          }
         }
       }
     });
 
-    const sectionsNb = frenchTitles.length > englishTitles.length ? frenchTitles.length : englishTitles.length;
-    if (sectionsNb > 2 || customSection) {
-      for (let i = 0; i < sectionsNb; i++) {
-        this._sectionsNames.push(`${englishTitles[i] || 'No section'} || ${frenchTitles[i] || 'Pas de section'}`);
+    if (!this.hasMissionTemplate) {
+      const sectionsNb = frenchTitles.length > englishTitles.length ? frenchTitles.length : englishTitles.length;
+      if (sectionsNb > 2 || customSection) {
+        for (let i = 0; i < sectionsNb; i++) {
+          this._sectionsNames.push(`${englishTitles[i] || 'No section'} || ${frenchTitles[i] || 'Pas de section'}`);
+        }
       }
     }
-
   }
 
   private _saveInnovation() {
