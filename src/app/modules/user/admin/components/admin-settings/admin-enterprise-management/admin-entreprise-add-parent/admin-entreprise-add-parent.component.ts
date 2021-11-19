@@ -11,7 +11,6 @@ import { Table, Config, Column } from '@umius/umi-common-component/models';
 
 @Component({
   templateUrl: './admin-entreprise-add-parent.component.html',
-  styleUrls: ['./admin-entreprise-add-parent.component.scss'],
 })
 export class AdminEntrepriseAddParentComponent implements OnInit {
   private _companiesToAddParent: Array<any> = [];

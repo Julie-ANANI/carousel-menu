@@ -3,7 +3,6 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 @Component({
   selector: 'sqFilter',
   templateUrl: './shared-filter-input.component.html',
-  styleUrls: ['./shared-filter-input.component.scss']
 })
 export class SharedFilterInputComponent {
   @Input() config: any;

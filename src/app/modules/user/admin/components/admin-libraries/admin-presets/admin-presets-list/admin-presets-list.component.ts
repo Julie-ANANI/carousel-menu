@@ -13,7 +13,6 @@ import { RolesFrontService } from '../../../../../../../services/roles/roles-fro
 
 @Component({
   templateUrl: './admin-presets-list.component.html',
-  styleUrls: ['./admin-presets-list.component.scss']
 })
 
 export class AdminPresetsListComponent implements OnInit {

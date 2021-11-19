@@ -15,7 +15,6 @@ import { MissionQuestionService } from '../../../../../../services/mission/missi
 @Component({
   selector: 'app-admin-use-cases-library',
   templateUrl: './admin-use-cases-library.component.html',
-  styleUrls: ['./admin-use-cases-library.component.scss']
 })
 export class AdminUseCasesLibraryComponent implements OnInit {
 

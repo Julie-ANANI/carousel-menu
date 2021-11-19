@@ -11,7 +11,6 @@ import { Table, Config } from '@umius/umi-common-component/models';
 @Component({
   selector: 'app-sidebar-search-history',
   templateUrl: './sidebar-search-history.component.html',
-  styleUrls: ['./sidebar-search-history.component.scss'],
 })
 export class SidebarSearchHistoryComponent {
   @Input() accessPath: Array<string> = [];

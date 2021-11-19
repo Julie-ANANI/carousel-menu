@@ -7,7 +7,6 @@ import { TranslateNotificationsService } from '../../../../../../../services/not
 @Component({
   selector: 'attachment-subset',
   templateUrl: 'admin-tag-attachment-subset.component.html',
-  styleUrls: ['admin-tag-attachment-subset.component.scss']
 })
 export class AdminTagAttachmentsSubsetComponent implements OnInit {
 

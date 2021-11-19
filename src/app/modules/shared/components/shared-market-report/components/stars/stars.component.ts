@@ -13,7 +13,6 @@ import {MissionQuestionService} from '../../../../../../services/mission/mission
 @Component({
   selector: 'app-stars',
   templateUrl: 'stars.component.html',
-  styleUrls: ['stars.component.scss']
 })
 
 export class StarsComponent implements OnInit, OnDestroy {

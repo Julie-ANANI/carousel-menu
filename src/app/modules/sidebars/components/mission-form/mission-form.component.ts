@@ -8,7 +8,6 @@ import { EmailService } from '../../../../services/email/email.service';
 @Component({
   selector: 'app-mission-form',
   templateUrl: './mission-form.component.html',
-  styleUrls: ['./mission-form.component.scss'],
 })
 export class MissionFormComponent {
   @Input() set mission(value: Mission) {

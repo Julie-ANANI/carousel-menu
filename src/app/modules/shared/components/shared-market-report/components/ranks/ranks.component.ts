@@ -13,7 +13,6 @@ import {MissionQuestionService} from '../../../../../../services/mission/mission
 @Component({
   selector: 'app-ranks',
   templateUrl: './ranks.component.html',
-  styleUrls: ['./ranks.component.scss']
 })
 export class RanksComponent implements OnInit, OnDestroy {
 

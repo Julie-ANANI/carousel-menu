@@ -24,7 +24,6 @@ type template = 'ADMIN' | 'CLIENT' | '';
 @Component({
   selector: 'app-shared-follow-up',
   templateUrl: './shared-follow-up.component.html',
-  styleUrls: ['./shared-follow-up.component.scss']
 })
 
 export class SharedFollowUpComponent implements OnInit {

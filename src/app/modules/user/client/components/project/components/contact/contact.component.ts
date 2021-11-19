@@ -11,7 +11,6 @@ import {HttpErrorResponse} from '@angular/common/http';
 
 @Component({
   templateUrl: './contact.component.html',
-  styleUrls: ['./contact.component.scss']
 })
 export class ContactComponent implements OnInit, OnDestroy {
 

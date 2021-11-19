@@ -4,7 +4,6 @@ import { EmailSignature } from '../../../../models/email-signature';
 @Component({
   selector: 'app-sidebar-workflow',
   templateUrl: './sidebar-workflow.component.html',
-  styleUrls: ['./sidebar-workflow.component.scss']
 })
 
 export class SidebarWorkflowComponent {

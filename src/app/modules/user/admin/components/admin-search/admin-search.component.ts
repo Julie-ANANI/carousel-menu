@@ -6,7 +6,6 @@ import {RolesFrontService} from '../../../../../services/roles/roles-front.servi
 @Component({
   moduleId: module.id,
   templateUrl: './admin-search.component.html',
-  styleUrls: ['./admin-search.component.scss']
 })
 
 export class AdminSearchComponent {

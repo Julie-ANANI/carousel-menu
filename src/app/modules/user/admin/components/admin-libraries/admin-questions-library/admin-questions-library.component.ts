@@ -25,7 +25,6 @@ interface IdentifierError {
 
 @Component({
   templateUrl: './admin-questions-library.component.html',
-  styleUrls: ['./admin-questions-library.component.scss']
 })
 export class AdminQuestionsLibraryComponent implements OnInit {
 

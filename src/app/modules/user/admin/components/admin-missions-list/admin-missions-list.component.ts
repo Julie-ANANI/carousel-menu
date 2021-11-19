@@ -10,7 +10,6 @@ import {SidebarInterface} from '../../../../sidebars/interfaces/sidebar-interfac
 @Component({
   selector: 'app-admin-missions-list',
   templateUrl: './admin-missions-list.component.html',
-  styleUrls: ['./admin-missions-list.component.scss']
 })
 export class AdminMissionsListComponent implements OnInit {
 

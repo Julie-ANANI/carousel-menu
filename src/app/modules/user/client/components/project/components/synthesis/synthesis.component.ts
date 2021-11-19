@@ -6,7 +6,6 @@ import {InnovationFrontService} from '../../../../../../../services/innovation/i
 
 @Component({
   templateUrl: './synthesis.component.html',
-  styleUrls: ['./synthesis.component.scss']
 })
 
 export class SynthesisComponent implements OnInit, OnDestroy {

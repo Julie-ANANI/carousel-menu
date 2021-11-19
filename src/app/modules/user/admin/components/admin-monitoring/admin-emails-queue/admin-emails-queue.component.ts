@@ -10,7 +10,6 @@ import { first } from 'rxjs/operators';
 @Component({
   selector: 'app-admin-email-queue',
   templateUrl: 'admin-emails-queue.component.html',
-  styleUrls: ['admin-emails-queue.component.scss']
 })
 export class AdminEmailQueueComponent implements OnInit {
 

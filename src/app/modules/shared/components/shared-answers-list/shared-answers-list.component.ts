@@ -6,7 +6,6 @@ import { Table } from '@umius/umi-common-component/models';
 @Component({
   selector: 'app-shared-answers-list',
   templateUrl: './shared-answers-list.component.html',
-  styleUrls: ['./shared-answers-list.component.scss']
 })
 
 export class SharedAnswersListComponent {

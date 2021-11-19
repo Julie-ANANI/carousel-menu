@@ -7,7 +7,6 @@ type Template = 'EDIT_NAME' | '';
 @Component({
   selector: 'app-sidebar-campaign',
   templateUrl: './sidebar-campaign.component.html',
-  styleUrls: ['./sidebar-campaign.component.scss']
 })
 
 export class SidebarCampaignComponent implements OnInit {

@@ -8,7 +8,6 @@ import {AutocompleteService} from '../../../services/autocomplete/autocomplete.s
 @Component({
   selector: 'app-auto-complete-company',
   templateUrl: './auto-complete-company.component.html',
-  styleUrls: ['./auto-complete-company.component.scss']
 })
 export class AutoCompleteCompanyComponent implements OnInit, OnDestroy {
 

@@ -5,7 +5,6 @@ import { CommonService } from '../../../../../../../services/common/common.servi
 @Component({
   selector: 'app-admin-section-type-bar',
   templateUrl: './type-bar.component.html',
-  styleUrls: ['./type-bar.component.scss']
 })
 
 export class TypeBarComponent {

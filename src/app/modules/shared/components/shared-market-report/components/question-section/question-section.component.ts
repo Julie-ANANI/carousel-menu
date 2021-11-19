@@ -13,7 +13,6 @@ import {MissionQuestion} from '../../../../../../models/mission';
 @Component({
   selector: 'app-question-section',
   templateUrl: 'question-section.component.html',
-  styleUrls: ['question-section.component.scss']
 })
 
 export class QuestionSectionComponent implements OnInit {

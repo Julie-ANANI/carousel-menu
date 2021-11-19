@@ -19,7 +19,6 @@ export interface SelectedProfessional extends Professional {
 @Component({
   selector: 'app-shared-ambassadors-list',
   templateUrl: './shared-ambassador-list.component.html',
-  styleUrls: ['./shared-ambassador-list.component.scss']
 })
 
 export class SharedAmbassadorListComponent {

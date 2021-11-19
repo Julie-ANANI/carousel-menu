@@ -10,7 +10,6 @@ import {SpinnerService} from '../../../services/spinner/spinner.service';
 @Component({
   selector: 'app-logout',
   templateUrl: './logout.component.html',
-  styleUrls: ['./logout.component.scss']
 })
 
 export class LogoutComponent implements OnInit {

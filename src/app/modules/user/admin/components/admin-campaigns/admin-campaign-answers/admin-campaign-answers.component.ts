@@ -21,7 +21,6 @@ import {InnovationFrontService} from '../../../../../../services/innovation/inno
 
 @Component({
   templateUrl: './admin-campaign-answers.component.html',
-  styleUrls: ['./admin-campaign-answers.component.scss']
 })
 
 export class AdminCampaignAnswersComponent implements OnInit {

@@ -18,7 +18,6 @@ export interface SelectedProfessional extends Professional {
 
 @Component({
   templateUrl: './admin-professionals-list.component.html',
-  styleUrls: ['./admin-professionals-list.component.scss']
 })
 
 export class AdminProfessionalsListComponent implements OnInit {

@@ -16,7 +16,6 @@ interface Tab {
 @Component({
   selector: 'app-admin-project-analysis',
   templateUrl: './admin-project-analysis.component.html',
-  styleUrls: ['./admin-project-analysis.component.scss']
 })
 
 export class AdminProjectAnalysisComponent implements OnInit, OnDestroy {

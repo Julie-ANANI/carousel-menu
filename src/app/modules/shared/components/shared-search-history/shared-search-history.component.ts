@@ -23,7 +23,6 @@ import * as _ from 'lodash';
 @Component({
   selector: 'app-shared-search-history',
   templateUrl: './shared-search-history.component.html',
-  styleUrls: ['./shared-search-history.component.scss']
 })
 
 export class SharedSearchHistoryComponent implements OnInit {

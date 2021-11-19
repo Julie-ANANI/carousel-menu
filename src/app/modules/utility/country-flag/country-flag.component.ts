@@ -3,7 +3,16 @@ import { countries } from '../../../models/static-data/country';
 
 @Component({
   selector: 'app-utility-country-flag',
-  templateUrl: './country-flag.component.html',
+  template: `
+    <div *ngIf="countryToDisplay" [attr.data-tooltip]="name" class="tooltip d-flex" id="country-flag">
+      <img
+        [height]="height"
+        [ngStyle]="{ 'height': height + 'px', 'width': width + 'px' }"
+        [src]="url"
+        [width]="width"
+        alt=" ">
+    </div>
+  `,
   styleUrls: ['./country-flag.component.scss'],
 })
 export class CountryFlagComponent {

@@ -16,7 +16,6 @@ import { Subject } from 'rxjs';
 
 @Component({
   templateUrl: 'admin-project-tags-pool.component.html',
-  styleUrls: ['admin-project-tags-pool.component.scss']
 })
 
 export class AdminProjectTagsPoolComponent implements OnInit, OnDestroy {

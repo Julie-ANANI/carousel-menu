@@ -11,7 +11,6 @@ import {oldColorsToNewMapping} from "../../../../utils/chartColors";
 @Component({
   selector: 'app-utility-piechart-executive',
   templateUrl: 'piechart-executive.component.html',
-  styleUrls: ['piechart-executive.component.scss']
 })
 
 export class PiechartExecutiveComponent {

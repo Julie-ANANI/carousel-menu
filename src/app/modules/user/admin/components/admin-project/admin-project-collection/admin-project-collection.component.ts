@@ -29,7 +29,6 @@ import { Table, Config } from '@umius/umi-common-component/models';
 
 @Component({
   templateUrl: './admin-project-collection.component.html',
-  styleUrls: ['./admin-project-collection.component.scss'],
 })
 export class AdminProjectCollectionComponent implements OnInit, OnDestroy {
   private _isLoading = true;

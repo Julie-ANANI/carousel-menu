@@ -2,11 +2,15 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-admin-search-results',
-  templateUrl: './admin-search-results.component.html',
-  styleUrls: ['./admin-search-results.component.scss']
+  template:
+    `
+      <app-shared-search-results></app-shared-search-results>
+
+    `
 })
 export class AdminSearchResultsComponent implements OnInit {
-  constructor() {}
+  constructor() {
+  }
 
   ngOnInit(): void {
   }

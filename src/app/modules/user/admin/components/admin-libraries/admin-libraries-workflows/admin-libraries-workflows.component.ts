@@ -14,7 +14,6 @@ import { Response } from "../../../../../../models/response";
 
 @Component({
   templateUrl: 'admin-libraries-workflows.component.html',
-  styleUrls: ['admin-libraries-workflows.component.scss']
 })
 
 export class AdminLibrariesWorkflowsComponent implements OnInit {

@@ -5,7 +5,6 @@ import { CommonService } from '../../../../../../../services/common/common.servi
 @Component({
   selector: 'app-admin-section-type-kpi',
   templateUrl: './type-kpi.component.html',
-  styleUrls: ['./type-kpi.component.scss']
 })
 
 export class TypeKpiComponent {

@@ -7,7 +7,6 @@ import { ExecutiveReportFrontService } from '../../../../../../services/executiv
 @Component({
   selector: 'app-admin-executive-targeting',
   templateUrl: './executive-targeting.component.html',
-  styleUrls: ['./executive-targeting.component.scss']
 })
 
 export class ExecutiveTargetingComponent {

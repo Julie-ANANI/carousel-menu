@@ -4,10 +4,9 @@ import { Campaign } from '../../../../../../models/campaign';
 
 @Component({
   templateUrl: './admin-campaign-search-results.component.html',
-  styleUrls: ['./admin-campaign-search-results.component.scss']
 })
 export class AdminCampaignSearchResultsComponent implements OnInit {
-  
+
   private _campaign: Campaign;
 
   constructor(private _activatedRoute: ActivatedRoute) { }

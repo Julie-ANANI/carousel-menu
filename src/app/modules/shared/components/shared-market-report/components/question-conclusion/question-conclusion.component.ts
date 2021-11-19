@@ -17,7 +17,6 @@ import {MissionQuestionService} from '../../../../../../services/mission/mission
 @Component({
   selector: 'app-question-conclusion',
   templateUrl: './question-conclusion.component.html',
-  styleUrls: ['./question-conclusion.component.scss']
 })
 
 export class QuestionConclusionComponent implements OnInit {

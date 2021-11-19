@@ -20,7 +20,6 @@ export interface SelectedProfessional extends Professional {
 @Component({
   selector: 'app-shared-professionals-list',
   templateUrl: './shared-professionals-list.component.html',
-  styleUrls: ['./shared-professionals-list.component.scss'],
 })
 export class SharedProfessionalsListComponent {
   @Input() accessPath: Array<string> = [];

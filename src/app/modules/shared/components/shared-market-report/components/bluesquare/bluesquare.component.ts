@@ -4,7 +4,6 @@ import {Picto, picto} from '../../../../../../models/static-data/picto';
 @Component({
   selector: 'app-bluesquare',
   templateUrl: 'bluesquare.component.html',
-  styleUrls: ['bluesquare.component.scss']
 })
 
 export class BluesquareComponent {

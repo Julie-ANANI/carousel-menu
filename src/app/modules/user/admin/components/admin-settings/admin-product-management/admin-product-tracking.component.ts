@@ -3,7 +3,6 @@ import { RolesFrontService } from '../../../../../../services/roles/roles-front.
 
 @Component({
   templateUrl: './admin-product-tracking.component.html',
-  styleUrls: ['./admin-product-tracking.component.scss']
 })
 
 export class AdminProductTrackingComponent implements OnInit {

@@ -10,7 +10,6 @@ import { first } from 'rxjs/operators';
 @Component({
   selector: 'app-admin-emails-library',
   templateUrl: 'admin-emails-library.component.html',
-  styleUrls: ['admin-emails-library.component.scss']
 })
 export class AdminEmailsLibraryComponent implements OnInit {
 
