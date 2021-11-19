@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 /***
  * this is to show the banner on the top. In this, you can write any message or
@@ -21,8 +21,26 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
 
 @Component({
   selector: 'app-utility-banner',
-  templateUrl: './banner.component.html',
-  styleUrls: ['./banner.component.scss']
+  template: `
+    <ng-container *ngIf="!!showBanner">
+      <div
+        [ngClass]="background"
+        [ngStyle]="{'position': position}"
+        class="banner animate-fade is-7"
+        id="banner">
+        <div class="m-right-15 text-white">
+          <ng-content></ng-content>
+        </div>
+        <button
+          (click)="onCloseBanner($event)"
+          *ngIf="showCloseBtn"
+          class="close is-background is-xs"
+          id="banner-btn-close">
+        </button>
+      </div>
+    </ng-container>
+  `,
+  styles: ['#banner {top: 0; width: 100%;padding: 8px 12px;z-index: 1;flex-wrap: wrap;font-weight: 600}']
 })
 
 export class BannerComponent {
@@ -45,7 +63,8 @@ export class BannerComponent {
 
   private _showBanner = false;
 
-  constructor() { }
+  constructor() {
+  }
 
   public onCloseBanner(event: Event) {
     event.preventDefault();

@@ -19,7 +19,19 @@ export interface DatePickerDefMonth {
 
 @Component({
   selector: 'app-utility-date-picker',
-  templateUrl: './date-picker.component.html'
+  template: `
+    <div [id]="'date-picker'" class="date-picker">
+      <label>
+        <input
+          (dateChanged)="onDateChanged($event)"
+          [defaultMonth]="defaultMonth"
+          [locale]="currentLang"
+          [options]="datePickerOptions"
+          angular-mydatepicker
+          type="hidden">
+      </label>
+    </div>
+  `
 })
 export class DatePickerComponent implements OnInit, OnChanges {
 
