@@ -5,6 +5,7 @@ import { AuthService } from '../auth/auth.service';
 import { environment } from '../../../environments/environment';
 import { version } from '../../../environments/version';
 import * as Sentry from '@sentry/browser';
+import {RolesFrontService} from '../roles/roles-front.service';
 
 Sentry.init({
   environment: environment.domain,
@@ -19,11 +20,12 @@ export class ErrorService {
 
   constructor(@Inject(PLATFORM_ID) protected platformId: Object,
               private router: Router,
+              private _rolesFrontService: RolesFrontService,
               private auth: AuthService) {}
 
   public handleError(error: Error | HttpErrorResponse) {
 
-    if (environment.production) {
+    if (environment.production && !this._rolesFrontService.isTechRole()) {
 
       Sentry.withScope(scope => {
 
