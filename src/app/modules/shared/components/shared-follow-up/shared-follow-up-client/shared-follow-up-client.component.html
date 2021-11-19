@@ -9,6 +9,7 @@
     </div>
   </ng-container>
 
+  <!-- not start contact process -->
   <ng-container *ngIf="!startContactProcess">
     <div class="container fluid grid-2xl p-top-50 p-bottom-30">
       <div class="column col-sm-12 col-11 col-mx-auto">
@@ -32,7 +33,9 @@
       </div>
     </div>
   </ng-container>
+  <!-- /not start contact process -->
 
+  <!-- start contact process -->
   <ng-container *ngIf="startContactProcess">
     <ng-container [ngSwitch]="contactFields[currentStep]">
       <div class="container fluid grid-2xl">
@@ -364,6 +367,7 @@
       </div>
     </ng-container>
   </ng-container>
+  <!-- start contact process -->
 
 </div>
 
