@@ -8,7 +8,6 @@ import { ShieldService } from '../../../../../../services/shield/shield.service'
 @Component({
   selector: 'app-admin-professional-shield',
   templateUrl: 'admin-professional-shield.component.html',
-  styleUrls: ['admin-professional-shield.component.scss']
 })
 export class AdminProfessionalShieldComponent implements OnInit {
 

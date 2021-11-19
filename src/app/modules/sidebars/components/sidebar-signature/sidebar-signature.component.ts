@@ -8,7 +8,6 @@ import {emailRegEx} from '../../../../utils/regex';
 @Component({
   selector: 'app-sidebar-signature',
   templateUrl: './sidebar-signature.component.html',
-  styleUrls: ['./sidebar-signature.component.scss']
 })
 
 

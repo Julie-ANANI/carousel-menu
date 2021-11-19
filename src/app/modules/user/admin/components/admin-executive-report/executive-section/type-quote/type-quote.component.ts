@@ -5,7 +5,6 @@ import { CommonService } from '../../../../../../../services/common/common.servi
 @Component({
   selector: 'app-admin-section-type-quote',
   templateUrl: './type-quote.component.html',
-  styleUrls: ['./type-quote.component.scss']
 })
 
 export class TypeQuoteComponent {

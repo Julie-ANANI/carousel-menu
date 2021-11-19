@@ -3,7 +3,6 @@ import {RolesFrontService} from '../../../../../../services/roles/roles-front.se
 
 @Component({
   templateUrl: './admin-search-queue.component.html',
-  styleUrls: ['./admin-search-queue.component.scss']
 })
 
 export class AdminSearchQueueComponent {

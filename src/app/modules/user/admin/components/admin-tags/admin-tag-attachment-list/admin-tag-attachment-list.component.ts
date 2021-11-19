@@ -4,8 +4,14 @@ import { Tag } from '../../../../../../models/tag';
 
 @Component({
   selector: 'app-admin-tag-attachment-list',
-  templateUrl: 'admin-tag-attachment-list.component.html',
-  styleUrls: ['admin-tag-attachment-list.component.scss']
+  template:
+  `
+    <div>
+      <h4>Thompson Reuters Attachments</h4>
+      <attachment-subset [type]="'threuters'"></attachment-subset>
+    </div>
+
+  `,
 })
 export class AdminTagAttachmentsListComponent implements OnInit{
 

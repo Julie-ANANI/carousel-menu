@@ -7,7 +7,6 @@ import {takeUntil} from 'rxjs/operators';
 
 @Component({
   templateUrl: 'admin-project-synthesis.component.html',
-  styleUrls: ['admin-project-synthesis.component.scss']
 })
 
 export class AdminProjectSynthesisComponent implements OnInit, OnDestroy {

@@ -21,7 +21,6 @@ import { EnterpriseValueChains, Industries } from '../../../../../../models/stat
 
 @Component({
   templateUrl: './admin-enterprise-management.component.html',
-  styleUrls: ['./admin-enterprise-management.component.scss'],
 })
 export class AdminEnterpriseManagementComponent implements OnInit {
   // private _defaultLogoURI = 'https://res.cloudinary.com/umi/image/upload/app/companies-logo/no-image.png';

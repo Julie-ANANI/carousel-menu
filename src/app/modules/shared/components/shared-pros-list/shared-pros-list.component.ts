@@ -18,7 +18,6 @@ export interface SelectedProfessional extends Professional {
 @Component({
   selector: 'app-shared-pros-list',
   templateUrl: './shared-pros-list.component.html',
-  styleUrls: ['./shared-pros-list.component.scss']
 })
 
 export class SharedProsListComponent {

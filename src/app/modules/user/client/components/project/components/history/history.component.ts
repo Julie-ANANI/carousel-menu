@@ -10,7 +10,6 @@ import { first } from 'rxjs/operators';
 @Component({
   selector: 'app-client-history-project',
   templateUrl: 'history.component.html',
-  styleUrls: ['history.component.scss']
 })
 
 export class HistoryProjectComponent implements OnInit {

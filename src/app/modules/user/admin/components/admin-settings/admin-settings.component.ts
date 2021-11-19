@@ -5,7 +5,6 @@ import { RolesFrontService } from '../../../../../services/roles/roles-front.ser
 
 @Component({
   templateUrl: './admin-settings.component.html',
-  styleUrls: ['./admin-settings.component.scss']
 })
 
 export class AdminSettingsComponent {

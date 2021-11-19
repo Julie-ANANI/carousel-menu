@@ -8,7 +8,6 @@ import {RolesFrontService} from '../../../../services/roles/roles-front.service'
 @Component({
   selector: 'app-shared-questionnaire',
   templateUrl: './shared-questionnaire.component.html',
-  styleUrls: ['./shared-questionnaire.component.scss']
 })
 export class SharedQuestionnaireComponent implements OnInit {
 

@@ -11,7 +11,6 @@ import { Table, Config } from '@umius/umi-common-component/models';
 
 @Component({
   templateUrl: './admin-country-management.component.html',
-  styleUrls: ['./admin-country-management.component.scss']
 })
 
 export class AdminCountryManagementComponent implements OnInit {

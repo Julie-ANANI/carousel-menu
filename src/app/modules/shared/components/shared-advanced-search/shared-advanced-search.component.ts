@@ -4,9 +4,7 @@ import { AnswerService } from '../../../../services/answer/answer.service';
 @Component({
   selector: 'app-shared-advanced-search',
   templateUrl: './shared-advanced-search.component.html',
-  styleUrls: ['./shared-advanced-search.component.scss']
 })
-
 export class SharedAdvancedSearchComponent {
 
   private _config: any = {

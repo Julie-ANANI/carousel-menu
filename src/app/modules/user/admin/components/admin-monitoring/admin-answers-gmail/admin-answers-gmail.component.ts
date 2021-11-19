@@ -5,7 +5,6 @@ import {AnswerService} from '../../../../../../services/answer/answer.service';
 @Component({
   selector: 'app-admin-email-queue',
   templateUrl: 'admin-answers-gmail.component.html',
-  styleUrls: ['admin-answers-gmail.component.scss']
 })
 export class AdminAnswersGmailComponent implements OnInit {
 

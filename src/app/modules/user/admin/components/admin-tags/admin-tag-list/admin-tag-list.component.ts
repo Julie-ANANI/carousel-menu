@@ -13,7 +13,6 @@ import { Config } from '@umius/umi-common-component/models';
 @Component({
   selector: 'app-admin-tag-list',
   templateUrl: 'admin-tag-list.component.html',
-  styleUrls: ['admin-tag-list.component.scss']
 })
 export class AdminTagListComponent implements OnInit {
 

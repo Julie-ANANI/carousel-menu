@@ -15,7 +15,6 @@ import { ErrorFrontService } from '../../../../../services/error/error-front.ser
 
 @Component({
   templateUrl: './admin-users.component.html',
-  styleUrls: ['./admin-users.component.scss']
 })
 
 export class AdminUsersComponent implements OnInit {

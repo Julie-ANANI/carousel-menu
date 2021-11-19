@@ -21,7 +21,6 @@ export interface NewPro {
 @Component({
   selector: 'app-reassign-answer',
   templateUrl: './reassign-answer.component.html',
-  styleUrls: ['./reassign-answer.component.scss']
 })
 
 export class ReassignAnswerComponent {

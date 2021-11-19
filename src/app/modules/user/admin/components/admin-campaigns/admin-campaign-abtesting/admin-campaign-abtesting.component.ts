@@ -11,7 +11,6 @@ import { first } from 'rxjs/operators';
 @Component({
   selector: 'app-admin-campaign-abtesting',
   templateUrl: './admin-campaign-abtesting.component.html',
-  styleUrls: ['./admin-campaign-abtesting.component.scss']
 })
 export class AdminCampaignAbtestingComponent implements OnInit {
 

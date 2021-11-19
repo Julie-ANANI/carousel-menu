@@ -6,7 +6,6 @@ import { RolesFrontService } from '../../../../../../services/roles/roles-front.
 
 @Component({
   templateUrl: './admin-campaign.component.html',
-  styleUrls: ['./admin-campaign.component.scss']
 })
 
 export class AdminCampaignComponent implements OnInit {

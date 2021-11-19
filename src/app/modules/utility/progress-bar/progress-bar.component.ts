@@ -2,7 +2,14 @@ import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-utility-progress-bar',
-  templateUrl: './progress-bar.component.html',
+  template: `
+  <div [attr.data-tooltip]="width" [ngClass]="{ 'tooltip': showTooltip }" [ngStyle]="{ 'height': height }"
+     id="progress-bar">
+  <div [ngStyle]="{ 'width': width, 'background-color': backgroundColor, 'height': height }" class="inner-wrapper">
+    <ng-container *ngIf="value">{{ value }}</ng-container>
+  </div>
+</div>
+  `,
   styleUrls: ['./progress-bar.component.scss']
 })
 

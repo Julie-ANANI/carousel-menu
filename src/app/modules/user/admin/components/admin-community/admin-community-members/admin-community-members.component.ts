@@ -8,7 +8,6 @@ import { Config } from '@umius/umi-common-component/models';
 @Component({
   selector: 'app-admin-community-members',
   templateUrl: './admin-community-members.component.html',
-  styleUrls: ['./admin-community-members.component.scss']
 })
 
 export class AdminCommunityMembersComponent {

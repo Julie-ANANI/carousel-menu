@@ -30,7 +30,6 @@ export interface ProMailsIndicators {
 
 @Component({
   templateUrl: './admin-campaign-history.component.html',
-  styleUrls: ['./admin-campaign-history.component.scss']
 })
 
 export class AdminCampaignHistoryComponent implements OnInit {

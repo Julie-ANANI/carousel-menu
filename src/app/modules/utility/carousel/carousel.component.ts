@@ -4,7 +4,6 @@ import { Carousel } from './models/carousel';
 @Component({
   selector: 'app-carousel',
   templateUrl: './carousel.component.html',
-  styleUrls: ['./carousel.component.scss']
 })
 
 export class CarouselComponent implements OnInit {
@@ -19,7 +18,8 @@ export class CarouselComponent implements OnInit {
 
   private _currentSlideIndex: number = 0;
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit(): void {
   }
@@ -33,7 +33,7 @@ export class CarouselComponent implements OnInit {
 
   public OnClickPrev(event: Event) {
     event.preventDefault();
-    this._currentSlideIndex = this._currentSlideIndex === 0 ? this._currentSlideIndex = this._totalItems - 1 : this._currentSlideIndex -=1;
+    this._currentSlideIndex = this._currentSlideIndex === 0 ? this._currentSlideIndex = this._totalItems - 1 : this._currentSlideIndex -= 1;
   }
 
   public OnClickNext(event: Event) {

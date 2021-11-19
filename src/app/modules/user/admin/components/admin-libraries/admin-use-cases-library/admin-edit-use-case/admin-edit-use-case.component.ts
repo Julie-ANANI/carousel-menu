@@ -20,7 +20,6 @@ interface ConfirmUpdate {
 
 @Component({
   templateUrl: './admin-edit-use-case.component.html',
-  styleUrls: ['./admin-edit-use-case.component.scss']
 })
 export class AdminEditUseCaseComponent implements OnInit {
 

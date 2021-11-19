@@ -4,7 +4,6 @@ import { Observable } from 'rxjs';
 
 @Component({
   templateUrl: 'shared-market-report-example.component.html',
-  styleUrls: ['shared-market-report-example.component.scss']
 })
 
 export class SharedMarketReportExampleComponent implements OnInit {

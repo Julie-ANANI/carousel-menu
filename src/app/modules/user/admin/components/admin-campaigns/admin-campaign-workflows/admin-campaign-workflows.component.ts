@@ -19,7 +19,6 @@ import { AuthService } from '../../../../../../services/auth/auth.service';
 
 @Component({
   templateUrl: './admin-campaign-workflows.component.html',
-  styleUrls: ['./admin-campaign-workflows.component.scss'],
 })
 export class AdminCampaignWorkflowsComponent implements OnInit {
   private _campaign: Campaign = <Campaign>{};

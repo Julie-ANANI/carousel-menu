@@ -3,7 +3,6 @@ import {RolesFrontService} from '../../../../../../services/roles/roles-front.se
 
 @Component({
   templateUrl: './admin-project-targeting.component.html',
-  styleUrls: ['./admin-project-targeting.component.scss']
 })
 
 export class AdminProjectTargetingComponent {

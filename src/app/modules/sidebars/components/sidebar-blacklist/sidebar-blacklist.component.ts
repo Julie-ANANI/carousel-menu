@@ -22,7 +22,6 @@ export interface FamilyEnterprises {
 @Component({
   selector: 'app-sidebar-blacklist',
   templateUrl: './sidebar-blacklist.component.html',
-  styleUrls: ['./sidebar-blacklist.component.scss']
 })
 
 export class SidebarBlacklistComponent implements OnInit {

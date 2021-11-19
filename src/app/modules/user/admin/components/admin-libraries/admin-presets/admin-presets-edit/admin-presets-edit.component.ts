@@ -10,7 +10,6 @@ import {ErrorFrontService} from '../../../../../../../services/error/error-front
 @Component({
   selector: 'app-admin-presets-edit',
   templateUrl: './admin-presets-edit.component.html',
-  styleUrls: ['./admin-presets-edit.component.scss']
 })
 export class AdminPresetsEditComponent implements OnInit {
 

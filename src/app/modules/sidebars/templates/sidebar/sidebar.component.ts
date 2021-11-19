@@ -6,7 +6,6 @@ import {isPlatformBrowser} from '@angular/common';
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
-  styleUrls: ['./sidebar.component.scss'],
   animations: [
     trigger(('animateSidebar'), [
       state('inactive', style({

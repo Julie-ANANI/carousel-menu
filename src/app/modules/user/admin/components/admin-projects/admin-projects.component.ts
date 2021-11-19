@@ -24,7 +24,6 @@ import {ConfigService} from '@umius/umi-common-component/services/config';
 
 @Component({
   templateUrl: './admin-projects.component.html',
-  styleUrls: ['./admin-projects.component.scss']
 })
 
 export class AdminProjectsComponent implements OnInit {

@@ -7,7 +7,6 @@ import {Country} from '../../../models/country';
 @Component({
   selector: 'app-auto-complete-country',
   templateUrl: './auto-complete-country.component.html',
-  styleUrls: ['./auto-complete-country.component.scss']
 })
 export class AutoCompleteCountryComponent implements OnInit, OnDestroy {
 

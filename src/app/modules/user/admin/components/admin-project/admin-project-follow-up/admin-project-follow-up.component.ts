@@ -5,7 +5,6 @@ import { RolesFrontService } from '../../../../../../services/roles/roles-front.
 
 @Component({
   templateUrl: 'admin-project-follow-up.component.html',
-  styleUrls: ['admin-project-follow-up.component.scss']
 })
 
 export class AdminProjectFollowUpComponent implements OnInit {

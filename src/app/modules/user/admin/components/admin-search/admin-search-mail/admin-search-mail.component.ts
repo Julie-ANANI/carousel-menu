@@ -2,9 +2,11 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-admin-search-mail',
-  templateUrl: './admin-search-mail.component.html',
-  styleUrls: ['./admin-search-mail.component.scss']
+  template: `
+    <app-shared-search-mail></app-shared-search-mail>
+  `,
 })
 export class AdminSearchMailComponent {
-  constructor() {}
+  constructor() {
+  }
 }

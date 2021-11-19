@@ -13,7 +13,6 @@ import { Table, Config } from '@umius/umi-common-component/models';
 
 @Component({
   templateUrl: 'admin-email-blacklist.component.html',
-  styleUrls: ['admin-email-blacklist.component.scss']
 })
 
 export class AdminEmailBlacklistComponent implements OnInit, OnDestroy {

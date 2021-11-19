@@ -9,7 +9,6 @@ import { RolesFrontService } from '../../../../services/roles/roles-front.servic
 @Component({
   selector: 'app-shared-import-pros',
   templateUrl: './shared-import-pros.component.html',
-  styleUrls: ['./shared-import-pros.component.scss']
 })
 
 export class SharedImportProsComponent {

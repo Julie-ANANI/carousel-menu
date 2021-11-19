@@ -6,7 +6,6 @@ import { ExecutivePieChart } from '../../../../../../../models/pie-chart';
 @Component({
   selector: 'app-admin-section-type-pie',
   templateUrl: './type-pie.component.html',
-  styleUrls: ['./type-pie.component.scss']
 })
 
 export class TypePieComponent {
