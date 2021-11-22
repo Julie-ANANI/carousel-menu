@@ -1,0 +1,200 @@
+{
+  "agreement": [{
+    "en": "strongly disagree",
+    "fr": "pas du tout d'accord"
+  },
+    {
+      "en": "disagree",
+      "fr": "pas d'accord"
+    },
+    {
+      "en": "neutral",
+      "fr": "neutre"
+    },
+    {
+      "en": "Agree",
+      "fr": "D'accord"
+    },
+    {
+      "en": "Strongly agree",
+      "fr": "Tout à fait d'accord"
+    }
+  ],
+
+  "frequency": [{
+    "en": "Never",
+    "fr": "Jamais"
+  },
+    {
+      "en": "Rarely",
+      "fr": "Rarement"
+    },
+    {
+      "en": "Occasionally",
+      "fr": "Occasionnellement"
+    },
+    {
+      "en": "Frequently",
+      "fr": "Fréquemment"
+    },
+    {
+      "en": "Continuously",
+      "fr": "En permanence"
+    }
+  ],
+
+  "satisfaction": [
+    {
+    "en": "Very dissatisfied",
+    "fr": "Très insatisfait"
+    },
+    {
+      "en": "Dissatisfied",
+      "fr": "Insatisfait"
+    },
+    {
+      "en": "Neutral",
+      "fr": "neutre"
+    },
+    {
+      "en": "Satisfied",
+      "fr": "Satisfait"
+    },
+    {
+      "en": "Very satisfied",
+      "fr": "Très satisfait"
+    }
+  ],
+
+  "use": [{
+    "en": "Not at all useful",
+    "fr": "Pas du tout utile"
+  },
+    {
+      "en": "Slighltly useful",
+      "fr": "Peu utile"
+    },
+    {
+      "en": "Moderately useful",
+      "fr": "Moyennement utile"
+    },
+    {
+      "en": "Very useful",
+      "fr": "Très utile"
+    },
+    {
+      "en": "Extremely useful",
+      "fr": "Êxtrêmement utile"
+    }
+  ],
+
+  "quality": [{
+    "en": "Very poor",
+    "fr": "Très Mauvais"
+  },
+    {
+      "en": "Poor",
+      "fr": "Mauvais"
+    },
+    {
+      "en": "Fair",
+      "fr": "Moyen"
+    },
+    {
+      "en": "Good",
+      "fr": "Bon"
+    },
+    {
+      "en": "Excellent",
+      "fr": "Excellent"
+    }
+  ],
+
+  "relevance": [{
+    "en": "Not at all relevant",
+    "fr": "Pas du tout pertinent"
+  },
+    {
+      "en": "Not very relevant",
+      "fr": "Peu pertinent"
+    },
+    {
+      "en": "Neutral",
+      "fr": "Neutre"
+    },
+    {
+      "en": "Somewhat relevant",
+      "fr": "Pertinent"
+    },
+    {
+      "en": "Highly relevant",
+      "fr": "Très pertinent"
+    }
+  ],
+
+  "importance": [{
+    "en": "Not at all important",
+    "fr": "Pas du tout important"
+  },
+    {
+      "en": "Low importance",
+      "fr": "Pas important"
+    },
+    {
+      "en": "neutral",
+      "fr": "neutre"
+    },
+    {
+      "en": "Important",
+      "fr": "Important"
+    },
+    {
+      "en": "Very important",
+      "fr": "Très important"
+    }
+  ],
+
+  "interest": [{
+    "en": "Not at all interested",
+    "fr": "Pas du tout intéressé"
+  },
+    {
+      "en": "Not very interested",
+      "fr": "Pas intéressé"
+    },
+    {
+      "en": "neutral",
+      "fr": "neutre"
+    },
+    {
+      "en": "Somewhat interested",
+      "fr": "Intéressé"
+    },
+    {
+      "en": "Very interested",
+      "fr": "Très intéressé"
+    }
+  ],
+
+  "criticality": [{
+    "en": "Not at all critical",
+    "fr": "Pas du tout critique"
+  },
+    {
+      "en": "Slightly critical",
+      "fr": "Peu critique"
+    },
+    {
+      "en": "neutral",
+      "fr": "neutre"
+    },
+    {
+      "en": "Critical",
+      "fr": "Critique"
+    },
+    {
+      "en": "Very critical",
+      "fr": "Très critique"
+    }
+  ]
+}

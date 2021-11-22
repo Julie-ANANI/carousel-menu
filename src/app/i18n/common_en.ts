@@ -524,7 +524,10 @@ export const COMMON = {
     'SATISFACTION': 'satisfaction',
     'USE': 'use',
     'QUALITY': 'quality',
-    'RELEVANCE': 'relevance'
+    'RELEVANCE': 'relevance',
+    'IMPORTANCE': 'importance',
+    'INTEREST': 'interest',
+    'CRITICALITY': 'criticality'
   },
 
 

@@ -9,7 +9,7 @@ import { SharedQuestionnaireSectionComponent } from './shared-questionnaire-sect
 import {ModalEmptyModule} from '../../../utility/modals/modal-empty/modal-empty.module';
 import {SharedQuestionnaireQuestionComponent} from './shared-questionnaire-question/shared-questionnaire-question.component';
 import {AutoSuggestionModule} from '../../../utility/auto-suggestion/auto-suggestion.module';
-import { SharedQuestionnaireQuestionLikertComponent } from './shared-questionnaire-question-likert/shared-questionnaire-question-likert.component';
+import {PipeModule} from '../../../../pipe/pipe.module';
 import {TextareaAutoResizeModule} from '../../../../directives/textareaAutoResize/textarea-auto-resize.module';
 
 @NgModule({
@@ -20,13 +20,13 @@ import {TextareaAutoResizeModule} from '../../../../directives/textareaAutoResiz
         FormsModule,
         ModalEmptyModule,
         AutoSuggestionModule,
-        TextareaAutoResizeModule
+        TextareaAutoResizeModule,
+        PipeModule
     ],
   declarations: [
     SharedQuestionnaireComponent,
     SharedQuestionnaireSectionComponent,
-    SharedQuestionnaireQuestionComponent,
-    SharedQuestionnaireQuestionLikertComponent,
+    SharedQuestionnaireQuestionComponent
   ],
   exports: [
     SharedQuestionnaireComponent

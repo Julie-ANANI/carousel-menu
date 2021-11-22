@@ -8,17 +8,11 @@ import {
   MissionQuestionType,
   MissionTemplate,
   MissionTemplateSection,
-/*  AttitudeMeasureType,
-  MeasureAgreementType,
-  MeasureFrenquencyType,
-  MeasureSatisfactionType,
-  MeasureUseType,
-  MeasureQualityType,
-  MeasureRelevanceType*/
 } from '../../models/mission';
 import { Subject } from 'rxjs/Subject';
 import { colors } from '../../utils/chartColors';
 import { replaceNumberRegex } from '../../utils/regex';
+import optionLikert from '../../../../assets/json/likert-scale.json';
 
 @Injectable({providedIn: 'root'})
 export class MissionQuestionService {
@@ -30,6 +24,8 @@ export class MissionQuestionService {
   set cardsSections(value: MissionCardTitle) {
     this._cardsSections = value;
   }
+
+  optionLikertList = optionLikert;
 
   get allQuestions(): Array<MissionQuestion> {
     return this._allQuestions;
@@ -77,6 +73,11 @@ export class MissionQuestionService {
 
   get sectionsNames(): Array<string> {
     return this._sectionsNames;
+  }
+
+  /* TODO test logic of select dynamique for likert*/
+  get optionsNamesLikert(): Array<string> {
+    return this.optionLikertList;
   }
 
   set sectionsNames(value: Array<string>) {
@@ -275,6 +276,12 @@ export class MissionQuestionService {
           fr: 'Drag and drop pour classer les items'
         };
 
+      case 'likert-scale':
+        return {
+          en: 'you can select your type',
+          fr: 'tu peux sélectionner ton type'
+        };
+
       default:
         return {
           en: '',
@@ -378,7 +385,7 @@ export class MissionQuestionService {
     question.options = [];
 
     if (question.controlType === 'checkbox' || question.controlType === 'radio'
-      || question.controlType === 'stars' || question.controlType === 'ranking' ) {
+      || question.controlType === 'stars' || question.controlType === 'ranking') {
       for (let i = 0; i < 4; i++) {
         question.options.push(this.addOption(question, oldOptions));
       }
@@ -393,8 +400,19 @@ export class MissionQuestionService {
       question = MissionQuestionService.setOptionsPositiveAnswer(question);
     }
 
+    if (question.controlType === 'likert-scale') {
+      // const measureOptions = this.measureOptionsTest[question.attitudeMeasure];
+      console.log(question.attitudeMeasure)
+      console.table(this.optionLikertList)
+      const measureOptions = this.optionLikertList[question.attitudeMeasure];
+      for (let i = 0; i < measureOptions.length; i++) {
+        question.options.push(this.addOptionLikert(question, measureOptions[i]));
+      }
+    }
+
     return question;
   }
+
 
   /**
    * return the new option for the controlType = 'radio' | 'checkbox' | 'stars' | 'ranking'
@@ -423,50 +441,35 @@ export class MissionQuestionService {
           };
         })
       };
-    /*} else if(question.controlType === 'likert-scale') {
-      switch (question.attitudeMeasure) {
-        case 'agreement':
-          return {
-            question.MeasureAgreementType,
-          };
-
-        case 'frequency':
-          return {
-            question.MeasureFrequencyType
-          };
-
-        case 'satisfaction':
-          return {
-            question.MeasureSatisfactionType
-          };
-
-        case 'use':
-          return {
-            question.MeasureUseType
-          };
-
-        case 'quality':
-          return {
-            question.MeasureQualityType
-          };
-
-        case 'relevance':
-          return {
-            question.MeasureRelevanceType
-          };
-
-        default:
-          return {
-            question.MeasureAgreementType: '',
-          };
-      }
-
-
-      }*/
     }
 
     return <MissionQuestionOption>{};
   }
+
+
+  /**
+   * return the new option for the controlType = 'agreement' | 'frequency' | 'satisfaction' | 'use'| 'quality' | 'relevance' | 'importance' | 'interest' |'criticality;
+   * @param question,
+   * @param measureOptions
+   */
+  public addOptionLikert(question: MissionQuestion = <MissionQuestion>{}, measureOptions: any): MissionQuestionOption {
+    if (question.controlType === 'likert-scale') {
+      const id = question.options.length;
+      return {
+        identifier: id.toString(),
+        positive: false,
+        entry:  this._addEntryLang.map((_lang) => {
+          return {
+            lang: _lang,
+            label: measureOptions[_lang]
+          };
+        })
+      };
+    }
+
+    return <MissionQuestionOption>{};
+  }
+
 
   /**
    * find option's text in right lang
@@ -936,6 +939,7 @@ export class MissionQuestionService {
   public setAllTemplates(value: Array<MissionTemplate>) {
     this._allTemplates = value;
   }
+
 
   /**
    * set all the questions

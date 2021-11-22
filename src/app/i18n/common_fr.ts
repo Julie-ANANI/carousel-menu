@@ -511,6 +511,20 @@ export const COMMON = {
     'checkbox': 'Choix multiples',
     'ranking': 'Ranking',
     'likert-scale': 'Likert-scale'
-  }
+  },
+
+  'LIKERT_TYPE': {
+    'CHOISIR': 'Choisis un type de likert scale',
+    'ACCORD': 'accord',
+    'FRÉQUENCE': 'fréquence',
+    'SATISFACTION': 'satisfaction',
+    'UTILITÉ': 'utilité',
+    'QUALITÉ': 'qualité',
+    'PERTINENCE': 'pertinence',
+    'IMPORTANCE': 'important',
+    'INTEREST': 'interest',
+    'CRITICALITY': 'Criticité'
+
+  },
 
 };

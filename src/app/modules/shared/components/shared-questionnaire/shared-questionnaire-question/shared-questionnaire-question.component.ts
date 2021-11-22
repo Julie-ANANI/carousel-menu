@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { picto, Picto } from '../../../../../models/static-data/picto';
 import {
+  AttitudeMeasureType,
   MissionQuestion,
   MissionQuestionEntry,
   MissionQuestionOption,
@@ -103,6 +104,15 @@ export class SharedQuestionnaireQuestionComponent implements OnInit {
   ngOnInit() {
   }
 
+  @HostListener('keydown', ['$event'])
+  onKeyDown(_event: KeyboardEvent) {
+    const textarea = (_event.target as HTMLTextAreaElement);
+    if (!textarea || (textarea.nodeName !== 'TEXTAREA') || (textarea.classList && !textarea.classList.contains('auto-expand'))) {
+      return;
+    }
+    CommonService.calcTextareaHeight(textarea, _event);
+  }
+
   public up(event: Event) {
     event.preventDefault();
     this._missionQuestionService.moveQuestion(this._questionIndex, this._sectionIndex, -1);
@@ -187,6 +197,16 @@ export class SharedQuestionnaireQuestionComponent implements OnInit {
     this._emitValueToSave(['edit', 'type']);
   }
 
+  /** It's function for change ngModel : question.attitudeMeasure
+   * @param Type : AttitudeMeasureType
+   * @return type attitudeMeasure + fn configureQuestion
+   * */
+  public onChangeTypeLikertScale(type: AttitudeMeasureType) {
+    this._question.attitudeMeasure = type;
+    this._missionQuestionService.configureQuestion(this._question);
+    this._emitValueToSave(['edit', 'type']);
+  }
+
   public addNewOption(event: Event) {
     event.preventDefault();
     this._missionQuestionService.addNewOption(this._question);
@@ -264,6 +284,12 @@ export class SharedQuestionnaireQuestionComponent implements OnInit {
     if (this.accessPath.length) {
       return this._rolesFrontService.hasAccessAdminSide(this.accessPath.concat(path));
     }
+
+  }
+
+  /* todo test logic of select dynamique for likert*/
+  get optionsNamesLikert(): any {
+    return this._missionQuestionService.optionsNamesLikert;
   }
 
   get isTaggedQuestion(): boolean {
