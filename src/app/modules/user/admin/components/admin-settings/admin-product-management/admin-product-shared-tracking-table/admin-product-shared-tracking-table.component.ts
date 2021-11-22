@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { RolesFrontService } from '../../../../../../../services/roles/roles-front.service';
 import { TrackingService } from '../../../../../../../services/tracking/tracking.service';
 import { first } from 'rxjs/operators';
@@ -9,7 +9,8 @@ import { Table, Config, Column } from '@umius/umi-common-component/models';
 
 @Component({
   templateUrl: './admin-product-shared-tracking-table.component.html',
-  styleUrls: ['./admin-product-shared-tracking-table.component.scss']
+  styleUrls: ['./admin-product-shared-tracking-table.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 
 export class AdminProductSharedTrackingTableComponent implements OnInit {
@@ -49,11 +50,13 @@ export class AdminProductSharedTrackingTableComponent implements OnInit {
 
   constructor(protected _rolesFrontService: RolesFrontService,
               protected _trackingService: TrackingService,
+              protected changeDetectorRef: ChangeDetectorRef,
               protected _translateNotificationsService: TranslateNotificationsService) {
     // initialise the selectors
     this._generateYears();
     this._monthSelected = this.months[0];
     this._yearSelected = this.years[0];
+    this.changeDetectorRef.detach();
   }
 
   ngOnInit() {
@@ -97,12 +100,13 @@ export class AdminProductSharedTrackingTableComponent implements OnInit {
     this._trackingService.getTrackers(this._monthSelected.toString(), this._yearSelected.toString(), this._pageTitle, this._activatedTab)
       .pipe(first())
       .subscribe((data: any) => {
-        if (data) {
+        if (data && data.data && data.data.length) {
           this._content = data.data;
           this._trackingTable = this.initTrackingTable(this._selector, this._title, this._content, this._columns);
         } else {
           this._trackingTable._total = 0;
         }
+        this.changeDetectorRef.detectChanges();
       }, (err: HttpErrorResponse) => {
         this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
         console.log(err);

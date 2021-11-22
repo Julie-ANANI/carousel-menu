@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Table } from '@umius/umi-common-component/models';
 import { RolesFrontService } from '../../../../../../../services/roles/roles-front.service';
 import { TrackingService } from '../../../../../../../services/tracking/tracking.service';
@@ -8,15 +8,18 @@ import { TranslateNotificationsService } from '../../../../../../../services/not
 @Component({
   selector: 'app-use-super-tools',
   templateUrl: './admin-product-shared-tracking-table.component.html',
-  styleUrls: ['./admin-product-shared-tracking-table.component.scss']
+  styleUrls: ['./admin-product-shared-tracking-table.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 
 export class UseSuperToolsComponent extends AdminProductSharedTrackingTableComponent implements OnInit {
 
   constructor(protected _rolesFrontService: RolesFrontService,
               protected _trackingService: TrackingService,
+              protected changeDetectorRef: ChangeDetectorRef,
               protected _translateNotificationsService: TranslateNotificationsService) {
-    super(_rolesFrontService, _trackingService, _translateNotificationsService);
+    super(_rolesFrontService, _trackingService, changeDetectorRef, _translateNotificationsService);
+    this.changeDetectorRef.detach();
     this._selector = 'admin-use-super-tools-table';
     this._title = 'Use super tool';
     this._columns = [
