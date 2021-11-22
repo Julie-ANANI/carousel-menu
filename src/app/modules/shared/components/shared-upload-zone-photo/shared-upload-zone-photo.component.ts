@@ -67,7 +67,7 @@ export class SharedUploadZonePhotoComponent {
     const _type = file.type.split('/');
 
     if (!this._isWrongFormat && (_type[1] === 'jpeg' || _type[1] === 'jpg')) {
-      if (file.size > 5242881) {
+      if (file.size > 5242880) {
         this._isUploading = false;
         this._isWrongSize = true;
       } else {
