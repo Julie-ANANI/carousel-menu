@@ -15,6 +15,7 @@ import { ErrorFrontService } from '../../../../../../services/error/error-front.
 import { StatsInterface } from '../../admin-stats-banner/admin-stats-banner.component';
 import { CampaignFrontService } from '../../../../../../services/campaign/campaign-front.service';
 import { Bytes2Human } from '../../../../../../utils/bytes2human';
+import {CampaignService} from "../../../../../../services/campaign/campaign.service";
 
 export interface SelectedProfessional extends Professional {
   isSelected: boolean;
@@ -90,11 +91,19 @@ export class AdminCampaignProsComponent implements OnInit {
 
   private _csvImportError = '';
 
+  private _prosStats = {
+    goodEmails: 0,
+    riskyEmails: 0,
+    badEmails: 0,
+    batched: 0
+  }
+
   constructor(
     @Inject(PLATFORM_ID) protected _platformId: Object,
     private _activatedRoute: ActivatedRoute,
     private _rolesFrontService: RolesFrontService,
     private _campaignFrontService: CampaignFrontService,
+    private _campaignService: CampaignService,
     private _translateNotificationsService: TranslateNotificationsService,
     private _professionalsService: ProfessionalsService,
     private _configService: ConfigService
@@ -104,6 +113,9 @@ export class AdminCampaignProsComponent implements OnInit {
     this._activatedRoute.data.subscribe((data) => {
       if (data['campaign']) {
         this._campaign = data['campaign'];
+        this._campaignService.getProsStats(this._campaign._id).subscribe((stats) => {
+          this._prosStats = stats;
+        })
         this._campaignFrontService.setActiveCampaign(this._campaign);
         this._campaignFrontService.setActiveCampaignTab('pros');
         this._initCampaign();
@@ -568,4 +580,7 @@ export class AdminCampaignProsComponent implements OnInit {
     return this._updatePreview;
   }
 
+  get prosStats(): { batched: number; riskyEmails: number; goodEmails: number; badEmails: number } {
+    return this._prosStats;
+  }
 }
