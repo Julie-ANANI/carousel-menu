@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Inject, PLATFORM_ID, OnDestroy } from '@angular/core';
+import { Component, Inject, Input, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
 import { SearchService } from '../../../../services/search/search.service';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { AuthService } from '../../../../services/auth/auth.service';
@@ -15,7 +15,6 @@ import { CampaignService } from '../../../../services/campaign/campaign.service'
 import { TargetPros } from '../../../../models/targetPros';
 import { JobsFrontService } from '../../../../services/jobs/jobs-front.service';
 
-import * as _ from 'lodash';
 import { Subject } from 'rxjs/Subject';
 
 
@@ -417,6 +416,7 @@ export class SharedSearchProsComponent implements OnInit, OnDestroy {
 
     const targetPros = this._targetedProsToUpdate || this._initialTargetedPro;
 
+    console.log(targetPros);
     const seniorityIncluded = [];
     const seniorityLevelsKeys = Object.keys(targetPros.seniorityLevels);
     seniorityLevelsKeys.forEach((key) => {

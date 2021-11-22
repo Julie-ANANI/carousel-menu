@@ -20,7 +20,7 @@ import { Mission, MissionTemplate } from '../../../../../models/mission';
 import { MissionService } from '../../../../../services/mission/mission.service';
 import { MissionFrontService } from '../../../../../services/mission/mission-front.service';
 import { Table, Config, Column } from '@umius/umi-common-component/models';
-import {ConfigService} from '@umius/umi-common-component/services/config';
+import { ConfigService } from '@umius/umi-common-component/services/config';
 
 @Component({
   templateUrl: './admin-projects.component.html',
@@ -731,26 +731,9 @@ export class AdminProjectsComponent implements OnInit {
         project.mainObjective = project.objective[this._currentLang];
       }
 
-      if (project.emailSent) {
-        project['emailSent'] = 'Yes';
-      } else {
-        project['emailSent'] = 'No';
-      }
-
-      if (project.published) {
-        project['published'] = 'Yes';
-      } else {
-        project['published'] = 'No';
-      }
-
-      if (project.isPublic) {
-        project['isPublic'] = 'Yes';
-      } else {
-        project['isPublic'] = 'No';
-      }
-
-
-      // project.emailSent = (project.emailSent) ? 'Yes' : 'No';
+      project.emailSent = project.emailSent ? 'Yes' : 'No';
+      project.published = project.published ? 'Yes' : 'No';
+      project.isPublic = project.isPublic ? 'Yes' : 'No';
       return project;
     });
   }
