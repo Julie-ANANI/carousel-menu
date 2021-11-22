@@ -114,24 +114,34 @@ export class SharedSearchProsComponent implements OnInit, OnDestroy {
       this._getCountries();
       this._initParams();
 
+      this.getTargetedProsFromService().then(_ => {
+        /**
+         * subscribe: get recent targetPros, not saved, current one
+         * */
+        this._jobFrontService
+          .targetedProsToUpdate()
+          .pipe(takeUntil(this._ngUnsubscribe))
+          .subscribe((result: { targetPros: TargetPros, isToggle?: boolean, identifier?: string, toSave?: boolean }) => {
+            this._toSave = result.toSave;
+            this._targetedProsToUpdate = result.targetPros || <TargetPros>{};
+            this._checkProsTargetingValid();
+          });
+      });
+    }
+  }
+
+  getTargetedProsFromService() {
+    return new Promise((resolve, reject) => {
       this._campaignService.getTargetedPros(this._campaign._id).pipe(first())
         .subscribe(res => {
           this._jobFrontService.setTargetedProsToUpdate({targetPros: res, isToggle: false, identifier: ''});
           this._initialTargetedPro = JSON.parse(JSON.stringify(res));
-
-          /**
-           * subscribe: get recent targetPros, not saved, current one
-           * */
-          this._jobFrontService
-            .targetedProsToUpdate()
-            .pipe(takeUntil(this._ngUnsubscribe))
-            .subscribe((result: { targetPros: TargetPros, isToggle?: boolean, identifier?: string, toSave?: boolean }) => {
-              this._toSave = result.toSave;
-              this._targetedProsToUpdate = result.targetPros || <TargetPros>{};
-              this._checkProsTargetingValid();
-            });
+          resolve(true);
+        }, error => {
+          console.error(error);
+          reject(error);
         });
-    }
+    });
   }
 
   private _getCountries() {
@@ -416,7 +426,6 @@ export class SharedSearchProsComponent implements OnInit, OnDestroy {
 
     const targetPros = this._targetedProsToUpdate || this._initialTargetedPro;
 
-    console.log(targetPros);
     const seniorityIncluded = [];
     const seniorityLevelsKeys = Object.keys(targetPros.seniorityLevels);
     seniorityLevelsKeys.forEach((key) => {

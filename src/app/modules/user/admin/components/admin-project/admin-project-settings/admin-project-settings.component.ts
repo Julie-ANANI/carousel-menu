@@ -131,7 +131,7 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
 
   private _statsConfig: Array<StatsInterface> = [];
 
-  private _missionTeam: string[];
+  private _missionTeam: string[] = [];
 
   private _picto: Picto = picto;
 
@@ -175,26 +175,38 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
       this._getOperators();
       this._getCommercials();
 
+      this.getInnovation().then((innovation: Innovation) => {
+        if (innovation) {
+          this._statsReferentsService
+            .get()
+            .subscribe((referents) => this._setStats(referents.innovations));
+          this._setQuizLink();
+        }
+      });
+    }
+  }
+
+  getInnovation() {
+    return new Promise((resolve, reject) => {
       this._innovationFrontService
         .innovation()
         .pipe(takeUntil(this._ngUnsubscribe))
         .subscribe((innovation) => {
           this._innovation = innovation || <Innovation>{};
-          this._statsReferentsService
-            .get()
-            .subscribe((referents) => this._setStats(referents.innovations));
-          this._setQuizLink();
-
-          if (!!this._innovation.mission) {
-            this._mission = <Mission>this._innovation.mission;
+          if (!!innovation.mission) {
+            this._mission = <Mission>innovation.mission;
             this._missionTeam = this._mission.team.map((user: User) => user.id);
           }
 
-          if (!!this._innovation.clientProject) {
-            this._clientProject = <ClientProject>this._innovation.clientProject;
+          if (!!innovation.clientProject) {
+            this._clientProject = <ClientProject>innovation.clientProject;
           }
+          resolve(innovation);
+        }, error => {
+          console.error(error);
+          reject(error);
         });
-    }
+    });
   }
 
   private _getValidAnswers() {
