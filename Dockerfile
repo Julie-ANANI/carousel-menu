@@ -8,8 +8,8 @@ ARG VERSION
 WORKDIR /var/web
 
 # build client
-RUN echo build ${APP_NAME} -c=${ENV_NAME} --prod
-RUN node --max-old-space-size=10240 ./node_modules/@angular/cli/bin/ng build --progress ${APP_NAME} -c=${ENV_NAME} --prod
+RUN echo build ${APP_NAME} -c=${ENV_NAME}
+RUN node --max-old-space-size=10240 ./node_modules/@angular/cli/bin/ng build --progress ${APP_NAME} -c=${ENV_NAME}
 
 # upload source-map to sentry
 RUN if [ $VERSION != "latest" ]; then npm install @sentry/cli; fi
@@ -26,7 +26,7 @@ RUN ng run ${APP_NAME}:server -c=${ENV_NAME}
 # gzip every files for the browser
 RUN gzip -k -r dist/browser/
 
-RUN npm run webpack:server
+RUN npm run server:webpack
 
 EXPOSE  3080
 CMD ["npm", "run", "serve:ssr"]
