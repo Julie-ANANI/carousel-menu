@@ -29,10 +29,6 @@ interface Commercial {
 
 export class ExecutiveObjectiveComponent implements OnInit {
 
-  get borderClass(): string {
-    return this._config.objective && this._config.objective.length ? 'is-success' : 'is-error';
-  }
-
   @Input() isEditable = false;
 
   @Input() lang = 'en';
@@ -238,24 +234,30 @@ export class ExecutiveObjectiveComponent implements OnInit {
     return this._company;
   }
 
-  set company(value: string) {
-    this._company = value;
+  public uploadImage(event: any) {
+    if (event && event.url) {
+      this._config.client.company.logo.uri = event.url;
+      this._logo = event.url;
+      if (this._config.client.company && this._config.client.company.id && this._config.client.company.logo) {
+        // company exists
+        this.updateEnterprise();
+      }
+    }
+    this._showUploadModal = false;
   }
 
-  get config(): ExecutiveObjective {
-    return this._config;
+  updateEnterprise() {
+    this._enterpriseService.updateLogo(this._config.client.company.id, this._config.client.company.logo).pipe(first())
+      .subscribe(res => {
+        this._translateNotificationsService.success('Success', 'Upload company logo succeed.');
+      }, err => {
+        console.error(err);
+        this._translateNotificationsService.error('ERROR.ERROR', 'Upload company logo failed.');
+      });
   }
 
-  get allCommercials(): Array<Commercial> {
-    return this._allCommercials;
-  }
-
-  get commercial(): Commercial {
-    return this._commercial;
-  }
-
-  get objectiveColor(): string {
-    return this._objectiveColor;
+  openUploadModal() {
+    this._showUploadModal = true;
   }
 
   get clientNameColor(): string {
@@ -274,41 +276,27 @@ export class ExecutiveObjectiveComponent implements OnInit {
     this._showUploadModal = value;
   }
 
-  public uploadImage(event: any) {
-    if (event && event.url) {
-      this._config.client.company.logo.uri = event.url;
-      this._logo = event.url;
-      console.log(this._config.client.company);
-      if (this._config.client.company && this._config.client.company.id && this._config.client.company.logo) {
-        // company exists
-        this.updateEnterprise();
-      }
-    }
-    this._showUploadModal = false;
+  get borderClass(): string {
+    return this._config.objective && this._config.objective.length ? 'is-success' : 'is-error';
   }
 
-  // createEnterprise() {
-  //   const enterprise: Enterprise = <Enterprise>this._config.client.company;
-  //   console.log(enterprise);
-  //   this._enterpriseService.create(enterprise).pipe(first()).subscribe(res => {
-  //     console.log(res);
-  //   }, err => {
-  //     console.error(err);
-  //     this._translateNotificationsService.error('ERROR.ERROR', 'Creating a company failed.');
-  //   });
-  // }
-
-  updateEnterprise() {
-    this._enterpriseService.updateLogo(this._config.client.company.id, this._config.client.company.logo).pipe(first())
-      .subscribe(res => {
-        this._translateNotificationsService.success('Success', 'Upload company logo succeed.');
-      }, err => {
-        console.error(err);
-        this._translateNotificationsService.error('ERROR.ERROR', 'Upload company logo failed.');
-      });
+  set company(value: string) {
+    this._company = value;
   }
 
-  openUploadModal() {
-    this._showUploadModal = true;
+  get config(): ExecutiveObjective {
+    return this._config;
+  }
+
+  get allCommercials(): Array<Commercial> {
+    return this._allCommercials;
+  }
+
+  get commercial(): Commercial {
+    return this._commercial;
+  }
+
+  get objectiveColor(): string {
+    return this._objectiveColor;
   }
 }

@@ -32,86 +32,6 @@ interface ConfirmUpdate {
 })
 export class AdminEditQuestionComponent implements OnInit {
 
-  get questions(): Array<MissionQuestion> {
-    return this._questions;
-  }
-
-  get isRemoving(): boolean {
-    return this._isRemoving;
-  }
-
-  get canBeDeleted(): boolean {
-    return this._canBeDeleted;
-  }
-
-  get isPartUseCase(): boolean {
-    return this._isPartUseCase;
-  }
-
-  get fetchingError(): boolean {
-    return this._fetchingError;
-  }
-
-  get isSaving(): boolean {
-    return this._isSaving;
-  }
-
-  get questionnaireLangs(): Array<string> {
-    return this._questionnaireLangs;
-  }
-
-  get accessPath(): Array<string> {
-    return this._accessPath;
-  }
-
-  get validate(): ConfirmUpdate {
-    return this._validate;
-  }
-
-  set validate(value: ConfirmUpdate) {
-    this._validate = value;
-  }
-
-  get showModal(): boolean {
-    return this._showModal;
-  }
-
-  set showModal(value: boolean) {
-    this._showModal = value;
-  }
-
-  get question(): MissionQuestion {
-    return this._question;
-  }
-
-  get name(): string {
-    return this._name;
-  }
-
-  get toBeSaved(): boolean {
-    return this._toBeSaved;
-  }
-
-  get picto(): Picto {
-    return this._picto;
-  }
-
-  get editMode(): boolean {
-    return this._editMode;
-  }
-
-  set editMode(value: boolean) {
-    this._editMode = value;
-  }
-
-  get isTaggedQuestion(): boolean {
-    return this._isTaggedQuestion;
-  }
-
-  get platformLang(): string {
-    return this._translateService.currentLang;
-  }
-
   private _fetchingError = false;
 
   private _isSaving = false;
@@ -457,6 +377,86 @@ export class AdminEditQuestionComponent implements OnInit {
     if (!this._toBeSaved) {
       this._question = this._questions.find((_question) => _question._id === event);
     }
+  }
+
+  get questions(): Array<MissionQuestion> {
+    return this._questions;
+  }
+
+  get isRemoving(): boolean {
+    return this._isRemoving;
+  }
+
+  get canBeDeleted(): boolean {
+    return this._canBeDeleted;
+  }
+
+  get isPartUseCase(): boolean {
+    return this._isPartUseCase;
+  }
+
+  get fetchingError(): boolean {
+    return this._fetchingError;
+  }
+
+  get isSaving(): boolean {
+    return this._isSaving;
+  }
+
+  get questionnaireLangs(): Array<string> {
+    return this._questionnaireLangs;
+  }
+
+  get accessPath(): Array<string> {
+    return this._accessPath;
+  }
+
+  get validate(): ConfirmUpdate {
+    return this._validate;
+  }
+
+  set validate(value: ConfirmUpdate) {
+    this._validate = value;
+  }
+
+  get showModal(): boolean {
+    return this._showModal;
+  }
+
+  set showModal(value: boolean) {
+    this._showModal = value;
+  }
+
+  get question(): MissionQuestion {
+    return this._question;
+  }
+
+  get name(): string {
+    return this._name;
+  }
+
+  get toBeSaved(): boolean {
+    return this._toBeSaved;
+  }
+
+  get picto(): Picto {
+    return this._picto;
+  }
+
+  get editMode(): boolean {
+    return this._editMode;
+  }
+
+  set editMode(value: boolean) {
+    this._editMode = value;
+  }
+
+  get isTaggedQuestion(): boolean {
+    return this._isTaggedQuestion;
+  }
+
+  get platformLang(): string {
+    return this._translateService.currentLang;
   }
 
 }

@@ -641,34 +641,6 @@ export class AdminProjectsComponent implements OnInit {
     this._getProjects();
   }
 
-  get canImport(): boolean {
-    return this._rolesFrontService.isTechRole() || this._rolesFrontService.isOperSupervisorRole();
-  }
-
-  get config(): Config {
-    return this._config;
-  }
-
-  get projects(): Array<Innovation> {
-    return this._projects;
-  }
-
-  get table(): Table {
-    return this._table;
-  }
-
-  get isLoading(): boolean {
-    return this._isLoading;
-  }
-
-  get fetchingError(): boolean {
-    return this._fetchingError;
-  }
-
-  get authUserId() {
-    return this._authService.userId;
-  }
-
   /**
    * @private
    */
@@ -858,6 +830,35 @@ export class AdminProjectsComponent implements OnInit {
           console.error(err);
         }
       );
+  }
+
+
+  get canImport(): boolean {
+    return this._rolesFrontService.isTechRole() || this._rolesFrontService.isOperSupervisorRole();
+  }
+
+  get config(): Config {
+    return this._config;
+  }
+
+  get projects(): Array<Innovation> {
+    return this._projects;
+  }
+
+  get table(): Table {
+    return this._table;
+  }
+
+  get isLoading(): boolean {
+    return this._isLoading;
+  }
+
+  get fetchingError(): boolean {
+    return this._fetchingError;
+  }
+
+  get authUserId() {
+    return this._authService.userId;
   }
 
 

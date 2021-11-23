@@ -20,14 +20,6 @@ export class AdminProductTrackingComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  get helpCommunity(): string[] {
-    return this._helpCommunity;
-  }
-
-  get futureHelpCommunity(): string[] {
-    return this._futureHelpCommunity;
-  }
-
   public canAccess(path?: Array<string>) {
     if (path) {
       return this._rolesFrontService.hasAccessAdminSide(['settings'].concat(path));
@@ -40,6 +32,18 @@ export class AdminProductTrackingComponent implements OnInit {
     this._helpCommunityTabActivated = help;
   }
 
+  activateTabFuture(future: string) {
+    this._futureHelpCommunityTabActivated = future;
+  }
+
+  get helpCommunity(): string[] {
+    return this._helpCommunity;
+  }
+
+  get futureHelpCommunity(): string[] {
+    return this._futureHelpCommunity;
+  }
+
 
   get helpCommunityTabActivated(): string {
     return this._helpCommunityTabActivated;
@@ -47,9 +51,5 @@ export class AdminProductTrackingComponent implements OnInit {
 
   get futureHelpCommunityTabActivated(): string {
     return this._futureHelpCommunityTabActivated;
-  }
-
-  activateTabFuture(future: string) {
-    this._futureHelpCommunityTabActivated = future;
   }
 }

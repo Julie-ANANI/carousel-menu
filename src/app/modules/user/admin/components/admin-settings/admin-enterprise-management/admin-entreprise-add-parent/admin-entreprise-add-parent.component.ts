@@ -47,22 +47,6 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
   ) {
   }
 
-  get companiesToAddParent(): Array<any> {
-    return this._companiesToAddParent;
-  }
-
-  get companiesTable(): Table {
-    return this._companiesTable;
-  }
-
-  get config(): Config {
-    return this._config;
-  }
-
-  set config(value: Config) {
-    this._config = value;
-  }
-
   ngOnInit(): void {
     this._companiesToAddParent = this._entrepriseService._enterprisesSelected;
     this._initTable();
@@ -472,5 +456,21 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
     if ($event._action === 'replace') {
       this.exchangeValue($event._context);
     }
+  }
+
+  get companiesToAddParent(): Array<any> {
+    return this._companiesToAddParent;
+  }
+
+  get companiesTable(): Table {
+    return this._companiesTable;
+  }
+
+  get config(): Config {
+    return this._config;
+  }
+
+  set config(value: Config) {
+    this._config = value;
   }
 }

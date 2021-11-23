@@ -22,10 +22,6 @@ import {ErrorFrontService} from '../../../../../../services/error/error-front.se
 
 export class AdminProjectQuestionnaireComponent implements OnInit, OnDestroy {
 
-  get cardsSections(): MissionCardTitle {
-    return this._cardsSections;
-  }
-
   private _innovation: Innovation = <Innovation>{};
 
   private _mission: Mission = <Mission>{};
@@ -233,6 +229,10 @@ export class AdminProjectQuestionnaireComponent implements OnInit, OnDestroy {
 
   get mission(): Mission {
     return this._mission;
+  }
+
+  get cardsSections(): MissionCardTitle {
+    return this._cardsSections;
   }
 
   ngOnDestroy(): void {

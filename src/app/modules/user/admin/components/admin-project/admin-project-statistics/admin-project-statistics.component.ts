@@ -16,38 +16,20 @@ export class AdminProjectStatisticsComponent implements OnInit, OnDestroy {
   public isFetchingPros = false;
   public fetchingError = false;
   private _ngUnsubscribe: Subject<any> = new Subject<any>();
-
-  constructor(private _innovationFrontService: InnovationFrontService,
-              private _rolesFrontService: RolesFrontService,
-              private _innovationService: InnovationService,
-              private _socketService: SocketService) {
-  }
-
+  private _socketListening = false;
+  private _innovation: Innovation = <Innovation>{};
+  private _accessPath: Array<string> = ['projects', 'project', 'statistics'];
   private _stats: {
     byCountries: [{ flag: string, count: number }],
     byCompanies: [{ name: string, count: number }],
     byJobTitle: [{ name: string, count: number }]
   };
 
-  get stats(): {
-    byCountries: [{ flag: string; count: number }];
-    byCompanies: [{ name: string; count: number }];
-    byJobTitle: [{ name: string; count: number }]
-  } {
-    return this._stats;
-  }
 
-  private _socketListening = false;
-  private _innovation: Innovation = <Innovation>{};
-
-  get innovation(): Innovation {
-    return this._innovation;
-  }
-
-  private _accessPath: Array<string> = ['projects', 'project', 'statistics'];
-
-  get accessPath(): Array<string> {
-    return this._accessPath;
+  constructor(private _innovationFrontService: InnovationFrontService,
+              private _rolesFrontService: RolesFrontService,
+              private _innovationService: InnovationService,
+              private _socketService: SocketService) {
   }
 
   ngOnInit(): void {
@@ -64,11 +46,6 @@ export class AdminProjectStatisticsComponent implements OnInit, OnDestroy {
     } else {
       return this._rolesFrontService.hasAccessAdminSide(this._accessPath);
     }
-  }
-
-  ngOnDestroy(): void {
-    this._ngUnsubscribe.next();
-    this._ngUnsubscribe.complete();
   }
 
   fetchProfessionalsRepartition() {
@@ -99,6 +76,27 @@ export class AdminProjectStatisticsComponent implements OnInit, OnDestroy {
         this._stats = res;
       });
     }
+  }
+
+  get stats(): {
+    byCountries: [{ flag: string; count: number }];
+    byCompanies: [{ name: string; count: number }];
+    byJobTitle: [{ name: string; count: number }]
+  } {
+    return this._stats;
+  }
+
+  get innovation(): Innovation {
+    return this._innovation;
+  }
+
+  get accessPath(): Array<string> {
+    return this._accessPath;
+  }
+
+  ngOnDestroy(): void {
+    this._ngUnsubscribe.next();
+    this._ngUnsubscribe.complete();
   }
 }
 

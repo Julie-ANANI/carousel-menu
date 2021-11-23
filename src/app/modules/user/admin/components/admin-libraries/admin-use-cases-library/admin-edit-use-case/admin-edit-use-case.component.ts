@@ -23,58 +23,6 @@ interface ConfirmUpdate {
 })
 export class AdminEditUseCaseComponent implements OnInit {
 
-  get templateName(): string {
-    return this._templateName;
-  }
-
-  get templates(): Array<MissionTemplate> {
-    return this._templates;
-  }
-
-  get validate(): ConfirmUpdate {
-    return this._validate;
-  }
-
-  set validate(value: ConfirmUpdate) {
-    this._validate = value;
-  }
-
-  get showModal(): boolean {
-    return this._showModal;
-  }
-
-  set showModal(value: boolean) {
-    this._showModal = value;
-  }
-
-  get toBeSaved(): boolean {
-    return this._toBeSaved;
-  }
-
-  get questionnaireLanguages(): Array<string> {
-    return this._questionnaireLanguages;
-  }
-
-  get accessPath(): Array<string> {
-    return this._accessPath;
-  }
-
-  get isSaving(): boolean {
-    return this._isSaving;
-  }
-
-  get missionTemplate(): MissionTemplate {
-    return this._missionTemplate;
-  }
-
-  get fetchingError(): boolean {
-    return this._fetchingError;
-  }
-
-  get currentLang(): string {
-    return this._translateService.currentLang;
-  }
-
   private _fetchingError = false;
 
   private _missionTemplate = <MissionTemplate>{};
@@ -321,6 +269,58 @@ export class AdminEditUseCaseComponent implements OnInit {
     if (!this._toBeSaved) {
       this._missionTemplate = this._templates.find((_template) => _template._id === event);
     }
+  }
+
+  get templateName(): string {
+    return this._templateName;
+  }
+
+  get templates(): Array<MissionTemplate> {
+    return this._templates;
+  }
+
+  get validate(): ConfirmUpdate {
+    return this._validate;
+  }
+
+  set validate(value: ConfirmUpdate) {
+    this._validate = value;
+  }
+
+  get showModal(): boolean {
+    return this._showModal;
+  }
+
+  set showModal(value: boolean) {
+    this._showModal = value;
+  }
+
+  get toBeSaved(): boolean {
+    return this._toBeSaved;
+  }
+
+  get questionnaireLanguages(): Array<string> {
+    return this._questionnaireLanguages;
+  }
+
+  get accessPath(): Array<string> {
+    return this._accessPath;
+  }
+
+  get isSaving(): boolean {
+    return this._isSaving;
+  }
+
+  get missionTemplate(): MissionTemplate {
+    return this._missionTemplate;
+  }
+
+  get fetchingError(): boolean {
+    return this._fetchingError;
+  }
+
+  get currentLang(): string {
+    return this._translateService.currentLang;
   }
 
 }

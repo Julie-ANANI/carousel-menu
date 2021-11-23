@@ -472,7 +472,6 @@ export class AdminCampaignWorkflowsComponent implements OnInit {
     return this._isTesting;
   }
 
-
   get innovationCardLanguages(): string[] {
     return this._innovationCardLanguages;
   }

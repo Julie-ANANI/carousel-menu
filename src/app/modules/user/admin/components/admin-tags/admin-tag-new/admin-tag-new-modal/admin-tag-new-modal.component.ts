@@ -9,15 +9,6 @@ export class AdminTagNewModalComponent {
 
   @Input() public title: string;
 
-  private _active = false;
-  private _initialData: Array<any> = [];
-
-  constructor() {}
-
-  get active(): boolean { return this._active; }
-
-  get initialData(): Array<any> { return this._initialData; }
-
   @Input()
   set initialData(data: Array<any>) {
     this._initialData = data;
@@ -27,5 +18,14 @@ export class AdminTagNewModalComponent {
   set active(data: boolean) {
     this._active = data;
   }
+
+  private _active = false;
+  private _initialData: Array<any> = [];
+
+  constructor() {}
+
+  get active(): boolean { return this._active; }
+
+  get initialData(): Array<any> { return this._initialData; }
 
 }

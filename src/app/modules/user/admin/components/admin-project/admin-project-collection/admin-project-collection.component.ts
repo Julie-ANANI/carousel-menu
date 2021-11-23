@@ -67,6 +67,14 @@ export class AdminProjectCollectionComponent implements OnInit, OnDestroy {
 
   private _socketListening = false;
 
+  private static _campaignStat(
+    answers: Array<Answer>,
+    type: string,
+    searchKey?: any
+  ): number {
+    return CampaignFrontService.answerStat(answers, type, searchKey);
+  }
+
   constructor(
     @Inject(PLATFORM_ID) protected _platformId: Object,
     private _configService: ConfigService,
@@ -76,14 +84,6 @@ export class AdminProjectCollectionComponent implements OnInit, OnDestroy {
     private _socketService: SocketService,
     private _innovationFrontService: InnovationFrontService
   ) {}
-
-  private static _campaignStat(
-    answers: Array<Answer>,
-    type: string,
-    searchKey?: any
-  ): number {
-    return CampaignFrontService.answerStat(answers, type, searchKey);
-  }
 
   ngOnInit() {
     if (isPlatformBrowser(this._platformId)) {
@@ -462,6 +462,31 @@ export class AdminProjectCollectionComponent implements OnInit, OnDestroy {
     });
   }
 
+  updatePros(value: any) {
+    const proToUpdate = this._answers.find((item) => item._id === value._id);
+    proToUpdate.professional = !proToUpdate.professional
+      ? <Professional>{}
+      : proToUpdate.professional;
+    proToUpdate.professional.firstName = value.newPro.firstName;
+    proToUpdate.professional.lastName = value.newPro.lastName;
+    proToUpdate.professional.email = value.newPro.email;
+    if (value.newPro.jobTitle) {
+      proToUpdate.professional.jobTitle = value.newPro.jobTitle;
+      proToUpdate.job = value.newPro.jobTitle;
+    }
+    if (value.newPro.company) {
+      proToUpdate.company.name = value.newPro.company;
+    }
+    if (value.newPro.country) {
+      proToUpdate.country = value.newPro.country.flag;
+    }
+  }
+
+  updateAnswersTable(value: boolean) {
+    this._initAnswers();
+  }
+
+
   get localConfig(): Config {
     return this._localConfig;
   }
@@ -524,30 +549,6 @@ export class AdminProjectCollectionComponent implements OnInit, OnDestroy {
 
   get campaignList(): Array<{ _name: ''; _alias: '' }> {
     return this._campaignList;
-  }
-
-  updatePros(value: any) {
-    const proToUpdate = this._answers.find((item) => item._id === value._id);
-    proToUpdate.professional = !proToUpdate.professional
-      ? <Professional>{}
-      : proToUpdate.professional;
-    proToUpdate.professional.firstName = value.newPro.firstName;
-    proToUpdate.professional.lastName = value.newPro.lastName;
-    proToUpdate.professional.email = value.newPro.email;
-    if (value.newPro.jobTitle) {
-      proToUpdate.professional.jobTitle = value.newPro.jobTitle;
-      proToUpdate.job = value.newPro.jobTitle;
-    }
-    if (value.newPro.company) {
-      proToUpdate.company.name = value.newPro.company;
-    }
-    if (value.newPro.country) {
-      proToUpdate.country = value.newPro.country.flag;
-    }
-  }
-
-  updateAnswersTable(value: boolean) {
-    this._initAnswers();
   }
 
   ngOnDestroy(): void {

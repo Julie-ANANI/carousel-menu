@@ -32,6 +32,10 @@ export class AdminProfessionalShieldComponent implements OnInit {
   constructor(private _shieldService: ShieldService,
               private _notificationsService: TranslateNotificationsService) { }
 
+  ngOnInit() {
+    this._getShieldedPros();
+  }
+
   private _initializeTable() {
     this._table = {
       _selector: 'admin-user-limit',
@@ -54,10 +58,6 @@ export class AdminProfessionalShieldComponent implements OnInit {
         {_attrs: ['professional.ambassador.is'], _name: 'TABLE.HEADING.AMBASSADOR', _type: 'TEXT', _isSearchable: false, _isSortable: false}
       ]
     };
-  }
-
-  ngOnInit() {
-    this._getShieldedPros();
   }
 
   private _getShieldedPros() {

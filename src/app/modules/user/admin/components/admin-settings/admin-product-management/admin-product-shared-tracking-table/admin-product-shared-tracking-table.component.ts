@@ -114,6 +114,15 @@ export class AdminProductSharedTrackingTableComponent implements OnInit {
       });
   }
 
+  public canAccess(path?: Array<string>) {
+    if (path) {
+      return this._rolesFrontService.hasAccessAdminSide(['settings'].concat(path));
+    } else {
+      return this._rolesFrontService.hasAccessAdminSide(['settings', 'tracking']);
+    }
+  }
+
+
 
   get monthSelected(): number {
     return this._monthSelected;
@@ -155,15 +164,6 @@ export class AdminProductSharedTrackingTableComponent implements OnInit {
   get years(): Array<number> {
     return this._years;
   }
-
-  public canAccess(path?: Array<string>) {
-    if (path) {
-      return this._rolesFrontService.hasAccessAdminSide(['settings'].concat(path));
-    } else {
-      return this._rolesFrontService.hasAccessAdminSide(['settings', 'tracking']);
-    }
-  }
-
 
   get path(): any[] {
     return this._path;

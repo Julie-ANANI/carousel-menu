@@ -5,15 +5,11 @@ import { User } from '../../../../models/user.model';
 import { Innovation } from '../../../../models/innovation';
 import { Professional } from '../../../../models/professional';
 import { Campaign } from '../../../../models/campaign';
-//import { AutocompleteService } from '../../../../services/autocomplete/autocomplete.service';
 import { AuthService } from '../../../../services/auth/auth.service';
-//import { UserService } from '../../../../services/user/user.service';
 import { environment } from '../../../../../environments/environment';
-//import { distinctUntilChanged, first } from 'rxjs/operators';
 import { Tag } from '../../../../models/tag';
 import { QuizService } from '../../../../services/quiz/quiz.service';
 import {emailRegEx} from '../../../../utils/regex';
-//import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'add-ambassador-form',
@@ -32,7 +28,6 @@ export class AddAmbassadorFormComponent implements OnInit {
   }
 
   @Input() set type(type: string) {
-    //this._type = type;
     this.loadTypes();
   }
 

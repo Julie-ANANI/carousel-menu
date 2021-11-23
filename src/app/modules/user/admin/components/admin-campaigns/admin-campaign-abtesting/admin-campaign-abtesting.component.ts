@@ -4,8 +4,8 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { CampaignService } from '../../../../../../services/campaign/campaign.service';
 import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
 import { Campaign } from '../../../../../../models/campaign';
-import {Table} from '@umius/umi-common-component/models';
-import {Batch} from '../../../../../../models/batch';
+import { Table } from '@umius/umi-common-component/models';
+import { Batch } from '../../../../../../models/batch';
 import { first } from 'rxjs/operators';
 
 @Component({
@@ -17,6 +17,7 @@ export class AdminCampaignAbtestingComponent implements OnInit {
   @Input() set modifiedScenarios(arg: Array<EmailScenario>) {
     this._modifiedScenarios = arg;
   }
+
   @Input() set campaign(arg: Campaign) {
     this._campaign = arg;
   }
@@ -25,7 +26,7 @@ export class AdminCampaignAbtestingComponent implements OnInit {
 
   public modalABtesting = false;
   private _campaign: Campaign;
-  private _modifiedScenarios: Array<EmailScenario> ;
+  private _modifiedScenarios: Array<EmailScenario>;
   private _nameWorkflowA = '';
   private _nameWorkflowB = '';
   private _tableA: Table;
@@ -52,20 +53,16 @@ export class AdminCampaignAbtestingComponent implements OnInit {
   private _sizeB: number;
   private _batchesLength = 0;
 
-
-
   form: FormGroup;
   public config: any = {
     sort: {},
     search: {}
   };
 
-
-
-
   constructor(private formBuilder: FormBuilder,
               private _campaignService: CampaignService,
-              private _notificationsService: TranslateNotificationsService) { }
+              private _notificationsService: TranslateNotificationsService) {
+  }
 
   ngOnInit() {
 
@@ -154,7 +151,7 @@ export class AdminCampaignAbtestingComponent implements OnInit {
           this._notificationsService.error('ERROR.ERROR', err);
         });
     } else {
-      this._notificationsService.error('ERROR.ERROR', 'Please, update stats of campaign or wait for pros. ')
+      this._notificationsService.error('ERROR.ERROR', 'Please, update stats of campaign or wait for pros. ');
     }
   }
 
@@ -184,7 +181,7 @@ export class AdminCampaignAbtestingComponent implements OnInit {
           Sent: self[`_stats${l}`][2].delivered + self[`_stats${l}`][2].bounced,
           Opened: ((self[`_stats${l}`][2].opened / self[`_size${l}`]) * 100).toFixed(digit) + '%',
           Clicked: ((self[`_stats${l}`][2].clicked / self[`_size${l}`]) * 100).toFixed(digit) + '%',
-          Insights: self[`_stats${l}`][2].insights ,
+          Insights: self[`_stats${l}`][2].insights,
           Status: this.getStatus(2, self[`_status${l}`])
         }],
       _total: self[`_size${l}`],
@@ -214,15 +211,16 @@ export class AdminCampaignAbtestingComponent implements OnInit {
         _attrs: ['Status'], _name: 'Status', _type: 'MULTI-CHOICES',
         _choices: [
           {_name: 'Sent', _class: 'label is-progress'},
-          {_name: 'Planned',  _class: 'label is-success'},
-        ]}]
+          {_name: 'Planned', _class: 'label is-success'},
+        ]
+      }]
     };
   }
 
   private _generateStatsTable() {
-    this._tableA = this._generateOneTable("A");
-    this._tableB = this._generateOneTable("B");
-  };
+    this._tableA = this._generateOneTable('A');
+    this._tableB = this._generateOneTable('B');
+  }
 
   private getStatus(step: number, status: number): string {
     return status > step ? 'Sent' : 'Planned';
@@ -254,25 +252,71 @@ export class AdminCampaignAbtestingComponent implements OnInit {
   }
 
   public ABDISPO() {
-    return this._campaign && this._campaign.innovation && this._campaign.innovation.quizId !== ""  && this._modifiedScenarios.length >= 2;
+    return this._campaign && this._campaign.innovation && this._campaign.innovation.quizId !== '' && this._modifiedScenarios.length >= 2;
   }
 
 
-  get nameWorkflowA(): string { return this._nameWorkflowA };
-  get nameWorkflowB(): string { return this._nameWorkflowB };
-  get sizeA(): number { return this._sizeA };
-  get sizeB(): number { return this._sizeB };
-  get modifiedScenarios(): Array<EmailScenario> { return this._modifiedScenarios };
-  get campaign(): Campaign { return this._campaign };
-  get statsA(): any { return this._statsA };
-  get statsB(): any { return this._statsB };
-  get tableA(): Table {return this._tableA};
-  get tableB(): Table {return this._tableB};
-  get batchesLength(): number { return this._batchesLength };
-  get avertAB(): boolean { return this._avertABtesting; }
+  get nameWorkflowA(): string {
+    return this._nameWorkflowA;
+  }
 
-  set nameWorkflowA(arg: string) { this._nameWorkflowA = arg};
-  set nameWorkflowB(arg: string) { this._nameWorkflowB = arg};
-  set sizeA(arg: number) { this._sizeA = arg};
-  set sizeB(arg: number) { this._sizeB = arg};
+  get nameWorkflowB(): string {
+    return this._nameWorkflowB;
+  }
+
+  get sizeA(): number {
+    return this._sizeA;
+  }
+
+  get sizeB(): number {
+    return this._sizeB;
+  }
+
+  get modifiedScenarios(): Array<EmailScenario> {
+    return this._modifiedScenarios;
+  }
+
+  get campaign(): Campaign {
+    return this._campaign;
+  }
+
+  get statsA(): any {
+    return this._statsA;
+  }
+
+  get statsB(): any {
+    return this._statsB;
+  }
+
+  get tableA(): Table {
+    return this._tableA;
+  }
+
+  get tableB(): Table {
+    return this._tableB;
+  }
+
+  get batchesLength(): number {
+    return this._batchesLength;
+  }
+
+  get avertAB(): boolean {
+    return this._avertABtesting;
+  }
+
+  set nameWorkflowA(arg: string) {
+    this._nameWorkflowA = arg;
+  }
+
+  set nameWorkflowB(arg: string) {
+    this._nameWorkflowB = arg;
+  }
+
+  set sizeA(arg: number) {
+    this._sizeA = arg;
+  }
+
+  set sizeB(arg: number) {
+    this._sizeB = arg;
+  }
 }

@@ -242,6 +242,21 @@ export class AdminUsersComponent implements OnInit {
     event.preventDefault();
   }
 
+  getPerformActions($event: any) {
+    if ($event) {
+      switch ($event._action) {
+        case 'Update grid':
+          const context = $event._context;
+          if (context) {
+            this._userToUpdate = context;
+            this._userToUpdate.id = context._id;
+            this.updateUser(this._userToUpdate, false);
+          }
+          break;
+      }
+    }
+  }
+
   set config(value: Config) {
     this._config = value;
     this._getUsers();
@@ -297,20 +312,5 @@ export class AdminUsersComponent implements OnInit {
 
   get isLoading(): boolean {
     return this._isLoading;
-  }
-
-  getPerformActions($event: any) {
-    if ($event) {
-      switch ($event._action) {
-        case 'Update grid':
-          const context = $event._context;
-          if (context) {
-            this._userToUpdate = context;
-            this._userToUpdate.id = context._id;
-            this.updateUser(this._userToUpdate, false);
-          }
-          break;
-      }
-    }
   }
 }
