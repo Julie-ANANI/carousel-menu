@@ -49,7 +49,7 @@
             ],
             "styles": [
               "src/style/framework/src/umi.scss",
-              "src/styles.scss"
+              "src/style/styles.scss"
             ],
             "scripts": [
               "node_modules/tinymce/tinymce.min.js",
@@ -216,7 +216,7 @@
               "assets/plugins/plugin.js"
             ],
             "styles": [
-              "src/styles.scss"
+              "src/style/styles.scss"
             ],
             "assets": [
               {
@@ -290,7 +290,7 @@
             ],
             "styles": [
               "src/style/framework/src/umi.scss",
-              "src/styles.dynergie.scss"
+              "src/style/styles.dynergie.scss"
             ],
             "scripts": [
               "node_modules/tinymce/tinymce.min.js",
@@ -601,7 +601,7 @@
           }
         }
       }
-    },
+    }
   },
   "defaultProject": "umi",
   "schematics": {
