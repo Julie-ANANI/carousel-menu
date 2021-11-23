@@ -4,7 +4,7 @@
     <!-- when fetching error -->
     <ng-container *ngIf="fetchingError">
       <div class="d-flex s-error-wrapper align-center">
-        <app-utility-error-template-1 [ngStyle]="{ 'width': '100%' }"
+        <app-utility-error-template-1  style="width: 100%"
                                       [errorMessage]="'ERROR.ERRORS.FETCHING'"></app-utility-error-template-1>
       </div>
     </ng-container>
@@ -125,8 +125,8 @@
                 <tr class="text-center">
                   <ng-container *ngFor="let seniorityLevel of seniorityLevelsClassification.seniorityLevels">
                     <th *ngIf="seniorityLevel.name"
-                        [ngStyle]="{'min-width': '40px'}">
-                      <div [ngStyle]="{'width': 'fit-content'}">
+                        style="min-width: 40px">
+                      <div style="width: fit-content">
                         {{ seniorityLevel.name }}
                       </div>
                     </th>
@@ -137,14 +137,15 @@
                 <tr class="text-center">
                    <ng-container *ngFor="let seniorityLevel of seniorityLevelsClassification.seniorityLevels">
                     <td *ngIf="seniorityLevel.name"
-                      [ngStyle]="{'min-width': '40px'}">
+                        style="min-width: 40px">
                       {{ numberFormatter(seniorityLevel.count, 0) }}
                     </td>
                   </ng-container>
                 </tr>
                 <tr class="text-center">
                   <ng-container *ngFor="let seniorityLevel of seniorityLevelsClassification.seniorityLevels">
-                    <td *ngIf="seniorityLevel.name" [ngStyle]="{'min-width': '40px'}" class="text-center">
+                    <td *ngIf="seniorityLevel.name"
+                        style="min-width: 40px" class="text-center">
                       {{ (seniorityLevel.count / repartitionStats.classified * 100) | number: '1.0-0' }}%
                     </td>
                   </ng-container>
@@ -174,10 +175,10 @@
                 <thead>
                 <tr class="text-center">
                   <th class="bg-draft"
-                      [ngStyle]="{'min-width': '40px'}">{{ (category.label || {en: 'Not classified yet'}).en }}</th>
+                      style="min-width: 40px">{{ (category.label || {en: 'Not classified yet'}).en }}</th>
                   <th *ngFor="let job of category.jobs"
-                      [ngStyle]="{'min-width': '40px'}">
-                    <div [ngStyle]="{'width': 'fit-content'}">
+                      style="min-width: 40px">
+                    <div style="width: fit-content">
                       {{ (job.label || {en: 'Not classified yet'}).en }}
                     </div>
                   </th>
@@ -187,14 +188,14 @@
                 <tr class="text-center">
                   <td class="text-bold">{{ numberFormatter(category.count, 0) }}</td>
                   <td *ngFor="let job of category.jobs"
-                      [ngStyle]="{'min-width': '40px'}">
+                      style="min-width: 40px">
                     {{ numberFormatter(job.count, 0) }}
                   </td>
                 </tr>
                 <tr class="text-center">
                   <td class="text-bold">{{ (category.count / repartitionStats.classified * 100) | number: '1.0-0'}}%</td>
                   <td *ngFor="let job of category.jobs"
-                      [ngStyle]="{'min-width': '40px'}">
+                      style="min-width: 40px">
                     {{ (job.count / category.count * 100) | number: '1.0-0' }}%
                   </td>
                 </tr>

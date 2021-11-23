@@ -44,7 +44,7 @@
             (click)="needToSetOriginalTag = true"
             *ngIf="isEditable"
             [attr.data-tooltip]="'Edit tag'"
-            [ngStyle]="{ 'top': '-12px' }"
+            style="top: -12px"
             class="absolute tooltip c-hand m-left-2">
               <i class="fas fa-edit text-warning text-xs"></i>
             </span>
@@ -87,7 +87,7 @@
             [attr.placeholder]="placeholder"
             [list-formatter]="autocompleListFormatter"
             [ngModelOptions]="{standalone: true}"
-            [ngStyle]="{'max-width': '80%'}"
+            style="max-width: 80%"
             [source]="suggestions.bind(this)"
             [value-formatter]="autocompleValueFormatter"
             auto-complete

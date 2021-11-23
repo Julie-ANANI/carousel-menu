@@ -1,25 +1,6 @@
 <div class="container fluid grid-2xl" id="admin-project-description">
   <!--  </div>-->
   <div class="column col-sm-12 col-11 col-mx-auto p-top-30 p-bottom-30">
-    <!--    <div class="d-flex align-center justify-start flex-wrap sticky bg-white" style="top: 49px; z-index: 99">-->
-    <!--      <ng-container *ngFor="let section of activeInnovCard.sections; let i=index;">-->
-    <!--        <a pageScroll [pageScrollOffset]="100" class="button is-link is-sm is-draft"-->
-    <!--           [href]="'#'+section.type.toUpperCase()+'-'+i + 1+'href'"-->
-    <!--        >{{ i + 1 }}.{{ section.title }}</a>-->
-    <!--        <span> | </span>-->
-    <!--      </ng-container>-->
-    <!--      <a pageScroll [pageScrollOffset]="100" class="button is-link is-sm is-draft" href="#project-title-href">{{activeInnovCard.sections.length + 1}}.Title</a>-->
-    <!--      <span> | </span>-->
-    <!--      <a pageScroll [pageScrollOffset]="100" class="button is-link is-sm is-draft" href="#project-summary-href">{{activeInnovCard.sections.length + 2}}-->
-    <!--        .Summary</a>-->
-    <!--      <span> | </span>-->
-    <!--      <a pageScroll [pageScrollOffset]="100" class="button is-link is-sm is-draft"-->
-    <!--         href="#project-media-href">{{ activeInnovCard.sections && activeInnovCard.sections.length + 3 || 4 }}.Media</a>-->
-    <!--      <button class="button is-outlined m-left-auto is-sm m-right-20"-->
-    <!--              (click)="openModal($event, 'NEW_SECTION')">-->
-    <!--        Add new section <i class="fas fa-plus"></i>-->
-    <!--      </button>-->
-    <!--    </div>-->
 
     <!-- sections dynamic -->
     <section
@@ -231,7 +212,7 @@
 
     <!-- section title -->
     <section
-      [ngStyle]="{ 'animation-duration': '110ms' }"
+      style="animation-duration: 100ms"
       class="animate-slide slide-down section-wrapper p-top-20">
       <div class="section-body"
            [ngClass]="{'flex-d-column': !toggleCommentSuggestion.title}">
@@ -361,7 +342,7 @@
     <!-- /section title -->
 
     <!-- section summary -->
-    <section [ngStyle]="{ 'animation-duration': '220ms' }" class="animate-slide slide-down has-border section-wrapper">
+    <section style="animation-duration: 220ms" class="animate-slide slide-down has-border section-wrapper">
       <div class="section-body" [ngClass]="{'flex-d-column': !toggleCommentSuggestion.summary}">
 
         <!-- content -->
@@ -521,7 +502,7 @@
         <!-- /image -->
 
         <!-- video -->
-        <div [ngStyle]="{'padding-top': '45px'}" class="section-suggestion">
+        <div style="padding-top: 45px" class="section-suggestion">
           <div *ngIf="isEditable" class="bg-white box-shadow">
             <app-shared-upload-zone-video
               (cbFn)="uploadVideo($event)"
@@ -536,7 +517,7 @@
       <!-- medias display -->
       <div
         *ngIf="activeInnovCard.media.length"
-        [ngStyle]="{ 'margin-left': '-10px', 'margin-right': '-20px' }"
+        style="margin-left: -10px; margin-right: -20px"
         class="d-flex flex-wrap">
 
         <!-- principal media -->

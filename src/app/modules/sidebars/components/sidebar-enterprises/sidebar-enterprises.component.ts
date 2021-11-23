@@ -20,7 +20,7 @@ import {
   EnterpriseValueChains,
   Industries,
 } from '../../../../models/static-data/enterprise';
-import {EnterpriseService} from "../../../../services/enterprise/enterprise.service";
+import {EnterpriseService} from '../../../../services/enterprise/enterprise.service';
 
 type Template = 'CREATE' | 'EDIT';
 

@@ -43,8 +43,8 @@
             <table *ngIf="stats && stats.byCountries && stats.byCountries.length" class="table" style="width: fit-content;margin: auto; max-width: 100%">
               <thead>
               <tr>
-                <th *ngFor="let country of stats.byCountries" [ngStyle]="{'min-width': '40px'}">
-                  <div [ngStyle]="{'width': '40px'}">
+                <th *ngFor="let country of stats.byCountries" style="min-width: 40px">
+                  <div style="width: 40px">
                     <app-utility-country-flag
                       [country]="country"
                       [width]="40"
@@ -56,12 +56,12 @@
               </thead>
               <tbody>
               <tr>
-                <td class="whitespace-normal" *ngFor="let country of stats.byCountries" [ngStyle]="{'min-width': '40px'}">
+                <td class="whitespace-normal" *ngFor="let country of stats.byCountries" style="min-width: 40px">
                   {{ country.flag }}
                 </td>
               </tr>
               <tr>
-                <td *ngFor="let country of stats.byCountries" [ngStyle]="{'min-width': '40px'}">
+                <td *ngFor="let country of stats.byCountries" style="min-width: 40px">
                   {{ country.count }}
                 </td>
               </tr>
@@ -75,20 +75,20 @@
               <table class="table">
                 <thead>
                 <tr>
-                  <th [ngStyle]="{'min-width': '40px'}">
+                  <th style="min-width: 40px">
                     Enterprises
                   </th>
-                  <th [ngStyle]="{'min-width': '40px'}">
+                  <th style="min-width: 40px">
                     Good emails
                   </th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr *ngFor="let company of stats.byCompanies">
-                  <td class="whitespace-normal" [ngStyle]="{'min-width': '40px'}">
+                  <td class="whitespace-normal" style="min-width: 40px">
                     {{ company.name }}
                   </td>
-                  <td [ngStyle]="{'min-width': '40px'}">
+                  <td style="min-width: 40px">
                     {{ company.count }}
                   </td>
                 </tr>
@@ -101,20 +101,20 @@
               <table class="table">
                 <thead>
                 <tr>
-                  <th [ngStyle]="{'min-width': '40px'}">
+                  <th style="min-width: 40px">
                     Job
                   </th>
-                  <th [ngStyle]="{'min-width': '40px'}">
+                  <th style="min-width: 40px">
                     Good emails
                   </th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr *ngFor="let job of stats.byJobTitle">
-                  <td class="whitespace-normal" [ngStyle]="{'min-width': '40px'}">
+                  <td class="whitespace-normal" style="min-width: 40px">
                     {{ job.name }}
                   </td>
-                  <td [ngStyle]="{'min-width': '40px'}">
+                  <td style="min-width: 40px">
                     {{ job.count }}
                   </td>
                 </tr>

@@ -8,10 +8,6 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { NotificationsService } from 'angular2-notifications';
 import { AutoSuggestionConfig } from '../../../../../../utility/auto-suggestion/interface/auto-suggestion-config';
 import { EnterpriseSizeList, EnterpriseTypes, EnterpriseValueChains, Industries } from '../../../../../../../models/static-data/enterprise';
-// import {SwellrtBackend} from "../swellrt-client/services/swellrt-backend";
-// import {UserService} from "../../services/user/user.service";
-
-// declare let swellrt;
 
 @Component({
   templateUrl: './admin-entreprise-bulk-edit.component.html',
@@ -73,11 +69,6 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
     sort: '{"created":-1}'
   };
 
-
-  get companiesOriginalTable(): Table {
-    return this._companiesOriginalTable;
-  }
-
   private _success = 0;
   private _failed = 0;
   private _inputType = '';
@@ -96,15 +87,24 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
   private _isSizeInfo = false;
   private _isShowSyntax = false;
 
-  get enterpriseTypes(): Array<any> {
-    return this._enterpriseTypes;
-  }
-
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _rolesFrontService: RolesFrontService,
               private _router: Router,
               private _notificationService: NotificationsService,
               private _enterpriseService: EnterpriseService) {
+  }
+
+  ngOnInit(): void {
+    this.companiesToEdit = this._enterpriseService._enterprisesSelected;
+    this._initTable();
+  }
+
+  get companiesOriginalTable(): Table {
+    return this._companiesOriginalTable;
+  }
+
+  get enterpriseTypes(): Array<any> {
+    return this._enterpriseTypes;
   }
 
 
@@ -304,11 +304,6 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
     });
     this._companiesOriginalTable = JSON.parse(JSON.stringify(this._companiesTable));
     this._companiesTableToSwap = JSON.parse(JSON.stringify(this._companiesTable));
-  }
-
-  ngOnInit(): void {
-    this.companiesToEdit = this._enterpriseService._enterprisesSelected;
-    this._initTable();
   }
 
   public canAccess(path?: Array<string>) {

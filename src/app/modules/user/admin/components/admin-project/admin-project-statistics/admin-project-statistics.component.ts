@@ -3,7 +3,7 @@ import {Innovation} from '../../../../../../models/innovation';
 import {RolesFrontService} from '../../../../../../services/roles/roles-front.service';
 import {InnovationFrontService} from '../../../../../../services/innovation/innovation-front.service';
 import {Subject} from 'rxjs';
-import {first, takeUntil} from 'rxjs/operators';
+import { first, takeUntil } from 'rxjs/operators';
 import {InnovationService} from '../../../../../../services/innovation/innovation.service';
 import {SocketService} from '../../../../../../services/socket/socket.service';
 

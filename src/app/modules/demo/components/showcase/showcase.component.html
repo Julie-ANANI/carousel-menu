@@ -13,7 +13,7 @@
     <!-- when fetching error -->
     <ng-container *ngIf="fetchingError">
       <div class="d-flex s-error-wrapper align-center">
-        <app-utility-error-template-1 [ngStyle]="{ 'width': '100%' }" [errorMessage]="'ERROR.ERRORS.FETCHING'"></app-utility-error-template-1>
+        <app-utility-error-template-1 style="width: 100%"  [errorMessage]="'ERROR.ERRORS.FETCHING'"></app-utility-error-template-1>
       </div>
     </ng-container>
     <!-- /when fetching error -->
@@ -22,7 +22,7 @@
     <!-- start process -->
     <ng-container *ngIf="selectedTagsStats.length === 0 && !fetchingError">
       <div class="s-start-wrapper d-flex align-center">
-        <app-message-template-2 [ngStyle]="{ 'width': '100%' }" [animation]="true">
+        <app-message-template-2 style="width: 100%" [animation]="true">
 
           <div class="text-center">
 

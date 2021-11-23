@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { Table } from '@umius/umi-common-component/models';
 import { RolesFrontService } from '../../../../../../../services/roles/roles-front.service';
 import { TrackingService } from '../../../../../../../services/tracking/tracking.service';
@@ -8,7 +8,8 @@ import { TranslateNotificationsService } from '../../../../../../../services/not
 @Component({
   selector: 'app-help-community',
   templateUrl: './admin-product-shared-tracking-table.component.html',
-  styleUrls: ['./admin-product-shared-tracking-table.component.scss']
+  styleUrls: ['./admin-product-shared-tracking-table.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 
 export class HelpCommunityGrowComponent extends AdminProductSharedTrackingTableComponent implements OnInit {
@@ -33,8 +34,10 @@ export class HelpCommunityGrowComponent extends AdminProductSharedTrackingTableC
 
   constructor(protected _rolesFrontService: RolesFrontService,
               protected _trackingService: TrackingService,
+              protected changeDetectorRef: ChangeDetectorRef,
               protected _translateNotificationsService: TranslateNotificationsService) {
-    super(_rolesFrontService, _trackingService, _translateNotificationsService);
+    super(_rolesFrontService, _trackingService, changeDetectorRef, _translateNotificationsService);
+    this.changeDetectorRef.detach();
     this._selector = 'admin-help-community-grow-tracking-table';
     this._title = '';
     this._columns = [

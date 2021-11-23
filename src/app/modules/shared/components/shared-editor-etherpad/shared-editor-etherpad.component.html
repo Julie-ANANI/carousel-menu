@@ -16,7 +16,8 @@
 
   <!-- error message while fetching -->
   <section *ngIf="!isEtherpadUp()"  class="container fluid grid-2xl">
-    <app-utility-message-error [ngStyle]="{ 'width': '100%', 'min-height': '400px' }" [reloadPage]="false"
+    <app-utility-message-error
+      style="width: 100%; min-height: 400px" [reloadPage]="false"
                                [errorMessage]="'SHARED_TEXT_ZONE.COLLABORATIVE_EDITING_ERROR' | translate">
     </app-utility-message-error>
   </section>

@@ -7,7 +7,6 @@ import { countries } from '../../../models/static-data/country';
     <div *ngIf="countryToDisplay" [attr.data-tooltip]="name" class="tooltip d-flex" id="country-flag">
       <img
         [height]="height"
-        [ngStyle]="{ 'height': height + 'px', 'width': width + 'px' }"
         [src]="url"
         [width]="width"
         alt=" ">

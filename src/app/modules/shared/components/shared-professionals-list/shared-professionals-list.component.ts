@@ -116,7 +116,6 @@ export class SharedProfessionalsListComponent {
   }
 
   private _initializeTable() {
-    console.log(this._professionals);
     this._table = {
       _selector: this.tableSelector,
       _title: 'professionals',

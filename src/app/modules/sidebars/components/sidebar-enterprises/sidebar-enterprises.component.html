@@ -77,10 +77,10 @@
         <label class="form-label" for="form-logo">Logo</label>
         <figure
           [ngClass]="{'no-logo': !logo}"
-          [ngStyle]="{'width': '120px', 'height': '120px'}"
+          style="width: 120px; height: 120px"
           class="img-hover-button">
           <img
-            [ngStyle]="{'width': '120px', 'height': '120px'}"
+            style="width: 120px; height: 120px"
             [src]="logo ? logo : defaultLogoURI"
             alt=" "
             class="img-fit-cover">

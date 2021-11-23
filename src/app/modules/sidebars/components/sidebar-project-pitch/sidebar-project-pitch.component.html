@@ -5,7 +5,7 @@
     <button
       (click)="onSave($event)"
       [disabled]="isSaving || !toBeSaved"
-      [ngStyle]="{'min-width': '100px'}"
+      style="min-width: 100px"
       class="button is-sm is-community"
       id="sidebarProjectPitch-btn-save">
       {{ (isSaving ? 'COMMON.BUTTON.SAVING_PROJECT' : 'COMMON.BUTTON.SAVE') | translate  }}

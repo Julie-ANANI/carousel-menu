@@ -63,7 +63,7 @@
           (keyup)="textColor('quotation')"
           [(ngModel)]="content.quotation"
           [attr.placeholder]="'ADMIN_EXECUTIVE_REPORT.QUOTE_SECTION.QUOTATION' | translate"
-          [ngStyle]="{ 'height': '97px' }"
+          style="height: 97px"
           maxlength="100"
           class="form-input"
           type="text">
@@ -147,15 +147,16 @@
     <!-- quotes / name / job -->
     <div class="m-bottom-20">
 
-      <div [ngStyle]="{ 'min-height': '131px' }" class="text-wrapper relative">
+      <div  style="min-height: 131px" class="text-wrapper relative">
 
-        <div *ngIf="content.showQuotes" [ngStyle]="{ 'top': '4px', 'left': '8px' }" class="absolute">
+        <div *ngIf="content.showQuotes"
+             style="top: 4px; left: 8px" class="absolute">
           <i class="fas fa-quote-left"></i>
         </div>
 
         {{ content.quotation }}
 
-        <div *ngIf="content.showQuotes" [ngStyle]="{ 'bottom': '4px', 'right': '8px' }" class="absolute">
+        <div *ngIf="content.showQuotes" style="top: 4px; left: 8px" class="absolute">
           <i class="fas fa-quote-right"></i>
         </div>
 

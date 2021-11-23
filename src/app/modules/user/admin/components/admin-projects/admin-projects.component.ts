@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { TranslateTitleService } from '../../../../../services/title/title.service';
 import { InnovationService } from '../../../../../services/innovation/innovation.service';
 import { Innovation } from '../../../../../models/innovation';
@@ -19,11 +19,12 @@ import { ObjectivesPrincipal } from '../../../../../models/static-data/missionOb
 import { Mission, MissionTemplate } from '../../../../../models/mission';
 import { MissionService } from '../../../../../services/mission/mission.service';
 import { MissionFrontService } from '../../../../../services/mission/mission-front.service';
-import { Table, Config, Column } from '@umius/umi-common-component/models';
-import {ConfigService} from '@umius/umi-common-component/services/config';
+import { Column, Config, Table } from '@umius/umi-common-component/models';
+import { ConfigService } from '@umius/umi-common-component/services/config';
 
 @Component({
   templateUrl: './admin-projects.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class AdminProjectsComponent implements OnInit {
@@ -64,6 +65,7 @@ export class AdminProjectsComponent implements OnInit {
               private _authService: AuthService,
               private _translateTitleService: TranslateTitleService,
               private _missionService: MissionService,
+              private _changeDetectorRef: ChangeDetectorRef,
               private _userService: UserService) {
     this._translateTitleService.setTitle('Market Tests');
   }
@@ -731,26 +733,9 @@ export class AdminProjectsComponent implements OnInit {
         project.mainObjective = project.objective[this._currentLang];
       }
 
-      if (project.emailSent) {
-        project['emailSent'] = 'Yes';
-      } else {
-        project['emailSent'] = 'No';
-      }
-
-      if (project.published) {
-        project['published'] = 'Yes';
-      } else {
-        project['published'] = 'No';
-      }
-
-      if (project.isPublic) {
-        project['isPublic'] = 'Yes';
-      } else {
-        project['isPublic'] = 'No';
-      }
-
-
-      // project.emailSent = (project.emailSent) ? 'Yes' : 'No';
+      project.emailSent = project.emailSent ? 'Yes' : 'No';
+      project.published = project.published ? 'Yes' : 'No';
+      project.isPublic = project.isPublic ? 'Yes' : 'No';
       return project;
     });
   }
@@ -772,6 +757,7 @@ export class AdminProjectsComponent implements OnInit {
       _isNoMinHeight: true,
       _columns: this._setColumnOrderForUser()
     };
+    this._changeDetectorRef.markForCheck();
   }
 
   /***

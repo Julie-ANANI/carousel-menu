@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Inject, PLATFORM_ID, OnDestroy } from '@angular/core';
+import { Component, Inject, Input, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
 import { SearchService } from '../../../../services/search/search.service';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { AuthService } from '../../../../services/auth/auth.service';
@@ -15,7 +15,6 @@ import { CampaignService } from '../../../../services/campaign/campaign.service'
 import { TargetPros } from '../../../../models/targetPros';
 import { JobsFrontService } from '../../../../services/jobs/jobs-front.service';
 
-import * as _ from 'lodash';
 import { Subject } from 'rxjs/Subject';
 
 
@@ -115,24 +114,34 @@ export class SharedSearchProsComponent implements OnInit, OnDestroy {
       this._getCountries();
       this._initParams();
 
+      this.getTargetedProsFromService().then(_ => {
+        /**
+         * subscribe: get recent targetPros, not saved, current one
+         * */
+        this._jobFrontService
+          .targetedProsToUpdate()
+          .pipe(takeUntil(this._ngUnsubscribe))
+          .subscribe((result: { targetPros: TargetPros, isToggle?: boolean, identifier?: string, toSave?: boolean }) => {
+            this._toSave = result.toSave;
+            this._targetedProsToUpdate = result.targetPros || <TargetPros>{};
+            this._checkProsTargetingValid();
+          });
+      });
+    }
+  }
+
+  getTargetedProsFromService() {
+    return new Promise((resolve, reject) => {
       this._campaignService.getTargetedPros(this._campaign._id).pipe(first())
         .subscribe(res => {
           this._jobFrontService.setTargetedProsToUpdate({targetPros: res, isToggle: false, identifier: ''});
           this._initialTargetedPro = JSON.parse(JSON.stringify(res));
-
-          /**
-           * subscribe: get recent targetPros, not saved, current one
-           * */
-          this._jobFrontService
-            .targetedProsToUpdate()
-            .pipe(takeUntil(this._ngUnsubscribe))
-            .subscribe((result: { targetPros: TargetPros, isToggle?: boolean, identifier?: string, toSave?: boolean }) => {
-              this._toSave = result.toSave;
-              this._targetedProsToUpdate = result.targetPros || <TargetPros>{};
-              this._checkProsTargetingValid();
-            });
+          resolve(true);
+        }, error => {
+          console.error(error);
+          reject(error);
         });
-    }
+    });
   }
 
   private _getCountries() {

@@ -152,18 +152,18 @@
 
     <div *ngFor="let bar of content.values; let i = index" class="m-bottom-20">
 
-      <p [ngStyle]="{ 'min-height': '27px' }" class="text-lg text-medium">
+      <p class="text-lg text-medium" style="min-height: 27px" >
         <ng-container *ngIf="bar.name">{{ bar.name }}</ng-container>
       </p>
 
-      <div [ngStyle]="{ 'height': '8px' }">
+      <div style="height: 8px">
         <app-utility-progress-bar
           [width]="bar.percentage ? (bar.percentage + '%') : 0 + '%'"
           [height]="'8px'">
         </app-utility-progress-bar>
       </div>
 
-      <p [ngStyle]="{ 'height': '21px' }" class="text-ellipsis">
+      <p style="height: 21px" class="text-ellipsis">
         <ng-container *ngIf="bar.legend && content.showExamples">
           {{ bar.legend }}
         </ng-container>

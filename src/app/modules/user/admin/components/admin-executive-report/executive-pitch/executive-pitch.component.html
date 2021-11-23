@@ -11,7 +11,7 @@
           (keyup)="textColor()"
           [attr.placeholder]="'ADMIN_EXECUTIVE_REPORT.PITCH.PROJECT_PITCH' | translate"
           [innerHTML]="pitch"
-          [ngStyle]="{ 'height': '150px' }"
+          style="height: 150px"
           class="form-input"
           [ngClass]="pitch && pitch.length <= 216 ? 'has-success' : 'has-error'"
           maxlength="216"

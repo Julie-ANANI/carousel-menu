@@ -70,7 +70,7 @@
 
 
     <!-- label / value -->
-    <div [ngStyle]="{ 'margin-bottom': '-15px' }" class="d-flex justify-space flex-wrap">
+    <div style="margin-bottom: -15px" class="d-flex justify-space flex-wrap">
       <div *ngFor="let pie of content.values; let i = index" class="pie-wrapper">
 
         <!-- label -->
@@ -128,7 +128,7 @@
 
       <h4 class="m-no-bottom text-center">{{ section.title }}</h4>
 
-      <h5 [ngStyle]="{ 'min-height': '27px' }" class="text-lg text-normal m-no-bottom">
+      <h5 style="min-height: 27px" class="text-lg text-normal m-no-bottom">
         <ng-container *ngIf="content.favorable_answers.visibility">
           {{ content.favorable_answers.percentage }}% {{ 'ADMIN_EXECUTIVE_REPORT.PIE_SECTION.FAVOURABLE' | translate }}
         </ng-container>

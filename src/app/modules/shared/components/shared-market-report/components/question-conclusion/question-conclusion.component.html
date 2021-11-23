@@ -35,7 +35,7 @@
       </sub>
     </h3>
 
-    <h4 *ngIf="questionLabel()" [ngStyle]="{'color': '#484848'}" class="m-no-bottom text-lg">
+    <h4 *ngIf="questionLabel()"  style="color: #484848" class="m-no-bottom text-lg">
       {{ displayedQuestionLabel() }}
     </h4>
 
@@ -141,7 +141,7 @@
         [readonly]="readonly"
         [percentage]="stats.percentage"
         [subtitle]="(questionSubtitle()) || ('MARKET_REPORT.NUMBER_ANSWERS' | translateIn: reportingLang)">
-        <div [ngStyle]="{'font-size': '100px'}">{{ stats.nbAnswers || 0 }}</div>
+        <div style="font-size: 100px">{{ stats.nbAnswers || 0 }}</div>
       </app-bluesquare>
     </ng-container>
     <!-- /rectangle box -->

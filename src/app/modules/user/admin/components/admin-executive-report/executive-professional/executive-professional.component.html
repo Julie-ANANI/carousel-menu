@@ -13,7 +13,7 @@
           (keyup)="textColor()"
           [(ngModel)]="config.abstract"
           [attr.placeholder]="'ADMIN_EXECUTIVE_REPORT.PROFESSIONAL.ABSTRACT' | translate"
-          [ngStyle]="{ 'height': '150px' }"
+          style="height: 150px"
           maxlength="258"
           class="form-input"
           type="text"
@@ -81,7 +81,7 @@
       <div *ngFor="let answer of top4Answers; let i = index;" class="pro-wrapper relative text-center text-sm">
         <ng-container *ngIf="answer">
           <!-- flag -->
-          <div [ngStyle]="{ 'height': '26px' }" class="m-bottom-1">
+          <div style="height: 26px" class="m-bottom-1">
             <ng-container *ngIf="answer.country">
               <app-utility-country-flag [country]="answer.country" [width]="22" [height]="15"></app-utility-country-flag>
             </ng-container>
@@ -98,21 +98,21 @@
 
 
           <!-- jobTitle -->
-          <div [ngStyle]="{ 'height': '19px' }" class="text-ellipsis">
+          <div style="height: 19px" class="text-ellipsis">
             {{ answer.job }}
           </div>
           <!-- /jobTitle -->
 
 
           <!-- company -->
-          <div *ngIf="!anonymous" [ngStyle]="{ 'height': '19px' }" class="text-ellipsis">
+          <div *ngIf="!anonymous" style="height: 19px" class="text-ellipsis">
             {{ answer.company ? answer.company.name : '' }}
           </div>
           <!-- /company -->
 
 
           <!-- user icon -->
-          <div [ngStyle]="{ 'top': '7px', 'right': '15px' }" class="absolute">
+          <div class="absolute" style="top: 7px; right: 15px" >
             <i class="fas fa-user text-md text-background"></i>
           </div>
           <!-- /user icon -->

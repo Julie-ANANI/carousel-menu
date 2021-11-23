@@ -1,6 +1,5 @@
 <section id="admin-signatures-library">
-  <div class="restrict-width">
-
+  <div class="column col-sm-12 col-11 col-mx-auto">
 
     <!-- fetching error -->
     <ng-container *ngIf="fetchingError">
@@ -14,7 +13,7 @@
     <!-- no signature -->
     <ng-container *ngIf="!fetchingError && noResult && total === 0">
       <div class="a-s-l-create-signature-wrapper d-flex align-center">
-        <app-message-template-2 [animation]="true" [ngStyle]="{ 'width': '100%' }">
+        <app-message-template-2 [animation]="true" style="width: 100%">
 
           <div class="text-center">
 
@@ -84,7 +83,7 @@
 
     <!-- isAdd -->
     <ng-container *ngIf="isModalAdd">
-      <div class="form-group" [ngStyle]="{ 'max-width': '430px' }">
+      <div class="form-group"  style="max-width: 430px">
         <label class="form-label" for="add-email">{{ 'COMMON.LABEL.SIGNATURE_NAME' | translate }}</label>
         <input
           [(ngModel)]="newSignatureName"
