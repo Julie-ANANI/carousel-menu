@@ -67,7 +67,6 @@ export class AdminProjectsComponent implements OnInit {
               private _missionService: MissionService,
               private _changeDetectorRef: ChangeDetectorRef,
               private _userService: UserService) {
-    this._changeDetectorRef.detach();
     this._translateTitleService.setTitle('Market Tests');
   }
 
@@ -758,7 +757,7 @@ export class AdminProjectsComponent implements OnInit {
       _isNoMinHeight: true,
       _columns: this._setColumnOrderForUser()
     };
-    this._changeDetectorRef.detectChanges();
+    this._changeDetectorRef.markForCheck();
   }
 
   /***
