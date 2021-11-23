@@ -59,7 +59,7 @@
       <!-- /regions -->
 
       <!-- automated -->
-      <div class="form-group m-bottom-25">
+      <div class="form-group">
         <label class="form-switch">
           <input
             [(ngModel)]="params && params.options && params.options['automated']"
@@ -73,7 +73,7 @@
       <!-- /automated -->
 
       <!-- rgpd -->
-      <div class="form-group m-bottom-25">
+      <div class="form-group">
         <label class="form-switch">
           <input
             [(ngModel)]="params && params.options && params.options['rgpd']"
@@ -85,6 +85,20 @@
         </label>
       </div>
       <!-- /rgpd -->
+
+      <!-- simulation -->
+      <div class="form-group m-bottom-25">
+        <label class="form-switch">
+          <input
+            [(ngModel)]="params && params.options && params.options['simulation']"
+            [disabled]="!isEditable"
+            (ngModelChange)="saveParams()"
+            name="sidebar-automated"
+            type="checkbox">
+          <i class="form-icon"></i> Simulation mode
+        </label>
+      </div>
+      <!-- /simulation -->
 
       <!-- use -->
       <h6 class="title is-6 m-bottom-15">Select the options</h6>

@@ -182,6 +182,7 @@ export class SharedSearchProsComponent implements OnInit, OnDestroy {
         regions: false,
         indexSearch: false,
         rgpd: false,
+        simulation: false,
       },
     };
 
