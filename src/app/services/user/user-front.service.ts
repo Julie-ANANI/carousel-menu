@@ -10,7 +10,7 @@ export class UserFrontService {
    * @param user
    */
   public static fullName(user: User | Professional): string {
-    if (user) {
+    if (!!user) {
       if (typeof User && (<User>user).name) {
         return (<User>user).name;
       } else if (user.firstName && user.lastName) {
