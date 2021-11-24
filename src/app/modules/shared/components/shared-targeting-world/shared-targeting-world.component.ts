@@ -330,22 +330,6 @@ export class SharedTargetingWorldComponent implements OnInit {
       : this.continents;
   }
 
-  get continents(): Array<string> {
-    return WorldmapService.continentsList;
-  }
-
-  get geography(): GeographySettings {
-    return this._geography;
-  }
-
-  get searchCountryString(): string {
-    return this._searchCountryString;
-  }
-
-  get showToggleList(): boolean {
-    return this._showToggleList;
-  }
-
   onChangeCountrySearch(value: string) {
     this._searchCountryString = value;
     this._searchCountries = [];
@@ -363,6 +347,22 @@ export class SharedTargetingWorldComponent implements OnInit {
         }
       );
     }
+  }
+
+  get continents(): Array<string> {
+    return WorldmapService.continentsList;
+  }
+
+  get geography(): GeographySettings {
+    return this._geography;
+  }
+
+  get searchCountryString(): string {
+    return this._searchCountryString;
+  }
+
+  get showToggleList(): boolean {
+    return this._showToggleList;
   }
 
   get searchCountries(): Array<Country> {

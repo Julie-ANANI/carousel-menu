@@ -28,18 +28,6 @@ type template = 'ADMIN' | 'CLIENT' | '';
 
 export class SharedFollowUpComponent implements OnInit {
 
-  set answers(value: Array<Answer>) {
-    this._answers = value;
-  }
-
-  get startContactProcess(): boolean {
-    return this._startContactProcess;
-  }
-
-  set startContactProcess(value: boolean) {
-    this._startContactProcess = value;
-  }
-
   @Input() template: template = '';
 
   // ex: ['projects', 'project', 'followUp']
@@ -134,6 +122,18 @@ export class SharedFollowUpComponent implements OnInit {
 
   get questions(): Array<any> {
     return this._questions;
+  }
+
+  set answers(value: Array<Answer>) {
+    this._answers = value;
+  }
+
+  get startContactProcess(): boolean {
+    return this._startContactProcess;
+  }
+
+  set startContactProcess(value: boolean) {
+    this._startContactProcess = value;
   }
 
 }

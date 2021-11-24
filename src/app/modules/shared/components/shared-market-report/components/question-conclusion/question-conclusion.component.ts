@@ -21,18 +21,6 @@ import {MissionQuestionService} from '../../../../../../services/mission/mission
 
 export class QuestionConclusionComponent implements OnInit {
 
-  get innovation(): Innovation {
-    return this._innovation;
-  }
-
-  get hasMissionTemplate(): boolean {
-    return MissionFrontService.hasMissionTemplate(this.innovation && <Mission>this.innovation.mission);
-  }
-
-  get question(): Question | MissionQuestion {
-    return this._question;
-  }
-
   @Input() originAnswers: {[continent: string]: {count: any, countries: {[country: string]: {count: number, names: any}}}} = null;
 
   @Input() readonly = true;
@@ -217,4 +205,15 @@ export class QuestionConclusionComponent implements OnInit {
     return this._picto;
   }
 
+  get innovation(): Innovation {
+    return this._innovation;
+  }
+
+  get hasMissionTemplate(): boolean {
+    return MissionFrontService.hasMissionTemplate(this.innovation && <Mission>this.innovation.mission);
+  }
+
+  get question(): Question | MissionQuestion {
+    return this._question;
+  }
 }

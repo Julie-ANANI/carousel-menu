@@ -30,96 +30,6 @@ interface IdentifierError {
 })
 export class SharedQuestionnaireSectionComponent implements OnInit {
 
-  get showTitlesLang(): string {
-    return this._showTitlesLang;
-  }
-
-  get isCheckingAvailability(): boolean {
-    return this._isCheckingAvailability;
-  }
-
-  get isAvailableIdentifier(): boolean {
-    return this._isAvailableIdentifier;
-  }
-
-  get isDisabled(): boolean {
-    if (this._questionToAdd.from === 'LIBRARY') {
-      return this._questionToAdd.value.length === 0;
-    } else if (this._questionToAdd.from === 'SCRATCH') {
-      return !this._questionToAdd.value['identifier'] || !this._questionToAdd.value['controlType']
-        || !this._isAvailableIdentifier;
-    }
-    return true;
-  }
-
-  get identifierError(): IdentifierError {
-    return this._identifierError;
-  }
-
-  get searchConfig(): AutoSuggestionConfig {
-    return this._searchConfig;
-  }
-
-  get questionToAdd(): AddQuestion {
-    return this._questionToAdd;
-  }
-
-  get showModal(): boolean {
-    return this._showModal;
-  }
-
-  set showModal(value: boolean) {
-    this._showModal = value;
-  }
-
-  get sectionTypes(): Array<string> {
-    return this._sectionTypes;
-  }
-
-  get questionnaireLangs(): Array<string> {
-    return this._missionQuestionService.questionnaireLangs;
-  }
-
-  get cardsSections(): MissionCardTitle {
-    return this._missionQuestionService.cardsSections;
-  }
-
-  get sections(): Array<MissionTemplateSection> {
-    return this._missionQuestionService.template && this._missionQuestionService.template.sections || [];
-  }
-
-  get editSection(): boolean {
-    return this._editSection;
-  }
-
-  set editSection(value: boolean) {
-    this._editSection = value;
-  }
-
-  get platformLang() {
-    return this._translateService.currentLang;
-  }
-
-  get picto(): Picto {
-    return this._picto;
-  }
-
-  get isCollapsed(): boolean {
-    return this._isCollapsed;
-  }
-
-  set isCollapsed(value: boolean) {
-    this._isCollapsed = value;
-  }
-
-  get sectionIndex(): number {
-    return this._sectionIndex;
-  }
-
-  get section(): MissionTemplateSection {
-    return this._section;
-  }
-
   /**
    * its true if we are integrating this under Library route.
    * because there we are editing the use case template or questions directly from the collections.
@@ -431,6 +341,96 @@ export class SharedQuestionnaireSectionComponent implements OnInit {
         this._isCheckingAvailability = false;
       }
     }
+  }
+
+  get showTitlesLang(): string {
+    return this._showTitlesLang;
+  }
+
+  get isCheckingAvailability(): boolean {
+    return this._isCheckingAvailability;
+  }
+
+  get isAvailableIdentifier(): boolean {
+    return this._isAvailableIdentifier;
+  }
+
+  get isDisabled(): boolean {
+    if (this._questionToAdd.from === 'LIBRARY') {
+      return this._questionToAdd.value.length === 0;
+    } else if (this._questionToAdd.from === 'SCRATCH') {
+      return !this._questionToAdd.value['identifier'] || !this._questionToAdd.value['controlType']
+        || !this._isAvailableIdentifier;
+    }
+    return true;
+  }
+
+  get identifierError(): IdentifierError {
+    return this._identifierError;
+  }
+
+  get searchConfig(): AutoSuggestionConfig {
+    return this._searchConfig;
+  }
+
+  get questionToAdd(): AddQuestion {
+    return this._questionToAdd;
+  }
+
+  get showModal(): boolean {
+    return this._showModal;
+  }
+
+  set showModal(value: boolean) {
+    this._showModal = value;
+  }
+
+  get sectionTypes(): Array<string> {
+    return this._sectionTypes;
+  }
+
+  get questionnaireLangs(): Array<string> {
+    return this._missionQuestionService.questionnaireLangs;
+  }
+
+  get cardsSections(): MissionCardTitle {
+    return this._missionQuestionService.cardsSections;
+  }
+
+  get sections(): Array<MissionTemplateSection> {
+    return this._missionQuestionService.template && this._missionQuestionService.template.sections || [];
+  }
+
+  get editSection(): boolean {
+    return this._editSection;
+  }
+
+  set editSection(value: boolean) {
+    this._editSection = value;
+  }
+
+  get platformLang() {
+    return this._translateService.currentLang;
+  }
+
+  get picto(): Picto {
+    return this._picto;
+  }
+
+  get isCollapsed(): boolean {
+    return this._isCollapsed;
+  }
+
+  set isCollapsed(value: boolean) {
+    this._isCollapsed = value;
+  }
+
+  get sectionIndex(): number {
+    return this._sectionIndex;
+  }
+
+  get section(): MissionTemplateSection {
+    return this._section;
   }
 
 }

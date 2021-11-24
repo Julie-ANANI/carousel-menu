@@ -19,42 +19,6 @@ import {RolesFrontService} from '../../../../../services/roles/roles-front.servi
 })
 export class SharedQuestionnaireQuestionComponent implements OnInit {
 
-  get isTaggedQuestion(): boolean {
-    return this._isTaggedQuestion;
-  }
-
-  get picto(): Picto {
-    return this._picto;
-  }
-
-  get platformLang() {
-    return this._translateService.currentLang;
-  }
-
-  get questionnaireLangs(): Array<string> {
-    return this._missionQuestionService.questionnaireLangs || [];
-  }
-
-  get question(): MissionQuestion {
-    return this._question;
-  }
-
-  get editMode(): boolean {
-    return this._editMode;
-  }
-
-  set editMode(value: boolean) {
-    this._editMode = value;
-  }
-
-  get sectionIndex(): number {
-    return this._sectionIndex;
-  }
-
-  get questionIndex(): number {
-    return this._questionIndex;
-  }
-
   /**
    * true if the Array<Question> is of
    * {
@@ -132,17 +96,6 @@ export class SharedQuestionnaireQuestionComponent implements OnInit {
 
   private _questionType = '';
 
-  constructor(private _missionQuestionService: MissionQuestionService,
-              private _rolesFrontService: RolesFrontService,
-              private _translateService: TranslateService) { }
-
-  ngOnInit() {
-  }
-
-  get questionType(): string {
-    return this._questionType;
-  }
-
   @HostListener('keydown', ['$event'])
   onKeyDown(_event: KeyboardEvent) {
     const textarea = (_event.target as HTMLTextAreaElement);
@@ -150,6 +103,14 @@ export class SharedQuestionnaireQuestionComponent implements OnInit {
       return;
     }
     CommonService.calcTextareaHeight(textarea, _event);
+  }
+
+
+  constructor(private _missionQuestionService: MissionQuestionService,
+              private _rolesFrontService: RolesFrontService,
+              private _translateService: TranslateService) { }
+
+  ngOnInit() {
   }
 
   public up(event: Event) {
@@ -314,5 +275,46 @@ export class SharedQuestionnaireQuestionComponent implements OnInit {
       return this._rolesFrontService.hasAccessAdminSide(this.accessPath.concat(path));
     }
   }
+
+  get isTaggedQuestion(): boolean {
+    return this._isTaggedQuestion;
+  }
+
+  get picto(): Picto {
+    return this._picto;
+  }
+
+  get platformLang() {
+    return this._translateService.currentLang;
+  }
+
+  get questionnaireLangs(): Array<string> {
+    return this._missionQuestionService.questionnaireLangs || [];
+  }
+
+  get question(): MissionQuestion {
+    return this._question;
+  }
+
+  get editMode(): boolean {
+    return this._editMode;
+  }
+
+  set editMode(value: boolean) {
+    this._editMode = value;
+  }
+
+  get sectionIndex(): number {
+    return this._sectionIndex;
+  }
+
+  get questionIndex(): number {
+    return this._questionIndex;
+  }
+
+  get questionType(): string {
+    return this._questionType;
+  }
+
 
 }

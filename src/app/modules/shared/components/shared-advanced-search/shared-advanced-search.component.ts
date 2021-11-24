@@ -6,6 +6,12 @@ import { AnswerService } from '../../../../services/answer/answer.service';
   templateUrl: './shared-advanced-search.component.html',
 })
 export class SharedAdvancedSearchComponent {
+  @Input() set config(value: any) {
+    this._config = value;
+    this.loadAnswers();
+  }
+
+  @Output() modalAnswerChange = new EventEmitter<any>();
 
   private _config: any = {
     fields: '',
@@ -16,13 +22,6 @@ export class SharedAdvancedSearchComponent {
       created: -1
     }
   };
-
-  @Input() set config(value: any) {
-    this._config = value;
-    this.loadAnswers();
-  }
-
-  @Output() modalAnswerChange = new EventEmitter<any>();
 
 
   constructor( private _answerService: AnswerService ) { }

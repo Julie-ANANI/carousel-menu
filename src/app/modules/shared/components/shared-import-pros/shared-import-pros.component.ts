@@ -31,15 +31,6 @@ export class SharedImportProsComponent {
   }
 
 
-  get importRequestKeywords(): string {
-    return this._importRequestKeywords;
-  }
-
-  set importRequestKeywords(value: string) {
-    this._importRequestKeywords = value;
-  }
-
-
   public onClickImport(file: File) {
     let fileName = this._importRequestKeywords;
     if (this.campaign) {
@@ -63,5 +54,13 @@ export class SharedImportProsComponent {
           console.error(err);
         }
       );
+  }
+
+  get importRequestKeywords(): string {
+    return this._importRequestKeywords;
+  }
+
+  set importRequestKeywords(value: string) {
+    this._importRequestKeywords = value;
   }
 }

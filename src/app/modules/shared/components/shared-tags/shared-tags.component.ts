@@ -105,6 +105,22 @@ export class SharedTagsComponent implements OnInit {
     this._showModal = false;
   }
 
+  addNewTags(event: KeyboardEvent) {
+    event.preventDefault();
+    if (event.keyCode === 13) {
+      this.onSubmit();
+    }
+  }
+
+  addTagSelected(event: any) {
+    if (typeof event === 'object') {
+      if (typeof this._tagForm.get('tag').value !== 'string') {
+        this.addTag.emit(this._tagForm.get('tag').value);
+        this._tagForm.get('tag').reset();
+      }
+    }
+  }
+
   get currentLang(): string {
     return this._currentLang;
   }
@@ -123,21 +139,5 @@ export class SharedTagsComponent implements OnInit {
 
   set showModal(value: boolean) {
     this._showModal = value;
-  }
-
-  addNewTags(event: KeyboardEvent) {
-    event.preventDefault();
-    if (event.keyCode === 13) {
-      this.onSubmit();
-    }
-  }
-
-  addTagSelected(event: any) {
-    if (typeof event === 'object') {
-      if (typeof this._tagForm.get('tag').value !== 'string') {
-        this.addTag.emit(this._tagForm.get('tag').value);
-        this._tagForm.get('tag').reset();
-      }
-    }
   }
 }
