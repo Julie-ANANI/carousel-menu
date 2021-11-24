@@ -1,17 +1,18 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {MissionCardTitle, MissionQuestion, MissionTemplateSection} from '../../../../../models/mission';
-import {picto, Picto} from '../../../../../models/static-data/picto';
-import {TranslateService} from '@ngx-translate/core';
-import {MissionQuestionService} from '../../../../../services/mission/mission-question.service';
-import {RolesFrontService} from '../../../../../services/roles/roles-front.service';
-import {AutoSuggestionConfig} from '../../../../utility/auto-suggestion/interface/auto-suggestion-config';
-import {MissionFrontService} from '../../../../../services/mission/mission-front.service';
-import {MissionService} from '../../../../../services/mission/mission.service';
-import {first} from 'rxjs/operators';
-import {HttpErrorResponse} from '@angular/common/http';
-import {ErrorFrontService} from '../../../../../services/error/error-front.service';
-import {TranslateNotificationsService} from '../../../../../services/notifications/notifications.service';
-import {InnovCardSection} from '../../../../../models/innov-card';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { MissionCardTitle, MissionQuestion, MissionTemplateSection } from '../../../../../models/mission';
+import { picto, Picto } from '../../../../../models/static-data/picto';
+import { TranslateService } from '@ngx-translate/core';
+import { MissionQuestionService } from '../../../../../services/mission/mission-question.service';
+import { RolesFrontService } from '../../../../../services/roles/roles-front.service';
+import { AutoSuggestionConfig } from '../../../../utility/auto-suggestion/interface/auto-suggestion-config';
+import { MissionFrontService } from '../../../../../services/mission/mission-front.service';
+import { MissionService } from '../../../../../services/mission/mission.service';
+import { first } from 'rxjs/operators';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ErrorFrontService } from '../../../../../services/error/error-front.service';
+import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
+import { InnovCardSection } from '../../../../../models/innov-card';
+import { PresetFrontService } from "../../../../../services/preset/preset-front.service";
 
 interface AddQuestion {
   from: 'SCRATCH' | 'LIBRARY';
@@ -95,8 +96,10 @@ export class SharedQuestionnaireSectionComponent implements OnInit {
   constructor(private _translateService: TranslateService,
               private _rolesFrontService: RolesFrontService,
               private _missionService: MissionService,
+              private _presetFrontService: PresetFrontService,
               private _translateNotificationsService: TranslateNotificationsService,
-              private _missionQuestionService: MissionQuestionService) { }
+              private _missionQuestionService: MissionQuestionService) {
+  }
 
   ngOnInit() {
   }
@@ -110,6 +113,7 @@ export class SharedQuestionnaireSectionComponent implements OnInit {
       this._missionQuestionService.addQuestion(this._sectionIndex);
     }
   }
+
 
   public up(event: Event) {
     event.preventDefault();
@@ -126,6 +130,14 @@ export class SharedQuestionnaireSectionComponent implements OnInit {
   }
 
   public sectionName(lang: string): string {
+    if (!!this.cardsSections[this._showTitlesLang].length) {
+      const _find = this.cardsSections[lang].find((_section: InnovCardSection) => {
+        return (_section.title === this._section.identifier) || (_section.type === this._section.type);
+      });
+      if (_find && _find.title) {
+        return _find.title;
+      }
+    }
     return MissionQuestionService.entryInfo(this._section, lang)['name'] || '';
   }
 
@@ -423,6 +435,10 @@ export class SharedQuestionnaireSectionComponent implements OnInit {
 
   set isCollapsed(value: boolean) {
     this._isCollapsed = value;
+  }
+
+  get sectionsNames(): Array<string> {
+    return this._presetFrontService.sectionsNames;
   }
 
   get sectionIndex(): number {
