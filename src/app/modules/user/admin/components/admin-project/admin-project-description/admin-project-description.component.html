@@ -7,7 +7,7 @@
       *ngFor="let section of activeInnovCard.sections; let i=index;"
       [ngStyle]="{ 'animation-duration': ((i + 1) * 110) + 'ms' }"
       class="animate-slide slide-down section-wrapper has-border">
-      <div class="section-body" [ngClass]="{'flex-d-column': !toggleCommentSuggestion[i.toString(10)]}">
+      <div class="section-body">
 
         <!-- content -->
         <div class="section-content">
@@ -75,11 +75,11 @@
                   </div>
                   <!-- /delete -->
 
-                  <div class="label is-primary is-sm tooltip"
-                       data-tooltip="comment & suggestion"
-                       style="cursor: pointer"
-                       (click)="onToggleCommentSuggestion($event, i.toString(10))">UMI
-                  </div>
+<!--                  <div class="label is-primary is-sm tooltip"-->
+<!--                       data-tooltip="comment & suggestion"-->
+<!--                       style="cursor: pointer"-->
+<!--                       (click)="onToggleCommentSuggestion($event, i.toString(10))">UMI-->
+<!--                  </div>-->
                 </div>
 
               </div>
@@ -111,7 +111,7 @@
         <!-- /content -->
 
         <!-- suggestion / comments -->
-        <div class="section-suggestion" *ngIf="toggleCommentSuggestion[i.toString(10)]">
+        <div class="section-suggestion">
 
           <!-- comment -->
           <div class="m-bottom-25"
@@ -214,8 +214,7 @@
     <section
       style="animation-duration: 100ms"
       class="animate-slide slide-down section-wrapper p-top-20">
-      <div class="section-body"
-           [ngClass]="{'flex-d-column': !toggleCommentSuggestion.title}">
+      <div class="section-body">
 
         <!-- content -->
         <div class="section-content">
@@ -244,11 +243,11 @@
               </button>
               <!-- /edit-preview button -->
 
-              <div class="label is-primary is-sm tooltip m-left-auto"
-                   data-tooltip="comment & suggestion"
-                   style="cursor: pointer"
-                   (click)="onToggleCommentSuggestion($event, 'title')">UMI
-              </div>
+<!--              <div class="label is-primary is-sm tooltip m-left-auto"-->
+<!--                   data-tooltip="comment & suggestion"-->
+<!--                   style="cursor: pointer"-->
+<!--                   (click)="onToggleCommentSuggestion($event, 'title')">UMI-->
+<!--              </div>-->
 
             </div>
 
@@ -274,8 +273,7 @@
         <!-- /content -->
 
         <!-- suggestion / comments -->
-        <div class="section-suggestion"
-             *ngIf="toggleCommentSuggestion.title">
+        <div class="section-suggestion">
 
           <!-- comment -->
           <div class="m-bottom-25" [id]="'project-title-href-comment'">
@@ -343,7 +341,7 @@
 
     <!-- section summary -->
     <section style="animation-duration: 220ms" class="animate-slide slide-down has-border section-wrapper">
-      <div class="section-body" [ngClass]="{'flex-d-column': !toggleCommentSuggestion.summary}">
+      <div class="section-body">
 
         <!-- content -->
         <div class="section-content">
@@ -372,11 +370,11 @@
               </button>
               <!-- /edit-preview button -->
 
-              <div class="label is-primary is-sm tooltip m-left-auto"
-                   data-tooltip="comment & suggestion"
-                   style="cursor: pointer"
-                   (click)="onToggleCommentSuggestion($event, 'summary')">UMI
-              </div>
+<!--              <div class="label is-primary is-sm tooltip m-left-auto"-->
+<!--                   data-tooltip="comment & suggestion"-->
+<!--                   style="cursor: pointer"-->
+<!--                   (click)="onToggleCommentSuggestion($event, 'summary')">UMI-->
+<!--              </div>-->
             </div>
 
           </div>
@@ -404,8 +402,7 @@
         <!-- /content -->
 
         <!-- suggestion / comments -->
-        <div class="section-suggestion"
-             *ngIf="toggleCommentSuggestion.summary">
+        <div class="section-suggestion">
 
           <!-- comment -->
           <div class="m-bottom-25" [id]="'project-summary-href-comment'">
