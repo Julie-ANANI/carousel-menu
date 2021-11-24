@@ -31,5 +31,16 @@ RUN gzip -k -r dist/browser/
 
 RUN npm run server:webpack
 
+RUN rm package-lock.json
+RUN rm -rf src/
+RUN rm angular.json
+RUN rm tsconfig.json
+RUN rm -rf e2e/
+RUN rm -rf builders/
+RUN rm -rf doc/
+RUN rm -rf hooks/
+RUN rm Dockerfile.image
+
+
 EXPOSE  3080
 CMD ["npm", "run", "serve:ssr"]
