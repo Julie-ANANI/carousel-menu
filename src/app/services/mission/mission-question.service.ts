@@ -75,9 +75,12 @@ export class MissionQuestionService {
     return this._sectionsNames;
   }
 
+  /** it's file data JSON of Choice Likert Scale
+   * */
+  dataOfChoiceLikertScale = optionLikert;
   /* TODO test logic of select dynamique for likert*/
   get optionsNamesLikert(): Array<string> {
-    return this.optionLikertList;
+    return this.dataOfChoiceLikertScale;
   }
 
   set sectionsNames(value: Array<string>) {
@@ -276,10 +279,10 @@ export class MissionQuestionService {
           fr: 'Drag and drop pour classer les items'
         };
 
-      case 'likert-scale':
+      case 'likert scale':
         return {
-          en: 'you can select your type',
-          fr: 'tu peux sélectionner ton type'
+          en: '',
+          fr: ''
         };
 
       default:
@@ -400,11 +403,10 @@ export class MissionQuestionService {
       question = MissionQuestionService.setOptionsPositiveAnswer(question);
     }
 
-    if (question.controlType === 'likert-scale') {
-      // const measureOptions = this.measureOptionsTest[question.attitudeMeasure];
-      console.log(question.attitudeMeasure)
-      console.table(this.optionLikertList)
-      const measureOptions = this.optionLikertList[question.attitudeMeasure];
+    if (question.controlType === 'likert scale') {
+ /*TODO DELETE CONSOLE LOG*/
+      console.table(this.dataOfChoiceLikertScale);
+      const measureOptions = this.dataOfChoiceLikertScale[question.attitudeMeasure];
       for (let i = 0; i < measureOptions.length; i++) {
         question.options.push(this.addOptionLikert(question, measureOptions[i]));
       }
@@ -448,12 +450,13 @@ export class MissionQuestionService {
 
 
   /**
-   * return the new option for the controlType = 'agreement' | 'frequency' | 'satisfaction' | 'use'| 'quality' | 'relevance' | 'importance' | 'interest' |'criticality;
+   * return the new option for the attitudeMeasure = 'agreement' | 'frequency' | 'satisfaction' | 'use'| 'quality'
+   * | 'relevance' | 'importance' | 'interest' |'criticality;
    * @param question,
    * @param measureOptions
    */
   public addOptionLikert(question: MissionQuestion = <MissionQuestion>{}, measureOptions: any): MissionQuestionOption {
-    if (question.controlType === 'likert-scale') {
+    if (question.controlType === 'likert scale') {
       const id = question.options.length;
       return {
         identifier: id.toString(),
@@ -469,7 +472,6 @@ export class MissionQuestionService {
 
     return <MissionQuestionOption>{};
   }
-
 
   /**
    * find option's text in right lang
@@ -747,14 +749,31 @@ export class MissionQuestionService {
     return question;
   }
 
-  /**
+ /* /!**
    * update the value of the option entry with new value.
    * @param newValue
    * @param lang
    * @param question
    * @param optionIndex
    * @param emitChanges
-   */
+   *!/
+  public noChangeQuestionOptionEntry(label: string, lang: string, question: MissionQuestion,
+                                   optionIndex: number, emitChanges = true) {
+    if (question && question.options && question.options[optionIndex]) {
+      const option = question.options[optionIndex];
+      const index = option.entry.findIndex((_entry) => _entry.lang === lang);
+      if (index !== -1) {
+        option.entry[index].label = label;
+        if (emitChanges) {
+          this._emitTemplate();
+        }
+      }
+    }
+
+    return question;
+  }*/
+
+
   public changeQuestionOptionEntry(newValue: string, lang: string, question: MissionQuestion,
                                    optionIndex: number, emitChanges = true) {
     if (question && question.options && question.options[optionIndex]) {
@@ -770,6 +789,7 @@ export class MissionQuestionService {
 
     return question;
   }
+
 
   /**
    * update the value of the option with new value not the option entry.

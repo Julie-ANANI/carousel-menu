@@ -510,19 +510,18 @@ export const COMMON = {
     'toggle': 'Toggle',
     'checkbox': 'Choix multiples',
     'ranking': 'Ranking',
-    'likert-scale': 'Likert-scale'
+    'likert scale': 'Likert scale'
   },
 
   'LIKERT_TYPE': {
-    'CHOISIR': 'Choisis un type de likert scale',
-    'ACCORD': 'accord',
-    'FRÉQUENCE': 'fréquence',
-    'SATISFACTION': 'satisfaction',
-    'UTILITÉ': 'utilité',
-    'QUALITÉ': 'qualité',
-    'PERTINENCE': 'pertinence',
-    'IMPORTANCE': 'important',
-    'INTEREST': 'interest',
+    'AGREEMENT': 'Accord',
+    'FREQUENCY': 'Fréquence',
+    'SATISFACTION': 'Satisfaction',
+    'USE': 'Utilité',
+    'QUALITY': 'Qualité',
+    'RELEVANCE': 'Pertinence',
+    'IMPORTANCE': 'Important',
+    'INTEREST': 'Intérêt',
     'CRITICALITY': 'Criticité'
 
   },

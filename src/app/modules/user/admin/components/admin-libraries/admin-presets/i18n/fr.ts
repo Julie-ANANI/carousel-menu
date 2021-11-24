@@ -110,7 +110,7 @@ export const PRESETS = {
       'toggle': 'Toggle',
       'checkbox': 'Choix multiples',
       'ranking': 'Classement',
-      'likert-scale': 'Likert scale'
+      'likert scale': 'Likert scale'
     },
     'EDIT': {
       'TITLE': 'Titre dans l\'infographie',

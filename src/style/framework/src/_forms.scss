@@ -607,12 +607,23 @@ input {
   &[readonly] {
     background: $form-disabled-color none;
     border-color: $border-default-color;
+    margin-top: 100px;
+    margin: auto;
+    padding: 20px;
   }
 
 }
 
+.form-input-likert {
 
+  &[readonly] {
+    text-align: center;
+    align-content: center;
+    margin: auto;
+    padding: 20px;
+  }
 
+}
 
 
 // Form suggestion Todo remove this.

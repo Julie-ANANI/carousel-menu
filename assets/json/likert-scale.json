@@ -1,15 +1,15 @@
 {
   "agreement": [{
-    "en": "strongly disagree",
-    "fr": "pas du tout d'accord"
+    "en": "Strongly disagree",
+    "fr": "Pas du tout d'accord"
   },
     {
-      "en": "disagree",
+      "en": "Disagree",
       "fr": "pas d'accord"
     },
     {
-      "en": "neutral",
-      "fr": "neutre"
+      "en": "Neutral",
+      "fr": "Neutre"
     },
     {
       "en": "Agree",
@@ -54,7 +54,7 @@
     },
     {
       "en": "Neutral",
-      "fr": "neutre"
+      "fr": "Neutre"
     },
     {
       "en": "Satisfied",
@@ -141,8 +141,8 @@
       "fr": "Pas important"
     },
     {
-      "en": "neutral",
-      "fr": "neutre"
+      "en": "Neutral",
+      "fr": "Neutre"
     },
     {
       "en": "Important",
@@ -163,8 +163,8 @@
       "fr": "Pas intéressé"
     },
     {
-      "en": "neutral",
-      "fr": "neutre"
+      "en": "Neutral",
+      "fr": "Neutre"
     },
     {
       "en": "Somewhat interested",
@@ -185,8 +185,8 @@
       "fr": "Peu critique"
     },
     {
-      "en": "neutral",
-      "fr": "neutre"
+      "en": "Neutral",
+      "fr": "Neutre"
     },
     {
       "en": "Critical",

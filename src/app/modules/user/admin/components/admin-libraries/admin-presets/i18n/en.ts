@@ -110,7 +110,7 @@ export const PRESETS = {
       'toggle': 'Toggle',
       'checkbox': 'Multiple choice',
       'ranking': 'Ranking',
-      'likert-scale': 'Likert scale'
+      'likert scale': 'Likert scale'
     },
     'EDIT': {
       'SAVE': 'Save the question',

@@ -56,92 +56,27 @@
                 <option value="scale">{{ 'COMMON.QUESTIONNAIRE_TYPE.scale' | translate }}</option>
                 <option value="stars">{{ 'COMMON.QUESTIONNAIRE_TYPE.stars' | translate }}</option>
                 <option value="ranking">{{ 'COMMON.QUESTIONNAIRE_TYPE.ranking' | translate }}</option>
-                <option value="likert-scale">{{ 'COMMON.QUESTIONNAIRE_TYPE.likert-scale' | translate }}</option>
+                <option value="likert scale">{{ 'COMMON.QUESTIONNAIRE_TYPE.likert scale' | translate }}</option>
               </select>
             </label>
 
             <!-- FIRST PART LIKERT SCALE SELECT -->
 
-            <ng-container *ngIf="(!isTaggedQuestion && isEditable) || canAccess(['edit', 'type']) || isEditable">
+            <ng-container *ngIf="question.controlType === 'likert scale'">
               <div class="d-flex">
                 <label class="m-right-20">
-
-                  <!-- 1- écoute l'event pour checker si l'utilisateur à les accès-->
-                  <!-- 2- le type change avant la fin de l'event (live), il selectionne le bon type qui est choisit par l'utilisateur-->
-                  <!-- 3 il boucle sur les nom des section solution, issues etc-->
-                  <!-- 4 l'index sert à ?, c'est probalement le nom de l'identifiant-->
-                  <!--5 il prend la valeur de name qui change par rapport à la boucle-->
-                  <!-- 6 indique une valeur en cas de bug-->
-
-
-              <!--    <select (change)="notifyChanges()"
-                          [(ngModel)]="section.identifier"
-
-                          class="form-select is-sm">
-                    <option
-
-                      *ngFor="let name of sectionsNames; let idx = index"
-
-                      [ngValue]="idx">{{ name }}
-                    </option>
-                    <option
-                      [ngValue]="'nothing'">Nothing
-                    </option>
-                  </select>-->
-
-                  <select (change)="notifyChanges()"
-                    [(ngModel)]="question.attitudeMeasure"
-                    class="form-select is-sm">
-<!--                    Todo : CLEAN WITH DATA DYNAMIQUE-->
-                    <!--optionNamesLikert or question.attitudeMesure-->
-
-                   <!--<option
-                    *ngFor="let type of question.attitudeMeasure;"
-                    [ngValue]="type">{{ 'COMMON.LIKERT_TYPE.' + type | uppercase | translate }}
-                    </option>-->
-
-                    <!--il faut un array de mes option-->
-
-                      <option
-                        *ngFor="let type of optionsNamesLikert| keyvalue; let idx = index"
-                        [ngValue]="idx">{{'COMMON.LIKERT_TYPE.'  +  type.key | uppercase | translate}}
-                      </option>
-                    </select>
-
-
                   <select
+                    (change)="notifyChanges()"
                     (ngModelChange)="onChangeTypeLikertScale($event)"
                     [(ngModel)]="question.attitudeMeasure"
                     class="form-select is-sm">
-
-             <!--       {{ 'COMMON.LANG.' + lang | uppercase | translate }}:-->
-                    <option value=" ">{{ 'COMMON.LIKERT_TYPE.CHOOSE' | translate }}</option>
-                    <option value="agreement">{{ 'COMMON.LIKERT_TYPE.AGREEMENT' | translate }}</option>
-                    <option value="frequency">{{ 'COMMON.LIKERT_TYPE.FREQUENCY' | translate }}</option>
-                    <option value="satisfaction">{{ 'COMMON.LIKERT_TYPE.SATISFACTION' | translate }}</option>
-                    <option value="use">{{ 'COMMON.LIKERT_TYPE.USE' | translate }}</option>
-                    <option value="quality">{{ 'COMMON.LIKERT_TYPE.QUALITY' | translate }}</option>
-                    <option value="relevance">{{ 'COMMON.LIKERT_TYPE.RELEVANCE' | translate }}</option>
-                    <option value="importance">{{ 'COMMON.LIKERT_TYPE.IMPORTANCE' | translate }}</option>
-                    <option value="interest">{{ 'COMMON.LIKERT_TYPE.INTEREST' | translate }}</option>
-                    <option value="criticality">{{ 'COMMON.LIKERT_TYPE.CRITICALITY' | translate }}</option>
+               <!--     <option [ngValue]="''">Choisis un type de likert scale</option>-->
+                    <option
+                        *ngFor="let type of optionsNamesLikert| keyvalue;"
+                        [ngValue]="type.key">{{'COMMON.LIKERT_TYPE.' +  type.key | uppercase | translate}}
+                    </option>
                   </select>
-                    <!--      <option *ngFor="let type of measuresOptions[question.attitudeMeasure]" [ngValue]="type">{{'COMMON.LIKERT_TYPE.'| translate }}</option>-->
-                    <!-- <option *ngFor="let type of sectionTypes" [ngValue]="type">{{type | titlecase}}</option>
-
-                  <!--      <option *ngFor="let type of measuresOptions[question.attitudeMeasure]" [ngValue]="type">{{'COMMON.LIKERT_TYPE.'| translate }}</option>&ndash;&gt;-->
-                  <!--     &lt;!&ndash; <option *ngFor="let type of sectionTypes" [ngValue]="type">{{type | titlecase}}</option>&ndash;&gt;-->
-
-                  <!--  // relier avec une variable ce nouveau composant qui represente les types de mesure d'attitudes-->
-                  <!--  //ce composant sera relié à son par parent qui est shared-questionnaire-question-->
-                  <!--  // Ce composant doit etre lié avec le choix d'option likert scale-->
-                  <!--  // ce composant doit afficher les types sous forme de liste-->
-                  <!--  // ce composant doit etre physiquement etre a coté des choix des types de question-->
-                  <!--  //ce composant doit afficher 5 option de choix non editable et non changeable ou ne peuvent pas etre deplacer-->
-                  <!--  // aucune option ne peut etre rajoutée-->
-                  <!--  //en fonction du type choisi le composant affiche les choix relié à cette sélection-->
-
-                  <!--  // ce composant à deux parents le shared-questinnaire-component et  [(ngModel)]="question.controlType"-->
+<!--TODO EFFACAER LES REPERES-->
                   <p>{{question.attitudeMeasure}} cliqué !</p>
 
                 </label>
@@ -431,11 +366,12 @@
         <!-- /instruction -->
 
         <!-- question types -->
-        <ng-container *ngIf="question.controlType === 'radio' || question.controlType === 'checkbox'
-          || question.controlType === 'stars' || question.controlType === 'ranking'">
+        <ng-container
+          *ngIf="question.controlType === 'radio' || question.controlType === 'checkbox'
+          || question.controlType === 'stars' || question.controlType === 'ranking' || question.controlType === 'likert scale'">
 
           <!-- options -->
-          <div [ngClass]="{'has-single-option': questionnaireLangs.length === 1}" class="options-wrapper">
+          <div [ngClass]="{'has-single-option-nowrap': questionnaireLangs.length === 1}" class="options-nowrapper">
             <div
 
               *ngFor="let option of question.options; let optionIndex = index;"
@@ -446,7 +382,7 @@
 
 <!--             move option-->
               <div
-                *ngIf="isEditable || canAccess(['edit', 'options', 'order'])"
+                *ngIf="question.controlType != 'likert scale' && (isEditable || canAccess(['edit', 'options', 'order']))"
                 class="flex-centered m-top-10 m-bottom-10">
                 <div
                   [ngClass]="{'is-horizontal': questionnaireLangs.length === 1}"
@@ -474,16 +410,24 @@
                 #textAreaElement
                 appTextareaAutoResize
                 (change)="onChangeQuestionOptionEntry(textAreaElement.value, lang, optionIndex)"
-                *ngIf="isEditable || canAccess(['edit', 'options', 'label']); else showOptionLabel"
+                *ngIf="question.controlType !== 'likert scale' && (isEditable || canAccess(['edit', 'options', 'label'])); else showOptionLabel"
                 [ngModel]="optionEntry(option, lang).label || 'NA'"
                 [id]="'option-label-'+lang"
                 class="form-input"
                 type="text">
               </textarea>
+
+            <!--  <option class="m-auto nowrap"
+                *ngIf="question.controlType !== 'likert scale' && (isEditable || canAccess(['edit', 'options', 'label'])); else showOptionLabel"
+                [ngModel]="optionEntry(option, lang).label || 'NA'"
+                [id]="'option-label-'+lang"
+              >
+
+              </option>-->
               <!-- /input -->
 
              <!-- delete icon -->
-              <div class="text-center m-top-10">
+              <div *ngIf="question.controlType !== 'likert scale'" class="text-center m-top-10">
                 <div
                   (click)="deleteOption($event, optionIndex)"
                   *ngIf="isEditable || canAccess(['edit', 'options', 'delete'])"
@@ -522,49 +466,6 @@
       </div>
     </ng-container>
     <!-- /add item -->
-
-
-        <!--  SECOND PART OF LIKERT SCALE FOR BOUCLE OPTION DEFAULT-->
-        <!--           question types likert -->
-        <!--             change ControlType in AttitureMeasure        -->
-<!--       TODO : Create dynamique code -->
-        <ng-container *ngIf="question.attitudeMeasure === 'agreement' || question.attitudeMeasure === 'frequency'
-        || question.attitudeMeasure === 'satisfaction' || question.attitudeMeasure === 'use' ||
-        question.attitudeMeasure === 'quality' || question.attitudeMeasure === 'relevance'||
-        question.attitudeMeasure === 'importance' || question.attitudeMeasure === 'interest' ||
-        question.attitudeMeasure === 'criticality'">
-
-          <!--             options-->
-          <div [ngClass]="{'has-single-option': questionnaireLangs.length === 1}" class="options-wrapper">
-            <!--              replace option by option switch case ? or function in ts-->
-            <div
-
-              *ngFor="let option of question.options; let optionIndex = index;"
-              [ngClass]="{'is-editable': isEditable || canAccess(['edit', 'options'])}"
-              class="card">
-
-              <ng-template #showOptionLabel>{{ optionEntry(option, lang).label || 'NA' }}</ng-template>
-
-              <!-- input-->
-              <textarea
-                #textAreaElement
-                (change)="onChangeQuestionOptionEntry(textAreaElement.value, lang, optionIndex)"
-                *ngIf="isEditable || canAccess(['edit', 'options', 'label']); else showOptionLabel"
-                [ngModel]="optionEntry(option, lang).label || 'NA'"
-                [id]="'option-label-'+lang"
-                [ngStyle]="{'minHeight': textAreaElement.scrollHeight + 'px'}"
-                class="form-input"
-                type="text">
-              </textarea>
-
-            </div>
-          </div>
-          <!--             /options-->
-
-        </ng-container>
-        <!--           /question types -->
-        <!-- END SECOND PART OF LIKERT SCALE FOR BOUCLE OPTION DEFAULT -->
-
 
   </div>
   <!-- /question edition -->
