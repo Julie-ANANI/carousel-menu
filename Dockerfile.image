@@ -4,7 +4,7 @@ ARG APP_NAME
 ARG ENV_NAME
 ARG VERSION
 
-RUN echo "!!!!!! Building front@${VERSION} with 'ng build ${APP_NAME} -c=${ENV_NAME} --prod' !!!!!!"
+RUN echo "!!!!!! Building front@${VERSION} with 'ng build ${APP_NAME} -c=${ENV_NAME}' !!!!!!"
 
 RUN apt-get clean
 RUN apt-get update
