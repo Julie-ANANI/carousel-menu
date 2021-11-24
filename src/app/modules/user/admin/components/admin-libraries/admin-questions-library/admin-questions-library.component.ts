@@ -28,67 +28,6 @@ interface IdentifierError {
 })
 export class AdminQuestionsLibraryComponent implements OnInit {
 
-  get identifierError(): IdentifierError {
-    return this._identifierError;
-  }
-
-  get choiceClass(): string {
-    return this._choiceClass;
-  }
-
-  get newQuestion(): NewQuestion {
-    return this._newQuestion;
-  }
-
-  set newQuestion(value: NewQuestion) {
-    this._newQuestion = value;
-  }
-
-  get showModal(): boolean {
-    return this._showModal;
-  }
-
-  set showModal(value: boolean) {
-    this._showModal = value;
-  }
-
-  get isAdding(): boolean {
-    return this._isAdding;
-  }
-
-  get questionChoices(): Array<any> {
-    return this._questionChoices;
-  }
-
-  get questions(): Array<MissionQuestion> {
-    return this._questions;
-  }
-
-  set config(value: Config) {
-    this._config = value;
-    this._getAllQuestions();
-  }
-
-  get fetchingError(): boolean {
-    return this._fetchingError;
-  }
-
-  get config(): Config {
-    return this._config;
-  }
-
-  get total(): number {
-    return this._total;
-  }
-
-  get tableData(): Table {
-    return this._tableData;
-  }
-
-  get currentLang(): string {
-    return this._translateService.currentLang;
-  }
-
   private _tableData = <Table>{};
 
   private _total = -1;
@@ -301,5 +240,67 @@ export class AdminQuestionsLibraryComponent implements OnInit {
       this._identifierError.letter = true;
     }
   }
+
+  get identifierError(): IdentifierError {
+    return this._identifierError;
+  }
+
+  get choiceClass(): string {
+    return this._choiceClass;
+  }
+
+  get newQuestion(): NewQuestion {
+    return this._newQuestion;
+  }
+
+  set newQuestion(value: NewQuestion) {
+    this._newQuestion = value;
+  }
+
+  get showModal(): boolean {
+    return this._showModal;
+  }
+
+  set showModal(value: boolean) {
+    this._showModal = value;
+  }
+
+  get isAdding(): boolean {
+    return this._isAdding;
+  }
+
+  get questionChoices(): Array<any> {
+    return this._questionChoices;
+  }
+
+  get questions(): Array<MissionQuestion> {
+    return this._questions;
+  }
+
+  set config(value: Config) {
+    this._config = value;
+    this._getAllQuestions();
+  }
+
+  get fetchingError(): boolean {
+    return this._fetchingError;
+  }
+
+  get config(): Config {
+    return this._config;
+  }
+
+  get total(): number {
+    return this._total;
+  }
+
+  get tableData(): Table {
+    return this._tableData;
+  }
+
+  get currentLang(): string {
+    return this._translateService.currentLang;
+  }
+
 
 }

@@ -151,10 +151,6 @@ export class SharedProjectSettingsComponent implements OnInit, OnDestroy {
     this._targetingCountries = this._innovation.settings.geography.include.map((country) => country.code);
   }
 
-  get continentTarget(): any {
-    return this._innovation.settings ? this._innovation.settings.geography.continentTarget : {};
-  }
-
   addCompanyToExclude(event: {value: Array<string>}): void {
     this._innovation.settings.companies.exclude = event.value;
     this.updateSettings();
@@ -166,6 +162,32 @@ export class SharedProjectSettingsComponent implements OnInit, OnDestroy {
     this.updateSettings();
   }
 
+  addKeywordToExclude(event: {value: Array<string>}): void {
+    this._innovation.settings.keywords = event.value;
+    this.updateSettings();
+  }
+
+  updateSettings() {
+    if (this._canEdit) {
+      this.innovationFrontService.setNotifyChanges({key: 'settings', state: true});
+    }
+  }
+
+
+  getColor(length: number) {
+    return InnovationFrontService.getColor(length, 500);
+  }
+
+  addPeopleToExclude(event: {value: Array<string>}): void {
+    this._innovation.settings.professionals.exclude = event.value;
+    this.updateSettings();
+  }
+
+
+  get continentTarget(): any {
+    return this._innovation.settings ? this._innovation.settings.geography.continentTarget : {};
+  }
+
 
   set displayCompanyCommentSection(value: boolean) {
     this._displayCompanyCommentSection = value;
@@ -174,12 +196,6 @@ export class SharedProjectSettingsComponent implements OnInit, OnDestroy {
 
   get displayCompanyCommentSection(): boolean {
     return this._displayCompanyCommentSection;
-  }
-
-
-  addPeopleToExclude(event: {value: Array<string>}): void {
-    this._innovation.settings.professionals.exclude = event.value;
-    this.updateSettings();
   }
 
 
@@ -212,24 +228,6 @@ export class SharedProjectSettingsComponent implements OnInit, OnDestroy {
   set displayKeywordsSection(value: boolean) {
     this._displayKeywordsSection = value;
   }
-
-
-  addKeywordToExclude(event: {value: Array<string>}): void {
-    this._innovation.settings.keywords = event.value;
-    this.updateSettings();
-  }
-
-  updateSettings() {
-    if (this._canEdit) {
-      this.innovationFrontService.setNotifyChanges({key: 'settings', state: true});
-    }
-  }
-
-
-  getColor(length: number) {
-    return InnovationFrontService.getColor(length, 500);
-  }
-
 
   get lang() {
     return this.translateService.currentLang;

@@ -45,46 +45,6 @@ export class AutoCompleteInputComponent implements OnInit {
     }
   }
 
-  constructor(private _formBuilder: FormBuilder,
-              private _domSanitizer: DomSanitizer,
-              private _autocompleteService: AutocompleteService,
-              private _multilingPipe: MultilingPipe,
-              private _translateNotificationsService: TranslateNotificationsService,
-              private _translateService: TranslateService) {
-  }
-
-  get canAdd(): boolean {
-    return this._autoCompleteInputForm.get('answer').value && (!this.onlyOne || this._answerList.length === 0);
-  }
-
-  get placeholder(): string {
-    return this._placeholder;
-  }
-
-  get identifier(): string {
-    return this._identifier;
-  }
-
-  get canOrder(): boolean {
-    return this._canOrder;
-  }
-
-  get autoCompleteInputForm(): FormGroup {
-    return this._autoCompleteInputForm;
-  }
-
-  get answerList(): Array<AnswerList> {
-    return this._answerList;
-  }
-
-  get answer(): string {
-    return this._answer;
-  }
-
-  set answer(value: string) {
-    this._answer = value;
-  }
-
   @Input() isSmall = false; // true: to make input field and button small.
 
   @Input() isEditable = true; // false: will not allow to edit the fields and perform actions.
@@ -125,9 +85,13 @@ export class AutoCompleteInputComponent implements OnInit {
 
   private _domain = false;
 
-  public answerFormatter = (answer: any): string => {
-    return `${answer[this.identifier]} ${!!this._domain && !!answer.domain ? '(' + answer.domain + ')' : ''}`;
-  };
+  constructor(private _formBuilder: FormBuilder,
+              private _domSanitizer: DomSanitizer,
+              private _autocompleteService: AutocompleteService,
+              private _multilingPipe: MultilingPipe,
+              private _translateNotificationsService: TranslateNotificationsService,
+              private _translateService: TranslateService) {
+  }
 
   ngOnInit(): void {
     this._autoCompleteInputForm = this._formBuilder.group({
@@ -260,6 +224,10 @@ export class AutoCompleteInputComponent implements OnInit {
     this.update.emit({value: this._answerList});
   }
 
+  public answerFormatter = (answer: any): string => {
+    return `${answer[this.identifier]} ${!!this._domain && !!answer.domain ? '(' + answer.domain + ')' : ''}`;
+  };
+
   selectedCompany(c: string | Enterprise | any) {
     if (typeof c === 'object' && this.isEditable) {
       if (this.onlyOne) {
@@ -270,5 +238,37 @@ export class AutoCompleteInputComponent implements OnInit {
       this.update.emit({value: this._answerList});
       this._autoCompleteInputForm.get('answer').setValue('');
     }
+  }
+
+  get canAdd(): boolean {
+    return this._autoCompleteInputForm.get('answer').value && (!this.onlyOne || this._answerList.length === 0);
+  }
+
+  get placeholder(): string {
+    return this._placeholder;
+  }
+
+  get identifier(): string {
+    return this._identifier;
+  }
+
+  get canOrder(): boolean {
+    return this._canOrder;
+  }
+
+  get autoCompleteInputForm(): FormGroup {
+    return this._autoCompleteInputForm;
+  }
+
+  get answerList(): Array<AnswerList> {
+    return this._answerList;
+  }
+
+  get answer(): string {
+    return this._answer;
+  }
+
+  set answer(value: string) {
+    this._answer = value;
   }
 }

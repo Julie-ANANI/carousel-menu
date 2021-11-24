@@ -170,6 +170,46 @@ export class LoginComponent implements OnInit {
     return JSON.stringify(object);
   }
 
+  cancelMessage() {
+    this._isShowModal = false;
+    this._helpMessageForm.reset();
+  }
+
+  sendMessageToUMISupport() {
+    const data = {
+      umi: {
+        email: 'support@umi.us',
+      },
+      user: {
+        email: this._helpMessageForm.get('contactEmail').value,
+        message: this._helpMessageForm.get('message').value,
+      },
+    };
+    this._userService.contactUMISupport(data).subscribe(
+      (next) => {
+        this._isShowModal = false;
+        if (next.status === 200) {
+          this._translateNotificationsService.success(
+            'Success',
+            'We received your email, we will contact you soon.'
+          );
+        } else {
+          this._translateNotificationsService.error(
+            'ERROR.ERROR',
+            'Sorry, an error occurred.'
+          );
+        }
+      },
+      (error) => {
+        this._translateNotificationsService.error(
+          'ERROR.ERROR',
+          'An error occurred'
+        );
+        console.error(error);
+      }
+    );
+  }
+
   get logo(): string {
     return this._logo;
   }
@@ -216,45 +256,5 @@ export class LoginComponent implements OnInit {
 
   get companyUrl(): string {
     return this._companyUrl;
-  }
-
-  cancelMessage() {
-    this._isShowModal = false;
-    this._helpMessageForm.reset();
-  }
-
-  sendMessageToUMISupport() {
-    const data = {
-      umi: {
-        email: 'support@umi.us',
-      },
-      user: {
-        email: this._helpMessageForm.get('contactEmail').value,
-        message: this._helpMessageForm.get('message').value,
-      },
-    };
-    this._userService.contactUMISupport(data).subscribe(
-      (next) => {
-        this._isShowModal = false;
-        if (next.status === 200) {
-          this._translateNotificationsService.success(
-            'Success',
-            'We received your email, we will contact you soon.'
-          );
-        } else {
-          this._translateNotificationsService.error(
-            'ERROR.ERROR',
-            'Sorry, an error occurred.'
-          );
-        }
-      },
-      (error) => {
-        this._translateNotificationsService.error(
-          'ERROR.ERROR',
-          'An error occurred'
-        );
-        console.error(error);
-      }
-    );
   }
 }

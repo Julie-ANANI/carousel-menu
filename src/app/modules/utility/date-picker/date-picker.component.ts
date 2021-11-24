@@ -35,14 +35,6 @@ export interface DatePickerDefMonth {
 })
 export class DatePickerComponent implements OnInit, OnChanges {
 
-  get markDates(): Array<IMyMarkedDates> {
-    return this._markDates;
-  }
-
-  get defMonth(): DatePickerDefMonth {
-    return this._defMonth;
-  }
-
   /**
    * setting the default calendar view.
    * for the first time it will be set when pass the value of isDisabledUntil.
@@ -194,6 +186,15 @@ export class DatePickerComponent implements OnInit, OnChanges {
 
   get defaultMonth(): IMyDefaultMonth {
     return this._defaultMonth;
+  }
+
+
+  get markDates(): Array<IMyMarkedDates> {
+    return this._markDates;
+  }
+
+  get defMonth(): DatePickerDefMonth {
+    return this._defMonth;
   }
 
 }

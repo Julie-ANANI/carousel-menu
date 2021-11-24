@@ -18,35 +18,6 @@ import { MissionQuestionService } from '../../../../../../services/mission/missi
 })
 export class AdminUseCasesLibraryComponent implements OnInit {
 
-  set config(value: Config) {
-    this._config = value;
-    this._getAllTemplates();
-  }
-
-  get fetchingError(): boolean {
-    return this._fetchingError;
-  }
-
-  get templates(): Array<MissionTemplate> {
-    return this._templates;
-  }
-
-  get config(): Config {
-    return this._config;
-  }
-
-  get total(): number {
-    return this._total;
-  }
-
-  get tableData(): Table {
-    return this._tableData;
-  }
-
-  get currentLang(): string {
-    return this._translateService.currentLang;
-  }
-
   private _tableData = <Table>{};
 
   private _total = -1;
@@ -195,5 +166,35 @@ export class AdminUseCasesLibraryComponent implements OnInit {
     }));
     this._router.navigate([`${this._router.url}/${event._id}`]);
   }
+
+  set config(value: Config) {
+    this._config = value;
+    this._getAllTemplates();
+  }
+
+  get fetchingError(): boolean {
+    return this._fetchingError;
+  }
+
+  get templates(): Array<MissionTemplate> {
+    return this._templates;
+  }
+
+  get config(): Config {
+    return this._config;
+  }
+
+  get total(): number {
+    return this._total;
+  }
+
+  get tableData(): Table {
+    return this._tableData;
+  }
+
+  get currentLang(): string {
+    return this._translateService.currentLang;
+  }
+
 
 }

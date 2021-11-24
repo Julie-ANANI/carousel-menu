@@ -36,38 +36,23 @@ export class AdminCampaignHistoryComponent implements OnInit {
 
   private _indicators: ProMailsIndicators;
 
+  private _referents: { identificationEfficiency: any; shieldImpact?: number; inabilityToValidate?: number; redundancy?: number; deductionEfficiency?: number; };
+
+  private _stats: ProMailsStats;
+
+  private _statsConfig: Array<StatsInterface> = [];
+
+  private _campaign: Campaign = <Campaign>{};
+
+  private _accessPath: Array<string> = ['projects', 'project', 'campaigns', 'campaign', 'history'];
+
+
   constructor(private _activatedRoute: ActivatedRoute,
               private _campaignFrontService: CampaignFrontService,
               private _rolesFrontService: RolesFrontService,
               private _statsReferentsService: StatsReferentsService,
               private _campaignService: CampaignService,
               private _translateNotificationsService: TranslateNotificationsService) {
-  }
-
-  private _referents: { identificationEfficiency: any; shieldImpact?: number; inabilityToValidate?: number; redundancy?: number; deductionEfficiency?: number; };
-
-  private _stats: ProMailsStats;
-
-  get stats(): ProMailsStats {
-    return this._stats;
-  }
-
-  private _statsConfig: Array<StatsInterface> = [];
-
-  get statsConfig(): Array<StatsInterface> {
-    return this._statsConfig;
-  }
-
-  private _campaign: Campaign = <Campaign>{};
-
-  get campaign(): Campaign {
-    return this._campaign;
-  }
-
-  private _accessPath: Array<string> = ['projects', 'project', 'campaigns', 'campaign', 'history'];
-
-  get accessPath(): Array<string> {
-    return this._accessPath;
   }
 
   ngOnInit(): void {
@@ -197,6 +182,22 @@ export class AdminCampaignHistoryComponent implements OnInit {
         }
       ]
     }];
+  }
+
+  get stats(): ProMailsStats {
+    return this._stats;
+  }
+
+  get statsConfig(): Array<StatsInterface> {
+    return this._statsConfig;
+  }
+
+  get campaign(): Campaign {
+    return this._campaign;
+  }
+
+  get accessPath(): Array<string> {
+    return this._accessPath;
   }
 
 }

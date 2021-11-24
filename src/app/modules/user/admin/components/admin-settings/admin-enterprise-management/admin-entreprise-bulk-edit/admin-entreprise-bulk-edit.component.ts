@@ -99,107 +99,6 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
     this._initTable();
   }
 
-  get companiesOriginalTable(): Table {
-    return this._companiesOriginalTable;
-  }
-
-  get enterpriseTypes(): Array<any> {
-    return this._enterpriseTypes;
-  }
-
-
-  get industrySelectConfig(): AutoSuggestionConfig {
-    return this._industrySelectConfig;
-  }
-
-  get valueChainSelectConfig(): AutoSuggestionConfig {
-    return this._valueChainSelectConfig;
-  }
-
-  get enterpriseSizeSelectConfig(): AutoSuggestionConfig {
-    return this._enterpriseSizeSelectConfig;
-  }
-
-  get enterpriseTypeSelectConfig(): AutoSuggestionConfig {
-    return this._enterpriseTypeSelectConfig;
-  }
-
-  get enterpriseSizeModel(): string {
-    return this._enterpriseSizeModel;
-  }
-
-  set enterpriseSizeModel(value: string) {
-    this._enterpriseSizeModel = value;
-  }
-
-  get enterpriseUrlModel(): string {
-    return this._enterpriseUrlModel;
-  }
-
-  set enterpriseUrlModel(value: string) {
-    this._enterpriseUrlModel = value;
-  }
-
-  get enterpriseTypeModel(): string {
-    return this._enterpriseTypeModel;
-  }
-
-  set enterpriseTypeModel(value: string) {
-    this._enterpriseTypeModel = value;
-  }
-
-  get scope(): string {
-    return this._scope;
-  }
-
-  get success(): number {
-    return this._success;
-  }
-
-  get isEditable(): boolean {
-    return this._isEditable;
-  }
-
-  get inputType(): string {
-    return this._inputType;
-  }
-
-  set inputType(value: string) {
-    this._inputType = value;
-  }
-
-  set success(value: number) {
-    this._success = value;
-  }
-
-  get failed(): number {
-    return this._failed;
-  }
-
-  set failed(value: number) {
-    this._failed = value;
-  }
-
-  set config(value: Config) {
-    this._config = value;
-  }
-
-  get config(): Config {
-    return this._config;
-  }
-
-  get companiesToEdit(): Array<any> {
-    return this._companiesToEdit;
-  }
-
-  set companiesToEdit(value: Array<any>) {
-    this._companiesToEdit = value;
-  }
-
-  get companiesTable(): Table {
-    return this._companiesTable;
-  }
-
   _initTable() {
     this._companiesTable = {
       _selector: 'admin-enterprises-bulk-edit-table',
@@ -481,56 +380,6 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
     c._isReplaceable = false;
   }
 
-
-  get industries(): Array<any> {
-    return this._industries;
-  }
-
-  get brands(): Array<any> {
-    return this._brands;
-  }
-
-  get patterns(): Array<any> {
-    return this._patterns;
-  }
-
-  get geoZones(): Array<any> {
-    return this._geoZones;
-  }
-
-  get valueChains(): Array<any> {
-    return this._valueChains;
-  }
-
-  getContext(type: string, list: any[], isString: boolean) {
-    return {
-      type: type,
-      isString: isString,
-      answerList: list
-    };
-  }
-
-  get patternConfig(): any {
-    return {
-      placeholder: 'Enter the pattern',
-      initialData: []
-    };
-  }
-
-  get brandConfig(): any {
-    return {
-      placeholder: 'Enter the brand',
-      initialData: []
-    };
-  }
-
-  get geoConfig(): any {
-    return {
-      placeholder: '',
-      initialData: []
-    };
-  }
-
   geoZoneUpdate($event: any) {
     $event.value.map((text: any) => {
       if (this._geoZones.length === 0 || this._geoZones.find(item => item.name === text.text) === undefined) {
@@ -617,11 +466,6 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
     }
   }
 
-
-  get isSizeInfo(): boolean {
-    return this._isSizeInfo;
-  }
-
   hideSizeInfo() {
     this._isSizeInfo = false;
   }
@@ -636,6 +480,162 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
 
   showSyntaxInfo() {
     this._isShowSyntax = true;
+  }
+
+
+  get industries(): Array<any> {
+    return this._industries;
+  }
+
+  get brands(): Array<any> {
+    return this._brands;
+  }
+
+  get patterns(): Array<any> {
+    return this._patterns;
+  }
+
+  get geoZones(): Array<any> {
+    return this._geoZones;
+  }
+
+  get valueChains(): Array<any> {
+    return this._valueChains;
+  }
+
+  getContext(type: string, list: any[], isString: boolean) {
+    return {
+      type: type,
+      isString: isString,
+      answerList: list
+    };
+  }
+
+  get patternConfig(): any {
+    return {
+      placeholder: 'Enter the pattern',
+      initialData: []
+    };
+  }
+
+  get brandConfig(): any {
+    return {
+      placeholder: 'Enter the brand',
+      initialData: []
+    };
+  }
+
+  get geoConfig(): any {
+    return {
+      placeholder: '',
+      initialData: []
+    };
+  }
+
+  get companiesOriginalTable(): Table {
+    return this._companiesOriginalTable;
+  }
+
+  get enterpriseTypes(): Array<any> {
+    return this._enterpriseTypes;
+  }
+
+
+  get industrySelectConfig(): AutoSuggestionConfig {
+    return this._industrySelectConfig;
+  }
+
+  get valueChainSelectConfig(): AutoSuggestionConfig {
+    return this._valueChainSelectConfig;
+  }
+
+  get enterpriseSizeSelectConfig(): AutoSuggestionConfig {
+    return this._enterpriseSizeSelectConfig;
+  }
+
+  get enterpriseTypeSelectConfig(): AutoSuggestionConfig {
+    return this._enterpriseTypeSelectConfig;
+  }
+
+  get enterpriseSizeModel(): string {
+    return this._enterpriseSizeModel;
+  }
+
+  set enterpriseSizeModel(value: string) {
+    this._enterpriseSizeModel = value;
+  }
+
+  get enterpriseUrlModel(): string {
+    return this._enterpriseUrlModel;
+  }
+
+  set enterpriseUrlModel(value: string) {
+    this._enterpriseUrlModel = value;
+  }
+
+  get enterpriseTypeModel(): string {
+    return this._enterpriseTypeModel;
+  }
+
+  set enterpriseTypeModel(value: string) {
+    this._enterpriseTypeModel = value;
+  }
+
+  get scope(): string {
+    return this._scope;
+  }
+
+  get success(): number {
+    return this._success;
+  }
+
+  get isEditable(): boolean {
+    return this._isEditable;
+  }
+
+  get inputType(): string {
+    return this._inputType;
+  }
+
+  set inputType(value: string) {
+    this._inputType = value;
+  }
+
+  set success(value: number) {
+    this._success = value;
+  }
+
+  get failed(): number {
+    return this._failed;
+  }
+
+  set failed(value: number) {
+    this._failed = value;
+  }
+
+  set config(value: Config) {
+    this._config = value;
+  }
+
+  get config(): Config {
+    return this._config;
+  }
+
+  get companiesToEdit(): Array<any> {
+    return this._companiesToEdit;
+  }
+
+  set companiesToEdit(value: Array<any>) {
+    this._companiesToEdit = value;
+  }
+
+  get companiesTable(): Table {
+    return this._companiesTable;
+  }
+
+
+  get isSizeInfo(): boolean {
+    return this._isSizeInfo;
   }
 
 

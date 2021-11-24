@@ -47,38 +47,38 @@ export class SharedScrapingComponent implements OnInit {
               private _scrapingService: ScrapingService,
               private _translateNotificationsService: TranslateNotificationsService) { }
 
+  ngOnInit(): void {
+    this._initParams();
+  }
+
+  private _initParams() {
+    this._scrapingService.getRunningScrapings().subscribe(runningScrapings => {
+      this._runningScrapings = runningScrapings;
+    });
+    this._params = {
+      url: '',
+      rawData: false,
+      // formattedAddress: false,
+      // whereFormattedAddress: '',
+      dynamicHTML: false,
+      loadMore: '',
+      skipMails: '',
+      numberSpecificData: 0,
+      specificData: [{}, {}, {}, {}, {}],
+      isCatalog: false,
+      isSpider: false,
+      numberFields: 0,
+      fields: [{}, {}, {}, {}, {}],
+      isDeep: false,
+      crawlDeeperOn: '',
+      id: Math.floor(Math.random() * 1000000)
+    };
+  }
+
   public canAccess(path: Array<string>) {
     return this._rolesFrontService.hasAccessAdminSide(
       this.accessPath.concat(path)
     );
-  }
-
-  get showKeepInformed(): boolean {
-    return this._showKeepInformed;
-  }
-
-  get isScraping(): boolean {
-    return this._isScraping;
-  }
-
-  get isError(): boolean {
-    return this._isError;
-  }
-
-  get error(): string {
-    return this._error;
-  }
-
-  get isWarning(): boolean {
-    return this._isWarning;
-  }
-
-  get warning(): string {
-    return this._warning;
-  }
-
-  get isCancel(): boolean {
-    return this._isCancel;
   }
 
   public onClickImport(file: File) {
@@ -211,6 +211,80 @@ export class SharedScrapingComponent implements OnInit {
     };
   }
 
+
+  public values(string: any): any {
+    const arrayValue = [string];
+    for (const key of this._attributes) {
+      if (key !== 'email') {
+        arrayValue.push(this._result.pros[string][key]);
+      }
+    }
+    return arrayValue;
+  }
+
+  public onClickCopy(): void {
+    const range = document.createRange();
+    range.selectNodeContents(document.getElementById('result'));
+    const selection = window.getSelection();
+    selection.removeAllRanges();
+    selection.addRange(range);
+    document.execCommand('copy');
+    selection.removeAllRanges();
+    this._translateNotificationsService.success(
+      'Success',
+      'The result has been copy to the clipboard'
+    );
+  }
+
+  public updateAttributes(): void {
+    this._attributes = ['email'];
+    const pros = Object.values(this._result.pros);
+    if (pros.length !== 0) {
+      let isRawData = false;
+      for (const key of Object.keys(pros[0])) {
+        if (key !== 'raw data') {
+          this._attributes.push(key);
+        } else {
+          isRawData = true;
+        }
+      }
+      // raw data at the end
+      if (isRawData) {
+        this._attributes.push('raw data');
+      }
+      this._showResultScraping = true;
+    }
+  }
+
+  get showKeepInformed(): boolean {
+    return this._showKeepInformed;
+  }
+
+  get isScraping(): boolean {
+    return this._isScraping;
+  }
+
+  get isError(): boolean {
+    return this._isError;
+  }
+
+  get error(): string {
+    return this._error;
+  }
+
+  get isWarning(): boolean {
+    return this._isWarning;
+  }
+
+  get warning(): string {
+    return this._warning;
+  }
+
+  get isCancel(): boolean {
+    return this._isCancel;
+  }
+
+
   get showResultScraping(): boolean {
     return this._showResultScraping;
   }
@@ -239,80 +313,9 @@ export class SharedScrapingComponent implements OnInit {
     return this._runningScrapings;
   }
 
-  public updateAttributes(): void {
-    this._attributes = ['email'];
-    const pros = Object.values(this._result.pros);
-    if (pros.length !== 0) {
-      let isRawData = false;
-      for (const key of Object.keys(pros[0])) {
-        if (key !== 'raw data') {
-          this._attributes.push(key);
-        } else {
-          isRawData = true;
-        }
-      }
-      // raw data at the end
-      if (isRawData) {
-        this._attributes.push('raw data');
-      }
-      this._showResultScraping = true;
-    }
-  }
-
   get attributes(): any {
     return this._attributes;
   }
 
-  public values(string: any): any {
-    const arrayValue = [string];
-    for (const key of this._attributes) {
-      if (key !== 'email') {
-        arrayValue.push(this._result.pros[string][key]);
-      }
-    }
-    return arrayValue;
-  }
-
-  public onClickCopy(): void {
-    const range = document.createRange();
-    range.selectNodeContents(document.getElementById('result'));
-    const selection = window.getSelection();
-    selection.removeAllRanges();
-    selection.addRange(range);
-    document.execCommand('copy');
-    selection.removeAllRanges();
-    this._translateNotificationsService.success(
-      'Success',
-      'The result has been copy to the clipboard'
-    );
-  }
-
-  ngOnInit(): void {
-    this._initParams();
-  }
-
-  private _initParams() {
-    this._scrapingService.getRunningScrapings().subscribe(runningScrapings => {
-      this._runningScrapings = runningScrapings;
-    });
-    this._params = {
-      url: '',
-      rawData: false,
-      // formattedAddress: false,
-      // whereFormattedAddress: '',
-      dynamicHTML: false,
-      loadMore: '',
-      skipMails: '',
-      numberSpecificData: 0,
-      specificData: [{}, {}, {}, {}, {}],
-      isCatalog: false,
-      isSpider: false,
-      numberFields: 0,
-      fields: [{}, {}, {}, {}, {}],
-      isDeep: false,
-      crawlDeeperOn: '',
-      id: Math.floor(Math.random() * 1000000)
-    };
-  }
 }
 

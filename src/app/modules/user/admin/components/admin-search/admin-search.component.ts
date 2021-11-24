@@ -19,6 +19,24 @@ export class AdminSearchComponent {
 
   private _heading = '';
 
+  private static _initHeading(value: string): string {
+    switch (value) {
+
+      case 'history':
+        return 'History';
+
+      case 'pros':
+        return 'Insights';
+
+      case 'queue':
+        return 'Queue';
+
+      case 'scraping':
+        return 'Scraping';
+
+    }
+  }
+
   constructor(private _translateTitleService: TranslateTitleService,
               private _rolesFrontService: RolesFrontService,
               private _router: Router) {
@@ -37,24 +55,6 @@ export class AdminSearchComponent {
       const _params = _url[4].indexOf('?');
       const _value = _params > 0 ? _url[4].substring(0, _params) : _url[4];
       this._heading = AdminSearchComponent._initHeading(_value);
-    }
-  }
-
-  private static _initHeading(value: string): string {
-    switch (value) {
-
-      case 'history':
-        return 'History';
-
-      case 'pros':
-        return 'Insights';
-
-      case 'queue':
-        return 'Queue';
-
-      case 'scraping':
-        return 'Scraping';
-
     }
   }
 

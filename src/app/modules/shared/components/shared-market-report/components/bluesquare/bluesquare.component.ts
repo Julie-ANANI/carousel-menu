@@ -8,10 +8,6 @@ import {Picto, picto} from '../../../../../../models/static-data/picto';
 
 export class BluesquareComponent {
 
-  get subtitle(): string {
-    return this._subtitle;
-  }
-
   @Input() set subtitle(value: string) {
     this._subtitle = value;
   }
@@ -44,5 +40,9 @@ export class BluesquareComponent {
 
   get picto(): Picto {
     return this._picto;
+  }
+
+  get subtitle(): string {
+    return this._subtitle;
   }
 }

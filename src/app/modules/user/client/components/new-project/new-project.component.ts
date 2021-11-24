@@ -22,99 +22,6 @@ import {Consent} from '../../../../../models/consent';
 
 export class NewProjectComponent implements OnInit, OnDestroy {
 
-  get restitutionDate(): Date {
-    return this._restitutionDate;
-  }
-
-  get missionTemplates(): Array<MissionTemplate> {
-    return this._missionTemplates;
-  }
-
-  /***
-   * based on the conditions of the fields this make the
-   * next button disabled/enabled.
-   */
-  get isDisabled(): boolean {
-    switch (this._fields[this._currentStep]) {
-      case 'STEP_1':
-        return !(this._mission.template && this._mission.template._id);
-
-      case 'STEP_LAST':
-        return !(this._hasRestitutionDate() && !!this._clientProject.name && this._verifyCollaboratorsConsent());
-    }
-
-    return false;
-  }
-
-  get buttonId(): string {
-    switch (this._fields[this._currentStep]) {
-      case 'STEP_0':
-        return 'new-project-btn-step-welcome';
-      case 'STEP_1':
-        return 'new-project-btn-step-template';
-      case 'STEP_LAST':
-        return 'new-project-btn-step-create-market-test';
-      default:
-        return 'new-project-btn-' + this._fields[this._currentStep].toLowerCase();
-    }
-  }
-
-  get currentStep(): number {
-    return this._currentStep;
-  }
-
-  get fields(): Array<string> {
-    return this._fields;
-  }
-
-  get clientProject(): ClientProject {
-    return this._clientProject;
-  }
-
-  get mission(): Mission {
-    return this._mission;
-  }
-
-  get isCreating(): boolean {
-    return this._isCreating;
-  }
-
-  get milestoneDateComment(): string {
-    return this._milestoneDateComment;
-  }
-
-  set milestoneDateComment(value: string) {
-    this._milestoneDateComment = value;
-  }
-
-  get reportingLang(): string {
-    return this._reportingLang;
-  }
-
-  set reportingLang(value: string) {
-    this._reportingLang = value;
-  }
-
-  get collaboratorsConsent(): Consent {
-    return this._collaboratorsConsent;
-  }
-
-  set collaboratorsConsent(value: Consent) {
-    this._collaboratorsConsent = value;
-  }
-
-  get collaborators(): Array<string> {
-    return this._collaborators;
-  }
-
-  set collaborators(value: Array<string>) {
-    this._collaborators = value;
-  }
-
-  get isNextStep(): boolean {
-    return this._isNextStep;
-  }
-
   private _currentStep = 0;
 
   private _fields: Array<string> = ['STEP_0', 'STEP_1', 'STEP_LAST'];
@@ -318,6 +225,99 @@ export class NewProjectComponent implements OnInit, OnDestroy {
    */
   private _verifyCollaboratorsConsent(): boolean {
     return this._collaborators.length ? this._collaboratorsConsent.value : true;
+  }
+
+  get restitutionDate(): Date {
+    return this._restitutionDate;
+  }
+
+  get missionTemplates(): Array<MissionTemplate> {
+    return this._missionTemplates;
+  }
+
+  /***
+   * based on the conditions of the fields this make the
+   * next button disabled/enabled.
+   */
+  get isDisabled(): boolean {
+    switch (this._fields[this._currentStep]) {
+      case 'STEP_1':
+        return !(this._mission.template && this._mission.template._id);
+
+      case 'STEP_LAST':
+        return !(this._hasRestitutionDate() && !!this._clientProject.name && this._verifyCollaboratorsConsent());
+    }
+
+    return false;
+  }
+
+  get buttonId(): string {
+    switch (this._fields[this._currentStep]) {
+      case 'STEP_0':
+        return 'new-project-btn-step-welcome';
+      case 'STEP_1':
+        return 'new-project-btn-step-template';
+      case 'STEP_LAST':
+        return 'new-project-btn-step-create-market-test';
+      default:
+        return 'new-project-btn-' + this._fields[this._currentStep].toLowerCase();
+    }
+  }
+
+  get currentStep(): number {
+    return this._currentStep;
+  }
+
+  get fields(): Array<string> {
+    return this._fields;
+  }
+
+  get clientProject(): ClientProject {
+    return this._clientProject;
+  }
+
+  get mission(): Mission {
+    return this._mission;
+  }
+
+  get isCreating(): boolean {
+    return this._isCreating;
+  }
+
+  get milestoneDateComment(): string {
+    return this._milestoneDateComment;
+  }
+
+  set milestoneDateComment(value: string) {
+    this._milestoneDateComment = value;
+  }
+
+  get reportingLang(): string {
+    return this._reportingLang;
+  }
+
+  set reportingLang(value: string) {
+    this._reportingLang = value;
+  }
+
+  get collaboratorsConsent(): Consent {
+    return this._collaboratorsConsent;
+  }
+
+  set collaboratorsConsent(value: Consent) {
+    this._collaboratorsConsent = value;
+  }
+
+  get collaborators(): Array<string> {
+    return this._collaborators;
+  }
+
+  set collaborators(value: Array<string>) {
+    this._collaborators = value;
+  }
+
+  get isNextStep(): boolean {
+    return this._isNextStep;
   }
 
   ngOnDestroy(): void {

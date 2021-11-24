@@ -31,15 +31,15 @@ export class SidebarSearchComponent {
     }
   }
 
+  onClickToggle() {
+    this._showToggleSearch = !this._showToggleSearch;
+  }
+
   get prosCount(): Array<string> {
     return this._prosCount;
   }
 
   get showToggleSearch(): boolean {
     return this._showToggleSearch;
-  }
-
-  onClickToggle() {
-    this._showToggleSearch = !this._showToggleSearch;
   }
 }

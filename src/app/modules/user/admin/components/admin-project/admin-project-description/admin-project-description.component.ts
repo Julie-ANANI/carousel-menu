@@ -468,6 +468,15 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
     return true;
   }
 
+  padPreviewModeOnChange(title: string) {
+    this._togglePreviewMode[title] = !this._togglePreviewMode[title];
+  }
+
+  mediaToShow(mediaSrc: any) {
+    this._modalMedia = true;
+    this._selectedMedia = mediaSrc;
+  }
+
   get activeInnovCard(): InnovCard {
     return InnovationFrontService.activeCard(this._innovation, this._activeCardIndex);
   }
@@ -543,12 +552,4 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
     this._ngUnsubscribe.complete();
   }
 
-  padPreviewModeOnChange(title: string) {
-    this._togglePreviewMode[title] = !this._togglePreviewMode[title];
-  }
-
-  mediaToShow(mediaSrc: any) {
-    this._modalMedia = true;
-    this._selectedMedia = mediaSrc;
-  }
 }

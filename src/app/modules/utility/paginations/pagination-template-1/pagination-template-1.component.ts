@@ -72,15 +72,6 @@ export class PaginationTemplate1Component implements OnInit {
     return false;
   }
 
-  get numPages(): number {
-    return this._numPages;
-  }
-
-  get currentPage(): number {
-    // return (this._config.offset / this._config.limit) + 1;
-    return (this.initialConfigValues.offset / this.initialConfigValues.limit) + 1;
-  }
-
   private _update() {
     if (this.propertyName) {
       this.lsService.setItem(`${this.propertyName}-limit`, this.initialConfigValues.limit);
@@ -117,6 +108,14 @@ export class PaginationTemplate1Component implements OnInit {
     this._numPages = Math.ceil(this._total / this.perPage);
   }
 
+  get numPages(): number {
+    return this._numPages;
+  }
+
+  get currentPage(): number {
+    // return (this._config.offset / this._config.limit) + 1;
+    return (this.initialConfigValues.offset / this.initialConfigValues.limit) + 1;
+  }
 
   get limit(): number {
     return this._limit;

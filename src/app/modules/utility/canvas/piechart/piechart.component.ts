@@ -28,6 +28,8 @@ export class PiechartComponent {
 
   @Input() positiveSections: boolean[];
 
+  @Input() reportingLang = this._translateService.currentLang;
+
   @ViewChild(BaseChartDirective, {static: false}) chart: BaseChartDirective;
 
   @Output() chartSectionColorChanged = new EventEmitter<{index: number, color: string}>();
@@ -41,8 +43,6 @@ export class PiechartComponent {
   private _datasets: Array<{data: Array<number>}> = [];
 
   private _colors: Array<{backgroundColor: Array<string>}> = [];
-
-  @Input() reportingLang = this._translateService.currentLang;
 
   private readonly _isBrowser = isPlatformBrowser(this.platformId);
 

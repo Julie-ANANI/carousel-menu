@@ -15,8 +15,6 @@ import { countries } from '../../../models/static-data/country';
   styleUrls: ['./country-flag.component.scss'],
 })
 export class CountryFlagComponent {
-  private _country: any;
-
   @Input() set country(value: any) {
     this._country = value;
     this.updateFlag();
@@ -25,6 +23,8 @@ export class CountryFlagComponent {
   @Input() width = 37;
 
   @Input() height = 25;
+
+  private _country: any;
 
   private _url: string;
 

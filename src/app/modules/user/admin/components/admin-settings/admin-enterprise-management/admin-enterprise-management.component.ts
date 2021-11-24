@@ -503,6 +503,59 @@ export class AdminEnterpriseManagementComponent implements OnInit {
     });
   }
 
+  performAction($event: any) {
+    this._enterpriseService.setQueryConfig(this._queryConfig);
+    this._enterpriseService.setEnterprisesSelected($event._rows);
+    switch ($event._action) {
+      // cell edit
+      case 'Update grid':
+        const context = $event._context;
+        if (context) {
+          this.saveEnterprise(context);
+        }
+        break;
+      case 'Add parent':
+        this._route.navigate(['/user/admin/settings/enterprises/addparent']);
+        break;
+      case 'Bulk edit':
+        this._route.navigate(['/user/admin/settings/enterprises/bulkedit']);
+        break;
+    }
+  }
+
+  private saveEnterprise(enterprise: Enterprise) {
+    this._enterpriseService
+      .save(enterprise._id, enterprise)
+      .pipe(first())
+      .subscribe(
+        (result) => {
+          this._isSaving = false;
+          this._translateNotificationsService.success(
+            'Success',
+            'The enterprise is updated.'
+          );
+          const idx = this._resultTableConfiguration._content.findIndex(
+            (value) => {
+              return value._id === result['_id'];
+            }
+          );
+          if (idx > -1) {
+            this._resultTableConfiguration._content[idx] = result;
+            this._resultTableConfiguration._content[idx]['parentEnterpriseObject'] = enterprise.parentEnterpriseObject;
+            this._resultTableConfiguration._content[idx]['subsidiariesList'] = enterprise.subsidiariesList;
+          }
+        },
+        (err: HttpErrorResponse) => {
+          this._translateNotificationsService.error(
+            'ERROR.ERROR',
+            ErrorFrontService.getErrorMessage(err.status)
+          );
+          this._isSaving = false;
+          console.error(err);
+        }
+      );
+  }
+
 
   get results(): boolean {
     return this._results;
@@ -559,58 +612,5 @@ export class AdminEnterpriseManagementComponent implements OnInit {
 
   get isSaving(): boolean {
     return this._isSaving;
-  }
-
-  performAction($event: any) {
-    this._enterpriseService.setQueryConfig(this._queryConfig);
-    this._enterpriseService.setEnterprisesSelected($event._rows);
-    switch ($event._action) {
-      // cell edit
-      case 'Update grid':
-        const context = $event._context;
-        if (context) {
-          this.saveEnterprise(context);
-        }
-        break;
-      case 'Add parent':
-        this._route.navigate(['/user/admin/settings/enterprises/addparent']);
-        break;
-      case 'Bulk edit':
-        this._route.navigate(['/user/admin/settings/enterprises/bulkedit']);
-        break;
-    }
-  }
-
-  private saveEnterprise(enterprise: Enterprise) {
-    this._enterpriseService
-      .save(enterprise._id, enterprise)
-      .pipe(first())
-      .subscribe(
-        (result) => {
-          this._isSaving = false;
-          this._translateNotificationsService.success(
-            'Success',
-            'The enterprise is updated.'
-          );
-          const idx = this._resultTableConfiguration._content.findIndex(
-            (value) => {
-              return value._id === result['_id'];
-            }
-          );
-          if (idx > -1) {
-            this._resultTableConfiguration._content[idx] = result;
-            this._resultTableConfiguration._content[idx]['parentEnterpriseObject'] = enterprise.parentEnterpriseObject;
-            this._resultTableConfiguration._content[idx]['subsidiariesList'] = enterprise.subsidiariesList;
-          }
-        },
-        (err: HttpErrorResponse) => {
-          this._translateNotificationsService.error(
-            'ERROR.ERROR',
-            ErrorFrontService.getErrorMessage(err.status)
-          );
-          this._isSaving = false;
-          console.error(err);
-        }
-      );
   }
 }

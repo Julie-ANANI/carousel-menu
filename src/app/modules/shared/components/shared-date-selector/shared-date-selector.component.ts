@@ -42,14 +42,8 @@ export class SharedDateSelectorComponent implements OnInit {
   ngOnInit(): void {
   }
 
-
-  get monthSelected(): number {
-    return this._monthSelected;
-  }
-
-
-  get yearSelected(): number {
-    return this._yearSelected;
+  getMonthName(number: number) {
+    return Months[number];
   }
 
   sendMonthSelection() {
@@ -61,15 +55,20 @@ export class SharedDateSelectorComponent implements OnInit {
   }
 
 
+  get monthSelected(): number {
+    return this._monthSelected;
+  }
+
+
+  get yearSelected(): number {
+    return this._yearSelected;
+  }
+
   get months(): Array<number> {
     return this._months;
   }
 
   get years(): Array<number> {
     return this._years;
-  }
-
-  getMonthName(number: number) {
-    return Months[number];
   }
 }

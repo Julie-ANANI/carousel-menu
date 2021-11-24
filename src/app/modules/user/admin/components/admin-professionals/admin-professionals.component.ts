@@ -21,6 +21,13 @@ interface Tab {
 })
 
 export class AdminProfessionalsComponent {
+  private _tabs: Array<Tab> = [
+    {name: 'Professionals database', path: 'list', link: 'list'},
+    {name: 'Professionals statistics', path: 'statistics', link: 'statistics'}
+  ];
+
+  private _options: Array<ActionOption> = [];
+
 
   constructor(private _translateTitleService: TranslateTitleService,
               private _router: Router,
@@ -40,21 +47,6 @@ export class AdminProfessionalsComponent {
     });
   }
 
-  private _tabs: Array<Tab> = [
-    {name: 'Professionals database', path: 'list', link: 'list'},
-    {name: 'Professionals statistics', path: 'statistics', link: 'statistics'}
-  ];
-
-  get tabs(): Array<Tab> {
-    return this._tabs;
-  }
-
-  private _options: Array<ActionOption> = [];
-
-  get options(): Array<ActionOption> {
-    return this._options;
-  }
-
   public setPageTitle(title?: string) {
     if (title) {
       this._translateTitleService.setTitle(title.slice(0, 1).toUpperCase() + title.slice(1) + ' | Professionals');
@@ -70,5 +62,14 @@ export class AdminProfessionalsComponent {
       return this._rolesFrontService.hasAccessAdminSide(['professionals']);
     }
   }
+
+  get tabs(): Array<Tab> {
+    return this._tabs;
+  }
+
+  get options(): Array<ActionOption> {
+    return this._options;
+  }
+
 
 }

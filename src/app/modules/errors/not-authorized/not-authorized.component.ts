@@ -13,10 +13,6 @@ import {AuthService} from '../../../services/auth/auth.service';
 
 export class NotAuthorizedComponent {
 
-  get isAdmin(): boolean {
-    return this._authService.isAdmin;
-  }
-
   private _logo = environment.logoSynthURL;
 
   private _companyShortName = environment.companyShortName;
@@ -56,6 +52,10 @@ export class NotAuthorizedComponent {
 
   get isReloading(): boolean {
     return this._isReloading;
+  }
+
+  get isAdmin(): boolean {
+    return this._authService.isAdmin;
   }
 
   set isReloading(value: boolean) {

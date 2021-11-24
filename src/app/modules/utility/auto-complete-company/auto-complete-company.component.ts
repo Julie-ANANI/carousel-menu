@@ -11,18 +11,6 @@ import {AutocompleteService} from '../../../services/autocomplete/autocomplete.s
 })
 export class AutoCompleteCompanyComponent implements OnInit, OnDestroy {
 
-  get companiesSuggestion(): Array<Company | Enterprise> {
-    return this._companiesSuggestion;
-  }
-
-  get displayCompanySuggestion(): boolean {
-    return this._displayCompanySuggestion;
-  }
-
-  get company(): Company | Enterprise {
-    return this._company;
-  }
-
   /**
    * make the input field not editable
    */
@@ -98,6 +86,18 @@ export class AutoCompleteCompanyComponent implements OnInit, OnDestroy {
     this._company = event;
     this._displayCompanySuggestion = false;
     this.companyChange.emit(this._company);
+  }
+
+  get companiesSuggestion(): Array<Company | Enterprise> {
+    return this._companiesSuggestion;
+  }
+
+  get displayCompanySuggestion(): boolean {
+    return this._displayCompanySuggestion;
+  }
+
+  get company(): Company | Enterprise {
+    return this._company;
   }
 
   ngOnDestroy(): void {
