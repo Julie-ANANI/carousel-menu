@@ -14,17 +14,6 @@ import {HttpErrorResponse} from '@angular/common/http';
 })
 export class ContactComponent implements OnInit, OnDestroy {
 
-  get isFetching(): boolean {
-    return this._isFetching;
-  }
-  get showFollowUp(): boolean {
-    return this._showFollowUp;
-  }
-
-  get innovation(): Innovation {
-    return this._innovation;
-  }
-
   private _innovation: Innovation = <Innovation>{};
 
   private _subscribe: Subject<any> = new Subject<any>();
@@ -68,6 +57,17 @@ export class ContactComponent implements OnInit, OnDestroy {
       ? 'Dès la première réponse collectée, vous pourrez être présenté.e aux professionnels afin d’approfondir les échanges.'
       : 'Once the first response is collected, you can be introduced to the professionals in order to continue and ' +
       'deepen the discussion.';
+  }
+
+  get isFetching(): boolean {
+    return this._isFetching;
+  }
+  get showFollowUp(): boolean {
+    return this._showFollowUp;
+  }
+
+  get innovation(): Innovation {
+    return this._innovation;
   }
 
   ngOnDestroy(): void {

@@ -29,14 +29,6 @@ interface Tab {
 
 export class ProjectComponent implements OnInit, OnDestroy {
 
-  get openModal(): boolean {
-    return this._openModal;
-  }
-
-  set openModal(value: boolean) {
-    this._openModal = value;
-  }
-
   private _innovation: Innovation = <Innovation>{};
 
   private _mission: Mission = <Mission>{};
@@ -269,6 +261,14 @@ export class ProjectComponent implements OnInit, OnDestroy {
 
   get updateTime(): number {
     return this._updateTime;
+  }
+
+  get openModal(): boolean {
+    return this._openModal;
+  }
+
+  set openModal(value: boolean) {
+    this._openModal = value;
   }
 
   ngOnDestroy(): void {

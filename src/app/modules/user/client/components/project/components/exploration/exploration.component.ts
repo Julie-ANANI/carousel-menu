@@ -21,10 +21,6 @@ import { Config, Table } from '@umius/umi-common-component/models';
 
 export class ExplorationComponent implements OnInit, OnDestroy {
 
-  get answers(): Array<Answer> {
-    return this._answers;
-  }
-
   private _innovation: Innovation = <Innovation>{};
 
   private _campaignsStats: {
@@ -239,6 +235,10 @@ export class ExplorationComponent implements OnInit, OnDestroy {
 
   set sidebarValue(value: SidebarInterface) {
     this._sidebarValue = value;
+  }
+
+  get answers(): Array<Answer> {
+    return this._answers;
   }
 
   ngOnDestroy(): void {

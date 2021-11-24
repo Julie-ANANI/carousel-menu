@@ -37,10 +37,6 @@ interface Save {
 
 export class SetupComponent implements OnInit, OnDestroy, CanComponentDeactivate {
 
-  get scrollOn(): boolean {
-    return this._scrollOn;
-  }
-
   private _innovation: Innovation = <Innovation>{};
 
   private _ngUnsubscribe: Subject<any> = new Subject();
@@ -216,6 +212,10 @@ export class SetupComponent implements OnInit, OnDestroy, CanComponentDeactivate
 
   }
 
+  canDeactivate(): Observable<boolean> | Promise<boolean> | boolean {
+    return !this._activeSaveBadge;
+  }
+
   public closeModal() {
     this._showCardModal = false;
   }
@@ -308,13 +308,13 @@ export class SetupComponent implements OnInit, OnDestroy, CanComponentDeactivate
     return this._previewLink;
   }
 
+  get scrollOn(): boolean {
+    return this._scrollOn;
+  }
+
 
   get activeSaveBadge(): boolean {
     return this._activeSaveBadge;
-  }
-
-  canDeactivate(): Observable<boolean> | Promise<boolean> | boolean {
-    return !this._activeSaveBadge;
   }
 
   ngOnDestroy(): void {

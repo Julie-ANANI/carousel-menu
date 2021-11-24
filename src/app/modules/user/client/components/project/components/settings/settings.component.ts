@@ -36,61 +36,6 @@ interface Section {
 })
 
 export class SettingsComponent implements OnInit, OnDestroy {
-
-  get pendingCollaborators(): Array<string> {
-    return this._pendingCollaborators;
-  }
-
-  get objectiveConsent(): boolean {
-    return this._objectiveConsent;
-  }
-
-  set objectiveConsent(value: boolean) {
-    this._objectiveConsent = value;
-  }
-
-  get disabledDate(): string {
-    return this._disabledDate;
-  }
-
-  get isEditable(): boolean {
-    return !!this._innovation.status && (this._innovation.status === 'EDITING' || this._innovation.status === 'SUBMITTED');
-  }
-
-  get templateComplementary(): Array<MissionQuestion> {
-    return this.hasMissionTemplate
-      && MissionFrontService.combineComplementaryObjectives(this._mission.template.sections)
-        .filter((_objective) => !!this.objectiveName(_objective)) || [];
-  }
-
-  get definedTemplate(): MissionTemplate {
-    return this._definedTemplate;
-  }
-
-  get missionTemplates(): Array<MissionTemplate> {
-    return this._missionTemplates;
-  }
-
-  get isFetchingTemplates(): boolean {
-    return this._isFetchingTemplates;
-  }
-
-  get hasMissionTemplate(): boolean {
-    return !!(this._mission.template && this._mission.template.entry && this._mission.template.entry.length);
-  }
-
-  get isOldObjective(): boolean {
-    return !!(this._mission.objective.principal && this._mission.objective.principal[this.currentLang]);
-  }
-
-  get dateRDOIndex(): number {
-    return this._mission.milestoneDates.findIndex((value) => value.code === 'RDO');
-  }
-
-  get dateRDO(): Milestone {
-    return this._mission.milestoneDates.find((value) => value.code === 'RDO');
-  }
-
   private _innovation: Innovation = <Innovation>{};
 
   private _mission: Mission = <Mission>{
@@ -947,6 +892,60 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
   get activeView(): string {
     return this._activeView;
+  }
+
+  get pendingCollaborators(): Array<string> {
+    return this._pendingCollaborators;
+  }
+
+  get objectiveConsent(): boolean {
+    return this._objectiveConsent;
+  }
+
+  set objectiveConsent(value: boolean) {
+    this._objectiveConsent = value;
+  }
+
+  get disabledDate(): string {
+    return this._disabledDate;
+  }
+
+  get isEditable(): boolean {
+    return !!this._innovation.status && (this._innovation.status === 'EDITING' || this._innovation.status === 'SUBMITTED');
+  }
+
+  get templateComplementary(): Array<MissionQuestion> {
+    return this.hasMissionTemplate
+      && MissionFrontService.combineComplementaryObjectives(this._mission.template.sections)
+        .filter((_objective) => !!this.objectiveName(_objective)) || [];
+  }
+
+  get definedTemplate(): MissionTemplate {
+    return this._definedTemplate;
+  }
+
+  get missionTemplates(): Array<MissionTemplate> {
+    return this._missionTemplates;
+  }
+
+  get isFetchingTemplates(): boolean {
+    return this._isFetchingTemplates;
+  }
+
+  get hasMissionTemplate(): boolean {
+    return !!(this._mission.template && this._mission.template.entry && this._mission.template.entry.length);
+  }
+
+  get isOldObjective(): boolean {
+    return !!(this._mission.objective.principal && this._mission.objective.principal[this.currentLang]);
+  }
+
+  get dateRDOIndex(): number {
+    return this._mission.milestoneDates.findIndex((value) => value.code === 'RDO');
+  }
+
+  get dateRDO(): Milestone {
+    return this._mission.milestoneDates.find((value) => value.code === 'RDO');
   }
 
   ngOnDestroy(): void {
