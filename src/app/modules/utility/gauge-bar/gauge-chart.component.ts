@@ -47,16 +47,6 @@ export class GaugeChartComponent implements OnChanges {
 
   private _needleColor = this.mean;
 
-  get needleColor(): string {
-    return this._needleColor;
-  }
-
-  private _options: any;
-
-  get options(): any {
-    return this._options;
-  }
-
   ngOnChanges(changes: SimpleChanges) {
     // We force display of needle when value is 0
     if (!this.needleValue) {
@@ -89,5 +79,15 @@ export class GaugeChartComponent implements OnChanges {
     } else {
       this._needleColor = this.high;
     }
+  }
+
+  get needleColor(): string {
+    return this._needleColor;
+  }
+
+  private _options: any;
+
+  get options(): any {
+    return this._options;
   }
 }

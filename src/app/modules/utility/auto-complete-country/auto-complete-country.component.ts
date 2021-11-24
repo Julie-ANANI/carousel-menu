@@ -10,22 +10,6 @@ import {Country} from '../../../models/country';
 })
 export class AutoCompleteCountryComponent implements OnInit, OnDestroy {
 
-  get subscribe(): Subject<any> {
-    return this._subscribe;
-  }
-
-  get countriesSuggestion(): Array<Country> {
-    return this._countriesSuggestion;
-  }
-
-  get displayCountrySuggestion(): boolean {
-    return this._displayCountrySuggestion;
-  }
-
-  get country(): Country {
-    return this._country;
-  }
-
   @Input() set country(value: Country) {
     this._country = value || <Country>{};
   }
@@ -99,6 +83,22 @@ export class AutoCompleteCountryComponent implements OnInit, OnDestroy {
     this._country = event;
     this._displayCountrySuggestion = false;
     this.countryChange.emit(this._country);
+  }
+
+  get subscribe(): Subject<any> {
+    return this._subscribe;
+  }
+
+  get countriesSuggestion(): Array<Country> {
+    return this._countriesSuggestion;
+  }
+
+  get displayCountrySuggestion(): boolean {
+    return this._displayCountrySuggestion;
+  }
+
+  get country(): Country {
+    return this._country;
   }
 
   ngOnDestroy(): void {

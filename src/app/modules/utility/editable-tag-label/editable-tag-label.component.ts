@@ -73,10 +73,6 @@ export class EditableTagLabelComponent implements OnInit, AfterViewInit {
 
   }
 
-  get currentLang(): string {
-    return this._currentLang;
-  }
-
 
   /**
    *
@@ -119,8 +115,14 @@ export class EditableTagLabelComponent implements OnInit, AfterViewInit {
     }
   }
 
-  get isEditable(): boolean {
-    return this._isEditable;
+  deleteTag(event: Event) {
+    event.preventDefault();
+    this.performAction.emit({action: 'delete', value: this._defaultTag});
+  }
+
+  onEdit(event: Event) {
+    event.preventDefault();
+    this._isEditable = true;
   }
 
   valueOnChange(value: any) {
@@ -133,32 +135,16 @@ export class EditableTagLabelComponent implements OnInit, AfterViewInit {
     }
   }
 
-  get defaultTag(): Tag {
-    return this._defaultTag;
-  }
-
-  deleteTag(event: Event) {
-    event.preventDefault();
-    this.performAction.emit({action: 'delete', value: this._defaultTag});
-  }
-
-  onEdit(event: Event) {
-    event.preventDefault();
-    this._isEditable = true;
-  }
-
-
-  get showModal(): boolean {
-    return this._showModal;
-  }
-
-  set showModal(value: boolean) {
-    this._showModal = value;
-  }
-
   createNewTag() {
     this._isEditable = false;
     this.performAction.emit({action: 'create', value: this._defaultTag});
+  }
+
+  onCancel(event: Event) {
+    event.preventDefault();
+    this._defaultTag = JSON.parse(JSON.stringify(this._originalTag));
+    this._isEditable = false;
+    this.performAction.emit({action: 'cancel', value: this._defaultTag});
   }
 
   ngAfterViewInit() {
@@ -169,10 +155,24 @@ export class EditableTagLabelComponent implements OnInit, AfterViewInit {
     }
   }
 
-  onCancel(event: Event) {
-    event.preventDefault();
-    this._defaultTag = JSON.parse(JSON.stringify(this._originalTag));
-    this._isEditable = false;
-    this.performAction.emit({action: 'cancel', value: this._defaultTag});
+  get defaultTag(): Tag {
+    return this._defaultTag;
   }
+
+  get showModal(): boolean {
+    return this._showModal;
+  }
+
+  set showModal(value: boolean) {
+    this._showModal = value;
+  }
+
+  get isEditable(): boolean {
+    return this._isEditable;
+  }
+
+  get currentLang(): string {
+    return this._currentLang;
+  }
+
 }

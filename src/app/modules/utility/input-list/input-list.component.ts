@@ -33,12 +33,6 @@ export class InputListComponent {
 
   @Input() isDomain = false; // true: if the answerList is of domain. ex: app-sidebar-blacklist component
 
-  private _answer = '';
-
-  private _answerList: Array<any> = [];
-
-  private _placeholder = 'COMMON.PLACEHOLDER.INPUT_LIST_DEFAULT';
-
   @Input() set config(config: InputListConfig) {
     if (config) {
       this._placeholder = config.placeholder;
@@ -46,17 +40,24 @@ export class InputListComponent {
     }
   }
 
+  @Input() isSelectCompany = false;
+
   @Output() update: EventEmitter<any> = new EventEmitter<any>(); // sends the updated list.
   @Output() remove: EventEmitter<any> = new EventEmitter<any>(); // sends the to-remove item.
   @Output() edit: EventEmitter<any> = new EventEmitter<any>(); // sends the edited item.
   @Output() clickItem: EventEmitter<any> = new EventEmitter<any>(); // sends the clicked item.
 
+
   private _enableUpdate = false;
+  private _answer = '';
+
+  private _answerList: Array<any> = [];
+
+  private _placeholder = 'COMMON.PLACEHOLDER.INPUT_LIST_DEFAULT';
 
   public isModalDelete = false;
   private _indexNumber: number = null;
   private _indexToDelete: number = null;
-  @Input() isSelectCompany = false;
 
   constructor(
     private _translateNotificationsService: TranslateNotificationsService,
@@ -188,29 +189,6 @@ export class InputListComponent {
     }
   }
 
-  get placeholder(): string {
-    return this._placeholder;
-  }
-
-  get enableUpdate(): boolean {
-    return this._enableUpdate;
-  }
-
-  get indexNumber(): number {
-    return this._indexNumber;
-  }
-
-  get answerList(): Array<any> {
-    return this._answerList;
-  }
-
-  get answer(): string {
-    return this._answer;
-  }
-
-  set answer(value: string) {
-    this._answer = value;
-  }
 
   public autocompleteCompanyListFormatter = (data: any): SafeHtml => {
     return this._domSanitizer.bypassSecurityTrustHtml(
@@ -237,7 +215,7 @@ export class InputListComponent {
     searchString: string
   ): Observable<
     Array<{ name: string; logo: any; domain: string; _id: string }>
-  > => {
+    > => {
     return this._autoCompleteService.get({
       query: searchString,
       type: 'enterprise',
@@ -252,4 +230,28 @@ export class InputListComponent {
     }
     this._answer = this._answer ? this._answer : '';
   }
+  get placeholder(): string {
+    return this._placeholder;
+  }
+
+  get enableUpdate(): boolean {
+    return this._enableUpdate;
+  }
+
+  get indexNumber(): number {
+    return this._indexNumber;
+  }
+
+  get answerList(): Array<any> {
+    return this._answerList;
+  }
+
+  get answer(): string {
+    return this._answer;
+  }
+
+  set answer(value: string) {
+    this._answer = value;
+  }
+
 }
