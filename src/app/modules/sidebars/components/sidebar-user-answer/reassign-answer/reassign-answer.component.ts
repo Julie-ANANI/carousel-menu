@@ -24,31 +24,6 @@ export interface NewPro {
 })
 
 export class ReassignAnswerComponent {
-
-  get company(): Company {
-    return this._company;
-  }
-
-  get country(): Country {
-    return this._country;
-  }
-
-  get showBanner(): boolean {
-    return this._showBanner;
-  }
-
-  get proFound(): number {
-    return this._proFound;
-  }
-
-  get isSearchingPro(): boolean {
-    return this._isSearchingPro;
-  }
-
-  get proConfig(): Config {
-    return this._proConfig;
-  }
-
   @Output() proToAssign: EventEmitter<NewPro> = new EventEmitter<NewPro>();
 
   private _newPro: NewPro = <NewPro>{};
@@ -132,5 +107,30 @@ export class ReassignAnswerComponent {
   get newPro(): NewPro {
     return this._newPro;
   }
+
+  get company(): Company {
+    return this._company;
+  }
+
+  get country(): Country {
+    return this._country;
+  }
+
+  get showBanner(): boolean {
+    return this._showBanner;
+  }
+
+  get proFound(): number {
+    return this._proFound;
+  }
+
+  get isSearchingPro(): boolean {
+    return this._isSearchingPro;
+  }
+
+  get proConfig(): Config {
+    return this._proConfig;
+  }
+
 
 }

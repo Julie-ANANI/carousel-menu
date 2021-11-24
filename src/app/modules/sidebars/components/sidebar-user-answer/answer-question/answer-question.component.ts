@@ -20,14 +20,6 @@ import { MissionQuestionService } from '../../../../../services/mission/mission-
 
 export class AnswerQuestionComponent {
 
-  get platformLang(): string {
-    return this._translateService.currentLang;
-  }
-
-  get questionLabel(): string {
-    return MissionQuestionService.label(this.question, 'label', this.currentLang);
-  }
-
   @Input() projectId = '';
 
   @Input() question: Question = <Question>{};
@@ -237,6 +229,29 @@ export class AnswerQuestionComponent {
     }
   }
 
+  performAction(event: any, identifier: string, tag?: any) {
+    switch (event.action) {
+      case 'add':
+        this.addTag(event.value, identifier);
+        this._isAddTag = false;
+        break;
+      case 'create':
+        this.createTag(event.value, identifier);
+        this._isAddTag = false;
+        break;
+      case 'delete':
+        this.removeTag(tag, identifier);
+        break;
+      case 'cancel':
+        this._isAddTag = false;
+        break;
+    }
+  }
+
+  showAddTag() {
+    this._isAddTag = true;
+  }
+
   get showCommentTranslation(): boolean {
     return this._showCommentTranslation;
   }
@@ -257,26 +272,6 @@ export class AnswerQuestionComponent {
     return this._starCase;
   }
 
-  performAction(event: any, identifier: string, tag?: any) {
-    switch (event.action) {
-      case 'add':
-        this.addTag(event.value, identifier);
-        this._isAddTag = false;
-        break;
-      case 'create':
-        this.createTag(event.value, identifier);
-        this._isAddTag = false;
-        break;
-      case 'delete':
-        this.removeTag(tag, identifier);
-        break;
-      case 'cancel':
-        this._isAddTag = false;
-        break;
-    }
-  }
-
-
   get isAddTag(): boolean {
     return this._isAddTag;
   }
@@ -285,7 +280,11 @@ export class AnswerQuestionComponent {
     return this._tagToAdd;
   }
 
-  showAddTag() {
-    this._isAddTag = true;
+  get platformLang(): string {
+    return this._translateService.currentLang;
+  }
+
+  get questionLabel(): string {
+    return MissionQuestionService.label(this.question, 'label', this.currentLang);
   }
 }
