@@ -15,9 +15,10 @@ RUN echo build ${APP_NAME} -c=${ENV_NAME}
 RUN node --max-old-space-size=10240 ./node_modules/@angular/cli/bin/ng build --progress ${APP_NAME} -c=${ENV_NAME}
 
 # upload source-map to sentry
-RUN if [ $VERSION != "latest" ]; then npm install @sentry/cli; fi
-RUN if [ $VERSION != "latest" ]; then ./node_modules/.bin/sentry-cli releases new ${VERSION}; fi
-RUN if [ $VERSION != "latest" ]; then ./node_modules/.bin/sentry-cli releases files ${VERSION} upload-sourcemaps dist/browser; fi
+RUN if [ $VERSION != "latest" && $ENV_NAME == 'production' ]; then npm install @sentry/cli; fi
+RUN if [ $VERSION != "latest" && $ENV_NAME == 'production' ]; then ./node_modules/.bin/sentry-cli releases new ${VERSION}; fi
+RUN if [ $VERSION != "latest" && $ENV_NAME == 'production' ]; then ./node_modules/.bin/sentry-cli releases files ${VERSION} upload-sourcemaps
+dist/browser; fi
 RUN rm -f /var/web/.sentryclirc
 
 # delete source-map files
@@ -40,6 +41,8 @@ RUN rm -rf builders/
 RUN rm -rf doc/
 RUN rm -rf hooks/
 RUN rm Dockerfile.image
+RUN rm CHANGELOG.md
+RUN rm README.md
 
 
 EXPOSE  3080
