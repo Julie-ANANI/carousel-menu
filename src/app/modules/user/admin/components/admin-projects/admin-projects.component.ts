@@ -50,6 +50,7 @@ export class AdminProjectsComponent implements OnInit {
   private _currentLang = this._translateService.currentLang;
 
   private _objectiveSearchKey = this._currentLang === 'en' ? 'objective.en' : 'objective.fr';
+
   private _useCaseSearchKey = this._currentLang === 'en' ? 'useCase.en' : 'useCase.fr';
 
   private _fetchingError = false;
