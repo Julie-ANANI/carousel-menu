@@ -4,7 +4,7 @@ import {first} from 'rxjs/operators';
 import {TranslateNotificationsService} from '../../../../../services/notifications/notifications.service';
 import {HttpErrorResponse} from '@angular/common/http';
 import {ErrorFrontService} from '../../../../../services/error/error-front.service';
-import {Config} from '../../../../../models/config';
+import { Config } from '@umius/umi-common-component/models';
 import {Company} from '../../../../../models/company';
 import {Country} from '../../../../../models/country';
 import {countries} from '../../../../../models/static-data/country';

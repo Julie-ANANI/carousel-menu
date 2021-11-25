@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { ClientProject } from '../../models/client-project';
 import { Mission } from '../../models/mission';
 import {Innovation, NewInnovation} from '../../models/innovation';
-import { Config } from '../../models/config';
+import { Config } from '@umius/umi-common-component/models';
 
 interface CreateResponse {
   clientProject: ClientProject;

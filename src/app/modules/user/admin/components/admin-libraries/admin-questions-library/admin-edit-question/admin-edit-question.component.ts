@@ -19,8 +19,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {TranslateTitleService} from '../../../../../../../services/title/title.service';
 import {CommonService} from '../../../../../../../services/common/common.service';
 import {HttpErrorResponse} from '@angular/common/http';
-import {Config} from '../../../../../../../models/config';
-
+import { Config } from '@umius/umi-common-component/models';
 interface ConfirmUpdate {
   tool: boolean;
   template: boolean;

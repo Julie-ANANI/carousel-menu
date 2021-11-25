@@ -7,7 +7,7 @@ import { Campaign } from '../../../../../../models/campaign';
 import { EmailScenario } from '../../../../../../models/email-scenario';
 import { EmailSignature } from '../../../../../../models/email-signature';
 import { first } from 'rxjs/operators';
-import { Config } from '../../../../../../models/config';
+import { Config } from '@umius/umi-common-component/models';
 import { isPlatformBrowser } from '@angular/common';
 import { Response } from '../../../../../../models/response';
 import { HttpErrorResponse } from '@angular/common/http';

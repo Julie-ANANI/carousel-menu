@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Config } from '../../../../../models/config';
+import { Config } from '@umius/umi-common-component/models';
 import { Innovation } from '../../../../../models/innovation';
 import { Showcase } from '../../../../../models/showcase';
 
