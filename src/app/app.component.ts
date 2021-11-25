@@ -35,29 +35,39 @@ export class AppComponent implements OnInit, OnDestroy {
 
   private _ngUnsubscribe: Subject<any> = new Subject<any>();
 
+  private static _setFavicon() {
+    const linkElement = document.createElement('link');
+    linkElement.setAttribute('id', 'theicon');
+    linkElement.setAttribute('rel', 'icon');
+    linkElement.setAttribute('type', 'image/x-icon');
+    if (environment.domain !== 'umi' && environment.domain !== 'dynergie') {
+      linkElement.setAttribute('href', 'https://res.cloudinary.com/umi/image/upload/app/favicon-wl.ico');
+    } else {
+      linkElement.setAttribute('href', 'https://res.cloudinary.com/umi/image/upload/cropped-favicon-1-192x192_cwgv3h.png');
+    }
+    document.head.appendChild( linkElement );
+  }
+
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _translateService: TranslateService,
               private _authService: AuthService,
               private _mouseService: MouseService,
               private _socketService: SocketService,
               private _translateNotificationsService: TranslateNotificationsService) {
-
-    this._setFavicon();
     initTranslation(this._translateService);
+  }
 
+  ngOnInit(): void {
     if (isPlatformServer(this._platformId)) {
       console.log('New connection has been made with the front.');
     }
 
     if (isPlatformBrowser(this._platformId)) {
       this._initializeSession();
+      AppComponent._setFavicon();
+      this._socketEvent();
+      this._mouseEvent();
     }
-  }
-
-  ngOnInit(): void {
-    this._socketEvent();
-    this._mouseEvent();
-    // this._setSwellRTScript();
   }
 
   @HostListener('mouseup', ['$event'])
@@ -97,62 +107,6 @@ export class AppComponent implements OnInit, OnDestroy {
       this._startMouseEvent = value;
     });
   }
-
-  // Favicon
-  private _setFavicon() {
-    if (isPlatformBrowser(this._platformId)) {
-      const linkElement = document.createElement('link');
-      linkElement.setAttribute('id', 'theicon');
-      linkElement.setAttribute('rel', 'icon');
-      linkElement.setAttribute('type', 'image/x-icon');
-      if (environment.domain !== 'umi' && environment.domain !== 'dynergie') {
-        linkElement.setAttribute('href', 'https://res.cloudinary.com/umi/image/upload/app/favicon-wl.ico');
-      } else {
-        linkElement.setAttribute('href', 'https://res.cloudinary.com/umi/image/upload/app/favicon.ico');
-      }
-      document.head.appendChild( linkElement );
-    }
-  }
-
-  /*private _setSwellRTScript() {
-    let SWELL_CONTEXT = "swellrt_beta";
-    let SWELL_JS_MODULE = "swellrt_beta.nocache.js";
-
-    window.swell = {
-
-      ready: function(handler) {
-        if (!handler || typeof handler !== "function")
-          return;
-
-        if (window.swellrt.runtime) {
-          handler(window.swell.runtime.get());
-        } else {
-          if (!window._lh)
-            window._lh = [];
-          window._lh.push(handler);
-        }
-      }
-    }
-
-    // Some alias
-    window.swellrt = window.swell;
-    window.swell.onReady = window.swell.ready;
-
-    const linkElement = document.createElement('script');
-    linkElement.setAttribute('type', 'text/javascript');
-    linkElement.setAttribute('id', 'swellrt');
-    if(environment.local) {
-      //linkElement.setAttribute('src', '/swellrt-beta.js');
-      linkElement.setAttribute('src', `http://localhost:9898/${SWELL_CONTEXT}/${SWELL_JS_MODULE}`);
-    } else {
-      if(environment.apiUrl === 'https://dev.umi.us') {
-        linkElement.setAttribute('src', `https://swellrtdev.umi.us:9899/${SWELL_CONTEXT}/${SWELL_JS_MODULE}`);
-      } else {
-        linkElement.setAttribute('src', `https://swellrt.umi.us:9899/${SWELL_CONTEXT}/${SWELL_JS_MODULE}`);
-      }
-    }
-    document.head.appendChild( linkElement );
-  }*/
 
   get notificationsOptions(): Options {
     return this._notificationsOptions;

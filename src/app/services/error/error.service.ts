@@ -6,6 +6,7 @@ import { environment } from '../../../environments/environment';
 import { version } from '../../../environments/version';
 import * as Sentry from '@sentry/browser';
 import {RolesFrontService} from '../roles/roles-front.service';
+import {UserFrontService} from '../user/user-front.service';
 
 Sentry.init({
   environment: environment.domain,
@@ -21,37 +22,26 @@ export class ErrorService {
   constructor(@Inject(PLATFORM_ID) protected platformId: Object,
               private router: Router,
               private _rolesFrontService: RolesFrontService,
-              private auth: AuthService) {}
+              private _authService: AuthService) {}
 
   public handleError(error: Error | HttpErrorResponse) {
-
-    if (environment.production && !this._rolesFrontService.isTechRole()) {
-
+    if (!environment.production || this._rolesFrontService.isTechRole()) {
+      console.error(error);
+    } else {
       Sentry.withScope(scope => {
-
-        const user = this.auth.user;
+        const user = this._authService.user;
         scope.setUser({
-          email: user ? user.email : '',
-          username: user ? `${user.firstName} ${user.lastName}` : '',
-          id: user ? user.id : ''
+          email: (user && user.email) || '',
+          username: UserFrontService.fullName(user),
+          id: (user && user.id) || ''
         });
         scope.setTag('route', environment.clientUrl + this.router.url);
-
         // const eventId = Sentry.captureException(error);
-
         /*if (this.auth.adminLevel > 0) {
           Sentry.showReportDialog({ eventId });
         }*/
-
       });
-
-    } else {
-      /**
-       * for the debugging purposes.
-       */
-      console.error(error);
     }
-
   }
 
 }
