@@ -443,7 +443,7 @@ export class SharedSearchHistoryComponent implements OnInit {
     } else if (value._action === 'Add to campaign') {
 
       this._searchService.addManyRequests(requestsIds).pipe(first()).subscribe((_: any) => {
-        this._translateNotificationsService.success('Success', 'The requests have been paused.');
+        this._translateNotificationsService.success('Success', 'The requests have been added.');
       }, (err: HttpErrorResponse) => {
         this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
         console.error(err);
