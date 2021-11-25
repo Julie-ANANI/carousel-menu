@@ -37,10 +37,7 @@ RUN rm -rf src/
 RUN rm angular.json
 RUN rm tsconfig.json
 RUN rm -rf e2e/
-RUN rm -rf builders/
 RUN rm -rf doc/
-RUN rm -rf hooks/
-RUN rm Dockerfile.image
 RUN rm CHANGELOG.md
 RUN rm README.md
 
