@@ -3,11 +3,9 @@ import {isPlatformBrowser, isPlatformServer} from '@angular/common';
 import { NotificationAnimationType, Options } from 'angular2-notifications';
 import { initTranslation, TranslateService } from './i18n/i18n';
 import { environment } from '../environments/environment';
-import { AuthService } from './services/auth/auth.service';
-import { TranslateNotificationsService } from './services/notifications/notifications.service';
 import { MouseService } from './services/mouse/mouse.service';
 import { SocketService } from './services/socket/socket.service';
-import {first, takeUntil} from 'rxjs/operators';
+import {takeUntil} from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import {HttpErrorResponse} from '@angular/common/http';
 
@@ -23,7 +21,7 @@ export class AppComponent implements OnInit, OnDestroy {
     position: ['bottom', 'right'],
     timeOut: 1500,
     lastOnBottom: true,
-    maxStack: 1,
+    maxStack: 3,
     animate: NotificationAnimationType.FromRight,
     pauseOnHover: true,
     showProgressBar: true,
@@ -50,10 +48,8 @@ export class AppComponent implements OnInit, OnDestroy {
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _translateService: TranslateService,
-              private _authService: AuthService,
               private _mouseService: MouseService,
-              private _socketService: SocketService,
-              private _translateNotificationsService: TranslateNotificationsService) {
+              private _socketService: SocketService) {
     initTranslation(this._translateService);
   }
 
@@ -63,10 +59,10 @@ export class AppComponent implements OnInit, OnDestroy {
     }
 
     if (isPlatformBrowser(this._platformId)) {
-      this._initializeSession();
       AppComponent._setFavicon();
       this._socketEvent();
       this._mouseEvent();
+      console.log('The application has been started.');
     }
   }
 
@@ -74,23 +70,6 @@ export class AppComponent implements OnInit, OnDestroy {
   onMouseUp(event: MouseEvent) {
     if (this._startMouseEvent) {
       this._mouseService.setClickEvent(event);
-    }
-  }
-
-  /**
-   * we initialize session if we haven't use the guard for the page.
-   * @private
-   */
-  private _initializeSession() {
-    if (!this._authService.user) {
-      this._authService.initializeSession().pipe(first()).subscribe((_) => {
-        console.log('The application has been started.');
-      }, (err: HttpErrorResponse) => {
-        this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH');
-        console.error(err);
-      });
-    } else {
-      console.log('The application has been started.');
     }
   }
 
