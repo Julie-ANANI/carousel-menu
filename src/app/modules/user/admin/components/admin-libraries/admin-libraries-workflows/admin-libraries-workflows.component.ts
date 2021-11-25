@@ -9,7 +9,7 @@ import { RolesFrontService } from "../../../../../../services/roles/roles-front.
 import { HttpErrorResponse } from "@angular/common/http";
 import { ErrorFrontService } from "../../../../../../services/error/error-front.service";
 import { isPlatformBrowser } from "@angular/common";
-import { Config } from "../../../../../../models/config";
+import { Config } from "@umius/umi-common-component/models/config";
 import { Response } from "../../../../../../models/response";
 
 @Component({

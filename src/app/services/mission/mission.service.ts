@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { Innovation } from '../../models/innovation';
 import { Multiling } from '../../models/multiling';
 import { Response } from '../../models/response';
-import { Config } from '../../models/config';
+import { Config } from '@umius/umi-common-component/models';
 
 @Injectable({providedIn: 'root'})
 export class MissionService {
