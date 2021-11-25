@@ -7,6 +7,7 @@ import { CookieModule, CookieService } from 'ngx-cookie';
 import { SimpleNotificationsModule } from 'angular2-notifications';
 import { TranslateModule, TranslateLoader, TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
+import { QuicklinkModule } from 'ngx-quicklink';
 
 // Modules/Components
 import { AppRoutingModule } from './app-routing.module';
@@ -31,6 +32,7 @@ import { SessionInterceptor } from './interceptors/session.interceptor';
     SimpleNotificationsModule.forRoot(),
     CookieModule.forRoot(),
     SpinnerLoaderModule,
+    QuicklinkModule,
     BrowserModule.withServerTransition({
       appId: 'umi-application-front'
     }),
@@ -48,8 +50,7 @@ import { SessionInterceptor } from './interceptors/session.interceptor';
     { provide: HTTP_INTERCEPTORS, useClass: ApiUrlInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: LoaderBrowserInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: SessionInterceptor, multi: true },
-    { provide: ErrorHandler, useClass: GlobalErrorHandler },
-    // { provide: APP_INITIALIZER, useFactory: initializeSession, deps: [AuthService], multi: true, },
+    { provide: ErrorHandler, useClass: GlobalErrorHandler }
   ],
   bootstrap: [
     AppComponent
@@ -63,26 +64,19 @@ export class AppModule {
               private cookieService: CookieService) {
 
     this.translateService.addLangs(['en', 'fr']);
-
     this.translateService.setDefaultLang('en');
-
     const user_lang = this.cookieService.get('user_lang');
 
     if (isPlatformBrowser(platformId)) {
-
       let browserLang = user_lang || this.translateService.getBrowserLang();
-
       if (!browserLang.match(/en|fr/)) {
         browserLang = 'en';
       }
-
       this.cookieService.put('user_lang', browserLang);
-
       this.translateService.use(browserLang);
     } else {
       this.translateService.use(user_lang || 'en');
     }
-
   }
 
 }
@@ -93,7 +87,7 @@ export function CreateTranslateLoader() {
 
 export class TranslateUniversalLoader implements TranslateLoader {
   getTranslation(_: string): Observable<any> {
-    return Observable.create((observer: any) => {
+    return new Observable((observer: any) => {
       observer.next();
       observer.complete();
     });
