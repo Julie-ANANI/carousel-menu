@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TranslateTitleService } from '../../../../../services/title/title.service';
@@ -10,16 +10,40 @@ import { first } from 'rxjs/operators';
 import {emailRegEx} from '../../../../../utils/regex';
 
 @Component({
-  selector: 'forget-password',
   templateUrl: './reset-password.component.html',
   styleUrls: ['./reset-password.component.scss']
 })
 
-export class ResetPasswordComponent implements OnInit {
+export class ResetPasswordComponent {
 
-  private _formData: FormGroup;
+  get companyName(): string {
+    return this._companyName;
+  }
+
+  get companyLogo(): string {
+    return this._companyLogo;
+  }
+
+  get companyUrl(): string {
+    return this._companyUrl;
+  }
+
+  private _formData: FormGroup = this.formBuilder.group({
+    email: [{
+      value: this.authService.isAuthenticated ? this.authService.user.email : '',
+      disabled: this.authService.isAuthenticated && this.authService.user.email
+    },
+      [Validators.required, Validators.pattern(emailRegEx)]
+    ],
+    password: ['', [Validators.required, Validators.minLength(9)]],
+    passwordConfirm: ['', [Validators.required, Validators.minLength(9)]]
+  });
 
   private _companyName: string = environment.companyShortName;
+
+  private _companyUrl = environment.companyURL;
+
+  private _companyLogo = environment.logoURL;
 
   constructor(private translateTitleService: TranslateTitleService,
               private formBuilder: FormBuilder,
@@ -28,25 +52,8 @@ export class ResetPasswordComponent implements OnInit {
               private authService: AuthService,
               private activatedRoute: ActivatedRoute,
               private router: Router) {
-
     this.translateTitleService.setTitle('COMMON.PAGE_TITLE.RESET');
-
   }
-
-  ngOnInit() {
-    this.buildForm();
-  }
-
-
-  private buildForm() {
-    this._formData = this.formBuilder.group({
-      email: [{ value: this.authService.isAuthenticated ? this.authService.user.email : '', disabled: this.authService.isAuthenticated && this.authService.user.email },
-        [Validators.required, Validators.pattern(emailRegEx)]],
-      password: ['', [Validators.required, Validators.minLength(9)]],
-      passwordConfirm: ['', [Validators.required, Validators.minLength(9)]]
-    });
-  }
-
 
   onClickSubmit() {
     if (this._formData.valid && this._formData.get('email')!.value) {
@@ -81,18 +88,8 @@ export class ResetPasswordComponent implements OnInit {
 
   }
 
-
   get formData(): FormGroup {
     return this._formData;
-  }
-
-
-  getLogo(): string {
-    return environment.logoURL;
-  }
-
-  get companyName(){
-    return (this._companyName || 'umi').toLocaleUpperCase();
   }
 
 }

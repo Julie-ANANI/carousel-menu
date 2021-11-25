@@ -6,12 +6,7 @@
       <ng-container *ngIf="isDomainUMI">
         <div class="logo-wrapper p-top-20 p-left-40">
           <a [href]="companyUrl" class="d-inline-flex">
-            <img
-              [src]="logo"
-              height="44.83"
-              width="85"
-              alt=" "
-              class="img-responsive">
+            <img [alt]="companyName" [src]="logo" class="img-responsive">
           </a>
         </div>
       </ng-container>
@@ -24,13 +19,14 @@
       <!-- sign up -->
       <div class="flex-end">
         <span class="text-13 text-notify m-right-20">{{ 'LOG_IN.DOES_NOT_HAVE_ACCOUNT' | translate }}</span>
-        <button
+        <a
+          [href]="'/register'"
           [id]="'login-btn-signup'"
           [routerLink]="'/register'"
           class="button is-primary text-xs is-sm is-rounded is-outlined"
           type="button">
           {{ 'LOG_IN.SIGN_UP' | translate }}
-        </button>
+        </a>
       </div>
       <!-- /sign up  -->
 
@@ -57,10 +53,8 @@
                 <span
                   *ngIf="formData.get('email').hasError('email') && formData.get('email').value !== ''"
                   class="form-input-hint">
-
                   {{ 'COMMON.INVALID.EMAIL' | translate }}
                 </span>
-                <!-- TODO {{strings(formData.get('email').errors)}} remove this. Just for debugging-->
               </ng-container>
             </div>
 
@@ -69,6 +63,7 @@
               <div class="flex-between">
                 <label class="form-label text-xs" for="login-password">{{ 'COMMON.LABEL.PASSWORD' | translate }}</label>
                 <a
+                  [href]="'forgetpassword'"
                   [id]="'login-btn-forgot-password'"
                   [routerLink]="'forgetpassword'"
                   class="gtm-change-password text-xs text-underline text-link">
@@ -108,11 +103,11 @@
             <!-- login button -->
             <div class="p-top-30">
               <button
+                [disabled]="formData.invalid || displayLoading || displayLoadingLinkedIn || nbTentatives < 1"
                 [id]="'login-btn-submit'"
-                style="height: 50px"
                 class="button is-primary text-sm w-full gtm-signin-email"
-                type="submit"
-                [disabled]="formData.invalid || displayLoading || displayLoadingLinkedIn || nbTentatives < 1">
+                style="height: 50px"
+                type="submit">
                 <ng-container *ngIf="!displayLoading">{{ 'LOG_IN.LOG_IN_BTN' | translate }}</ng-container>
                 <span *ngIf="displayLoading" class="loading is-white"></span>
               </button>

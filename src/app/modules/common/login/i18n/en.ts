@@ -9,6 +9,10 @@ export const LOG_IN = {
 
   'LOG_IN_LINKEDIN': 'Sign in with LinkedIn',
 
-  'SIGN_UP': 'Create an account'
+  'SIGN_UP': 'Create an account',
+
+  'SUCCESS_EMAIL': 'We have received your email and our team will contact you soon.',
+
+  'ERROR_EMAIL': 'Sorry, we could not process your request at the moment, please try later.'
 
 };

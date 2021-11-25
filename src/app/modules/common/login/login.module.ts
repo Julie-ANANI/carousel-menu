@@ -10,6 +10,7 @@ import { ForgetPasswordModule } from './components/forget-password/forget-passwo
 import { ResetPasswordModule } from './components/reset-password/reset-password.module';
 import { SpinnerLoaderModule } from '../../utility/spinner-loader/spinner-loader.module';
 import { ModalModule } from '../../utility/modals/modal/modal.module';
+import {QuicklinkModule} from 'ngx-quicklink';
 
 @NgModule({
   imports: [
@@ -22,8 +23,12 @@ import { ModalModule } from '../../utility/modals/modal/modal.module';
     ResetPasswordModule,
     SpinnerLoaderModule,
     ModalModule,
+    QuicklinkModule
   ],
   declarations: [LoginComponent],
+  exports: [
+    QuicklinkModule
+  ]
 })
 export class LoginModule {
 }

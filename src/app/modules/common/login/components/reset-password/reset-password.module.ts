@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { ResetPasswordComponent } from './reset-password.component';
+import {ResetPasswordRoutingModule} from './reset-password-routing.module';
 
 @NgModule({
   imports: [
@@ -13,6 +14,7 @@ import { ResetPasswordComponent } from './reset-password.component';
     RouterModule,
     TranslateModule.forChild(),
     ReactiveFormsModule,
+    ResetPasswordRoutingModule
   ],
   declarations: [
     ResetPasswordComponent

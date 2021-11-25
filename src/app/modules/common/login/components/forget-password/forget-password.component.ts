@@ -14,6 +14,10 @@ import {emailRegEx} from '../../../../../utils/regex';
 
 export class ForgetPasswordComponent implements OnInit {
 
+  get companyUrl(): string {
+    return this._companyUrl;
+  }
+
   private _formData: FormGroup = this.formBuilder.group({});
 
   private _companyName = environment.companyShortName || 'umi';
@@ -21,6 +25,8 @@ export class ForgetPasswordComponent implements OnInit {
   private _emailSent = false;
 
   private _companyLogo = environment.logoURL;
+
+  private _companyUrl = environment.companyURL;
 
   constructor(private translateTitleService: TranslateTitleService,
               private formBuilder: FormBuilder,
