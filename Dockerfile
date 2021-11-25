@@ -17,8 +17,7 @@ RUN node --max-old-space-size=10240 ./node_modules/@angular/cli/bin/ng build --p
 # upload source-map to sentry
 RUN if [ $VERSION != "latest" && $ENV_NAME == 'production' ]; then npm install @sentry/cli; fi
 RUN if [ $VERSION != "latest" && $ENV_NAME == 'production' ]; then ./node_modules/.bin/sentry-cli releases new ${VERSION}; fi
-RUN if [ $VERSION != "latest" && $ENV_NAME == 'production' ]; then ./node_modules/.bin/sentry-cli releases files ${VERSION} upload-sourcemaps
-dist/browser; fi
+RUN if [ $VERSION != "latest" && $ENV_NAME == 'production' ]; then ./node_modules/.bin/sentry-cli releases files ${VERSION} upload-sourcemaps dist/browser; fi
 RUN rm -f /var/web/.sentryclirc
 
 # delete source-map files
