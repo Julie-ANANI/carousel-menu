@@ -8,7 +8,6 @@ import * as XHR2 from 'xhr2';
 XHR2.prototype._restrictedHeaders.cookie = false;
 
 import { enableProdMode } from '@angular/core';
-import {environment} from './src/environments/environment';
 
 import * as express from 'express';
 import * as compression from 'compression';
@@ -16,9 +15,7 @@ import * as compression from 'compression';
 import { lookup } from 'mime-types';
 import { join, extname } from 'path';
 
-if (environment.production) {
-  enableProdMode();
-}
+enableProdMode();
 
 // Express server
 const app = express();
