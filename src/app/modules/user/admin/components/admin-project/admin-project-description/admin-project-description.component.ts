@@ -56,6 +56,17 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
     summary: false
   };
 
+  private _showComment: Toggle = {
+    title: false,
+    summary: false
+  };
+
+  private _showSuggestion: Toggle = {
+    title: false,
+    summary: false
+  };
+
+
   private _toggleCommentSuggestion: Toggle = {
     title: false,
     summary: false
@@ -65,6 +76,7 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
     title: true,
     summary: true
   };
+
 
   private _isSavingMedia = false;
 
@@ -237,6 +249,14 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
 
   public onToggleSuggestion(event: Event, property: string) {
     this._toggleSuggestion[property] = !this._toggleSuggestion[property];
+  }
+
+  public onShowSuggestion(event: Event, property: string) {
+    this._showSuggestion[property] = !this._showSuggestion[property];
+  }
+
+  public onShowComment(event: Event, property: string) {
+    this._showComment[property] = !this._showComment[property];
   }
 
   /**
@@ -545,6 +565,15 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
 
   get toggleCommentSuggestion(): Toggle {
     return this._toggleCommentSuggestion;
+  }
+
+
+  get showComment(): Toggle {
+    return this._showComment;
+  }
+
+  get showSuggestion(): Toggle {
+    return this._showSuggestion;
   }
 
   ngOnDestroy(): void {

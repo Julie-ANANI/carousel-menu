@@ -7,7 +7,8 @@
       *ngFor="let section of activeInnovCard.sections; let i=index;"
       [ngStyle]="{ 'animation-duration': ((i + 1) * 110) + 'ms' }"
       class="animate-slide slide-down section-wrapper has-border">
-      <div class="section-body">
+      <div class="section-body flex-d-column"
+           [ngClass]="{'flex-d-column': !showComment[i.toString(10)] && !showSuggestion[i.toString(10)]}">
 
         <!-- content -->
         <div class="section-content">
@@ -52,6 +53,15 @@
                 <!-- /edit-preview button -->
 
                 <div class="d-flex align-center justify-center m-left-auto">
+                  <a class="button is-link is-xs p-1 m-no" style="min-width: unset"
+                     (click)="onShowComment($event,  i.toString(10))"
+                     [ngClass]="{'is-draft': !showComment[i.toString(10)],
+                        'is-warning': showComment[i.toString(10)]}">Comment</a>
+
+                  <a class="button is-link is-xs m-left-15 p-1 m-no" style="min-width: unset"
+                     (click)="onShowSuggestion($event,  i.toString(10))"
+                     [ngClass]="{'is-draft': !showSuggestion[i.toString(10)],
+                        'is-warning': showSuggestion[i.toString(10)]}">Suggestion</a>
                   <!-- visibility -->
                   <div
                     *ngIf="isEditable"
@@ -75,11 +85,11 @@
                   </div>
                   <!-- /delete -->
 
-<!--                  <div class="label is-primary is-sm tooltip"-->
-<!--                       data-tooltip="comment & suggestion"-->
-<!--                       style="cursor: pointer"-->
-<!--                       (click)="onToggleCommentSuggestion($event, i.toString(10))">UMI-->
-<!--                  </div>-->
+                  <!--                  <div class="label is-primary is-sm tooltip"-->
+                  <!--                       data-tooltip="comment & suggestion"-->
+                  <!--                       style="cursor: pointer"-->
+                  <!--                       (click)="onToggleCommentSuggestion($event, i.toString(10))">UMI-->
+                  <!--                  </div>-->
                 </div>
 
               </div>
@@ -115,6 +125,7 @@
 
           <!-- comment -->
           <div class="m-bottom-25"
+               *ngIf="showComment[i.toString(10)]"
                [id]="section.type.toUpperCase()+'-'+i + 1+'href-comment'">
             <div class="d-flex align-center">
               <div
@@ -153,7 +164,7 @@
           <!-- /comment -->
 
           <!-- suggestion -->
-          <div>
+          <div *ngIf="showSuggestion[i.toString(10)]">
             <div class="d-flex align-center">
               <div
                 (click)="onToggleSuggestion($event, i.toString(10))"
@@ -214,7 +225,8 @@
     <section
       style="animation-duration: 100ms"
       class="animate-slide slide-down section-wrapper p-top-20">
-      <div class="section-body">
+      <div class="section-body"
+           [ngClass]="{'flex-d-column': !showComment['title'] && !showSuggestion['title']}">
 
         <!-- content -->
         <div class="section-content">
@@ -241,13 +253,26 @@
                    *ngIf="getPadPreviewMode('title')"></i>
                 <i class="fas fa-eye" *ngIf="!getPadPreviewMode('title')"></i>
               </button>
+
+              <div class="d-flex justify-start align-center m-left-auto">
+                <a class="button is-link is-xs p-1 m-no" style="min-width: unset"
+                        (click)="onShowComment($event,  'title')"
+                        [ngClass]="{'is-draft': !showComment['title'],
+                        'is-primary': showComment['title']}">Comment</a>
+
+                <a class="button is-link is-xs m-left-15 p-1 m-no" style="min-width: unset"
+                        (click)="onShowSuggestion($event,  'title')"
+                        [ngClass]="{'is-draft': !showSuggestion['title'],
+                        'is-primary': showSuggestion['title']}">Suggestion</a>
+              </div>
+
               <!-- /edit-preview button -->
 
-<!--              <div class="label is-primary is-sm tooltip m-left-auto"-->
-<!--                   data-tooltip="comment & suggestion"-->
-<!--                   style="cursor: pointer"-->
-<!--                   (click)="onToggleCommentSuggestion($event, 'title')">UMI-->
-<!--              </div>-->
+              <!--              <div class="label is-primary is-sm tooltip m-left-auto"-->
+              <!--                   data-tooltip="comment & suggestion"-->
+              <!--                   style="cursor: pointer"-->
+              <!--                   (click)="onToggleCommentSuggestion($event, 'title')">UMI-->
+              <!--              </div>-->
 
             </div>
 
@@ -276,7 +301,9 @@
         <div class="section-suggestion">
 
           <!-- comment -->
-          <div class="m-bottom-25" [id]="'project-title-href-comment'">
+          <div class="m-bottom-25"
+               *ngIf="showComment['title']"
+               [id]="'project-title-href-comment'">
             <div class="d-flex align-center">
               <div (click)="onToggleComment($event, 'title')" class="icon-container is-sm is-overlay m-right-1">
                 <i
@@ -302,7 +329,9 @@
           <!-- /comment -->
 
           <!-- suggestion -->
-          <div [id]="'project-title-href-suggestion'">
+          <div
+            *ngIf="showSuggestion['title']"
+            [id]="'project-title-href-suggestion'">
             <div class="d-flex align-center">
               <div
                 (click)="onToggleSuggestion($event, 'title')"
@@ -341,7 +370,8 @@
 
     <!-- section summary -->
     <section style="animation-duration: 220ms" class="animate-slide slide-down has-border section-wrapper">
-      <div class="section-body">
+      <div class="section-body"
+           [ngClass]="{'flex-d-column': !showComment['summary'] && !showSuggestion['summary']}">
 
         <!-- content -->
         <div class="section-content">
@@ -370,11 +400,23 @@
               </button>
               <!-- /edit-preview button -->
 
-<!--              <div class="label is-primary is-sm tooltip m-left-auto"-->
-<!--                   data-tooltip="comment & suggestion"-->
-<!--                   style="cursor: pointer"-->
-<!--                   (click)="onToggleCommentSuggestion($event, 'summary')">UMI-->
-<!--              </div>-->
+              <div class="d-flex justify-start align-center m-left-auto">
+                <a class="button is-link is-xs p-1 m-no" style="min-width: unset"
+                        (click)="onShowComment($event,  'summary')"
+                        [ngClass]="{'is-draft': !showComment['summary'],
+                        'is-primary': showComment['summary']}">Comment</a>
+
+                <a class="button is-link is-xs m-left-15 p-1 m-no" style="min-width: unset"
+                        (click)="onShowSuggestion($event,  'summary')"
+                        [ngClass]="{'is-draft': !showSuggestion['summary'],
+                        'is-primary': showSuggestion['summary']}">Suggestion</a>
+              </div>
+
+              <!--              <div class="label is-primary is-sm tooltip m-left-auto"-->
+              <!--                   data-tooltip="comment & suggestion"-->
+              <!--                   style="cursor: pointer"-->
+              <!--                   (click)="onToggleCommentSuggestion($event, 'summary')">UMI-->
+              <!--              </div>-->
             </div>
 
           </div>
@@ -405,7 +447,9 @@
         <div class="section-suggestion">
 
           <!-- comment -->
-          <div class="m-bottom-25" [id]="'project-summary-href-comment'">
+          <div class="m-bottom-25"
+               *ngIf="showComment['summary']"
+               [id]="'project-summary-href-comment'">
             <div class="d-flex align-center">
               <div
                 (click)="onToggleComment($event, 'summary')"
@@ -433,7 +477,8 @@
           <!-- /comment -->
 
           <!-- suggestion -->
-          <div [id]="'project-summary-href-suggestion'">
+          <div [id]="'project-summary-href-suggestion'"
+          *ngIf="showSuggestion['summary']">
             <div class="d-flex align-center">
               <div
                 (click)="onToggleSuggestion($event, 'summary')"
