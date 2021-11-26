@@ -7,7 +7,6 @@ import { CookieModule, CookieService } from 'ngx-cookie';
 import { SimpleNotificationsModule } from 'angular2-notifications';
 import { TranslateModule, TranslateLoader, TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
-import { QuicklinkModule } from 'ngx-quicklink';
 
 // Modules/Components
 import { AppRoutingModule } from './app-routing.module';
@@ -32,7 +31,6 @@ import { SessionInterceptor } from './interceptors/session.interceptor';
     SimpleNotificationsModule.forRoot(),
     CookieModule.forRoot(),
     SpinnerLoaderModule,
-    QuicklinkModule,
     BrowserModule.withServerTransition({
       appId: 'umi-application-front'
     }),
