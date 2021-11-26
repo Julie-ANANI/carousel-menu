@@ -76,7 +76,7 @@
               "optimization": true,
               "outputHashing": "all",
               "extractCss": true,
-              "namedChunks": false,
+              "namedChunks": true,
               "aot": true,
               "extractLicenses": true,
               "vendorChunk": false,
@@ -97,7 +97,7 @@
               "optimization": true,
               "outputHashing": "all",
               "extractCss": true,
-              "namedChunks": false,
+              "namedChunks": true,
               "aot": true,
               "extractLicenses": true,
               "vendorChunk": false,
@@ -133,10 +133,6 @@
           },
           "configurations": {
             "dev": {
-              "sourceMap": true,
-              "outputHashing": "media",
-              "optimization": true,
-              "namedChunks": false,
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
@@ -153,10 +149,6 @@
               ]
             },
             "production": {
-              "sourceMap": false,
-              "outputHashing": "media",
-              "optimization": true,
-              "namedChunks": false,
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
