@@ -7,7 +7,7 @@ import { AuthService } from './services/auth/auth.service';
 import { TranslateNotificationsService } from './services/notifications/notifications.service';
 import { MouseService } from './services/mouse/mouse.service';
 import { SocketService } from './services/socket/socket.service';
-import {first, takeUntil} from 'rxjs/operators';
+import {takeUntil} from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import {HttpErrorResponse} from '@angular/common/http';
 
@@ -36,16 +36,14 @@ export class AppComponent implements OnInit, OnDestroy {
   private _ngUnsubscribe: Subject<any> = new Subject<any>();
 
   private static _setFavicon() {
-    const linkElement = document.createElement('link');
-    linkElement.setAttribute('id', 'theicon');
-    linkElement.setAttribute('rel', 'icon');
-    linkElement.setAttribute('type', 'image/x-icon');
     if (environment.domain !== 'umi' && environment.domain !== 'dynergie') {
+      const linkElement = document.createElement('link');
+      linkElement.setAttribute('id', 'theicon');
+      linkElement.setAttribute('rel', 'icon');
+      linkElement.setAttribute('type', 'image/x-icon');
       linkElement.setAttribute('href', 'https://res.cloudinary.com/umi/image/upload/app/favicon-wl.ico');
-    } else {
-      linkElement.setAttribute('href', 'https://res.cloudinary.com/umi/image/upload/cropped-favicon-1-192x192_cwgv3h.png');
+      document.head.appendChild(linkElement);
     }
-    document.head.appendChild( linkElement );
   }
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
@@ -55,9 +53,7 @@ export class AppComponent implements OnInit, OnDestroy {
               private _socketService: SocketService,
               private _translateNotificationsService: TranslateNotificationsService) {
     initTranslation(this._translateService);
-  }
 
-  ngOnInit(): void {
     if (isPlatformServer(this._platformId)) {
       console.log('New connection has been made with the front.');
     }
@@ -65,6 +61,11 @@ export class AppComponent implements OnInit, OnDestroy {
     if (isPlatformBrowser(this._platformId)) {
       AppComponent._setFavicon();
       this._initializeSession();
+    }
+  }
+
+  ngOnInit(): void {
+    if (isPlatformBrowser(this._platformId)) {
       this._socketEvent();
       this._mouseEvent();
     }
@@ -83,7 +84,7 @@ export class AppComponent implements OnInit, OnDestroy {
    */
   private _initializeSession() {
     if (!this._authService.user) {
-      this._authService.initializeSession().pipe(first()).subscribe((_) => {
+      this._authService.initializeSession().pipe(takeUntil(this._ngUnsubscribe)).subscribe((_) => {
         console.log('The application has been started.');
       }, () => {
         this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH');

@@ -11,7 +11,10 @@ const userRoutes: Routes = [
     path: '',
     component: UserComponent,
     children: [
-      { path: '', loadChildren: './client/client.module#ClientModule' },
+      {
+        path: '',
+        loadChildren: () => import('./client/client.module').then(m => m.ClientModule)
+      },
       { path: 'admin', loadChildren: './admin/admin.module#AdminModule' },
       {
         path: 'projects/:projectId/print/executive-report',

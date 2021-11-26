@@ -11,8 +11,11 @@ import {QuicklinkStrategy} from 'ngx-quicklink';
 
 const appRoutes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'user' },
+  {
+    path: 'user',
+    loadChildren: () => import('./modules/user/user.module').then(m => m.UserModule)
+  },
   { path: 'login', canActivate: [NonAuthGuard], loadChildren: './modules/common/login/login.module#LoginModule' },
-  { path: 'user', loadChildren: './modules/user/user.module#UserModule' },
   {
     path: 'register',
     canActivate: [NonAuthGuard],
