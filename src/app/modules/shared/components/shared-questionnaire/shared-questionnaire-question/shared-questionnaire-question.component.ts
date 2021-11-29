@@ -1,4 +1,4 @@
-import {Component, EventEmitter, HostListener, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {picto, Picto} from '../../../../../models/static-data/picto';
 import {
   MissionQuestion,
@@ -8,7 +8,6 @@ import {
   OptionEntry
 } from '../../../../../models/mission';
 import {MissionQuestionService} from '../../../../../services/mission/mission-question.service';
-import {CommonService} from '../../../../../services/common/common.service';
 import {TranslateService} from '@ngx-translate/core';
 import {RolesFrontService} from '../../../../../services/roles/roles-front.service';
 
@@ -95,16 +94,6 @@ export class SharedQuestionnaireQuestionComponent implements OnInit {
   private _picto: Picto = picto;
 
   private _questionType = '';
-
-  @HostListener('keydown', ['$event'])
-  onKeyDown(_event: KeyboardEvent) {
-    const textarea = (_event.target as HTMLTextAreaElement);
-    if (!textarea || (textarea.nodeName !== 'TEXTAREA') || (textarea.classList && !textarea.classList.contains('auto-expand'))) {
-      return;
-    }
-    CommonService.calcTextareaHeight(textarea, _event);
-  }
-
 
   constructor(private _missionQuestionService: MissionQuestionService,
               private _rolesFrontService: RolesFrontService,

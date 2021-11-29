@@ -239,12 +239,12 @@ question.isTagged && isEssential? 'Essential questions are required \n to ensure
           </ng-template>
           <textarea
             #textAreaElement
+            appTextareaAutoResize
             (change)="onChangeQuestionEntry(textAreaElement.value, lang, 'objective')"
             *ngIf="canAccess(['edit', 'objective']); else showObjective"
             [ngModel]="questionEntry(lang).objective || 'NA'"
             [id]="'question-objective-'+lang"
-            [ngStyle]="{'minHeight': textAreaElement.scrollHeight + 'px'}"
-            class="form-input auto-expand"
+            class="form-input"
             type="text">
           </textarea>
         </div>
@@ -258,12 +258,12 @@ question.isTagged && isEssential? 'Essential questions are required \n to ensure
           </ng-template>
           <textarea
             #textAreaElement
+            appTextareaAutoResize
             (change)="onChangeQuestionEntry(textAreaElement.value, lang, 'title')"
             *ngIf="canAccess(['edit', 'title']); else showTitle"
             [ngModel]="questionEntry(lang).title || 'NA'"
             [id]="'question-title-'+lang"
-            [ngStyle]="{'minHeight': textAreaElement.scrollHeight + 'px'}"
-            class="form-input auto-expand"
+            class="form-input"
             type="text">
           </textarea>
         </div>
@@ -276,13 +276,13 @@ question.isTagged && isEssential? 'Essential questions are required \n to ensure
             <p class="text-sm">{{ questionEntry(lang).subtitle || 'NA' }}</p>
           </ng-template>
           <textarea
+            appTextareaAutoResize
             #textAreaElement
             (change)="onChangeQuestionEntry(textAreaElement.value, lang, 'subtitle')"
             *ngIf="canAccess(['edit', 'subtitle']); else showSubtitle"
             [ngModel]="questionEntry(lang).subtitle || 'NA'"
             [id]="'question-subtitle-'+lang"
-            [ngStyle]="{'minHeight': textAreaElement.scrollHeight + 'px'}"
-            class="form-input auto-expand"
+            class="form-input"
             type="text">
           </textarea>
         </div>
@@ -296,12 +296,12 @@ question.isTagged && isEssential? 'Essential questions are required \n to ensure
           </ng-template>
           <textarea
             #textAreaElement
+            appTextareaAutoResize
             (change)="onChangeQuestionEntry(textAreaElement.value, lang, 'label')"
             *ngIf="isEditable || canAccess(['edit', 'label']); else showLabel"
             [ngModel]="questionEntry(lang).label || 'NA'"
             [id]="'question-label-'+lang"
-            [ngStyle]="{'minHeight': textAreaElement.scrollHeight + 'px'}"
-            class="form-input auto-expand"
+            class="form-input"
             type="text">
           </textarea>
         </div>
@@ -319,7 +319,6 @@ question.isTagged && isEssential? 'Essential questions are required \n to ensure
             *ngIf="isEditable || canAccess(['edit', 'instruction']); else showInstruction"
             [id]="'question-instruction-'+lang"
             [ngModel]="questionEntry(lang).instruction || ''"
-            [ngStyle]="{'minHeight': textAreaElement.scrollHeight + 'px'}"
             class="form-input"
             type="text">
           </textarea>
@@ -367,11 +366,11 @@ question.isTagged && isEssential? 'Essential questions are required \n to ensure
               <!-- input -->
               <textarea
                 #textAreaElement
+                appTextareaAutoResize
                 (change)="onChangeQuestionOptionEntry(textAreaElement.value, lang, optionIndex)"
                 *ngIf="isEditable || canAccess(['edit', 'options', 'label']); else showOptionLabel"
                 [ngModel]="optionEntry(option, lang).label || 'NA'"
                 [id]="'option-label-'+lang"
-                [ngStyle]="{'minHeight': textAreaElement.scrollHeight + 'px'}"
                 class="form-input"
                 type="text">
               </textarea>

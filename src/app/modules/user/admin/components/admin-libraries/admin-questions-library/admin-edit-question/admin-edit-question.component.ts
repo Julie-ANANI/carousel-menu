@@ -1,4 +1,4 @@
-import {Component, HostListener, Inject, OnInit, PLATFORM_ID} from '@angular/core';
+import {Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
 import {
   MissionQuestion,
   MissionQuestionEntry,
@@ -17,7 +17,6 @@ import {RolesFrontService} from '../../../../../../../services/roles/roles-front
 import {picto, Picto} from '../../../../../../../models/static-data/picto';
 import {TranslateService} from '@ngx-translate/core';
 import {TranslateTitleService} from '../../../../../../../services/title/title.service';
-import {CommonService} from '../../../../../../../services/common/common.service';
 import {HttpErrorResponse} from '@angular/common/http';
 import { Config } from '@umius/umi-common-component/models';
 interface ConfirmUpdate {
@@ -119,20 +118,6 @@ export class AdminEditQuestionComponent implements OnInit {
 
   private _jsonParse() {
     this._questions = JSON.parse(JSON.stringify(this._questions));
-  }
-
-  /**
-   * auto expand the height of the textarea based on the content length.
-   *
-   * @param _event
-   */
-  @HostListener('keydown', ['$event'])
-  onKeyDown(_event: KeyboardEvent) {
-    const textarea = (_event.target as HTMLTextAreaElement);
-    if (!textarea || (textarea.nodeName !== 'TEXTAREA') || (textarea.classList && !textarea.classList.contains('auto-expand'))) {
-      return;
-    }
-    CommonService.calcTextareaHeight(textarea, _event);
   }
 
   /**

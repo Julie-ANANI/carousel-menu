@@ -1,10 +1,9 @@
-import {Component, HostListener, Input} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {PresetFrontService} from '../../../../../services/preset/preset-front.service';
 import {Question, QuestionType} from '../../../../../models/question';
 import {picto, Picto} from '../../../../../models/static-data/picto';
 import {InnovationFrontService} from '../../../../../services/innovation/innovation-front.service';
-import {CommonService} from '../../../../../services/common/common.service';
 import {replaceNumberRegex} from '../../../../../utils/regex';
 
 @Component({
@@ -70,15 +69,6 @@ export class SharedPresetQuestionComponent {
   constructor(private _presetFrontService: PresetFrontService,
               private _innovationFrontService: InnovationFrontService,
               private _translateService: TranslateService) {
-  }
-
-  @HostListener('keydown', ['$event'])
-  onKeyDown(_event: KeyboardEvent) {
-    const textarea = (_event.target as HTMLTextAreaElement);
-    if (!textarea || (textarea.nodeName !== 'TEXTAREA') || (textarea.classList && !textarea.classList.contains('auto-expand'))) {
-      return;
-    }
-    CommonService.calcTextareaHeight(textarea, _event);
   }
 
   public onChangeMaxOptions(value: number) {

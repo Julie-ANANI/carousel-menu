@@ -199,12 +199,12 @@
           <p *ngIf="!isEditable" class="text-sm">{{ question.label[lang] || 'NA' }}</p>
           <textarea
             #textAreaElement
+            appTextareaAutoResize
             (ngModelChange)="notifyChanges()"
             *ngIf="isEditable"
             [(ngModel)]="question.label[lang]"
             [id]="'question-label-'+lang"
-            [ngStyle]="{'minHeight': textAreaElement.scrollHeight + 'px'}"
-            class="form-input auto-expand"
+            class="form-input"
             type="text">
           </textarea>
         </div>
