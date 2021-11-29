@@ -99,29 +99,11 @@
         padding: 10px;
       }
 
-    /*  #textareaLikertScale{
-        font-size: 13px;
-        min-height: 60px;
-        padding: 10px;
-        color: #B0261B;
-      }
-*/
-  /*  optionlabel {
-        margin: auto;
-        display: flex;
-        flex-wrap: nowrap !important;
-      }*/
-
-
-      .option-nowrapper {
-        display: flex;
-        flex-wrap: nowrap;
-
-
-      /*.options-wrapper {
+      .options-wrapper {
         display: flex;
         flex-direction: column;
-        overflow-x: auto;*/
+        overflow-x: auto;
+        margin: auto;
 
         .card {
           flex: 1;
@@ -145,12 +127,11 @@
           margin-right: -20px;
 
         &.has-single-option-nowrap {
-            flex-wrap: nowrap;
-            color : red;
+          flex-wrap: nowrap;
           }
 
           .card {
-            min-width: 240px;
+            min-width: 100px;
             max-width: calc(25% - 20px);
             margin-right: 20px;
           }
@@ -170,6 +151,7 @@
 
         textarea, .option, .options-wrapper .card {
           max-width: 90%;
+          background: #2fbbf5;
         }
 
         .options-wrapper .card textarea .option {

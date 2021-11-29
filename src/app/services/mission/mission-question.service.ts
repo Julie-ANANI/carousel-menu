@@ -75,10 +75,12 @@ export class MissionQuestionService {
     return this._sectionsNames;
   }
 
-  /** it's file data JSON of Choice Likert Scale
-   * */
+  /**
+   * it's file data JSON of Choice Likert Scale
+   *
+   */
   dataOfChoiceLikertScale = optionLikert;
-  /* TODO test logic of select dynamique for likert*/
+
   get optionsNamesLikert(): Array<string> {
     return this.dataOfChoiceLikertScale;
   }
@@ -384,6 +386,7 @@ export class MissionQuestionService {
    */
   public configureQuestionOptions(question: MissionQuestion = <MissionQuestion>{})
     : MissionQuestion {
+
     const oldOptions = question.options;
     question.options = [];
 
@@ -393,6 +396,7 @@ export class MissionQuestionService {
         question.options.push(this.addOption(question, oldOptions));
       }
     }
+
 
     if (question.controlType === 'checkbox') {
       question.maxOptionsSelect = 4;
@@ -404,8 +408,6 @@ export class MissionQuestionService {
     }
 
     if (question.controlType === 'likert scale') {
- /*TODO DELETE CONSOLE LOG*/
-      console.table(this.dataOfChoiceLikertScale);
       const measureOptions = this.dataOfChoiceLikertScale[question.attitudeMeasure];
       for (let i = 0; i < measureOptions.length; i++) {
         question.options.push(this.addOptionLikert(question, measureOptions[i]));
@@ -422,6 +424,7 @@ export class MissionQuestionService {
    * @param oldOptions
    */
   public addOption(question: MissionQuestion = <MissionQuestion>{}, oldOptions?: any[]): MissionQuestionOption {
+
     if (question.controlType === 'radio' || question.controlType === 'checkbox'
       || question.controlType === 'stars' || question.controlType === 'ranking') {
       const id = question.options.length;
@@ -749,31 +752,20 @@ export class MissionQuestionService {
     return question;
   }
 
- /* /!**
+ /***
+   * update the value of the option entry with new value.
+   * @param newValue
+   * @param lang
+   * @param question
+   * @param optionIndex
+   * @param emitChanges /* /!**
    * update the value of the option entry with new value.
    * @param newValue
    * @param lang
    * @param question
    * @param optionIndex
    * @param emitChanges
-   *!/
-  public noChangeQuestionOptionEntry(label: string, lang: string, question: MissionQuestion,
-                                   optionIndex: number, emitChanges = true) {
-    if (question && question.options && question.options[optionIndex]) {
-      const option = question.options[optionIndex];
-      const index = option.entry.findIndex((_entry) => _entry.lang === lang);
-      if (index !== -1) {
-        option.entry[index].label = label;
-        if (emitChanges) {
-          this._emitTemplate();
-        }
-      }
-    }
-
-    return question;
-  }*/
-
-
+   */
   public changeQuestionOptionEntry(newValue: string, lang: string, question: MissionQuestion,
                                    optionIndex: number, emitChanges = true) {
     if (question && question.options && question.options[optionIndex]) {

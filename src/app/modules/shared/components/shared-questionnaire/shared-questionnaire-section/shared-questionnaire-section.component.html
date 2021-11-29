@@ -51,20 +51,6 @@
         <ng-container *ngIf="sectionsNames.length > 0; else types">
           <label class="m-right-20">
 
-            <!-- TODO : A décortiquer-->
-<!--            <select (change)="notifyChanges()" [(ngModel)]="section.identifier" class="form-select is-sm">-->
-<!--              <option *ngFor="let name of sectionsNames; let idx = index" [ngValue]="idx">{{ name }}</option>-->
-<!--              <option [ngValue]="'nothing'">Nothing</option>-->
-<!--            </select>-->
-
-            <!-- 1- écoute l'event pour checker si l'utilisateur à les accès-->
-            <!-- 2- le type change avant la fin de l'event (live), il selectionne le bon type qui est choisit par l'utilisateur-->
-            <!-- 3 il boucle sur les nom des section solution, issues etc-->
-            <!-- 4 l'index sert à ?, c'est probalement le nom de l'identifiant-->
-            <!--5 il prend la valeur de name qui change par rapport à la boucle-->
-            <!-- 6 indique une valeur en cas de bug-->
-
-
             <select (change)="notifyChanges()"
                     [(ngModel)]="section.identifier"
 
@@ -287,7 +273,7 @@
           <option value="scale">{{ 'COMMON.QUESTIONNAIRE_TYPE.scale' | translate }}</option>
           <option value="stars">{{ 'COMMON.QUESTIONNAIRE_TYPE.stars' | translate }}</option>
           <option value="ranking">{{ 'COMMON.QUESTIONNAIRE_TYPE.ranking' | translate }}</option>
-          <option value="likert-scale">{{ 'COMMON.QUESTIONNAIRE_TYPE.likert-scale' | translate }}</option>
+          <option value="likert-scale">{{ 'COMMON.QUESTIONNAIRE_TYPE.likert scale' | translate }}</option>
 
         </select>
       </div>

@@ -202,6 +202,7 @@ export class SharedQuestionnaireQuestionComponent implements OnInit {
    * @return type attitudeMeasure + fn configureQuestion
    * */
   public onChangeTypeLikertScale(type: AttitudeMeasureType) {
+    console.log('oups');
     this._question.attitudeMeasure = type;
     this._missionQuestionService.configureQuestion(this._question);
     this._emitValueToSave(['edit', 'type']);
@@ -230,13 +231,6 @@ export class SharedQuestionnaireQuestionComponent implements OnInit {
     this._missionQuestionService.changeQuestionOptionEntry(value, lang, this._question, optionIndex);
     this._emitValueToSave(['edit', 'options', 'label']);
   }
-
-  /**TODO : TEST FONCTION LIKERT
-   * */
-  /*public dontChangeQuestionEntry(label: string, lang: string, optionIndex: number){
-    this._missionQuestionService.noChangeQuestionOptionEntry(label, lang, this._question, optionIndex);
-    this._emitValueToSave(['options', 'lang']);
-  }*/
 
   public deleteOption(event: Event, index: number) {
     event.preventDefault();
@@ -294,7 +288,6 @@ export class SharedQuestionnaireQuestionComponent implements OnInit {
 
   }
 
-  /* todo test logic of select dynamique for likert*/
   get optionsNamesLikert(): any {
     return this._missionQuestionService.optionsNamesLikert;
   }

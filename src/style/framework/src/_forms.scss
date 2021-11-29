@@ -602,6 +602,7 @@ input {
 
 }
 
+
 .form-input {
 
   &[readonly] {
@@ -613,18 +614,6 @@ input {
   }
 
 }
-
-.form-input-likert {
-
-  &[readonly] {
-    text-align: center;
-    align-content: center;
-    margin: auto;
-    padding: 20px;
-  }
-
-}
-
 
 // Form suggestion Todo remove this.
 .input-suggestion {

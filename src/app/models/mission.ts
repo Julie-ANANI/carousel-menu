@@ -127,11 +127,6 @@ export interface MissionQuestionOption {
    */
   positive?: boolean;
 
-  /**
-   * These are the different types of choices for the likert-scale question
-   * */
-  measureOptions?: string;
-
   entry: Array<OptionEntry>;
 }
 
