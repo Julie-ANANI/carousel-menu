@@ -1083,4 +1083,25 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
     this._ngUnsubscribe.next();
     this._ngUnsubscribe.complete();
   }
+
+  editMilestone(milestone: Milestone) {
+    console.log(milestone);
+    milestone.isEditing = true;
+  }
+
+  disableEditing(event: Event, milestone: Milestone) {
+    event.preventDefault();
+    milestone.isEditing = false;
+    console.log(milestone);
+    console.log(this.milestones);
+  }
+
+  validateRoadmap(event: KeyboardEvent, date: string, value: any, milestone: Milestone) {
+    if (event.keyCode === 13) {
+      console.log(date);
+      console.log(value);
+
+      console.log(milestone);
+    }
+  }
 }
