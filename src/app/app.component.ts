@@ -13,7 +13,6 @@ import {HttpErrorResponse} from '@angular/common/http';
 
 @Component({
   selector: 'app-root',
-  styleUrls: ['./app.component.scss'],
   templateUrl: './app.component.html'
 })
 
@@ -52,6 +51,9 @@ export class AppComponent implements OnInit, OnDestroy {
               private _mouseService: MouseService,
               private _socketService: SocketService,
               private _translateNotificationsService: TranslateNotificationsService) {
+  }
+
+  ngOnInit(): void {
     initTranslation(this._translateService);
 
     if (isPlatformServer(this._platformId)) {
@@ -61,11 +63,6 @@ export class AppComponent implements OnInit, OnDestroy {
     if (isPlatformBrowser(this._platformId)) {
       AppComponent._setFavicon();
       this._initializeSession();
-    }
-  }
-
-  ngOnInit(): void {
-    if (isPlatformBrowser(this._platformId)) {
       this._socketEvent();
       this._mouseEvent();
     }

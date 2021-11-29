@@ -10,47 +10,48 @@ const adminRoutes: Routes = [
       {
         path: 'projects',
         canActivate: [AdminAuthGuard],
-        loadChildren: './components/admin-projects/admin-projects.module#AdminProjectsModule'
+        loadChildren: () => import('./components/admin-projects/admin-projects.module').then(m => m.AdminProjectsModule)
       },
       {
         path: 'users',
         canActivate: [AdminAuthGuard],
-        loadChildren: './components/admin-users/admin-users.module#AdminUsersModule'
+        loadChildren: () => import('./components/admin-users/admin-users.module').then(m => m.AdminUsersModule)
       },
       {
         path: 'professionals',
         canActivate: [AdminAuthGuard],
-        loadChildren: './components/admin-professionals/admin-professionals.module#AdminProfessionalsModule'
+        loadChildren: () => import('./components/admin-professionals/admin-professionals.module')
+          .then(m => m.AdminProfessionalsModule)
       },
       {
         path: 'libraries',
         canActivate: [AdminAuthGuard],
-        loadChildren: './components/admin-libraries/admin-libraries.module#AdminLibrariesModule'
+        loadChildren: () => import('./components/admin-libraries/admin-libraries.module').then(m => m.AdminLibrariesModule)
       },
       {
         path: 'settings',
         canActivate: [AdminAuthGuard],
-        loadChildren: './components/admin-settings/admin-settings.module#AdminSettingsModule'
+        loadChildren: () => import('./components/admin-settings/admin-settings.module').then(m => m.AdminSettingsModule)
       },
       {
         path: 'search',
         canActivate: [AdminAuthGuard],
-        loadChildren: './components/admin-search/admin-search.module#AdminSearchModule'
+        loadChildren: () => import('./components/admin-search/admin-search.module').then(m => m.AdminSearchModule)
       },
       {
         path: 'tags',
         canActivateChild: [AdminAuthGuard],
-        loadChildren: './components/admin-tags/admin-tag.module#AdminTagModule'
+        loadChildren: () => import('./components/admin-tags/admin-tag.module').then(m => m.AdminTagModule)
       },
       {
         path: 'monitoring',
         canActivate: [AdminAuthGuard],
-        loadChildren: './components/admin-monitoring/admin-monitoring.module#AdminMonitoringModule'
+        loadChildren: () => import('./components/admin-monitoring/admin-monitoring.module').then(m => m.AdminMonitoringModule)
       },
       {
         path: 'community',
         canActivate: [AdminAuthGuard],
-        loadChildren: './components/admin-community/admin-community.module#AdminCommunityModule'
+        loadChildren: () => import('./components/admin-community/admin-community.module').then(m => m.AdminCommunityModule)
       }
     ]
   }

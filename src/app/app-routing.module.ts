@@ -14,28 +14,32 @@ const appRoutes: Routes = [
     path: 'user',
     loadChildren: () => import('./modules/user/user.module').then(m => m.UserModule)
   },
-  { path: 'login', canActivate: [NonAuthGuard], loadChildren: './modules/common/login/login.module#LoginModule' },
+  {
+    path: 'login',
+    canActivate: [NonAuthGuard],
+    loadChildren: () => import('./modules/common/login/login.module').then(m => m.LoginModule)
+  },
   {
     path: 'register',
     canActivate: [NonAuthGuard],
-    loadChildren: './modules/common/signup/signup.module#SignupModule'
+    loadChildren: () => import('./modules/common/signup/signup.module').then(m => m.SignupModule)
   },
   {
     path: 'welcome',
-    loadChildren: './modules/common/welcome/welcome.module#WelcomeModule'
+    loadChildren: () => import('./modules/common/welcome/welcome.module').then(m => m.WelcomeModule)
   },
   {
     path: 'discover',
-    loadChildren: './modules/public/discover/discover.module#DiscoverModule'
+    loadChildren: () => import('./modules/public/discover/discover.module').then(m => m.DiscoverModule)
   },
   {
     path: 'share',
     canActivate: [ShareSynthesisGuard],
-    loadChildren: './modules/public/share/share.module#ShareModule'
+    loadChildren: () => import('./modules/public/share/share.module').then(m => m.ShareModule)
   },
   {
     path: 'sample',
-    loadChildren: './modules/public/share/share.module#ShareModule'
+    loadChildren: () => import('./modules/public/share/share.module').then(m => m.ShareModule)
   },
   {
     path: 'demo',
@@ -45,16 +49,16 @@ const appRoutes: Routes = [
   {
     path: 'logout',
     canActivate: [AuthGuard],
-    loadChildren: './modules/common/logout/logout.module#LogoutModule'
+    loadChildren: () => import('./modules/common/logout/logout.module').then(m => m.LogoutModule)
   },
   {
     path: 'monitoring',
-    loadChildren: './modules/monitoring/monitoring.module#MonitoringModule'
+    loadChildren: () => import('./modules/monitoring/monitoring.module').then(m => m.MonitoringModule)
   },
   {
     path: 'not-authorized',
     canActivate: [AuthGuard],
-    loadChildren: './modules/errors/not-authorized/not-authorized.module#NotAuthorizedModule'
+    loadChildren: () => import('./modules/errors/not-authorized/not-authorized.module').then(m => m.NotAuthorizedModule)
   },
   { path: '**', component: NotFoundComponent },
 ];

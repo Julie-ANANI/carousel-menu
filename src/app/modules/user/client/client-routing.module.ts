@@ -32,7 +32,10 @@ const clientRoutes: Routes = [
         children: [
           { path: '', component: ProjectsListComponent, pathMatch: 'full' },
           { path: 'new', component: NewProjectComponent, pathMatch: 'full' },
-          { path:  ':projectId', loadChildren: './components/project/project.module#ProjectModule' }
+          {
+            path:  ':projectId',
+            loadChildren: () => import('./components/project/project.module').then(m => m.ProjectModule)
+          }
         ]
       },
     ]
