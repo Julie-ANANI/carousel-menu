@@ -120,6 +120,12 @@
                 background-color: $bg-white-color;
               }
 
+              input[type="date"]::-webkit-inner-spin-button,
+              input[type="date"]::-webkit-calendar-picker-indicator {
+                display: none;
+                -webkit-appearance: none;
+              }
+
               .divider-vert {
                 padding-top: 20px;
                 margin: -5px 0 0;
