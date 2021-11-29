@@ -31,10 +31,6 @@ import { ClientProject } from '../../../../../../models/client-project';
 import { UserService } from '../../../../../../services/user/user.service';
 import { Response } from '../../../../../../models/response';
 import { ClientProjectService } from '../../../../../../services/client-project/client-project.service';
-/*import {
-  Objective,
-  ObjectivesPrincipal,
-} from '../../../../../../models/static-data/missionObjectives';*/
 import { environment } from '../../../../../../../environments/environment';
 import { CommonService } from '../../../../../../services/common/common.service';
 import { SidebarInterface } from '../../../../../sidebars/interfaces/sidebar-interface';
@@ -129,6 +125,10 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
 
   private _canDeactivateFollowUp = false;
 
+  private _orginalMilestone: Array<Milestone> = [];
+
+  private _milestones: Array<Milestone> = [];
+
   constructor(
     @Inject(PLATFORM_ID) protected _platformId: Object,
     private _answerService: AnswerService,
@@ -180,6 +180,7 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
           if (!!innovation.mission) {
             this._mission = <Mission>innovation.mission;
             this._missionTeam = this._mission.team.map((user: User) => user.id);
+            this.initRoadmap();
           }
 
           if (!!innovation.clientProject) {
@@ -191,6 +192,11 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
           reject(error);
         });
     });
+  }
+
+  private initRoadmap(){
+    this._milestones = MissionFrontService.sortMilestoneDates(this._mission.milestoneDates);
+    this._orginalMilestone = JSON.parse(JSON.stringify(this._milestones));
   }
 
   private _getValidAnswers() {
@@ -909,15 +915,10 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
       code: '',
       comment: ''
     };
-
-    this._missionService.addMilestone(this._mission._id, milestone).pipe(first()).subscribe(res => {
-      this._mission.milestoneDates.push(milestone);
-      this._milestoneForm.reset();
-      this._translateNotificationsService.success('Success', 'Add a milestone in mission');
-    }, (err: HttpErrorResponse) => {
-      this._translateNotificationsService.error('Project Error...', ErrorFrontService.adminErrorMessage(err));
-      console.error(err);
-    });
+    this._milestones.push(milestone);
+    this._mission.milestoneDates = this._milestones;
+    this.initRoadmap();
+    this._saveMission(this._mission);
   }
 
 
@@ -945,6 +946,42 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
     if (this.quizLink) {
       window.open(this.quizLink, '_blank');
     }
+  }
+
+  editMilestone(milestone: Milestone, type: string) {
+    milestone['edit' + type] = true;
+  }
+
+  disableEditing(event: Event, milestone: Milestone, type: string) {
+    event.preventDefault();
+    milestone['edit' + type] = false;
+    this._milestones = JSON.parse(JSON.stringify(this._orginalMilestone));
+  }
+
+  validateRoadmap(event: KeyboardEvent, milestone: Milestone, type: string) {
+    event.preventDefault();
+    if (event.keyCode === 13) {
+      if (milestone.name && milestone.dueDate) {
+        this._mission.milestoneDates = this._milestones;
+        this.initRoadmap();
+        this._saveMission(this._mission, 'The roadmap has been updated.');
+      } else {
+        this._milestones = JSON.parse(JSON.stringify(this._orginalMilestone));
+        this._translateNotificationsService.error('Input Error...', 'Invalide roadmap');
+      }
+      milestone['edit' + type] = false;
+    }
+  }
+
+  dueDateOnChange(event: any, milestone: Milestone) {
+    milestone.dueDate = new Date(event);
+  }
+
+  removeMilestone(event: Event, i: number) {
+    this._milestones =  this._milestones.filter((milestone, index )=> index !== i);
+    this._mission.milestoneDates = this._milestones;
+    this.initRoadmap();
+    this._saveMission(this._mission, 'The roadmap has been deleted.');
   }
 
   get quizLink(): string {
@@ -1036,7 +1073,7 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
   }
 
   get milestones(): Array<Milestone> {
-    return MissionFrontService.sortMilestoneDates(this._mission.milestoneDates);
+    return this._milestones;
   }
 
   get isLoading(): boolean {
@@ -1082,26 +1119,5 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this._ngUnsubscribe.next();
     this._ngUnsubscribe.complete();
-  }
-
-  editMilestone(milestone: Milestone) {
-    console.log(milestone);
-    milestone.isEditing = true;
-  }
-
-  disableEditing(event: Event, milestone: Milestone) {
-    event.preventDefault();
-    milestone.isEditing = false;
-    console.log(milestone);
-    console.log(this.milestones);
-  }
-
-  validateRoadmap(event: KeyboardEvent, date: string, value: any, milestone: Milestone) {
-    if (event.keyCode === 13) {
-      console.log(date);
-      console.log(value);
-
-      console.log(milestone);
-    }
   }
 }

@@ -361,7 +361,7 @@
 
               <label>Roadmap</label>
 
-              <div class="d-flex flex-d-column" style="width: 300px">
+              <div class="d-flex flex-d-column" style="width: 380px">
                 <div class="edit-wrapper">
                   <ul *ngIf="mission.milestoneDates && mission.milestoneDates.length" class="roadmap-wrapper w-full">
                     <li *ngIf="mission.milestoneDates.length > 1" class="active">
@@ -385,33 +385,41 @@
                           class="divider-vert">
                         </span>
                       </span>
-                        <ng-container
-                          *ngIf="!milestone.isEditing; else editRoadmap">
-                          <span (click)="editMilestone(milestone)">
-                            {{ milestone.dueDate | date:dateFormat }} - {{ milestone.name }}
+                        <ng-container>
+                          <span *ngIf="!milestone['editDueDate']; else editDueDate"
+                                (click)="editMilestone(milestone, 'DueDate')">
+                            {{ milestone.dueDate | date:dateFormat }}
                           </span>
+                          &nbsp; - &nbsp;
+                          <span *ngIf="!milestone['editName']; else editName"
+                                (click)="editMilestone(milestone, 'Name')">
+                            {{ milestone.name }}
+                          </span>
+                          <button
+                            *ngIf="milestone['editName'] || milestone['editDueDate']"
+                            style="height: 25px; width: 25px; margin-left: auto"
+                            (click)="removeMilestone($event, i)" class="button is-action is-danger is-circled is-sm">
+                            <i class="fas fa-trash-alt"></i>
+                          </button>
                         </ng-container>
-                        <ng-template #editRoadmap>
-                          <div class="d-flex">
-                            <div class="form-group">
-                              <input
-                                class="form-input is-xs" style="height: 25px"
-                                (keyup)="validateRoadmap($event, 'date',  $event.target.value, milestone)"
-                                [ngModel]="milestone.dueDate | date:'yyyy-MM-dd'"
-                                type="date">
-                            </div>
-                            <div class="form-group">
-                              <input
-                                style="height: 25px"
-                                (keyup)="validateRoadmap($event, 'name',  $event.target.value, milestone)"
-                                class="form-input is-xs"
-                                type="text" [ngModel]="milestone.name">
-                            </div>
-                            <button
-                              (click)="disableEditing($event, milestone)"
-                              style="height: 25px"
-                              class="button is-danger is-circled is-xs"><i class="fas fa-times"></i>
-                            </button>
+                        <ng-template #editDueDate>
+                          <div class="form-group" *ngIf="milestone['editDueDate']">
+                            <input
+                              class="form-input is-xs" style="height: 25px"
+                              (focusout)="disableEditing($event, milestone, 'DueDate')"
+                              (keyup)="validateRoadmap($event, milestone, 'DueDate')"
+                              [ngModel]="milestone.dueDate | date:'yyyy-MM-dd'"
+                              (ngModelChange)="dueDateOnChange($event, milestone)"
+                              type="date">
+                          </div>
+                        </ng-template>
+                        <ng-template #editName>
+                          <div class="form-group" *ngIf="milestone['editName']">
+                            <input
+                              (focusout)="disableEditing($event, milestone, 'Name')"                              style="height: 25px"
+                              class="form-input is-xs"
+                              (keyup)="validateRoadmap($event, milestone, 'Name')"
+                              type="text" [(ngModel)]="milestone.name">
                           </div>
                         </ng-template>
                       </li>

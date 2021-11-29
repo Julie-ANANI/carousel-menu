@@ -264,7 +264,7 @@ export interface  Milestone {
  code: string;
  dueDate: Date;
  comment?: string;
- isEditing?: boolean;
+ [property: string]: any;
 }
 
 
