@@ -68,7 +68,8 @@ app.use(compression());
 
 // All regular routes use the Universal engine
 app.get('*', (req, res) => {
-  res.render('index', {
+  res.sendFile(join(DIST_FOLDER, 'browser/index.html'));
+  /*res.render('index', {
     req: req,
     res: res,
     providers: [
@@ -86,7 +87,7 @@ app.get('*', (req, res) => {
       res.send('An error occurred ' + err.message);
     }
     res.send(html);
-  });
+  });*/
 });
 
 // Start up the Node server
