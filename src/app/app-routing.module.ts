@@ -7,7 +7,6 @@ import { AdHocAuthGuard } from './guards/adhoc-auth-guard.service';
 import { ShareSynthesisGuard } from './guards/share-synthesis-guard.service';
 import { NotFoundComponent } from './modules/errors/not-found/not-found.component';
 import { demoRoutes } from './modules/demo/demo-routing.module';
-import {QuicklinkStrategy} from 'ngx-quicklink';
 
 const appRoutes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'user' },
@@ -15,56 +14,51 @@ const appRoutes: Routes = [
     path: 'user',
     loadChildren: () => import('./modules/user/user.module').then(m => m.UserModule)
   },
-  { path: 'login', canActivate: [NonAuthGuard], loadChildren: './modules/common/login/login.module#LoginModule' },
+  {
+    path: 'login',
+    canActivate: [NonAuthGuard],
+    loadChildren: () => import('./modules/common/login/login.module').then(m => m.LoginModule)
+  },
   {
     path: 'register',
     canActivate: [NonAuthGuard],
-    loadChildren: './modules/common/signup/signup.module#SignupModule',
-    data: {preload: false}
+    loadChildren: () => import('./modules/common/signup/signup.module').then(m => m.SignupModule)
   },
   {
     path: 'welcome',
-    loadChildren: './modules/common/welcome/welcome.module#WelcomeModule',
-    data: {preload: false}
+    loadChildren: () => import('./modules/common/welcome/welcome.module').then(m => m.WelcomeModule)
   },
   {
     path: 'discover',
-    loadChildren: './modules/public/discover/discover.module#DiscoverModule',
-    data: {preload: false}
+    loadChildren: () => import('./modules/public/discover/discover.module').then(m => m.DiscoverModule)
   },
   {
     path: 'share',
     canActivate: [ShareSynthesisGuard],
-    loadChildren: './modules/public/share/share.module#ShareModule',
-    data: {preload: false}
+    loadChildren: () => import('./modules/public/share/share.module').then(m => m.ShareModule)
   },
   {
     path: 'sample',
-    loadChildren: './modules/public/share/share.module#ShareModule',
-    data: {preload: false}
+    loadChildren: () => import('./modules/public/share/share.module').then(m => m.ShareModule)
   },
   {
     path: 'demo',
     canActivate: [AuthGuard, AdHocAuthGuard],
-    children: [ ...demoRoutes ],
-    data: {preload: false}
+    children: [ ...demoRoutes ]
   },
   {
     path: 'logout',
     canActivate: [AuthGuard],
-    loadChildren: './modules/common/logout/logout.module#LogoutModule',
-    data: {preload: false}
+    loadChildren: () => import('./modules/common/logout/logout.module').then(m => m.LogoutModule)
   },
   {
     path: 'monitoring',
-    loadChildren: './modules/monitoring/monitoring.module#MonitoringModule',
-    data: {preload: false}
+    loadChildren: () => import('./modules/monitoring/monitoring.module').then(m => m.MonitoringModule)
   },
   {
     path: 'not-authorized',
     canActivate: [AuthGuard],
-    loadChildren: './modules/errors/not-authorized/not-authorized.module#NotAuthorizedModule',
-    data: {preload: false}
+    loadChildren: () => import('./modules/errors/not-authorized/not-authorized.module').then(m => m.NotAuthorizedModule)
   },
   { path: '**', component: NotFoundComponent },
 ];
@@ -78,8 +72,7 @@ const config: ExtraOptions = {
   initialNavigation: 'enabled',
   scrollPositionRestoration: 'top',
   onSameUrlNavigation: 'reload',
-  anchorScrolling: 'enabled',
-  preloadingStrategy: QuicklinkStrategy
+  anchorScrolling: 'enabled'
 };
 
 @NgModule({

@@ -10,17 +10,13 @@ const routes: Routes = [
       { path: '', component: LoginComponent, pathMatch: 'full' },
       {
         path: 'forgetpassword',
-        loadChildren: '../../.././modules/common/login/components/forget-password/forget-password.module#ForgetPasswordModule',
-        data: {
-          preload: false
-        }
+        loadChildren: () => import('../../.././modules/common/login/components/forget-password/forget-password.module')
+          .then(m => m.ForgetPasswordModule)
       },
       {
         path: 'resetpassword/:tokenEmail',
-        loadChildren: '../../.././modules/common/login/components/reset-password/reset-password.module#ResetPasswordModule',
-        data: {
-          preload: false
-        }
+        loadChildren: () => import('../../.././modules/common/login/components/reset-password/reset-password.module')
+          .then(m => m.ResetPasswordModule)
       },
     ]
   }

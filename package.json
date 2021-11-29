@@ -62,7 +62,6 @@
     "ngx-file-drop": "^6.0.1",
     "ngx-page-scroll": "^6.0.0",
     "ngx-page-scroll-core": "^6.0.2",
-    "ngx-quicklink": "^0.2.7",
     "print-js": "^1.0.47",
     "rxjs": "^6.5.1",
     "rxjs-compat": "^6.5.3",
