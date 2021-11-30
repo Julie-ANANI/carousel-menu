@@ -281,7 +281,7 @@ export class MissionQuestionService {
           fr: 'Drag and drop pour classer les items'
         };
 
-      case 'likert scale':
+      case 'likert-scale':
         return {
           en: '',
           fr: ''
@@ -363,7 +363,6 @@ export class MissionQuestionService {
 
       question.maxOptionsSelect = null;
       question.canComment = true;
-      question = this.configureQuestionOptions(question);
 
       if (question.controlType === 'textarea') {
         question.canComment = false;
@@ -371,6 +370,12 @@ export class MissionQuestionService {
       if (question.controlType === 'ranking') {
         question.randomization = true;
       }
+      if (question.controlType === 'likert-scale') {
+        question.attitudeMeasure = question.attitudeMeasure || 'agreement';
+        delete question.options;
+      }
+
+      question = this.configureQuestionOptions(question);
 
       if (emitChanges) {
         this._emitTemplate();
@@ -407,7 +412,7 @@ export class MissionQuestionService {
       question = MissionQuestionService.setOptionsPositiveAnswer(question);
     }
 
-    if (question.controlType === 'likert scale') {
+    if (question.controlType === 'likert-scale') {
       const measureOptions = this.dataOfChoiceLikertScale[question.attitudeMeasure];
       for (let i = 0; i < measureOptions.length; i++) {
         question.options.push(this.addOptionLikert(question, measureOptions[i]));
@@ -459,7 +464,7 @@ export class MissionQuestionService {
    * @param measureOptions
    */
   public addOptionLikert(question: MissionQuestion = <MissionQuestion>{}, measureOptions: any): MissionQuestionOption {
-    if (question.controlType === 'likert scale') {
+    if (question.controlType === 'likert-scale') {
       const id = question.options.length;
       return {
         identifier: id.toString(),

@@ -202,7 +202,6 @@ export class SharedQuestionnaireQuestionComponent implements OnInit {
    * @return type attitudeMeasure + fn configureQuestion
    * */
   public onChangeTypeLikertScale(type: AttitudeMeasureType) {
-    console.log('oups');
     this._question.attitudeMeasure = type;
     this._missionQuestionService.configureQuestion(this._question);
     this._emitValueToSave(['edit', 'type']);

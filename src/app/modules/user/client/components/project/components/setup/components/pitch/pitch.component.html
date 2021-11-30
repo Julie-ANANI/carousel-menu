@@ -194,7 +194,7 @@
               </div>
               <div
                 *ngIf="!question['toggle'] && (question.controlType === 'checkbox' || question.controlType === 'radio'
-                || question.controlType === 'stars' || question.controlType === 'ranking' || question.controlType === 'likert scale')"
+                || question.controlType === 'stars' || question.controlType === 'ranking' || question.controlType === 'likert-scale')"
                 class="m-left-30 d-flex flex-wrap">
                 <div *ngFor="let option of question.options" class="label">
                   {{ questionOptionName(option) }}

@@ -514,7 +514,7 @@ export const COMMON = {
     'toggle': 'Toggle',
     'checkbox': 'Multiple choice',
     'ranking': 'Ranking',
-    'likert scale': 'Likert scale'
+    'likert-scale': 'Likert scale'
   },
 
   'LIKERT_TYPE': {

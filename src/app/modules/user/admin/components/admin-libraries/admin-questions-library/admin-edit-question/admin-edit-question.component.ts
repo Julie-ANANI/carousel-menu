@@ -1,5 +1,6 @@
 import {Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
 import {
+  AttitudeMeasureType,
   MissionQuestion,
   MissionQuestionEntry,
   MissionQuestionOption,
@@ -275,11 +276,13 @@ export class AdminEditQuestionComponent implements OnInit {
     });
   }
 
+
   /*public remove(event: Event) {
     event.preventDefault();
   }*/
 
-  private _notifyChanges() {
+
+  public notifyChanges() {
     if (this.canAccess(['edit']) && this._editMode) {
       this._toBeSaved = true;
     }
@@ -288,7 +291,17 @@ export class AdminEditQuestionComponent implements OnInit {
   public onChangeQuestionType(type: MissionQuestionType) {
     this._question.controlType = type;
     this._question = this._missionQuestionService.configureQuestion(this._question, false);
-    this._notifyChanges();
+    this.notifyChanges();
+  }
+
+  /** It's function for change ngModel : question.attitudeMeasure
+   * @param Type : AttitudeMeasureType
+   * @return type attitudeMeasure + fn configureQuestion
+   * */
+  public onChangeTypeLikertScale(type: AttitudeMeasureType) {
+    this._question.attitudeMeasure = type;
+    this._question = this._missionQuestionService.configureQuestion(this._question, false);
+    this.notifyChanges();
   }
 
   public onChangeIdentifier(identifier: string) {
@@ -296,7 +309,7 @@ export class AdminEditQuestionComponent implements OnInit {
     if (this._isTaggedQuestion) {
       this._question.controlType = this._missionQuestionService.getQuestionType(identifier);
     }
-    this._notifyChanges();
+    this.notifyChanges();
   }
 
   public updateValue(value: any, attr: string, index?: number) {
@@ -319,48 +332,52 @@ export class AdminEditQuestionComponent implements OnInit {
         break;
     }
 
-    this._notifyChanges();
+    this.notifyChanges();
   }
 
   public onChangeMaxOptions(value: number) {
     if (value !== null) {
       this._question = this._missionQuestionService.configureCheckbox(this._question, value);
-      this._notifyChanges();
+      this.notifyChanges();
     }
   }
 
   public onChangeQuestionEntry(value: string, lang: string, attr: string) {
     this._question = this._missionQuestionService.changeQuestionEntry(value, lang, this._question, attr, false);
-    this._notifyChanges();
+    this.notifyChanges();
   }
 
   public moveQuestionOption(event: Event, optionIndex: number, move: 1 | -1) {
     event.preventDefault();
     this._question = this._missionQuestionService.moveQuestionOption(this._question, optionIndex, move, false);
-    this._notifyChanges();
+    this.notifyChanges();
   }
 
   public onChangeQuestionOptionEntry(value: string, lang: string, optionIndex: number) {
     this._question = this._missionQuestionService.changeQuestionOptionEntry(value, lang, this._question, optionIndex, false);
-    this._notifyChanges();
+    this.notifyChanges();
   }
 
   public deleteOption(event: Event, index: number) {
     event.preventDefault();
     this._question = this._missionQuestionService.deleteOption(this._question, index, false);
-    this._notifyChanges();
+    this.notifyChanges();
   }
 
   public addNewOption(event: Event) {
     event.preventDefault();
     this._question = this._missionQuestionService.addNewOption(this._question, false);
-    this._notifyChanges();
+    this.notifyChanges();
   }
 
   public onChangeQuestion(event: string) {
     if (!this._toBeSaved) {
       this._question = this._questions.find((_question) => _question._id === event);
     }
+  }
+
+  get optionsNamesLikert(): any {
+    return this._missionQuestionService.optionsNamesLikert;
   }
 
   get questions(): Array<MissionQuestion> {

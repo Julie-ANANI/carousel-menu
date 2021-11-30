@@ -20,7 +20,6 @@
         <span *ngIf="!editMode || !isEditable" class="m-right-20">{{ questionLabel }}</span>
       </ng-container>
 
-      <!-- TODO :       create type for likert-->
       <ng-container *ngIf="isEditable && editMode && !isTaggedQuestion">
         <label class="m-right-20">
           <select
@@ -33,7 +32,7 @@
             <option value="scale">{{ 'PRESETS.QUESTION.TYPE.scale' | translate }}</option>
             <option value="stars">{{ 'PRESETS.QUESTION.TYPE.stars' | translate }}</option>
             <option value="ranking">{{ 'PRESETS.QUESTION.TYPE.ranking' | translate }}</option>
-            <option value="likert scale">{{ 'PRESETS.QUESTION.TYPE.likert-scale' | translate }}</option>
+            <option value="likert-scale">{{ 'PRESETS.QUESTION.TYPE.likert-scale' | translate }}</option>
           </select>
         </label>
       </ng-container>
