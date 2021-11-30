@@ -1,10 +1,7 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
+import {Component, Inject, OnDestroy, OnInit, PLATFORM_ID} from '@angular/core';
 import { AnswerService } from '../../../../../../../services/answer/answer.service';
-// import { InnovationService } from '../../../../../../../services/innovation/innovation.service';
 import { TranslateNotificationsService } from '../../../../../../../services/notifications/notifications.service';
 import { Answer } from '../../../../../../../models/answer';
-// import { Campaign } from '../../../../../../../models/campaign';
 import { Innovation } from '../../../../../../../models/innovation';
 import { SidebarInterface } from '../../../../../../sidebars/interfaces/sidebar-interface';
 import { first, takeUntil } from 'rxjs/operators';
@@ -13,6 +10,7 @@ import { Subject } from 'rxjs';
 import {HttpErrorResponse} from '@angular/common/http';
 import {ErrorFrontService} from '../../../../../../../services/error/error-front.service';
 import { Config, Table } from '@umius/umi-common-component/models';
+import {isPlatformBrowser} from '@angular/common';
 
 @Component({
   templateUrl: 'exploration.component.html',
@@ -20,6 +18,10 @@ import { Config, Table } from '@umius/umi-common-component/models';
 })
 
 export class ExplorationComponent implements OnInit, OnDestroy {
+
+  get isFetching(): boolean {
+    return this._isFetching;
+  }
 
   private _innovation: Innovation = <Innovation>{};
 
@@ -57,120 +59,9 @@ export class ExplorationComponent implements OnInit, OnDestroy {
 
   private _answers: Array<Answer> = [];
 
-  constructor(private translateService: TranslateService,
-              private answerService: AnswerService,
-              private _innovationFrontService: InnovationFrontService,
-              // private innovationService: InnovationService,
-              private translateNotificationsService: TranslateNotificationsService) {
-  }
+  private _isFetching = true;
 
-  ngOnInit() {
-    this._innovationFrontService.innovation().pipe(takeUntil(this._ngUnsubscribe)).subscribe((innovation) => {
-      this._innovation = innovation || <Innovation>{};
-      this._anonymousAnswers = this._innovation._metadata && this._innovation._metadata.campaign
-        && this._innovation._metadata.campaign.anonymous_answers;
-      if (this._innovation._id) {
-        this.loadAnswers();
-      }
-    });
-  }
-
-  loadAnswers() {
-    this.answerService.getInnovationValidAnswers(this._innovation._id, this._anonymousAnswers).pipe(first()).subscribe((response: any) => {
-      this._answers = response.answers || [];
-
-      this._answers.map((answer: Answer) => {
-        if (!answer.job) {
-          answer.job = answer.professional.jobTitle;
-        }
-        this.setCountryFlag(answer);
-        return answer;
-      });
-
-      if (this._anonymousAnswers) {
-        this._tableInfos = {
-          _selector: 'client-answer',
-          _content: response.answers,
-          _total: response.answers.length,
-          _clickIndex: 1,
-          _isLocal: true,
-          _isPaginable: true,
-          _columns: [
-            {_attrs: ['job'], _name: 'TABLE.HEADING.JOB_TITLE', _type: 'TEXT'},
-            {_attrs: ['created'], _name: 'TABLE.HEADING.CREATED', _type: 'DATE'},
-          ]
-        };
-      } else {
-        this._tableInfos = {
-          _selector: 'client-answer',
-          _content: response.answers,
-          _total: response.answers.length,
-          _clickIndex: 1,
-          _isLocal: true,
-          _isPaginable: true,
-          _columns: [
-            {_attrs: ['professional.firstName', 'professional.lastName'], _name: 'TABLE.HEADING.NAME', _type: 'TEXT'},
-            {_attrs: ['job'], _name: 'TABLE.HEADING.JOB_TITLE', _type: 'TEXT'},
-            {_attrs: ['country'], _name: 'TABLE.HEADING.COUNTRY', _type: 'COUNTRY'},
-            {_attrs: ['company.name'], _name: 'TABLE.HEADING.COMPANY', _type: 'TEXT'},
-            {_attrs: ['created'], _name: 'TABLE.HEADING.CREATED', _type: 'DATE'},
-          ]
-        };
-      }
-
-      this._countries = response.answers.reduce((acc: any, answer: any) => {
-        if (!!answer.country &&
-          !!answer.country.flag &&
-          acc.indexOf(answer.country.flag) === -1) {
-          acc.push(answer.country.flag);
-        }
-        return acc;
-      }, []);
-
-    }, (err: HttpErrorResponse) => {
-      this.translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
-      console.error(err);
-    });
-
-    /*this.innovationService.campaigns(this._innovation._id).pipe(first()).subscribe((results: any) => {
-      if (results && Array.isArray(results.result)) {
-        this._campaignsStats = results.result.reduce(function (acc: any, campaign: Campaign) {
-          if (campaign.stats) {
-            if (campaign.stats.campaign) {
-              acc.nbPros += (campaign.stats.campaign.nbProfessionals || 0);
-              acc.nbValidatedResp += (campaign.stats.campaign.nbValidatedResp || 0);
-            }
-            if (campaign.stats.mail) {
-              acc.nbProsSent += (campaign.stats.mail.totalPros || 0);
-              if (campaign.stats.mail.statuses) {
-                acc.nbProsOpened += (campaign.stats.mail.statuses.opened || 0);
-                acc.nbProsClicked += (campaign.stats.mail.statuses.clicked || 0);
-              }
-            }
-          }
-          return acc;
-        }, {nbPros: 0, nbProsSent: 0, nbProsOpened: 0, nbProsClicked: 0, nbValidatedResp: 0});
-      }
-    }, () => {
-      this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
-    });*/
-
-    this._questions = InnovationFrontService.questionsList(this._innovation);
-  }
-
-
-  onClickShow(answer: Answer) {
-    this._modalAnswer = answer;
-
-    this._sidebarValue = {
-      animate_state: this._sidebarValue.animate_state === 'active' ? 'inactive' : 'active',
-      title: 'SIDEBAR.TITLE.INSIGHT',
-      size: '726px'
-    };
-
-  }
-
-  setCountryFlag(answer: Answer) {
+  private static _setCountryFlag(answer: Answer) {
     if (!answer.country && answer.professional && answer.professional.country) {
       answer.country = {flag: answer.professional.country};
     }
@@ -179,8 +70,96 @@ export class ExplorationComponent implements OnInit, OnDestroy {
     }
   }
 
+  constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
+              private _answerService: AnswerService,
+              private _innovationFrontService: InnovationFrontService,
+              private _translateNotificationsService: TranslateNotificationsService) {
+  }
 
-  percentage(value1: number, value2: number): number {
+  ngOnInit() {
+    this._initTable();
+    this._innovationFrontService.innovation().pipe(takeUntil(this._ngUnsubscribe)).subscribe((innovation) => {
+      this._innovation = innovation || <Innovation>{};
+      this._getAnswers();
+      this._questions = InnovationFrontService.questionsList(this._innovation);
+      this._anonymousAnswers = this._innovation._metadata && this._innovation._metadata.campaign
+        && this._innovation._metadata.campaign.anonymous_answers;
+    });
+  }
+
+  private _getAnswers() {
+    if (isPlatformBrowser(this._platformId) && this._innovation._id) {
+      this._answerService.getInnovationValidAnswers(this._innovation._id, this._anonymousAnswers)
+        .pipe(first()).subscribe((response) => {
+          this._answers = response && response.answers.map((answer: Answer) => {
+            if (!answer.job) {
+              answer.job = answer.professional.jobTitle;
+            }
+            ExplorationComponent._setCountryFlag(answer);
+            return answer;
+          }) || [];
+
+          this._initTable(this._answers, this._answers.length);
+
+          this._countries = this._answers.reduce((acc: any, answer: any) => {
+            if (!!answer.country && !!answer.country.flag &&
+              acc.indexOf(answer.country.flag) === -1) {
+              acc.push(answer.country.flag);
+            }
+            return acc;
+            }, []);
+          this._isFetching = false;
+          }, (err: HttpErrorResponse) => {
+          this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+          this._isFetching = false;
+          console.error(err);
+        });
+    }
+  }
+
+  private _initTable(answers: Array<Answer> = [], total = -1) {
+    if (this._anonymousAnswers) {
+      this._tableInfos = {
+        _selector: 'client-answer',
+        _content: answers,
+        _total: total,
+        _clickIndex: 1,
+        _isLocal: true,
+        _isPaginable: true,
+        _columns: [
+          {_attrs: ['job'], _name: 'TABLE.HEADING.JOB_TITLE', _type: 'TEXT'},
+          {_attrs: ['created'], _name: 'TABLE.HEADING.CREATED', _type: 'DATE'},
+        ]
+      };
+    } else {
+      this._tableInfos = {
+        _selector: 'client-answer',
+        _content: answers,
+        _total: total,
+        _clickIndex: 1,
+        _isLocal: true,
+        _isPaginable: true,
+        _columns: [
+          {_attrs: ['professional.firstName', 'professional.lastName'], _name: 'TABLE.HEADING.NAME', _type: 'TEXT'},
+          {_attrs: ['job'], _name: 'TABLE.HEADING.JOB_TITLE', _type: 'TEXT'},
+          {_attrs: ['country'], _name: 'TABLE.HEADING.COUNTRY', _type: 'COUNTRY', _width: '150px'},
+          {_attrs: ['company.name'], _name: 'TABLE.HEADING.COMPANY', _type: 'TEXT'},
+          {_attrs: ['created'], _name: 'TABLE.HEADING.CREATED', _type: 'DATE'},
+        ]
+      };
+    }
+  }
+
+  public onClickShow(answer: Answer) {
+    this._modalAnswer = answer;
+    this._sidebarValue = {
+      animate_state: this._sidebarValue.animate_state === 'active' ? 'inactive' : 'active',
+      title: 'SIDEBAR.TITLE.INSIGHT',
+      size: '726px'
+    };
+  }
+
+  public percentage(value1: number, value2: number): number {
     if (value2 === 0 || value2 === undefined) {
       return 0;
     } else {
@@ -195,10 +174,6 @@ export class ExplorationComponent implements OnInit, OnDestroy {
 
   get countries() {
     return this._countries;
-  }
-
-  get dateFormat(): string {
-    return this.translateService.currentLang === 'fr' ? 'dd/MM/y' : 'y/MM/dd';
   }
 
   get modalAnswer() {
