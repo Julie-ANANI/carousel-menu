@@ -19,7 +19,6 @@ type modalType = 'NEW_SECTION' | 'DELETE_SECTION' | '';
 interface Toggle {
   title: boolean;
   summary: boolean;
-
   [property: string]: boolean;
 }
 
@@ -62,12 +61,6 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
   };
 
   private _showSuggestion: Toggle = {
-    title: false,
-    summary: false
-  };
-
-
-  private _toggleCommentSuggestion: Toggle = {
     title: false,
     summary: false
   };
@@ -139,48 +132,6 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
     return '';
   }
 
-  /**
-   public importTranslation(event: Event, model: CardSectionTypes, index?: number) {
-    const htmlScraper = new ScrapeHTMLTags();
-    event.preventDefault();
-    const from_card = this._innovation.innovationCards[this._activeCardIndex === 0 ? 1 : 0];
-    const _model = model.toLowerCase();
-    let _text = '';
-
-    if (model === 'TITLE' || model === 'SUMMARY') {
-      _text = htmlScraper.transform(from_card[_model]);
-    } else if (model === 'ISSUE' || model === 'SOLUTION' || model === 'CONTEXT' || model === 'OTHER') {
-      _text = htmlScraper.transform(<String>from_card.sections[index].content);
-    }
-
-    if (_text) {
-      this._translationService.translate(_text, this.activeInnovCard.lang).pipe(first()).subscribe((o: any) => {
-        switch (model) {
-
-          case 'TITLE':
-          case 'SUMMARY':
-            this.activeInnovCard[_model] = o.translation;
-            break;
-
-          case 'ISSUE':
-          case 'SOLUTION':
-          case 'CONTEXT':
-          case 'OTHER':
-            this.activeInnovCard.sections[index].content = o.translation;
-            break;
-
-        }
-        this.updateInnovation();
-      }, (err: HttpErrorResponse) => {
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
-        console.error(err);
-      });
-    } else {
-      this._translateNotificationsService.error('Error', 'The text is empty in another project language.');
-    }
-
-  }
-   */
   private _initToggle() {
     this._toggleComment = {
       title: !!(this.activeInnovCard.operatorComment && this.activeInnovCard.operatorComment.title.comment),
@@ -237,10 +188,6 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
       return !!etherpadId && !!_comment.sectionId ? (_comment.sectionId === etherpadId && sectionType === _comment.type)
         : (sectionType === _comment.type);
     });
-  }
-
-  public onToggleCommentSuggestion(event: Event, property: string) {
-    this._toggleCommentSuggestion[property] = !this._toggleCommentSuggestion[property];
   }
 
   public onToggleComment(event: Event, property: string) {
@@ -562,11 +509,6 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
   get selectedMedia(): string {
     return this._selectedMedia;
   }
-
-  get toggleCommentSuggestion(): Toggle {
-    return this._toggleCommentSuggestion;
-  }
-
 
   get showComment(): Toggle {
     return this._showComment;

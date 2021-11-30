@@ -315,31 +315,11 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
       ];
       return {
         Step: data[i].title,
-        // Sent: batch.stats[i].delivered + batch.stats[i].bounced,
-        // OpenedPred:
-        //   i < 3
-        //     ? (batch.predictions[i].opened * 100).toFixed(digit) + '%' || ''
-        //     : 0,
-        // OpenedReel:
-        //   ((batch.stats[i].opened / batch.size) * 100).toFixed(digit) + '%',
-        // ClickedPred:
-        //   i < 3
-        //     ? (batch.predictions[i].clicked * 100).toFixed(digit) + '%' || ''
-        //     : 0,
-        // ClickedReel:
-        //   ((batch.stats[i].clicked / batch.size) * 100).toFixed(digit) + '%',
-        // InsightsPred: i < 3 ? batch.predictions[i].insights : 0,
-        // InsightsReel: i < 3 ? batch.stats[i].insights : 0,
         Date: data[i].date,
         Time: data[i].time,
         Status: data[i].status,
       };
     };
-
-    // if (!batch.predictions || batch.predictions.length === 0) {
-    //   const reset = {opened: 0, clicked: 0, insights: 0};
-    //   batch.predictions = [reset, reset, reset];
-    // }
 
     let content: any[];
     if (this._campaign && this._campaign.type === 'COMMUNITY') {
