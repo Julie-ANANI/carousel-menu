@@ -70,6 +70,7 @@ export class ContactComponent implements OnInit, OnDestroy {
   get isFetching(): boolean {
     return this._isFetching;
   }
+
   get showFollowUp(): boolean {
     return this._showFollowUp;
   }
