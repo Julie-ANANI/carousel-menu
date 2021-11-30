@@ -156,7 +156,6 @@ export class SharedFollowUpClientComponent implements OnInit, OnDestroy {
               private _translateNotificationsService: TranslateNotificationsService) { }
 
   ngOnInit() {
-    this._initTable(this._answers, -1);
   }
 
   private _initFilter() {

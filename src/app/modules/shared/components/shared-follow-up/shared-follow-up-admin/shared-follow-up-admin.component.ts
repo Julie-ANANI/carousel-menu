@@ -102,7 +102,6 @@ export class SharedFollowUpAdminComponent implements OnInit {
               private _translateNotificationsService: TranslateNotificationsService) { }
 
   ngOnInit() {
-    this._initTable(this._answers, -1);
   }
 
   private _initFilter() {

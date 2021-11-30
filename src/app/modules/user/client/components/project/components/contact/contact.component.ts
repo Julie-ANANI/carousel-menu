@@ -8,11 +8,16 @@ import {TranslateService} from '@ngx-translate/core';
 import {isPlatformBrowser} from '@angular/common';
 import {AnswerService} from '../../../../../../../services/answer/answer.service';
 import {HttpErrorResponse} from '@angular/common/http';
+import {Answer} from '../../../../../../../models/answer';
 
 @Component({
   templateUrl: './contact.component.html',
 })
 export class ContactComponent implements OnInit, OnDestroy {
+
+  get validAnswers(): Array<Answer> {
+    return this._validAnswers;
+  }
 
   private _innovation: Innovation = <Innovation>{};
 
@@ -21,6 +26,8 @@ export class ContactComponent implements OnInit, OnDestroy {
   private _showFollowUp = false;
 
   private _isFetching = true;
+
+  private _validAnswers: Array<Answer> = [];
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _innovationFrontService: InnovationFrontService,
@@ -44,6 +51,7 @@ export class ContactComponent implements OnInit, OnDestroy {
     if (isPlatformBrowser(this._platformId) && this._innovation._id && !this._showFollowUp) {
       this._answerService.getInnovationValidAnswers(this._innovation._id).pipe(first()).subscribe((response) => {
         this._showFollowUp = !!(response && response.answers && response.answers.length);
+        this._validAnswers = response && response.answers || [];
         this._isFetching = false;
       }, (err: HttpErrorResponse) => {
         this._isFetching = false;

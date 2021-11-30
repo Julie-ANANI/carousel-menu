@@ -33,6 +33,11 @@ export class SharedFollowUpComponent implements OnInit {
   // ex: ['projects', 'project', 'followUp']
   @Input() accessPath: Array<string> = [];
 
+  /**
+   * get the innovation valid answers
+   */
+  @Input() answers: Array<Answer> = [];
+
   @Input() set project(value: Innovation) {
     if (value && value._id) {
       this._project = value;
@@ -42,8 +47,6 @@ export class SharedFollowUpComponent implements OnInit {
   private _project: Innovation = <Innovation>{};
 
   private _questions: Array<MissionQuestion | Question> = [];
-
-  private _answers: Array<Answer> = [];
 
   private _startContactProcess = false;
 
@@ -58,7 +61,7 @@ export class SharedFollowUpComponent implements OnInit {
     if (this._project && this._project._id) {
       this._project.followUpEmails = this._project.followUpEmails || {};
       this._questions = InnovationFrontService.questionsList(this._project);
-      this.getAnswers();
+      this._initValues();
     }
   }
 
@@ -75,57 +78,52 @@ export class SharedFollowUpComponent implements OnInit {
       this._answerService.getInnovationValidAnswers(this._project._id)
         .pipe(first())
         .subscribe((response) => {
-
-          this._answers = response && response.answers && response.answers.map((answer: Answer) => {
-            answer.followUp = answer.followUp || {};
-            return answer;
-          }) || [];
-
-          /*
-           * compute tag list globally
-           */
-          const tagsDict = response.answers.reduce(function (acc, answer) {
-            answer.tags.forEach((tag) => {
-              if (!acc[tag._id]) {
-                acc[tag._id] = tag;
-              }
-            });
-            return acc;
-          }, {} as { [id: string]: Tag });
-
-          this._tagFiltersService.tagsList = Object.keys(tagsDict).map((k) => tagsDict[k]);
-
-          /*
-           * compute tags lists for each questions of type textarea
-           */
-          this._questions.forEach((question) => {
-            const tags = ResponseService.tagsList(response.answers, question);
-            const identifier = (question.controlType === 'textarea') ? question.identifier : question.identifier + 'Comment';
-            this._tagFiltersService.setAnswerTags(identifier, tags);
-          });
-
+          this.answers = response && response.answers || [];
+          this._initValues();
         }, (err: HttpErrorResponse) => {
-          this._answers = [];
+          this.answers = [];
           this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
           console.error(err);
         });
     }
   }
 
+  private _initValues() {
+    this.answers = this.answers.map((answer: Answer) => {
+      answer.followUp = answer.followUp || {};
+      return answer;
+    }) || [];
+
+    /*
+     * compute tag list globally
+     */
+    const tagsDict = this.answers.reduce(function (acc, answer) {
+      answer.tags.forEach((tag) => {
+        if (!acc[tag._id]) {
+          acc[tag._id] = tag;
+        }
+      });
+      return acc;
+    }, {} as { [id: string]: Tag });
+
+    this._tagFiltersService.tagsList = Object.keys(tagsDict).map((k) => tagsDict[k]);
+
+    /*
+     * compute tags lists for each questions of type textarea
+     */
+    this._questions.forEach((question) => {
+      const tags = ResponseService.tagsList(this.answers, question);
+      const identifier = (question.controlType === 'textarea') ? question.identifier : question.identifier + 'Comment';
+      this._tagFiltersService.setAnswerTags(identifier, tags);
+    });
+  }
+
   get project(): Innovation {
     return this._project;
   }
 
-  get answers(): Array<Answer> {
-    return this._answers;
-  }
-
   get questions(): Array<any> {
     return this._questions;
-  }
-
-  set answers(value: Array<Answer>) {
-    this._answers = value;
   }
 
   get startContactProcess(): boolean {
