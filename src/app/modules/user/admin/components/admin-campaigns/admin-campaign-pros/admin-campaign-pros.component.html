@@ -1,3 +1,8 @@
+<div class="m-bottom-2">
+  <app-admin-stats-banner
+    [config]="prosStatsConfig"></app-admin-stats-banner>
+</div>
+
 <div class="container grid-2xl fluid p-top-30 p-bottom-30" id="admin-campaign-pros">
   <div class="column col-sm-12 col-11 col-mx-auto">
 
@@ -83,13 +88,6 @@
       </app-shared-professionals-list>
     </section>
     <!-- /professionals -->
-
-    <div class="d-flex justify-center m-top-4" *ngIf="prosStats.badEmails">
-      <div class="label is-rounded is-success">Good - {{ prosStats.goodEmails || 0 }}<br></div>
-      <div class="label is-rounded is-info">Risky - {{ prosStats.riskyEmails || 0}}<br></div>
-      <div class="label is-rounded is-danger">Bad - {{ prosStats.badEmails || 0}}<br></div>
-      <div class="label is-rounded is-draft">Batched - {{ prosStats.batched || 0}}<br></div>
-    </div>
   </div>
 </div>
 

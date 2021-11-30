@@ -11,7 +11,7 @@ export interface StatsInterface {
     },
     gauge?: {
       title: string,
-      inverted?: boolean;
+      negative?: boolean;
       referent: number,
       delimitersLabels?: string[]
     };

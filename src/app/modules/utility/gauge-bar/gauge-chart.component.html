@@ -4,7 +4,7 @@
   <div class="popover-container">
     <div class="card align-center">
       <span class="text-bold">{{ title }}</span>
-      <div class="chart m-top-40" [ngStyle]="{'height': (height) + 'px'}">
+      <div class="chart m-top-40" [ngStyle]="{'height': (height) + 'px'}" [ngClass]="{'reverted': negative}">
         <rg-gauge-chart [canvasWidth]="width"
                         [needleValue]="needleValue"
                         [centralLabel]="''"
@@ -12,7 +12,7 @@
         </rg-gauge-chart>
       </div>
       <div class="legend text-sm w-full" [ngStyle]="{'margin-top': (height / 2 + 30) + 'px'}">
-        <ul>
+        <ul [ngClass]="{'reverted-legend': negative}">
           <li>
             <div [ngStyle]="{ 'background-color': veryLow }" class="square"></div>
             <span class="m-left-20">{{ delimitersLabels[0] }}</span>

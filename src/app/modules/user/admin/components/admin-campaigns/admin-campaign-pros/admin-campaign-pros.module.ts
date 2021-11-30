@@ -8,17 +8,19 @@ import {SidebarUserFormModule} from '../../../../../sidebars/components/user-for
 import {ModalModule} from '../../../../../utility/modals/modal/modal.module';
 import {AutoCompleteInputModule} from '../../../../../utility/auto-complete-input/auto-complete-input.module';
 import {FormsModule} from '@angular/forms';
+import {AdminStatsBannerModule} from "../../admin-stats-banner/admin-stats-banner.module";
 
 @NgModule({
-  imports: [
-    CommonModule,
-    SharedProfessionalsListModule,
-    SidebarModule,
-    SidebarUserFormModule,
-    ModalModule,
-    AutoCompleteInputModule,
-    FormsModule,
-  ],
+    imports: [
+        CommonModule,
+        SharedProfessionalsListModule,
+        SidebarModule,
+        SidebarUserFormModule,
+        ModalModule,
+        AutoCompleteInputModule,
+        FormsModule,
+        AdminStatsBannerModule,
+    ],
   declarations: [
     AdminCampaignProsComponent
   ]

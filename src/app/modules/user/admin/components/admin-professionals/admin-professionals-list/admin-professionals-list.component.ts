@@ -62,7 +62,6 @@ export class AdminProfessionalsListComponent implements OnInit {
   private _getProfessionals() {
     this._professionalsService.getAll(this._config).pipe(first()).subscribe((response: Response) => {
       this._professionals = response && response.result || [];
-      console.log(response);
       this._total = response && response._metadata && response._metadata.totalCount;
     }, (err: HttpErrorResponse) => {
       this._translateNotificationsService.error('Error', ErrorFrontService.getErrorMessage(err.status));

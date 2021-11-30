@@ -11,6 +11,7 @@ import { ErrorFrontService } from "../../../../../../services/error/error-front.
 import { isPlatformBrowser } from "@angular/common";
 import { Config } from "@umius/umi-common-component/models/config";
 import { Response } from "../../../../../../models/response";
+import { LocalStorageService } from "@umius/umi-common-component/services/localStorage";
 
 @Component({
   templateUrl: 'admin-libraries-workflows.component.html',
@@ -45,11 +46,13 @@ export class AdminLibrariesWorkflowsComponent implements OnInit {
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _templatesService: TemplatesService,
               private _rolesFrontService: RolesFrontService,
-              private _translateNotificationsService: TranslateNotificationsService) {}
+              private _translateNotificationsService: TranslateNotificationsService,
+              private _localStorageService: LocalStorageService) {
+  }
 
   ngOnInit() {
     if (isPlatformBrowser(this._platformId)) {
-      this._getAllScenarios().then( () => {
+      this._getAllScenarios().then(() => {
         this._getAllSignatures();
       }, (err: HttpErrorResponse) => {
         this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
@@ -61,15 +64,22 @@ export class AdminLibrariesWorkflowsComponent implements OnInit {
   }
 
   private _getAllSignatures() {
-    this._templatesService.getAllSignatures(this._config).pipe(first()).subscribe((response: Response) => {
-      this._isLoading = false;
-      this._signatures = response && response.result;
-    }, (err: HttpErrorResponse) => {
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
-      this._isLoading = false;
-      this._fetchingError = true;
-      console.error(err);
-    });
+    this._localStorageService.setItem('allSignatures', '');
+    const signatures = this._localStorageService.getItem('allSignatures') && JSON.parse(this._localStorageService.getItem('allSignatures'));
+    if (signatures) {
+      this._signatures = signatures.result;
+    } else {
+      this._templatesService.getAllSignatures(this._config).pipe(first()).subscribe((response: Response) => {
+        this._isLoading = false;
+        this._signatures = response && response.result;
+        this._localStorageService.setItem('allSignatures',  JSON.stringify(response));
+      }, (err: HttpErrorResponse) => {
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+        this._isLoading = false;
+        this._fetchingError = true;
+        console.error(err);
+      });
+    }
   }
 
   private _getAllScenarios() {
@@ -128,7 +138,7 @@ export class AdminLibrariesWorkflowsComponent implements OnInit {
           this._translateNotificationsService.success('Success', 'The workflow is added.');
           this._modalAdd = false;
           this._isAdding = false;
-      }, (err: HttpErrorResponse) => {
+        }, (err: HttpErrorResponse) => {
           this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
           this._isAdding = false;
           console.error(err);
@@ -137,7 +147,7 @@ export class AdminLibrariesWorkflowsComponent implements OnInit {
   }
 
   public changeScenarioSignature(selection: any) {
-    if(selection) {
+    if (selection) {
       this._scenarioSignature = selection;
     }
   }
