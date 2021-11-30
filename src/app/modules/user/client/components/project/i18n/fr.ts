@@ -1,5 +1,4 @@
 import { EXPLORATION } from '../components/exploration/i18n/fr';
-import { HISTORY } from '../components/history/i18n/fr';
 import { PROJECTS_LIST } from '../../projects-list/i18n/fr';
 import { SETUP } from '../components/setup/i18n/fr';
 
@@ -67,8 +66,6 @@ export const PROJECT_MODULE = {
   'HISTORY_TAB': 'Historique',
 
   'EXPLORATION': EXPLORATION,
-
-  'HISTORY': HISTORY,
 
   'PROJECTS_LIST': PROJECTS_LIST,
 

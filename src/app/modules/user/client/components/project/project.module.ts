@@ -7,7 +7,6 @@ import { TranslateModule } from '@ngx-translate/core';
 import { ProjectComponent } from './project.component';
 import { SetupComponent } from './components/setup/setup.component';
 import { ExplorationComponent } from './components/exploration/exploration.component';
-import { HistoryProjectComponent } from './components/history/history.component';
 import { SettingsComponent } from './components/settings/settings.component';
 import { DocumentsComponent } from './components/documents/documents.component';
 import { PitchComponent } from './components/setup/components/pitch/pitch.component';
@@ -83,7 +82,6 @@ import { TableComponentsModule } from '@umius/umi-common-component/table';
     ProjectComponent,
     SetupComponent,
     ExplorationComponent,
-    HistoryProjectComponent,
     SettingsComponent,
     DocumentsComponent,
     PitchComponent,
