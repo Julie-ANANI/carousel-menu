@@ -20,7 +20,8 @@ import { ErrorFrontService } from '../../../../../services/error/error-front.ser
 export class AdminUsersComponent implements OnInit {
 
   private _config: Config = {
-    fields: 'id company jobTitle created domain location firstName lastName',
+    fields: 'id company jobTitle created domain location firstName lastName attempts emailVerified isOperator phone' +
+      ' language roles state name country email',
     limit: this._configService.configLimit('admin-users-limit'),
     offset: '0',
     search: '{}',
@@ -173,18 +174,12 @@ export class AdminUsersComponent implements OnInit {
   }
 
   public onClickEdit(value: User) {
-    const us = new User(value);
-    this._userService.get(us.id).pipe(first()).subscribe((response: User) => {
-      this._selectedUser = response;
-      this._sidebarValue = {
-        animate_state: 'active',
-        type: 'editUser',
-        title: this.canAccess(['user', 'edit']) ? 'Edit User' : 'View User'
-      };
-    }, (err: HttpErrorResponse) => {
-      this._translateNotificationsService.error('Error', ErrorFrontService.getErrorMessage(err.status));
-      console.error(err);
-    });
+    this._selectedUser = value;
+    this._sidebarValue = {
+      animate_state: 'active',
+      type: 'editUser',
+      title: this.canAccess(['user', 'edit']) ? 'Edit User' : 'View User'
+    };
   }
 
   public updateUser(value: User, isResetTable = true) {

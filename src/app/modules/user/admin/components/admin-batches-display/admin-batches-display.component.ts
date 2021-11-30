@@ -8,7 +8,6 @@ import { TranslateService } from '@ngx-translate/core';
 import { InnovCard } from '../../../../../models/innov-card';
 import { SidebarInterface } from '../../../../sidebars/interfaces/sidebar-interface';
 import { isPlatformBrowser } from '@angular/common';
-// import { SearchService } from '../../../../../services/search/search.service';
 import {InnovationService} from '../../../../../services/innovation/innovation.service';
 import {InnovationFrontService} from '../../../../../services/innovation/innovation-front.service';
 
@@ -16,13 +15,6 @@ import {InnovationFrontService} from '../../../../../services/innovation/innovat
  * this is to display the batches.
  * Example: Under the Market Tests tab.
  */
-
-/*interface Statistics {
-  percentFoundPros: number | string;
-  percentFoundEmails: number | string;
-  percentOkEmails: number | string;
-  percentReceivedEmails: number | string;
-}*/
 
 @Component({
   selector: 'app-admin-batches-display',
@@ -35,16 +27,7 @@ export class AdminBatchesDisplayComponent implements OnInit {
   private _weekBatches: Array<any> = [[], [], [], [], []];
   // => [['DATE', batch, batch,..]...]
 
-  // private _nbDaysOfStats = 1;
-
   private _selectedBatch: any;
-
-  /*private _statistics: Statistics = {
-    percentFoundPros: null,
-    percentFoundEmails: null,
-    percentOkEmails: null,
-    percentReceivedEmails: null
-  };*/
 
   private _dateNow = new Date();
 
@@ -58,43 +41,15 @@ export class AdminBatchesDisplayComponent implements OnInit {
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _dashboardService: DashboardService,
-              // private _searchService: SearchService,
               private _translateService: TranslateService,
               private _innovationService: InnovationService,
               private _translateNotificationsService: TranslateNotificationsService) { }
 
   ngOnInit() {
     if (isPlatformBrowser(this._platformId)) {
-      // this._getPeriodStats();
       this._getWeek();
     }
   }
-
-
-  /**
-   * commented on 18th Mar,2021 because no idea where we are using this.
-   * @private
-   */
-  /*private _getPeriodStats() {
-    this._searchService.getEmailStats(this._nbDaysOfStats).pipe(first()).subscribe((stats: any) => {
-
-      const totalMails = stats.total && stats.total.domainNotFound && stats.total.found && stats.total.timeOut
-        ? stats.total.domainNotFound + stats.total.found + stats.total.notFound + stats.total.timeOut : 'NA';
-
-      this._statistics.percentFoundEmails = totalMails && stats && stats.total && stats.total.found
-        ? Math.round(stats.total.found / totalMails * 100) : 'NA';
-
-      this._statistics.percentFoundPros = 'NA';
-
-      this._statistics.percentOkEmails = stats && stats.total && stats.total.found && stats.total.confidence
-        ? Math.round((stats.total.confidence['100'] || 0) / stats.total.found * 100) : 'NA';
-
-      this._statistics.percentReceivedEmails = 'NA';
-      }, (err: HttpErrorResponse) => {
-      console.error(err);
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
-    });
-  }*/
 
   private _getWeek() {
     const now = Date.now();
