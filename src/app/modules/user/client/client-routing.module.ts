@@ -2,36 +2,47 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { ClientComponent } from './client.component';
-import { ProjectsListComponent } from './components/projects-list/projects-list.component';
-import { NewProjectComponent } from './components/new-project/new-project.component';
-import { AccountComponent } from './components/account/account.component';
-import { SynthesisListComponent } from './components/synthesis-list/synthesis-list.component';
-import { SynthesisCompleteComponent } from '../../public/share/component/synthesis-complete/synthesis-complete.component';
 
 import { AuthGuard } from '../../../guards/auth-guard.service';
 
-const clientRoutes: Routes = [
+const routes: Routes = [
   {
     path: '',
     component: ClientComponent,
     canActivateChild: [AuthGuard],
     children: [
       { path: '', redirectTo: 'projects', pathMatch: 'full' },
-      { path: 'account', component: AccountComponent, pathMatch: 'full' },
+      {
+        path: 'account',
+        loadChildren: () => import('./components/account/account.module').then(m => m.AccountModule)
+      },
       {
         path: 'synthesis',
         canActivateChild: [AuthGuard],
         children: [
-          { path: '', component: SynthesisListComponent, pathMatch: 'full' },
-          { path: ':projectId/:shareKey', component: SynthesisCompleteComponent, pathMatch: 'full' }
+          {
+            path: '',
+            loadChildren: () => import('./components/synthesis-list/synthesis-list.module').then(m => m.SynthesisListModule)
+          },
+          {
+            path: ':projectId/:shareKey',
+            loadChildren: () => import('../../../modules/public/share/share.module').then(m => m.ShareModule)
+          }
         ]
       },
       {
         path: 'projects',
-        canActivateChild: [AuthGuard],
         children: [
-          { path: '', component: ProjectsListComponent, pathMatch: 'full' },
-          { path: 'new', component: NewProjectComponent, pathMatch: 'full' },
+          {
+            path: '',
+            canActivate: [AuthGuard],
+            loadChildren: () => import('./components/projects-list/projects-list.module').then(m => m.ProjectsListModule)
+          },
+          {
+            path: 'new',
+            canActivate: [AuthGuard],
+            loadChildren: () => import('./components/new-project/new-project.module').then(m => m.NewProjectModule)
+          },
           {
             path:  ':projectId',
             loadChildren: () => import('./components/project/project.module').then(m => m.ProjectModule)
@@ -44,7 +55,7 @@ const clientRoutes: Routes = [
 
 @NgModule({
   imports: [
-    RouterModule.forChild(clientRoutes)
+    RouterModule.forChild(routes)
   ],
   exports: [
     RouterModule

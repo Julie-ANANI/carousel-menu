@@ -15,6 +15,7 @@ import {TextInputModule} from '../../../../utility/text-input/text-input.module'
 import {DatePickerModule} from '../../../../utility/date-picker/date-picker.module';
 import {NgxPageScrollModule} from 'ngx-page-scroll';
 import {NgxPageScrollCoreModule} from 'ngx-page-scroll-core';
+import {NewProjectRoutingModule} from './new-project-routing.module';
 
 @NgModule({
   imports: [
@@ -28,6 +29,7 @@ import {NgxPageScrollCoreModule} from 'ngx-page-scroll-core';
     TextInputModule,
     DatePickerModule,
     NgxPageScrollModule,
+    NewProjectRoutingModule,
     NgxPageScrollCoreModule
   ],
   declarations: [
