@@ -49,8 +49,6 @@ export class AdminUsersComponent implements OnInit {
 
   private _isLoading = true;
 
-  private _userToUpdate: User = <User>{};
-
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _configService: ConfigService,
               private _translateTitleService: TranslateTitleService,
@@ -129,8 +127,6 @@ export class AdminUsersComponent implements OnInit {
           _isSortable: true,
           _isSearchable: this.canAccess(['searchBy', 'job']),
           _isHidden: !this.canAccess(['tableColumns', 'job']),
-          // _isEditable: true,
-          // _editType: 'TEXT',
         },
         {
           _attrs: ['company.name'],
@@ -139,8 +135,6 @@ export class AdminUsersComponent implements OnInit {
           _isSortable: true,
           _isSearchable: this.canAccess(['searchBy', 'company']),
           _isHidden: !this.canAccess(['tableColumns', 'company']),
-          _isEditable: false,
-          _editType: 'TEXT'
         },
         {
           _attrs: ['domain'],
@@ -150,8 +144,6 @@ export class AdminUsersComponent implements OnInit {
           _width: '200px',
           _isSearchable: this.canAccess(['searchBy', 'domain']),
           _isHidden: !this.canAccess(['tableColumns', 'domain']),
-          _isEditable: false,
-          _editType: 'TEXT'
         },
         {
           _attrs: ['created'],
@@ -182,12 +174,9 @@ export class AdminUsersComponent implements OnInit {
     };
   }
 
-  public updateUser(value: User, isResetTable = true) {
+  public updateUser(value: User) {
     if (this.canAccess(['user', 'edit'])) {
       this._userService.updateOther(value).pipe(first()).subscribe(() => {
-        if (isResetTable) {
-          this._getUsers();
-        }
         this._translateNotificationsService.success('Success', 'The user has been updated.');
       }, (err: HttpErrorResponse) => {
         this._translateNotificationsService.error('Error', ErrorFrontService.getErrorMessage(err.status));
@@ -235,21 +224,6 @@ export class AdminUsersComponent implements OnInit {
   // TODO
   inviteUser(event: Event): void {
     event.preventDefault();
-  }
-
-  getPerformActions($event: any) {
-    if ($event) {
-      switch ($event._action) {
-        case 'Update grid':
-          const context = $event._context;
-          if (context) {
-            this._userToUpdate = context;
-            this._userToUpdate.id = context._id;
-            this.updateUser(this._userToUpdate, false);
-          }
-          break;
-      }
-    }
   }
 
   set config(value: Config) {
