@@ -32,6 +32,10 @@ interface Document {
 
 export class DocumentsComponent implements OnInit, OnDestroy {
 
+  get ownerConsent(): boolean {
+    return this._ownerConsent;
+  }
+
   private _innovation: Innovation = <Innovation>{};
 
   private _ngUnsubscribe: Subject<any> = new Subject();
@@ -73,6 +77,12 @@ export class DocumentsComponent implements OnInit, OnDestroy {
 
   private _isGeneratingReport = false;
 
+  private _timeout: ReturnType<typeof setTimeout>;
+
+  private _anonymousXLSX = true;
+
+  private _ownerConsent = false;
+
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _innovationFrontService: InnovationFrontService,
               private _authService: AuthService,
@@ -87,38 +97,43 @@ export class DocumentsComponent implements OnInit, OnDestroy {
     this._innovationFrontService.innovation().pipe(takeUntil(this._ngUnsubscribe)).subscribe((innovation) => {
       this._innovation = innovation || <Innovation>{};
       this._initDocuments();
+      this._anonymousXLSX = !!(this._innovation._metadata && this._innovation._metadata.campaign
+        && this._innovation._metadata.campaign.anonymous_answers);
+      this._ownerConsent = this._innovation.ownerConsent && this._innovation.ownerConsent.value;
     });
   }
 
   private _initDocuments() {
-    this._documents.forEach((document) => {
-      switch (document.name) {
+    if (!!this._innovation._id) {
+      this._documents.forEach((document) => {
+        switch (document.name) {
 
-        case 'REPORT':
-          if (this._innovation.executiveReportId) {
-            this._getExecutiveReport();
-          } else if (this._innovation.executiveReport && this._innovation.executiveReport.sections
-            && this._innovation.executiveReport.sections.length) {
+          case 'REPORT':
+            if (this._innovation.executiveReportId) {
+              this._getExecutiveReport();
+            } else if (this._innovation.executiveReport && this._innovation.executiveReport.sections
+              && this._innovation.executiveReport.sections.length) {
+              document.isExportable = true;
+            }
+            break;
+
+          case 'VIDEO':
             document.isExportable = true;
-          }
-          break;
+            break;
 
-        case 'VIDEO':
-          document.isExportable = true;
-          break;
+          case 'SHARE':
+            document.isExportable = this._innovation.previewMode || (this._innovation.status && this._innovation.status === 'DONE');
+            break;
 
-        case 'SHARE':
-          document.isExportable = this._innovation.previewMode || (this._innovation.status && this._innovation.status === 'DONE');
-          break;
+          case 'XLSX':
+          case 'PDF':
+            document.isExportable = this._innovation.previewMode || (this._innovation.status
+              && this._innovation.status === 'EVALUATING');
+            break;
 
-        case 'XLSX':
-        case 'PDF':
-          document.isExportable = this._innovation.previewMode || (this._innovation.status
-            && this._innovation.status === 'EVALUATING');
-          break;
-
-      }
-    });
+        }
+      });
+    }
   }
 
   /***
@@ -162,18 +177,16 @@ export class DocumentsComponent implements OnInit, OnDestroy {
    */
   public onClickShare(event: Event) {
     event.preventDefault();
-    if (!this._isLinkCopied && this.isOwner && this.ownerConsent) {
+    if (!this._isLinkCopied && this.isOwner && this._ownerConsent) {
       this._isGeneratingLink = true;
       this._innovationService.shareSynthesis(this._innovation._id).pipe(first()).subscribe((share) => {
         const url = `${environment.clientUrl}/share/synthesis/${share.objectId}/${share.shareKey}`;
         this._commonService.copyToClipboard(url);
         this._isGeneratingLink = false;
         this._isLinkCopied = true;
-
-        setTimeout(() => {
+        this._timeout = setTimeout(() => {
           this._isLinkCopied = false;
         }, 8000);
-
       }, (err: HttpErrorResponse) => {
         this._isGeneratingLink = false;
         this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
@@ -187,10 +200,10 @@ export class DocumentsComponent implements OnInit, OnDestroy {
    */
   public onClickXLSX(event: Event) {
     event.preventDefault();
-    if (!this._isGeneratingXLSX && this.isOwner && this.ownerConsent) {
+    if (!this._isGeneratingXLSX && this.isOwner && this._ownerConsent) {
       this._isGeneratingXLSX = true;
-      const url = this._answerService.getExportUrl(this._innovation._id, true, this.userLang, this.anonymousXLSX);
-      setTimeout(() => {
+      const url = this._answerService.getExportUrl(this._innovation._id, true, this.userLang, this._anonymousXLSX);
+      this._timeout = setTimeout(() => {
         window.open(url);
         this._isGeneratingXLSX = false;
       }, 1000);
@@ -202,10 +215,10 @@ export class DocumentsComponent implements OnInit, OnDestroy {
    */
   public onClickPDF(event: Event) {
     event.preventDefault();
-    if (!this._isGeneratingPDF && this.isOwner && this.ownerConsent) {
+    if (!this._isGeneratingPDF && this.isOwner && this._ownerConsent) {
       this._isGeneratingPDF = true;
       const url = this._answerService.exportAsPDF(this._innovation._id, this.userLang);
-      setTimeout(() => {
+      this._timeout = setTimeout(() => {
         window.open(url);
         this._isGeneratingPDF = false;
       }, 1000);
@@ -217,7 +230,7 @@ export class DocumentsComponent implements OnInit, OnDestroy {
    */
   public onClickReport(event: Event) {
     event.preventDefault();
-    if (!this._isGeneratingReport && this.isOwner && this.ownerConsent) {
+    if (!this._isGeneratingReport && this.isOwner && this._ownerConsent) {
       this._isGeneratingReport = true;
       const filename = this._innovation.name ? `UMI Executive report -
       ${this._innovation.name.slice(0, Math.min(13, this._innovation.name.length))}.pdf` : 'innovation_umi.pdf';
@@ -239,19 +252,11 @@ export class DocumentsComponent implements OnInit, OnDestroy {
    */
   public onClickContact(event: Event) {
     event.preventDefault();
-    if (this.isOwner && this.ownerConsent) {
+    if (this.isOwner && this._ownerConsent) {
       const clientProject = <ClientProject>this._innovation.clientProject;
       const email = clientProject && clientProject.commercial && clientProject.commercial.email || 'achampagne@umi.us';
       window.open(ContactFrontService.commercialVideo(this._innovation, email, this.userLang), '_blank');
     }
-  }
-
-  get anonymousXLSX(): boolean {
-    return !!(this._innovation._metadata && this._innovation._metadata.campaign && this._innovation._metadata.campaign.anonymous_answers);
-  }
-
-  get ownerConsent(): boolean {
-    return this._innovation.ownerConsent && this._innovation.ownerConsent.value;
   }
 
   /**
@@ -302,6 +307,7 @@ export class DocumentsComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this._ngUnsubscribe.next();
     this._ngUnsubscribe.complete();
+    clearTimeout(this._timeout);
   }
 
 }
