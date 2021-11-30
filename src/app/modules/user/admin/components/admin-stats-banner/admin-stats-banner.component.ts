@@ -1,22 +1,5 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-
-export interface StatsInterface {
-  heading: string;
-  content: Array<{
-    subHeading: string;
-    value: string;
-    stats?: {
-      title: string,
-      values: any
-    },
-    gauge?: {
-      title: string,
-      negative?: boolean;
-      referent: number,
-      delimitersLabels?: string[]
-    };
-  }>;
-}
+import { StatsInterface } from "../../../../../models/stats";
 
 @Component({
   selector: 'app-admin-stats-banner',

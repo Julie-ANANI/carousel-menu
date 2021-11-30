@@ -4,7 +4,7 @@ import { Campaign } from '../../../../../../models/campaign';
 import { RolesFrontService } from '../../../../../../services/roles/roles-front.service';
 import { CampaignFrontService } from '../../../../../../services/campaign/campaign-front.service';
 import { StatsReferentsService } from '../../../../../../services/stats-referents/stats-referents.service';
-import { StatsInterface } from '../../admin-stats-banner/admin-stats-banner.component';
+import { StatsInterface } from '../../../../../../models/stats';
 import { first } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorFrontService } from '../../../../../../services/error/error-front.service';

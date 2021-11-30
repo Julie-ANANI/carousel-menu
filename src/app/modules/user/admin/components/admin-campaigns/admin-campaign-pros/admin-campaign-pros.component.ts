@@ -12,7 +12,7 @@ import { Response } from '../../../../../../models/response';
 import {ConfigService} from '@umius/umi-common-component/services/config';import { RolesFrontService } from '../../../../../../services/roles/roles-front.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorFrontService } from '../../../../../../services/error/error-front.service';
-import { StatsInterface } from '../../admin-stats-banner/admin-stats-banner.component';
+import { StatsInterface } from '../../../../../../models/stats';
 import { CampaignFrontService } from '../../../../../../services/campaign/campaign-front.service';
 import { Bytes2Human } from '../../../../../../utils/bytes2human';
 import {CampaignService} from "../../../../../../services/campaign/campaign.service";

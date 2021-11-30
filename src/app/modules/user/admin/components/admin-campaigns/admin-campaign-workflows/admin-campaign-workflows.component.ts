@@ -13,7 +13,7 @@ import { Response } from '../../../../../../models/response';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorFrontService } from '../../../../../../services/error/error-front.service';
 import { RolesFrontService } from '../../../../../../services/roles/roles-front.service';
-import { StatsInterface } from '../../admin-stats-banner/admin-stats-banner.component';
+import { StatsInterface } from '../../../../../../models/stats';
 import { CampaignFrontService } from '../../../../../../services/campaign/campaign-front.service';
 import { AuthService } from '../../../../../../services/auth/auth.service';
 
@@ -59,7 +59,7 @@ export class AdminCampaignWorkflowsComponent implements OnInit {
     private _templatesService: TemplatesService,
     private _rolesFrontService: RolesFrontService,
     private _authService: AuthService,
-    private _translateNotificationsService: TranslateNotificationsService
+    private _translateNotificationsService: TranslateNotificationsService,
   ) {
   }
 

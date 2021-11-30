@@ -14,7 +14,7 @@ import { InnovationFrontService } from '../../../../../../services/innovation/in
 import { Subject } from 'rxjs';
 import { first, takeUntil } from 'rxjs/operators';
 import { RolesFrontService } from '../../../../../../services/roles/roles-front.service';
-import { StatsInterface } from '../../admin-stats-banner/admin-stats-banner.component';
+import { StatsInterface } from '../../../../../../models/stats';
 import {
   Milestone,
   Mission, MissionQuestion,

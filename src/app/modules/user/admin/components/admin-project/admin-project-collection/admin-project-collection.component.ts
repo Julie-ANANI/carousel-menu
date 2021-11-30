@@ -10,7 +10,7 @@ import { Subject } from 'rxjs';
 import { isPlatformBrowser } from '@angular/common';
 import { first, takeUntil } from 'rxjs/operators';
 import { InnovationFrontService } from '../../../../../../services/innovation/innovation-front.service';
-import { StatsInterface } from '../../admin-stats-banner/admin-stats-banner.component';
+import { StatsInterface } from '../../../../../../models/stats';
 import {ConfigService} from '@umius/umi-common-component/services/config';
 import { RolesFrontService } from '../../../../../../services/roles/roles-front.service';
 import { HttpErrorResponse } from '@angular/common/http';
