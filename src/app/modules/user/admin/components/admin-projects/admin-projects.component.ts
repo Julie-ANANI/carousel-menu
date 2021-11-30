@@ -98,11 +98,11 @@ export class AdminProjectsComponent implements OnInit {
   private _getMissionTemplates() {
     const templates = this._localStorageService.getItem('missionTemplates');
     if (templates) {
-      this._missionTemplates = JSON.parse(templates);
+      this._missionTemplates = JSON.parse(templates).result || [];
     } else {
       this._missionService.getAllTemplates().pipe(first()).subscribe((response) => {
         this._missionTemplates = response && response.result || [];
-        this._localStorageService.setItem('missionTemplates', JSON.stringify(this._missionTemplates));
+        this._localStorageService.setItem('missionTemplates', JSON.stringify(response));
       }, error => {
         console.error(error);
       });
