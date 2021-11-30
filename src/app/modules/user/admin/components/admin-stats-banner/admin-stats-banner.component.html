@@ -19,7 +19,7 @@
         <ng-template #gaugeChartComponent>
           <app-gauge-chart class="d-flex align-center" *ngIf="content.value !== 'NA'" [average]="content.gauge.referent"
                            [title]="content.gauge.title"
-                           [inverted]="content.gauge.inverted"
+                           [negative]="content.gauge.negative"
                            [delimitersLabels]="content.gauge.delimitersLabels"
                            [needleValue]="stringToNumber(content.value)">
           </app-gauge-chart>

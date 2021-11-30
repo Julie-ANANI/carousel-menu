@@ -132,7 +132,27 @@ export class AdminCampaignHistoryComponent implements OnInit {
       heading: 'Emails',
       content: [
         {
-          subHeading: 'Identification efficiency',
+          subHeading: 'Bad emails',
+          value: this._indicators.inabilityToValidate,
+          gauge: {
+            title: `${this._stats && this._stats.uniqueBadEmails} uniques invalids / ${this._stats && this._stats.uniqueIdentified} uniques identified`,
+            negative: true,
+            referent: this._referents.inabilityToValidate || 50,
+            delimitersLabels: ['Strong inability to validate, to be alerted', 'Moderate inability to validate, to be checked',
+              'Inability to validate low', 'Inability to validate very low']
+          }
+        },
+        {
+          subHeading: 'Risky emails',
+          value: this._indicators.deductionEfficiency,
+          gauge: {
+            title: `${this._stats && this._stats.uniqueUncertain} uniques risky / ${this._stats && this._stats.uniqueIdentified} uniques identified`,
+            referent: this._referents.deductionEfficiency || 50,
+            delimitersLabels: ['Very small deduction, to be alerted', 'Low deduction, to be checked', 'Deduction ok!', 'Strong deduction! ']
+          }
+        },
+        {
+          subHeading: 'Good emails',
           value: this._indicators.identificationEfficiency,
           gauge: {
             title: `${this._stats && this._stats.uniqueGoodEmails} uniques good emails / ${this._stats && this._stats.uniqueIdentified} uniques identified`,
@@ -145,20 +165,9 @@ export class AdminCampaignHistoryComponent implements OnInit {
           value: this._indicators.shieldImpact,
           gauge: {
             title: `${this._stats && this._stats.uniqueShielded} uniques shielded / ${this._stats && this._stats.uniqueGoodEmails} uniques good emails`,
-            inverted: true,
+            negative: true,
             referent: this._referents.shieldImpact || 50,
             delimitersLabels: ['Strong impact', 'Moderate impact', 'Low impact', 'Very low impact']
-          }
-        },
-        {
-          subHeading: 'Inability to validate',
-          value: this._indicators.inabilityToValidate,
-          gauge: {
-            title: `${this._stats && this._stats.uniqueBadEmails} uniques invalids / ${this._stats && this._stats.uniqueIdentified} uniques identified`,
-            inverted: true,
-            referent: this._referents.inabilityToValidate || 50,
-            delimitersLabels: ['Strong inability to validate, to be alerted', 'Moderate inability to validate, to be checked',
-              'Inability to validate low', 'Inability to validate very low']
           }
         },
         {
@@ -166,18 +175,9 @@ export class AdminCampaignHistoryComponent implements OnInit {
           value: this._indicators.redundancy,
           gauge: {
             title: `${this._stats && this._stats.uniqueIdentified} uniques identified / ${this._stats && this._stats.identified} identified`,
-            inverted: true,
+            negative: true,
             referent: this._referents.redundancy || 50,
             delimitersLabels: ['Highly redundant request, to be redirected', 'Redundant request, be careful', 'Request ok !', 'Request excellent !']
-          }
-        },
-        {
-          subHeading: 'Deduction efficiency',
-          value: this._indicators.deductionEfficiency,
-          gauge: {
-            title: `${this._stats && this._stats.uniqueUncertain} uniques deduced / ${this._stats && this._stats.uniqueIdentified} uniques identified`,
-            referent: this._referents.deductionEfficiency || 50,
-            delimitersLabels: ['Very small deduction, to be alerted', 'Low deduction, to be checked', 'Deduction ok!', 'Strong deduction! ']
           }
         }
       ]
