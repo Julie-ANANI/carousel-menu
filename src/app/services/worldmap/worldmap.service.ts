@@ -81,6 +81,7 @@ export class WorldmapService {
   }
 
   public async getCountriesList(): Promise<Array<Country>> {
+    // TODO might call 6 getWholeSet api - to be optimised
     return new Promise(resolve => {
       if (this._countriesList.length === 0) {
         this._indexService.getWholeSet({type: 'countries'}).pipe(first())
