@@ -21,6 +21,7 @@ import { MissionService } from '../../../../../services/mission/mission.service'
 import { MissionFrontService } from '../../../../../services/mission/mission-front.service';
 import { Column, Config, Table } from '@umius/umi-common-component/models';
 import { ConfigService } from '@umius/umi-common-component/services/config';
+import { LocalStorageService } from "@umius/umi-common-component/services/localStorage";
 
 @Component({
   templateUrl: './admin-projects.component.html',
@@ -67,15 +68,16 @@ export class AdminProjectsComponent implements OnInit {
               private _translateTitleService: TranslateTitleService,
               private _missionService: MissionService,
               private _changeDetectorRef: ChangeDetectorRef,
+              private _localStorageService: LocalStorageService,
               private _userService: UserService) {
     this._translateTitleService.setTitle('Market Tests');
   }
 
   ngOnInit(): void {
     this._initializeTable();
-    this._getMissionTemplates();
 
     if (isPlatformBrowser(this._platformId)) {
+      this._getMissionTemplates();
       this._isLoading = false;
       this._setConfigForUmiBack();
       this._getOperators().then(_ => {
@@ -94,9 +96,13 @@ export class AdminProjectsComponent implements OnInit {
   }
 
   private _getMissionTemplates() {
-    if (isPlatformBrowser(this._platformId)) {
+    const templates = this._localStorageService.getItem('missionTemplates');
+    if (templates) {
+      this._missionTemplates = JSON.parse(templates);
+    } else {
       this._missionService.getAllTemplates().pipe(first()).subscribe((response) => {
         this._missionTemplates = response && response.result || [];
+        this._localStorageService.setItem('missionTemplates', JSON.stringify(this._missionTemplates));
       }, error => {
         console.error(error);
       });
