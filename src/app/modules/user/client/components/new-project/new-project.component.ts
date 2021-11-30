@@ -52,7 +52,7 @@ export class NewProjectComponent implements OnInit, OnDestroy {
 
   private _milestoneDateComment = '';
 
-  private _nextStepTimeout: any = null;
+  private _nextStepTimeout: ReturnType<typeof setTimeout>;
 
   private _reportingLang = '';
 

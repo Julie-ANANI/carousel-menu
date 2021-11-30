@@ -199,22 +199,26 @@
                     <div
                       (click)="openDeleteModal($event, section, collaborator)"
                       [id]="'open-modal-delete-collaborators'"
-                      class="button is-xs is-outlined is-danger">
-                      {{ 'COMMON.BUTTON.DELETE' | translate }}
+                      class="icon-container is-overlay">
+                      <span class="tooltip" [attr.data-tooltip]="'COMMON.BUTTON.DELETE' | translate">
+                        <i class="icon icon-delete text-alert"></i>
+                      </span>
                     </div>
                   </div>
                   <div *ngFor="let pending of pendingCollaborators" class="collaborator-wrapper">
                     <div class="m-right-10">{{ pending }}</div>
                     <div
                       [attr.data-tooltip]="'PROJECT_SETTINGS.TOOLTIP_PENDING' | translate"
-                      class="label is-sm is-progress tooltip is-fullwidth m-right-40">
+                      class="label is-sm is-progress tooltip is-fullwidth m-right-20">
                       {{ 'COMMON.LABEL.PENDING' | translate }}
                     </div>
                     <div
                       (click)="openDeleteModal($event, section, pending, 'PENDING_COLLABORATOR')"
                       [id]="'open-modal-delete-collaborators'"
-                      class="button is-xs is-outlined is-danger">
-                      {{ 'COMMON.BUTTON.DELETE' | translate }}
+                      class="icon-container is-overlay">
+                      <span class="tooltip" [attr.data-tooltip]="'COMMON.BUTTON.DELETE' | translate">
+                        <i class="icon icon-delete text-alert"></i>
+                      </span>
                     </div>
                   </div>
                 </ng-template>
@@ -272,17 +276,19 @@
               <!-- LANGUAGE -->
               <div *ngSwitchCase="'LANGUAGE'">
                 <div *ngFor="let card of innovation.innovationCards" class="lang-wrapper">
-                <span class="m-right-40">
-                  {{ 'PROJECT_SETTINGS.PROJECT_IN' | translate }}
-                  {{ 'COMMON.LANG.' + card.lang.toUpperCase() | translate }}.
-                </span>
-                <span
-                  (click)="openDeleteModal($event, section, card)"
-                  *ngIf="innovation.innovationCards.length > 1"
-                  [id]="'open-modal-delete-innovationCard'"
-                  class="button is-xs is-outlined is-danger">
-                  {{ 'COMMON.BUTTON.DELETE' | translate }}
-                </span>
+                  <span class="m-right-40">
+                    {{ 'PROJECT_SETTINGS.PROJECT_IN' | translate }}
+                    {{ 'COMMON.LANG.' + card.lang.toUpperCase() | translate }}.
+                  </span>
+                  <span
+                    (click)="openDeleteModal($event, section, card)"
+                    *ngIf="innovation.innovationCards.length > 1"
+                    [id]="'open-modal-delete-innovationCard'"
+                    class="icon-container is-overlay">
+                    <span class="tooltip" [attr.data-tooltip]="'COMMON.BUTTON.DELETE' | translate">
+                      <i class="icon icon-delete text-alert"></i>
+                    </span>
+                  </span>
                 </div>
               </div>
               <!-- /LANGUAGE -->
