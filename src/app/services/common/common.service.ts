@@ -4,11 +4,13 @@ import * as moment from 'moment';
 import {TranslateNotificationsService} from '../notifications/notifications.service';
 import {Etherpad} from '../../models/etherpad';
 import {environment} from '../../../environments/environment';
+import {TranslateService} from '@ngx-translate/core';
 
 @Injectable({ providedIn: 'root' })
 export class CommonService {
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
+              private _translateService: TranslateService,
               private _translateNotificationsService: TranslateNotificationsService) {
 
   }
@@ -201,6 +203,13 @@ export class CommonService {
       console.error(err);
       this._translateNotificationsService.error('Error', 'The audio could not be played at the moment.');
     });
+  }
+
+  /**
+   * one place for the date format based on the platform lang.
+   */
+  public dateFormat(): string {
+    return this._translateService.currentLang === 'fr' ? 'dd/MM/y' : 'y/MM/dd';
   }
 
 }
