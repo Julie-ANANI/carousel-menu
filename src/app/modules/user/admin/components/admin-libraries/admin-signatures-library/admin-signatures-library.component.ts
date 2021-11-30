@@ -91,12 +91,16 @@ export class AdminSignaturesLibraryComponent {
     };
   }
 
+  prepareSignatureTable(signatures: Array<EmailSignature>, total: number) {
+    this._signatures = signatures || [];
+    this._total = total || 0;
+    this._noResult = this._config.search.length > 2 ? false : this._total === 0;
+    this._initializeTable();
+  }
+
   private _getSignatures() {
     this._templatesService.getAllSignatures(this._config).pipe(first()).subscribe((response: Response) => {
-      this._signatures = response.result;
-      this._total = response._metadata.totalCount;
-      this._noResult = this._config.search.length > 2 ? false : this._total === 0;
-      this._initializeTable();
+      this.prepareSignatureTable(response.result, response._metadata.totalCount);
     }, () => {
       this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH');
     });
@@ -113,9 +117,30 @@ export class AdminSignaturesLibraryComponent {
     this._modalOpen = true;
   }
 
+  private _updateSignatureStorage(operation: string, newSignature: EmailSignature, signatureList: Array<EmailSignature> = []) {
+      switch (operation) {
+        case 'create':
+          this._signatures.push(newSignature);
+          this._total += 1;
+          break;
+        case 'update':
+          this._signatures = this._signatures.map((sig: EmailSignature) => {
+            return sig._id === newSignature._id ? newSignature : sig;
+          });
+          break;
+        case 'delete':
+          this._signatures = this._signatures.filter((sig: EmailSignature) =>
+            !signatureList.find(ele => sig._id === ele._id));
+          this._total -= signatureList.length;
+          break;
+    }
+    this.prepareSignatureTable(this._signatures, this._total);
+    this._initializeTable();
+  }
+
   public onAddConfirm() {
     this._templatesService.createSignature({name: this._newSignatureName}).pipe(first()).subscribe((response: EmailSignature) => {
-      this._getSignatures();
+      this._updateSignatureStorage('create', response);
       this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.SIGNATURES.ADDED');
       this._newSignatureName = null;
       this._modalOpen = false;
@@ -147,7 +172,7 @@ export class AdminSignaturesLibraryComponent {
 
   public updateSignature(signature: EmailSignature) {
     this._templatesService.saveSignature(signature).pipe(first()).subscribe(() => {
-      this._getSignatures();
+      this._updateSignatureStorage('update', signature);
       this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.SIGNATURES.UPDATED');
     }, () => {
       this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.OPERATION_ERROR');
@@ -162,9 +187,9 @@ export class AdminSignaturesLibraryComponent {
   }
 
   public onDeleteConfirm() {
+    this._updateSignatureStorage('delete', null, this._signaturesToRemove);
     this._signaturesToRemove.forEach((signature) => {
       this._templatesService.removeSignature(signature._id).pipe(first()).subscribe(() => {
-        this._getSignatures();
         this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.SIGNATURES.DELETED');
       }, () => {
         this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.OPERATION_ERROR');
