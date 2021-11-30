@@ -130,7 +130,7 @@ export class SharedQuestionnaireSectionComponent implements OnInit {
   }
 
   public sectionName(lang: string): string {
-    if (!!this.cardsSections[this._showTitlesLang].length) {
+    if (!this.isLibraryView && !!this.cardsSections[this._showTitlesLang].length) {
       const _find = this.cardsSections[lang].find((_section: InnovCardSection) => {
         return (_section.title === this._section.identifier) || (_section.type === this._section.type);
       });
