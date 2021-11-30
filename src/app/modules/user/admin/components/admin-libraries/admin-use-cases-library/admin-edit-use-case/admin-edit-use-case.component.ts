@@ -1,17 +1,18 @@
-import {Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
-import {MissionQuestionService} from '../../../../../../../services/mission/mission-question.service';
-import {MissionTemplate} from '../../../../../../../models/mission';
-import {MissionService} from '../../../../../../../services/mission/mission.service';
-import {ActivatedRoute} from '@angular/router';
-import {isPlatformBrowser} from '@angular/common';
-import {first} from 'rxjs/operators';
-import {TranslateNotificationsService} from '../../../../../../../services/notifications/notifications.service';
-import {ErrorFrontService} from '../../../../../../../services/error/error-front.service';
-import {RolesFrontService} from '../../../../../../../services/roles/roles-front.service';
-import {MissionFrontService} from '../../../../../../../services/mission/mission-front.service';
-import {TranslateService} from '@ngx-translate/core';
-import {TranslateTitleService} from '../../../../../../../services/title/title.service';
-import {HttpErrorResponse} from '@angular/common/http';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { MissionQuestionService } from '../../../../../../../services/mission/mission-question.service';
+import { MissionTemplate } from '../../../../../../../models/mission';
+import { MissionService } from '../../../../../../../services/mission/mission.service';
+import { ActivatedRoute } from '@angular/router';
+import { isPlatformBrowser } from '@angular/common';
+import { first } from 'rxjs/operators';
+import { TranslateNotificationsService } from '../../../../../../../services/notifications/notifications.service';
+import { ErrorFrontService } from '../../../../../../../services/error/error-front.service';
+import { RolesFrontService } from '../../../../../../../services/roles/roles-front.service';
+import { MissionFrontService } from '../../../../../../../services/mission/mission-front.service';
+import { TranslateService } from '@ngx-translate/core';
+import { TranslateTitleService } from '../../../../../../../services/title/title.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { LocalStorageService } from "@umius/umi-common-component/services/localStorage";
 
 interface ConfirmUpdate {
   tool: boolean;
@@ -59,7 +60,9 @@ export class AdminEditUseCaseComponent implements OnInit {
               private _rolesFrontService: RolesFrontService,
               private _translateTitleService: TranslateTitleService,
               private _translateNotificationsService: TranslateNotificationsService,
-              private _missionQuestionService: MissionQuestionService) { }
+              private _missionQuestionService: MissionQuestionService,
+              private _localStorageService: LocalStorageService) {
+  }
 
   ngOnInit() {
     this._missionTemplate = this._missionQuestionService.template;
@@ -73,7 +76,7 @@ export class AdminEditUseCaseComponent implements OnInit {
      */
     this._activatedRoute.params.subscribe((params) => {
       const id = params['templateId'] || '';
-      if (!!id && (id !== this._missionTemplate._id) || !this._missionTemplate._id ) {
+      if (!!id && (id !== this._missionTemplate._id) || !this._missionTemplate._id) {
         this._getTemplate(id);
       }
     });
@@ -156,13 +159,25 @@ export class AdminEditUseCaseComponent implements OnInit {
     event.preventDefault();
     if (this._validate.tool && this._validate.template) {
       this._isSaving = true;
-      const data = { template: this._missionTemplate };
+      const data = {template: this._missionTemplate};
 
       if (this._toSaveQuestion) {
         data['actions'] = this._valuesToSave;
       }
 
+      this._updateTemplateInStorage();
       this._updateLibraryTemplate(data);
+    }
+  }
+
+  private _updateTemplateInStorage() {
+    const missionTemplates = this._localStorageService.getItem('missionTemplates') && JSON.parse(this._localStorageService.getItem('missionTemplates'));
+    if (missionTemplates) {
+      missionTemplates.result = missionTemplates.result.map((template: MissionTemplate) => {
+        return this._missionTemplate._id === template._id? this.missionTemplate : template;
+      });
+      this._localStorageService.setItem('missionTemplates', JSON.stringify(missionTemplates));
+      this._missionQuestionService.setAllTemplates(missionTemplates.result);
     }
   }
 
@@ -210,7 +225,7 @@ export class AdminEditUseCaseComponent implements OnInit {
    *
    * @param event
    */
-  public changeStack(event: {key: string, value: any}) {
+  public changeStack(event: { key: string, value: any }) {
     if (!!event && this.canAccess(['question', 'edit'])) {
 
       switch (event.key) {
@@ -241,7 +256,7 @@ export class AdminEditUseCaseComponent implements OnInit {
    * @param event
    * @private
    */
-  private _removeAction(event: {key: string, value: any}) {
+  private _removeAction(event: { key: string, value: any }) {
     const index = this._valuesToSave.findIndex((_value) => {
       return (_value.value.identifier === event.value.identifier && _value.key === 'QUESTION_ADD');
     });
@@ -257,7 +272,7 @@ export class AdminEditUseCaseComponent implements OnInit {
    * @param event: {key: string, value: any}
    * @private
    */
-  private _addAction(event: {key: string, value: any}) {
+  private _addAction(event: { key: string, value: any }) {
     const index = this._valuesToSave.findIndex((_value) => _value.value.quesId === event.value.quesId);
     if (index !== -1) {
       this._valuesToSave.splice(index, 1);
