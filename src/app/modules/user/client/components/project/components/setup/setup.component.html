@@ -29,10 +29,10 @@
             class="button is-link is-sm m-bottom-15 p-no"
             id="btn-quiz-example">
             <img
-              alt=""
-              width="18"
+              [src]="pictos?.example?.primary"
+              alt="picto example"
               class="icon-left"
-              src="https://res.cloudinary.com/umi/image/upload/app/default-images/pictos/picto-example.svg">
+              width="18">
             {{ 'COMMON.BUTTON.EXAMPLE' | translate }}
           </button>
           <!-- card example -->
@@ -41,18 +41,18 @@
           <a
             *ngIf="previewLink"
             [href]="previewLink"
-            [ngClass]="{'m-right-15': isDropdownLang}"
+            [ngClass]="{'m-right-15': hasDropdownLang}"
             class="button is-link is-sm m-bottom-15 p-no"
             id="btn-preview"
             target="_blank">
             <img
-              width="20"
-              src="https://res.cloudinary.com/umi/image/upload/app/default-images/pictos/picto-eye.svg"
-              alt=""
-              class="icon-left">
+              [src]="pictos?.eye?.primary"
+              alt="picto preview"
+              class="icon-left"
+              width="20">
             {{ 'COMMON.BUTTON.PREVIEW' | translate }}
           </a>
-          <!-- preview -->
+          <!-- /preview -->
 
           <!-- card lang -->
 
@@ -75,9 +75,10 @@
           <!-- /if only one lang then Add card lang -->
 
           <!-- has more than 2 lang -->
-          <div *ngIf="isDropdownLang" class="dropdown m-bottom-15 is-right">
-            <a class="button dropdown-toggle is-info" tabindex="0">
-              {{ 'COMMON.LANG.' + activeInnovCard.lang | uppercase | translate }} <i class="icon icon-caret"></i>
+          <div *ngIf="hasDropdownLang" class="dropdown m-bottom-15 is-right">
+            <a class="button dropdown-toggle is-sm is-outlined is-info" tabindex="0">
+              {{ 'COMMON.LANG.' + activeInnovCard.lang | uppercase | translate }}
+              <i class="icon icon-right icon-caret"></i>
             </a>
             <ul class="menu">
               <li (click)="onChangeLang($event)" *ngIf="activeInnovCard.lang === 'en'" class="menu-item">
@@ -100,10 +101,10 @@
           <button
             (click)="onSaveProject($event)"
             [disabled]="isSavingProject"
-            style="min-width: 100px"
-            class="button is-primary is-sm badge is-icon"
             [ngClass]="{'is-active': activeSaveBadge}"
-            id="btn-project-save">
+            class="button is-primary is-sm badge is-icon"
+            id="btn-project-save"
+            style="min-width: 100px">
             <i class="fas fa-save" *ngIf="activeSaveBadge"></i>
             <ng-container *ngIf="isSavingProject; else defSaveText">
               {{ 'COMMON.BUTTON.SAVING_PROJECT' | translate }}
@@ -147,7 +148,7 @@
 
 
 <!-- modal to innovation card add lang -->
-<app-utility-modal-empty *ngIf="showCardModal" [(showModal)]="showCardModal">
+<app-utility-modal-empty [(showModal)]="showCardModal">
 
   <!-- body -->
   <section class="modal-body p-bottom-40">

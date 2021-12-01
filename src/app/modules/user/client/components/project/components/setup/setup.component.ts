@@ -13,6 +13,8 @@ import { Mission } from '../../../../../../../models/mission';
 import { MissionFrontService } from '../../../../../../../services/mission/mission-front.service';
 import { environment } from '../../../../../../../../environments/environment';
 import { CanComponentDeactivate } from '../../../../../../../guards/can-deactivate-guard.service';
+import {RouteFrontService} from '../../../../../../../services/route/route-front.service';
+import {picto, Picto} from '../../../../../../../models/static-data/picto';
 
 interface Banner {
   message: string;
@@ -36,6 +38,18 @@ interface Save {
 })
 
 export class SetupComponent implements OnInit, OnDestroy, CanComponentDeactivate {
+
+  get pictos(): Picto {
+    return this._pictos;
+  }
+
+  get canAddCard(): boolean {
+    return this._canAddCard;
+  }
+
+  get hasDropdownLang(): boolean {
+    return this._hasDropdownLang;
+  }
 
   private _innovation: Innovation = <Innovation>{};
 
@@ -74,11 +88,22 @@ export class SetupComponent implements OnInit, OnDestroy, CanComponentDeactivate
 
   private _scrollOn = false;
 
+  private _hasDropdownLang = false;
+
+  private _canAddCard = false;
+
+  private _pictos: Picto = picto;
+
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _router: Router,
+              private _routeFrontService: RouteFrontService,
               private _innovationService: InnovationService,
               private _translateNotificationsService: TranslateNotificationsService,
               private _innovationFrontService: InnovationFrontService) {
+  }
+
+  ngOnInit() {
+    this._getCurrentPage();
 
     this._router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
@@ -86,27 +111,25 @@ export class SetupComponent implements OnInit, OnDestroy, CanComponentDeactivate
       }
     });
 
-  }
-
-  ngOnInit() {
-    this._getCurrentPage();
-
     this._innovationFrontService.innovation().pipe(takeUntil(this._ngUnsubscribe)).subscribe((innovation) => {
       this._innovation = innovation || <Innovation>{};
       this._previewLink = `${environment.quizUrl}/quiz/${innovation._id}/preview`;
       this._initBanner();
       this._initInnovCard();
+      this._hasDropdownLang = this._activeInnovCard.lang && this._innovation.innovationCards && this._innovation.innovationCards.length > 1;
+      this._canAddCard = this._activeInnovCard.lang && this._innovation.innovationCards && this._innovation.innovationCards.length === 1
+        && (this._innovation.status === 'EDITING' || this._innovation.status === 'SUBMITTED');
       this._quizExample = MissionFrontService.objectiveInfo(<Mission>this._innovation.mission,
         'HELP_QUIZ', this._activeInnovCard.lang);
     });
 
-    this._innovationFrontService.getNotifyChanges().pipe(takeUntil(this._ngUnsubscribe)).subscribe((response) => {
-      this._saveChanges = response;
-      if (response && response.key === 'settings') {
-        this._activeSaveBadge = response && response.state;
-      }
-    });
-
+    this._innovationFrontService.getNotifyChanges()
+      .pipe(takeUntil(this._ngUnsubscribe)).subscribe((response) => {
+        this._saveChanges = response;
+        if (response && response.key === 'settings') {
+          this._activeSaveBadge = response && response.state;
+        }
+      });
   }
 
   @HostListener('window:scroll', [])
@@ -115,14 +138,7 @@ export class SetupComponent implements OnInit, OnDestroy, CanComponentDeactivate
   }
 
   private _getCurrentPage() {
-    const _url = this._router.routerState.snapshot.url.split('/');
-    if (_url.length > 0) {
-      const _value = _url[_url.length - 1];
-      const _params = _value.indexOf('?');
-      this._currentPage = (_params > 0 ? _value.substring(0, _params) : _value).toUpperCase();
-    } else {
-      this._currentPage = 'PITCH';
-    }
+    this._currentPage = this._routeFrontService.activeTab(6, 5).toUpperCase() || 'PITCH';
   }
 
   private _initBanner() {
@@ -180,7 +196,7 @@ export class SetupComponent implements OnInit, OnDestroy, CanComponentDeactivate
 
   public onAddCard(event: Event) {
     event.preventDefault();
-    if (this.canAddCard && !this._isAddingCard) {
+    if (this._canAddCard && !this._isAddingCard) {
       this._showCardModal = true;
     }
   }
@@ -192,7 +208,7 @@ export class SetupComponent implements OnInit, OnDestroy, CanComponentDeactivate
   public addInnovationCard(event: Event) {
     event.preventDefault();
 
-    if (this.canAddCard && !this._isAddingCard) {
+    if (this._canAddCard && !this._isAddingCard) {
       this._isAddingCard = true;
       const _lang = this._activeInnovCard.lang === 'en' ? 'fr' : 'en';
       const _card = new InnovCard({lang: _lang});
@@ -227,29 +243,21 @@ export class SetupComponent implements OnInit, OnDestroy, CanComponentDeactivate
    */
   public onSaveProject(event: Event) {
     event.preventDefault();
+
     if (this._saveChanges.state && !this._isSavingProject) {
       this._isSavingProject = true;
-      this._innovationService.save(this._innovation._id, {settings: this._innovation.settings}).pipe(first()).subscribe(() => {
-        this._isSavingProject = false;
-        this._saveChanges.state = false;
-        this._innovationFrontService.setNotifyChanges(this._saveChanges);
-        this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.SAVED_TEXT');
-        }, (err: HttpErrorResponse) => {
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
-        this._isSavingProject = false;
-        console.error(err);
-      });
+      this._innovationService.save(this._innovation._id, {settings: this._innovation.settings})
+        .pipe(first()).subscribe(() => {
+          this._isSavingProject = false;
+          this._saveChanges.state = false;
+          this._innovationFrontService.setNotifyChanges(this._saveChanges);
+          this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.SAVED_TEXT');
+          }, (err: HttpErrorResponse) => {
+          this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+          this._isSavingProject = false;
+          console.error(err);
+        });
     }
-
-  }
-
-  get canAddCard(): boolean {
-    return this._activeInnovCard.lang && this._innovation.innovationCards && this._innovation.innovationCards.length === 1
-      && (this._innovation.status === 'EDITING' || this._innovation.status === 'SUBMITTED');
-  }
-
-  get isDropdownLang(): boolean {
-    return this._activeInnovCard.lang && this._innovation.innovationCards && this._innovation.innovationCards.length > 1;
   }
 
   get innovation(): Innovation {
@@ -311,7 +319,6 @@ export class SetupComponent implements OnInit, OnDestroy, CanComponentDeactivate
   get scrollOn(): boolean {
     return this._scrollOn;
   }
-
 
   get activeSaveBadge(): boolean {
     return this._activeSaveBadge;
