@@ -23,7 +23,7 @@
 
         <label class="tooltip m-right-20" data-tooltip="Section type">
           <select class="form-select is-sm" disabled>
-            <option>{{ cardSectionName() | titlecase }}</option>
+            <option>{{ isLibraryView? (cardSectionName() | titlecase) : (cardSectionTitle() | titlecase)}}</option>
           </select>
         </label>
 

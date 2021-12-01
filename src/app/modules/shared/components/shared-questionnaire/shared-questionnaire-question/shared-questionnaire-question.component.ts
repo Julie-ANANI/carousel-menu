@@ -1,5 +1,5 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {picto, Picto} from '../../../../../models/static-data/picto';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { picto, Picto } from '../../../../../models/static-data/picto';
 import {
   MissionQuestion,
   MissionQuestionEntry,
@@ -7,9 +7,9 @@ import {
   MissionQuestionType,
   OptionEntry
 } from '../../../../../models/mission';
-import {MissionQuestionService} from '../../../../../services/mission/mission-question.service';
-import {TranslateService} from '@ngx-translate/core';
-import {RolesFrontService} from '../../../../../services/roles/roles-front.service';
+import { MissionQuestionService } from '../../../../../services/mission/mission-question.service';
+import { TranslateService } from '@ngx-translate/core';
+import { RolesFrontService } from '../../../../../services/roles/roles-front.service';
 
 @Component({
   selector: 'app-shared-questionnaire-question',
@@ -97,7 +97,8 @@ export class SharedQuestionnaireQuestionComponent implements OnInit {
 
   constructor(private _missionQuestionService: MissionQuestionService,
               private _rolesFrontService: RolesFrontService,
-              private _translateService: TranslateService) { }
+              private _translateService: TranslateService) {
+  }
 
   ngOnInit() {
   }

@@ -1,4 +1,4 @@
-import {Component, Inject, OnDestroy, OnInit, PLATFORM_ID} from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
 import { AutocompleteService } from '../../../../../../services/autocomplete/autocomplete.service';
 import { PresetService } from '../../../../../../services/preset/preset.service';
 import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
@@ -6,14 +6,14 @@ import { InnovationService } from '../../../../../../services/innovation/innovat
 import { Innovation } from '../../../../../../models/innovation';
 import { environment } from '../../../../../../../environments/environment';
 import { Preset } from '../../../../../../models/preset';
-import {Observable, Subject} from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { RolesFrontService } from '../../../../../../services/roles/roles-front.service';
-import {first, takeUntil} from 'rxjs/operators';
+import { first, takeUntil } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
 import { InnovationFrontService } from '../../../../../../services/innovation/innovation-front.service';
-import {isPlatformBrowser} from '@angular/common';
-import {Mission, MissionCardTitle, MissionTemplate} from '../../../../../../models/mission';
-import {ErrorFrontService} from '../../../../../../services/error/error-front.service';
+import { isPlatformBrowser } from '@angular/common';
+import { Mission, MissionCardTitle, MissionTemplate } from '../../../../../../models/mission';
+import { ErrorFrontService } from '../../../../../../services/error/error-front.service';
 
 @Component({
   templateUrl: './admin-project-questionnaire.component.html',
@@ -46,7 +46,8 @@ export class AdminProjectQuestionnaireComponent implements OnInit, OnDestroy {
               private _rolesFrontService: RolesFrontService,
               private _innovationFrontService: InnovationFrontService,
               private _translateNotificationsService: TranslateNotificationsService,
-              private _innovationService: InnovationService) { }
+              private _innovationService: InnovationService) {
+  }
 
   ngOnInit(): void {
     if (isPlatformBrowser(this._platformId)) {
@@ -92,13 +93,17 @@ export class AdminProjectQuestionnaireComponent implements OnInit, OnDestroy {
           if (card.sections.some(section => section.type === 'OTHER')) {
             customSection = true;
           }
-          const titles = card.sections.map(s => s.title);
+          const titles = card.sections.map((s => s.title));
           if (card.lang === 'fr') {
             frenchTitles = titles;
           } else {
             englishTitles = titles;
           }
         }
+        this._cardsSections[card.lang].map((s: any, index: number) => {
+          s.index = index;
+          this._markSectionIndex(s, index);
+        });
       }
     });
 
@@ -112,14 +117,28 @@ export class AdminProjectQuestionnaireComponent implements OnInit, OnDestroy {
     }
   }
 
+  private _markSectionIndex(section: any, index: number) {
+    if (section.type === "OTHER") {
+      const sectionCardToMark = this._mission.template.sections.find(s => s.identifier === section.title);
+      if (sectionCardToMark) {
+        sectionCardToMark['index'] = index;
+      }
+    } else {
+      const sectionCardToMark = this._mission.template.sections.find(s => s.type === section.type);
+      if(sectionCardToMark){
+        sectionCardToMark['index'] = index;
+      }
+    }
+  }
+
   private _saveInnovation() {
     this._innovationService.save(this._innovation._id, {preset: this._innovation.preset}).subscribe((innovation: Innovation) => {
       this._innovation = innovation;
       this._setQuizLink();
       this._translateNotificationsService.success('Success', 'The preset is updated.');
     }, (err: HttpErrorResponse) => {
-     this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.adminErrorMessage(err));
-     console.error(err);
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.adminErrorMessage(err));
+      console.error(err);
     });
   }
 
@@ -151,7 +170,7 @@ export class AdminProjectQuestionnaireComponent implements OnInit, OnDestroy {
     this._showPresetModal = true;
   }
 
-  public presetSuggestions = (searchString: string): Observable<Array<{name: string, domain: string, logo: string}>> => {
+  public presetSuggestions = (searchString: string): Observable<Array<{ name: string, domain: string, logo: string }>> => {
     return this._autocompleteService.get({query: searchString, type: 'preset'});
   }
 
@@ -159,7 +178,7 @@ export class AdminProjectQuestionnaireComponent implements OnInit, OnDestroy {
     return data.name;
   }
 
-  public choosePreset(event: {name: string, _id: string}) {
+  public choosePreset(event: { name: string, _id: string }) {
     this._chosenPreset = null;
     this._presetService.get(event._id).pipe(first()).subscribe((preset) => {
       this._chosenPreset = preset;

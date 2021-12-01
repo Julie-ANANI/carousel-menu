@@ -18,6 +18,7 @@ export interface InnovCardSection {
   visibility: boolean;
   comments?: CollaborativeComment[];
   etherpadElementId?: string;
+  index?: number;
 }
 
 export interface InnovCardComment {

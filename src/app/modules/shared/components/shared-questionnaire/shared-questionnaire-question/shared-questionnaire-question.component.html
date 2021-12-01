@@ -1,8 +1,10 @@
 <div [id]="'question-' + questionIndex" class="shared-questionnaire-question">
 
   <!-- header -->
-  <div [ngClass]="{'is-edit-mode': editMode, 'essentialBg': question.isTagged && isEssential,
-  'complementaryBg': question.isTagged && !isEssential, 'costumedBg': !question.isTagged}" class="header-wrapper flex-between">
+  <div [ngClass]="{'is-edit-mode': editMode,
+  'essentialBg': (isLibraryView && isEssential) || (!isLibraryView && isTaggedQuestion && question.type === 'ESSENTIAL'),
+  'complementaryBg': (isLibraryView && !isEssential) || (!isLibraryView && isTaggedQuestion && question.type === 'COMPLEMENTARY'),
+  'costumedBg': !isLibraryView && !isTaggedQuestion}" class="header-wrapper flex-between">
 
     <!-- move / select / type / label-->
     <div class="d-flex align-center">
@@ -128,19 +130,23 @@
   <div *ngIf="editMode" class="question-body">
     <span class="label is-rounded text-white tooltip"
           [attr.data-tooltip]="
-question.isTagged && isEssential? 'Essential questions are required \n to ensure the right answer \n to the use case':
-        question.isTagged && !isEssential? 'Secondary questions complete \n the main result coming \n from essential questions' :
-          'Custom questions are specific \n to a client project'
-"
-          [ngClass]="{'is-edit-mode': editMode, 'essentialBg': question.isTagged && isEssential,
-  'complementaryBg': question.isTagged && !isEssential, 'costumedBg': !question.isTagged}"
+(isLibraryView && isEssential) || (!isLibraryView && isTaggedQuestion && question.type === 'ESSENTIAL')?
+'Essential questions are required \n to ensure the right answer \n to the use case':
+        (isLibraryView && !isEssential) || (!isLibraryView && isTaggedQuestion && question.type === 'COMPLEMENTARY')?
+        'Secondary questions complete \n the main result coming \n from essential questions' :
+          'Custom questions are specific \n to a client project'"
+          [ngClass]="{'is-edit-mode': editMode,
+          'essentialBg': (isLibraryView && isEssential) || (!isLibraryView && isTaggedQuestion && question.type === 'ESSENTIAL'),
+  'complementaryBg': (isLibraryView && !isEssential) || (!isLibraryView && isTaggedQuestion && question.type === 'COMPLEMENTARY'),
+  'costumedBg': !isLibraryView && !isTaggedQuestion}"
     >{{
-      question.isTagged && isEssential? 'Essential':
-        question.isTagged && !isEssential? 'Secondary' :
-          'Custom'
+      (isLibraryView && isEssential) || (!isLibraryView && isTaggedQuestion && question.type === 'ESSENTIAL')? 'Essential' :
+        (isLibraryView && !isEssential) || (!isLibraryView && isTaggedQuestion && question.type === 'COMPLEMENTARY')?
+          'Secondary': 'Custom'
       }}</span>
 
-    <div class="text-sm m-bottom-10 m-top-10" *ngIf="question.entry && question.entry.length && question.entry[0].objective">
+    <div class="text-sm m-bottom-10 m-top-10"
+         *ngIf="question.entry && question.entry.length && question.entry[0].objective">
       <p class="text-bold">Objective</p>
       <p class="m-left-15">{{question.entry[0].objective}}</p>
     </div>

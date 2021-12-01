@@ -130,15 +130,11 @@ export class SharedQuestionnaireSectionComponent implements OnInit {
   }
 
   public sectionName(lang: string): string {
-    if (!this.isLibraryView && !!this.cardsSections[this._showTitlesLang].length) {
-      const _find = this.cardsSections[lang].find((_section: InnovCardSection) => {
-        return (_section.title === this._section.identifier) || (_section.type === this._section.type);
-      });
-      if (_find && _find.title) {
-        return _find.title;
-      }
+    if (!this.isLibraryView && this._section['index'] >= 0 && this.cardsSections[lang][this._section['index']] && (this.cardsSections[lang][this._section['index']].title)) {
+      return this.cardsSections[lang][this._section['index']].title;
+    } else {
+      return MissionQuestionService.entryInfo(this._section, lang)['name'] || '';
     }
-    return MissionQuestionService.entryInfo(this._section, lang)['name'] || '';
   }
 
   public removeSection(event: Event): void {
@@ -189,6 +185,7 @@ export class SharedQuestionnaireSectionComponent implements OnInit {
 
     return this._section.type;
   }
+
 
   public cardSectionTitle(): string {
     if (this._section.identifier) {
