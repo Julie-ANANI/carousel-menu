@@ -3,12 +3,6 @@
 
     <!--<button (click)="createPro()" class="btn btn-primary">CreerDesPros Alea + Autobatch si actif</button>-->
 
-    <div
-      (click)="activateSidebar('NEW_BATCH')"
-      *ngIf="canAccess(['create'])"
-      class="text-sm c-hand text-medium text-notify">
-      <i class="fas fa-cog">Create batch manually</i>
-    </div>
     <!-- section no batches -->
     <section *ngIf="!batchesTable.length && !isLoading" class="p-top-30 p-bottom-30">
 
@@ -89,16 +83,6 @@
         </div>
         <!-- /autobatch / to send -->
 
-        <!-- new batch -->
-        <button
-          (click)="activateSidebar('NEW_BATCH')"
-          *ngIf="canAccess(['create'])"
-          class="button is-primary is-sm m-bottom-15"
-          id="btn-new-batch">
-          New batch
-        </button>
-        <!-- /new batch -->
-
       </section>
       <!-- /autobatch / new batch -->
 
@@ -157,6 +141,16 @@
 
       </section>
       <!-- /batches -->
+
+      <!-- new batch -->
+      <button
+        (click)="activateSidebar('NEW_BATCH')"
+        *ngIf="canAccess(['create'])"
+        class="button is-primary is-sm centered"
+        id="btn-new-batch">
+        New batch
+      </button>
+      <!-- /new batch -->
 
     </div>
     <!-- /section batches -->
