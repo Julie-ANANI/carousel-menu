@@ -36,7 +36,8 @@
 
               <a [routerLink]="getRelevantLink(innovation)" class="card-image">
                 <img
-                  [ngStyle]="{ 'width': '120px', 'height': '100px' }"
+                  width="120"
+                  height="100"
                   [src]="getImage(innovation)"
                   alt=" ">
               </a>
@@ -44,7 +45,7 @@
               <div class="card-body">
 
                 <a [routerLink]="getRelevantLink(innovation)">
-                  <span [ngStyle]="{ 'font-size': '22px' }">
+                  <span style="font-size: 22px">
                     {{ innovation.name || ('PROJECT_MODULE.PROJECTS_LIST.UNTITLED' | translate) }}
                   </span>
                 </a>

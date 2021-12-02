@@ -1,6 +1,11 @@
 @import "../../../../../../style/framework/src/variables";
 
 #admin-batches-display {
+  .flex-between{
+    button{
+      min-width: unset;
+    }
+  }
 
   .batch-wrapper {
     display: flex;

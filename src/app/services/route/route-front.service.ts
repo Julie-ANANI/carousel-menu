@@ -44,14 +44,15 @@ export class RouteFrontService {
   }
 
   /***
-	 * this returns the active tab.
-	 * @param urlLength total length of the array ex:
-	 * http://localhost:4200/user/admin/projects/project/5b17cc800a7f5b178e79f710/preparation = 7
-	 * @param indexOf ex: for the above url = 6 because the last route is preparation
-	 */
-  public activeTab(urlLength: number, indexOf: number): string {
+   * this returns the active tab.
+   * @param urlLength total length of the url ex:
+   * http://localhost:4200/user/admin/projects/project/5b17cc800a7f5b178e79f710/preparation = 7
+   * @param indexOf ex: for the above url = 6 because the last route is preparation
+   * @param notExact - true means the url length is not important. The value at the indexOf matters.
+   */
+  public activeTab(urlLength: number, indexOf: number, notExact = false): string {
     const _url = this._router.routerState.snapshot.url.split('/');
-    if (_url.length === urlLength) {
+    if (_url.length === urlLength || notExact) {
       const _params = _url[indexOf].indexOf('?');
       return _params > 0 ? _url[indexOf].substring(0, _params) : _url[indexOf];
     }

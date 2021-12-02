@@ -14,7 +14,7 @@ import { InnovationFrontService } from '../../../../../../services/innovation/in
 import { Subject } from 'rxjs';
 import { first, takeUntil } from 'rxjs/operators';
 import { RolesFrontService } from '../../../../../../services/roles/roles-front.service';
-import { StatsInterface } from '../../admin-stats-banner/admin-stats-banner.component';
+import { StatsInterface } from '../../../../../../models/stats';
 import {
   Milestone,
   Mission, MissionQuestion,
@@ -31,10 +31,6 @@ import { ClientProject } from '../../../../../../models/client-project';
 import { UserService } from '../../../../../../services/user/user.service';
 import { Response } from '../../../../../../models/response';
 import { ClientProjectService } from '../../../../../../services/client-project/client-project.service';
-/*import {
-  Objective,
-  ObjectivesPrincipal,
-} from '../../../../../../models/static-data/missionObjectives';*/
 import { environment } from '../../../../../../../environments/environment';
 import { CommonService } from '../../../../../../services/common/common.service';
 import { SidebarInterface } from '../../../../../sidebars/interfaces/sidebar-interface';
@@ -62,22 +58,6 @@ export interface UserSuggestion {
   styleUrls: ['./admin-project-settings.component.scss'],
 })
 export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
-
-  get canDeactivateFollowUp(): boolean {
-    return this._canDeactivateFollowUp;
-  }
-
-  get hasMissionTemplate(): boolean {
-    return MissionFrontService.hasMissionTemplate(this._mission);
-  }
-
-  get templateComplementary(): Array<MissionQuestion> {
-    return this.hasMissionTemplate && MissionFrontService.combineComplementaryObjectives(this._mission.template.sections) || [];
-  }
-
-  get currentLang(): string {
-    return this._translateService.currentLang;
-  }
 
   private _isLoading = true;
 
@@ -131,7 +111,7 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
 
   private _statsConfig: Array<StatsInterface> = [];
 
-  private _missionTeam: string[];
+  private _missionTeam: string[] = [];
 
   private _picto: Picto = picto;
 
@@ -144,6 +124,10 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
   private _blacklistDomains: Array<string> = [];
 
   private _canDeactivateFollowUp = false;
+
+  private _orginalMilestone: Array<Milestone> = [];
+
+  private _milestones: Array<Milestone> = [];
 
   constructor(
     @Inject(PLATFORM_ID) protected _platformId: Object,
@@ -175,26 +159,44 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
       this._getOperators();
       this._getCommercials();
 
+      this.getInnovation().then((innovation: Innovation) => {
+        if (innovation) {
+          this._statsReferentsService
+            .get()
+            .subscribe((referents) => this._setStats(referents.innovations));
+          this._setQuizLink();
+        }
+      });
+    }
+  }
+
+  getInnovation() {
+    return new Promise((resolve, reject) => {
       this._innovationFrontService
         .innovation()
         .pipe(takeUntil(this._ngUnsubscribe))
         .subscribe((innovation) => {
           this._innovation = innovation || <Innovation>{};
-          this._statsReferentsService
-            .get()
-            .subscribe((referents) => this._setStats(referents.innovations));
-          this._setQuizLink();
-
-          if (!!this._innovation.mission) {
-            this._mission = <Mission>this._innovation.mission;
+          if (!!innovation.mission) {
+            this._mission = <Mission>innovation.mission;
             this._missionTeam = this._mission.team.map((user: User) => user.id);
+            this.initRoadmap();
           }
 
-          if (!!this._innovation.clientProject) {
-            this._clientProject = <ClientProject>this._innovation.clientProject;
+          if (!!innovation.clientProject) {
+            this._clientProject = <ClientProject>innovation.clientProject;
           }
+          resolve(innovation);
+        }, error => {
+          console.error(error);
+          reject(error);
         });
-    }
+    });
+  }
+
+  private initRoadmap(){
+    this._milestones = MissionFrontService.sortMilestoneDates(this._mission.milestoneDates);
+    this._orginalMilestone = JSON.parse(JSON.stringify(this._milestones));
   }
 
   private _getValidAnswers() {
@@ -895,6 +897,174 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
     return MissionFrontService.objectiveName(value, this.currentLang);
   }
 
+  /*get missionObjectives(): Array<Objective> {
+    return this._missionObjectives;
+  }*/
+
+  addMilestone(event: Event) {
+    event.preventDefault();
+    this._isAddMilestone = true;
+  }
+
+  confirmAddMileStone(event: Event) {
+    event.preventDefault();
+    this._isAddMilestone = false;
+    const milestone = {
+      name: this.milestoneForm.get('name').value,
+      dueDate: this.milestoneForm.get('dueDate').value,
+      code: '',
+      comment: ''
+    };
+    this._milestones.push(milestone);
+    this._mission.milestoneDates = this._milestones;
+    this.initRoadmap();
+    this._saveMission(this._mission);
+  }
+
+
+  cancelAddMileStone(event: Event) {
+    event.preventDefault();
+    this._isAddMilestone = false;
+    this._milestoneForm.reset();
+  }
+
+  getInitialDomains() {
+    this._blacklistDomains = [];
+    if (this._innovation.settings && this._innovation.settings.blacklist) {
+      this._blacklistDomains = this._innovation.settings.blacklist.domains;
+    }
+    if (this._innovation.owner && this._innovation.owner.company && this._innovation.owner.company.domain) {
+      if (this._blacklistDomains.indexOf(this._innovation.owner.company.domain) === -1) {
+        this._blacklistDomains.push(this._innovation.owner.company.domain);
+      }
+    }
+    this._innovation.settings.blacklist.domains = JSON.parse(JSON.stringify(this._blacklistDomains));
+  }
+
+  openQuiz($event: Event) {
+    $event.preventDefault();
+    if (this.quizLink) {
+      window.open(this.quizLink, '_blank');
+    }
+  }
+
+  editMilestone(milestone: Milestone, type: string) {
+    milestone['edit' + type] = true;
+  }
+
+  disableEditing(event: Event, milestone: Milestone, type: string) {
+    event.preventDefault();
+    milestone['edit' + type] = false;
+    this._milestones = JSON.parse(JSON.stringify(this._orginalMilestone));
+  }
+
+  validateRoadmap(event: KeyboardEvent, milestone: Milestone, type: string) {
+    event.preventDefault();
+    if (event.keyCode === 13) {
+      if (milestone.name && milestone.dueDate) {
+        this._mission.milestoneDates = this._milestones;
+        this.initRoadmap();
+        this._saveMission(this._mission, 'The roadmap has been updated.');
+      } else {
+        this._milestones = JSON.parse(JSON.stringify(this._orginalMilestone));
+        this._translateNotificationsService.error('Input Error...', 'Invalide roadmap');
+      }
+      milestone['edit' + type] = false;
+    }
+  }
+
+  dueDateOnChange(event: any, milestone: Milestone) {
+    milestone.dueDate = new Date(event);
+  }
+
+  removeMilestone(event: Event, i: number) {
+    this._milestones =  this._milestones.filter((milestone, index )=> index !== i);
+    this._mission.milestoneDates = this._milestones;
+    this.initRoadmap();
+    this._saveMission(this._mission, 'The roadmap has been deleted.');
+  }
+
+  get quizLink(): string {
+    return this._quizLink;
+  }
+
+  get quizUrlCopied(): boolean {
+    return this._quizUrlCopied;
+  }
+
+  get sidebarValue(): SidebarInterface {
+    return this._sidebarValue;
+  }
+
+  set sidebarValue(value: SidebarInterface) {
+    this._sidebarValue = value;
+  }
+
+  get dateFormat(): string {
+    return this._dateFormat;
+  }
+
+  get innovationStatus(): Array<InnovationStatus> {
+    return this._innovationStatus;
+  }
+
+  get domains(): Array<{ name: string }> {
+    return this._domains;
+  }
+
+  get statsConfig(): Array<StatsInterface> {
+    return this._statsConfig;
+  }
+
+  set isPublishingCommunity(value: boolean) {
+    this._isPublishingCommunity = value;
+  }
+
+  get blacklistDomains(): Array<string> {
+    return this._blacklistDomains;
+  }
+
+  get picto(): Picto {
+    return this._picto;
+  }
+
+  get showModal(): boolean {
+    return this._showModal;
+  }
+
+  set showModal(value: boolean) {
+    this._showModal = value;
+  }
+
+  get isPublishingCommunity(): boolean {
+    return this._isPublishingCommunity;
+  }
+
+
+  get isAddMilestone(): boolean {
+    return this._isAddMilestone;
+  }
+
+  get milestoneForm(): FormGroup {
+    return this._milestoneForm;
+  }
+
+  get canDeactivateFollowUp(): boolean {
+    return this._canDeactivateFollowUp;
+  }
+
+  get hasMissionTemplate(): boolean {
+    return MissionFrontService.hasMissionTemplate(this._mission);
+  }
+
+  get templateComplementary(): Array<MissionQuestion> {
+    return this.hasMissionTemplate && MissionFrontService.combineComplementaryObjectives(this._mission.template.sections) || [];
+  }
+
+  get currentLang(): string {
+    return this._translateService.currentLang;
+  }
+
   get innovTags(): Array<Tag> {
     if (this._sidebarValue.animate_state === 'active') {
       return this._innovation.tags;
@@ -903,7 +1073,7 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
   }
 
   get milestones(): Array<Milestone> {
-    return MissionFrontService.sortMilestoneDates(this._mission.milestoneDates);
+    return this._milestones;
   }
 
   get isLoading(): boolean {
@@ -946,129 +1116,8 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
     return this._newOwner;
   }
 
-  /*get missionObjectives(): Array<Objective> {
-    return this._missionObjectives;
-  }*/
-
-  get quizLink(): string {
-    return this._quizLink;
-  }
-
-  get quizUrlCopied(): boolean {
-    return this._quizUrlCopied;
-  }
-
-  get sidebarValue(): SidebarInterface {
-    return this._sidebarValue;
-  }
-
-  set sidebarValue(value: SidebarInterface) {
-    this._sidebarValue = value;
-  }
-
-  get dateFormat(): string {
-    return this._dateFormat;
-  }
-
-  get innovationStatus(): Array<InnovationStatus> {
-    return this._innovationStatus;
-  }
-
-  get domains(): Array<{ name: string }> {
-    return this._domains;
-  }
-
-  get statsConfig(): Array<StatsInterface> {
-    return this._statsConfig;
-  }
-
-  get blacklistDomains(): Array<string> {
-    return this._blacklistDomains;
-  }
-
-  get picto(): Picto {
-    return this._picto;
-  }
-
-  get showModal(): boolean {
-    return this._showModal;
-  }
-
-  set showModal(value: boolean) {
-    this._showModal = value;
-  }
-
-  get isPublishingCommunity(): boolean {
-    return this._isPublishingCommunity;
-  }
-
-  getInitialDomains() {
-    this._blacklistDomains = [];
-    if (this._innovation.settings && this._innovation.settings.blacklist) {
-      this._blacklistDomains = this._innovation.settings.blacklist.domains;
-    }
-    if (this._innovation.owner && this._innovation.owner.company && this._innovation.owner.company.domain) {
-      if (this._blacklistDomains.indexOf(this._innovation.owner.company.domain) === -1) {
-        this._blacklistDomains.push(this._innovation.owner.company.domain);
-      }
-    }
-    this._innovation.settings.blacklist.domains = JSON.parse(JSON.stringify(this._blacklistDomains));
-  }
-
-  set isPublishingCommunity(value: boolean) {
-    this._isPublishingCommunity = value;
-  }
-
-
-  get isAddMilestone(): boolean {
-    return this._isAddMilestone;
-  }
-
   ngOnDestroy(): void {
     this._ngUnsubscribe.next();
     this._ngUnsubscribe.complete();
-  }
-
-  openQuiz($event: Event) {
-    $event.preventDefault();
-    if (this.quizLink) {
-      window.open(this.quizLink, '_blank');
-    }
-  }
-
-  get milestoneForm(): FormGroup {
-    return this._milestoneForm;
-  }
-
-  addMilestone(event: Event) {
-    event.preventDefault();
-    this._isAddMilestone = true;
-  }
-
-  confirmAddMileStone(event: Event) {
-    event.preventDefault();
-    this._isAddMilestone = false;
-    const milestone = {
-      name: this.milestoneForm.get('name').value,
-      dueDate: this.milestoneForm.get('dueDate').value,
-      code: '',
-      comment: ''
-    };
-
-    this._missionService.addMilestone(this._mission._id, milestone).pipe(first()).subscribe(res => {
-      this._mission.milestoneDates.push(milestone);
-      this._milestoneForm.reset();
-      this._translateNotificationsService.success('Success', 'Add a milestone in mission');
-    }, (err: HttpErrorResponse) => {
-      this._translateNotificationsService.error('Project Error...', ErrorFrontService.adminErrorMessage(err));
-      console.error(err);
-    });
-  }
-
-
-  cancelAddMileStone(event: Event) {
-    event.preventDefault();
-    this._isAddMilestone = false;
-    this._milestoneForm.reset();
   }
 }

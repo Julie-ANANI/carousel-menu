@@ -16,7 +16,7 @@ import { ErrorFrontService } from '../../../../../../services/error/error-front.
 import { HttpErrorResponse } from '@angular/common/http';
 import { QuizService } from '../../../../../../services/quiz/quiz.service';
 import { RolesFrontService } from '../../../../../../services/roles/roles-front.service';
-import { StatsInterface } from '../../admin-stats-banner/admin-stats-banner.component';
+import { StatsInterface } from '../../../../../../models/stats';
 import {InnovationFrontService} from '../../../../../../services/innovation/innovation-front.service';
 
 @Component({

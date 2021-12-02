@@ -117,16 +117,6 @@ export class SharedWorldmapComponent implements OnInit {
 
   private _countriesData: any;
 
-  constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
-              private _elementRef: ElementRef,
-              private _indexService: IndexService,
-              private _worldmapService: WorldmapService,
-              private _viewContainerRef: ViewContainerRef) {}
-
-  ngOnInit() {
-    this._worldmapService.loadCountriesFromViewContainerRef(this._viewContainerRef);
-  }
-
   @HostListener('click', ['$event'])
   onMouseClick(event: MouseEvent) {
     if (this.type === 'demo') {
@@ -135,6 +125,16 @@ export class SharedWorldmapComponent implements OnInit {
         this.onCountryClick.emit(id);
       }
     }
+  }
+
+  constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
+              private _elementRef: ElementRef,
+              private _indexService: IndexService,
+              private _worldmapService: WorldmapService,
+              private _viewContainerRef: ViewContainerRef) {}
+
+  ngOnInit() {
+    this._worldmapService.loadCountriesFromViewContainerRef(this._viewContainerRef);
   }
 
   private _reinitializeMap() {

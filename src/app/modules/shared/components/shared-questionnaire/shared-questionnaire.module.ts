@@ -9,16 +9,18 @@ import { SharedQuestionnaireSectionComponent } from './shared-questionnaire-sect
 import {ModalEmptyModule} from '../../../utility/modals/modal-empty/modal-empty.module';
 import {SharedQuestionnaireQuestionComponent} from './shared-questionnaire-question/shared-questionnaire-question.component';
 import {AutoSuggestionModule} from '../../../utility/auto-suggestion/auto-suggestion.module';
+import {TextareaAutoResizeModule} from '../../../../directives/textareaAutoResize/textarea-auto-resize.module';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    TranslateModule.forChild(),
-    RouterModule,
-    FormsModule,
-    ModalEmptyModule,
-    AutoSuggestionModule
-  ],
+    imports: [
+        CommonModule,
+        TranslateModule.forChild(),
+        RouterModule,
+        FormsModule,
+        ModalEmptyModule,
+        AutoSuggestionModule,
+        TextareaAutoResizeModule
+    ],
   declarations: [
     SharedQuestionnaireComponent,
     SharedQuestionnaireSectionComponent,

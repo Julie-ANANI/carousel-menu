@@ -28,189 +28,6 @@ import {UserFrontService} from '../../../../../services/user/user-front.service'
 })
 export class SharedFollowUpClientComponent implements OnInit, OnDestroy {
 
-  get answersCanBeSelected(): number {
-    return this._answers.filter((_answer) => !SharedFollowUpClientComponent._isRowDisabled(_answer)).length;
-  }
-
-  get platformLang(): string {
-    return this._translateService.currentLang;
-  }
-
-  get isValidCompany(): boolean {
-    return !!this._companyName && !!this._companyName.trim();
-  }
-
-  get finalAnswers(): Array<Answer> {
-    return this._finalAnswers;
-  }
-
-  get config(): Config {
-    return this._config;
-  }
-
-  set config(value: Config) {
-    this._config = value;
-  }
-
-  get tableInfos(): Table {
-    return this._tableInfos;
-  }
-
-  set sendShowModal(value: boolean) {
-    this._sendShowModal = value;
-  }
-
-  set showModal(value: boolean) {
-    this._showModal = value;
-  }
-
-  set companyName(value: string) {
-    this._companyName = value;
-  }
-
-  set finalConfig(value: Config) {
-    this._finalConfig = value;
-  }
-
-  set sidebarAnswer(value: SidebarInterface) {
-    this._sidebarAnswer = value;
-  }
-
-  set sidebarTemplate(value: SidebarInterface) {
-    this._sidebarTemplate = value;
-  }
-
-  get answers(): Array<Answer> {
-    return this._answers;
-  }
-
-  get cc(): Array<InnovationFollowUpEmailsCc> {
-    return this._cc;
-  }
-
-  get contactFields(): Array<string> {
-    return this._contactFields;
-  }
-
-  get currentStep(): number {
-    return this._currentStep;
-  }
-
-  get introImages(): Array<string> {
-    return this._introImages;
-  }
-
-  get isNextStep(): boolean {
-    return this._isNextStep;
-  }
-
-  get phraseChoose(): Array<string> {
-    return this._phraseChoose;
-  }
-
-  get selectedIds(): Array<string> {
-    return this._selectedIds;
-  }
-
-  get selectedPhrase(): string {
-    return this._selectedPhrase;
-  }
-
-  get modalAnswer(): Answer {
-    return this._modalAnswer;
-  }
-
-  get sidebarAnswer(): SidebarInterface {
-    return this._sidebarAnswer;
-  }
-
-  get sidebarTemplate(): SidebarInterface {
-    return this._sidebarTemplate;
-  }
-
-  get steps(): Array<string> {
-    return this._steps;
-  }
-
-  get emailsObject(): EmailsObject {
-    return this._emailsObject;
-  }
-
-  get emailsObjectReplaced(): EmailsObject {
-    return this._emailsObjectReplaced;
-  }
-
-  get showModal(): boolean {
-    return this._showModal;
-  }
-
-  get sendShowModal(): boolean {
-    return this._sendShowModal;
-  }
-
-  get formData(): FormGroup {
-    return this._formData;
-  }
-
-  get selectedCC(): Array<InnovationFollowUpEmailsCc> {
-    return this._selectedCC;
-  }
-
-  get ccToAdd(): InnovationFollowUpEmailsCc {
-    return this._ccToAdd;
-  }
-
-  get langs(): Array<string> {
-    return this._langs;
-  }
-
-  get selectedLang(): string {
-    return this._selectedLang;
-  }
-
-  get finalTableInfos(): Table {
-    return this._finalTableInfos;
-  }
-
-  get finalConfig(): Config {
-    return this._finalConfig;
-  }
-
-  get planeImage(): string {
-    return this._planeImage;
-  }
-
-  get isSending(): boolean {
-    return this._isSending;
-  }
-
-  get companyName(): string {
-    return this._companyName;
-  }
-
-  get startContactProcess(): boolean {
-    return this._startContactProcess;
-  }
-
-  get isDisabled(): boolean {
-    switch (this._contactFields[this._currentStep]) {
-
-      case 'STEP_SELECT':
-        return !this._selectedIds.length;
-
-      case 'STEP_CONFIGURE':
-        return !this.isValidCompany || !this._selectedCC.length;
-
-      default:
-        return false;
-
-    }
-  }
-
-  get project(): Innovation {
-    return this._project;
-  }
-
   @Input() set startContactProcess(value: boolean) {
     if (!!value) {
       this._initVariables();
@@ -339,7 +156,6 @@ export class SharedFollowUpClientComponent implements OnInit, OnDestroy {
               private _translateNotificationsService: TranslateNotificationsService) { }
 
   ngOnInit() {
-    this._initTable(this._answers, -1);
   }
 
   private _initFilter() {
@@ -683,6 +499,189 @@ export class SharedFollowUpClientComponent implements OnInit, OnDestroy {
 
   public updateAnswers(answers: Array<Answer> = []) {
     this.rowsSelected({_rows: answers});
+  }
+
+  get answersCanBeSelected(): number {
+    return this._answers.filter((_answer) => !SharedFollowUpClientComponent._isRowDisabled(_answer)).length;
+  }
+
+  get platformLang(): string {
+    return this._translateService.currentLang;
+  }
+
+  get isValidCompany(): boolean {
+    return !!this._companyName && !!this._companyName.trim();
+  }
+
+  get finalAnswers(): Array<Answer> {
+    return this._finalAnswers;
+  }
+
+  get config(): Config {
+    return this._config;
+  }
+
+  set config(value: Config) {
+    this._config = value;
+  }
+
+  get tableInfos(): Table {
+    return this._tableInfos;
+  }
+
+  set sendShowModal(value: boolean) {
+    this._sendShowModal = value;
+  }
+
+  set showModal(value: boolean) {
+    this._showModal = value;
+  }
+
+  set companyName(value: string) {
+    this._companyName = value;
+  }
+
+  set finalConfig(value: Config) {
+    this._finalConfig = value;
+  }
+
+  set sidebarAnswer(value: SidebarInterface) {
+    this._sidebarAnswer = value;
+  }
+
+  set sidebarTemplate(value: SidebarInterface) {
+    this._sidebarTemplate = value;
+  }
+
+  get answers(): Array<Answer> {
+    return this._answers;
+  }
+
+  get cc(): Array<InnovationFollowUpEmailsCc> {
+    return this._cc;
+  }
+
+  get contactFields(): Array<string> {
+    return this._contactFields;
+  }
+
+  get currentStep(): number {
+    return this._currentStep;
+  }
+
+  get introImages(): Array<string> {
+    return this._introImages;
+  }
+
+  get isNextStep(): boolean {
+    return this._isNextStep;
+  }
+
+  get phraseChoose(): Array<string> {
+    return this._phraseChoose;
+  }
+
+  get selectedIds(): Array<string> {
+    return this._selectedIds;
+  }
+
+  get selectedPhrase(): string {
+    return this._selectedPhrase;
+  }
+
+  get modalAnswer(): Answer {
+    return this._modalAnswer;
+  }
+
+  get sidebarAnswer(): SidebarInterface {
+    return this._sidebarAnswer;
+  }
+
+  get sidebarTemplate(): SidebarInterface {
+    return this._sidebarTemplate;
+  }
+
+  get steps(): Array<string> {
+    return this._steps;
+  }
+
+  get emailsObject(): EmailsObject {
+    return this._emailsObject;
+  }
+
+  get emailsObjectReplaced(): EmailsObject {
+    return this._emailsObjectReplaced;
+  }
+
+  get showModal(): boolean {
+    return this._showModal;
+  }
+
+  get sendShowModal(): boolean {
+    return this._sendShowModal;
+  }
+
+  get formData(): FormGroup {
+    return this._formData;
+  }
+
+  get selectedCC(): Array<InnovationFollowUpEmailsCc> {
+    return this._selectedCC;
+  }
+
+  get ccToAdd(): InnovationFollowUpEmailsCc {
+    return this._ccToAdd;
+  }
+
+  get langs(): Array<string> {
+    return this._langs;
+  }
+
+  get selectedLang(): string {
+    return this._selectedLang;
+  }
+
+  get finalTableInfos(): Table {
+    return this._finalTableInfos;
+  }
+
+  get finalConfig(): Config {
+    return this._finalConfig;
+  }
+
+  get planeImage(): string {
+    return this._planeImage;
+  }
+
+  get isSending(): boolean {
+    return this._isSending;
+  }
+
+  get companyName(): string {
+    return this._companyName;
+  }
+
+  get startContactProcess(): boolean {
+    return this._startContactProcess;
+  }
+
+  get isDisabled(): boolean {
+    switch (this._contactFields[this._currentStep]) {
+
+      case 'STEP_SELECT':
+        return !this._selectedIds.length;
+
+      case 'STEP_CONFIGURE':
+        return !this.isValidCompany || !this._selectedCC.length;
+
+      default:
+        return false;
+
+    }
+  }
+
+  get project(): Innovation {
+    return this._project;
   }
 
   ngOnDestroy(): void {

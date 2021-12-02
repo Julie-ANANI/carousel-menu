@@ -1,4 +1,4 @@
-import {Component, HostListener, Inject, OnInit, PLATFORM_ID} from '@angular/core';
+import {Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
 import {
   MissionQuestion,
   MissionQuestionEntry,
@@ -17,10 +17,8 @@ import {RolesFrontService} from '../../../../../../../services/roles/roles-front
 import {picto, Picto} from '../../../../../../../models/static-data/picto';
 import {TranslateService} from '@ngx-translate/core';
 import {TranslateTitleService} from '../../../../../../../services/title/title.service';
-import {CommonService} from '../../../../../../../services/common/common.service';
 import {HttpErrorResponse} from '@angular/common/http';
-import {Config} from '../../../../../../../models/config';
-
+import { Config } from '@umius/umi-common-component/models';
 interface ConfirmUpdate {
   tool: boolean;
   template: boolean;
@@ -31,86 +29,6 @@ interface ConfirmUpdate {
   styleUrls: ['./admin-edit-question.component.scss']
 })
 export class AdminEditQuestionComponent implements OnInit {
-
-  get questions(): Array<MissionQuestion> {
-    return this._questions;
-  }
-
-  get isRemoving(): boolean {
-    return this._isRemoving;
-  }
-
-  get canBeDeleted(): boolean {
-    return this._canBeDeleted;
-  }
-
-  get isPartUseCase(): boolean {
-    return this._isPartUseCase;
-  }
-
-  get fetchingError(): boolean {
-    return this._fetchingError;
-  }
-
-  get isSaving(): boolean {
-    return this._isSaving;
-  }
-
-  get questionnaireLangs(): Array<string> {
-    return this._questionnaireLangs;
-  }
-
-  get accessPath(): Array<string> {
-    return this._accessPath;
-  }
-
-  get validate(): ConfirmUpdate {
-    return this._validate;
-  }
-
-  set validate(value: ConfirmUpdate) {
-    this._validate = value;
-  }
-
-  get showModal(): boolean {
-    return this._showModal;
-  }
-
-  set showModal(value: boolean) {
-    this._showModal = value;
-  }
-
-  get question(): MissionQuestion {
-    return this._question;
-  }
-
-  get name(): string {
-    return this._name;
-  }
-
-  get toBeSaved(): boolean {
-    return this._toBeSaved;
-  }
-
-  get picto(): Picto {
-    return this._picto;
-  }
-
-  get editMode(): boolean {
-    return this._editMode;
-  }
-
-  set editMode(value: boolean) {
-    this._editMode = value;
-  }
-
-  get isTaggedQuestion(): boolean {
-    return this._isTaggedQuestion;
-  }
-
-  get platformLang(): string {
-    return this._translateService.currentLang;
-  }
 
   private _fetchingError = false;
 
@@ -200,20 +118,6 @@ export class AdminEditQuestionComponent implements OnInit {
 
   private _jsonParse() {
     this._questions = JSON.parse(JSON.stringify(this._questions));
-  }
-
-  /**
-   * auto expand the height of the textarea based on the content length.
-   *
-   * @param _event
-   */
-  @HostListener('keydown', ['$event'])
-  onKeyDown(_event: KeyboardEvent) {
-    const textarea = (_event.target as HTMLTextAreaElement);
-    if (!textarea || (textarea.nodeName !== 'TEXTAREA') || (textarea.classList && !textarea.classList.contains('auto-expand'))) {
-      return;
-    }
-    CommonService.calcTextareaHeight(textarea, _event);
   }
 
   /**
@@ -457,6 +361,86 @@ export class AdminEditQuestionComponent implements OnInit {
     if (!this._toBeSaved) {
       this._question = this._questions.find((_question) => _question._id === event);
     }
+  }
+
+  get questions(): Array<MissionQuestion> {
+    return this._questions;
+  }
+
+  get isRemoving(): boolean {
+    return this._isRemoving;
+  }
+
+  get canBeDeleted(): boolean {
+    return this._canBeDeleted;
+  }
+
+  get isPartUseCase(): boolean {
+    return this._isPartUseCase;
+  }
+
+  get fetchingError(): boolean {
+    return this._fetchingError;
+  }
+
+  get isSaving(): boolean {
+    return this._isSaving;
+  }
+
+  get questionnaireLangs(): Array<string> {
+    return this._questionnaireLangs;
+  }
+
+  get accessPath(): Array<string> {
+    return this._accessPath;
+  }
+
+  get validate(): ConfirmUpdate {
+    return this._validate;
+  }
+
+  set validate(value: ConfirmUpdate) {
+    this._validate = value;
+  }
+
+  get showModal(): boolean {
+    return this._showModal;
+  }
+
+  set showModal(value: boolean) {
+    this._showModal = value;
+  }
+
+  get question(): MissionQuestion {
+    return this._question;
+  }
+
+  get name(): string {
+    return this._name;
+  }
+
+  get toBeSaved(): boolean {
+    return this._toBeSaved;
+  }
+
+  get picto(): Picto {
+    return this._picto;
+  }
+
+  get editMode(): boolean {
+    return this._editMode;
+  }
+
+  set editMode(value: boolean) {
+    this._editMode = value;
+  }
+
+  get isTaggedQuestion(): boolean {
+    return this._isTaggedQuestion;
+  }
+
+  get platformLang(): string {
+    return this._translateService.currentLang;
   }
 
 }

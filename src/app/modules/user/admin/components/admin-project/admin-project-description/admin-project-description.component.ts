@@ -19,7 +19,6 @@ type modalType = 'NEW_SECTION' | 'DELETE_SECTION' | '';
 interface Toggle {
   title: boolean;
   summary: boolean;
-
   [property: string]: boolean;
 }
 
@@ -56,7 +55,12 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
     summary: false
   };
 
-  private _toggleCommentSuggestion: Toggle = {
+  private _showComment: Toggle = {
+    title: false,
+    summary: false
+  };
+
+  private _showSuggestion: Toggle = {
     title: false,
     summary: false
   };
@@ -65,6 +69,7 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
     title: true,
     summary: true
   };
+
 
   private _isSavingMedia = false;
 
@@ -127,48 +132,6 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
     return '';
   }
 
-  /**
-   public importTranslation(event: Event, model: CardSectionTypes, index?: number) {
-    const htmlScraper = new ScrapeHTMLTags();
-    event.preventDefault();
-    const from_card = this._innovation.innovationCards[this._activeCardIndex === 0 ? 1 : 0];
-    const _model = model.toLowerCase();
-    let _text = '';
-
-    if (model === 'TITLE' || model === 'SUMMARY') {
-      _text = htmlScraper.transform(from_card[_model]);
-    } else if (model === 'ISSUE' || model === 'SOLUTION' || model === 'CONTEXT' || model === 'OTHER') {
-      _text = htmlScraper.transform(<String>from_card.sections[index].content);
-    }
-
-    if (_text) {
-      this._translationService.translate(_text, this.activeInnovCard.lang).pipe(first()).subscribe((o: any) => {
-        switch (model) {
-
-          case 'TITLE':
-          case 'SUMMARY':
-            this.activeInnovCard[_model] = o.translation;
-            break;
-
-          case 'ISSUE':
-          case 'SOLUTION':
-          case 'CONTEXT':
-          case 'OTHER':
-            this.activeInnovCard.sections[index].content = o.translation;
-            break;
-
-        }
-        this.updateInnovation();
-      }, (err: HttpErrorResponse) => {
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
-        console.error(err);
-      });
-    } else {
-      this._translateNotificationsService.error('Error', 'The text is empty in another project language.');
-    }
-
-  }
-   */
   private _initToggle() {
     this._toggleComment = {
       title: !!(this.activeInnovCard.operatorComment && this.activeInnovCard.operatorComment.title.comment),
@@ -227,16 +190,20 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
     });
   }
 
-  public onToggleCommentSuggestion(event: Event, property: string) {
-    this._toggleCommentSuggestion[property] = !this._toggleCommentSuggestion[property];
-  }
-
   public onToggleComment(event: Event, property: string) {
     this._toggleComment[property] = !this._toggleComment[property];
   }
 
   public onToggleSuggestion(event: Event, property: string) {
     this._toggleSuggestion[property] = !this._toggleSuggestion[property];
+  }
+
+  public onShowSuggestion(event: Event, property: string) {
+    this._showSuggestion[property] = !this._showSuggestion[property];
+  }
+
+  public onShowComment(event: Event, property: string) {
+    this._showComment[property] = !this._showComment[property];
   }
 
   /**
@@ -468,6 +435,15 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
     return true;
   }
 
+  padPreviewModeOnChange(title: string) {
+    this._togglePreviewMode[title] = !this._togglePreviewMode[title];
+  }
+
+  mediaToShow(mediaSrc: any) {
+    this._modalMedia = true;
+    this._selectedMedia = mediaSrc;
+  }
+
   get activeInnovCard(): InnovCard {
     return InnovationFrontService.activeCard(this._innovation, this._activeCardIndex);
   }
@@ -534,8 +510,12 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
     return this._selectedMedia;
   }
 
-  get toggleCommentSuggestion(): Toggle {
-    return this._toggleCommentSuggestion;
+  get showComment(): Toggle {
+    return this._showComment;
+  }
+
+  get showSuggestion(): Toggle {
+    return this._showSuggestion;
   }
 
   ngOnDestroy(): void {
@@ -543,12 +523,4 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
     this._ngUnsubscribe.complete();
   }
 
-  padPreviewModeOnChange(title: string) {
-    this._togglePreviewMode[title] = !this._togglePreviewMode[title];
-  }
-
-  mediaToShow(mediaSrc: any) {
-    this._modalMedia = true;
-    this._selectedMedia = mediaSrc;
-  }
 }

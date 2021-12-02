@@ -23,10 +23,6 @@ import {MissionQuestionService} from '../../../../../../services/mission/mission
 
 export class BarChartComponent implements OnInit, OnDestroy {
 
-  get hasMissionTemplate(): boolean {
-    return MissionFrontService.hasMissionTemplate(<Mission>this.innovation.mission);
-  }
-
   @Input() innovation: Innovation = <Innovation>{};
 
   @Input() question: Question | MissionQuestion = <Question>{};
@@ -141,6 +137,10 @@ export class BarChartComponent implements OnInit, OnDestroy {
 
   get toggleFilterIcon(): { [p: string]: boolean } {
     return this._toggleFilterIcon;
+  }
+
+  get hasMissionTemplate(): boolean {
+    return MissionFrontService.hasMissionTemplate(<Mission>this.innovation.mission);
   }
 
   ngOnDestroy(): void {

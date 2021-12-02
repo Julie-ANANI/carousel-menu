@@ -22,28 +22,9 @@ export interface SelectedProfessional extends Professional {
 
 export class AdminProfessionalsListComponent implements OnInit {
 
-  constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
-              private _configService: ConfigService,
-              private _professionalsService: ProfessionalsService,
-              private _rolesFrontService: RolesFrontService,
-              private _translateNotificationsService: TranslateNotificationsService,
-              private _translateTitleService: TranslateTitleService) {
-
-    this._translateTitleService.setTitle('Professionals');
-
-  }
-
   private _professionals: Array<SelectedProfessional> = [];
 
-  get professionals(): Array<SelectedProfessional> {
-    return this._professionals;
-  }
-
   private _total = 0;
-
-  get total(): number {
-    return this._total;
-  }
 
   private _config: Config = {
     fields: 'language firstName lastName companyOriginalName country emailConfidence jobTitle campaigns tags messages ambassador.is',
@@ -53,25 +34,19 @@ export class AdminProfessionalsListComponent implements OnInit {
     sort: '{"created":-1}'
   };
 
-  get config(): Config {
-    return this._config;
-  }
-
-  set config(value: Config) {
-    this._config = value;
-    this._getProfessionals();
-  }
-
   private _fetchingError = false;
-
-  get fetchingError(): boolean {
-    return this._fetchingError;
-  }
 
   private _isLoading = true;
 
-  get isLoading(): boolean {
-    return this._isLoading;
+  constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
+              private _configService: ConfigService,
+              private _professionalsService: ProfessionalsService,
+              private _rolesFrontService: RolesFrontService,
+              private _translateNotificationsService: TranslateNotificationsService,
+              private _translateTitleService: TranslateTitleService) {
+
+    this._translateTitleService.setTitle('Professionals');
+
   }
 
   ngOnInit(): void {
@@ -87,7 +62,6 @@ export class AdminProfessionalsListComponent implements OnInit {
   private _getProfessionals() {
     this._professionalsService.getAll(this._config).pipe(first()).subscribe((response: Response) => {
       this._professionals = response && response.result || [];
-      console.log(response);
       this._total = response && response._metadata && response._metadata.totalCount;
     }, (err: HttpErrorResponse) => {
       this._translateNotificationsService.error('Error', ErrorFrontService.getErrorMessage(err.status));
@@ -95,6 +69,31 @@ export class AdminProfessionalsListComponent implements OnInit {
       this._isLoading = false;
       console.error(err);
     });
+  }
+
+  get professionals(): Array<SelectedProfessional> {
+    return this._professionals;
+  }
+
+  get total(): number {
+    return this._total;
+  }
+
+  get config(): Config {
+    return this._config;
+  }
+
+  set config(value: Config) {
+    this._config = value;
+    this._getProfessionals();
+  }
+
+  get fetchingError(): boolean {
+    return this._fetchingError;
+  }
+
+  get isLoading(): boolean {
+    return this._isLoading;
   }
 
 }

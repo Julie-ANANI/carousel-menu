@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { TranslateTitleService } from '../../../../../services/title/title.service';
 import { InnovationService } from '../../../../../services/innovation/innovation.service';
 import { Innovation } from '../../../../../models/innovation';
@@ -19,11 +19,13 @@ import { ObjectivesPrincipal } from '../../../../../models/static-data/missionOb
 import { Mission, MissionTemplate } from '../../../../../models/mission';
 import { MissionService } from '../../../../../services/mission/mission.service';
 import { MissionFrontService } from '../../../../../services/mission/mission-front.service';
-import { Table, Config, Column } from '@umius/umi-common-component/models';
-import {ConfigService} from '@umius/umi-common-component/services/config';
+import { Column, Config, Table } from '@umius/umi-common-component/models';
+import { ConfigService } from '@umius/umi-common-component/services/config';
+import { LocalStorageService } from "@umius/umi-common-component/services/localStorage";
 
 @Component({
   templateUrl: './admin-projects.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class AdminProjectsComponent implements OnInit {
@@ -49,6 +51,7 @@ export class AdminProjectsComponent implements OnInit {
   private _currentLang = this._translateService.currentLang;
 
   private _objectiveSearchKey = this._currentLang === 'en' ? 'objective.en' : 'objective.fr';
+
   private _useCaseSearchKey = this._currentLang === 'en' ? 'useCase.en' : 'useCase.fr';
 
   private _fetchingError = false;
@@ -64,15 +67,17 @@ export class AdminProjectsComponent implements OnInit {
               private _authService: AuthService,
               private _translateTitleService: TranslateTitleService,
               private _missionService: MissionService,
+              private _changeDetectorRef: ChangeDetectorRef,
+              private _localStorageService: LocalStorageService,
               private _userService: UserService) {
     this._translateTitleService.setTitle('Market Tests');
   }
 
   ngOnInit(): void {
     this._initializeTable();
-    this._getMissionTemplates();
 
     if (isPlatformBrowser(this._platformId)) {
+      this._getMissionTemplates();
       this._isLoading = false;
       this._setConfigForUmiBack();
       this._getOperators().then(_ => {
@@ -91,9 +96,13 @@ export class AdminProjectsComponent implements OnInit {
   }
 
   private _getMissionTemplates() {
-    if (isPlatformBrowser(this._platformId)) {
+    const templates = this._localStorageService.getItem('missionTemplates');
+    if (templates) {
+      this._missionTemplates = JSON.parse(templates).result || [];
+    } else {
       this._missionService.getAllTemplates().pipe(first()).subscribe((response) => {
         this._missionTemplates = response && response.result || [];
+        this._localStorageService.setItem('missionTemplates', JSON.stringify(response));
       }, error => {
         console.error(error);
       });
@@ -639,34 +648,6 @@ export class AdminProjectsComponent implements OnInit {
     this._getProjects();
   }
 
-  get canImport(): boolean {
-    return this._rolesFrontService.isTechRole() || this._rolesFrontService.isOperSupervisorRole();
-  }
-
-  get config(): Config {
-    return this._config;
-  }
-
-  get projects(): Array<Innovation> {
-    return this._projects;
-  }
-
-  get table(): Table {
-    return this._table;
-  }
-
-  get isLoading(): boolean {
-    return this._isLoading;
-  }
-
-  get fetchingError(): boolean {
-    return this._fetchingError;
-  }
-
-  get authUserId() {
-    return this._authService.userId;
-  }
-
   /**
    * @private
    */
@@ -731,26 +712,9 @@ export class AdminProjectsComponent implements OnInit {
         project.mainObjective = project.objective[this._currentLang];
       }
 
-      if (project.emailSent) {
-        project['emailSent'] = 'Yes';
-      } else {
-        project['emailSent'] = 'No';
-      }
-
-      if (project.published) {
-        project['published'] = 'Yes';
-      } else {
-        project['published'] = 'No';
-      }
-
-      if (project.isPublic) {
-        project['isPublic'] = 'Yes';
-      } else {
-        project['isPublic'] = 'No';
-      }
-
-
-      // project.emailSent = (project.emailSent) ? 'Yes' : 'No';
+      project.emailSent = project.emailSent ? 'Yes' : 'No';
+      project.published = project.published ? 'Yes' : 'No';
+      project.isPublic = project.isPublic ? 'Yes' : 'No';
       return project;
     });
   }
@@ -772,6 +736,7 @@ export class AdminProjectsComponent implements OnInit {
       _isNoMinHeight: true,
       _columns: this._setColumnOrderForUser()
     };
+    this._changeDetectorRef.markForCheck();
   }
 
   /***
@@ -872,6 +837,35 @@ export class AdminProjectsComponent implements OnInit {
           console.error(err);
         }
       );
+  }
+
+
+  get canImport(): boolean {
+    return this._rolesFrontService.isTechRole() || this._rolesFrontService.isOperSupervisorRole();
+  }
+
+  get config(): Config {
+    return this._config;
+  }
+
+  get projects(): Array<Innovation> {
+    return this._projects;
+  }
+
+  get table(): Table {
+    return this._table;
+  }
+
+  get isLoading(): boolean {
+    return this._isLoading;
+  }
+
+  get fetchingError(): boolean {
+    return this._fetchingError;
+  }
+
+  get authUserId() {
+    return this._authService.userId;
   }
 
 

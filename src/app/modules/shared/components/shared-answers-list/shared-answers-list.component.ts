@@ -10,14 +10,6 @@ import { Table } from '@umius/umi-common-component/models';
 
 export class SharedAnswersListComponent {
 
-  private _config: any = {
-    fields: '',
-    limit: '10',
-    offset: '0',
-    search: '{}',
-    sort: '{"created": "-1"}'
-  };
-
   @Input() set config(value: any) {
     this._config = value;
     this.loadAnswers();
@@ -28,6 +20,13 @@ export class SharedAnswersListComponent {
   @Output() validateAnswers = new EventEmitter<Answer[]>();
 
   @Output() rejectAnswers = new EventEmitter<Answer[]>();
+  private _config: any = {
+    fields: '',
+    limit: '10',
+    offset: '0',
+    search: '{}',
+    sort: '{"created": "-1"}'
+  };
 
   private _answers: Array<Answer> = [];
 
@@ -65,10 +64,6 @@ export class SharedAnswersListComponent {
       console.error(err);
     });
   }
-
-
-
-
 
   seeAnswer(answer: Answer) {
     this.modalAnswerChange.emit(answer);

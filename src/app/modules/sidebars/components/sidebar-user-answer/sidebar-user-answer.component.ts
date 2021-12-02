@@ -440,6 +440,29 @@ export class SidebarUserAnswerComponent implements OnInit {
     this._currentLang = this._innovationCardLanguages.includes(this._currentLang) ? this._currentLang : this._innovationCardLanguages[0];
   }
 
+  editThis() {
+    this._testUp = true;
+  }
+
+  getValueTag(event: any) {
+    if (event) {
+      console.log(event);
+    }
+    this._testUp = false;
+  }
+
+  performAction(event: any) {
+    switch (event.action) {
+      case 'add':
+        console.log(event);
+        break;
+      case 'delete':
+        console.log(event);
+        break;
+    }
+    this._testUp = false;
+  }
+
   get companyLength(): number {
     return (
       (this._userAnswer.company &&
@@ -539,26 +562,4 @@ export class SidebarUserAnswerComponent implements OnInit {
     return this._testUp;
   }
 
-  editThis() {
-    this._testUp = true;
-  }
-
-  getValueTag(event: any) {
-    if (event) {
-      console.log(event);
-    }
-    this._testUp = false;
-  }
-
-  performAction(event: any) {
-    switch (event.action) {
-      case 'add':
-        console.log(event);
-        break;
-      case 'delete':
-        console.log(event);
-        break;
-    }
-    this._testUp = false;
-  }
 }

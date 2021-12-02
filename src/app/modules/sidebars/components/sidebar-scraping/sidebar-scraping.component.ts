@@ -152,20 +152,20 @@ export class SidebarScrapingComponent implements OnChanges {
     return this._fields[name].toolTip;
   }
 
-  get showToggleMoreData(): boolean {
-    return this._showToggleMoreData;
+  onClickToggleCrawlingSetting() {
+    this._showToggleCrawlingSetting = !this._showToggleCrawlingSetting;
   }
 
   onClickToggleMoreData() {
     this._showToggleMoreData = !this._showToggleMoreData;
   }
 
-  get showToggleCrawlingSetting(): boolean {
-    return this._showToggleCrawlingSetting;
+  get showToggleMoreData(): boolean {
+    return this._showToggleMoreData;
   }
 
-  onClickToggleCrawlingSetting() {
-    this._showToggleCrawlingSetting = !this._showToggleCrawlingSetting;
+  get showToggleCrawlingSetting(): boolean {
+    return this._showToggleCrawlingSetting;
   }
 
   // public possibleFormattedAddress(): Array<string> {

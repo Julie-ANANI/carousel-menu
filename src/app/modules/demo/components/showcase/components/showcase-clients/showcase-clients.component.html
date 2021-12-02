@@ -51,7 +51,7 @@
 
           <div class="card-header">
             <div *ngIf="client.logo" class="card-img tooltip" [attr.data-tooltip]="client.name">
-              <img [src]="client.logo" height="50" [alt]="client.name" [ngStyle]="{ 'height': '50px' }"/>
+              <img [src]="client.logo" height="50" [alt]="client.name"/>
             </div>
             <div *ngIf="!client.logo" class="card-title text-background"><span>{{ client.name }}</span></div>
           </div>

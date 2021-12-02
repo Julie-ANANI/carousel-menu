@@ -32,8 +32,6 @@ export class SharedSearchConfigProComponent implements OnInit {
     this.setNextState();
   }
 
-  count = 1;
-
   /**
    * identifier in jobConfig
    * @param value
@@ -85,6 +83,8 @@ export class SharedSearchConfigProComponent implements OnInit {
 
   private _hoverState = 0;
 
+  count = 1;
+
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _jobFrontService: JobsFrontService) {
   }
@@ -92,11 +92,6 @@ export class SharedSearchConfigProComponent implements OnInit {
 
   ngOnInit() {
     this._countStates();
-  }
-
-
-  get jobConfigs(): Array<JobConfig> {
-    return this._jobConfigs;
   }
 
   getCurrentState() {
@@ -139,22 +134,6 @@ export class SharedSearchConfigProComponent implements OnInit {
           };
       }
     }
-  }
-
-  get currentState(): number {
-    return this._currentState;
-  }
-
-  get context(): string {
-    return this._context;
-  }
-
-  get nbIncluded(): number {
-    return this._nbIncluded;
-  }
-
-  get nbExcluded(): number {
-    return this._nbExcluded;
   }
 
   /**
@@ -409,14 +388,6 @@ export class SharedSearchConfigProComponent implements OnInit {
     this._isHovered = true;
   }
 
-  get hoverState(): number {
-    return this._hoverState;
-  }
-
-  get isHovered(): boolean {
-    return this._isHovered;
-  }
-
   closeHoverState() {
     this._isHovered = false;
   }
@@ -444,4 +415,34 @@ export class SharedSearchConfigProComponent implements OnInit {
     this.jobNextState(job);
     job.hovered = true;
   }
+
+  get currentState(): number {
+    return this._currentState;
+  }
+
+  get context(): string {
+    return this._context;
+  }
+
+  get nbIncluded(): number {
+    return this._nbIncluded;
+  }
+
+  get nbExcluded(): number {
+    return this._nbExcluded;
+  }
+
+  get jobConfigs(): Array<JobConfig> {
+    return this._jobConfigs;
+  }
+
+  get hoverState(): number {
+    return this._hoverState;
+  }
+
+  get isHovered(): boolean {
+    return this._isHovered;
+  }
+
+
 }

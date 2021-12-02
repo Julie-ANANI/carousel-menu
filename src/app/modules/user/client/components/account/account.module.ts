@@ -11,6 +11,7 @@ import { InputListModule } from '../../../../utility/input-list/input-list.modul
 import { SidebarModule } from '../../../../sidebars/templates/sidebar/sidebar.module';
 import { ModalModule } from '../../../../utility/modals/modal/modal.module';
 import { NguiAutoCompleteModule } from '../../../../utility/auto-complete/auto-complete.module';
+import {AccountRoutingModule} from './account-routing.module';
 
 @NgModule({
   imports: [
@@ -22,7 +23,8 @@ import { NguiAutoCompleteModule } from '../../../../utility/auto-complete/auto-c
     InputListModule,
     SidebarModule,
     ModalModule,
-    NguiAutoCompleteModule
+    NguiAutoCompleteModule,
+    AccountRoutingModule
   ],
   declarations: [
     AccountComponent

@@ -43,7 +43,7 @@
                   (click)="filterAnswer(barData, $event); toggleFilterIcon[i] = false"
                   (mouseenter)="toggleFilterIcon[i] = true;"
                   (mouseleave)="toggleFilterIcon[i] = false;"
-                  [ngStyle]="{ 'width': '20px', 'height': '20px' }"
+                  style="width:20px; height: 20px"
                   class="c-hand icon-container">
                   <span [attr.data-tooltip]="'MARKET_REPORT.TOOLTIP_HIDE_ANSWER' | translateIn: reportingLang" class="tooltip">
                     <i
@@ -72,7 +72,7 @@
             <div
               (click)="onShowAnswers(i, (barData.answers && barData.answers.length))"
               [ngClass]="{'c-hand': barData.answers && barData.answers.length}"
-              [ngStyle]="{'height': '12px'}"
+              style="height: 12px"
               class="bar m-top-10">
               <div
                 class="bar-item tooltip"

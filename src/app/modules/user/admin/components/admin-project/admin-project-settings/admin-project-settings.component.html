@@ -87,12 +87,14 @@
                 <ng-container *ngIf="(hasMissionTemplate || !!mission.objective.secondary.length); else noSecObj">
                   <ng-container *ngIf="templateComplementary.length > 0; else oldSecondary;">
                     <ng-container *ngFor="let objective of templateComplementary">
-                      <span class="label is-rounded is-sm" *ngIf="objectiveName(objective)">{{ objectiveName(objective) }}</span>
+                      <span class="label is-rounded is-sm"
+                            *ngIf="objectiveName(objective)">{{ objectiveName(objective) }}</span>
                     </ng-container>
                   </ng-container>
                   <ng-template #oldSecondary>
                     <ng-container *ngFor="let objective of mission.objective.secondary">
-                      <span class="label is-rounded is-sm" *ngIf="objective[currentLang]">{{ objective[currentLang] }}</span>
+                      <span class="label is-rounded is-sm"
+                            *ngIf="objective[currentLang]">{{ objective[currentLang] }}</span>
                     </ng-container>
                   </ng-template>
                 </ng-container>
@@ -355,24 +357,27 @@
             <!-- roadmap -->
             <div
               *ngIf="canAccess(['view', 'roadmap']) || canAccess(['edit', 'roadmap'])"
-              [ngStyle]="{'align-items': 'flex-start'}"
-              class="content">
+              class="content align-start">
 
               <label>Roadmap</label>
 
-              <div class="d-flex flex-d-column">
+              <div class="d-flex flex-d-column" style="width: 380px">
                 <div class="edit-wrapper">
                   <ul *ngIf="mission.milestoneDates && mission.milestoneDates.length" class="roadmap-wrapper w-full">
                     <li *ngIf="mission.milestoneDates.length > 1" class="active">
-                    <span [ngStyle]="{'margin-top': '3px'}" class="d-flex flex-d-column align-center">
+                        <span style="margin-top: 3px" class="d-flex flex-d-column align-center">
                       <span class="shape is-circle"></span>
                       <span class="divider-vert active"></span>
                     </span>
-                      {{ innovation.created | date:dateFormat }} - Preparation
+                      <ng-container>
+                        {{ innovation.created | date:dateFormat }} - Preparation
+                      </ng-container>
                     </li>
                     <ng-container *ngFor="let milestone of milestones; let i = index;">
-                      <li *ngIf="milestone.dueDate" [ngClass]="{ 'active': isMilestoneReached(milestone.dueDate) }">
-                      <span [ngStyle]="{'margin-top': '3px'}" class="d-flex flex-d-column align-center">
+                      <li *ngIf="milestone.dueDate"
+                          style="cursor:pointer"
+                          [ngClass]="{ 'active': isMilestoneReached(milestone.dueDate) }">
+                      <span style="margin-top: 3px" class="d-flex flex-d-column align-center">
                         <span class="shape is-circle"></span>
                         <span
                           *ngIf="i < mission.milestoneDates.length - 1"
@@ -380,7 +385,43 @@
                           class="divider-vert">
                         </span>
                       </span>
-                        {{ milestone.dueDate | date:dateFormat }} - {{ milestone.name }}
+                        <ng-container>
+                          <span *ngIf="!milestone['editDueDate']; else editDueDate"
+                                (click)="editMilestone(milestone, 'DueDate')">
+                            {{ milestone.dueDate | date:dateFormat }}
+                          </span>
+                          &nbsp; - &nbsp;
+                          <span *ngIf="!milestone['editName']; else editName"
+                                (click)="editMilestone(milestone, 'Name')">
+                            {{ milestone.name }}
+                          </span>
+                          <button
+                            *ngIf="milestone['editName'] || milestone['editDueDate']"
+                            style="height: 25px; width: 25px; margin-left: auto"
+                            (click)="removeMilestone($event, i)" class="button is-action is-danger is-circled is-sm">
+                            <i class="fas fa-trash-alt"></i>
+                          </button>
+                        </ng-container>
+                        <ng-template #editDueDate>
+                          <div class="form-group" *ngIf="milestone['editDueDate']">
+                            <input
+                              class="form-input is-xs" style="height: 25px"
+                              (focusout)="disableEditing($event, milestone, 'DueDate')"
+                              (keyup)="validateRoadmap($event, milestone, 'DueDate')"
+                              [ngModel]="milestone.dueDate | date:'yyyy-MM-dd'"
+                              (ngModelChange)="dueDateOnChange($event, milestone)"
+                              type="date">
+                          </div>
+                        </ng-template>
+                        <ng-template #editName>
+                          <div class="form-group" *ngIf="milestone['editName']">
+                            <input
+                              (focusout)="disableEditing($event, milestone, 'Name')"                              style="height: 25px"
+                              class="form-input is-xs"
+                              (keyup)="validateRoadmap($event, milestone, 'Name')"
+                              type="text" [(ngModel)]="milestone.name">
+                          </div>
+                        </ng-template>
                       </li>
                     </ng-container>
 
@@ -390,17 +431,17 @@
                   No milestones defined
                 </span>
 
-                  <div
-                    (click)="onEdit('ROADMAP')"
-                    *ngIf="canAccess(['edit', 'roadmap'])"
-                    class="icon-container m-left-20">
-                  <span data-tooltip="Edit roadmap" class="tooltip">
-                    <img
-                      [src]="picto.edit.blue"
-                      alt="Edit"
-                      class="img-responsive">
-                  </span>
-                  </div>
+                  <!--                  <div-->
+                  <!--                    (click)="onEdit('ROADMAP')"-->
+                  <!--                    *ngIf="canAccess(['edit', 'roadmap'])"-->
+                  <!--                    class="icon-container m-left-20">-->
+                  <!--                  <span data-tooltip="Edit roadmap" class="tooltip">-->
+                  <!--                    <img-->
+                  <!--                      [src]="picto.edit.blue"-->
+                  <!--                      alt="Edit"-->
+                  <!--                      class="img-responsive">-->
+                  <!--                  </span>-->
+                  <!--                  </div>-->
                 </div>
 
                 <div class="m-top-15">

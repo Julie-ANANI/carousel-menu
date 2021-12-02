@@ -54,6 +54,10 @@ export class WelcomeComponent implements OnInit {
 
   }
 
+  isMainDomain(): boolean {
+    return environment.domain === 'umi';
+  }
+
 
   get name(): string {
     return this._user ? this._user['name'] : '';
@@ -75,10 +79,6 @@ export class WelcomeComponent implements OnInit {
 
   get translate (): TranslateService {
     return this.translateService;
-  }
-
-  isMainDomain(): boolean {
-    return environment.domain === 'umi';
   }
 
 }

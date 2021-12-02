@@ -8,7 +8,7 @@ import {InnovCard, InnovCardComment} from '../../models/innov-card';
 import {Professional} from '../../models/professional';
 import {User} from '../../models/user.model';
 import {Video} from '../../models/media';
-import {Config} from '../../models/config';
+import { Config } from '@umius/umi-common-component/models';
 import {Collaborator} from '../../models/collaborator';
 import {Job, JobType} from '../../models/job';
 import {SharedFilter} from '../../modules/shared/components/shared-market-report/models/shared-filter';

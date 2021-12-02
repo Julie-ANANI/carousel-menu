@@ -153,7 +153,7 @@
           <div class="d-flex align-center">
             <label
               [for]="'question-maxOption'"
-              [ngStyle]="{'width': '215px'}"
+              style="width: 215px"
               class="form-label m-no-bottom m-right-2 text-normal">
               Maximum options to select:
             </label>
@@ -165,7 +165,7 @@
               [attr.placeholder]="question.options.length"
               [id]="'question-maxOption'"
               [max]="question.options.length"
-              [ngStyle]="{'max-width': '80px'}"
+              style="max-width: 80px"
               class="form-input is-sm text-center"
               min="1"
               type="number">
@@ -199,12 +199,12 @@
           <p *ngIf="!isEditable" class="text-sm">{{ question.label[lang] || 'NA' }}</p>
           <textarea
             #textAreaElement
+            appTextareaAutoResize
             (ngModelChange)="notifyChanges()"
             *ngIf="isEditable"
             [(ngModel)]="question.label[lang]"
             [id]="'question-label-'+lang"
-            [ngStyle]="{'minHeight': textAreaElement.scrollHeight + 'px'}"
-            class="form-input auto-expand"
+            class="form-input"
             type="text">
           </textarea>
         </div>

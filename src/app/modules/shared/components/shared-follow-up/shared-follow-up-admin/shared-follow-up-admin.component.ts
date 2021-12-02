@@ -34,147 +34,6 @@ interface Custom {
 })
 export class SharedFollowUpAdminComponent implements OnInit {
 
-  get tableInfos(): Table {
-    return this._tableInfos;
-  }
-
-  get config(): Config {
-    return this._config;
-  }
-
-  set config(value: Config) {
-    this._config = value;
-  }
-
-  get customFields(): { fr: Array<{ label: string, value: string }>, en: Array<{ label: string, value: string }> } {
-    return this._customFields;
-  }
-
-  get sidebarTemplate(): SidebarInterface {
-    return this._sidebarTemplate;
-  }
-
-  set sidebarTemplate(value: SidebarInterface) {
-    this._sidebarTemplate = value;
-  }
-
-  get modalTemplateType(): string {
-    return this._modalTemplateType;
-  }
-
-  get showEmailsModal(): boolean {
-    return this._showEmailsModal;
-  }
-
-  set showEmailsModal(value: boolean) {
-    this._showEmailsModal = value;
-  }
-
-  get showSendModal(): boolean {
-    return this._showSendModal;
-  }
-
-  set showSendModal(value: boolean) {
-    this._showSendModal = value;
-  }
-
-  get showWarningModal(): boolean {
-    return this._showWarningModal;
-  }
-
-  get loadingButton(): boolean {
-    return this._loadingButton;
-  }
-
-  set showWarningModal(value: boolean) {
-    this._showWarningModal = value;
-  }
-
-  get pros(): Array<Professional> {
-    if (this._modalTemplateType) {
-      return this._prosByObjective(this._modalTemplateType.toUpperCase(), false).map(answer => answer.professional);
-    }
-    return [];
-  }
-
-  get prosWithoutObjective(): Array<Answer> {
-    return this._answers.filter(answer => !answer.followUp.objective);
-  }
-
-  get prosInterview(): Array<Answer> {
-    return this._prosByObjective('INTERVIEW', false);
-  }
-
-  get prosInterviewSent(): Array<Answer> {
-    return this._prosByObjective('INTERVIEW', true);
-  }
-
-  get prosOpening(): Array<Answer> {
-    return this._prosByObjective('OPENING', false);
-  }
-
-  get prosOpeningSent(): Array<Answer> {
-    return this._prosByObjective('OPENING', true);
-  }
-
-  get prosNoFollow(): Array<Answer> {
-    return this._prosByObjective('NO_FOLLOW', false);
-  }
-
-  get prosNoFollowSent(): Array<Answer> {
-    return this._prosByObjective('NO_FOLLOW', true);
-  }
-
-  get pendingAction(): {
-    answersIds?: Array<string>, objective?: 'INTERVIEW' | 'OPENING' | 'NO_FOLLOW',
-    assignedAnswers?: Array<{ name: string, objective: string }>
-  } {
-    return this._pendingAction;
-  }
-
-  get modalAnswer(): Answer {
-    return this._modalAnswer;
-  }
-
-  set modalAnswer(modalAnswer: Answer) {
-    this._modalAnswer = modalAnswer;
-  }
-
-  get sidebarAnswer(): SidebarInterface {
-    return this._sidebarAnswer;
-  }
-
-  set sidebarAnswer(value: SidebarInterface) {
-    this._sidebarAnswer = value;
-  }
-
-  get ccEmail(): string {
-    return this._project.followUpEmails.ccEmail;
-  }
-
-  set ccEmail(value: string) {
-    this._project.followUpEmails.ccEmail = value;
-  }
-
-  set emailsObject(value: any) {
-    this._project.followUpEmails[this._modalTemplateType] = value;
-  }
-
-  get emailsObject(): any {
-    return this._project.followUpEmails[this._modalTemplateType] || {
-      en: {content: '', subject: ''},
-      fr: {content: '', subject: ''}
-    };
-  }
-
-  get project(): Innovation {
-    return this._project;
-  }
-
-  get answers(): Array<Answer> {
-    return this._answers;
-  }
-
   // ex: ['projects', 'project', 'followUp']
   @Input() accessPath: Array<string> = [];
 
@@ -243,7 +102,6 @@ export class SharedFollowUpAdminComponent implements OnInit {
               private _translateNotificationsService: TranslateNotificationsService) { }
 
   ngOnInit() {
-    this._initTable(this._answers, -1);
   }
 
   private _initFilter() {
@@ -534,6 +392,147 @@ export class SharedFollowUpAdminComponent implements OnInit {
         this._answers[answerToUpdate].followUp.objective = objective;
       });
     });
+  }
+
+  get tableInfos(): Table {
+    return this._tableInfos;
+  }
+
+  get config(): Config {
+    return this._config;
+  }
+
+  set config(value: Config) {
+    this._config = value;
+  }
+
+  get customFields(): { fr: Array<{ label: string, value: string }>, en: Array<{ label: string, value: string }> } {
+    return this._customFields;
+  }
+
+  get sidebarTemplate(): SidebarInterface {
+    return this._sidebarTemplate;
+  }
+
+  set sidebarTemplate(value: SidebarInterface) {
+    this._sidebarTemplate = value;
+  }
+
+  get modalTemplateType(): string {
+    return this._modalTemplateType;
+  }
+
+  get showEmailsModal(): boolean {
+    return this._showEmailsModal;
+  }
+
+  set showEmailsModal(value: boolean) {
+    this._showEmailsModal = value;
+  }
+
+  get showSendModal(): boolean {
+    return this._showSendModal;
+  }
+
+  set showSendModal(value: boolean) {
+    this._showSendModal = value;
+  }
+
+  get showWarningModal(): boolean {
+    return this._showWarningModal;
+  }
+
+  get loadingButton(): boolean {
+    return this._loadingButton;
+  }
+
+  set showWarningModal(value: boolean) {
+    this._showWarningModal = value;
+  }
+
+  get pros(): Array<Professional> {
+    if (this._modalTemplateType) {
+      return this._prosByObjective(this._modalTemplateType.toUpperCase(), false).map(answer => answer.professional);
+    }
+    return [];
+  }
+
+  get prosWithoutObjective(): Array<Answer> {
+    return this._answers.filter(answer => !answer.followUp.objective);
+  }
+
+  get prosInterview(): Array<Answer> {
+    return this._prosByObjective('INTERVIEW', false);
+  }
+
+  get prosInterviewSent(): Array<Answer> {
+    return this._prosByObjective('INTERVIEW', true);
+  }
+
+  get prosOpening(): Array<Answer> {
+    return this._prosByObjective('OPENING', false);
+  }
+
+  get prosOpeningSent(): Array<Answer> {
+    return this._prosByObjective('OPENING', true);
+  }
+
+  get prosNoFollow(): Array<Answer> {
+    return this._prosByObjective('NO_FOLLOW', false);
+  }
+
+  get prosNoFollowSent(): Array<Answer> {
+    return this._prosByObjective('NO_FOLLOW', true);
+  }
+
+  get pendingAction(): {
+    answersIds?: Array<string>, objective?: 'INTERVIEW' | 'OPENING' | 'NO_FOLLOW',
+    assignedAnswers?: Array<{ name: string, objective: string }>
+  } {
+    return this._pendingAction;
+  }
+
+  get modalAnswer(): Answer {
+    return this._modalAnswer;
+  }
+
+  set modalAnswer(modalAnswer: Answer) {
+    this._modalAnswer = modalAnswer;
+  }
+
+  get sidebarAnswer(): SidebarInterface {
+    return this._sidebarAnswer;
+  }
+
+  set sidebarAnswer(value: SidebarInterface) {
+    this._sidebarAnswer = value;
+  }
+
+  get ccEmail(): string {
+    return this._project.followUpEmails.ccEmail;
+  }
+
+  set ccEmail(value: string) {
+    this._project.followUpEmails.ccEmail = value;
+  }
+
+  set emailsObject(value: any) {
+    this._project.followUpEmails[this._modalTemplateType] = value;
+  }
+
+  get emailsObject(): any {
+    return this._project.followUpEmails[this._modalTemplateType] || {
+      en: {content: '', subject: ''},
+      fr: {content: '', subject: ''}
+    };
+  }
+
+  get project(): Innovation {
+    return this._project;
+  }
+
+  get answers(): Array<Answer> {
+    return this._answers;
   }
 
 }

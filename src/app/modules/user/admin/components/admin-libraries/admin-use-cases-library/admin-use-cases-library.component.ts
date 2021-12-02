@@ -11,41 +11,13 @@ import { MissionFrontService } from '../../../../../../services/mission/mission-
 import { TranslateService } from '@ngx-translate/core';
 import { Router } from '@angular/router';
 import { MissionQuestionService } from '../../../../../../services/mission/mission-question.service';
+import { LocalStorageService } from "@umius/umi-common-component/services/localStorage";
 
 @Component({
   selector: 'app-admin-use-cases-library',
   templateUrl: './admin-use-cases-library.component.html',
 })
 export class AdminUseCasesLibraryComponent implements OnInit {
-
-  set config(value: Config) {
-    this._config = value;
-    this._getAllTemplates();
-  }
-
-  get fetchingError(): boolean {
-    return this._fetchingError;
-  }
-
-  get templates(): Array<MissionTemplate> {
-    return this._templates;
-  }
-
-  get config(): Config {
-    return this._config;
-  }
-
-  get total(): number {
-    return this._total;
-  }
-
-  get tableData(): Table {
-    return this._tableData;
-  }
-
-  get currentLang(): string {
-    return this._translateService.currentLang;
-  }
 
   private _tableData = <Table>{};
 
@@ -69,12 +41,33 @@ export class AdminUseCasesLibraryComponent implements OnInit {
               private _missionQuestionService: MissionQuestionService,
               private _translateService: TranslateService,
               private _translateNotificationsService: TranslateNotificationsService,
-              private _missionService: MissionService) {
+              private _missionService: MissionService,
+              private _localStorageService: LocalStorageService) {
   }
 
   ngOnInit() {
     this._initializeTable();
-    this._getAllTemplates();
+    const missionTemplates = this._localStorageService.getItem('missionTemplates');
+    if (missionTemplates) {
+      const missionTemplatesObject = JSON.parse(missionTemplates);
+      this._templates = missionTemplatesObject.result || [];
+      this._total = missionTemplatesObject._metadata.totalCount || 0;
+      this._missionQuestionService.setAllTemplates(JSON.parse(JSON.stringify(this._templates)));
+      this._prepareTemplates();
+      this._initializeTable();
+    } else {
+      this._getAllTemplates();
+    }
+  }
+
+  private _prepareTemplates() {
+    this._templates.map((_template) => {
+      _template['name'] = MissionFrontService.objectiveName(_template, this.currentLang);
+      _template['totalQuestions'] = MissionFrontService.totalTemplateQuestions(_template);
+      _template['essentialsQuestions'] = MissionFrontService.essentialsObjectives(_template['totalQuestions']);
+      _template['complementaryQuestions'] = MissionFrontService.complementaryObjectives(_template['totalQuestions']);
+      return _template;
+    });
   }
 
   /**
@@ -86,15 +79,10 @@ export class AdminUseCasesLibraryComponent implements OnInit {
     if (isPlatformBrowser(this._platformId)) {
       this._missionService.getAllTemplates(this._config).pipe(first()).subscribe((response) => {
         this._templates = response && response.result || [];
+        this._localStorageService.setItem('missionTemplates', JSON.stringify(response));
         this._missionQuestionService.setAllTemplates(JSON.parse(JSON.stringify(this._templates)));
         this._total = response && response._metadata && response._metadata.totalCount || 0;
-        this._templates.map((_template) => {
-          _template['name'] = MissionFrontService.objectiveName(_template, this.currentLang);
-          _template['totalQuestions'] = MissionFrontService.totalTemplateQuestions(_template);
-          _template['essentialsQuestions'] = MissionFrontService.essentialsObjectives(_template['totalQuestions']);
-          _template['complementaryQuestions'] = MissionFrontService.complementaryObjectives(_template['totalQuestions']);
-          return _template;
-        });
+        this._prepareTemplates();
         this._initializeTable();
       }, error => {
         this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.adminErrorMessage(error));
@@ -195,5 +183,35 @@ export class AdminUseCasesLibraryComponent implements OnInit {
     }));
     this._router.navigate([`${this._router.url}/${event._id}`]);
   }
+
+  set config(value: Config) {
+    this._config = value;
+    this._getAllTemplates();
+  }
+
+  get fetchingError(): boolean {
+    return this._fetchingError;
+  }
+
+  get templates(): Array<MissionTemplate> {
+    return this._templates;
+  }
+
+  get config(): Config {
+    return this._config;
+  }
+
+  get total(): number {
+    return this._total;
+  }
+
+  get tableData(): Table {
+    return this._tableData;
+  }
+
+  get currentLang(): string {
+    return this._translateService.currentLang;
+  }
+
 
 }

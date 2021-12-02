@@ -1,5 +1,5 @@
-import {Component, EventEmitter, HostListener, Input, OnInit, Output} from '@angular/core';
-import {picto, Picto} from '../../../../../models/static-data/picto';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { picto, Picto } from '../../../../../models/static-data/picto';
 import {
   MissionQuestion,
   MissionQuestionEntry,
@@ -7,10 +7,9 @@ import {
   MissionQuestionType,
   OptionEntry
 } from '../../../../../models/mission';
-import {MissionQuestionService} from '../../../../../services/mission/mission-question.service';
-import {CommonService} from '../../../../../services/common/common.service';
-import {TranslateService} from '@ngx-translate/core';
-import {RolesFrontService} from '../../../../../services/roles/roles-front.service';
+import { MissionQuestionService } from '../../../../../services/mission/mission-question.service';
+import { TranslateService } from '@ngx-translate/core';
+import { RolesFrontService } from '../../../../../services/roles/roles-front.service';
 
 @Component({
   selector: 'app-shared-questionnaire-question',
@@ -18,42 +17,6 @@ import {RolesFrontService} from '../../../../../services/roles/roles-front.servi
   styleUrls: ['./shared-questionnaire-question.component.scss']
 })
 export class SharedQuestionnaireQuestionComponent implements OnInit {
-
-  get isTaggedQuestion(): boolean {
-    return this._isTaggedQuestion;
-  }
-
-  get picto(): Picto {
-    return this._picto;
-  }
-
-  get platformLang() {
-    return this._translateService.currentLang;
-  }
-
-  get questionnaireLangs(): Array<string> {
-    return this._missionQuestionService.questionnaireLangs || [];
-  }
-
-  get question(): MissionQuestion {
-    return this._question;
-  }
-
-  get editMode(): boolean {
-    return this._editMode;
-  }
-
-  set editMode(value: boolean) {
-    this._editMode = value;
-  }
-
-  get sectionIndex(): number {
-    return this._sectionIndex;
-  }
-
-  get questionIndex(): number {
-    return this._questionIndex;
-  }
 
   /**
    * true if the Array<Question> is of
@@ -134,22 +97,10 @@ export class SharedQuestionnaireQuestionComponent implements OnInit {
 
   constructor(private _missionQuestionService: MissionQuestionService,
               private _rolesFrontService: RolesFrontService,
-              private _translateService: TranslateService) { }
+              private _translateService: TranslateService) {
+  }
 
   ngOnInit() {
-  }
-
-  get questionType(): string {
-    return this._questionType;
-  }
-
-  @HostListener('keydown', ['$event'])
-  onKeyDown(_event: KeyboardEvent) {
-    const textarea = (_event.target as HTMLTextAreaElement);
-    if (!textarea || (textarea.nodeName !== 'TEXTAREA') || (textarea.classList && !textarea.classList.contains('auto-expand'))) {
-      return;
-    }
-    CommonService.calcTextareaHeight(textarea, _event);
   }
 
   public up(event: Event) {
@@ -314,5 +265,46 @@ export class SharedQuestionnaireQuestionComponent implements OnInit {
       return this._rolesFrontService.hasAccessAdminSide(this.accessPath.concat(path));
     }
   }
+
+  get isTaggedQuestion(): boolean {
+    return this._isTaggedQuestion;
+  }
+
+  get picto(): Picto {
+    return this._picto;
+  }
+
+  get platformLang() {
+    return this._translateService.currentLang;
+  }
+
+  get questionnaireLangs(): Array<string> {
+    return this._missionQuestionService.questionnaireLangs || [];
+  }
+
+  get question(): MissionQuestion {
+    return this._question;
+  }
+
+  get editMode(): boolean {
+    return this._editMode;
+  }
+
+  set editMode(value: boolean) {
+    this._editMode = value;
+  }
+
+  get sectionIndex(): number {
+    return this._sectionIndex;
+  }
+
+  get questionIndex(): number {
+    return this._questionIndex;
+  }
+
+  get questionType(): string {
+    return this._questionType;
+  }
+
 
 }

@@ -9,36 +9,6 @@ import { RolesFrontService } from '../../../../../../services/roles/roles-front.
 })
 
 export class AdminCampaignComponent implements OnInit {
-
-  constructor(private _activatedRoute: ActivatedRoute,
-              private _router: Router,
-              private _rolesFrontService: RolesFrontService,
-              private _translateTitleService: TranslateTitleService) {
-
-    this._initHeading();
-    this._setPageTitle();
-  }
-
-  get campaign(): Campaign {
-    return this._campaign;
-  }
-
-  get heading(): string {
-    return this._heading;
-  }
-
-  get tabs(): Array<{ key: string, name: string, route: string }> {
-    return this._tabs;
-  }
-
-  get isLoading(): boolean {
-    return this._isLoading;
-  }
-
-  get fetchingError(): boolean {
-    return this._fetchingError;
-  }
-
   private _campaign: Campaign = <Campaign>{};
 
   private _tabs: Array<{ key: string, name: string, route: string }> = [
@@ -74,6 +44,15 @@ export class AdminCampaignComponent implements OnInit {
         return 'Insights';
 
     }
+  }
+
+  constructor(private _activatedRoute: ActivatedRoute,
+              private _router: Router,
+              private _rolesFrontService: RolesFrontService,
+              private _translateTitleService: TranslateTitleService) {
+
+    this._initHeading();
+    this._setPageTitle();
   }
 
   ngOnInit() {
@@ -138,6 +117,26 @@ export class AdminCampaignComponent implements OnInit {
     event.preventDefault();
     this._heading = AdminCampaignComponent._initHeading(key);
     this._setPageTitle();
+  }
+
+  get campaign(): Campaign {
+    return this._campaign;
+  }
+
+  get heading(): string {
+    return this._heading;
+  }
+
+  get tabs(): Array<{ key: string, name: string, route: string }> {
+    return this._tabs;
+  }
+
+  get isLoading(): boolean {
+    return this._isLoading;
+  }
+
+  get fetchingError(): boolean {
+    return this._fetchingError;
   }
 
 }

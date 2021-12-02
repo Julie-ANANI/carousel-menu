@@ -274,38 +274,6 @@ export class SidebarBlacklistComponent implements OnInit {
     this.saveChanges();
   }
 
-  get tableInfos(): Table {
-    return this._tableInfos;
-  }
-
-  get initialDomains(): string[] {
-    return this._initialDomains;
-  }
-
-  get initialEmails(): string[] {
-    return this._initialEmails;
-  }
-
-  get formData(): FormGroup {
-    return this._formData;
-  }
-
-  get config(): Config {
-    return this._config;
-  }
-
-  get type(): Template {
-    return this._type;
-  }
-
-  get country(): { flag: string; domain: string; name: string } {
-    return this._country;
-  }
-
-  get toBeSaved(): boolean {
-    return this._toBeSaved;
-  }
-
   addDomains(value: any) {
     if (value.value && value.value.length) {
       value.value.forEach((_domain: any) => {
@@ -416,6 +384,38 @@ export class SidebarBlacklistComponent implements OnInit {
         );
       }
     }
+  }
+
+  get tableInfos(): Table {
+    return this._tableInfos;
+  }
+
+  get initialDomains(): string[] {
+    return this._initialDomains;
+  }
+
+  get initialEmails(): string[] {
+    return this._initialEmails;
+  }
+
+  get formData(): FormGroup {
+    return this._formData;
+  }
+
+  get config(): Config {
+    return this._config;
+  }
+
+  get type(): Template {
+    return this._type;
+  }
+
+  get country(): { flag: string; domain: string; name: string } {
+    return this._country;
+  }
+
+  get toBeSaved(): boolean {
+    return this._toBeSaved;
   }
 
   get messageForEmptyFamilyEnterprises() {

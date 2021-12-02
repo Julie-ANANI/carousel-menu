@@ -12,11 +12,9 @@ import { enableProdMode } from '@angular/core';
 import * as express from 'express';
 import * as compression from 'compression';
 
-// @ts-ignore
 import { lookup } from 'mime-types';
 import { join, extname } from 'path';
 
-// Faster server renders w/ Prod mode (dev mode never needed)
 enableProdMode();
 
 // Express server
@@ -44,13 +42,11 @@ app.set('view engine', 'html');
 app.set('views', join(DIST_FOLDER, 'browser'));
 
 app.use('*', (req, res, next) => {
-  res.header('X-powered-by', 'Blood, sweat, and tears');
-  console.log(`Setting header`);
+  res.header('X-powered-by', 'Blood, sweat, and tears!');
   next();
 });
 
 app.use('*.*', function (req, res, next) {
-  console.log(`Compressing`); // TODO
   const indexParams = req.url.indexOf('?');
   if (indexParams !== - 1) {
     req.url = req.url.substring(0, indexParams) + '.gz' + req.url.substring(indexParams);
@@ -58,8 +54,7 @@ app.use('*.*', function (req, res, next) {
     req.url = req.url + '.gz';
   }
   res.set('Content-Encoding', 'gzip');
-  res.set('Content-Type', lookup(extname(req.originalUrl)));
-  console.log(`Compressed`); // TODO
+  res.set('Content-Type', lookup(extname(req.originalUrl)) as any);
   next();
 });
 
@@ -73,7 +68,7 @@ app.use(compression());
 
 // All regular routes use the Universal engine
 app.get('*', (req, res) => {
-  res.sendFile(join(DIST_FOLDER, 'browser/index.html')); // TODO remove SSR support for now
+  res.sendFile(join(DIST_FOLDER, 'browser/index.html'));
   /*res.render('index', {
     req: req,
     res: res,
@@ -89,9 +84,8 @@ app.get('*', (req, res) => {
     if (err) {
       // Here we catch the errors and we send back a generic error message.
       console.error(err);
-      res.send('An error occurred.');
+      res.send('An error occurred ' + err.message);
     }
-    console.log(`Rendering ${html.substring(0, 128)}`); // TODO
     res.send(html);
   });*/
 });

@@ -1,17 +1,18 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {MissionCardTitle, MissionQuestion, MissionTemplateSection} from '../../../../../models/mission';
-import {picto, Picto} from '../../../../../models/static-data/picto';
-import {TranslateService} from '@ngx-translate/core';
-import {MissionQuestionService} from '../../../../../services/mission/mission-question.service';
-import {RolesFrontService} from '../../../../../services/roles/roles-front.service';
-import {AutoSuggestionConfig} from '../../../../utility/auto-suggestion/interface/auto-suggestion-config';
-import {MissionFrontService} from '../../../../../services/mission/mission-front.service';
-import {MissionService} from '../../../../../services/mission/mission.service';
-import {first} from 'rxjs/operators';
-import {HttpErrorResponse} from '@angular/common/http';
-import {ErrorFrontService} from '../../../../../services/error/error-front.service';
-import {TranslateNotificationsService} from '../../../../../services/notifications/notifications.service';
-import {InnovCardSection} from '../../../../../models/innov-card';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { MissionCardTitle, MissionQuestion, MissionTemplateSection } from '../../../../../models/mission';
+import { picto, Picto } from '../../../../../models/static-data/picto';
+import { TranslateService } from '@ngx-translate/core';
+import { MissionQuestionService } from '../../../../../services/mission/mission-question.service';
+import { RolesFrontService } from '../../../../../services/roles/roles-front.service';
+import { AutoSuggestionConfig } from '../../../../utility/auto-suggestion/interface/auto-suggestion-config';
+import { MissionFrontService } from '../../../../../services/mission/mission-front.service';
+import { MissionService } from '../../../../../services/mission/mission.service';
+import { first } from 'rxjs/operators';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ErrorFrontService } from '../../../../../services/error/error-front.service';
+import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
+import { InnovCardSection } from '../../../../../models/innov-card';
+import { PresetFrontService } from "../../../../../services/preset/preset-front.service";
 
 interface AddQuestion {
   from: 'SCRATCH' | 'LIBRARY';
@@ -29,96 +30,6 @@ interface IdentifierError {
   styleUrls: ['./shared-questionnaire-section.component.scss']
 })
 export class SharedQuestionnaireSectionComponent implements OnInit {
-
-  get showTitlesLang(): string {
-    return this._showTitlesLang;
-  }
-
-  get isCheckingAvailability(): boolean {
-    return this._isCheckingAvailability;
-  }
-
-  get isAvailableIdentifier(): boolean {
-    return this._isAvailableIdentifier;
-  }
-
-  get isDisabled(): boolean {
-    if (this._questionToAdd.from === 'LIBRARY') {
-      return this._questionToAdd.value.length === 0;
-    } else if (this._questionToAdd.from === 'SCRATCH') {
-      return !this._questionToAdd.value['identifier'] || !this._questionToAdd.value['controlType']
-        || !this._isAvailableIdentifier;
-    }
-    return true;
-  }
-
-  get identifierError(): IdentifierError {
-    return this._identifierError;
-  }
-
-  get searchConfig(): AutoSuggestionConfig {
-    return this._searchConfig;
-  }
-
-  get questionToAdd(): AddQuestion {
-    return this._questionToAdd;
-  }
-
-  get showModal(): boolean {
-    return this._showModal;
-  }
-
-  set showModal(value: boolean) {
-    this._showModal = value;
-  }
-
-  get sectionTypes(): Array<string> {
-    return this._sectionTypes;
-  }
-
-  get questionnaireLangs(): Array<string> {
-    return this._missionQuestionService.questionnaireLangs;
-  }
-
-  get cardsSections(): MissionCardTitle {
-    return this._missionQuestionService.cardsSections;
-  }
-
-  get sections(): Array<MissionTemplateSection> {
-    return this._missionQuestionService.template && this._missionQuestionService.template.sections || [];
-  }
-
-  get editSection(): boolean {
-    return this._editSection;
-  }
-
-  set editSection(value: boolean) {
-    this._editSection = value;
-  }
-
-  get platformLang() {
-    return this._translateService.currentLang;
-  }
-
-  get picto(): Picto {
-    return this._picto;
-  }
-
-  get isCollapsed(): boolean {
-    return this._isCollapsed;
-  }
-
-  set isCollapsed(value: boolean) {
-    this._isCollapsed = value;
-  }
-
-  get sectionIndex(): number {
-    return this._sectionIndex;
-  }
-
-  get section(): MissionTemplateSection {
-    return this._section;
-  }
 
   /**
    * its true if we are integrating this under Library route.
@@ -185,8 +96,10 @@ export class SharedQuestionnaireSectionComponent implements OnInit {
   constructor(private _translateService: TranslateService,
               private _rolesFrontService: RolesFrontService,
               private _missionService: MissionService,
+              private _presetFrontService: PresetFrontService,
               private _translateNotificationsService: TranslateNotificationsService,
-              private _missionQuestionService: MissionQuestionService) { }
+              private _missionQuestionService: MissionQuestionService) {
+  }
 
   ngOnInit() {
   }
@@ -200,6 +113,7 @@ export class SharedQuestionnaireSectionComponent implements OnInit {
       this._missionQuestionService.addQuestion(this._sectionIndex);
     }
   }
+
 
   public up(event: Event) {
     event.preventDefault();
@@ -216,7 +130,11 @@ export class SharedQuestionnaireSectionComponent implements OnInit {
   }
 
   public sectionName(lang: string): string {
-    return MissionQuestionService.entryInfo(this._section, lang)['name'] || '';
+    if (!this.isLibraryView && this._section['index'] >= 0 && this.cardsSections[lang][this._section['index']] && (this.cardsSections[lang][this._section['index']].title)) {
+      return this.cardsSections[lang][this._section['index']].title;
+    } else {
+      return MissionQuestionService.entryInfo(this._section, lang)['name'] || '';
+    }
   }
 
   public removeSection(event: Event): void {
@@ -267,6 +185,7 @@ export class SharedQuestionnaireSectionComponent implements OnInit {
 
     return this._section.type;
   }
+
 
   public cardSectionTitle(): string {
     if (this._section.identifier) {
@@ -431,6 +350,100 @@ export class SharedQuestionnaireSectionComponent implements OnInit {
         this._isCheckingAvailability = false;
       }
     }
+  }
+
+  get showTitlesLang(): string {
+    return this._showTitlesLang;
+  }
+
+  get isCheckingAvailability(): boolean {
+    return this._isCheckingAvailability;
+  }
+
+  get isAvailableIdentifier(): boolean {
+    return this._isAvailableIdentifier;
+  }
+
+  get isDisabled(): boolean {
+    if (this._questionToAdd.from === 'LIBRARY') {
+      return this._questionToAdd.value.length === 0;
+    } else if (this._questionToAdd.from === 'SCRATCH') {
+      return !this._questionToAdd.value['identifier'] || !this._questionToAdd.value['controlType']
+        || !this._isAvailableIdentifier;
+    }
+    return true;
+  }
+
+  get identifierError(): IdentifierError {
+    return this._identifierError;
+  }
+
+  get searchConfig(): AutoSuggestionConfig {
+    return this._searchConfig;
+  }
+
+  get questionToAdd(): AddQuestion {
+    return this._questionToAdd;
+  }
+
+  get showModal(): boolean {
+    return this._showModal;
+  }
+
+  set showModal(value: boolean) {
+    this._showModal = value;
+  }
+
+  get sectionTypes(): Array<string> {
+    return this._sectionTypes;
+  }
+
+  get questionnaireLangs(): Array<string> {
+    return this._missionQuestionService.questionnaireLangs;
+  }
+
+  get cardsSections(): MissionCardTitle {
+    return this._missionQuestionService.cardsSections;
+  }
+
+  get sections(): Array<MissionTemplateSection> {
+    return this._missionQuestionService.template && this._missionQuestionService.template.sections || [];
+  }
+
+  get editSection(): boolean {
+    return this._editSection;
+  }
+
+  set editSection(value: boolean) {
+    this._editSection = value;
+  }
+
+  get platformLang() {
+    return this._translateService.currentLang;
+  }
+
+  get picto(): Picto {
+    return this._picto;
+  }
+
+  get isCollapsed(): boolean {
+    return this._isCollapsed;
+  }
+
+  set isCollapsed(value: boolean) {
+    this._isCollapsed = value;
+  }
+
+  get sectionsNames(): Array<string> {
+    return this._presetFrontService.sectionsNames;
+  }
+
+  get sectionIndex(): number {
+    return this._sectionIndex;
+  }
+
+  get section(): MissionTemplateSection {
+    return this._section;
   }
 
 }

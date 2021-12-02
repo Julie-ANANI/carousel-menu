@@ -364,6 +364,26 @@ export class SharedProfessionalTargetingComponent implements OnInit, OnDestroy {
     }
   }
 
+  /**
+   * keep one job typo toggle show
+   * @param isToggle
+   * @param identifier
+   */
+  toggleStatus(isToggle: boolean = false, identifier: string = '') {
+    if (isToggle) {
+      this._sortedFilteredJobsTypologies.map(jobTypo => {
+        jobTypo.isToggle = jobTypo.identifier === identifier;
+      });
+    }
+  }
+
+  sortJobs(jobs: Array<JobConfig>) {
+    // return jobs;
+    if (jobs && jobs.length) {
+      return _.sortBy(jobs, ['label.en']);
+    }
+  }
+
 
   get targetedProsToUpdate(): TargetPros {
     return this._targetedProsToUpdate;
@@ -451,23 +471,4 @@ export class SharedProfessionalTargetingComponent implements OnInit, OnDestroy {
     this._ngUnsubscribe.complete();
   }
 
-  /**
-   * keep one job typo toggle show
-   * @param isToggle
-   * @param identifier
-   */
-  toggleStatus(isToggle: boolean = false, identifier: string = '') {
-    if (isToggle) {
-      this._sortedFilteredJobsTypologies.map(jobTypo => {
-        jobTypo.isToggle = jobTypo.identifier === identifier;
-      });
-    }
-  }
-
-  sortJobs(jobs: Array<JobConfig>) {
-    // return jobs;
-    if (jobs && jobs.length) {
-      return _.sortBy(jobs, ['label.en']);
-    }
-  }
 }

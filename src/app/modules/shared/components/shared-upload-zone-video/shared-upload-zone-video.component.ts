@@ -15,11 +15,11 @@ export class SharedUploadZoneVideoComponent implements OnInit {
    */
   @Input() isUploading = false;
 
+  @Output() public cbFn: EventEmitter<any> = new EventEmitter();
+
   private _videoUrlInput = '';
 
   private _videoParameters: Array<string> = [];
-
-  @Output() public cbFn: EventEmitter<any> = new EventEmitter();
 
   private _isWrongFormat = false;
 

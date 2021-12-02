@@ -6,7 +6,7 @@ import { AdvSearchService } from '../../../../../../services/advsearch/advsearch
 import { catchError, tap } from 'rxjs/operators';
 import { isPlatformServer } from '@angular/common';
 import { Response } from '../../../../../../models/response';
-import { Config } from '../../../../../../models/config';
+import { Config } from '@umius/umi-common-component/models';
 
 const COMMUNITY_PROJECTS_KEY = makeStateKey('community_projects');
 

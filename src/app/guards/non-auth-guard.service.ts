@@ -17,8 +17,7 @@ export class NonAuthGuard implements CanActivate {
   }
 
   private _checkLogin(): boolean {
-
-    if (!this.authService.isAuthenticated) {
+    if (!this.authService.isAuthenticated && !this.authService.user) {
       return true;
     }
 

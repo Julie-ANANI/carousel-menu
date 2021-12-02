@@ -10,8 +10,6 @@ import {emailRegEx} from '../../../../utils/regex';
   styleUrls: ['./advsearch-form.component.scss'],
 })
 export class AdvsearchFormComponent implements OnInit {
-  private _advSearchForm: FormGroup;
-
   @Input() set sidebarState(value: string) {
     if (value === undefined || 'active') {
       this.buildForm();
@@ -20,6 +18,9 @@ export class AdvsearchFormComponent implements OnInit {
   }
 
   @Output() finalOutput = new EventEmitter<FormGroup>();
+
+  private _advSearchForm: FormGroup;
+
 
   constructor(
     private _formBuilder: FormBuilder,

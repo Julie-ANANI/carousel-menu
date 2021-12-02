@@ -1,7 +1,7 @@
 #!/bin/bash
 
 FRONT_VERSION="umi"
-BUILD_ENV="prod"
+BUILD_ENV="production"
 OTHER_PARAMS="--aot"
 
 echo $SOURCE_BRANCH
@@ -15,7 +15,7 @@ then
   BUILD_ENV="dev"
 else
   FRONT_VERSION=$(cut -d '-' -f1 <<< "$SOURCE_BRANCH")
-  BUILD_ENV="prod"
+  BUILD_ENV="production"
 fi
 
 echo docker build --build-arg APP_NAME=$FRONT_VERSION \

@@ -7,7 +7,6 @@ import { TranslateModule } from '@ngx-translate/core';
 import { ProjectComponent } from './project.component';
 import { SetupComponent } from './components/setup/setup.component';
 import { ExplorationComponent } from './components/exploration/exploration.component';
-import { HistoryProjectComponent } from './components/history/history.component';
 import { SettingsComponent } from './components/settings/settings.component';
 import { DocumentsComponent } from './components/documents/documents.component';
 import { PitchComponent } from './components/setup/components/pitch/pitch.component';
@@ -45,46 +44,44 @@ import {SharedFollowUpModule} from '../../../../shared/components/shared-follow-
 import {MessageTemplate2Module} from '../../../../utility/messages/message-template-2/message-template-2.module';
 import { TableComponentsModule } from '@umius/umi-common-component/table';
 @NgModule({
-    imports: [
-        CommonModule,
-        ProjectRoutingModule,
-        TranslateModule.forChild(),
-        PipeModule,
-        SidebarModule,
-        SharedProjectSettingsModule,
-
-        SharedWorldmapModule,
-        SidebarUserAnswerModule,
-        SharedMarketReportModule,
-        ModalModule,
-        FormsModule,
-        SharedEditorTinymceModule,
-        ObjectivesSecondaryModule,
-        ModalEmptyModule,
-        ObjectivesPrimaryModule,
-        AngularMyDatePickerModule,
-        AutoSuggestionModule,
-        NgxPageScrollModule,
-        BannerModule,
-        SidebarProjectPitchModule,
-        InnovCardTitlePipeModule,
-        MessageErrorModule,
-        CleanHtmlModule,
-        MarketTestMethodologyModule,
-        MarketTestObjectivesModule,
-        DatePickerModule,
-        MarketTestObjectivesComplementaryModule,
-        ModalMediaModule,
-        SidebarInPageModule,
-        SharedFollowUpModule,
-        MessageTemplate2Module,
-        TableComponentsModule
-    ],
+  imports: [
+    CommonModule,
+    ProjectRoutingModule,
+    TranslateModule.forChild(),
+    PipeModule,
+    SidebarModule,
+    SharedProjectSettingsModule,
+    SharedWorldmapModule,
+    SidebarUserAnswerModule,
+    SharedMarketReportModule,
+    ModalModule,
+    FormsModule,
+    SharedEditorTinymceModule,
+    ObjectivesSecondaryModule,
+    ModalEmptyModule,
+    ObjectivesPrimaryModule,
+    AngularMyDatePickerModule,
+    AutoSuggestionModule,
+    NgxPageScrollModule,
+    BannerModule,
+    SidebarProjectPitchModule,
+    InnovCardTitlePipeModule,
+    MessageErrorModule,
+    CleanHtmlModule,
+    MarketTestMethodologyModule,
+    MarketTestObjectivesModule,
+    DatePickerModule,
+    MarketTestObjectivesComplementaryModule,
+    ModalMediaModule,
+    SidebarInPageModule,
+    SharedFollowUpModule,
+    MessageTemplate2Module,
+    TableComponentsModule
+  ],
   declarations: [
     ProjectComponent,
     SetupComponent,
     ExplorationComponent,
-    HistoryProjectComponent,
     SettingsComponent,
     DocumentsComponent,
     PitchComponent,

@@ -116,7 +116,6 @@ export class SharedProfessionalsListComponent {
   }
 
   private _initializeTable() {
-    console.log(this._professionals);
     this._table = {
       _selector: this.tableSelector,
       _title: 'professionals',
@@ -580,66 +579,6 @@ export class SharedProfessionalsListComponent {
     }
   }
 
-  private _isCampaignProfessional(): boolean {
-    return !!this.campaign;
-  }
-
-  get professionals(): Array<SelectedProfessional> {
-    return this._professionals;
-  }
-
-  get table(): Table {
-    return this._table;
-  }
-
-  get localConfig(): Config {
-    return this._localConfig;
-  }
-
-  set sidebarValue(value: SidebarInterface) {
-    this._sidebarValue = value;
-  }
-
-  get sidebarValue(): SidebarInterface {
-    return this._sidebarValue;
-  }
-
-  get isProfessionalSidebar(): boolean {
-    return this._isProfessionalSidebar;
-  }
-
-  get isTagsSidebar(): boolean {
-    return this._isTagsSidebar;
-  }
-
-  get modalDelete(): boolean {
-    return this._modalDelete;
-  }
-
-  set modalDelete(value: boolean) {
-    this._modalDelete = value;
-  }
-
-  get selectedProfessional(): Professional {
-    return this._selectedProfessional;
-  }
-
-  get professionalsToRemove(): Array<SelectedProfessional> {
-    return this._professionalsToRemove;
-  }
-
-  get isDeleting(): boolean {
-    return this._isDeleting;
-  }
-
-  get isShowModal(): boolean {
-    return this._isShowModal;
-  }
-
-  set isShowModal(value: boolean) {
-    this._isShowModal = value;
-  }
-
   closeRemoveProModal() {
     this._isShowModal = false;
   }
@@ -702,22 +641,6 @@ export class SharedProfessionalsListComponent {
     }
   }
 
-  get isLoading(): boolean {
-    return this._isLoading;
-  }
-
-  get isFiltersSidebar(): boolean {
-    return this._isFiltersSidebar;
-  }
-
-  get geography(): GeographySettings {
-    return this._geography;
-  }
-
-  set geography(value: GeographySettings) {
-    this._geography = value;
-  }
-
   public onGeographyChange(value: GeographySettings) {
     this._geography = value;
     this._countriesSelected = this._geography.include.map((c) => c.code);
@@ -732,5 +655,81 @@ export class SharedProfessionalsListComponent {
       delete this._localConfig.country;
     }
     this.configChange.emit(this._localConfig);
+  }
+
+  private _isCampaignProfessional(): boolean {
+    return !!this.campaign;
+  }
+
+  get professionals(): Array<SelectedProfessional> {
+    return this._professionals;
+  }
+
+  get table(): Table {
+    return this._table;
+  }
+
+  get localConfig(): Config {
+    return this._localConfig;
+  }
+
+  set sidebarValue(value: SidebarInterface) {
+    this._sidebarValue = value;
+  }
+
+  get sidebarValue(): SidebarInterface {
+    return this._sidebarValue;
+  }
+
+  get isProfessionalSidebar(): boolean {
+    return this._isProfessionalSidebar;
+  }
+
+  get isTagsSidebar(): boolean {
+    return this._isTagsSidebar;
+  }
+
+  get modalDelete(): boolean {
+    return this._modalDelete;
+  }
+
+  set modalDelete(value: boolean) {
+    this._modalDelete = value;
+  }
+
+  get selectedProfessional(): Professional {
+    return this._selectedProfessional;
+  }
+
+  get professionalsToRemove(): Array<SelectedProfessional> {
+    return this._professionalsToRemove;
+  }
+
+  get isDeleting(): boolean {
+    return this._isDeleting;
+  }
+
+  get isShowModal(): boolean {
+    return this._isShowModal;
+  }
+
+  set isShowModal(value: boolean) {
+    this._isShowModal = value;
+  }
+
+  get isLoading(): boolean {
+    return this._isLoading;
+  }
+
+  get isFiltersSidebar(): boolean {
+    return this._isFiltersSidebar;
+  }
+
+  get geography(): GeographySettings {
+    return this._geography;
+  }
+
+  set geography(value: GeographySettings) {
+    this._geography = value;
   }
 }

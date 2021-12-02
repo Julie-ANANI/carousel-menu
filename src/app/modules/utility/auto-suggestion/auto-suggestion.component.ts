@@ -40,10 +40,6 @@ import {HttpErrorResponse} from '@angular/common/http';
 })
 
 export class AutoSuggestionComponent implements OnInit, OnDestroy {
-  private _suggestionDefaultList: Array<any> = [];
-  private _requestType = 'remote';
-  private _showSuggestionFirst = false;
-
   @Input() set config(config: AutoSuggestionConfig) {
     if (config) {
       this._minChars = config.minChars || 3;
@@ -68,14 +64,10 @@ export class AutoSuggestionComponent implements OnInit, OnDestroy {
 
   @Output() valueAdded = new EventEmitter();
 
+  private _suggestionDefaultList: Array<any> = [];
+  private _requestType = 'remote';
+  private _showSuggestionFirst = false;
 
-  get requestType(): string {
-    return this._requestType;
-  }
-
-  get isShowAddButton(): boolean {
-    return this._isShowAddButton;
-  }
 
   private _minChars = 3;
 
@@ -109,19 +101,6 @@ export class AutoSuggestionComponent implements OnInit, OnDestroy {
   private _width = '100%';
 
   constructor(private _autoCompleteService: AutocompleteService) {
-  }
-
-
-  get default(): string {
-    return this._default;
-  }
-
-  get width(): any {
-    return this._width;
-  }
-
-  get inputNewValue(): string {
-    return this._inputNewValue;
   }
 
   ngOnInit() {
@@ -264,6 +243,22 @@ export class AutoSuggestionComponent implements OnInit, OnDestroy {
     this.hideAutoSuggestionDropdown();
   }
 
+  /**
+   * add new value => reset state
+   */
+  addNewValue() {
+    if (this.inputNewValue) {
+      this._itemSelected = this.inputNewValue;
+      this.valueAdded.emit({
+        type: this.type,
+        value: this.searchKeyword.value
+      });
+      this._searchKeyword.setValue('');
+      this._inputNewValue = '';
+      this._width = '100%';
+      this.hideAutoSuggestionDropdown();
+    }
+  }
 
   get placeholder(): string {
     return this._placeholder;
@@ -301,25 +296,28 @@ export class AutoSuggestionComponent implements OnInit, OnDestroy {
     return this._type;
   }
 
+  get default(): string {
+    return this._default;
+  }
+
+  get width(): any {
+    return this._width;
+  }
+
+  get inputNewValue(): string {
+    return this._inputNewValue;
+  }
+
+  get requestType(): string {
+    return this._requestType;
+  }
+
+  get isShowAddButton(): boolean {
+    return this._isShowAddButton;
+  }
+
   ngOnDestroy(): void {
     this._ngUnsubscribe.next();
     this._ngUnsubscribe.complete();
-  }
-
-  /**
-   * add new value => reset state
-   */
-  addNewValue() {
-    if (this.inputNewValue) {
-      this._itemSelected = this.inputNewValue;
-      this.valueAdded.emit({
-        type: this.type,
-        value: this.searchKeyword.value
-      });
-      this._searchKeyword.setValue('');
-      this._inputNewValue = '';
-      this._width = '100%';
-      this.hideAutoSuggestionDropdown();
-    }
   }
 }

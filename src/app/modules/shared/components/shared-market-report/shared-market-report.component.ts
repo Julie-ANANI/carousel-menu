@@ -522,6 +522,41 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy, OnChanges
     };
   }
 
+  hideQuestionAnswers(question: Question) {
+    return (
+      this.showAnonymousAnswers &&
+      (question.sensitiveAnswerData ||
+        question.identifier.indexOf('contact') !== -1)
+    );
+  }
+
+  showSection(sectionText: string) {
+    return (
+      ((sectionText && !emptyHtmlRegex.test(sectionText)) || this.adminSide) &&
+      !this.areAnswersLoading
+    );
+  }
+
+  updateNewPro(value: any) {
+    const proToUpdate = this._answers.find((item) => item._id === value._id);
+    proToUpdate.professional = !proToUpdate.professional
+      ? <Professional>{}
+      : proToUpdate.professional;
+    proToUpdate.professional.firstName = value.newPro.firstName;
+    proToUpdate.professional.lastName = value.newPro.lastName;
+    proToUpdate.professional.email = value.newPro.email;
+    if (value.newPro.jobTitle) {
+      proToUpdate.professional.jobTitle = value.newPro.jobTitle;
+      proToUpdate.job = value.newPro.jobTitle;
+    }
+    if (value.newPro.company) {
+      proToUpdate.company.name = value.newPro.company;
+    }
+    if (value.newPro.country) {
+      proToUpdate.country = { flag: value.newPro.country.flag };
+    }
+  }
+
   public get userLang(): string {
     return this._translateService.currentLang;
   }
@@ -629,41 +664,6 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy, OnChanges
 
   set reportingLang(value: string) {
     this._reportingLang = value;
-  }
-
-  hideQuestionAnswers(question: Question) {
-    return (
-      this.showAnonymousAnswers &&
-      (question.sensitiveAnswerData ||
-        question.identifier.indexOf('contact') !== -1)
-    );
-  }
-
-  showSection(sectionText: string) {
-    return (
-      ((sectionText && !emptyHtmlRegex.test(sectionText)) || this.adminSide) &&
-      !this.areAnswersLoading
-    );
-  }
-
-  updateNewPro(value: any) {
-    const proToUpdate = this._answers.find((item) => item._id === value._id);
-    proToUpdate.professional = !proToUpdate.professional
-      ? <Professional>{}
-      : proToUpdate.professional;
-    proToUpdate.professional.firstName = value.newPro.firstName;
-    proToUpdate.professional.lastName = value.newPro.lastName;
-    proToUpdate.professional.email = value.newPro.email;
-    if (value.newPro.jobTitle) {
-      proToUpdate.professional.jobTitle = value.newPro.jobTitle;
-      proToUpdate.job = value.newPro.jobTitle;
-    }
-    if (value.newPro.company) {
-      proToUpdate.company.name = value.newPro.company;
-    }
-    if (value.newPro.country) {
-      proToUpdate.country = { flag: value.newPro.country.flag };
-    }
   }
 
   ngOnDestroy(): void {

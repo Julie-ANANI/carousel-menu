@@ -49,7 +49,7 @@
             ],
             "styles": [
               "src/style/framework/src/umi.scss",
-              "src/styles.scss"
+              "src/style/styles.scss"
             ],
             "scripts": [
               "node_modules/tinymce/tinymce.min.js",
@@ -75,17 +75,17 @@
             "dev": {
               "optimization": true,
               "outputHashing": "all",
+              "extractCss": true,
+              "namedChunks": true,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
               "sourceMap": {
                 "hidden": true,
                 "styles": true,
                 "scripts": true
               },
-              "extractCss": true,
-              "namedChunks": false,
-              "aot": true,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
@@ -96,17 +96,17 @@
             "production": {
               "optimization": true,
               "outputHashing": "all",
+              "extractCss": true,
+              "namedChunks": true,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
               "sourceMap": {
                 "hidden": true,
                 "styles": true,
                 "scripts": true
               },
-              "extractCss": true,
-              "namedChunks": false,
-              "aot": true,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
@@ -115,19 +115,6 @@
               ]
             },
             "demo": {
-              "optimization": true,
-              "outputHashing": "all",
-              "sourceMap": {
-                "hidden": true,
-                "styles": true,
-                "scripts": true
-              },
-              "extractCss": true,
-              "namedChunks": false,
-              "aot": true,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
@@ -216,7 +203,7 @@
               "assets/plugins/plugin.js"
             ],
             "styles": [
-              "src/styles.scss"
+              "src/style/styles.scss"
             ],
             "assets": [
               {
@@ -228,14 +215,11 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-eslint/builder:lint",
           "options": {
-            "tsConfig": [
-              "src/tsconfig.app.json",
-              "src/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
+            "lintFilePatterns": [
+              "src/**/*.ts",
+              "src/**/*.html"
             ]
           }
         }
@@ -290,7 +274,7 @@
             ],
             "styles": [
               "src/style/framework/src/umi.scss",
-              "src/styles.dynergie.scss"
+              "src/style/styles.dynergie.scss"
             ],
             "scripts": [
               "node_modules/tinymce/tinymce.min.js",
@@ -445,336 +429,6 @@
         }
       }
     },
-    "novanexia": {
-      "root": "",
-      "sourceRoot": "src",
-      "projectType": "application",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-angular:browser",
-          "options": {
-            "outputPath": "dist/browser",
-            "index": "src/index.html",
-            "main": "src/main.ts",
-            "tsConfig": "src/tsconfig.app.json",
-            "polyfills": "src/polyfills.ts",
-            "assets": [
-              {
-                "glob": "**/*",
-                "input": "node_modules/tinymce/skins",
-                "output": "/assets/skins"
-              }
-            ],
-            "styles": [
-              "src/style/framework/src/umi.scss",
-              "src/styles.dynergie.scss"
-            ],
-            "scripts": [
-              "node_modules/tinymce/tinymce.min.js",
-              "node_modules/tinymce/themes/modern/theme.min.js",
-              "node_modules/tinymce/plugins/advlist/plugin.min.js",
-              "node_modules/tinymce/plugins/link/plugin.min.js",
-              "node_modules/tinymce/plugins/textcolor/plugin.min.js",
-              "node_modules/tinymce/plugins/lists/plugin.min.js",
-              "node_modules/tinymce/plugins/paste/plugin.min.js",
-              "node_modules/tinymce/plugins/code/plugin.min.js",
-              "assets/plugins/plugin.js"
-            ]
-          },
-          "configurations": {
-            "local": {
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/novanexia/environment.novanexia.local.ts"
-                }
-              ]
-            },
-            "production": {
-              "optimization": true,
-              "outputHashing": "all",
-              "sourceMap": {
-                "hidden": true,
-                "styles": true,
-                "scripts": true
-              },
-              "extractCss": true,
-              "namedChunks": false,
-              "aot": true,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/novanexia/environment.novanexia.prod.ts"
-                }
-              ]
-            }
-          }
-        },
-        "server": {
-          "builder": "@angular-devkit/build-angular:server",
-          "options": {
-            "outputPath": "dist/server",
-            "main": "src/main.server.ts",
-            "tsConfig": "src/tsconfig.server.json"
-          },
-          "configurations": {
-            "local": {
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/novanexia/environment.novanexia.local.ts"
-                }
-              ]
-            },
-            "production": {
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/novanexia/environment.novanexia.prod.ts"
-                }
-              ]
-            }
-          }
-        },
-        "serve": {
-          "builder": "@angular-devkit/build-angular:dev-server",
-          "options": {
-            "browserTarget": "novanexia:build"
-          },
-          "configurations": {
-            "local": {
-              "browserTarget": "novanexia:build:local"
-            },
-            "dev": {
-              "browserTarget": "novanexia:build:dev"
-            },
-            "production": {
-              "browserTarget": "novanexia:build:production"
-            }
-          }
-        },
-        "extract-i18n": {
-          "builder": "@angular-devkit/build-angular:extract-i18n",
-          "options": {
-            "browserTarget": "novanexia:build"
-          }
-        },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "src/test.ts",
-            "karmaConfig": "./karma.conf.js",
-            "polyfills": "src/polyfills.ts",
-            "tsConfig": "src/tsconfig.spec.json",
-            "scripts": [
-              "node_modules/tinymce/tinymce.min.js",
-              "node_modules/tinymce/themes/modern/theme.min.js",
-              "node_modules/tinymce/plugins/advlist/plugin.min.js",
-              "node_modules/tinymce/plugins/link/plugin.min.js",
-              "node_modules/tinymce/plugins/textcolor/plugin.min.js",
-              "node_modules/tinymce/plugins/lists/plugin.min.js",
-              "node_modules/tinymce/plugins/paste/plugin.min.js",
-              "node_modules/tinymce/plugins/code/plugin.min.js",
-              "assets/plugins/plugin.js"
-            ],
-            "styles": [
-              "src/styles.dynergie.scss"
-            ],
-            "assets": [
-              {
-                "glob": "**/*",
-                "input": "node_modules/tinymce/skins",
-                "output": "/assets/skins"
-              }
-            ]
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "src/tsconfig.app.json",
-              "src/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
-        }
-      }
-    },
-    "inomer": {
-      "root": "",
-      "sourceRoot": "src",
-      "projectType": "application",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-angular:browser",
-          "options": {
-            "outputPath": "dist/browser",
-            "index": "src/index.html",
-            "main": "src/main.ts",
-            "tsConfig": "src/tsconfig.app.json",
-            "polyfills": "src/polyfills.ts",
-            "assets": [
-              {
-                "glob": "**/*",
-                "input": "node_modules/tinymce/skins",
-                "output": "/assets/skins"
-              }
-            ],
-            "styles": [
-              "src/style/framework/src/umi.scss",
-              "src/styles.inomer.scss"
-            ],
-            "scripts": [
-              "node_modules/tinymce/tinymce.min.js",
-              "node_modules/tinymce/themes/modern/theme.min.js",
-              "node_modules/tinymce/plugins/advlist/plugin.min.js",
-              "node_modules/tinymce/plugins/textcolor/plugin.min.js",
-              "node_modules/tinymce/plugins/link/plugin.min.js",
-              "node_modules/tinymce/plugins/lists/plugin.min.js",
-              "node_modules/tinymce/plugins/paste/plugin.min.js",
-              "node_modules/tinymce/plugins/code/plugin.min.js",
-              "assets/plugins/plugin.js"
-            ]
-          },
-          "configurations": {
-            "local": {
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/inomer/environment.inomer.local.ts"
-                }
-              ]
-            },
-            "dev": {
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/inomer/environment.inomer.dev.ts"
-                }
-              ]
-            },
-            "production": {
-              "optimization": true,
-              "outputHashing": "all",
-              "sourceMap": {
-                "hidden": true,
-                "styles": true,
-                "scripts": true
-              },
-              "extractCss": true,
-              "namedChunks": false,
-              "aot": true,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/inomer/environment.inomer.prod.ts"
-                }
-              ]
-            }
-          }
-        },
-        "server": {
-          "builder": "@angular-devkit/build-angular:server",
-          "options": {
-            "outputPath": "dist/server",
-            "main": "src/main.server.ts",
-            "tsConfig": "src/tsconfig.server.json"
-          },
-          "configurations": {
-            "local": {
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/inomer/environment.inomer.local.ts"
-                }
-              ]
-            },
-            "production": {
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/inomer/environment.inomer.prod.ts"
-                }
-              ]
-            }
-          }
-        },
-        "serve": {
-          "builder": "@angular-devkit/build-angular:dev-server",
-          "options": {
-            "browserTarget": "inomer:build"
-          },
-          "configurations": {
-            "local": {
-              "browserTarget": "inomer:build:local"
-            },
-            "dev": {
-              "browserTarget": "inomer:build:dev"
-            },
-            "production": {
-              "browserTarget": "inomer:build:production"
-            }
-          }
-        },
-        "extract-i18n": {
-          "builder": "@angular-devkit/build-angular:extract-i18n",
-          "options": {
-            "browserTarget": "inomer:build"
-          }
-        },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "src/test.ts",
-            "karmaConfig": "./karma.conf.js",
-            "polyfills": "src/polyfills.ts",
-            "tsConfig": "src/tsconfig.spec.json",
-            "scripts": [
-              "node_modules/tinymce/tinymce.min.js",
-              "node_modules/tinymce/themes/modern/theme.min.js",
-              "node_modules/tinymce/plugins/advlist/plugin.min.js",
-              "node_modules/tinymce/plugins/textcolor/plugin.min.js",
-              "node_modules/tinymce/plugins/link/plugin.min.js",
-              "node_modules/tinymce/plugins/lists/plugin.min.js",
-              "node_modules/tinymce/plugins/paste/plugin.min.js",
-              "node_modules/tinymce/plugins/code/plugin.min.js",
-              "assets/plugins/plugin.js"
-            ],
-            "styles": [
-              "src/styles.inomer.scss"
-            ],
-            "assets": [
-              {
-                "glob": "**/*",
-                "input": "node_modules/tinymce/skins",
-                "output": "/assets/skins"
-              }
-            ]
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "src/tsconfig.app.json",
-              "src/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
-        }
-      }
-    },
     "multivalente": {
       "root": "",
       "sourceRoot": "src",
@@ -797,7 +451,7 @@
             ],
             "styles": [
               "src/style/framework/src/umi.scss",
-              "src/styles.vendor1.scss"
+              "src/styles.multivalente.scss"
             ],
             "scripts": [
               "node_modules/tinymce/tinymce.min.js",
@@ -907,481 +561,7 @@
               "assets/plugins/plugin.js"
             ],
             "styles": [
-              "src/styles.vendor1.scss"
-            ],
-            "assets": [
-              {
-                "glob": "**/*",
-                "input": "node_modules/tinymce/skins",
-                "output": "/assets/skins"
-              }
-            ]
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "src/tsconfig.app.json",
-              "src/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
-        }
-      }
-    },
-    "salveo": {
-      "root": "",
-      "sourceRoot": "src",
-      "projectType": "application",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-angular:browser",
-          "options": {
-            "outputPath": "dist/browser",
-            "index": "src/index.html",
-            "main": "src/main.ts",
-            "tsConfig": "src/tsconfig.app.json",
-            "polyfills": "src/polyfills.ts",
-            "assets": [
-              {
-                "glob": "**/*",
-                "input": "node_modules/tinymce/skins",
-                "output": "/assets/skins"
-              }
-            ],
-            "styles": [
-              "src/style/framework/src/umi.scss",
-              "src/styles.vendor1.scss"
-            ],
-            "scripts": [
-              "node_modules/tinymce/tinymce.min.js",
-              "node_modules/tinymce/themes/modern/theme.min.js",
-              "node_modules/tinymce/plugins/advlist/plugin.min.js",
-              "node_modules/tinymce/plugins/link/plugin.min.js",
-              "node_modules/tinymce/plugins/textcolor/plugin.min.js",
-              "node_modules/tinymce/plugins/lists/plugin.min.js",
-              "node_modules/tinymce/plugins/paste/plugin.min.js",
-              "node_modules/tinymce/plugins/code/plugin.min.js",
-              "assets/plugins/plugin.js"
-            ]
-          },
-          "configurations": {
-            "local": {
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/salveo/environment.salveo.local.ts"
-                }
-              ]
-            },
-            "production": {
-              "optimization": true,
-              "outputHashing": "all",
-              "sourceMap": {
-                "hidden": true,
-                "styles": true,
-                "scripts": true
-              },
-              "extractCss": true,
-              "namedChunks": false,
-              "aot": true,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/salveo/environment.salveo.prod.ts"
-                }
-              ]
-            }
-          }
-        },
-        "server": {
-          "builder": "@angular-devkit/build-angular:server",
-          "options": {
-            "outputPath": "dist/server",
-            "main": "src/main.server.ts",
-            "tsConfig": "src/tsconfig.server.json"
-          },
-          "configurations": {
-            "local": {
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/salveo/environment.salveo.local.ts"
-                }
-              ]
-            },
-            "production": {
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/salveo/environment.salveo.prod.ts"
-                }
-              ]
-            }
-          }
-        },
-        "serve": {
-          "builder": "@angular-devkit/build-angular:dev-server",
-          "options": {
-            "browserTarget": "salveo:build"
-          },
-          "configurations": {
-            "local": {
-              "browserTarget": "salveo:build:local"
-            },
-            "production": {
-              "browserTarget": "salveo:build:production"
-            }
-          }
-        },
-        "extract-i18n": {
-          "builder": "@angular-devkit/build-angular:extract-i18n",
-          "options": {
-            "browserTarget": "salveo:build"
-          }
-        },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "src/test.ts",
-            "karmaConfig": "./karma.conf.js",
-            "polyfills": "src/polyfills.ts",
-            "tsConfig": "src/tsconfig.spec.json",
-            "scripts": [
-              "node_modules/tinymce/tinymce.min.js",
-              "node_modules/tinymce/themes/modern/theme.min.js",
-              "node_modules/tinymce/plugins/advlist/plugin.min.js",
-              "node_modules/tinymce/plugins/link/plugin.min.js",
-              "node_modules/tinymce/plugins/lists/plugin.min.js",
-              "node_modules/tinymce/plugins/textcolor/plugin.min.js",
-              "node_modules/tinymce/plugins/paste/plugin.min.js",
-              "node_modules/tinymce/plugins/code/plugin.min.js",
-              "assets/plugins/plugin.js"
-            ],
-            "styles": [
-              "src/styles.vendor1.scss"
-            ],
-            "assets": [
-              {
-                "glob": "**/*",
-                "input": "node_modules/tinymce/skins",
-                "output": "/assets/skins"
-              }
-            ]
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "src/tsconfig.app.json",
-              "src/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
-        }
-      }
-    },
-    "schneider": {
-      "root": "",
-      "sourceRoot": "src",
-      "projectType": "application",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-angular:browser",
-          "options": {
-            "outputPath": "dist/browser",
-            "index": "src/index.html",
-            "main": "src/main.ts",
-            "tsConfig": "src/tsconfig.app.json",
-            "polyfills": "src/polyfills.ts",
-            "assets": [
-              {
-                "glob": "**/*",
-                "input": "node_modules/tinymce/skins",
-                "output": "/assets/skins"
-              }
-            ],
-            "styles": [
-              "src/style/framework/src/umi.scss",
-              "src/styles.schneider.scss"
-            ],
-            "scripts": [
-              "node_modules/tinymce/tinymce.min.js",
-              "node_modules/tinymce/themes/modern/theme.min.js",
-              "node_modules/tinymce/plugins/advlist/plugin.min.js",
-              "node_modules/tinymce/plugins/link/plugin.min.js",
-              "node_modules/tinymce/plugins/textcolor/plugin.min.js",
-              "node_modules/tinymce/plugins/lists/plugin.min.js",
-              "node_modules/tinymce/plugins/paste/plugin.min.js",
-              "node_modules/tinymce/plugins/code/plugin.min.js",
-              "assets/plugins/plugin.js"
-            ]
-          },
-          "configurations": {
-            "local": {
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/schneider/environment.schneider.local.ts"
-                }
-              ]
-            },
-            "production": {
-              "optimization": true,
-              "outputHashing": "all",
-              "sourceMap": {
-                "hidden": true,
-                "styles": true,
-                "scripts": true
-              },
-              "extractCss": true,
-              "namedChunks": false,
-              "aot": true,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/schneider/environment.schneider.prod.ts"
-                }
-              ]
-            }
-          }
-        },
-        "server": {
-          "builder": "@angular-devkit/build-angular:server",
-          "options": {
-            "outputPath": "dist/server",
-            "main": "src/main.server.ts",
-            "tsConfig": "src/tsconfig.server.json"
-          },
-          "configurations": {
-            "local": {
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/schneider/environment.schneider.local.ts"
-                }
-              ]
-            },
-            "production": {
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/schneider/environment.schneider.prod.ts"
-                }
-              ]
-            }
-          }
-        },
-        "serve": {
-          "builder": "@angular-devkit/build-angular:dev-server",
-          "options": {
-            "browserTarget": "schneider:build"
-          },
-          "configurations": {
-            "local": {
-              "browserTarget": "schneider:build:local"
-            },
-            "production": {
-              "browserTarget": "schneider:build:production"
-            }
-          }
-        },
-        "extract-i18n": {
-          "builder": "@angular-devkit/build-angular:extract-i18n",
-          "options": {
-            "browserTarget": "schneider:build"
-          }
-        },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "src/test.ts",
-            "karmaConfig": "./karma.conf.js",
-            "polyfills": "src/polyfills.ts",
-            "tsConfig": "src/tsconfig.spec.json",
-            "scripts": [
-              "node_modules/tinymce/tinymce.min.js",
-              "node_modules/tinymce/themes/modern/theme.min.js",
-              "node_modules/tinymce/plugins/advlist/plugin.min.js",
-              "node_modules/tinymce/plugins/link/plugin.min.js",
-              "node_modules/tinymce/plugins/lists/plugin.min.js",
-              "node_modules/tinymce/plugins/textcolor/plugin.min.js",
-              "node_modules/tinymce/plugins/paste/plugin.min.js",
-              "node_modules/tinymce/plugins/code/plugin.min.js",
-              "assets/plugins/plugin.js"
-            ],
-            "styles": [
-              "src/styles.schneider.scss"
-            ],
-            "assets": [
-              {
-                "glob": "**/*",
-                "input": "node_modules/tinymce/skins",
-                "output": "/assets/skins"
-              }
-            ]
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "src/tsconfig.app.json",
-              "src/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
-        }
-      }
-    },
-    "bnpparibas": {
-      "root": "",
-      "sourceRoot": "src",
-      "projectType": "application",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-angular:browser",
-          "options": {
-            "outputPath": "dist/browser",
-            "index": "src/index.html",
-            "main": "src/main.ts",
-            "tsConfig": "src/tsconfig.app.json",
-            "polyfills": "src/polyfills.ts",
-            "assets": [
-              {
-                "glob": "**/*",
-                "input": "node_modules/tinymce/skins",
-                "output": "/assets/skins"
-              }
-            ],
-            "styles": [
-              "src/style/framework/src/umi.scss",
-              "src/styles.schneider.scss"
-            ],
-            "scripts": [
-              "node_modules/tinymce/tinymce.min.js",
-              "node_modules/tinymce/themes/modern/theme.min.js",
-              "node_modules/tinymce/plugins/advlist/plugin.min.js",
-              "node_modules/tinymce/plugins/link/plugin.min.js",
-              "node_modules/tinymce/plugins/textcolor/plugin.min.js",
-              "node_modules/tinymce/plugins/lists/plugin.min.js",
-              "node_modules/tinymce/plugins/paste/plugin.min.js",
-              "node_modules/tinymce/plugins/code/plugin.min.js",
-              "assets/plugins/plugin.js"
-            ]
-          },
-          "configurations": {
-            "local": {
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/bnpparibas/environment.bnpparibas.local.ts"
-                }
-              ]
-            },
-            "production": {
-              "optimization": true,
-              "outputHashing": "all",
-              "sourceMap": {
-                "hidden": true,
-                "styles": true,
-                "scripts": true
-              },
-              "extractCss": true,
-              "namedChunks": false,
-              "aot": true,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/bnpparibas/environment.bnpparibas.prod.ts"
-                }
-              ]
-            }
-          }
-        },
-        "server": {
-          "builder": "@angular-devkit/build-angular:server",
-          "options": {
-            "outputPath": "dist/server",
-            "main": "src/main.server.ts",
-            "tsConfig": "src/tsconfig.server.json"
-          },
-          "configurations": {
-            "local": {
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/bnpparibas/environment.bnpparibas.local.ts"
-                }
-              ]
-            },
-            "production": {
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/bnpparibas/environment.bnpparibas.prod.ts"
-                }
-              ]
-            }
-          }
-        },
-        "serve": {
-          "builder": "@angular-devkit/build-angular:dev-server",
-          "options": {
-            "browserTarget": "bnpparibas:build"
-          },
-          "configurations": {
-            "local": {
-              "browserTarget": "bnpparibas:build:local"
-            },
-            "production": {
-              "browserTarget": "bnpparibas:build:production"
-            }
-          }
-        },
-        "extract-i18n": {
-          "builder": "@angular-devkit/build-angular:extract-i18n",
-          "options": {
-            "browserTarget": "schneider:build"
-          }
-        },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "src/test.ts",
-            "karmaConfig": "./karma.conf.js",
-            "polyfills": "src/polyfills.ts",
-            "tsConfig": "src/tsconfig.spec.json",
-            "scripts": [
-              "node_modules/tinymce/tinymce.min.js",
-              "node_modules/tinymce/themes/modern/theme.min.js",
-              "node_modules/tinymce/plugins/advlist/plugin.min.js",
-              "node_modules/tinymce/plugins/link/plugin.min.js",
-              "node_modules/tinymce/plugins/textcolor/plugin.min.js",
-              "node_modules/tinymce/plugins/lists/plugin.min.js",
-              "node_modules/tinymce/plugins/paste/plugin.min.js",
-              "node_modules/tinymce/plugins/code/plugin.min.js",
-              "assets/plugins/plugin.js"
-            ],
-            "styles": [
-              "src/styles.vendor1.scss"
+              "src/styles.multivalente.scss"
             ],
             "assets": [
               {
@@ -1410,7 +590,12 @@
   "defaultProject": "umi",
   "schematics": {
     "@schematics/angular:component": {
+      "prefix": "app",
       "styleext": "scss"
+    },
+    "@schematics/angular:directive": {
+      "prefix": "app",
+      "style": "scss"
     }
   }
 }

@@ -307,6 +307,11 @@ export class SidebarProjectPitchComponent implements OnInit, OnChanges, OnDestro
     return '';
   }
 
+  mediaToShow(mediaSrc: any) {
+    this._modalMedia = true;
+    this._selectedMedia = mediaSrc;
+  }
+
   public help(type: string): string {
     if (this.pitchHelp && this.type) {
       switch (this.type) {
@@ -413,10 +418,5 @@ export class SidebarProjectPitchComponent implements OnInit, OnChanges, OnDestro
   ngOnDestroy(): void {
     this._ngUnsubscribe.next();
     this._ngUnsubscribe.complete();
-  }
-
-  mediaToShow(mediaSrc: any) {
-    this._modalMedia = true;
-    this._selectedMedia = mediaSrc;
   }
 }

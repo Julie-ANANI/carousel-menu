@@ -13,114 +13,47 @@ import * as moment from 'moment';
 })
 export class AdminProfessionalsStatisticsComponent implements OnInit {
 
-  constructor(private _rolesFrontService: RolesFrontService,
-              private _classificationService: ClassificationService) {
-  }
-
   private _seniorityLevelsClassification: SeniorityClassification;
-
-  get seniorityLevelsClassification(): SeniorityClassification {
-    return this._seniorityLevelsClassification;
-  }
 
   private _jobsClassification: JobsClassification;
 
-  get jobsClassification(): JobsClassification {
-    return this._jobsClassification;
-  }
-
   private _seniorityLevelsClassifications: Array<SeniorityClassification> = [];
-
-  get seniorityLevelsClassifications(): Array<SeniorityClassification> {
-    return this._seniorityLevelsClassifications;
-  }
 
   private _jobsClassifications: Array<JobsClassification> = [];
 
-  get jobsClassifications(): Array<JobsClassification> {
-    return this._jobsClassifications;
-  }
-
   private _fetchingError = false;
-
-  get fetchingError(): boolean {
-    return this._fetchingError;
-  }
-
-  private _config: { emailConfidence?: EmailType; year?: number; month?: number; week?: number } = {};
-
-  get config(): { emailConfidence?: EmailType; year?: number; month?: number; week?: number } {
-    return this._config;
-  }
 
   private _selectedYear = '';
 
-  get selectedYear(): string {
-    return this._selectedYear;
-  }
+  private _config: { emailConfidence?: EmailType; year?: number; month?: number; week?: number } = {};
 
   private _selectedMonth = '';
 
-  get selectedMonth(): string {
-    return this._selectedMonth;
-  }
-
   private _selectedWeek = '';
-
-  get selectedWeek(): string {
-    return this._selectedWeek;
-  }
 
   private _dropdownYears: Array<string> = [];
 
-  get dropdownYears(): any[] {
-    return this._dropdownYears;
-  }
-
-  private _dropdownMonths: Array<string> = ['January', 'February', 'March', 'April', 'May', 'June',
-    'July', 'August', 'September', 'October', 'November', 'December'];
-
-  get dropdownMonths(): any[] {
-    return this._dropdownMonths;
-  }
-
   private _dropdownWeeks: Array<string> = [];
-
-  get dropdownWeeks(): any[] {
-    return this._dropdownWeeks;
-  }
-
-  private _isLoading = false;
-
-  get isLoading(): boolean {
-    return this._isLoading;
-  }
 
   private _allRepartitionStats: Array<{ emailConfidence: EmailType, classified: number }> = [];
 
-  get repartitionStats(): { emailConfidence: EmailType; classified: number } {
-    return this._repartitionStats;
-  }
-
   private _repartitionStats: { emailConfidence: EmailType, classified: number };
+
   private _classified = 0;
 
   private _selectedEmailConfidenceType: EmailType = 'ALL';
-
-  get selectedEmailConfidenceType(): EmailType {
-    return this._selectedEmailConfidenceType;
-  }
 
   private _nbRiskyEmailsClassified = 0;
 
   private _nbGoodEmailsClassified = 0;
 
-  get nbGoodEmailsClassified(): number {
-    return this._nbGoodEmailsClassified;
-  }
+  private _isLoading = false;
 
-  get nbRiskyEmailsClassified(): number {
-    return this._nbRiskyEmailsClassified;
+  private _dropdownMonths: Array<string> = ['January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December'];
+
+  constructor(private _rolesFrontService: RolesFrontService,
+              private _classificationService: ClassificationService) {
   }
 
   ngOnInit() {
@@ -192,9 +125,9 @@ export class AdminProfessionalsStatisticsComponent implements OnInit {
 
   public selectEmailConfidenceType(type: EmailType) {
     this._selectedEmailConfidenceType = (type === this._selectedEmailConfidenceType) ? 'ALL' : type;
-    this._seniorityLevelsClassification = this.seniorityLevelsClassifications.find(s => s.emailConfidence === this._selectedEmailConfidenceType)
-    this._jobsClassification = this.jobsClassifications.find(j => j.emailConfidence === this._selectedEmailConfidenceType)
-    this._repartitionStats = this._allRepartitionStats.find(r => r.emailConfidence === this._selectedEmailConfidenceType)
+    this._seniorityLevelsClassification = this.seniorityLevelsClassifications.find(s => s.emailConfidence === this._selectedEmailConfidenceType);
+    this._jobsClassification = this.jobsClassifications.find(j => j.emailConfidence === this._selectedEmailConfidenceType);
+    this._repartitionStats = this._allRepartitionStats.find(r => r.emailConfidence === this._selectedEmailConfidenceType);
   }
 
   public computeEmailConfidenceStats() {
@@ -303,18 +236,86 @@ export class AdminProfessionalsStatisticsComponent implements OnInit {
 
   numberFormatter(num: number) {
     const bigDigitsBases = [
-      {value: 1, symbol: ""},
-      {value: 1e3, symbol: "k"},
-      {value: 1e6, symbol: "M"},
-      {value: 1e9, symbol: "G"}
+      {value: 1, symbol: ''},
+      {value: 1e3, symbol: 'k'},
+      {value: 1e6, symbol: 'M'},
+      {value: 1e9, symbol: 'G'}
     ];
     const rx = /\.0+$|(\.[0-9]*[1-9])0+$/; // remove last digits after abbreviated number
     const item = bigDigitsBases.slice().reverse().find((item) => num >= item.value);
     if (item) {
       const truncateNum = Math.floor(num / item.value);
       const round = Math.pow(10, truncateNum.toString().length - 1);
-      return (Math.floor(truncateNum / round) * round).toString().replace(rx, "$1") + item.symbol + '+';
+      return (Math.floor(truncateNum / round) * round).toString().replace(rx, '$1') + item.symbol + '+';
     }
     return '0';
+  }
+
+  get dropdownMonths(): any[] {
+    return this._dropdownMonths;
+  }
+
+  get seniorityLevelsClassification(): SeniorityClassification {
+    return this._seniorityLevelsClassification;
+  }
+  get jobsClassification(): JobsClassification {
+    return this._jobsClassification;
+  }
+
+
+  get seniorityLevelsClassifications(): Array<SeniorityClassification> {
+    return this._seniorityLevelsClassifications;
+  }
+
+  get jobsClassifications(): Array<JobsClassification> {
+    return this._jobsClassifications;
+  }
+
+  get fetchingError(): boolean {
+    return this._fetchingError;
+  }
+
+  get config(): { emailConfidence?: EmailType; year?: number; month?: number; week?: number } {
+    return this._config;
+  }
+
+  get selectedYear(): string {
+    return this._selectedYear;
+  }
+
+  get selectedMonth(): string {
+    return this._selectedMonth;
+  }
+
+  get selectedWeek(): string {
+    return this._selectedWeek;
+  }
+
+  get dropdownYears(): any[] {
+    return this._dropdownYears;
+  }
+
+  get dropdownWeeks(): any[] {
+    return this._dropdownWeeks;
+  }
+
+  get isLoading(): boolean {
+    return this._isLoading;
+  }
+
+  get repartitionStats(): { emailConfidence: EmailType; classified: number } {
+    return this._repartitionStats;
+  }
+
+  get selectedEmailConfidenceType(): EmailType {
+    return this._selectedEmailConfidenceType;
+  }
+
+  get nbGoodEmailsClassified(): number {
+    return this._nbGoodEmailsClassified;
+  }
+
+  get nbRiskyEmailsClassified(): number {
+    return this._nbRiskyEmailsClassified;
   }
 }

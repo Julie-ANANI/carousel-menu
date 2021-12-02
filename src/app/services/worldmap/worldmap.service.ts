@@ -51,6 +51,8 @@ export class WorldmapService {
   public async getCountriesRepartitionByContinent(countries: Array<string>): Promise<{ [continent: string]: { count: number, countries: { [country: string]: {count: number, names: any} } } }> {
     const countriesList = await this.getCountriesList();
     return countries.reduce((acc, countryCode) => {
+      // Todo: we need to find a better approach to resolve the UK and GB problem in 2021.
+      countryCode = countryCode === 'UK' ? 'GB' : countryCode;
       const continent = this._countries[countryCode];
       const country = countriesList.find(c => c.code === countryCode);
       if (continent) {
@@ -79,6 +81,7 @@ export class WorldmapService {
   }
 
   public async getCountriesList(): Promise<Array<Country>> {
+    // TODO might call 6 getWholeSet api - to be optimised
     return new Promise(resolve => {
       if (this._countriesList.length === 0) {
         this._indexService.getWholeSet({type: 'countries'}).pipe(first())

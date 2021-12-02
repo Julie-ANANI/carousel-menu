@@ -127,11 +127,11 @@
 
     <div *ngFor="let tag of content.values; let i = index;" class="m-bottom-20 text-center">
 
-      <p [ngStyle]="{ 'min-height': '24px', 'line-height': '24px' }" class="text-lg text-medium">
+      <p style="min-height: 24px; line-height: 24px" class="text-lg text-medium">
         <ng-container *ngIf="tag.legend && tag.visibility">{{ tag.legend }}</ng-container>
       </p>
 
-      <div [ngStyle]="{ 'min-height': '30px' }">
+      <div style="min-height: 30px">
         <div *ngIf="tag.visibility && tag.name" [ngStyle]="{ 'background-color': tag.color }" class="label is-rounded">
           {{ tag.name }}
         </div>

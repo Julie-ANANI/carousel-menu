@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { User } from '../../models/user.model';
 import { Tag } from '../../models/tag';
-import { Config } from '../../models/config';
+import { Config } from '@umius/umi-common-component/models';
 import { environment } from '../../../environments/environment';
 
 @Injectable({ providedIn: 'root' })

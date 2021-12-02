@@ -7,12 +7,12 @@ import { first } from 'rxjs/operators';
 import { SidebarInterface } from '../../../../../sidebars/interfaces/sidebar-interface';
 import { isPlatformBrowser } from '@angular/common';
 import { Professional } from '../../../../../../models/professional';
-import { Config } from '../../../../../../models/config';
+import { Config } from '@umius/umi-common-component/models';
 import { Response } from '../../../../../../models/response';
 import {ConfigService} from '@umius/umi-common-component/services/config';import { RolesFrontService } from '../../../../../../services/roles/roles-front.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorFrontService } from '../../../../../../services/error/error-front.service';
-import { StatsInterface } from '../../admin-stats-banner/admin-stats-banner.component';
+import { StatsInterface } from '../../../../../../models/stats';
 import { CampaignFrontService } from '../../../../../../services/campaign/campaign-front.service';
 import { Bytes2Human } from '../../../../../../utils/bytes2human';
 import {CampaignService} from "../../../../../../services/campaign/campaign.service";
@@ -91,12 +91,7 @@ export class AdminCampaignProsComponent implements OnInit {
 
   private _csvImportError = '';
 
-  private _prosStats = {
-    goodEmails: 0,
-    riskyEmails: 0,
-    badEmails: 0,
-    batched: 0
-  }
+  private _prosStatsConfig: Array<StatsInterface> = [];
 
   constructor(
     @Inject(PLATFORM_ID) protected _platformId: Object,
@@ -114,7 +109,7 @@ export class AdminCampaignProsComponent implements OnInit {
       if (data['campaign']) {
         this._campaign = data['campaign'];
         this._campaignService.getProsStats(this._campaign._id).subscribe((stats) => {
-          this._prosStats = stats;
+          this._prosStatsConfig = this.setProsStatsConfig(stats);
         })
         this._campaignFrontService.setActiveCampaign(this._campaign);
         this._campaignFrontService.setActiveCampaignTab('pros');
@@ -148,7 +143,6 @@ export class AdminCampaignProsComponent implements OnInit {
         .subscribe(
           (response: Response) => {
             this._professionals = (response && response.result) || [];
-            console.log(this._professionals);
             this._total =
               response._metadata.totalCount || response.result.length;
           },
@@ -198,8 +192,32 @@ export class AdminCampaignProsComponent implements OnInit {
     ];
   }
 
+  public setProsStatsConfig(stats: {goodEmails: number, badEmails: number, riskyEmails: number, batched: number }):
+    Array<StatsInterface> {
+    return [
+      {
+        heading: 'Emails',
+        content: [
+          { subHeading: 'Good', value: this._campaignProsStats(stats,'goodEmails').toString()},
+          { subHeading: 'Risky', value: this._campaignProsStats(stats, 'riskyEmails').toString()},
+          { subHeading: 'Bad', value: this._campaignProsStats(stats,'badEmails').toString()},
+        ]
+      },
+      {
+        heading: 'Batch',
+        content: [
+          { subHeading: 'Batched', value: this._campaignProsStats(stats, 'batched').toString()}
+        ]
+      }
+    ];
+  }
+
   private _campaignStat(searchKey: string): number {
     return CampaignFrontService.getBatchCampaignStat(this._campaign, searchKey);
+  }
+
+  private _campaignProsStats(stats: { goodEmails?: number; badEmails?: number; riskyEmails?: number; batched?: number; }, searchKey: string): number {
+    return stats[searchKey] || 0;
   }
 
   public onClickAdd() {
@@ -580,7 +598,7 @@ export class AdminCampaignProsComponent implements OnInit {
     return this._updatePreview;
   }
 
-  get prosStats(): { batched: number; riskyEmails: number; goodEmails: number; badEmails: number } {
-    return this._prosStats;
+  get prosStatsConfig(): Array<StatsInterface> {
+    return this._prosStatsConfig;
   }
 }

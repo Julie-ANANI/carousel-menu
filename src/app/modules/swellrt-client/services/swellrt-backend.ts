@@ -1,9 +1,9 @@
-import {Injectable} from "@angular/core";
-import {User} from "../../../models/user.model";
+import {Injectable} from '@angular/core';
+import {User} from '../../../models/user.model';
 
 import * as sha1 from 'js-sha1';
 
-//declare let swellrt;
+// declare let swellrt;
 
 @Injectable({providedIn: 'root'})
 export class SwellrtBackend {

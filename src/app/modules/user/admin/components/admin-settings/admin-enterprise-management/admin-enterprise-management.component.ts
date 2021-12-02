@@ -1,14 +1,11 @@
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { EnterpriseService } from '../../../../../../services/enterprise/enterprise.service';
 import {
-  /*FormArray,*/ FormBuilder,
-  FormGroup /*, Validators*/,
+  FormBuilder,
+  FormGroup
 } from '@angular/forms';
 import { SidebarInterface } from '../../../../../sidebars/interfaces/sidebar-interface';
 import { Enterprise /*, Pattern*/ } from '../../../../../../models/enterprise';
-// import {Clearbit} from '../../../../../../models/clearbit';
-// import {AutocompleteService} from '../../../../../../services/autocomplete/autocomplete.service';
-/*import {DomSanitizer, SafeHtml} from '@angular/platform-browser';*/
 import { Table, Config } from '@umius/umi-common-component/models';
 import { first } from 'rxjs/operators';
 import { isPlatformBrowser } from '@angular/common';
@@ -23,35 +20,21 @@ import { EnterpriseValueChains, Industries } from '../../../../../../models/stat
   templateUrl: './admin-enterprise-management.component.html',
 })
 export class AdminEnterpriseManagementComponent implements OnInit {
-  // private _defaultLogoURI = 'https://res.cloudinary.com/umi/image/upload/app/companies-logo/no-image.png';
-
   private _searchForm: FormGroup = this._formBuilder.group({
     searchString: [''],
   });
 
   loading = false;
 
-  // private _newEnterpriseForm: FormGroup;
-
-  // private _newEnterprise: Enterprise;
-
-  // private _parentEntreprise: Enterprise;
-
-  // private _enterpriseSidebarPatterns: Array<Pattern> = [];
-
   private _isSearching = false;
 
   private _sidebarValue: SidebarInterface = <SidebarInterface>{};
-
-  // private _uploadLogoModal = false;
 
   private _results = false;
 
   private _nothingFound = false;
 
   private _companiesSelected: Array<any> = [];
-
-  // private _editEnterpriseId: string = null;
 
   private _queryConfig: Config = {
     fields: '',
@@ -96,31 +79,13 @@ export class AdminEnterpriseManagementComponent implements OnInit {
     private _formBuilder: FormBuilder,
     private _rolesFrontService: RolesFrontService,
     private _translateNotificationsService: TranslateNotificationsService,
-    private _route: Router /*private _autoCompleteService: AutocompleteService,*/
-  ) /*private _sanitizer: DomSanitizer*/ {
-  }
-
-  private _buildForm() {
-    // New company form
-    /*this._newEnterpriseForm = this._formBuilder.group({
-      name: [null, [Validators.required]],
-      topLevelDomain: [null, [Validators.required]],
-      enterpriseURL: [null],
-      logo: [null],
-      subsidiaries: [null],
-      parentEnterprise: [null],
-      patterns: [null],
-      enterpriseType: [null],
-      industries: [null],
-      brands: [null],
-      geographicalZone: [null]
-    });*/
+    private _route: Router
+  ) {
   }
 
   ngOnInit(): void {
     if (isPlatformBrowser(this._platformId)) {
       this._isLoading = false;
-      this._buildForm();
       this._companiesSelected = this._enterpriseService._enterprisesSelected;
       this._initTable([], 0);
       if (this._companiesSelected.length > 0) {
@@ -128,7 +93,6 @@ export class AdminEnterpriseManagementComponent implements OnInit {
       }
     }
   }
-
 
 
   public canAccess(path?: Array<string>) {
@@ -377,8 +341,6 @@ export class AdminEnterpriseManagementComponent implements OnInit {
   public openSidebar(event: any, type: 'CREATE' | 'EDIT') {
     switch (type) {
       case 'CREATE':
-        // this._editEnterpriseId = null;
-        // this._newEnterpriseForm.reset();
         this._isEditable = this.canAccess(['add']);
         this._isSaving = false;
         this._selectedEnterprise = <Enterprise>{};
@@ -392,11 +354,6 @@ export class AdminEnterpriseManagementComponent implements OnInit {
       case 'EDIT':
         this._isEditable = this.canAccess(['edit']);
         this._isSaving = false;
-        // this._editEnterpriseId = event._id;
-        // this._enterpriseSidebarPatterns = event.patterns;
-        // this._newEnterpriseForm.patchValue(event);
-        // this._newEnterpriseForm.get('patterns').reset('');
-        // this._newEnterpriseForm.get('logo').reset(event.logo.uri);
         this._sidebarValue = {
           animate_state: 'active',
           title: this._isEditable ? 'Edit Enterprise' : 'Enterprise',
@@ -406,50 +363,6 @@ export class AdminEnterpriseManagementComponent implements OnInit {
         break;
     }
   }
-
-  /*public saveEnterprise() {
-    this._newEnterprise = {
-      name: this._newEnterpriseForm.get('name').value,
-      topLevelDomain: this._newEnterpriseForm.get('topLevelDomain').value,
-      patterns: this._enterpriseSidebarPatterns,
-      parentEnterprise: this._parentEntreprise ? this._parentEntreprise.id || null : null
-    };
-    Object.keys(this._newEnterpriseForm.controls).forEach(key => {
-      if (this._newEnterpriseForm.get(key).value) {
-        switch (key) {
-          case 'patterns':
-          case 'name':
-          case 'topLevelDomain':
-          case 'parentEnterprise':
-            // NOOP
-            break;
-          case 'logo':
-            this._newEnterprise[key] = {
-              'uri': this._newEnterpriseForm.get('logo').value || this._defaultLogoURI,
-              'alt': this._newEnterpriseForm.get('name').value
-            };
-            break;
-          default:
-            this._newEnterprise[key] = this._newEnterpriseForm.get(key).value;
-        }
-      }
-    });
-    const promise = !!this._editEnterpriseId ?
-      this._enterpriseService.save(this._editEnterpriseId, this._newEnterprise) :
-      this._enterpriseService.create(this._newEnterprise);
-
-    promise.subscribe(result => {
-        this._newEnterpriseForm.patchValue(result);
-        const idx = this.resultTableConfiguration._content.findIndex((value) => {
-            return value._id === result['_id'];
-        });
-        if (idx > -1) {
-          this.resultTableConfiguration._content[idx] = result;
-        }
-      }, err => {
-        console.error(err);
-      });
-  }*/
 
   public updateEnterprise(event: { enterprise: Enterprise; opType: string, enterpriseBeforeUpdate?: Enterprise }) {
     switch (event.opType) {
@@ -590,6 +503,59 @@ export class AdminEnterpriseManagementComponent implements OnInit {
     });
   }
 
+  performAction($event: any) {
+    this._enterpriseService.setQueryConfig(this._queryConfig);
+    this._enterpriseService.setEnterprisesSelected($event._rows);
+    switch ($event._action) {
+      // cell edit
+      case 'Update grid':
+        const context = $event._context;
+        if (context) {
+          this.saveEnterprise(context);
+        }
+        break;
+      case 'Add parent':
+        this._route.navigate(['/user/admin/settings/enterprises/addparent']);
+        break;
+      case 'Bulk edit':
+        this._route.navigate(['/user/admin/settings/enterprises/bulkedit']);
+        break;
+    }
+  }
+
+  private saveEnterprise(enterprise: Enterprise) {
+    this._enterpriseService
+      .save(enterprise._id, enterprise)
+      .pipe(first())
+      .subscribe(
+        (result) => {
+          this._isSaving = false;
+          this._translateNotificationsService.success(
+            'Success',
+            'The enterprise is updated.'
+          );
+          const idx = this._resultTableConfiguration._content.findIndex(
+            (value) => {
+              return value._id === result['_id'];
+            }
+          );
+          if (idx > -1) {
+            this._resultTableConfiguration._content[idx] = result;
+            this._resultTableConfiguration._content[idx]['parentEnterpriseObject'] = enterprise.parentEnterpriseObject;
+            this._resultTableConfiguration._content[idx]['subsidiariesList'] = enterprise.subsidiariesList;
+          }
+        },
+        (err: HttpErrorResponse) => {
+          this._translateNotificationsService.error(
+            'ERROR.ERROR',
+            ErrorFrontService.getErrorMessage(err.status)
+          );
+          this._isSaving = false;
+          console.error(err);
+        }
+      );
+  }
+
 
   get results(): boolean {
     return this._results;
@@ -646,58 +612,5 @@ export class AdminEnterpriseManagementComponent implements OnInit {
 
   get isSaving(): boolean {
     return this._isSaving;
-  }
-
-  performAction($event: any) {
-    this._enterpriseService.setQueryConfig(this._queryConfig);
-    this._enterpriseService.setEnterprisesSelected($event._rows);
-    switch ($event._action) {
-      // cell edit
-      case 'Update grid':
-        const context = $event._context;
-        if (context) {
-          this.saveEnterprise(context);
-        }
-        break;
-      case 'Add parent':
-        this._route.navigate(['/user/admin/settings/enterprises/addparent']);
-        break;
-      case 'Bulk edit':
-        this._route.navigate(['/user/admin/settings/enterprises/bulkedit']);
-        break;
-    }
-  }
-
-  private saveEnterprise(enterprise: Enterprise) {
-    this._enterpriseService
-      .save(enterprise._id, enterprise)
-      .pipe(first())
-      .subscribe(
-        (result) => {
-          this._isSaving = false;
-          this._translateNotificationsService.success(
-            'Success',
-            'The enterprise is updated.'
-          );
-          const idx = this._resultTableConfiguration._content.findIndex(
-            (value) => {
-              return value._id === result['_id'];
-            }
-          );
-          if (idx > -1) {
-            this._resultTableConfiguration._content[idx] = result;
-            this._resultTableConfiguration._content[idx]['parentEnterpriseObject'] = enterprise.parentEnterpriseObject;
-            this._resultTableConfiguration._content[idx]['subsidiariesList'] = enterprise.subsidiariesList;
-          }
-        },
-        (err: HttpErrorResponse) => {
-          this._translateNotificationsService.error(
-            'ERROR.ERROR',
-            ErrorFrontService.getErrorMessage(err.status)
-          );
-          this._isSaving = false;
-          console.error(err);
-        }
-      );
   }
 }

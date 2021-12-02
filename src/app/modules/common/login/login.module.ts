@@ -21,9 +21,9 @@ import { ModalModule } from '../../utility/modals/modal/modal.module';
     ReactiveFormsModule,
     ResetPasswordModule,
     SpinnerLoaderModule,
-    ModalModule,
+    ModalModule
   ],
-  declarations: [LoginComponent],
+  declarations: [LoginComponent]
 })
 export class LoginModule {
 }

@@ -9,6 +9,10 @@ export const LOG_IN = {
 
   'LOG_IN_LINKEDIN': 'Se connecter avec LinkedIn',
 
-  'SIGN_UP': 'Inscription'
+  'SIGN_UP': 'Inscription',
+
+  'SUCCESS_EMAIL': 'Nous avons reçu votre courriel et notre équipe vous contactera bientôt.',
+
+  'ERROR_EMAIL': 'Désolé, nous n\'avons pas pu traiter votre demande pour le moment, veuillez essayer plus tard.'
 
 };

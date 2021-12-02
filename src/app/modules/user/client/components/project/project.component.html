@@ -39,7 +39,7 @@
             <ng-container *ngIf="!!(mission.template && mission.template.entry && mission.template.entry.length);
             else oldObjective">
               <div class="flex-centered flex-d-column p-bottom-40">
-                <h3 class="op-8 text-lg text-normal text-white m-bottom-2">{{ objectiveName() }}</h3>
+                <h3 class="op-8 text-lg text-normal text-white m-bottom-2">{{ objectiveName }}</h3>
                 <button
                   (click)="showModal($event)"
                   class="button is-link is-community p-no text-underline"
@@ -106,7 +106,7 @@
     <section class="modal-body p-no br-6">
       <app-market-test-methodology
         [methodology]="mission.template.methodology"
-        [title]="objectiveName()">
+        [title]="objectiveName">
       </app-market-test-methodology>
     </section>
   </app-utility-modal-empty>

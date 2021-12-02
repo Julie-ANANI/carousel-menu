@@ -40,8 +40,8 @@
       <div *ngIf="canTestMails" class="m-left-10 m-bottom-10 m-right-10">
         <label>
           <select
-            class="form-select p-left-15"
-            [ngStyle]="{ 'height': 'unset', 'font-size': '13px', 'max-width': '206px' }"
+            class="form-select p-left-15 text-13"
+            style="height: unset; max-width: 206px"
             (change)="onSelectProfessional($event.target['value'])">
             <option [value]="''">{{ 'SHARED_MAIL_EDITOR.TEST_WITH_CONTACT' | translate }}</option>
             <option *ngFor="let professional of professionals" [value]="professional._id">
@@ -78,12 +78,12 @@
               <span class="text-secondary-dark text-normal">Follow up -</span>
             </div>
 
-            <label *ngIf="isEditableMode" [ngStyle]="{ 'flex': '1' }">
+            <label *ngIf="isEditableMode" style="flex: 1">
               <input
                 (ngModelChange)="onUpdate($event, 'en')"
                 [(ngModel)]="emailsObject['en'].subject"
-                [ngStyle]="{ 'height': '40px', 'font-size': '13px' }"
-                class="form-input"
+                style="height: 40px"
+                class="form-input text-13"
                 name="subject-en"
                 type="text">
             </label>
@@ -100,12 +100,12 @@
               <span class="text-notify text-medium">CC:</span>
             </div>
 
-            <label *ngIf="isEditableMode" [ngStyle]="{ 'flex': '1' }">
+            <label *ngIf="isEditableMode" style="flex: 1">
               <input
                 (ngModelChange)="updateChanges($event)"
                 [(ngModel)]="ccEmail"
-                [ngStyle]="{ 'height': '40px', 'font-size': '13px' }"
-                class="form-input"
+                style="height: 40px"
+                class="form-input text-13"
                 type="text">
             </label>
 
@@ -141,12 +141,12 @@
               <span class="text-secondary-dark text-normal">Suivi - </span>
             </div>
 
-            <label *ngIf="isEditableMode" [ngStyle]="{ 'flex': '1' }">
+            <label *ngIf="isEditableMode" style="flex: 1">
               <input
                 (ngModelChange)="onUpdate($event, 'fr')"
                 [(ngModel)]="emailsObject['fr'].subject"
-                [ngStyle]="{ 'height': '40px', 'font-size': '13px' }"
-                class="form-input"
+                style="height: 40px"
+                class="form-input text-13"
                 name="subject-fr"
                 type="text">
             </label>
@@ -163,12 +163,12 @@
               <span class="text-notify text-medium">CC :</span>
             </div>
 
-            <label *ngIf="isEditableMode" [ngStyle]="{ 'flex': '1' }">
+            <label *ngIf="isEditableMode" style="flex: 1">
               <input
                 (ngModelChange)="updateChanges($event)"
                 [(ngModel)]="ccEmail"
-                [ngStyle]="{ 'height': '40px', 'font-size': '13px' }"
-                class="form-input"
+                style="height: 40px"
+                class="form-input text-13"
                 type="text">
             </label>
 

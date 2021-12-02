@@ -14,6 +14,8 @@ import { Mission } from '../../../../../models/mission';
 import { MissionFrontService } from '../../../../../services/mission/mission-front.service';
 import { SocketService } from '../../../../../services/socket/socket.service';
 import { AuthService } from '../../../../../services/auth/auth.service';
+import {RouteFrontService} from '../../../../../services/route/route-front.service';
+import {CommonService} from '../../../../../services/common/common.service';
 
 interface Tab {
   route: string;
@@ -29,12 +31,12 @@ interface Tab {
 
 export class ProjectComponent implements OnInit, OnDestroy {
 
-  get openModal(): boolean {
-    return this._openModal;
+  get iconClass(): string {
+    return this._iconClass;
   }
 
-  set openModal(value: boolean) {
-    this._openModal = value;
+  get objectiveName(): string {
+    return this._objectiveName;
   }
 
   private _innovation: Innovation = <Innovation>{};
@@ -63,8 +65,14 @@ export class ProjectComponent implements OnInit, OnDestroy {
 
   private _openModal = false;
 
+  private _objectiveName = '';
+
+  private _iconClass = '';
+
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _activatedRoute: ActivatedRoute,
+              private _routeFrontService: RouteFrontService,
+              private _commonService: CommonService,
               private _translateTitleService: TranslateTitleService,
               private _innovationService: InnovationService,
               private _router: Router,
@@ -73,7 +81,9 @@ export class ProjectComponent implements OnInit, OnDestroy {
               private _socketService: SocketService,
               private _authService: AuthService,
               private _innovationFrontService: InnovationFrontService) {
+  }
 
+  ngOnInit() {
     this._setSpinner(true);
     this._initPageTitle();
 
@@ -83,36 +93,39 @@ export class ProjectComponent implements OnInit, OnDestroy {
         this._getInnovation(params['projectId']);
       }
     });
-  }
 
-  ngOnInit() {
     this._initCurrentTab();
 
     this._innovationFrontService.innovation().pipe(takeUntil(this._ngUnsubscribe)).subscribe((innovation) => {
       this._innovation = innovation || <Innovation>{};
       this._verifyFollowUp();
       this._mission = <Mission>this._innovation.mission || <Mission>{};
-
-      // Listen to the updates only the first time we retrieve the innovation
-      if (!this._socketListening && this._innovation._id) {
-        this._socketService.getMissionUpdates(this._mission._id)
-          .pipe(takeUntil(this._ngUnsubscribe))
-          .subscribe((update: any) => {
-            this._realTimeUpdate('mission', update);
-          }, (error) => {
-            console.error(error);
-          });
-
-        this._socketService.getProjectUpdates(this._innovation._id)
-          .pipe(takeUntil(this._ngUnsubscribe))
-          .subscribe((update: any) => {
-            this._realTimeUpdate('project', update);
-          }, (error) => {
-            console.error(error);
-          });
-        this._socketListening = true;
-      }
+      this._initValues();
+      this._socket();
     });
+  }
+
+  /***
+   * Listen to the updates only the first time we retrieve the innovation
+   * @private
+   */
+  private _socket() {
+    if (!this._socketListening && this._innovation._id) {
+      this._socketService.getMissionUpdates(this._mission._id).pipe(takeUntil(this._ngUnsubscribe)).subscribe((update: any) => {
+        this._realTimeUpdate('mission', update);
+        }, (error) => {
+        console.error(error);
+      });
+
+      this._socketService.getProjectUpdates(this._innovation._id)
+        .pipe(takeUntil(this._ngUnsubscribe)).subscribe((update: any) => {
+          this._realTimeUpdate('project', update);
+          }, (error) => {
+          console.error(error);
+        });
+
+      this._socketListening = true;
+    }
   }
 
   private _verifyFollowUp() {
@@ -170,6 +183,18 @@ export class ProjectComponent implements OnInit, OnDestroy {
     }
   }
 
+  /**
+   * will initialize the variables here.
+   * @private
+   */
+  private _initValues() {
+    this._objectiveName = MissionFrontService.objectiveName(this._mission.template, this.currentLang);
+
+    if (!MissionFrontService.hasMissionTemplate(this._mission.template)) {
+      this._iconClass = MissionFrontService.objectiveInfo(<Mission>this._mission, 'FONT_AWESOME_ICON');
+    }
+  }
+
   /***
    * we are getting the innovation from the api.
    * @param projectId
@@ -179,14 +204,12 @@ export class ProjectComponent implements OnInit, OnDestroy {
     if (isPlatformBrowser(this._platformId)) {
       this._innovationService.get(projectId).pipe(first()).subscribe((innovation: Innovation) => {
         this._innovationFrontService.setInnovation(innovation);
-        this._innovation = innovation;
+        this._initPageTitle();
         if (!this._authService.user) {
           this._authService.initializeSession().pipe(first()).subscribe(() => {
-            this._initPageTitle();
             this._setSpinner(false);
           });
         } else {
-          this._initPageTitle();
           this._setSpinner(false);
         }
       }, (err: HttpErrorResponse) => {
@@ -202,13 +225,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
    * @private
    */
   private _initCurrentTab() {
-    const url = this._router.routerState.snapshot.url.split('/');
-    if (url.length > 4) {
-      const params = url[4].indexOf('?');
-      this._currentPage = params > 0 ? url[4].substring(0, params) : url[4];
-    } else {
-      this._currentPage = 'settings';
-    }
+    this._currentPage = this._routeFrontService.activeTab(5, 4, true) || 'settings';
   }
 
   public showModal(event: Event) {
@@ -223,14 +240,6 @@ export class ProjectComponent implements OnInit, OnDestroy {
     this._router.navigate([`/user/projects/${this._innovation._id}/${route}`]);
   }
 
-  public objectiveName(lang = this.currentLang): string {
-    return MissionFrontService.objectiveName(this._mission.template, lang);
-  }
-
-  get iconClass(): string {
-    return MissionFrontService.objectiveInfo(<Mission>this._mission, 'FONT_AWESOME_ICON');
-  }
-
   get mission(): Mission {
     return this._mission;
   }
@@ -240,7 +249,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
   }
 
   get dateFormat(): string {
-    return this.currentLang === 'fr' ? 'dd-MM-y' : 'y-MM-dd';
+    return this._commonService.dateFormat();
   }
 
   get tabs(): Array<Tab> {
@@ -249,10 +258,6 @@ export class ProjectComponent implements OnInit, OnDestroy {
 
   get innovation(): Innovation {
     return this._innovation;
-  }
-
-  get currentPage(): string {
-    return this._currentPage;
   }
 
   get fetchingError(): boolean {
@@ -269,6 +274,14 @@ export class ProjectComponent implements OnInit, OnDestroy {
 
   get updateTime(): number {
     return this._updateTime;
+  }
+
+  get openModal(): boolean {
+    return this._openModal;
+  }
+
+  set openModal(value: boolean) {
+    this._openModal = value;
   }
 
   ngOnDestroy(): void {

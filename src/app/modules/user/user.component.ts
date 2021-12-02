@@ -4,10 +4,7 @@ import {NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Route
 import {LoaderService} from '../../services/loader/loader.service';
 import {Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
-// import {SwellrtBackend} from "../swellrt-client/services/swellrt-backend";
-// import {UserService} from "../../services/user/user.service";
-
-// declare let swellrt;
+import {environment} from '../../../environments/environment';
 
 @Component({
   templateUrl: './user.component.html',
@@ -16,11 +13,21 @@ import {takeUntil} from 'rxjs/operators';
 
 export class UserComponent implements OnInit, OnDestroy {
 
+  get displayLoader(): boolean {
+    return this._displayLoader;
+  }
+
+  get adminSide(): boolean {
+    return this._adminSide;
+  }
+
   private _displayLoader = true;
 
   private _adminSide = false;
 
   private _ngUnsubscribe: Subject<any> = new Subject<any>();
+
+  private _clearTimeout: ReturnType<typeof setTimeout>;
 
   private static _toggleVisibilityHelp(value: string) {
     document.getElementById('jsd-widget').style.visibility = value;
@@ -28,23 +35,20 @@ export class UserComponent implements OnInit, OnDestroy {
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _location: Location,
-              // private _userService: UserService,
-              // private _swellRTBackend: SwellrtBackend,
               private _loaderService: LoaderService,
               private _router: Router) {
-    this._initRoutes();
   }
 
   ngOnInit() {
+    this._initRoutes();
+
     if (isPlatformBrowser(this._platformId)) {
       this._loaderService.isLoading$.pipe(takeUntil(this._ngUnsubscribe)).subscribe((loading: boolean) => {
-        setTimeout(() => {
+        this._clearTimeout = setTimeout(() => {
           this._displayLoader = loading;
         });
       });
     }
-    /*this.startSwellRTClient();
-    this.startSwellRTSession();*/
   }
 
   private _initRoutes() {
@@ -65,7 +69,7 @@ export class UserComponent implements OnInit, OnDestroy {
    * @private
    */
   private _initHelpDesk() {
-    if (isPlatformBrowser(this._platformId)) {
+    if (isPlatformBrowser(this._platformId) && environment.production) {
       if (this._adminSide) {
         UserComponent._toggleVisibilityHelp('visible');
       } else {
@@ -74,54 +78,10 @@ export class UserComponent implements OnInit, OnDestroy {
     }
   }
 
-  /*private startSwellRTSession() {
-    this._userService.getSelf().subscribe(user=>{
-      this._swellRTBackend.startSwellRTSession(user)
-        .then(result=>{
-          //TODO add some notification? maybe?
-          console.log(`The session for ${result.id} has been started`);
-        }, err=>{
-          console.error(`The session for user ${user.id} couldn't be started! ${err}`);
-        });
-    }, err=>{
-      console.error(`The session for user couldn't be started! ${err}`);
-    });
-  }
-
-  private startSwellRTClient() {
-    // Try to start the swellrt client
-    this._swellRTBackend.bind(new Promise(
-      (resolve, reject) => {
-        let connected = false;
-        swellrt.onReady(server=>{
-          console.log('The swellrt client is ready!');
-          connected = true;
-          resolve(server);
-        });
-
-        //Put a timeout for the connection
-        setTimeout(()=>{
-          if(!connected) {
-            const msg = "Connection to swellrt server timed out (15s)";
-            console.error(msg);
-            reject(msg);
-          }
-        }, 15000);
-      }
-    ));
-  }*/
-
-  get displayLoader(): boolean {
-    return this._displayLoader;
-  }
-
-  get adminSide(): boolean {
-    return this._adminSide;
-  }
-
   ngOnDestroy(): void {
     this._ngUnsubscribe.next();
     this._ngUnsubscribe.complete();
+    clearTimeout(this._clearTimeout);
   }
 
 }

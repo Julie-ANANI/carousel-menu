@@ -13,7 +13,10 @@ import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
 export class GaugeChartComponent implements OnChanges {
 
   @Input() title = '';
-  @Input() inverted = false;
+
+  // A negative chart will go from good values (green) to bad values (red)
+  // A positive chart will go from bad values (red) to good values (green)
+  @Input() negative = false;
 
   /**
    * We can give whatever distribution parameters we want,
@@ -47,16 +50,6 @@ export class GaugeChartComponent implements OnChanges {
 
   private _needleColor = this.mean;
 
-  get needleColor(): string {
-    return this._needleColor;
-  }
-
-  private _options: any;
-
-  get options(): any {
-    return this._options;
-  }
-
   ngOnChanges(changes: SimpleChanges) {
     // We force display of needle when value is 0
     if (!this.needleValue) {
@@ -64,7 +57,7 @@ export class GaugeChartComponent implements OnChanges {
     }
     // We change needle value to fit standard delimiters
     this.needleValue = this.needleValue * 50 / this.average;
-    if (this.inverted) {
+    if (this.negative) {
       this.needleValue = 100 - this.needleValue;
     }
     this._changeIndicatorColor();
@@ -89,5 +82,15 @@ export class GaugeChartComponent implements OnChanges {
     } else {
       this._needleColor = this.high;
     }
+  }
+
+  get needleColor(): string {
+    return this._needleColor;
+  }
+
+  private _options: any;
+
+  get options(): any {
+    return this._options;
   }
 }

@@ -94,6 +94,14 @@ export class SharedSearchHistoryComponent implements OnInit {
 
   private _campaignId = '';
 
+  private static _getRequestIndex(requestId: string, array: Array<any>): number {
+    for (const request of array) {
+      if (requestId === request._id) {
+        return array.indexOf(request);
+      }
+    }
+  }
+
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _router: Router,
               private _configService: ConfigService,
@@ -135,14 +143,6 @@ export class SharedSearchHistoryComponent implements OnInit {
       }
       this._loadHistory();
       this._loadWaitingTime();
-    }
-  }
-
-  private static _getRequestIndex(requestId: string, array: Array<any>): number {
-    for (const request of array) {
-      if (requestId === request._id) {
-        return array.indexOf(request);
-      }
     }
   }
 

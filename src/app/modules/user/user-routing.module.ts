@@ -11,12 +11,19 @@ const userRoutes: Routes = [
     path: '',
     component: UserComponent,
     children: [
-      { path: '', loadChildren: './client/client.module#ClientModule' },
-      { path: 'admin', loadChildren: './admin/admin.module#AdminModule' },
+      {
+        path: '',
+        loadChildren: () => import('./client/client.module').then(m => m.ClientModule)
+      },
+      {
+        path: 'admin',
+        loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)
+      },
       {
         path: 'projects/:projectId/print/executive-report',
         canActivate: [AuthGuard],
-        loadChildren: '../.././modules/print/print-executive-report/print-executive-report.module#PrintExecutiveReportModule',
+        loadChildren: () => import('../.././modules/print/print-executive-report/print-executive-report.module')
+          .then(m => m.PrintExecutiveReportModule),
         resolve: { innovation : InnovationResolver },
         runGuardsAndResolvers: 'always',
       }

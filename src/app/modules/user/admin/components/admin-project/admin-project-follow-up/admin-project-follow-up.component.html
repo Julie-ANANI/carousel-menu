@@ -1,10 +1,11 @@
 <div [hidden]="!canAccess()" class="container fluid grid-2xl" id="admin-project-follow-up">
   <div class="column col-sm-12 col-11 col-mx-auto p-top-30 p-bottom-30">
-    <ng-container *ngIf="innovation.followUpEmails && !innovation.followUpEmails.status">
+    <ng-container *ngIf="!isNewFollowUp">
       <app-shared-follow-up
-        [template]="'ADMIN'"
         [accessPath]="accessPath"
-        [project]="innovation">
+        [answers]="validAnswers"
+        [project]="innovation"
+        [template]="'ADMIN'">
       </app-shared-follow-up>
     </ng-container>
   </div>

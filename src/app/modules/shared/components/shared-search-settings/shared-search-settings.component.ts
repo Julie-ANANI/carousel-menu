@@ -24,6 +24,10 @@ export class SharedSearchSettingsComponent {
     }
   }
 
+  onClickToggle() {
+    this._showToggleSearch = !this._showToggleSearch;
+  }
+
   get prosCount(): Array<string> {
     return this._prosCount;
   }
@@ -32,7 +36,4 @@ export class SharedSearchSettingsComponent {
     return this._showToggleSearch;
   }
 
-  onClickToggle() {
-    this._showToggleSearch = !this._showToggleSearch;
-  }
 }

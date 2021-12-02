@@ -64,6 +64,29 @@ export class AdminCampaignSearchComponent implements OnInit {
     return this._rolesFrontService.hasAccessAdminSide(this._accessPath);
   }
 
+  moduleOnChange(value: string) {
+    this._optionSelected = value;
+    if (this._moduleSelected.option === 'research') {
+      this._showModal = true;
+    } else {
+      this._moduleSelected = this._searchModules.find(search => search.option === value);
+    }
+  }
+
+  confirmChangePage() {
+    this._moduleSelected = this._searchModules.find(search => search.option === this._optionSelected);
+    this._showModal = false;
+  }
+
+  closeModal() {
+    const option = this._moduleSelected.option;
+    this._moduleSelected.option = '';
+    setTimeout(() => {
+      this._moduleSelected.option = option;
+    }, 0);
+    this._showModal = false;
+  }
+
   get campaign(): Campaign {
     return this._campaign;
   }
@@ -84,15 +107,6 @@ export class AdminCampaignSearchComponent implements OnInit {
     return this._searchModules;
   }
 
-  moduleOnChange(value: string) {
-    this._optionSelected = value;
-    if (this._moduleSelected.option === 'research') {
-      this._showModal = true;
-    } else {
-      this._moduleSelected = this._searchModules.find(search => search.option === value);
-    }
-  }
-
 
   get showModal(): boolean {
     return this._showModal;
@@ -100,19 +114,5 @@ export class AdminCampaignSearchComponent implements OnInit {
 
   set showModal(value: boolean) {
     this._showModal = value;
-  }
-
-  confirmChangePage() {
-    this._moduleSelected = this._searchModules.find(search => search.option === this._optionSelected);
-    this._showModal = false;
-  }
-
-  closeModal() {
-    const option = this._moduleSelected.option;
-    this._moduleSelected.option = '';
-    setTimeout(() => {
-      this._moduleSelected.option = option;
-    }, 0);
-    this._showModal = false;
   }
 }

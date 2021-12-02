@@ -10,7 +10,7 @@ import {InnovationService} from '../services/innovation/innovation.service';
 import {EMPTY, Observable} from 'rxjs';
 import {catchError, first, tap} from 'rxjs/operators';
 import {HttpErrorResponse} from '@angular/common/http';
-import {Config} from '../models/config';
+import { Config } from '@umius/umi-common-component/models';
 
 const INNOVATION_KEY = makeStateKey('innovation');
 const config: Config = {

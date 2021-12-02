@@ -21,6 +21,11 @@ import {emailRegEx} from '../../../utils/regex';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
+
+  get companyName(): string {
+    return this._companyName;
+  }
+
   private _formData: FormGroup = this._formBuilder.group({
     email: ['', [Validators.required, Validators.pattern(emailRegEx)]],
     password: ['', [Validators.required]],
@@ -51,23 +56,25 @@ export class LoginComponent implements OnInit {
 
   private _isDomainUMI = environment.domain === 'umi';
 
-  constructor(
-    @Inject(PLATFORM_ID) protected _platformId: Object,
-    private _translateTitleService: TranslateTitleService,
-    private _formBuilder: FormBuilder,
-    private _authService: AuthService,
-    private _routeFrontService: RouteFrontService,
-    private _translateNotificationsService: TranslateNotificationsService,
-    private _router: Router,
-    private _userService: UserService
-  ) {
+  private _companyName = environment.companyShortName;
+
+  constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
+              private _translateTitleService: TranslateTitleService,
+              private _formBuilder: FormBuilder,
+              private _authService: AuthService,
+              private _routeFrontService: RouteFrontService,
+              private _translateNotificationsService: TranslateNotificationsService,
+              private _router: Router,
+              private _userService: UserService) {
     this._translateTitleService.setTitle('COMMON.PAGE_TITLE.LOG_IN');
   }
 
   ngOnInit() {
     if (isPlatformBrowser(this._platformId)) {
       this._backgroundImage = MediaFrontService.customDefaultImageSrc(environment.background, '480', '2000');
-      this.linkedInUrl();
+      if (this._isDomainUMI) {
+        this.linkedInUrl();
+      }
     }
   }
 
@@ -97,21 +104,13 @@ export class LoginComponent implements OnInit {
       state: this._linkedInState,
     };
 
-    this._authService
-      .preRegisterDataOAuth2('linkedin', data)
-      .pipe(first())
-      .subscribe(
-        (_) => {
-          console.log(_);
-        },
-        (err: HttpErrorResponse) => {
-          this._displayLoadingLinkedIn = false;
-          console.error(err);
-        },
-        () => {
-          window.open(this._linkedInLink, '_self');
-        }
-      );
+    this._authService.preRegisterDataOAuth2('linkedin', data).pipe(first()).subscribe(() => {
+    }, (err: HttpErrorResponse) => {
+      this._displayLoadingLinkedIn = false;
+      console.error(err);
+      }, () => {
+      window.open(this._linkedInLink, '_self');
+    });
   }
 
   public onClickLogin() {
@@ -120,54 +119,66 @@ export class LoginComponent implements OnInit {
       const user = new User(this._formData.value);
       user.domain = environment.domain;
 
-      this._authService
-        .login(user)
-        .pipe(first())
-        .subscribe(
-          () => {
-            if (this._authService.isAuthenticated) {
-              // Get the redirect URL from our auth service. If no redirect has been set, use the default.
-              const redirect = this._authService.redirectUrl
-                ? this._authService.redirectUrl
-                : this._authService.isAdmin
-                  ? this._routeFrontService.adminDefaultRoute()
-                  : '/';
+      this._authService.login(user).pipe(first()).subscribe(() => {
+        if (this._authService.isAuthenticated) {
+          // Get the redirect URL from our auth service. If no redirect has been set, use the default.
+          const redirect = this._authService.redirectUrl ? this._authService.redirectUrl : this._authService.isAdmin
+            ? this._routeFrontService.adminDefaultRoute() : '/';
 
-              this._authService.redirectUrl = '';
+          this._authService.redirectUrl = '';
 
-              // Set our navigation extras object that passes on our global query params and fragment
-              const navigationExtras: NavigationExtras = {
-                queryParamsHandling: 'merge',
-                preserveFragment: true,
-              };
+          // Set our navigation extras object that passes on our global query params and fragment
+          const navigationExtras: NavigationExtras = {
+            queryParamsHandling: 'merge',
+            preserveFragment: true,
+          };
 
-              // Redirect the user
-              this._router.navigate([redirect], navigationExtras);
-            }
-          },
-          () => {
-            this._nbTentatives -= 1;
-            this._displayLoading = false;
-            this._translateNotificationsService.error(
-              'ERROR.ERROR',
-              'ERROR.INVALID_FORM_DATA'
-            );
-            this._formData.get('password').reset();
-          }
-        );
+          // Redirect the user
+          this._router.navigate([redirect], navigationExtras);
+        }
+        }, () => {
+        this._nbTentatives -= 1;
+        this._displayLoading = false;
+        this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.INVALID_FORM_DATA');
+        this._formData.get('password').reset();
+      });
     } else {
       if (this._formData.untouched && this._formData.pristine) {
-        this._translateNotificationsService.error(
-          'ERROR.ERROR',
-          'ERROR.INVALID_FORM_DATA'
-        );
+        this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.INVALID_FORM_DATA');
       }
     }
   }
 
   public strings(object: any): string {
-    // console.log(this.formData.get('email').value.match(emailRegEx));
     return JSON.stringify(object);
+  }
+
+  cancelMessage() {
+    this._isShowModal = false;
+    this._helpMessageForm.reset();
+  }
+
+  sendMessageToUMISupport() {
+    const data = {
+      umi: {
+        email: 'support@umi.us',
+      },
+      user: {
+        email: this._helpMessageForm.get('contactEmail').value,
+        message: this._helpMessageForm.get('message').value,
+      },
+    };
+
+    this._userService.contactUMISupport(data).pipe(first()).subscribe((next) => {
+      this._isShowModal = false;
+      if (next.status === 200) {
+        this._translateNotificationsService.success('ERROR.SUCCESS', 'LOG_IN.SUCCESS_EMAIL');
+      } else {
+        this._translateNotificationsService.error('ERROR.ERROR', 'LOG_IN.ERROR_EMAIL');
+      }
+      }, () => {
+      this._translateNotificationsService.error('ERROR.ERROR', 'LOG_IN.ERROR_EMAIL');
+    });
   }
 
   get logo(): string {
@@ -216,45 +227,5 @@ export class LoginComponent implements OnInit {
 
   get companyUrl(): string {
     return this._companyUrl;
-  }
-
-  cancelMessage() {
-    this._isShowModal = false;
-    this._helpMessageForm.reset();
-  }
-
-  sendMessageToUMISupport() {
-    const data = {
-      umi: {
-        email: 'support@umi.us',
-      },
-      user: {
-        email: this._helpMessageForm.get('contactEmail').value,
-        message: this._helpMessageForm.get('message').value,
-      },
-    };
-    this._userService.contactUMISupport(data).subscribe(
-      (next) => {
-        this._isShowModal = false;
-        if (next.status === 200) {
-          this._translateNotificationsService.success(
-            'Success',
-            'We received your email, we will contact you soon.'
-          );
-        } else {
-          this._translateNotificationsService.error(
-            'ERROR.ERROR',
-            'Sorry, an error occurred.'
-          );
-        }
-      },
-      (error) => {
-        this._translateNotificationsService.error(
-          'ERROR.ERROR',
-          'An error occurred'
-        );
-        console.error(error);
-      }
-    );
   }
 }

@@ -12,8 +12,6 @@ import { TranslateNotificationsService } from '../../../../../../services/notifi
 import { Campaign } from '../../../../../../models/campaign';
 import { Subject } from 'rxjs';
 import { CampaignFrontService } from '../../../../../../services/campaign/campaign-front.service';
-import { isPlatformBrowser } from '@angular/common';
-import { Response } from '../../../../../../models/response';
 import { RolesFrontService } from '../../../../../../services/roles/roles-front.service';
 import { SocketService } from '../../../../../../services/socket/socket.service';
 import { MissionService } from '../../../../../../services/mission/mission.service';
@@ -27,11 +25,6 @@ import { ErrorFrontService } from '../../../../../../services/error/error-front.
 })
 
 export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
-
-  get quizPreviewLink(): string {
-    return this._quizPreviewLink;
-  }
-
   private _defaultTabs: Array<string> = ['description', 'questionnaire', 'targeting', 'campaigns', 'statistics'];
 
   private _campaignTabs: Array<string> = ['search', 'history', 'pros', 'workflows', 'batch'];
@@ -104,7 +97,6 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
     this._campaignFrontService.activeCampaignTab().pipe(takeUntil(this._ngUnsubscribe)).subscribe((tab) => {
       if (tab && this._activeTab !== tab) {
         this._activeTab = tab;
-        this._getAllCampaigns();
         setTimeout(() => {
           this._showCampaignTabs = true;
           this.setPageTitle();
@@ -173,18 +165,6 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
         return this.canAccess(['settings', 'view', 'targeting']) || this.canEditTargeting;
       }
       return this.canAccess([tab]);
-    }
-  }
-
-  private _getAllCampaigns() {
-    if (isPlatformBrowser(this._platformId) && !this._allCampaigns.length) {
-      this._innovationService.campaigns(this._project._id).pipe(first()).subscribe((response: Response) => {
-        this._allCampaigns = response && response.result || [];
-        this._campaignFrontService.setAllCampaigns(this._allCampaigns);
-      }, (err: HttpErrorResponse) => {
-        this._translateNotificationsService.error('Campaigns Fetching Error...', ErrorFrontService.adminErrorMessage(err));
-        console.error(err);
-      });
     }
   }
 
@@ -467,6 +447,11 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
   get toBeSavedComment(): boolean {
     return this._toBeSavedComment;
   }
+
+  get quizPreviewLink(): string {
+    return this._quizPreviewLink;
+  }
+
 
   ngOnDestroy(): void {
     this._ngUnsubscribe.next();

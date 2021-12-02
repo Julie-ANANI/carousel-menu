@@ -8,17 +8,19 @@ import { AdminEditQuestionComponent } from './admin-edit-question/admin-edit-que
 import {ModalEmptyModule} from '../../../../../utility/modals/modal-empty/modal-empty.module';
 import {FormsModule} from '@angular/forms';
 import { TableComponentsModule } from '@umius/umi-common-component/table';
+import {TextareaAutoResizeModule} from '../../../../../../directives/textareaAutoResize/textarea-auto-resize.module';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        TranslateModule.forChild(),
-        MessageErrorModule,
+  imports: [
+    CommonModule,
+    TranslateModule.forChild(),
+    MessageErrorModule,
 
-        ModalEmptyModule,
-        FormsModule,
-        TableComponentsModule
-    ],
+    ModalEmptyModule,
+    FormsModule,
+    TableComponentsModule,
+    TextareaAutoResizeModule
+  ],
   declarations: [
     AdminQuestionsLibraryComponent,
     AdminEditQuestionComponent

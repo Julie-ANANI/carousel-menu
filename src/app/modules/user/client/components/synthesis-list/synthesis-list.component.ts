@@ -108,6 +108,16 @@ export class SynthesisListComponent implements OnInit, OnDestroy {
     }
   }
 
+  /**
+   * Remove all subscriptions
+   * @user
+   */
+  private _cleanSubs() {
+    this._subscriptions.forEach((sub) => {
+      sub.unsubscribe();
+    });
+  }
+
   get dateFormat(): string {
     return this._translateService.currentLang === 'fr' ? 'dd/MM/y' : 'y/MM/dd';
   }
@@ -130,16 +140,6 @@ export class SynthesisListComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this._cleanSubs();
-  }
-
-  /**
-   * Remove all subscriptions
-   * @user
-   */
-  private _cleanSubs() {
-    this._subscriptions.forEach((sub) => {
-      sub.unsubscribe();
-    });
   }
 
 }

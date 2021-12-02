@@ -21,6 +21,7 @@ import {MissionFrontService} from '../../../../../../../services/mission/mission
 import {isPlatformBrowser} from '@angular/common';
 import {UserFrontService} from '../../../../../../../services/user/user-front.service';
 import * as moment from 'moment';
+import {CommonService} from '../../../../../../../services/common/common.service';
 
 interface Section {
   name: string;
@@ -37,91 +38,17 @@ interface Section {
 
 export class SettingsComponent implements OnInit, OnDestroy {
 
-  get pendingCollaborators(): Array<string> {
-    return this._pendingCollaborators;
-  }
-
-  get objectiveConsent(): boolean {
-    return this._objectiveConsent;
-  }
-
-  set objectiveConsent(value: boolean) {
-    this._objectiveConsent = value;
-  }
-
-  get disabledDate(): string {
-    return this._disabledDate;
-  }
-
-  get isEditable(): boolean {
-    return !!this._innovation.status && (this._innovation.status === 'EDITING' || this._innovation.status === 'SUBMITTED');
-  }
-
-  get templateComplementary(): Array<MissionQuestion> {
-    return this.hasMissionTemplate
-      && MissionFrontService.combineComplementaryObjectives(this._mission.template.sections)
-        .filter((_objective) => !!this.objectiveName(_objective)) || [];
-  }
-
-  get definedTemplate(): MissionTemplate {
-    return this._definedTemplate;
-  }
-
-  get missionTemplates(): Array<MissionTemplate> {
-    return this._missionTemplates;
-  }
-
-  get isFetchingTemplates(): boolean {
-    return this._isFetchingTemplates;
-  }
-
-  get hasMissionTemplate(): boolean {
-    return !!(this._mission.template && this._mission.template.entry && this._mission.template.entry.length);
-  }
-
-  get isOldObjective(): boolean {
-    return !!(this._mission.objective.principal && this._mission.objective.principal[this.currentLang]);
-  }
-
-  get dateRDOIndex(): number {
-    return this._mission.milestoneDates.findIndex((value) => value.code === 'RDO');
-  }
-
-  get dateRDO(): Milestone {
-    return this._mission.milestoneDates.find((value) => value.code === 'RDO');
-  }
-
   private _innovation: Innovation = <Innovation>{};
 
-  private _mission: Mission = <Mission>{
-    objective: {
-      principal: {en: '', fr: ''},
-      secondary: [],
-      comment: ''
-    },
-    milestoneDates: []
-  };
+  private _mission: Mission = <Mission>{};
 
   private _clientProject: ClientProject = <ClientProject>{};
 
-  private _isAdmin = this._authService.isAdmin;
+  private _isAdmin = false;
 
   private _activeView = 'TITLE';
 
-  private _sections: Array<Section> = [
-    {name: 'TITLE', isVisible: false, isEditable: true, level: 'INNOVATION'},
-    {name: 'PRINCIPAL_OBJECTIVE', isVisible: false, isEditable: false, level: 'MISSION'},
-    {name: 'SECONDARY_OBJECTIVE', isVisible: false, isEditable: false, level: 'MISSION'},
-    {name: 'ROADMAP', isVisible: false, isEditable: false, level: 'MISSION'},
-    {name: 'RESTITUTION_DATE', isVisible: false, isEditable: false, level: 'MISSION'},
-    {name: 'REPORTING_LANG', isVisible: false, isEditable: false, level: 'INNOVATION'},
-    {name: 'OWNER', isVisible: false, isEditable: false, level: 'ALL'},
-    {name: 'COLLABORATORS', isVisible: true, isEditable: true, level: 'COLLABORATOR'},
-    {name: 'OPERATOR', isVisible: false, isEditable: false, level: 'INNOVATION'},
-    {name: 'COMMERCIAL', isVisible: false, isEditable: false, level: 'CLIENT_PROJECT'},
-    {name: 'LANGUAGE', isVisible: false, isEditable: false, level: 'INNOVATION'},
-    {name: 'AUTHORISATION', isVisible: false, isEditable: true, level: 'MISSION'},
-  ];
+  private _sections: Array<Section> = [];
 
   private _showModal = false;
 
@@ -150,7 +77,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
    */
   private _definedTemplate: MissionTemplate = <MissionTemplate>{};
 
-  private _disabledDate = moment().add(-1, 'days').format('YYYY-MM-DD');
+  private _disabledDate = '';
 
   /**
    * when the user try to change the objective we ask him to tick the box to confirm.
@@ -163,6 +90,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _authService: AuthService,
+              private _commonService: CommonService,
               private _translateService: TranslateService,
               private _innovationService: InnovationService,
               private _missionService: MissionService,
@@ -171,6 +99,8 @@ export class SettingsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this._initValues();
+
     this._innovationFrontService.innovation().pipe(takeUntil(this._ngUnsubscribe)).subscribe((innovation) => {
       this._innovation = innovation || <Innovation>{};
 
@@ -188,6 +118,38 @@ export class SettingsComponent implements OnInit, OnDestroy {
       this._getPendingCollaborators();
       this._initSections();
     });
+  }
+
+  /**
+   * initialize with the default values.
+   * @private
+   */
+  private _initValues() {
+    this._isAdmin = this._authService.isAdmin;
+    this._disabledDate = moment().add(-1, 'days').format('YYYY-MM-DD');
+    this._mission = {
+      objective: {
+        principal: {en: '', fr: ''},
+        secondary: [],
+        comment: ''
+      },
+      milestoneDates: []
+    };
+
+    this._sections = [
+      {name: 'TITLE', isVisible: false, isEditable: true, level: 'INNOVATION'},
+      {name: 'PRINCIPAL_OBJECTIVE', isVisible: false, isEditable: false, level: 'MISSION'},
+      {name: 'SECONDARY_OBJECTIVE', isVisible: false, isEditable: false, level: 'MISSION'},
+      {name: 'ROADMAP', isVisible: false, isEditable: false, level: 'MISSION'},
+      {name: 'RESTITUTION_DATE', isVisible: false, isEditable: false, level: 'MISSION'},
+      {name: 'REPORTING_LANG', isVisible: false, isEditable: false, level: 'INNOVATION'},
+      {name: 'OWNER', isVisible: false, isEditable: false, level: 'ALL'},
+      {name: 'COLLABORATORS', isVisible: true, isEditable: true, level: 'COLLABORATOR'},
+      {name: 'OPERATOR', isVisible: false, isEditable: false, level: 'INNOVATION'},
+      {name: 'COMMERCIAL', isVisible: false, isEditable: false, level: 'CLIENT_PROJECT'},
+      {name: 'LANGUAGE', isVisible: false, isEditable: false, level: 'INNOVATION'},
+      {name: 'AUTHORISATION', isVisible: false, isEditable: true, level: 'MISSION'},
+    ];
   }
 
   private _getPendingCollaborators() {
@@ -906,7 +868,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
   }
 
   get dateFormat(): string {
-    return this.currentLang === 'en' ? 'y/MM/dd' : 'dd/MM/y';
+    return this._commonService.dateFormat();
   }
 
   get showModal(): boolean {
@@ -947,6 +909,60 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
   get activeView(): string {
     return this._activeView;
+  }
+
+  get pendingCollaborators(): Array<string> {
+    return this._pendingCollaborators;
+  }
+
+  get objectiveConsent(): boolean {
+    return this._objectiveConsent;
+  }
+
+  set objectiveConsent(value: boolean) {
+    this._objectiveConsent = value;
+  }
+
+  get disabledDate(): string {
+    return this._disabledDate;
+  }
+
+  get isEditable(): boolean {
+    return !!this._innovation.status && (this._innovation.status === 'EDITING' || this._innovation.status === 'SUBMITTED');
+  }
+
+  get templateComplementary(): Array<MissionQuestion> {
+    return this.hasMissionTemplate
+      && MissionFrontService.combineComplementaryObjectives(this._mission.template.sections)
+        .filter((_objective) => !!this.objectiveName(_objective)) || [];
+  }
+
+  get definedTemplate(): MissionTemplate {
+    return this._definedTemplate;
+  }
+
+  get missionTemplates(): Array<MissionTemplate> {
+    return this._missionTemplates;
+  }
+
+  get isFetchingTemplates(): boolean {
+    return this._isFetchingTemplates;
+  }
+
+  get hasMissionTemplate(): boolean {
+    return !!(this._mission.template && this._mission.template.entry && this._mission.template.entry.length);
+  }
+
+  get isOldObjective(): boolean {
+    return !!(this._mission.objective.principal && this._mission.objective.principal[this.currentLang]);
+  }
+
+  get dateRDOIndex(): number {
+    return this._mission.milestoneDates.findIndex((value) => value.code === 'RDO');
+  }
+
+  get dateRDO(): Milestone {
+    return this._mission.milestoneDates.find((value) => value.code === 'RDO');
   }
 
   ngOnDestroy(): void {

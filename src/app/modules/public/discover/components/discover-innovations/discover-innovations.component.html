@@ -8,7 +8,8 @@
         <!-- section fetching error -->
         <section *ngIf="fetchingError">
           <div class="i-error-wrapper d-flex align-center">
-            <app-utility-error-template-1 [errorMessage]="'DISCOVER.FETCHING_ERROR'" [ngStyle]="{ 'width': '100%' }">
+            <app-utility-error-template-1 [errorMessage]="'DISCOVER.FETCHING_ERROR'"
+                                          style="width: 100%">
               <p [innerText]="'DISCOVER.FETCHING_ERROR_SUB'" translate></p>
             </app-utility-error-template-1>
           </div>
@@ -76,7 +77,7 @@
                 class="text-background text-normal d-flex m-bottom-10 flex-wrap text-md c-filter-wrapper"
                 [ngClass]="{ 'loading-content': !stopLoading }">
 
-                <div [ngStyle]="{ 'margin-bottom': '0.25rem' }" *ngIf="filterActivated">
+                <div  style="margin-bottom: 0.25rem" *ngIf="filterActivated">
                   <span>
                     {{ totalFilteredInnovations }} {{ 'DISCOVER.RESULT' | translate }} {{ 'DISCOVER.FOR' | translate }}
                     <ng-container *ngIf="searchKey">

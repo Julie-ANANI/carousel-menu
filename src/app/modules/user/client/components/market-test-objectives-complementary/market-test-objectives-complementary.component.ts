@@ -16,10 +16,6 @@ type template = 'TEMPLATE_1' | 'TEMPLATE_2';
 })
 export class MarketTestObjectivesComplementaryComponent {
 
-  get currentLang(): string {
-    return this._translateService.currentLang;
-  }
-
   /**
    * TEMPLATE_1 : show the objective row by row.
    * TEMPLATE_2 : show more than one objective in the row.
@@ -86,6 +82,10 @@ export class MarketTestObjectivesComplementaryComponent {
 
   public emitCommentChange() {
     this.objectiveCommentChange.emit(this.objectiveComment.trim());
+  }
+
+  get currentLang(): string {
+    return this._translateService.currentLang;
   }
 
 }

@@ -15,35 +15,6 @@ import {PageScrollService} from 'ngx-page-scroll-core';
   styleUrls: ['./market-test-objectives.component.scss']
 })
 export class MarketTestObjectivesComponent {
-
-  get currentLang(): string {
-    return this._translateService.currentLang;
-  }
-
-  get selectedCategory(): string {
-    return this._selectedCategory;
-  }
-
-  get objectivesCategory(): Array<string> {
-    return this._objectivesCategory;
-  }
-
-  get missionTemplates(): Array<MissionTemplate> {
-    return this._missionTemplates;
-  }
-
-  get selectedTemplate(): MissionTemplate {
-    return this._selectedTemplate;
-  }
-
-  get missionTemplate(): MissionTemplate {
-    return this._missionTemplate;
-  }
-
-  get objectiveComment(): string {
-    return this._objectiveComment;
-  }
-
   /**
    * make it true if you include this component in the modal because page scroll does not work.
    */
@@ -165,5 +136,34 @@ export class MarketTestObjectivesComponent {
       });
     }
   }
+
+  get currentLang(): string {
+    return this._translateService.currentLang;
+  }
+
+  get selectedCategory(): string {
+    return this._selectedCategory;
+  }
+
+  get objectivesCategory(): Array<string> {
+    return this._objectivesCategory;
+  }
+
+  get missionTemplates(): Array<MissionTemplate> {
+    return this._missionTemplates;
+  }
+
+  get selectedTemplate(): MissionTemplate {
+    return this._selectedTemplate;
+  }
+
+  get missionTemplate(): MissionTemplate {
+    return this._missionTemplate;
+  }
+
+  get objectiveComment(): string {
+    return this._objectiveComment;
+  }
+
 
 }

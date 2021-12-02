@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Inject, PLATFORM_ID, OnDestroy } from '@angular/core';
+import { Component, Inject, Input, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
 import { SearchService } from '../../../../services/search/search.service';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { AuthService } from '../../../../services/auth/auth.service';
@@ -15,7 +15,6 @@ import { CampaignService } from '../../../../services/campaign/campaign.service'
 import { TargetPros } from '../../../../models/targetPros';
 import { JobsFrontService } from '../../../../services/jobs/jobs-front.service';
 
-import * as _ from 'lodash';
 import { Subject } from 'rxjs/Subject';
 
 
@@ -115,24 +114,34 @@ export class SharedSearchProsComponent implements OnInit, OnDestroy {
       this._getCountries();
       this._initParams();
 
+      this.getTargetedProsFromService().then(_ => {
+        /**
+         * subscribe: get recent targetPros, not saved, current one
+         * */
+        this._jobFrontService
+          .targetedProsToUpdate()
+          .pipe(takeUntil(this._ngUnsubscribe))
+          .subscribe((result: { targetPros: TargetPros, isToggle?: boolean, identifier?: string, toSave?: boolean }) => {
+            this._toSave = result.toSave;
+            this._targetedProsToUpdate = result.targetPros || <TargetPros>{};
+            this._checkProsTargetingValid();
+          });
+      });
+    }
+  }
+
+  getTargetedProsFromService() {
+    return new Promise((resolve, reject) => {
       this._campaignService.getTargetedPros(this._campaign._id).pipe(first())
         .subscribe(res => {
           this._jobFrontService.setTargetedProsToUpdate({targetPros: res, isToggle: false, identifier: ''});
           this._initialTargetedPro = JSON.parse(JSON.stringify(res));
-
-          /**
-           * subscribe: get recent targetPros, not saved, current one
-           * */
-          this._jobFrontService
-            .targetedProsToUpdate()
-            .pipe(takeUntil(this._ngUnsubscribe))
-            .subscribe((result: { targetPros: TargetPros, isToggle?: boolean, identifier?: string, toSave?: boolean }) => {
-              this._toSave = result.toSave;
-              this._targetedProsToUpdate = result.targetPros || <TargetPros>{};
-              this._checkProsTargetingValid();
-            });
+          resolve(true);
+        }, error => {
+          console.error(error);
+          reject(error);
         });
-    }
+    });
   }
 
   private _getCountries() {
@@ -514,12 +523,83 @@ export class SharedSearchProsComponent implements OnInit, OnDestroy {
     console.log(this._params.countries);
   }
 
-  get suggestions(): Array<{
-    expected_result: number;
-    search_keywords: string;
-    keywords: string;
-  }> {
-    return this._suggestions;
+  /**
+   * confirm: restore target pros
+   */
+  restoreTargetedPros() {
+    this._campaignService.getTargetedPros(this._campaign._id).pipe(first())
+      .subscribe(res => {
+        this._jobFrontService.setTargetedProsToUpdate({targetPros: res, isToggle: false, identifier: ''});
+        this._initialTargetedPro = JSON.parse(JSON.stringify(res));
+        this._isReset = false;
+        this._toSave = false;
+        this._translateNotificationsService.success('Success', 'The saved professional targeting has been applied.');
+      }, err => {
+        this._translateNotificationsService.error('Error', 'An error occurred');
+        this._toSave = true;
+        this._isReset = false;
+        console.error(err);
+      });
+  }
+
+  confirmSaveReset() {
+    this._isShowModal = false;
+    if (this._saveApplyModalTitle === 'Apply') {
+      this.restoreTargetedPros();
+    } else {
+      this.saveTargetedPros();
+    }
+  }
+
+
+  previewSearchConfig() {
+    this._isPreview = true;
+  }
+
+  closePreview() {
+    this._isPreview = false;
+  }
+
+  saveProTargeting() {
+    this._saveApplyModalContext = 'Save this professional targeting?';
+    this._saveApplyModalTitle = 'Save';
+    this._isShowModal = true;
+  }
+
+  getUpdatedTargetedPros(targetPros: TargetPros) {
+    this._targetedProsToUpdate = targetPros;
+    this._toSave = true;
+  }
+
+  cancelSaveReset() {
+    this._isShowModal = false;
+  }
+
+  resetTargetedPros() {
+    this._saveApplyModalContext = 'Apply the saved professional targeting?';
+    this._saveApplyModalTitle = 'Apply';
+    this._isShowModal = true;
+  }
+
+  private _isSameDataToSave(): boolean {
+    return this._isEqual(this._initialTargetedPro, this._targetedProsToUpdate);
+  }
+
+  /**
+   * confirm: save targeted pros in the campaign
+   */
+  saveTargetedPros() {
+    this._campaignService.saveTargetedPros(this._campaign._id, this._targetedProsToUpdate).pipe(first())
+      .subscribe(() => {
+        this._toSave = false;
+        this._initialTargetedPro = JSON.parse(JSON.stringify(this._targetedProsToUpdate));
+        this._translateNotificationsService.success('Success', 'The saved professional targeting has been saved.');
+      }, err => {
+        this._translateNotificationsService.error('Error', 'An error occurred');
+        this._toSave = false;
+        this._initialTargetedPro = JSON.parse(JSON.stringify(this._targetedProsToUpdate));
+        console.error(err);
+      });
   }
 
   get params(): any {
@@ -588,6 +668,18 @@ export class SharedSearchProsComponent implements OnInit, OnDestroy {
     this.onGeographyChange(value);
   }
 
+  get toSave(): boolean {
+    return this._toSave && !this._isSameDataToSave();
+  }
+
+  get isReset(): boolean {
+    return this._isReset;
+  }
+
+  set isReset(value: boolean) {
+    this._isReset = value;
+  }
+
   get campaign(): Campaign {
     return this._campaign;
   }
@@ -601,50 +693,9 @@ export class SharedSearchProsComponent implements OnInit, OnDestroy {
     this._isPreview = value;
   }
 
-  previewSearchConfig() {
-    this._isPreview = true;
-  }
-
-  closePreview() {
-    this._isPreview = false;
-  }
-
-  get toSave(): boolean {
-    return this._toSave && !this._isSameDataToSave();
-  }
-
-  saveProTargeting() {
-    this._saveApplyModalContext = 'Save this professional targeting?';
-    this._saveApplyModalTitle = 'Save';
-    this._isShowModal = true;
-  }
-
-  getUpdatedTargetedPros(targetPros: TargetPros) {
-    this._targetedProsToUpdate = targetPros;
-    this._toSave = true;
-  }
-
-
-  get isReset(): boolean {
-    return this._isReset;
-  }
-
-  set isReset(value: boolean) {
-    this._isReset = value;
-  }
 
   get isSaved(): boolean {
     return this._isSaved;
-  }
-
-  resetTargetedPros() {
-    this._saveApplyModalContext = 'Apply the saved professional targeting?';
-    this._saveApplyModalTitle = 'Apply';
-    this._isShowModal = true;
-  }
-
-  private _isSameDataToSave(): boolean {
-    return this._isEqual(this._initialTargetedPro, this._targetedProsToUpdate);
   }
 
   get saveApplyModalTitle(): string {
@@ -663,58 +714,17 @@ export class SharedSearchProsComponent implements OnInit, OnDestroy {
     return this._saveApplyModalContext;
   }
 
-  cancelSaveReset() {
-    this._isShowModal = false;
-  }
-
-  /**
-   * confirm: save targeted pros in the campaign
-   */
-  saveTargetedPros() {
-    this._campaignService.saveTargetedPros(this._campaign._id, this._targetedProsToUpdate).pipe(first())
-      .subscribe(() => {
-        this._toSave = false;
-        this._initialTargetedPro = JSON.parse(JSON.stringify(this._targetedProsToUpdate));
-        this._translateNotificationsService.success('Success', 'The saved professional targeting has been saved.');
-      }, err => {
-        this._translateNotificationsService.error('Error', 'An error occurred');
-        this._toSave = false;
-        this._initialTargetedPro = JSON.parse(JSON.stringify(this._targetedProsToUpdate));
-        console.error(err);
-      });
-  }
-
-
-  /**
-   * confirm: restore target pros
-   */
-  restoreTargetedPros() {
-    this._campaignService.getTargetedPros(this._campaign._id).pipe(first())
-      .subscribe(res => {
-        this._jobFrontService.setTargetedProsToUpdate({targetPros: res, isToggle: false, identifier: ''});
-        this._initialTargetedPro = JSON.parse(JSON.stringify(res));
-        this._isReset = false;
-        this._toSave = false;
-        this._translateNotificationsService.success('Success', 'The saved professional targeting has been applied.');
-      }, err => {
-        this._translateNotificationsService.error('Error', 'An error occurred');
-        this._toSave = true;
-        this._isReset = false;
-        console.error(err);
-      });
-  }
-
-  confirmSaveReset() {
-    this._isShowModal = false;
-    if (this._saveApplyModalTitle === 'Apply') {
-      this.restoreTargetedPros();
-    } else {
-      this.saveTargetedPros();
-    }
-  }
 
   get initialTargetedPro(): TargetPros {
     return this._initialTargetedPro;
+  }
+
+  get suggestions(): Array<{
+    expected_result: number;
+    search_keywords: string;
+    keywords: string;
+  }> {
+    return this._suggestions;
   }
 
   get errorMessageLaunch(): string {

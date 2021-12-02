@@ -197,7 +197,7 @@
                       [attr.placeholder]="question.options.length"
                       [id]="'question-maxOption'"
                       [max]="question.options.length"
-                      [ngStyle]="{'max-width': '80px'}"
+                      style="max-width: 80px"
                       class="form-input is-sm text-center"
                       min="1"
                       type="number">
@@ -233,12 +233,12 @@
                   </ng-template>
                   <textarea
                     #textAreaElement
+                    appTextareaAutoResize
                     (change)="onChangeQuestionEntry(textAreaElement.value, lang, 'objective')"
                     *ngIf="canAccess(['edit', 'objective']) && editMode; else showObjective"
                     [ngModel]="questionEntry(lang).objective || 'NA'"
                     [id]="'question-objective-'+lang"
-                    [ngStyle]="{'minHeight': textAreaElement.scrollHeight + 'px'}"
-                    class="form-input auto-expand"
+                    class="form-input"
                     type="text">
                   </textarea>
                 </div>
@@ -252,12 +252,12 @@
                   </ng-template>
                   <textarea
                     #textAreaElement
+                    appTextareaAutoResize
                     (change)="onChangeQuestionEntry(textAreaElement.value, lang, 'title')"
                     *ngIf="canAccess(['edit', 'title']) && editMode; else showTitle"
                     [ngModel]="questionEntry(lang).title || 'NA'"
                     [id]="'question-title-'+lang"
-                    [ngStyle]="{'minHeight': textAreaElement.scrollHeight + 'px'}"
-                    class="form-input auto-expand"
+                    class="form-input"
                     type="text">
                   </textarea>
                 </div>
@@ -271,12 +271,12 @@
                   </ng-template>
                   <textarea
                     #textAreaElement
+                    appTextareaAutoResize
                     (change)="onChangeQuestionEntry(textAreaElement.value, lang, 'subtitle')"
                     *ngIf="canAccess(['edit', 'subtitle']) && editMode; else showSubtitle"
                     [ngModel]="questionEntry(lang).subtitle || 'NA'"
                     [id]="'question-subtitle-'+lang"
-                    [ngStyle]="{'minHeight': textAreaElement.scrollHeight + 'px'}"
-                    class="form-input auto-expand"
+                    class="form-input"
                     type="text">
                   </textarea>
                 </div>
@@ -290,12 +290,12 @@
                   </ng-template>
                   <textarea
                     #textAreaElement
+                    appTextareaAutoResize
                     (change)="onChangeQuestionEntry(textAreaElement.value, lang, 'label')"
                     *ngIf="canAccess(['edit', 'label']) && editMode; else showLabel"
                     [ngModel]="questionEntry(lang).label || 'NA'"
                     [id]="'question-label-'+lang"
-                    [ngStyle]="{'minHeight': textAreaElement.scrollHeight + 'px'}"
-                    class="form-input auto-expand"
+                    class="form-input"
                     type="text">
                   </textarea>
                 </div>

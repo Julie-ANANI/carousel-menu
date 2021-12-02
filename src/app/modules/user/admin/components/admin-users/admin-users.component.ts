@@ -20,7 +20,8 @@ import { ErrorFrontService } from '../../../../../services/error/error-front.ser
 export class AdminUsersComponent implements OnInit {
 
   private _config: Config = {
-    fields: 'id company jobTitle created domain location firstName lastName',
+    fields: 'id company jobTitle created domain location firstName lastName attempts emailVerified isOperator phone' +
+      ' language roles state name country email',
     limit: this._configService.configLimit('admin-users-limit'),
     offset: '0',
     search: '{}',
@@ -47,8 +48,6 @@ export class AdminUsersComponent implements OnInit {
   private _fetchingError = false;
 
   private _isLoading = true;
-
-  private _userToUpdate: User = <User>{};
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _configService: ConfigService,
@@ -128,8 +127,6 @@ export class AdminUsersComponent implements OnInit {
           _isSortable: true,
           _isSearchable: this.canAccess(['searchBy', 'job']),
           _isHidden: !this.canAccess(['tableColumns', 'job']),
-          // _isEditable: true,
-          // _editType: 'TEXT',
         },
         {
           _attrs: ['company.name'],
@@ -138,8 +135,6 @@ export class AdminUsersComponent implements OnInit {
           _isSortable: true,
           _isSearchable: this.canAccess(['searchBy', 'company']),
           _isHidden: !this.canAccess(['tableColumns', 'company']),
-          _isEditable: false,
-          _editType: 'TEXT'
         },
         {
           _attrs: ['domain'],
@@ -149,8 +144,6 @@ export class AdminUsersComponent implements OnInit {
           _width: '200px',
           _isSearchable: this.canAccess(['searchBy', 'domain']),
           _isHidden: !this.canAccess(['tableColumns', 'domain']),
-          _isEditable: false,
-          _editType: 'TEXT'
         },
         {
           _attrs: ['created'],
@@ -173,26 +166,17 @@ export class AdminUsersComponent implements OnInit {
   }
 
   public onClickEdit(value: User) {
-    const us = new User(value);
-    this._userService.get(us.id).pipe(first()).subscribe((response: User) => {
-      this._selectedUser = response;
-      this._sidebarValue = {
-        animate_state: 'active',
-        type: 'editUser',
-        title: this.canAccess(['user', 'edit']) ? 'Edit User' : 'View User'
-      };
-    }, (err: HttpErrorResponse) => {
-      this._translateNotificationsService.error('Error', ErrorFrontService.getErrorMessage(err.status));
-      console.error(err);
-    });
+    this._selectedUser = value;
+    this._sidebarValue = {
+      animate_state: 'active',
+      type: 'editUser',
+      title: this.canAccess(['user', 'edit']) ? 'Edit User' : 'View User'
+    };
   }
 
-  public updateUser(value: User, isResetTable = true) {
+  public updateUser(value: User) {
     if (this.canAccess(['user', 'edit'])) {
       this._userService.updateOther(value).pipe(first()).subscribe(() => {
-        if (isResetTable) {
-          this._getUsers();
-        }
         this._translateNotificationsService.success('Success', 'The user has been updated.');
       }, (err: HttpErrorResponse) => {
         this._translateNotificationsService.error('Error', ErrorFrontService.getErrorMessage(err.status));
@@ -297,20 +281,5 @@ export class AdminUsersComponent implements OnInit {
 
   get isLoading(): boolean {
     return this._isLoading;
-  }
-
-  getPerformActions($event: any) {
-    if ($event) {
-      switch ($event._action) {
-        case 'Update grid':
-          const context = $event._context;
-          if (context) {
-            this._userToUpdate = context;
-            this._userToUpdate.id = context._id;
-            this.updateUser(this._userToUpdate, false);
-          }
-          break;
-      }
-    }
   }
 }

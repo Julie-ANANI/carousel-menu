@@ -9,10 +9,11 @@ import { first } from 'rxjs/operators';
 import { animate, keyframes, query, stagger, style, transition, trigger } from '@angular/animations';
 import { InnovationService } from '../../../../../services/innovation/innovation.service';
 import { InnovationFrontService } from '../../../../../services/innovation/innovation-front.service';
-import { Config } from '../../../../../models/config';
+import { Config } from '@umius/umi-common-component/models';
 import { isPlatformBrowser } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorFrontService } from '../../../../../services/error/error-front.service';
+import {CommonService} from '../../../../../services/common/common.service';
 
 @Component({
   templateUrl: 'projects-list.component.html',
@@ -20,23 +21,24 @@ import { ErrorFrontService } from '../../../../../services/error/error-front.ser
   animations: [
     trigger('listAnimation', [
       transition('* => *', [
-
         query(':enter', style({ opacity: 0 }), { optional: true }),
-
-        query(':enter', stagger('300ms', [
-          animate('300ms ease-in-out', keyframes([
+        query(':enter', stagger('100ms', [
+          animate('200ms ease-in-out', keyframes([
               style({ opacity: 0, transform: 'translateX(-20%)', offset: 0 }),
               style({ opacity: 1, transform: 'translateX(0)',     offset: 1.0 }),
             ])
           )]
         ), { optional: true }),
-
       ])
     ])
   ]
 })
 
 export class ProjectsListComponent implements OnInit {
+
+  get currentLang(): string {
+    return this._translateService.currentLang;
+  }
 
   private _innovations: Array<Innovation> = [];
 
@@ -63,6 +65,7 @@ export class ProjectsListComponent implements OnInit {
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _translateService: TranslateService,
+              private _commonService: CommonService,
               private _userService: UserService,
               private _translateTitleService: TranslateTitleService,
               private _translateNotificationService: TranslateNotificationsService,
@@ -100,21 +103,17 @@ export class ProjectsListComponent implements OnInit {
     const link = [innovation._id];
 
     switch (innovation.status) {
-
       case 'DONE':
         link.push('synthesis');
         break;
-
       case 'EVALUATING':
         link.push('exploration');
         break;
-
       default:
         link.push('settings');
     }
 
     return link;
-
   }
 
   /***
@@ -122,7 +121,7 @@ export class ProjectsListComponent implements OnInit {
    * @param innovation
    */
   public getImage(innovation: Innovation): string {
-    return InnovationFrontService.principalMedia(innovation, this._translateService.currentLang);
+    return InnovationFrontService.principalMedia(innovation, this.currentLang);
   }
 
   public onClickDelete(event: Event, innovationId: string) {
@@ -189,7 +188,7 @@ export class ProjectsListComponent implements OnInit {
   }
 
   get dateFormat(): string {
-    return this._translateService.currentLang === 'fr' ? 'dd/MM/y' : 'y/MM/dd';
+    return this._commonService.dateFormat();
   }
 
 }

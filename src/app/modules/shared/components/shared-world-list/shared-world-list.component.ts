@@ -22,24 +22,16 @@ export class SharedWorldListComponent {
       this._fetchAllCountries();
     }
   }
-  private _answersCountries: string[] = [];
 
   @Output() filterAllContinents = new EventEmitter<{ isChecked: boolean, filterArray: Array<any> }>();
   @Output() checkContinent: EventEmitter<Event> = new EventEmitter();
   @Output() checkCountry: EventEmitter<Event> = new EventEmitter();
-
-  constructor(private _worldmapService: WorldmapService,
-              private _translateService: TranslateService) {
-  }
+  private _answersCountries: string[] = [];
 
   private _continentCountries: { [continent: string]: Array<Country> } = {};
 
-  get continentCountries(): { [continent: string]: Array<Country> } {
-    return this._continentCountries;
-  }
-
-  get continents(): Array<string> {
-    return WorldmapService.continentsList;
+  constructor(private _worldmapService: WorldmapService,
+              private _translateService: TranslateService) {
   }
 
   selectAllContinents(isChecked: boolean, filterArray: Array<any>) {
@@ -81,5 +73,13 @@ export class SharedWorldListComponent {
     this._worldmapService.getCountriesByContinent(this._answersCountries).then((countries: { [continent: string]: Array<Country> }) => {
       this._continentCountries = countries;
     });
+  }
+
+  get continentCountries(): { [continent: string]: Array<Country> } {
+    return this._continentCountries;
+  }
+
+  get continents(): Array<string> {
+    return WorldmapService.continentsList;
   }
 }

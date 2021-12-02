@@ -20,7 +20,7 @@ import {
   EnterpriseValueChains,
   Industries,
 } from '../../../../models/static-data/enterprise';
-import {EnterpriseService} from "../../../../services/enterprise/enterprise.service";
+import {EnterpriseService} from '../../../../services/enterprise/enterprise.service';
 
 type Template = 'CREATE' | 'EDIT';
 
@@ -197,22 +197,6 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
       });
   }
 
-  get enterpriseTypeSelectConfig(): AutoSuggestionConfig {
-    return this._enterpriseTypeSelectConfig;
-  }
-
-  get industrySelectConfig() {
-    return this._industrySelectConfig;
-  }
-
-  get enterpriseSizeSelectConfig(): AutoSuggestionConfig {
-    return this._enterpriseSizeSelectConfig;
-  }
-
-  get valueChainSelectConfig(): AutoSuggestionConfig {
-    return this._valueChainSelectConfig;
-  }
-
   private fillTheForm() {
     this._form.get('name').setValue(this._enterprise.name);
     this._form.get('topLevelDomain').setValue(this._enterprise.topLevelDomain);
@@ -251,14 +235,6 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
     this.isSaving = true;
   }
 
-  get newGeoZone(): any {
-    return this._newGeoZone;
-  }
-
-  get newIndustry(): Array<any> {
-    return this._newIndustry;
-  }
-
   private _buildForm() {
     this._form = this._formBuilder.group({
       name: [null, [Validators.required]],
@@ -275,14 +251,6 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
       enterpriseSize: [null],
       valueChain: [null],
     });
-  }
-
-  get newBrands(): any {
-    return this._newBrands;
-  }
-
-  get newSubsidiary(): Array<any> {
-    return this._newSubsidiary;
   }
 
   public autocompleteCompanyListFormatter = (data: any): SafeHtml => {
@@ -464,60 +432,6 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
     }
   }
 
-  get patternConfig(): any {
-    return {
-      placeholder: 'Enter the enterprise pattern',
-      initialData: this._inputPatterns,
-    };
-  }
-
-  get brandConfig(): any {
-    return {
-      placeholder: 'Enter the enterprise brand',
-      initialData: this._inputBrands,
-    };
-  }
-
-  get geoConfig(): any {
-    return {
-      placeholder: 'Enter the geographical zone',
-      initialData: this._inputGeoZone,
-    };
-  }
-
-  get form(): FormGroup {
-    return this._form;
-  }
-
-  get defaultLogoURI(): string {
-    return this._defaultLogoURI;
-  }
-
-  get logo(): string {
-    return this._logo;
-  }
-
-  get showModal(): boolean {
-    return this._showModal;
-  }
-
-  set showModal(value: boolean) {
-    this._showModal = value;
-  }
-
-  get parentEnterprise(): Enterprise {
-    return this._parentEnterprise;
-  }
-
-  get newPatterns(): Array<Pattern> {
-    return this._newPatterns;
-  }
-
-  ngOnDestroy(): void {
-    this._ngUnsubscribe.next();
-    this._ngUnsubscribe.complete();
-  }
-
   getValueSelected($event: any) {
     if ($event) {
       switch ($event.type) {
@@ -593,6 +507,37 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
     };
   }
 
+  checkParentInput(value: any) {
+    if (!value && this._parentEnterprise.name) {
+      this._parentEnterprise = <Enterprise>{};
+      this._enterprise.parentEnterpriseObject = [];
+      this._form
+        .get('parentEnterprise')
+        .setValue('');
+    }
+  }
+
+  changeShowSyntax() {
+    this._isShowSyntax = !this.isShowSyntax;
+  }
+
+  showEnterpriseSizeInfo() {
+    this._isSizeInfo = true;
+  }
+
+  hideEnterpriseSizeInfo() {
+    this._isSizeInfo = false;
+  }
+
+  hideSyntaxInfo() {
+    this._isShowSyntax = false;
+  }
+
+  showSyntaxInfo() {
+    this._isShowSyntax = true;
+  }
+
+
   get newValueChains(): Array<any> {
     return this._newValueChains;
   }
@@ -609,37 +554,93 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
     return this._isLoading;
   }
 
-  changeShowSyntax() {
-    this._isShowSyntax = !this.isShowSyntax;
-  }
-
-  showEnterpriseSizeInfo() {
-    this._isSizeInfo = true;
-  }
-
   get isSizeInfo(): boolean {
     return this._isSizeInfo;
   }
 
-  hideEnterpriseSizeInfo() {
-    this._isSizeInfo = false;
+  get enterpriseTypeSelectConfig(): AutoSuggestionConfig {
+    return this._enterpriseTypeSelectConfig;
   }
 
-  hideSyntaxInfo() {
-    this._isShowSyntax = false;
+  get industrySelectConfig() {
+    return this._industrySelectConfig;
   }
 
-  showSyntaxInfo() {
-    this._isShowSyntax = true;
+  get enterpriseSizeSelectConfig(): AutoSuggestionConfig {
+    return this._enterpriseSizeSelectConfig;
   }
 
-  checkParentInput(value: any) {
-    if (!value && this._parentEnterprise.name) {
-      this._parentEnterprise = <Enterprise>{};
-      this._enterprise.parentEnterpriseObject = [];
-      this._form
-        .get('parentEnterprise')
-        .setValue('');
-    }
+  get valueChainSelectConfig(): AutoSuggestionConfig {
+    return this._valueChainSelectConfig;
+  }
+
+  get patternConfig(): any {
+    return {
+      placeholder: 'Enter the enterprise pattern',
+      initialData: this._inputPatterns,
+    };
+  }
+
+  get brandConfig(): any {
+    return {
+      placeholder: 'Enter the enterprise brand',
+      initialData: this._inputBrands,
+    };
+  }
+
+  get geoConfig(): any {
+    return {
+      placeholder: 'Enter the geographical zone',
+      initialData: this._inputGeoZone,
+    };
+  }
+
+  get form(): FormGroup {
+    return this._form;
+  }
+
+  get defaultLogoURI(): string {
+    return this._defaultLogoURI;
+  }
+
+  get logo(): string {
+    return this._logo;
+  }
+
+  get showModal(): boolean {
+    return this._showModal;
+  }
+
+  set showModal(value: boolean) {
+    this._showModal = value;
+  }
+
+  get parentEnterprise(): Enterprise {
+    return this._parentEnterprise;
+  }
+
+  get newPatterns(): Array<Pattern> {
+    return this._newPatterns;
+  }
+
+  get newBrands(): any {
+    return this._newBrands;
+  }
+
+  get newSubsidiary(): Array<any> {
+    return this._newSubsidiary;
+  }
+
+  get newGeoZone(): any {
+    return this._newGeoZone;
+  }
+
+  get newIndustry(): Array<any> {
+    return this._newIndustry;
+  }
+
+  ngOnDestroy(): void {
+    this._ngUnsubscribe.next();
+    this._ngUnsubscribe.complete();
   }
 }

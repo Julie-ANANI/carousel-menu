@@ -48,47 +48,6 @@ export class CheckBoxFilterComponent implements OnInit, OnDestroy {
 
   constructor(private _campaignFrontService: CampaignFrontService) {}
 
-  get sources(): Array<any> {
-    return this._sources;
-  }
-
-  get hasChildrenItem(): boolean {
-    return this._hasChildrenItem;
-  }
-
-  get isCanSelectAll(): boolean {
-    return this._isCanSelectAll;
-  }
-
-  get height(): string {
-    return this._height;
-  }
-
-  get title(): string {
-    return this._title;
-  }
-
-  getContext(item: any, i: any) {
-    return {
-      item: item,
-      index: i,
-    };
-  }
-
-  selectItem(event: Event, context: any) {
-    if (context.item.label === 'Select All') {
-      this.initialiseSources((event.target as HTMLInputElement).checked);
-    } else {
-      this._displaySources[
-        context.index
-      ].isSelected = (event.target as HTMLInputElement).checked;
-      this._sources[
-        context.index
-      ].isSelected = (event.target as HTMLInputElement).checked;
-    }
-    this.sendFilters.emit(this._sources);
-  }
-
   ngOnInit(): void {
     if (this._type !== 'default') {
       this._subFilters = this._campaignFrontService
@@ -114,6 +73,27 @@ export class CheckBoxFilterComponent implements OnInit, OnDestroy {
     }
   }
 
+  selectItem(event: Event, context: any) {
+    if (context.item.label === 'Select All') {
+      this.initialiseSources((event.target as HTMLInputElement).checked);
+    } else {
+      this._displaySources[
+        context.index
+        ].isSelected = (event.target as HTMLInputElement).checked;
+      this._sources[
+        context.index
+        ].isSelected = (event.target as HTMLInputElement).checked;
+    }
+    this.sendFilters.emit(this._sources);
+  }
+
+  getContext(item: any, i: any) {
+    return {
+      item: item,
+      index: i,
+    };
+  }
+
   public getCountryName(isoCode: string): string {
     if (isoCode) {
       return countries[isoCode] || 'NA';
@@ -129,10 +109,6 @@ export class CheckBoxFilterComponent implements OnInit, OnDestroy {
     this._sources.map((item) => {
       item.isSelected = value;
     });
-  }
-
-  ngOnDestroy(): void {
-    this._subFilters.unsubscribe();
   }
 
   displayResults(event: string) {
@@ -163,5 +139,29 @@ export class CheckBoxFilterComponent implements OnInit, OnDestroy {
 
   get displaySources(): Array<any> {
     return this._displaySources;
+  }
+
+  get sources(): Array<any> {
+    return this._sources;
+  }
+
+  get hasChildrenItem(): boolean {
+    return this._hasChildrenItem;
+  }
+
+  get isCanSelectAll(): boolean {
+    return this._isCanSelectAll;
+  }
+
+  get height(): string {
+    return this._height;
+  }
+
+  get title(): string {
+    return this._title;
+  }
+
+  ngOnDestroy(): void {
+    this._subFilters.unsubscribe();
   }
 }

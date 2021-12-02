@@ -40,23 +40,30 @@ export class PitchComponent implements OnInit, OnDestroy {
   private _activeSectionCode = '';
   private _toBeSaved = false;
   private _isUploadingVideo = false;
-
+  private _innovation: Innovation = <Innovation>{};
   private _activeSectionIndex = 0;
+  private _sidebarValue: SidebarInterface = {
+    animate_state: 'inactive'
+  };
+  private _isSaving = false;
+  private _cardContent: any = '';
+  private _activeSection: InnovCardSection = <InnovCardSection>{};
+  private _sections: Array<InnovCardSection> = [];
+  private _isRequesting = false;
+  private _isSubmitting = false;
 
-  get activeSectionIndex(): number {
-    return this._activeSectionIndex;
-  }
+  private _showModal = false;
 
-  get isEditable(): boolean {
-    return this._innovation.status && (this._innovation.status === 'EDITING' || this._innovation.status === 'SUBMITTED');
-  }
+  private _isSendingMessage = false;
+  private _preset: Preset = <Preset>{};
+  private _newMessage = false;
+  private _mission: Mission = <Mission>{};
+  private _authorisation: Array<string> = ['SOCIAL', 'UMI', 'COMMUNITY'];
+  private _currentSectionComments: CollaborativeComment[] = [];
 
-  /**
-   * return true if the mission has template in it.
-   */
-  get hasMissionTemplate(): boolean {
-    return MissionFrontService.hasMissionTemplate(this.mission);
-  }
+  private _modalMedia = false;
+
+  private _selectedMedia: string;
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _etherpadService: EtherpadService,
@@ -66,140 +73,6 @@ export class PitchComponent implements OnInit, OnDestroy {
               private _etherpadFrontService: EtherpadFrontService,
               private _translateNotificationsService: TranslateNotificationsService,
               private _innovationFrontService: InnovationFrontService) {
-  }
-
-  private _innovation: Innovation = <Innovation>{};
-
-  get innovation(): Innovation {
-    return this._innovation;
-  }
-
-  private _sidebarValue: SidebarInterface = {
-    animate_state: 'inactive'
-  };
-
-  get sidebarValue(): SidebarInterface {
-    return this._sidebarValue;
-  }
-
-  set sidebarValue(value: SidebarInterface) {
-    if (!this._toBeSaved) {
-      this._sidebarValue = value;
-      if (this._sidebarValue.animate_state === 'inactive') {
-        this._activeSection = <InnovCardSection>{};
-      }
-    } else if (this._toBeSaved) {
-      this._changesToSave();
-    }
-  }
-
-  private _isSaving = false;
-
-  get isSaving(): boolean {
-    return this._isSaving;
-  }
-
-  set isSaving(value: boolean) {
-    this._isSaving = value;
-  }
-
-  private _cardContent: any = '';
-
-  get cardContent(): any {
-    return this._cardContent;
-  }
-
-  private _activeSection: InnovCardSection = <InnovCardSection>{};
-
-  get activeSection(): InnovCardSection {
-    return this._activeSection;
-  }
-
-  private _sections: Array<InnovCardSection> = [];
-
-  get sections(): Array<InnovCardSection> {
-    return this._sections;
-  }
-
-  private _isRequesting = false;
-
-  get isRequesting(): boolean {
-    return this._isRequesting;
-  }
-
-  private _isSubmitting = false;
-
-  get isSubmitting(): boolean {
-    return this._isSubmitting;
-  }
-
-  private _showModal = false;
-
-  get showModal(): boolean {
-    return this._showModal;
-  }
-
-  set showModal(value: boolean) {
-    this._showModal = value;
-  }
-
-  private _isSendingMessage = false;
-
-  get isSendingMessage(): boolean {
-    return this._isSendingMessage;
-  }
-
-  private _preset: Preset = <Preset>{};
-
-  get preset(): Preset {
-    return this._preset;
-  }
-
-  private _newMessage = false;
-
-  get newMessage(): boolean {
-    return this._newMessage;
-  }
-
-  private _mission: Mission = <Mission>{};
-
-  get mission(): Mission {
-    return this._mission;
-  }
-
-  private _authorisation: Array<string> = ['SOCIAL', 'UMI', 'COMMUNITY'];
-
-  get authorisation(): Array<string> {
-    return this._authorisation;
-  }
-
-  private _currentSectionComments: CollaborativeComment[] = [];
-
-  private _modalMedia = false;
-
-  private _selectedMedia: string;
-
-  get currentSectionComments(): any[] {
-    return this._currentSectionComments;
-  }
-
-  get activeInnovCard(): InnovCard {
-    return InnovationFrontService.activeCard(this._innovation, this._activeCardIndex);
-  }
-
-  get operatorComment(): CardComment {
-    return InnovationFrontService.cardOperatorComment(
-      this.activeInnovCard, this._activeSection.type, this._activeSection.etherpadElementId);
-  }
-
-  get imagePostUri(): string {
-    return this._innovation._id && this.activeInnovCard._id
-      ? `/innovation/${this._innovation._id}/innovationCard/${this.activeInnovCard._id}/media/image` : '';
-  }
-
-  get pitchHelp(): PitchHelpFields {
-    return MissionFrontService.objectiveInfo(<Mission>this._innovation.mission,
-      'PITCH_HELP', this.activeInnovCard.lang);
   }
 
   ngOnInit() {
@@ -478,11 +351,6 @@ export class PitchComponent implements OnInit, OnDestroy {
     this._toBeSaved = value;
   }
 
-  ngOnDestroy(): void {
-    this._ngUnsubscribe.next();
-    this._ngUnsubscribe.complete();
-  }
-
   private _initDefaultSections() {
     const _defaultSections: Array<InnovCardSection> = [
       {
@@ -534,6 +402,11 @@ export class PitchComponent implements OnInit, OnDestroy {
           });
       });
     }
+  }
+
+  public mediaToShow(src: string) {
+    this._modalMedia = true;
+    this._selectedMedia = src;
   }
 
   private _changesToSave() {
@@ -700,8 +573,132 @@ export class PitchComponent implements OnInit, OnDestroy {
     return this._modalMedia;
   }
 
-  public mediaToShow(src: string) {
-    this._modalMedia = true;
-    this._selectedMedia = src;
+
+  get activeSectionIndex(): number {
+    return this._activeSectionIndex;
+  }
+
+  get isEditable(): boolean {
+    return this._innovation.status && (this._innovation.status === 'EDITING' || this._innovation.status === 'SUBMITTED');
+  }
+
+  /**
+   * return true if the mission has template in it.
+   */
+  get hasMissionTemplate(): boolean {
+    return MissionFrontService.hasMissionTemplate(this.mission);
+  }
+
+  get currentSectionComments(): any[] {
+    return this._currentSectionComments;
+  }
+
+  get activeInnovCard(): InnovCard {
+    return InnovationFrontService.activeCard(this._innovation, this._activeCardIndex);
+  }
+
+  get operatorComment(): CardComment {
+    return InnovationFrontService.cardOperatorComment(
+      this.activeInnovCard, this._activeSection.type, this._activeSection.etherpadElementId);
+  }
+
+  get imagePostUri(): string {
+    return this._innovation._id && this.activeInnovCard._id
+      ? `/innovation/${this._innovation._id}/innovationCard/${this.activeInnovCard._id}/media/image` : '';
+  }
+
+  get pitchHelp(): PitchHelpFields {
+    return MissionFrontService.objectiveInfo(<Mission>this._innovation.mission,
+      'PITCH_HELP', this.activeInnovCard.lang);
+  }
+
+  get innovation(): Innovation {
+    return this._innovation;
+  }
+
+  get sidebarValue(): SidebarInterface {
+    return this._sidebarValue;
+  }
+
+  set sidebarValue(value: SidebarInterface) {
+    if (!this._toBeSaved) {
+      this._sidebarValue = value;
+      if (this._sidebarValue.animate_state === 'inactive') {
+        this._activeSection = <InnovCardSection>{};
+      }
+    } else if (this._toBeSaved) {
+      this._changesToSave();
+    }
+  }
+
+  get isSaving(): boolean {
+    return this._isSaving;
+  }
+
+  set isSaving(value: boolean) {
+    this._isSaving = value;
+  }
+
+  get cardContent(): any {
+    return this._cardContent;
+  }
+
+
+  get activeSection(): InnovCardSection {
+    return this._activeSection;
+  }
+
+
+  get sections(): Array<InnovCardSection> {
+    return this._sections;
+  }
+
+
+  get isRequesting(): boolean {
+    return this._isRequesting;
+  }
+
+
+  get isSubmitting(): boolean {
+    return this._isSubmitting;
+  }
+
+
+  get showModal(): boolean {
+    return this._showModal;
+  }
+
+  set showModal(value: boolean) {
+    this._showModal = value;
+  }
+
+
+  get isSendingMessage(): boolean {
+    return this._isSendingMessage;
+  }
+
+
+  get preset(): Preset {
+    return this._preset;
+  }
+
+
+  get newMessage(): boolean {
+    return this._newMessage;
+  }
+
+
+  get mission(): Mission {
+    return this._mission;
+  }
+
+
+  get authorisation(): Array<string> {
+    return this._authorisation;
+  }
+
+  ngOnDestroy(): void {
+    this._ngUnsubscribe.next();
+    this._ngUnsubscribe.complete();
   }
 }

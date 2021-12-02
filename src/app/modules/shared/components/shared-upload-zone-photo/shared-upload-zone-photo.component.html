@@ -18,12 +18,12 @@
     <input (change)="dropped($event)" type="file" #fileInput>
 
     <ng-container *ngIf="!isWrongFormat && !isWrongSize">
-      <i [ngStyle]="{'font-size': '70px'}" class="fas text-primary fa-cloud-upload-alt"></i>
+      <i style="font-size: 70px" class="fas text-primary fa-cloud-upload-alt"></i>
       <p class="text-13 text-background m-top-1 m-no-bottom">{{ 'COMMON.PLACEHOLDER.MEDIA_SLIDE' | translate }}</p>
     </ng-container>
 
     <ng-container *ngIf="isWrongFormat || isWrongSize">
-      <i [ngStyle]="{'font-size': '50px'}" class="fas text-alert fa-exclamation-triangle"></i>
+      <i style="font-size: 50px" class="fas text-alert fa-exclamation-triangle"></i>
       <p class="text-13 text-alert m-top-2 m-no-bottom text-medium">
         {{ isWrongFormat ? ('COMMON.MEDIA.WRONG_FORMAT' | translate) : ('COMMON.MEDIA.WRONG_SIZE' | translate) }}
       </p>

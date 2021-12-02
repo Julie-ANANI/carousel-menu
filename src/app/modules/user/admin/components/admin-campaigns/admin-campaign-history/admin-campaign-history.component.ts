@@ -4,7 +4,7 @@ import { Campaign } from '../../../../../../models/campaign';
 import { RolesFrontService } from '../../../../../../services/roles/roles-front.service';
 import { CampaignFrontService } from '../../../../../../services/campaign/campaign-front.service';
 import { StatsReferentsService } from '../../../../../../services/stats-referents/stats-referents.service';
-import { StatsInterface } from '../../admin-stats-banner/admin-stats-banner.component';
+import { StatsInterface } from '../../../../../../models/stats';
 import { first } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorFrontService } from '../../../../../../services/error/error-front.service';
@@ -36,38 +36,23 @@ export class AdminCampaignHistoryComponent implements OnInit {
 
   private _indicators: ProMailsIndicators;
 
+  private _referents: { identificationEfficiency: any; shieldImpact?: number; inabilityToValidate?: number; redundancy?: number; deductionEfficiency?: number; };
+
+  private _stats: ProMailsStats;
+
+  private _statsConfig: Array<StatsInterface> = [];
+
+  private _campaign: Campaign = <Campaign>{};
+
+  private _accessPath: Array<string> = ['projects', 'project', 'campaigns', 'campaign', 'history'];
+
+
   constructor(private _activatedRoute: ActivatedRoute,
               private _campaignFrontService: CampaignFrontService,
               private _rolesFrontService: RolesFrontService,
               private _statsReferentsService: StatsReferentsService,
               private _campaignService: CampaignService,
               private _translateNotificationsService: TranslateNotificationsService) {
-  }
-
-  private _referents: { identificationEfficiency: any; shieldImpact?: number; inabilityToValidate?: number; redundancy?: number; deductionEfficiency?: number; };
-
-  private _stats: ProMailsStats;
-
-  get stats(): ProMailsStats {
-    return this._stats;
-  }
-
-  private _statsConfig: Array<StatsInterface> = [];
-
-  get statsConfig(): Array<StatsInterface> {
-    return this._statsConfig;
-  }
-
-  private _campaign: Campaign = <Campaign>{};
-
-  get campaign(): Campaign {
-    return this._campaign;
-  }
-
-  private _accessPath: Array<string> = ['projects', 'project', 'campaigns', 'campaign', 'history'];
-
-  get accessPath(): Array<string> {
-    return this._accessPath;
   }
 
   ngOnInit(): void {
@@ -147,7 +132,27 @@ export class AdminCampaignHistoryComponent implements OnInit {
       heading: 'Emails',
       content: [
         {
-          subHeading: 'Identification efficiency',
+          subHeading: 'Bad emails',
+          value: this._indicators.inabilityToValidate,
+          gauge: {
+            title: `${this._stats && this._stats.uniqueBadEmails} uniques invalids / ${this._stats && this._stats.uniqueIdentified} uniques identified`,
+            negative: true,
+            referent: this._referents.inabilityToValidate || 50,
+            delimitersLabels: ['Strong inability to validate, to be alerted', 'Moderate inability to validate, to be checked',
+              'Inability to validate low', 'Inability to validate very low']
+          }
+        },
+        {
+          subHeading: 'Risky emails',
+          value: this._indicators.deductionEfficiency,
+          gauge: {
+            title: `${this._stats && this._stats.uniqueUncertain} uniques risky / ${this._stats && this._stats.uniqueIdentified} uniques identified`,
+            referent: this._referents.deductionEfficiency || 50,
+            delimitersLabels: ['Very small deduction, to be alerted', 'Low deduction, to be checked', 'Deduction ok!', 'Strong deduction! ']
+          }
+        },
+        {
+          subHeading: 'Good emails',
           value: this._indicators.identificationEfficiency,
           gauge: {
             title: `${this._stats && this._stats.uniqueGoodEmails} uniques good emails / ${this._stats && this._stats.uniqueIdentified} uniques identified`,
@@ -160,20 +165,9 @@ export class AdminCampaignHistoryComponent implements OnInit {
           value: this._indicators.shieldImpact,
           gauge: {
             title: `${this._stats && this._stats.uniqueShielded} uniques shielded / ${this._stats && this._stats.uniqueGoodEmails} uniques good emails`,
-            inverted: true,
+            negative: true,
             referent: this._referents.shieldImpact || 50,
             delimitersLabels: ['Strong impact', 'Moderate impact', 'Low impact', 'Very low impact']
-          }
-        },
-        {
-          subHeading: 'Inability to validate',
-          value: this._indicators.inabilityToValidate,
-          gauge: {
-            title: `${this._stats && this._stats.uniqueBadEmails} uniques invalids / ${this._stats && this._stats.uniqueIdentified} uniques identified`,
-            inverted: true,
-            referent: this._referents.inabilityToValidate || 50,
-            delimitersLabels: ['Strong inability to validate, to be alerted', 'Moderate inability to validate, to be checked',
-              'Inability to validate low', 'Inability to validate very low']
           }
         },
         {
@@ -181,22 +175,29 @@ export class AdminCampaignHistoryComponent implements OnInit {
           value: this._indicators.redundancy,
           gauge: {
             title: `${this._stats && this._stats.uniqueIdentified} uniques identified / ${this._stats && this._stats.identified} identified`,
-            inverted: true,
+            negative: true,
             referent: this._referents.redundancy || 50,
             delimitersLabels: ['Highly redundant request, to be redirected', 'Redundant request, be careful', 'Request ok !', 'Request excellent !']
-          }
-        },
-        {
-          subHeading: 'Deduction efficiency',
-          value: this._indicators.deductionEfficiency,
-          gauge: {
-            title: `${this._stats && this._stats.uniqueUncertain} uniques deduced / ${this._stats && this._stats.uniqueIdentified} uniques identified`,
-            referent: this._referents.deductionEfficiency || 50,
-            delimitersLabels: ['Very small deduction, to be alerted', 'Low deduction, to be checked', 'Deduction ok!', 'Strong deduction! ']
           }
         }
       ]
     }];
+  }
+
+  get stats(): ProMailsStats {
+    return this._stats;
+  }
+
+  get statsConfig(): Array<StatsInterface> {
+    return this._statsConfig;
+  }
+
+  get campaign(): Campaign {
+    return this._campaign;
+  }
+
+  get accessPath(): Array<string> {
+    return this._accessPath;
   }
 
 }

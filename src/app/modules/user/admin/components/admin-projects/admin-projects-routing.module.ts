@@ -13,7 +13,7 @@ const routes: Routes = [
       { path: '', component: AdminProjectsComponent, pathMatch: 'full' },
       {
         path: 'project/:projectId',
-        loadChildren: '.././admin-project/admin-project.module#AdminProjectModule',
+        loadChildren: () => import('.././admin-project/admin-project.module').then(m => m.AdminProjectModule),
         canActivateChild: [AdminAuthGuard],
         resolve: { innovation : AdminInnovationResolver },
         runGuardsAndResolvers: 'always'

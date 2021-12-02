@@ -1,5 +1,4 @@
 {
-  "baseUrl": "./src",
   "buildOnSave": false,
   "compileOnSave": false,
   "compilerOptions": {
@@ -15,21 +14,19 @@
     "suppressImplicitAnyIndexErrors": true,
     "outDir": "./dist/out-tsc",
     "declaration": false,
-    "typeRoots": [
-      "node_modules/@types"
-    ],
+    "typeRoots": ["node_modules/@types"],
     "lib": [
       "es2018",
       "dom"
     ],
     "skipLibCheck": true,
-    // "strict": true, TODO
     "noImplicitAny": true,
     "noUnusedLocals": true
   },
   "exclude": [
     "dist",
     "node_modules",
-    "server.ts"
+    "server.ts",
+    "e2e"
   ]
 }

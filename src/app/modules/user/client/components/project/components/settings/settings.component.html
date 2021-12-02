@@ -123,7 +123,7 @@
                 <div class="d-flex align-center p-top-1">
                   <ul class="roadmap-wrapper">
                     <li *ngIf="!!mission.milestoneDates.length" class="active">
-                    <span [ngStyle]="{'padding-top': '2px'}" class="d-flex flex-d-column align-center">
+                    <span style="padding-top: 2px"  class="d-flex flex-d-column align-center">
                       <span class="shape is-circle is-sm"></span>
                       <span class="divider-vert" [ngClass]="{ 'active': isNextMilestoneReached(0) }"></span>
                     </span>
@@ -131,7 +131,7 @@
                     </li>
                     <ng-container *ngFor="let milestone of mission.milestoneDates; let i = index;">
                       <li *ngIf="!!milestone.dueDate" [ngClass]="{ 'active': isMilestoneReached(milestone.dueDate) }">
-                      <span [ngStyle]="{'padding-top': '2px'}" class="d-flex flex-d-column align-center">
+                      <span style="padding-top: 2px"  class="d-flex flex-d-column align-center">
                         <span class="shape is-circle is-sm"></span>
                         <span
                           *ngIf="i < mission.milestoneDates.length - 1"
@@ -199,22 +199,26 @@
                     <div
                       (click)="openDeleteModal($event, section, collaborator)"
                       [id]="'open-modal-delete-collaborators'"
-                      class="button is-xs is-outlined is-danger">
-                      {{ 'COMMON.BUTTON.DELETE' | translate }}
+                      class="icon-container is-overlay">
+                      <span class="tooltip" [attr.data-tooltip]="'COMMON.BUTTON.DELETE' | translate">
+                        <i class="icon icon-delete text-alert"></i>
+                      </span>
                     </div>
                   </div>
                   <div *ngFor="let pending of pendingCollaborators" class="collaborator-wrapper">
                     <div class="m-right-10">{{ pending }}</div>
                     <div
                       [attr.data-tooltip]="'PROJECT_SETTINGS.TOOLTIP_PENDING' | translate"
-                      class="label is-sm is-progress tooltip is-fullwidth m-right-40">
+                      class="label is-sm is-progress tooltip is-fullwidth m-right-20">
                       {{ 'COMMON.LABEL.PENDING' | translate }}
                     </div>
                     <div
                       (click)="openDeleteModal($event, section, pending, 'PENDING_COLLABORATOR')"
                       [id]="'open-modal-delete-collaborators'"
-                      class="button is-xs is-outlined is-danger">
-                      {{ 'COMMON.BUTTON.DELETE' | translate }}
+                      class="icon-container is-overlay">
+                      <span class="tooltip" [attr.data-tooltip]="'COMMON.BUTTON.DELETE' | translate">
+                        <i class="icon icon-delete text-alert"></i>
+                      </span>
                     </div>
                   </div>
                 </ng-template>
@@ -272,17 +276,19 @@
               <!-- LANGUAGE -->
               <div *ngSwitchCase="'LANGUAGE'">
                 <div *ngFor="let card of innovation.innovationCards" class="lang-wrapper">
-                <span class="m-right-40">
-                  {{ 'PROJECT_SETTINGS.PROJECT_IN' | translate }}
-                  {{ 'COMMON.LANG.' + card.lang.toUpperCase() | translate }}.
-                </span>
-                <span
-                  (click)="openDeleteModal($event, section, card)"
-                  *ngIf="innovation.innovationCards.length > 1"
-                  [id]="'open-modal-delete-innovationCard'"
-                  class="button is-xs is-outlined is-danger">
-                  {{ 'COMMON.BUTTON.DELETE' | translate }}
-                </span>
+                  <span class="m-right-40">
+                    {{ 'PROJECT_SETTINGS.PROJECT_IN' | translate }}
+                    {{ 'COMMON.LANG.' + card.lang.toUpperCase() | translate }}.
+                  </span>
+                  <span
+                    (click)="openDeleteModal($event, section, card)"
+                    *ngIf="innovation.innovationCards.length > 1"
+                    [id]="'open-modal-delete-innovationCard'"
+                    class="icon-container is-overlay">
+                    <span class="tooltip" [attr.data-tooltip]="'COMMON.BUTTON.DELETE' | translate">
+                      <i class="icon icon-delete text-alert"></i>
+                    </span>
+                  </span>
                 </div>
               </div>
               <!-- /LANGUAGE -->
@@ -352,7 +358,7 @@
 
   <!-- body -->
   <section
-    [ngStyle]="{'background-color': '#2E6188'}"
+    style="background-color: #2E6188"
     [ngSwitch]="activeModalSection.name"
     class="modal-body p-bottom-40">
 
@@ -487,14 +493,14 @@
     <ng-container *ngSwitchCase="'COLLABORATORS'">
 
       <!-- Warning text -->
-      <div [ngStyle]="{'max-width': '530px'}" class="m-left-auto m-right-auto m-bottom-30">
+      <div style="max-width: 530px" class="m-left-auto m-right-auto m-bottom-30">
         <label class="form-checkbox p-left-30 text-white">
           <input
             (change)="onChangeCollaboratorsConsent($event)"
             [ngModel]="selectedValue['consent']"
             id="collaborator-consent"
             type="checkbox">
-          <i [ngStyle]="{ 'width': '20px', 'height': '20px' }" class="form-icon"></i>
+          <i style="width: 20px; height: 20px" class="form-icon"></i>
           {{ 'PROJECT_SETTINGS.COLLABORATORS_CONSENT' | translate }}
         </label>
       </div>
@@ -522,7 +528,7 @@
             (ngModelChange)="objectiveConsent = !objectiveConsent"
             [(ngModel)]="objectiveConsent"
             type="checkbox">
-          <i [ngStyle]="{ 'width': '20px', 'height': '20px' }" class="form-icon"></i>
+          <i style="width: 20px; height: 20px" class="form-icon"></i>
           <span class="text-white text-medium">
             <ng-container *ngIf="activeModalSection.name === 'PRINCIPAL_OBJECTIVE'">
               {{ 'PROJECT_SETTINGS.PRIMARY_OBJECTIVE_CONSENT' | translate }}
@@ -540,7 +546,7 @@
   <!-- /body -->
 
   <!-- footer -->
-  <footer [ngStyle]="{'background-color': '#2E6188'}" class="modal-footer justify-center">
+  <footer style="background-color: #2E6188" class="modal-footer justify-center">
 
     <button
       (click)="closeModal()"
@@ -576,7 +582,7 @@
   <section class="modal-body">
 
     <!-- heading -->
-    <h2 [ngStyle]="{ 'color': '4C4C4C' }" class="title is-4 text-center m-bottom-30 text-bold">
+    <h2 style="color: #4C4C4C" class="title is-4 text-center m-bottom-30 text-bold">
       {{ 'COMMON.MODAL.TITLE_DELETE' | translate }}
     </h2>
     <!-- /heading -->
