@@ -451,7 +451,7 @@
             ],
             "styles": [
               "src/style/framework/src/umi.scss",
-              "src/styles.multivalente.scss"
+              "src/style/styles.multivalente.scss"
             ],
             "scripts": [
               "node_modules/tinymce/tinymce.min.js",
@@ -561,7 +561,7 @@
               "assets/plugins/plugin.js"
             ],
             "styles": [
-              "src/styles.multivalente.scss"
+              "src/style/styles.multivalente.scss"
             ],
             "assets": [
               {
