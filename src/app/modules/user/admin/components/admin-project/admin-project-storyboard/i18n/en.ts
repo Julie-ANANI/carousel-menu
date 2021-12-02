@@ -58,7 +58,8 @@ export const ADMIN_STORYBOARD = {
     'ABSTRACT': 'We need the professionals abstract',
     'LIST': 'We need at least four profiles of respondents',
     'COUNTRY': 'Le pays est manquant, corriger dans la synthèse',
-    'MEDIA': 'We need a principal media'
+    'MEDIA': 'We need a principal media',
+    'TITLE': 'We need a title... no shit ?!'
   }
 
 };

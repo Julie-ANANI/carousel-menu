@@ -71,6 +71,8 @@ export class AdminProjectStoryboardComponent implements OnInit, OnDestroy {
 
   private _fetchingError = false;
 
+  private _hasTitle = false;
+
   private _hasPrincipalMedia = false;
 
   private _isChargingReport = true;
@@ -300,6 +302,7 @@ export class AdminProjectStoryboardComponent implements OnInit, OnDestroy {
   private _setPrincipalMediaBoolean() {
     const innovationCard = this._innovation.innovationCards.find(card => card.lang === this._executiveReport.lang);
     this._hasPrincipalMedia = !!innovationCard.principalMedia;
+    this._hasTitle = !!innovationCard.title;
   }
 
   public onChangeDiffusion(event: Event) {
@@ -566,6 +569,10 @@ export class AdminProjectStoryboardComponent implements OnInit, OnDestroy {
 
   get hasPrincipalMedia(): boolean {
     return this._hasPrincipalMedia;
+  }
+
+  get hasTitle(): boolean {
+    return this._hasTitle;
   }
 
   get showBannerUpdate(): string {

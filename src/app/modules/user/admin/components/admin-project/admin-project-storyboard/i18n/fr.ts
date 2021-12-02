@@ -58,7 +58,8 @@ export const ADMIN_STORYBOARD = {
     'ABSTRACT': 'Il faut le texte de présentation des profils',
     'LIST': 'Il faut au moins quatre profils de pros',
     'COUNTRY': 'Country is missing, adjust in the synthesis',
-    'MEDIA': 'Il faut un média principal'
+    'MEDIA': 'Il faut un média principal',
+    'TITLE': 'Il faut un titre... no shit ?!'
   }
 
 };
