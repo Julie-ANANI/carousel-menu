@@ -391,7 +391,7 @@
               <button
                 *ngIf="isEditable"
                 [attr.data-tooltip]="!(getPadPreviewMode('summary'))? 'Preview':'Edit'"
-                (click)="padPreviewModeOnChange('c')"
+                (click)="padPreviewModeOnChange('summary')"
                 class="button tooltip is-circled is-action is-outlined text-no-underline is-info is-xxs text-sm op-text text-notify m-left-15"
                 type="button">
                 <i class="fas fa-pencil-alt"
