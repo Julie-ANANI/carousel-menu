@@ -432,7 +432,7 @@ export class UserFormComponent implements OnInit {
   public impersonateUser(event: Event) {
     event.preventDefault();
     if (this.canImpersonate) {
-      this._authService.forceLogin(this._user.id).subscribe(response => {
+      this._authService.forceLogin(this._user._id).subscribe(response => {
         this.translateNotificationsService.success('ERROR.SUCCESS', '');
         this.router.navigate(['/user']);
       }, err => {
