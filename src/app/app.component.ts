@@ -1,5 +1,5 @@
 import { Component, OnInit, PLATFORM_ID, Inject, HostListener, OnDestroy } from '@angular/core';
-import {isPlatformBrowser, isPlatformServer} from '@angular/common';
+import { isPlatformBrowser, isPlatformServer } from '@angular/common';
 import { NotificationAnimationType, Options } from 'angular2-notifications';
 import { initTranslation, TranslateService } from './i18n/i18n';
 import { environment } from '../environments/environment';
@@ -7,9 +7,10 @@ import { AuthService } from './services/auth/auth.service';
 import { TranslateNotificationsService } from './services/notifications/notifications.service';
 import { MouseService } from './services/mouse/mouse.service';
 import { SocketService } from './services/socket/socket.service';
-import {takeUntil} from 'rxjs/operators';
+import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
-import {HttpErrorResponse} from '@angular/common/http';
+import { HttpErrorResponse } from '@angular/common/http';
+import { WorldmapService } from "./services/worldmap/worldmap.service";
 
 @Component({
   selector: 'app-root',
@@ -50,6 +51,7 @@ export class AppComponent implements OnInit, OnDestroy {
               private _authService: AuthService,
               private _mouseService: MouseService,
               private _socketService: SocketService,
+              private _worldMapService: WorldmapService,
               private _translateNotificationsService: TranslateNotificationsService) {
   }
 
@@ -66,6 +68,10 @@ export class AppComponent implements OnInit, OnDestroy {
       this._socketEvent();
       this._mouseEvent();
     }
+
+    this._worldMapService.getCountriesList().then(_ => {
+      console.log('worldMap service connected');
+    })
   }
 
   @HostListener('mouseup', ['$event'])
@@ -93,7 +99,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   private _socketEvent() {
     this._socketService.listenToSocket().pipe(takeUntil(this._ngUnsubscribe)).subscribe(() => {
-      this._socketService.sendDataToApi('helloBack', { 'hello': 'back' });
+      this._socketService.sendDataToApi('helloBack', {'hello': 'back'});
     }, (err: HttpErrorResponse) => {
       console.error(err);
     });

@@ -1,7 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { IndexService } from '../../../../services/index/index.service';
 import { Country } from '../../../../models/country';
-import { Response } from '../../../../models/response';
 import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
 import { TranslateService } from '@ngx-translate/core';
 import { WorldmapService } from '../../../../services/worldmap/worldmap.service';
@@ -39,8 +37,8 @@ export class SharedTargetingWorldComponent implements OnInit {
   private _searchCountries: Array<Country> = [];
 
   constructor(
-    private _indexService: IndexService,
     private _translateService: TranslateService,
+    private _worldMapService: WorldmapService,
     private _translateNotificationService: TranslateNotificationsService
   ) {
   }
@@ -57,34 +55,26 @@ export class SharedTargetingWorldComponent implements OnInit {
    * @private
    */
   private _getAllCountries() {
-    this._indexService.getWholeSet({type: 'countries'}).subscribe(
-      (response: Response) => {
-        this._allCountries = response.result;
-        this._allContinentsCountries();
+    this._worldMapService.getCountriesList().then(response => {
+      this._allCountries = response;
+      this._allContinentsCountries();
 
-        if (this._geography.include.length === 0) {
-          this._includeCountries();
-        }
-
-        if (this._geography.exclude.length > 0) {
-          this._filterExCountriesFromIncluded();
-        }
-
-        /***
-         * we are emitting here because of the old innovations.
-         * so that we can have the calculated values for them.
-         */
-        if (!this.isEditable || this.isAdmin) {
-          this._emitChanges();
-        }
-      },
-      () => {
-        this._translateNotificationService.error(
-          'ERROR.ERROR',
-          'ERROR.FETCHING_ERROR'
-        );
+      if (this._geography.include.length === 0) {
+        this._includeCountries();
       }
-    );
+
+      if (this._geography.exclude.length > 0) {
+        this._filterExCountriesFromIncluded();
+      }
+
+      /***
+       * we are emitting here because of the old innovations.
+       * so that we can have the calculated values for them.
+       */
+      if (!this.isEditable || this.isAdmin) {
+        this._emitChanges();
+      }
+    })
   }
 
   /***
