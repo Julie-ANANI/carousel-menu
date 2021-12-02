@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {Component, EventEmitter, HostListener, Input, OnInit, Output} from '@angular/core';
 import { picto, Picto } from '../../../../../models/static-data/picto';
 import {
   AttitudeMeasureType,
@@ -11,6 +11,7 @@ import {
 import { MissionQuestionService } from '../../../../../services/mission/mission-question.service';
 import { TranslateService } from '@ngx-translate/core';
 import { RolesFrontService } from '../../../../../services/roles/roles-front.service';
+import {CommonService} from '../../../../../services/common/common.service';
 
 @Component({
   selector: 'app-shared-questionnaire-question',
