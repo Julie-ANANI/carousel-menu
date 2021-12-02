@@ -176,9 +176,7 @@ export interface MissionQuestion {
    */
   controlType: MissionQuestionType;
 
-  /**
-   * Comes from the preset model.
-   */
+  
   attitudeMeasure?: AttitudeMeasureType;
 
   /**
