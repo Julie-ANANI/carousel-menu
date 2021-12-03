@@ -367,14 +367,12 @@
               'is-editable-medium': isEditable || canAccess(['edit', 'options']) && question.controlType === 'likert-scale',
               'is-editable-small': isEssential || canAccess(['libraries', 'useCases', 'question']) && question.controlType === 'likert-scale'}"
               class="card card-medium">
-              <!--   ,
-                 'is-editable-small': isEditable || canAccess(['libraries', 'useCases', 'question']) && question.controlType === 'likert-scale'-->
 
               <ng-template
                 #showOptionLabel>{{ optionEntry(option, lang).label || 'NA' }}
               </ng-template>
 
-              <!--             move option-->
+              <!-- move option-->
               <div
                 *ngIf="question.controlType != 'likert-scale' && (isEditable || canAccess(['edit', 'options', 'order']))"
                 class="flex-centered m-top-10 m-bottom-10">
