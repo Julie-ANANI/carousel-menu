@@ -487,7 +487,7 @@ export class AdminProjectCollectionComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Updates one answer when saved from the sidebar
+   * Updates one answer when saved from the sidebar (using the object sent back when we called the PUT route)
    * @param answer {Answer}
    */
   updateOneAnswer(answer: Answer) {
