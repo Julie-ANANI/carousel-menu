@@ -487,6 +487,13 @@ export class SidebarUserAnswerComponent implements OnInit {
     return this._userAnswer.meta || {};
   }
 
+  /**
+   * Get the list of warnings associated to the answer
+   */
+  get answerWarnings(): Array<{message:string}> {
+    return this._userAnswer.warnings;
+  }
+
   get userAnswer(): Answer {
     return this._userAnswer;
   }

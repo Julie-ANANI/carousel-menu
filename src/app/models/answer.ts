@@ -37,4 +37,5 @@ export interface Answer {
   autoTags?: Array<string>;
   followUp?: {objective?: 'INTERVIEW' | 'OPENING' | 'NO_FOLLOW', date?: Date};
   readonly localStatus?: string;
+  readonly warnings?: Array<{message:string}>;
 }
