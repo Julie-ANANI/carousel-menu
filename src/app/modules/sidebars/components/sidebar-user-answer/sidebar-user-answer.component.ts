@@ -185,6 +185,7 @@ export class SidebarUserAnswerComponent implements OnInit {
             'Success',
             'The answer is updated.'
           );
+          this._userAnswer = res;
           this._resetEdit();
           this._resetSaveVariables();
           this.userAnswerChange.emit(this._userAnswer);

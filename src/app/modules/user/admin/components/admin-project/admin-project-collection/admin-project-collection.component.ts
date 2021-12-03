@@ -445,7 +445,7 @@ export class AdminProjectCollectionComponent implements OnInit, OnDestroy {
         .save(answer._id, answer)
         .pipe(first())
         .subscribe(
-          () => {
+          _ans => {
             this._translateNotificationsService.success(
               'Success',
               'The answer has been updated.'
