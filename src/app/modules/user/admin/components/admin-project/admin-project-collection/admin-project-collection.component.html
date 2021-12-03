@@ -78,6 +78,7 @@
     [innovationCards]="innovation.innovationCards"
     [sidebarState]="sidebarValue.animate_state"
     (answerUpdated)="updateAnswersTable($event)"
+    (userAnswerChange)="updateOneAnswer($event)"
     (sendNewPro)="updatePros($event)"
     [userAnswer]="sidebarAnswer">
   </app-sidebar-user-answer>

@@ -486,6 +486,20 @@ export class AdminProjectCollectionComponent implements OnInit, OnDestroy {
     this._initAnswers();
   }
 
+  /**
+   * Updates one answer when saved from the sidebar
+   * @param answer {Answer}
+   */
+  updateOneAnswer(answer: Answer) {
+    // Search for the answer
+    const idx = this._answers.findIndex(ans => {
+      return ans._id === answer._id;
+    });
+    if(idx > -1) {
+      this._answers[idx] = answer;
+    }
+  }
+
 
   get localConfig(): Config {
     return this._localConfig;
