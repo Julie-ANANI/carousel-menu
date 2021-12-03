@@ -67,6 +67,8 @@ export class AdminProjectCollectionComponent implements OnInit, OnDestroy {
 
   private _socketListening = false;
 
+  private _targetWarnings = 0;
+
   private static _campaignStat(
     answers: Array<Answer>,
     type: string,
@@ -135,6 +137,7 @@ export class AdminProjectCollectionComponent implements OnInit, OnDestroy {
       .subscribe(
         (response) => {
           this._answers = response.answers;
+          this._targetWarnings = this._areThereWarnings();
           this._answers.forEach((answer) => {
             if ( answer.campaign &&
               this._campaignList.findIndex(
@@ -154,6 +157,14 @@ export class AdminProjectCollectionComponent implements OnInit, OnDestroy {
           console.error(err);
         }
       );
+  }
+
+  /**
+   * Counts how many answers are off target
+   * @private
+   */
+  private _areThereWarnings(): number {
+    return this._answers.filter(ans => {return !!ans.warnings ? ans.warnings.length > 0 : false;}).length;
   }
 
   private _initAnswers() {
@@ -563,6 +574,13 @@ export class AdminProjectCollectionComponent implements OnInit, OnDestroy {
 
   get campaignList(): Array<{ _name: ''; _alias: '' }> {
     return this._campaignList;
+  }
+
+  /**
+   * Get the number of answers off target
+   */
+  get targetWarnings(): number {
+    return this._targetWarnings;
   }
 
   ngOnDestroy(): void {
