@@ -122,11 +122,14 @@
           &.is-editable-medium {
             padding: 5px 10px 2px 10px;
             min-height:70px;
+            justify-content: center ;
+            text-align: center;
           }
 
           &.is-editable-small {
             padding: 5px 10px 2px 10px;
-            min-height:15px;
+            min-height:30px;
+            text-align: left;
           }
 
         }
@@ -164,9 +167,15 @@
         padding-top: 10px;
         padding-bottom: 10px;
 
-        textarea, .options-wrapper .card {
+        textarea, .options-wrapper, .card, .card-medium   {
           max-width: 90%;
+
+          &.is-centered {
+            background: #B0261B;
+            margin: auto;
+          }
         }
+
 
         .options-wrapper .card textarea {
           max-width: 100%;
