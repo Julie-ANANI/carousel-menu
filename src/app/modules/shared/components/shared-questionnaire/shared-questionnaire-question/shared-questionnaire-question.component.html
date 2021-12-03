@@ -154,21 +154,17 @@
   <!-- question edition -->
   <div *ngIf="editMode" class="question-body">
     <span class="label is-rounded text-white tooltip"
-          [attr.data-tooltip]="
-(isLibraryView && isEssential) || (!isLibraryView && isTaggedQuestion && question.type === 'ESSENTIAL')?
-'Essential questions are required \n to ensure the right answer \n to the use case':
-        (isLibraryView && !isEssential) || (!isLibraryView && isTaggedQuestion && question.type === 'COMPLEMENTARY')?
-        'Secondary questions complete \n the main result coming \n from essential questions' :
+          [attr.data-tooltip]="(isLibraryView && isEssential) || (!isLibraryView && isTaggedQuestion && question.type === 'ESSENTIAL')?
+          'Essential questions are required \n to ensure the right answer \n to the use case':
+          (isLibraryView && !isEssential) || (!isLibraryView && isTaggedQuestion && question.type === 'COMPLEMENTARY')?
+          'Secondary questions complete \n the main result coming \n from essential questions' :
           'Custom questions are specific \n to a client project'"
           [ngClass]="{'is-edit-mode': editMode,
           'essentialBg': (isLibraryView && isEssential) || (!isLibraryView && isTaggedQuestion && question.type === 'ESSENTIAL'),
-  'complementaryBg': (isLibraryView && !isEssential) || (!isLibraryView && isTaggedQuestion && question.type === 'COMPLEMENTARY'),
-  'costumedBg': !isLibraryView && !isTaggedQuestion}"
-    >{{
-      (isLibraryView && isEssential) || (!isLibraryView && isTaggedQuestion && question.type === 'ESSENTIAL')? 'Essential' :
-        (isLibraryView && !isEssential) || (!isLibraryView && isTaggedQuestion && question.type === 'COMPLEMENTARY')?
-          'Secondary': 'Custom'
-      }}</span>
+          'complementaryBg': (isLibraryView && !isEssential) || (!isLibraryView && isTaggedQuestion && question.type === 'COMPLEMENTARY'),
+          'costumedBg': !isLibraryView && !isTaggedQuestion}">
+              {{(isLibraryView && isEssential) || (!isLibraryView && isTaggedQuestion && question.type === 'ESSENTIAL')? 'Essential' :
+              (isLibraryView && !isEssential) || (!isLibraryView && isTaggedQuestion && question.type === 'COMPLEMENTARY')? 'Secondary': 'Custom'}}</span>
 
     <div class="text-sm m-bottom-10 m-top-10"
          *ngIf="question.entry && question.entry.length && question.entry[0].objective">
@@ -367,9 +363,11 @@
                'has-single-option-nowrap': question.controlType === 'likert-scale'}" class="options-wrapper">
             <div
               *ngFor="let option of question.options; let optionIndex = index;"
-              [ngClass]="{'is-editable': canAccess(['edit', 'options']),
-              'has-single-option-small': question.controlType === 'likert-scale'}"
-              class="card">
+              [ngClass]="{'is-editable': isEditable || canAccess(['edit', 'options']),
+              'is-editable-medium': isEditable || canAccess(['edit', 'options']) && question.controlType === 'likert-scale'}"
+              class="card card-medium">
+           <!--   ,
+              'is-editable-small': isEditable || canAccess(['libraries', 'useCases', 'question']) && question.controlType === 'likert-scale'-->
 
               <ng-template
                 #showOptionLabel><div class="m-auto">{{ optionEntry(option, lang).label || 'NA' }}</div></ng-template>

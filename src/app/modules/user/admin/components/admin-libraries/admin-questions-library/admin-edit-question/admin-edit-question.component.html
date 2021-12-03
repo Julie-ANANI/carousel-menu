@@ -351,7 +351,7 @@
                     <div
                       *ngFor="let option of question.options; let optionIndex = index;"
                       [ngClass]="{'is-editable': canAccess(['edit', 'options']),
-                      'has-single-option-small': question.controlType === 'likert-scale'}"
+                      'is-editable-small': question.controlType === 'likert-scale'}"
                       class="card">
 
                       <ng-template #showOptionLabel>{{ optionEntry(option, lang).label || 'NA' }}</ng-template>
