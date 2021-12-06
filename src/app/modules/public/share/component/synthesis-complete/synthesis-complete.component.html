@@ -1,74 +1,75 @@
-<section id="synthesis-complete-component">
-
+<div id="share-synthesis-complete">
 
   <!-- not found message -->
   <ng-container *ngIf="notFound">
-    <div class="no-found-wrapper">
-      <div class="column col-xs-12 col-11 col-mx-auto">
-        <app-message-template [widthMax]="'360px'">
-          <span [innerText]="'SHARE.NOT_FOUND'" translate></span>
-        </app-message-template>
-      </div>
+    <div class="column col-sm-12 col-11 col-mx-auto p-top-50">
+      <app-message-template widthMax="360px">
+        <span>{{ 'SHARE.NOT_FOUND' | translate }}</span>
+      </app-message-template>
     </div>
   </ng-container>
   <!-- /not found message -->
 
-
   <!-- message -->
-  <ng-container *ngIf="!notFound && displayReport && authService.adminLevel < 2">
+  <ng-container *ngIf="!notFound && displayReport && adminLevel < 2">
     <div class="banner bg-success">
-      <span [innerText]="'SHARE.MESSAGE'" translate></span>
+      <span>{{ 'SHARE.MESSAGE' | translate }}</span>
     </div>
   </ng-container>
   <!-- /message -->
 
-
   <!-- market report -->
   <ng-container *ngIf="displayReport && !notFound">
-    <div class="report-wrapper">
-      <div class="restrict-width">
+    <div style="background-color: #F5F5F5">
 
-        <div class="column col-xs-12 col-11 col-mx-auto">
+      <div class="container grid-2xl">
+        <div class="column col-sm-12 col-11 col-mx-auto">
 
           <!-- main page -->
-          <div class="p-top-50 p-bottom-50">
-            <ng-container *ngIf="report._id">
+          <div class="p-top-50">
+            <div *ngIf="report._id" class="box-shadow">
               <app-project-front-page
                 [data]="report"
                 [media]="reportMedia"
                 [title]="reportTitle">
               </app-project-front-page>
-            </ng-container>
+            </div>
           </div>
           <!-- /main page -->
 
           <!-- description -->
-          <div class="p-top-50 p-bottom-50">
-            <app-synthesis-comp-innov-desc [innovation]="innovation"></app-synthesis-comp-innov-desc>
+          <div class="p-top-50">
+            <div class="box-shadow">
+              <app-synthesis-comp-innov-desc [innovation]="innovation"></app-synthesis-comp-innov-desc>
+            </div>
           </div>
           <!-- /description -->
 
           <!-- targeting -->
-          <div class="p-top-50 p-bottom-50">
-            <app-shared-targeting-detail [project]="innovation"></app-shared-targeting-detail>
+          <div class="p-top-50">
+            <div class="box-shadow">
+              <app-shared-targeting-detail [project]="innovation"></app-shared-targeting-detail>
+            </div>
           </div>
           <!-- /targeting -->
 
         </div>
+      </div>
 
-        <!-- synthesis -->
-        <div class="section-pad">
+      <!-- synthesis -->
+      <div class="container grid-2xl p-no">
+        <div class="p-top-50">
           <app-shared-market-report
             [project]="innovation"
             [reportShared]="true"
             [showAnonymousAnswers]="true">
           </app-shared-market-report>
         </div>
-
       </div>
+      <!-- /synthesis -->
+
     </div>
   </ng-container>
   <!-- /market report -->
 
-
-</section>
+</div>

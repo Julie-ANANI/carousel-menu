@@ -9,19 +9,13 @@ import { AuthService } from '../services/auth/auth.service';
 @Injectable({providedIn: 'root'})
 export class ShareSynthesisGuard implements CanActivate {
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService,
+              private router: Router) {}
 
   canActivate(activatedRoute: ActivatedRouteSnapshot, routerStateSnapshot: RouterStateSnapshot): boolean {
-    return this._checkLogin(routerStateSnapshot.url);
-  }
-
-  private _checkLogin(url: string): boolean {
-
-    if (this.authService.isAuthenticated ) {
-      this.router.navigate([url.replace('share', 'user'), {}]);
+    if (this.authService.isAuthenticated && !!this.authService.user) {
+      this.router.navigate([routerStateSnapshot.url.replace('share', 'user'), {}]);
     }
-
     return true;
-
   }
 }

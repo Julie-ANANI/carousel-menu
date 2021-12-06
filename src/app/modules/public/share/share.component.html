@@ -1,27 +1,23 @@
-<div class="main-wrapper" id="share-component">
+<div class="d-flex flex-d-column" id="public-share" style="min-height: 100vh;">
 
-
-  <!-- unauthenticated header -->
-  <ng-container *ngIf="!authService.isAuthenticated">
-    <app-header-unauth></app-header-unauth>
-  </ng-container>
-
-
-  <!-- authenticated header -->
-  <ng-container *ngIf="authService.isAuthenticated">
+  <!-- header -->
+  <ng-container *ngIf="isAuthenticated && !!authUser; else notAuth">
     <app-header></app-header>
   </ng-container>
-
+  <ng-template #notAuth>
+    <app-header-unauth></app-header-unauth>
+  </ng-template>
+  <!-- /header -->
 
   <!-- body -->
-  <div class="body-wrapper">
+  <div style="flex: 1 0 auto">
     <router-outlet></router-outlet>
   </div>
-
+  <!-- /body -->
 
   <!-- footer -->
   <app-footer></app-footer>
-
+  <!-- /footer -->
 
 </div>
 
