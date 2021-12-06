@@ -169,8 +169,8 @@ export class InnovationService {
     return encodeURIComponent(`${environment.clientUrl}/register?invitation=true`);
   }
 
-  public getSharedSynthesis(id: string, sharedKey: string): Observable<any> {
-    return this._http.get(`/sharing/synthesis/${id}/${sharedKey}?fields=innovationCards,principalMedia,tags,mission,
+  public getSharedSynthesis(id: string, sharedKey: string): Observable<Innovation> {
+    return this._http.get<Innovation>(`/sharing/synthesis/${id}/${sharedKey}?fields=innovationCards,principalMedia,tags,mission,
     owner, operator,clientProject`); // TODO I don't like hardcoded things
   }
 

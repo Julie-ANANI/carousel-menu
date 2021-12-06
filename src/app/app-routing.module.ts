@@ -4,7 +4,6 @@ import { ExtraOptions, Routes, RouterModule } from '@angular/router';
 import { NonAuthGuard } from './guards/non-auth-guard.service';
 import { AuthGuard } from './guards/auth-guard.service';
 import { AdHocAuthGuard } from './guards/adhoc-auth-guard.service';
-import { ShareSynthesisGuard } from './guards/share-synthesis-guard.service';
 import { NotFoundComponent } from './modules/errors/not-found/not-found.component';
 import { demoRoutes } from './modules/demo/demo-routing.module';
 
@@ -34,7 +33,6 @@ const appRoutes: Routes = [
   },
   {
     path: 'share',
-    canActivate: [ShareSynthesisGuard],
     loadChildren: () => import('./modules/public/share/share.module').then(m => m.ShareModule)
   },
   {
