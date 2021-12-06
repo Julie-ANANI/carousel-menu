@@ -32,6 +32,7 @@
             <option value="scale">{{ 'PRESETS.QUESTION.TYPE.scale' | translate }}</option>
             <option value="stars">{{ 'PRESETS.QUESTION.TYPE.stars' | translate }}</option>
             <option value="ranking">{{ 'PRESETS.QUESTION.TYPE.ranking' | translate }}</option>
+            <option value="likert-scale">{{ 'PRESETS.QUESTION.TYPE.likert-scale' | translate }}</option>
           </select>
         </label>
       </ng-container>
@@ -231,7 +232,7 @@
 
         <!-- question types -->
         <ng-container *ngIf="question.controlType === 'radio' || question.controlType === 'checkbox'
-          || question.controlType === 'stars'|| question.controlType === 'ranking'">
+          || question.controlType === 'stars'|| question.controlType === 'ranking' || question.controlType === 'likert-scale'">
 
           <!-- options -->
           <div [ngClass]="{'has-single-option': presetLanguages.length === 1}" class="options-wrapper">
@@ -305,7 +306,7 @@
 
     <!-- add item -->
     <ng-container *ngIf="isEditable && (question.controlType === 'radio' || question.controlType === 'checkbox'
-     || question.controlType === 'stars') || question.controlType === 'ranking'">
+     || question.controlType === 'stars') || question.controlType === 'ranking' || question.controlType === 'likert-scale'">
       <div [ngClass]="presetLanguages.length === 1 ? 'm-top-15' : 'm-top-30'" class="text-center  m-bottom-15">
         <button
           (click)="addNewOption($event)"

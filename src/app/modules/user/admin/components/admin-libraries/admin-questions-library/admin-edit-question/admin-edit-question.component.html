@@ -90,8 +90,30 @@
                       <option value="scale">{{ 'COMMON.QUESTIONNAIRE_TYPE.scale' | translate }}</option>
                       <option value="stars">{{ 'COMMON.QUESTIONNAIRE_TYPE.stars' | translate }}</option>
                       <option value="ranking">{{ 'COMMON.QUESTIONNAIRE_TYPE.ranking' | translate }}</option>
+                      <option value="likert-scale">{{ 'COMMON.QUESTIONNAIRE_TYPE.likert-scale' | translate }}</option>
                     </select>
                   </label>
+
+                  <!-- Select for type of likert scale admin edit-->
+                  <ng-container *ngIf="question.controlType === 'likert-scale'">
+                    <div class="d-flex">
+                      <label class="m-right-20">
+                        <select
+                                (change)="notifyChanges()"
+                                (ngModelChange)="onChangeTypeLikertScale($event)"
+                                [(ngModel)]="question.attitudeMeasure"
+                                class="form-select is-sm">
+                          <option *ngFor="let type of optionsNamesLikert| keyvalue;"
+                                  [ngValue]="type.key">{{'COMMON.LIKERT_TYPE.' +  type.key | uppercase | translate}}
+                          </option>
+                        </select>
+                      </label>
+
+                    </div>
+                  </ng-container>
+                  <!-- end select for type of likert scale admin edit-->
+
+
                 </ng-container>
                 <!-- /type -->
 
@@ -322,20 +344,21 @@
 
                 <!-- question types -->
                 <ng-container *ngIf="question.controlType === 'radio' || question.controlType === 'checkbox'
-                || question.controlType === 'stars' || question.controlType === 'ranking'">
+                || question.controlType === 'stars' || question.controlType === 'ranking' || question.controlType === 'likert-scale'">
 
                   <!-- options -->
                   <div [ngClass]="{'has-single-option': questionnaireLangs.length === 1}" class="options-wrapper">
                     <div
                       *ngFor="let option of question.options; let optionIndex = index;"
-                      [ngClass]="{'is-editable': canAccess(['edit', 'options'])}"
+                      [ngClass]="{'is-editable': canAccess(['edit', 'options']),
+                      'is-editable-small': question.controlType === 'likert-scale'}"
                       class="card">
 
                       <ng-template #showOptionLabel>{{ optionEntry(option, lang).label || 'NA' }}</ng-template>
 
                       <!-- move option -->
                       <div
-                        *ngIf="canAccess(['edit', 'options', 'order']) && editMode"
+                        *ngIf="question.controlType !== 'likert-scale' && (editMode || canAccess(['edit', 'options', 'order']))"
                         class="flex-centered m-top-10 m-bottom-10">
                         <div
                           [ngClass]="{'is-horizontal': questionnaireLangs.length === 1}"
@@ -362,7 +385,7 @@
                       <textarea
                         #textAreaElement
                         (change)="onChangeQuestionOptionEntry(textAreaElement.value, lang, optionIndex)"
-                        *ngIf="canAccess(['edit', 'options', 'label']) && editMode; else showOptionLabel"
+                        *ngIf="question.controlType !== 'likert-scale' && (!editMode || canAccess(['edit', 'options', 'label'])); else showOptionLabel"
                         [ngModel]="optionEntry(option, lang).label || 'NA'"
                         [id]="'option-label-'+lang"
                         [ngStyle]="{'minHeight': textAreaElement.scrollHeight + 'px'}"
@@ -372,7 +395,7 @@
                       <!-- /input -->
 
                       <!-- delete icon -->
-                      <div class="text-center m-top-10">
+                      <div *ngIf="question.controlType !== 'likert-scale'" class="text-center m-top-10">
                         <div
                           (click)="deleteOption($event, optionIndex)"
                           *ngIf="canAccess(['edit', 'options', 'delete']) && editMode"
@@ -397,9 +420,9 @@
             <!-- /question content -->
 
             <!-- add item -->
-            <ng-container *ngIf="(canAccess(['edit', 'options', 'add'])) && (question.controlType === 'radio' ||
-            question.controlType === 'checkbox' || question.controlType === 'stars'|| question.controlType ===
-            'ranking')">
+            <ng-container *ngIf="(canAccess(['edit', 'options', 'add']))
+            && (question.controlType === 'radio' || question.controlType === 'checkbox' || question.controlType === 'stars'
+            || question.controlType === 'ranking')">
               <div [ngClass]="questionnaireLangs.length === 1 ? 'm-top-15' : 'm-top-30'" class="text-center  m-bottom-15">
                 <button
                   (click)="addNewOption($event)"

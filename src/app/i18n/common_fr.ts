@@ -509,7 +509,21 @@ export const COMMON = {
     'textarea': 'Texte',
     'toggle': 'Toggle',
     'checkbox': 'Choix multiples',
-    'ranking': 'Ranking'
-  }
+    'ranking': 'Ranking',
+    'likert-scale': 'Likert scale'
+  },
+
+  'LIKERT_TYPE': {
+    'AGREEMENT': 'Accord',
+    'FREQUENCY': 'Fréquence',
+    'SATISFACTION': 'Satisfaction',
+    'USE': 'Utilité',
+    'QUALITY': 'Qualité',
+    'RELEVANCE': 'Pertinence',
+    'IMPORTANCE': 'Important',
+    'INTEREST': 'Intérêt',
+    'CRITICALITY': 'Criticité'
+
+  },
 
 };

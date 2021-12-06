@@ -7,7 +7,7 @@ export interface Option {
   positive?: boolean;
 }
 
-export type QuestionType = 'checkbox' | 'clearbit' | 'list' | 'radio' | 'scale' | 'stars' | 'textarea' | 'toggle' | 'ranking';
+export type QuestionType = 'checkbox' | 'clearbit' | 'list' | 'radio' | 'scale' | 'stars' | 'textarea' | 'toggle' | 'ranking'| 'likert-scale';
 
 export interface Question {
   _id?: string;

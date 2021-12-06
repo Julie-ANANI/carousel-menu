@@ -40,23 +40,48 @@
       <!-- edit mode -->
       <ng-container *ngIf="editMode">
 
+
         <!-- type -->
+
         <ng-container *ngIf="(!isTaggedQuestion && isEditable) || canAccess(['edit', 'type']) || isEditable">
-          <label class="m-right-20">
-            <select
-              (ngModelChange)="onChangeQuestionType($event)"
-              [(ngModel)]="question.controlType"
-              class="form-select is-sm">
-              <option value="radio">{{ 'COMMON.QUESTIONNAIRE_TYPE.radio' | translate }}</option>
-              <option value="checkbox">{{ 'COMMON.QUESTIONNAIRE_TYPE.checkbox' | translate }}</option>
-              <option value="textarea">{{ 'COMMON.QUESTIONNAIRE_TYPE.textarea' | translate }}</option>
-              <option value="scale">{{ 'COMMON.QUESTIONNAIRE_TYPE.scale' | translate }}</option>
-              <option value="stars">{{ 'COMMON.QUESTIONNAIRE_TYPE.stars' | translate }}</option>
-              <option value="ranking">{{ 'COMMON.QUESTIONNAIRE_TYPE.ranking' | translate }}</option>
-            </select>
-          </label>
+          <div class="d-flex m-3">
+            <label class="m-right-20">
+              <select
+                (ngModelChange)="onChangeQuestionType($event)"
+                [(ngModel)]="question.controlType"
+                class="form-select is-sm">
+                <option value="radio">{{ 'COMMON.QUESTIONNAIRE_TYPE.radio' | translate }}</option>
+                <option value="checkbox">{{ 'COMMON.QUESTIONNAIRE_TYPE.checkbox' | translate }}</option>
+                <option value="textarea">{{ 'COMMON.QUESTIONNAIRE_TYPE.textarea' | translate }}</option>
+                <option value="scale">{{ 'COMMON.QUESTIONNAIRE_TYPE.scale' | translate }}</option>
+                <option value="stars">{{ 'COMMON.QUESTIONNAIRE_TYPE.stars' | translate }}</option>
+                <option value="ranking">{{ 'COMMON.QUESTIONNAIRE_TYPE.ranking' | translate }}</option>
+                <option value="likert-scale">{{ 'COMMON.QUESTIONNAIRE_TYPE.likert-scale' | translate }}</option>
+              </select>
+            </label>
+
+            <!-- Select for type of likert scale -->
+            <ng-container *ngIf="question.controlType === 'likert-scale'">
+              <div class="d-flex">
+                <label class="m-right-20">
+                  <select name="test"
+                          (change)="notifyChanges()"
+                          (ngModelChange)="onChangeTypeLikertScale($event)"
+                          [(ngModel)]="question.attitudeMeasure"
+                          class="form-select is-sm">
+                    <option *ngFor="let type of optionsNamesLikert| keyvalue;"
+                            [ngValue]="type.key">{{'COMMON.LIKERT_TYPE.' + type.key | uppercase | translate}}
+                    </option>
+                  </select>
+                </label>
+              </div>
+            </ng-container>
+            <!-- end select for type of likert scale-->
+
+          </div>
         </ng-container>
         <!-- /type -->
+
 
         <!-- question type specific to template -->
         <ng-container *ngIf="isLibraryView && canAccess(['typeInUseCase'])">
@@ -129,21 +154,17 @@
   <!-- question edition -->
   <div *ngIf="editMode" class="question-body">
     <span class="label is-rounded text-white tooltip"
-          [attr.data-tooltip]="
-(isLibraryView && isEssential) || (!isLibraryView && isTaggedQuestion && question.type === 'ESSENTIAL')?
-'Essential questions are required \n to ensure the right answer \n to the use case':
-        (isLibraryView && !isEssential) || (!isLibraryView && isTaggedQuestion && question.type === 'COMPLEMENTARY')?
-        'Secondary questions complete \n the main result coming \n from essential questions' :
+          [attr.data-tooltip]="(isLibraryView && isEssential) || (!isLibraryView && isTaggedQuestion && question.type === 'ESSENTIAL')?
+          'Essential questions are required \n to ensure the right answer \n to the use case':
+          (isLibraryView && !isEssential) || (!isLibraryView && isTaggedQuestion && question.type === 'COMPLEMENTARY')?
+          'Secondary questions complete \n the main result coming \n from essential questions' :
           'Custom questions are specific \n to a client project'"
           [ngClass]="{'is-edit-mode': editMode,
           'essentialBg': (isLibraryView && isEssential) || (!isLibraryView && isTaggedQuestion && question.type === 'ESSENTIAL'),
-  'complementaryBg': (isLibraryView && !isEssential) || (!isLibraryView && isTaggedQuestion && question.type === 'COMPLEMENTARY'),
-  'costumedBg': !isLibraryView && !isTaggedQuestion}"
-    >{{
-      (isLibraryView && isEssential) || (!isLibraryView && isTaggedQuestion && question.type === 'ESSENTIAL')? 'Essential' :
-        (isLibraryView && !isEssential) || (!isLibraryView && isTaggedQuestion && question.type === 'COMPLEMENTARY')?
-          'Secondary': 'Custom'
-      }}</span>
+          'complementaryBg': (isLibraryView && !isEssential) || (!isLibraryView && isTaggedQuestion && question.type === 'COMPLEMENTARY'),
+          'costumedBg': !isLibraryView && !isTaggedQuestion}">
+              {{(isLibraryView && isEssential) || (!isLibraryView && isTaggedQuestion && question.type === 'ESSENTIAL') ? 'Essential' :
+      (isLibraryView && !isEssential) || (!isLibraryView && isTaggedQuestion && question.type === 'COMPLEMENTARY') ? 'Secondary' : 'Custom'}}</span>
 
     <div class="text-sm m-bottom-10 m-top-10"
          *ngIf="question.entry && question.entry.length && question.entry[0].objective">
@@ -332,21 +353,28 @@
         <!-- /instruction -->
 
         <!-- question types -->
-        <ng-container *ngIf="question.controlType === 'radio' || question.controlType === 'checkbox'
-          || question.controlType === 'stars' || question.controlType === 'ranking'">
+        <ng-container
+
+          *ngIf="question.controlType === 'radio' || question.controlType === 'checkbox'
+          || question.controlType === 'stars' || question.controlType === 'ranking' || question.controlType === 'likert-scale'">
 
           <!-- options -->
-          <div [ngClass]="{'has-single-option': questionnaireLangs.length === 1}" class="options-wrapper">
+          <div [ngClass]="{'has-single-option': questionnaireLangs.length === 1,
+               'has-single-option-nowrap': question.controlType === 'likert-scale'}" class="options-wrapper">
             <div
               *ngFor="let option of question.options; let optionIndex = index;"
-              [ngClass]="{'is-editable': isEditable || canAccess(['edit', 'options'])}"
-              class="card">
+              [ngClass]="{'is-editable': isEditable || canAccess(['edit', 'options']),
+              'is-editable-medium': isEditable || canAccess(['edit', 'options']) && question.controlType === 'likert-scale',
+              'is-editable-small': isEssential || canAccess(['libraries', 'useCases', 'question']) && question.controlType === 'likert-scale'}"
+              class="card card-medium">
 
-              <ng-template #showOptionLabel>{{ optionEntry(option, lang).label || 'NA' }}</ng-template>
+              <ng-template
+                #showOptionLabel>{{ optionEntry(option, lang).label || 'NA' }}
+              </ng-template>
 
-              <!-- move option -->
+              <!-- move option-->
               <div
-                *ngIf="isEditable || canAccess(['edit', 'options', 'order'])"
+                *ngIf="question.controlType != 'likert-scale' && (isEditable || canAccess(['edit', 'options', 'order']))"
                 class="flex-centered m-top-10 m-bottom-10">
                 <div
                   [ngClass]="{'is-horizontal': questionnaireLangs.length === 1}"
@@ -367,14 +395,15 @@
                   </i>
                 </div>
               </div>
-              <!-- /move option -->
+              <!--               /move option -->
 
               <!-- input -->
               <textarea
                 #textAreaElement
                 appTextareaAutoResize
                 (change)="onChangeQuestionOptionEntry(textAreaElement.value, lang, optionIndex)"
-                *ngIf="isEditable || canAccess(['edit', 'options', 'label']); else showOptionLabel"
+                *ngIf="question.controlType !== 'likert-scale' &&
+                       (isEditable || canAccess(['edit', 'options', 'label'])); else showOptionLabel"
                 [ngModel]="optionEntry(option, lang).label || 'NA'"
                 [id]="'option-label-'+lang"
                 class="form-input"
@@ -383,7 +412,7 @@
               <!-- /input -->
 
               <!-- delete icon -->
-              <div class="text-center m-top-10">
+              <div *ngIf="question.controlType !== 'likert-scale'" class="text-center m-top-10">
                 <div
                   (click)="deleteOption($event, optionIndex)"
                   *ngIf="isEditable || canAccess(['edit', 'options', 'delete'])"
@@ -403,30 +432,30 @@
         </ng-container>
         <!-- /question types -->
 
-      </div>
-    </div>
-    <!-- /question content -->
-
-    <!-- add item -->
-    <ng-container *ngIf="(isEditable || canAccess(['edit', 'options', 'add']))
+        <!-- add item-->
+        <ng-container *ngIf="(isEditable || canAccess(['edit', 'options', 'add']))
     && (question.controlType === 'radio' || question.controlType === 'checkbox'
-     || question.controlType === 'stars'|| question.controlType === 'ranking')">
-      <div [ngClass]="questionnaireLangs.length === 1 ? 'm-top-15' : 'm-top-30'" class="text-center  m-bottom-15">
-        <button
-          (click)="addNewOption($event)"
-          [id]="'sharedQuestionnaireQuestion-btn-add-item'"
-          class="button is-outlined is-info text-bold is-sm p-2"
-          type="button">
+    || question.controlType === 'stars'|| question.controlType === 'ranking')">
+          <div [ngClass]="questionnaireLangs.length === 1 ? 'm-top-15' : 'm-top-30'" class="text-center  m-bottom-15">
+            <button
+              (click)="addNewOption($event)"
+              [id]="'sharedQuestionnaireQuestion-btn-add-item'"
+              class="button is-outlined is-info text-bold is-sm p-2"
+              type="button">
           <span class="icon-container is-overlay is-sm active m-right-10">
             <i class="icon icon-plus text-xs"></i>
           </span>
-          Add a new item
-        </button>
+              <!--          Add a new item-->
+            </button>
+          </div>
+        </ng-container>
+        <!-- /add item -->
+
       </div>
-    </ng-container>
-    <!-- /add item -->
+      <!-- /question edition -->
+
+    </div>
 
   </div>
-  <!-- /question edition -->
 
 </div>
