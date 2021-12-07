@@ -17,6 +17,11 @@
     margin: -$unit-2;
   }
 
+  .answer-warnings {
+    color: $alert-color;
+    font-style: oblique;
+  }
+
   .status-wrapper {
 
     .form-radio {
