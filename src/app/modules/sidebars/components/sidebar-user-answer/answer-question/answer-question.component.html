@@ -43,6 +43,39 @@
       </div>
       <!-- /radio case -->
 
+      <!--TODO JU : DEPLACER CODE-->
+      <!-- likert scale case -->
+      <div *ngSwitchCase="'likert-scale'" class="flex-between">
+
+         <!--edit-->
+        <ng-container>
+          <div
+            (click)="selectOption($event, option)"
+            *ngFor="let option of question.options"
+            [ngClass]="{ 'text-light': option.identifier !== fullAnswer.answers[question.identifier] && !editMode}"
+            class="answer-wrapper-full">
+            <!--'text-primary-dark': option.identifier !== fullAnswer.answers[question.identifier] && editMode-->
+            {{ optionLabel(option.identifier) }}
+          </div>
+        </ng-container>
+         <!--edit -->
+
+  <!--       not edit mode
+        <div *ngIf="!editMode">
+          {{ optionLabel(fullAnswer.answers[question.identifier]) }}
+        </div>
+         /not edit mode -->
+
+        <app-rating-item
+          [editMode]="editMode"
+          [prop]="question.identifier"
+          [rating]="fullAnswer.answers[question.identifier + 'Quality']"
+          (ratingChange)="updateQuality($event)">
+        </app-rating-item>
+
+      </div>
+      <!-- /likert scale case -->
+
       <!-- clearbit case -->
       <div *ngSwitchCase="'clearbit'">
 
@@ -110,7 +143,7 @@
 
           <!-- edit mode -->
           <div *ngIf="editMode" class="m-1">
-            <div class="flex-between text-primary-dark m-bottom-10">
+            <div class="">
               <label class="form-checkbox" for="{{question.identifier}}-{{option.identifier}}">
                 <input
                   (change)="emitChanges()"
