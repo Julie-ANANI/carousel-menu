@@ -19,7 +19,7 @@ export const SIDEBAR_USER_ANSWER = {
 
   'ANSWER': {
     'TARGETING': {
-      'OUTSIDE': 'Le pays de cette réponse est DEHORS du ciblage du projet',
+      'OUTSIDE': 'Le pays de cette réponse est en dehors du ciblage du projet',
       'FROM_EXCLUDED_COUNTRY': 'Le pays de cette réponse est dans la liste des pays à exclure',
       'EMPTY_COUNTRY': 'Cette réponse n\'a pas de pays !'
     }
