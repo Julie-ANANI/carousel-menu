@@ -55,7 +55,6 @@ export class SharedQuestionnaireSectionComponent implements OnInit {
 
   @Input() set section(value: MissionTemplateSection) {
     this._section = value || <MissionTemplateSection>{};
-    console.log(this._section);
   }
 
   /**
@@ -103,21 +102,20 @@ export class SharedQuestionnaireSectionComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.prepareSectionName();
+    // this.prepareSectionName();
   }
 
-  private prepareSectionName() {
-    for (const lang of ['en', 'fr']) {
-      if (!this.isLibraryView &&
-        this._section['index'] >= 0
-        && this.cardsSections[lang][this._section['index']]
-        && (this.cardsSections[lang][this._section['index']].title)) {
-        const entry = this._section.entry.find(e => e.lang === lang);
-        entry.name = this.cardsSections[lang][this._section['index']].title;
-        // this._missionQuestionService.changeSectionName(this.cardsSections[lang][this._section['index']].title, lang, this._section);
-      }
-    }
-  }
+  // private prepareSectionName() {
+  //   for (const lang of ['en', 'fr']) {
+  //     if (!this.isLibraryView &&
+  //       this._section['index'] >= 0
+  //       && this.cardsSections[lang][this._section['index']]
+  //       && (this.cardsSections[lang][this._section['index']].title)) {
+  //       const entry = this._section.entry.find(e => e.lang === lang);
+  //       entry.name = this.cardsSections[lang][this._section['index']].title;
+  //     }
+  //   }
+  // }
 
   public addNewQuestion(event: Event) {
     event.preventDefault();
@@ -145,14 +143,6 @@ export class SharedQuestionnaireSectionComponent implements OnInit {
   }
 
   public sectionName(lang: string): string {
-    // console.log(this._section);
-    // if (!this.isLibraryView && this._section['index'] >= 0 && this.cardsSections[lang][this._section['index']] && (this.cardsSections[lang][this._section['index']].title)) {
-    //   console.log(this.cardsSections[lang][this._section['index']]);
-    //   // this._missionQuestionService.changeSectionName(this.cardsSections[lang][this._section['index']].title, lang, this._section);
-    //   return this.cardsSections[lang][this._section['index']].title;
-    // } else {
-    //   return MissionQuestionService.entryInfo(this._section, lang)['name'] || '';
-    // }
     return MissionQuestionService.entryInfo(this._section, lang)['name'] || '';
   }
 
