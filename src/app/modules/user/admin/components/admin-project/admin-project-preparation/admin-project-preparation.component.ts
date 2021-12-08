@@ -244,6 +244,7 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
       if (this._activeTab === 'questionnaire') {
         if (this._toBeSaved.indexOf('mission') !== -1) {
           this._isSaving = true;
+          console.log((<Mission>this._project.mission).template);
           this._saveMission({template: (<Mission>this._project.mission).template});
         } else if (this._toBeSaved.indexOf('preset') !== -1) {
           this._isSaving = true;
@@ -279,8 +280,10 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
   private _saveMission(missionObj: { [P in keyof Mission]?: Mission[P]; }) {
     const id = this._project.mission && (<Mission>this._project.mission)._id;
     if (!!id) {
+      console.log(missionObj);
       this._missionService.save(id, missionObj).pipe(first()).subscribe((mission) => {
         this._project.mission = mission;
+        console.log(mission);
         this._isSaving = false;
         this._toBeSaved = '';
         this._setInnovation();

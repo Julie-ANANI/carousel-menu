@@ -670,6 +670,7 @@ export class MissionQuestionService {
       const index = section.entry.findIndex((_entry) => _entry.lang === lang);
       if (index !== -1) {
         section.entry[index].name = newValue;
+        console.log(section);
         this._emitTemplate();
       }
     }
