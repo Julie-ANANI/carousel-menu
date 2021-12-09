@@ -1,7 +1,7 @@
 import {Component, Input, Output, EventEmitter, ViewChild, ElementRef} from '@angular/core';
 import { FileSystemFileEntry } from 'ngx-file-drop';
 import {HttpErrorResponse} from '@angular/common/http';
-import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
+import { TranslateNotificationsService } from '../../../../services/translate-notifications/translate-notifications.service';
 import {ErrorFrontService} from '../../../../services/error/error-front.service';
 import {first} from 'rxjs/operators';
 import {MediaService} from '../../../../services/media/media.service';

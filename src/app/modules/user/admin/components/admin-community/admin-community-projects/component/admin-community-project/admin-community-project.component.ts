@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { SidebarInterface } from "../../../../../../../sidebars/interfaces/sidebar-interface";
 import { Innovation } from '../../../../../../../../models/innovation';
-import { TranslateNotificationsService } from "../../../../../../../../services/notifications/notifications.service";
+import { TranslateNotificationsService } from "../../../../../../../../services/translate-notifications/translate-notifications.service";
 import { TranslateTitleService } from '../../../../../../../../services/title/title.service';
 import { AnswerService } from '../../../../../../../../services/answer/answer.service';
 import {ContextInterface} from '../../../interfaces/context-interface';

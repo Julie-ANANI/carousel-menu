@@ -6,7 +6,7 @@ import {MissionQuestion} from '../../../../../models/mission';
 import {SidebarInterface} from '../../../../sidebars/interfaces/sidebar-interface';
 import {EmailsObject} from '../../../../../models/email';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {TranslateNotificationsService} from '../../../../../services/notifications/notifications.service';
+import {TranslateNotificationsService} from '../../../../../services/translate-notifications/translate-notifications.service';
 import {InnovationFrontService} from '../../../../../services/innovation/innovation-front.service';
 import {InnovCard} from '../../../../../models/innov-card';
 import {InnovationService} from '../../../../../services/innovation/innovation.service';

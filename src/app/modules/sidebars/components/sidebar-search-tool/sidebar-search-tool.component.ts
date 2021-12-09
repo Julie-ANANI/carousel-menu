@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { SearchService } from '../../../../services/search/search.service';
-import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
+import { TranslateNotificationsService } from '../../../../services/translate-notifications/translate-notifications.service';
 import { Table, Config } from '@umius/umi-common-component/models';
 
 @Component({

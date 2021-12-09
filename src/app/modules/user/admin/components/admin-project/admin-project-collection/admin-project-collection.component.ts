@@ -14,7 +14,7 @@ import { StatsInterface } from '../../../../../../models/stats';
 import {ConfigService} from '@umius/umi-common-component/services/config';
 import { RolesFrontService } from '../../../../../../services/roles/roles-front.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
+import { TranslateNotificationsService } from '../../../../../../services/translate-notifications/translate-notifications.service';
 import { AnswerService } from '../../../../../../services/answer/answer.service';
 import { CampaignFrontService } from '../../../../../../services/campaign/campaign-front.service';
 import { Answer, AnswerStatus } from '../../../../../../models/answer';

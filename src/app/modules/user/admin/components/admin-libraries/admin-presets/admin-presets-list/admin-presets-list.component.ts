@@ -3,7 +3,7 @@ import { PresetService } from '../../../../../../../services/preset/preset.servi
 import { ActivatedRoute, Router } from '@angular/router';
 import { Preset } from '../../../../../../../models/preset';
 import { first } from 'rxjs/operators';
-import { TranslateNotificationsService } from '../../../../../../../services/notifications/notifications.service';
+import { TranslateNotificationsService } from '../../../../../../../services/translate-notifications/translate-notifications.service';
 import { Table, Config } from '@umius/umi-common-component/models';
 import { Response } from '../../../../../../../models/response';
 import { isPlatformBrowser } from '@angular/common';

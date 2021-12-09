@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { CampaignService } from '../../../../services/campaign/campaign.service';
 import { DatePipe } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
-import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
+import { TranslateNotificationsService } from '../../../../services/translate-notifications/translate-notifications.service';
 import { ErrorFrontService } from '../../../../services/error/error-front.service';
 
 type Template = 'NEW_BATCH' | 'EDIT_BATCH' | '';

@@ -9,7 +9,7 @@ import { ambassadorPosition, AmbassadorPosition } from '../../../../../../../../
 import { Tag } from '../../../../../../../../models/tag';
 import { TranslateService } from '@ngx-translate/core';
 import { ProfessionalsService } from '../../../../../../../../services/professionals/professionals.service';
-import { TranslateNotificationsService } from '../../../../../../../../services/notifications/notifications.service';
+import { TranslateNotificationsService } from '../../../../../../../../services/translate-notifications/translate-notifications.service';
 import { InnovationService } from '../../../../../../../../services/innovation/innovation.service';
 import { Innovation } from '../../../../../../../../models/innovation';
 import { InnovationFrontService } from '../../../../../../../../services/innovation/innovation-front.service';

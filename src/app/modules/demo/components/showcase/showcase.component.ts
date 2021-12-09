@@ -3,7 +3,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { MultilingPipe } from '../../../../pipe/pipes/multiling.pipe';
-import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
+import { TranslateNotificationsService } from '../../../../services/translate-notifications/translate-notifications.service';
 import { TagsService } from '../../../../services/tags/tags.service';
 import { Answer } from '../../../../models/answer';
 import { Clearbit } from '../../../../models/clearbit';

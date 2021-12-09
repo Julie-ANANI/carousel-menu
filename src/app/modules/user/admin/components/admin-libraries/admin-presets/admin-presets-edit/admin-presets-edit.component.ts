@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PresetService } from '../../../../../../../services/preset/preset.service';
-import { TranslateNotificationsService } from '../../../../../../../services/notifications/notifications.service';
+import { TranslateNotificationsService } from '../../../../../../../services/translate-notifications/translate-notifications.service';
 import { Preset } from '../../../../../../../models/preset';
 import {first} from 'rxjs/operators';
 import {HttpErrorResponse} from '@angular/common/http';

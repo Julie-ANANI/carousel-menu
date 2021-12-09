@@ -1,6 +1,6 @@
 import { Component, Inject, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
 import { TagsService } from '../../../../../../services/tags/tags.service';
-import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
+import { TranslateNotificationsService } from '../../../../../../services/translate-notifications/translate-notifications.service';
 import { Innovation } from '../../../../../../models/innovation';
 import { Table, Config } from '@umius/umi-common-component/models';
 import { Tag } from '../../../../../../models/tag';

@@ -8,7 +8,7 @@ import { StatsInterface } from '../../../../../../models/stats';
 import { first } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorFrontService } from '../../../../../../services/error/error-front.service';
-import {  TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
+import {  TranslateNotificationsService } from '../../../../../../services/translate-notifications/translate-notifications.service';
 import { CommonService } from '../../../../../../services/common/common.service';import {CampaignService} from '../../../../../../services/campaign/campaign.service';
 
 export interface ProMailsStats {

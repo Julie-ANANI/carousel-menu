@@ -3,7 +3,7 @@ import { RolesFrontService } from '../../../../../../../services/roles/roles-fro
 import { TrackingService } from '../../../../../../../services/tracking/tracking.service';
 import { first } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
-import { TranslateNotificationsService } from '../../../../../../../services/notifications/notifications.service';
+import { TranslateNotificationsService } from '../../../../../../../services/translate-notifications/translate-notifications.service';
 import { ErrorFrontService } from '../../../../../../../services/error/error-front.service';
 import { Table, Config, Column } from '@umius/umi-common-component/models';
 

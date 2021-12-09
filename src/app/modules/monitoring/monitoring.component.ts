@@ -4,7 +4,7 @@ import { MonitoringService } from '../../services/monitoring/monitoring.service'
 import {first} from 'rxjs/operators';
 import {HttpErrorResponse} from '@angular/common/http';
 import {ErrorFrontService} from '../../services/error/error-front.service';
-import {TranslateNotificationsService} from '../../services/notifications/notifications.service';
+import {TranslateNotificationsService} from '../../services/translate-notifications/translate-notifications.service';
 
 @Component({
   selector: 'monitoring',

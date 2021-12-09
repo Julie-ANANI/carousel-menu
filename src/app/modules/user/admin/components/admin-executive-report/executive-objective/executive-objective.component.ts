@@ -11,7 +11,7 @@ import { AutocompleteService } from '../../../../../../services/autocomplete/aut
 import { SnippetService } from '../../../../../../services/snippet/snippet.service';
 import { ExecutiveReportFrontService } from '../../../../../../services/executive-report/executive-report-front.service';
 import { EnterpriseService } from '../../../../../../services/enterprise/enterprise.service';
-import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
+import { TranslateNotificationsService } from '../../../../../../services/translate-notifications/translate-notifications.service';
 
 interface Commercial {
   _id: string;

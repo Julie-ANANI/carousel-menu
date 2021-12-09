@@ -2,7 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {RolesFrontService} from '../../../../services/roles/roles-front.service';
 import {ScrapingService} from '../../../../services/scraping/scraping.service';
 import {SidebarInterface} from '../../../sidebars/interfaces/sidebar-interface';
-import {TranslateNotificationsService} from '../../../../services/notifications/notifications.service';
+import {TranslateNotificationsService} from '../../../../services/translate-notifications/translate-notifications.service';
 
 @Component({
   selector: 'app-shared-scraping',

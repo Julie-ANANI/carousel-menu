@@ -9,7 +9,7 @@ import {
   SimpleChanges,
   SimpleChange,
 } from '@angular/core';
-import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
+import { TranslateNotificationsService } from '../../../../services/translate-notifications/translate-notifications.service';
 import { TranslateService } from '@ngx-translate/core';
 import { AnswerService } from '../../../../services/answer/answer.service';
 import { FilterService } from './services/filters.service';

@@ -3,7 +3,7 @@ import {InnovationService} from '../../../../../../services/innovation/innovatio
 import {TranslateService} from '@ngx-translate/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {Tag} from '../../../../../../models/tag';
-import {TranslateNotificationsService} from '../../../../../../services/notifications/notifications.service';
+import {TranslateNotificationsService} from '../../../../../../services/translate-notifications/translate-notifications.service';
 import {Innovation} from '../../../../../../models/innovation';
 import {ActivatedRoute, Router} from '@angular/router';
 import {SidebarInterface} from '../../../../../sidebars/interfaces/sidebar-interface';

@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MissionService } from '../../../../services/mission/mission.service';
-import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
+import { TranslateNotificationsService } from '../../../../services/translate-notifications/translate-notifications.service';
 import { MailConfiguration, Mission } from '../../../../models/mission';
 import { EmailService } from '../../../../services/email/email.service';
 

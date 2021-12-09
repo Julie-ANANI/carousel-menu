@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ProfessionalsService } from '../../../../services/professionals/professionals.service';
-import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
+import { TranslateNotificationsService } from '../../../../services/translate-notifications/translate-notifications.service';
 import { Router } from '@angular/router';
 import { Professional } from '../../../../models/professional';
 import {emailRegEx} from '../../../../utils/regex';

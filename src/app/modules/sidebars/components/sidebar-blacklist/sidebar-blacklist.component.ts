@@ -4,7 +4,7 @@ import { EmailQueueModel } from '../../../../models/mail.queue.model';
 import { first } from 'rxjs/operators';
 import { InnovationService } from '../../../../services/innovation/innovation.service';
 import { ErrorFrontService } from '../../../../services/error/error-front.service';
-import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
+import { TranslateNotificationsService } from '../../../../services/translate-notifications/translate-notifications.service';
 import { Enterprise } from '../../../../models/enterprise';
 import { Blacklist } from '../../../../models/blacklist';
 import { emailRegEx } from '../../../../utils/regex';

@@ -2,7 +2,7 @@ import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Campaign } from '../../../../../../models/campaign';
 import { ProfessionalsService } from '../../../../../../services/professionals/professionals.service';
-import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
+import { TranslateNotificationsService } from '../../../../../../services/translate-notifications/translate-notifications.service';
 import { first } from 'rxjs/operators';
 import { SidebarInterface } from '../../../../../sidebars/interfaces/sidebar-interface';
 import { isPlatformBrowser } from '@angular/common';

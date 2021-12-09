@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
+import { TranslateNotificationsService } from '../../../../../services/translate-notifications/translate-notifications.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TranslateTitleService } from '../../../../../services/title/title.service';
 import { UserService } from '../../../../../services/user/user.service';

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { MissionService } from '../../../../../services/mission/mission.service';
-import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
+import { TranslateNotificationsService } from '../../../../../services/translate-notifications/translate-notifications.service';
 import { Table, Config } from '@umius/umi-common-component/models';
 import { Mission } from '../../../../../models/mission';
 import {SidebarInterface} from '../../../../sidebars/interfaces/sidebar-interface';

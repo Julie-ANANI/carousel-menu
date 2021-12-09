@@ -2,7 +2,7 @@ import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AnswerService } from '../../../../../../services/answer/answer.service';
 import { CampaignService } from '../../../../../../services/campaign/campaign.service';
-import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
+import { TranslateNotificationsService } from '../../../../../../services/translate-notifications/translate-notifications.service';
 import { Answer, AnswerStatus } from '../../../../../../models/answer';
 import { Campaign } from '../../../../../../models/campaign';
 import { SidebarInterface } from '../../../../../sidebars/interfaces/sidebar-interface';
