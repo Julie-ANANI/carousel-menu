@@ -113,6 +113,24 @@
             </ng-container>
             <!-- /quiz preview -->
 
+            <!-- ask validation -->
+            <ng-container *ngIf="activeTab === 'description' && project.status === 'EDITING'">
+              <div
+                [ngClass]="{'tooltip is-multiline': triggerAsk()}"
+                data-tooltip="This notification has been already sent.">
+                <button
+                  (click)="openModal($event, 'ASK_VALIDATION')"
+                  [disabled]="isSendingNotification || triggerAsk()"
+                  style="padding-top: 9px; padding-bottom: 9px"
+                  [ngClass]="{'is-info': triggerAsk(), 'is-primary': !triggerAsk()}"
+                  class="button is-outlined is-sm m-right-10"
+                  id="btn-ask-final-validation">
+                  Ask for final validation
+                </button>
+              </div>
+            </ng-container>
+            <!-- /ask validation -->
+
             <!-- save -->
             <button
               *ngIf="canEditDescription || canEditTargeting || activeTab === 'questionnaire'"
@@ -151,6 +169,54 @@
   <!-- /different pages -->
 
 </div>
+
+<!-- modal -->
+<app-utility-modal-empty [(showModal)]="showModal">
+
+  <section class="modal-body">
+
+    <h2 [ngSwitch]="{ 'color': '4C4C4C' }" class="title is-4 text-center text-bold m-bottom-30">
+      <ng-container *ngIf="modelType === 'ASK_VALIDATION'">Ask for final validation</ng-container>
+    </h2>
+
+    <div [ngSwitch]="modelType">
+
+      <!-- ask validation -->
+      <div *ngSwitchCase="'ASK_VALIDATION'">
+        You are about to send an email to the Market Test project team. This email can only be sent once. Continue?
+      </div>
+      <!-- /ask validation -->
+
+    </div>
+
+  </section>
+
+  <footer [ngSwitch]="modelType" class="modal-footer justify-center">
+
+    <button
+      (click)="closeModal()"
+      [id]="'btn-cancel'"
+      class="button modal-cancel"
+      type="button">
+      Cancel
+    </button>
+
+    <!-- ask validation -->
+    <button
+      (click)="onAskValidation($event)"
+      *ngSwitchCase="'ASK_VALIDATION'"
+      [disabled]="isSendingNotification"
+      class="button is-community"
+      id="btn-modal-confirm-ask-final-validation"
+      type="button">
+      Confirm
+    </button>
+    <!-- /ask validation -->
+
+  </footer>
+
+</app-utility-modal-empty>
+<!-- /modal -->
 
 <!-- modal to innovation card add / delete lang -->
 <app-utility-modal-empty *ngIf="canEditDescription" [(showModal)]="showCardModal">
