@@ -2,7 +2,7 @@ import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CampaignService } from '../../../../../../services/campaign/campaign.service';
 import { TemplatesService } from '../../../../../../services/templates/templates.service';
-import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
+import { TranslateNotificationsService } from '../../../../../../services/translate-notifications/translate-notifications.service';
 import { Campaign } from '../../../../../../models/campaign';
 import { EmailScenario } from '../../../../../../models/email-scenario';
 import { EmailSignature } from '../../../../../../models/email-signature';

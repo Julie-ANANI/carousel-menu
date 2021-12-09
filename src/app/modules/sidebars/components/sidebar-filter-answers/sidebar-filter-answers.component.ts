@@ -2,7 +2,7 @@ import {Component, EventEmitter, Inject, Input, OnChanges, OnDestroy, Output, PL
 import {Innovation} from '../../../../models/innovation';
 import {SharedFilter} from '../../../shared/components/shared-market-report/models/shared-filter';
 import {InnovationService} from '../../../../services/innovation/innovation.service';
-import {TranslateNotificationsService} from '../../../../services/notifications/notifications.service';
+import {TranslateNotificationsService} from '../../../../services/translate-notifications/translate-notifications.service';
 import {FilterService} from '../../../shared/components/shared-market-report/services/filters.service';
 import {Answer} from '../../../../models/answer';
 import {first, takeUntil} from 'rxjs/operators';

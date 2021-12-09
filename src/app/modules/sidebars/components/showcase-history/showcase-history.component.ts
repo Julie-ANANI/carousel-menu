@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ShowcaseService } from '../../../demo/components/showcase/services/showcase.service';
-import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
+import { TranslateNotificationsService } from '../../../../services/translate-notifications/translate-notifications.service';
 import { Answer } from '../../../../models/answer';
 import { Clearbit } from '../../../../models/clearbit';
 import { Innovation } from '../../../../models/innovation';

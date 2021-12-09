@@ -4,7 +4,7 @@ import {Innovation} from '../../../../models/innovation';
 import {InnovationSettings} from '../../../../models/innov-settings';
 import {TemplatesService} from '../../../../services/templates/templates.service';
 import {EmailSignature} from '../../../../models/email-signature';
-import {TranslateNotificationsService} from '../../../../services/notifications/notifications.service';
+import {TranslateNotificationsService} from '../../../../services/translate-notifications/translate-notifications.service';
 import { InnovationService } from '../../../../services/innovation/innovation.service';
 import {takeUntil} from 'rxjs/operators';
 import {InnovationFrontService} from '../../../../services/innovation/innovation-front.service';

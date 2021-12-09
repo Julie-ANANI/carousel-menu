@@ -4,7 +4,7 @@ import { TagAttachment } from '../../../../../../models/tag-attachment';
 import { MultilingPipe } from '../../../../../../pipe/pipes/multiling.pipe';
 import { TagsService } from '../../../../../../services/tags/tags.service';
 import { TranslateService } from '@ngx-translate/core';
-import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
+import { TranslateNotificationsService } from '../../../../../../services/translate-notifications/translate-notifications.service';
 import {Pagination} from '../../../../../utility/paginations/interfaces/pagination';
 import { first } from 'rxjs/operators';
 import { Config } from '@umius/umi-common-component/models';

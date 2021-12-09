@@ -9,7 +9,7 @@ import {isPlatformBrowser} from '@angular/common';
 import {CommunityService} from '../../../../../../../services/community/community.service';
 import {first} from 'rxjs/operators';
 import {HttpErrorResponse} from '@angular/common/http';
-import {TranslateNotificationsService} from '../../../../../../../services/notifications/notifications.service';
+import {TranslateNotificationsService} from '../../../../../../../services/translate-notifications/translate-notifications.service';
 import {ErrorFrontService} from '../../../../../../../services/error/error-front.service';
 import {cloudinaryImageRegEx, videoDomainRegEx} from '../../../../../../../utils/regex';
 import {MissionFrontService} from '../../../../../../../services/mission/mission-front.service';

@@ -4,7 +4,7 @@ import {isPlatformBrowser} from '@angular/common';
 import {EtherpadService} from '../../../../services/etherpad/etherpad.service';
 import {first, takeUntil} from 'rxjs/operators';
 import {HttpErrorResponse} from '@angular/common/http';
-import {TranslateNotificationsService} from '../../../../services/notifications/notifications.service';
+import {TranslateNotificationsService} from '../../../../services/translate-notifications/translate-notifications.service';
 import {ErrorFrontService} from '../../../../services/error/error-front.service';
 import {CommonService} from '../../../../services/common/common.service';
 import {TranslateService} from '@ngx-translate/core';

@@ -4,7 +4,7 @@ import { InnovationService } from '../../../../../services/innovation/innovation
 import { Innovation } from '../../../../../models/innovation';
 import { first } from 'rxjs/operators';
 import { Response } from '../../../../../models/response';
-import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
+import { TranslateNotificationsService } from '../../../../../services/translate-notifications/translate-notifications.service';
 import { isPlatformBrowser } from '@angular/common';
 import { TranslateService } from '@ngx-translate/core';
 import { ErrorFrontService } from '../../../../../services/error/error-front.service';

@@ -4,7 +4,7 @@ import { MissionService } from '../../../../../../services/mission/mission.servi
 import { isPlatformBrowser } from '@angular/common';
 import { MissionTemplate } from '../../../../../../models/mission';
 import { first } from 'rxjs/operators';
-import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
+import { TranslateNotificationsService } from '../../../../../../services/translate-notifications/translate-notifications.service';
 import { ErrorFrontService } from '../../../../../../services/error/error-front.service';
 import { RolesFrontService } from '../../../../../../services/roles/roles-front.service';
 import { MissionFrontService } from '../../../../../../services/mission/mission-front.service';

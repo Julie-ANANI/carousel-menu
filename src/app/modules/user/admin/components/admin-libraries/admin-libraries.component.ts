@@ -3,7 +3,7 @@ import { TranslateTitleService } from '../../../../../services/title/title.servi
 import { NavigationCancel, NavigationEnd, Router } from '@angular/router';
 import { PresetService } from '../../../../../services/preset/preset.service';
 import { first } from 'rxjs/operators';
-import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
+import { TranslateNotificationsService } from '../../../../../services/translate-notifications/translate-notifications.service';
 import { TemplatesService } from '../../../../../services/templates/templates.service';
 import { RolesFrontService } from '../../../../../services/roles/roles-front.service';
 import { HttpErrorResponse } from '@angular/common/http';

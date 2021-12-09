@@ -8,7 +8,7 @@ import {first} from 'rxjs/operators';
 import {HttpErrorResponse} from '@angular/common/http';
 import {AnswerService} from '../../../../../../services/answer/answer.service';
 import {ErrorFrontService} from '../../../../../../services/error/error-front.service';
-import {TranslateNotificationsService} from '../../../../../../services/notifications/notifications.service';
+import {TranslateNotificationsService} from '../../../../../../services/translate-notifications/translate-notifications.service';
 
 @Component({
   templateUrl: 'admin-project-follow-up.component.html',

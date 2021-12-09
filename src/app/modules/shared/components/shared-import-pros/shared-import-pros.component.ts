@@ -3,7 +3,7 @@ import { first } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Campaign } from '../../../../models/campaign';
 import { SearchService } from '../../../../services/search/search.service';
-import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
+import { TranslateNotificationsService } from '../../../../services/translate-notifications/translate-notifications.service';
 import { RolesFrontService } from '../../../../services/roles/roles-front.service';
 
 @Component({

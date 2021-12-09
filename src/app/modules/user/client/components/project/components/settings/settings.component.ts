@@ -9,7 +9,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {ClientProject} from '../../../../../../../models/client-project';
 import {InnovationService} from '../../../../../../../services/innovation/innovation.service';
 import {HttpErrorResponse} from '@angular/common/http';
-import {TranslateNotificationsService} from '../../../../../../../services/notifications/notifications.service';
+import {TranslateNotificationsService} from '../../../../../../../services/translate-notifications/translate-notifications.service';
 import {ErrorFrontService} from '../../../../../../../services/error/error-front.service';
 import {MissionService} from '../../../../../../../services/mission/mission.service';
 import {IMyDateModel} from 'angular-mydatepicker';

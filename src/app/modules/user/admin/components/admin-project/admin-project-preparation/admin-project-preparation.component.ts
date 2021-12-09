@@ -8,7 +8,7 @@ import { InnovCard } from '../../../../../../models/innov-card';
 import { InnovationService } from '../../../../../../services/innovation/innovation.service';
 import { first, takeUntil } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
-import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
+import { TranslateNotificationsService } from '../../../../../../services/translate-notifications/translate-notifications.service';
 import { Campaign } from '../../../../../../models/campaign';
 import { Subject } from 'rxjs';
 import { CampaignFrontService } from '../../../../../../services/campaign/campaign-front.service';

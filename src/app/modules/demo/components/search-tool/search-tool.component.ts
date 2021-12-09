@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { TranslateTitleService } from '../../../../services/title/title.service';
 import { SearchService } from '../../../../services/search/search.service';
-import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
+import { TranslateNotificationsService } from '../../../../services/translate-notifications/translate-notifications.service';
 import { SearchTool } from '../../../../models/demo/search-tool';
 import { result_sample } from "../../../../models/static-data/result_sample";
 import { SidebarInterface } from "../../../sidebars/interfaces/sidebar-interface";

@@ -15,7 +15,7 @@ import {CardComment, CardSectionTypes, InnovCard, InnovCardSection} from '../../
 import {SidebarInterface} from '../../../../../../../../sidebars/interfaces/sidebar-interface';
 import {InnovationService} from '../../../../../../../../../services/innovation/innovation.service';
 import {HttpErrorResponse} from '@angular/common/http';
-import {TranslateNotificationsService} from '../../../../../../../../../services/notifications/notifications.service';
+import {TranslateNotificationsService} from '../../../../../../../../../services/translate-notifications/translate-notifications.service';
 import {ErrorFrontService} from '../../../../../../../../../services/error/error-front.service';
 import {Media, Video} from '../../../../../../../../../models/media';
 import {Preset} from '../../../../../../../../../models/preset';

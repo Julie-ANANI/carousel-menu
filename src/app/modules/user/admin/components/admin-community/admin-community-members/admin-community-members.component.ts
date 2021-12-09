@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ProfessionalsService } from '../../../../../../services/professionals/professionals.service';
-import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
+import { TranslateNotificationsService } from '../../../../../../services/translate-notifications/translate-notifications.service';
 import { SidebarInterface } from '../../../../../sidebars/interfaces/sidebar-interface';
 import { Config } from '@umius/umi-common-component/models';
 

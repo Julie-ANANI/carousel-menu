@@ -11,7 +11,7 @@ import { first } from 'rxjs/operators';
 import { isPlatformBrowser } from '@angular/common';
 import { RolesFrontService } from '../../../../../../services/roles/roles-front.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
+import { TranslateNotificationsService } from '../../../../../../services/translate-notifications/translate-notifications.service';
 import { ErrorFrontService } from '../../../../../../services/error/error-front.service';
 import { Router } from '@angular/router';
 import { EnterpriseValueChains, Industries } from '../../../../../../models/static-data/enterprise';

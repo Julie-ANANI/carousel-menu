@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {Session} from '../../models/session';
 import * as moment from 'moment';
 import {PadType} from '../../models/etherpad';
-import {TranslateNotificationsService} from '../notifications/notifications.service';
+import {TranslateNotificationsService} from '../translate-notifications/translate-notifications.service';
 import {CardSectionTypes} from '../../models/innov-card';
 
 @Injectable({providedIn: 'root'})

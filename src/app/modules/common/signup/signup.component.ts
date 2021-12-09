@@ -3,7 +3,7 @@ import {environment} from '../../../../environments/environment';
 import {TranslateTitleService} from '../../../services/title/title.service';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {first} from 'rxjs/operators';
-import {TranslateNotificationsService} from '../../../services/notifications/notifications.service';
+import {TranslateNotificationsService} from '../../../services/translate-notifications/translate-notifications.service';
 import {AuthService} from '../../../services/auth/auth.service';
 import {SidebarInterface} from '../../sidebars/interfaces/sidebar-interface';
 import {FormGroup} from '@angular/forms';

@@ -5,7 +5,7 @@ import { InnovationFrontService } from '../../../../../../services/innovation/in
 import { Innovation } from '../../../../../../models/innovation';
 import { InnovCard } from '../../../../../../models/innov-card';
 import { TagStats } from '../../../../../../models/tag-stats';
-import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
+import { TranslateNotificationsService } from '../../../../../../services/translate-notifications/translate-notifications.service';
 import { AuthService } from '../../../../../../services/auth/auth.service';
 
 @Component({

@@ -3,7 +3,7 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { UserService } from '../../../../../services/user/user.service';
 import { AuthService } from '../../../../../services/auth/auth.service';
 import { User } from '../../../../../models/user.model';
-import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
+import { TranslateNotificationsService } from '../../../../../services/translate-notifications/translate-notifications.service';
 import { TranslateTitleService } from '../../../../../services/title/title.service';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';

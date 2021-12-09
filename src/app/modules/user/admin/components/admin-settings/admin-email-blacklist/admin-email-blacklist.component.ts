@@ -1,7 +1,7 @@
 import {Component, Inject, OnDestroy, OnInit, PLATFORM_ID} from '@angular/core';
 import {Subject} from 'rxjs';
 import {SidebarInterface} from '../../../../../sidebars/interfaces/sidebar-interface';
-import {TranslateNotificationsService} from '../../../../../../services/notifications/notifications.service';
+import {TranslateNotificationsService} from '../../../../../../services/translate-notifications/translate-notifications.service';
 import {EmailService} from '../../../../../../services/email/email.service';
 import {isPlatformBrowser} from '@angular/common';
 import {first, takeUntil} from 'rxjs/operators';

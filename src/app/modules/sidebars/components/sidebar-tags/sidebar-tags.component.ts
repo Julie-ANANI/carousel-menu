@@ -5,7 +5,7 @@ import { TagsService } from '../../../../services/tags/tags.service';
 import { Multiling } from '../../../../models/multiling';
 import { Tag } from '../../../../models/tag';
 import { AutocompleteService } from '../../../../services/autocomplete/autocomplete.service';
-import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
+import { TranslateNotificationsService } from '../../../../services/translate-notifications/translate-notifications.service';
 import { MultilingPipe } from '../../../../pipe/pipes/multiling.pipe';
 import { Observable } from 'rxjs';
 import { first } from 'rxjs/operators';

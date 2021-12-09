@@ -6,7 +6,7 @@ import { AdvSearchService } from '../../../../services/advsearch/advsearch.servi
 import { Router } from '@angular/router';
 import { ListConfigurations } from './list-configurations';
 import { InnovationService } from '../../../../services/innovation/innovation.service';
-import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
+import { TranslateNotificationsService } from '../../../../services/translate-notifications/translate-notifications.service';
 import { ProfessionalsService } from '../../../../services/professionals/professionals.service';
 import { ContextInterface } from '../../../user/admin/components/admin-community/interfaces/context-interface';
 import { Config } from '@umius/umi-common-component/models';

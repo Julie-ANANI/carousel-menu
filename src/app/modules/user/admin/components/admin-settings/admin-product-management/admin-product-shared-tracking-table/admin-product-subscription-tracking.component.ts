@@ -4,7 +4,7 @@ import { TrackingService } from '../../../../../../../services/tracking/tracking
 import { first } from 'rxjs/operators';
 import { Table } from '@umius/umi-common-component/models';
 import { AdminProductSharedTrackingTableComponent } from './admin-product-shared-tracking-table.component';
-import { TranslateNotificationsService } from '../../../../../../../services/notifications/notifications.service';
+import { TranslateNotificationsService } from '../../../../../../../services/translate-notifications/translate-notifications.service';
 import { ErrorFrontService } from '../../../../../../../services/error/error-front.service';
 
 @Component({
