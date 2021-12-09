@@ -19,6 +19,8 @@ import { Mission } from '../../../../../../models/mission';
 import { environment } from '../../../../../../../environments/environment';
 import { ErrorFrontService } from '../../../../../../services/error/error-front.service';
 import { Response } from "../../../../../../models/response";
+import {NotificationService} from '../../../../../../services/notification/notification.service';
+import {NotificationTrigger} from '../../../../../../models/notification';
 
 @Component({
   templateUrl: './admin-project-preparation.component.html',
@@ -26,6 +28,19 @@ import { Response } from "../../../../../../models/response";
 })
 
 export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
+
+  get showModal(): boolean {
+    return this._showModal;
+  }
+
+  set showModal(value: boolean) {
+    this._showModal = value;
+  }
+
+  get isSendingNotification(): boolean {
+    return this._isSendingNotification;
+  }
+
   private _defaultTabs: Array<string> = ['description', 'questionnaire', 'targeting', 'campaigns', 'statistics'];
 
   private _campaignTabs: Array<string> = ['search', 'history', 'pros', 'workflows', 'batch'];
@@ -64,12 +79,17 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
 
   private _quizPreviewLink = '';
 
+  private _isSendingNotification = false;
+
+  private _showModal = false;
+
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _routeFrontService: RouteFrontService,
               private _router: Router,
               private _innovationService: InnovationService,
               private _campaignFrontService: CampaignFrontService,
               private _missionService: MissionService,
+              private _notificationService: NotificationService,
               private _innovationFrontService: InnovationFrontService,
               private _rolesFrontService: RolesFrontService,
               private _translateNotificationsService: TranslateNotificationsService,
@@ -129,6 +149,35 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
     this._campaignFrontService.loadingCampaign().pipe(takeUntil(this._ngUnsubscribe)).subscribe((loading) => {
       this._isLoadingCampaign = loading;
     });
+  }
+
+  /**
+   * this function is to register the notification job to send the
+   * emails to the project team toa ask for validation.
+   * @param event
+   */
+  public onAskValidation(event: Event) {
+    event.preventDefault();
+
+    if (!this._isSendingNotification) {
+      this._isSendingNotification = true;
+      this._notificationService.registerJob(this._project, 'TRIGGER_ASK_VALIDATE_PROJECT')
+        .pipe(first()).subscribe((res) => {
+        this.closeModal();
+        this._translateNotificationsService.success('Success', res.message);
+        this._isSendingNotification = false;
+        this._project.notifications.push('TRIGGER_ASK_VALIDATE_PROJECT');
+        this._setInnovation();
+      }, (err: HttpErrorResponse) => {
+        this._isSendingNotification = false;
+        this._translateNotificationsService.error('Error', ErrorFrontService.adminErrorMessage(err));
+        console.error(err);
+      });
+    }
+  }
+
+  public triggerAsk(): boolean {
+    return this._project.notifications.some((notification:  NotificationTrigger) => notification === 'TRIGGER_ASK_VALIDATE_PROJECT');
   }
 
   private _setInnovation() {
@@ -208,13 +257,18 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
     this._router.navigate([`/user/admin/projects/project/${this._project._id}/preparation/campaigns`]);
   }
 
-  public openModal(event: Event, type: 'ADD_LANG' | 'DELETE_LANG', deleteCard?: InnovCard) {
+  public openModal(event: Event, type: 'ADD_LANG' | 'DELETE_LANG' | 'ASK_VALIDATION', deleteCard?: InnovCard) {
     event.preventDefault();
+    this._modelType = type;
+
     switch (type) {
+
+      case 'ASK_VALIDATION':
+        this._showModal = true;
+        break;
 
       case 'ADD_LANG':
         if (this.canAddCard && !this._isAddingCard) {
-          this._modelType = type;
           this._showCardModal = true;
         }
         break;
@@ -222,7 +276,6 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
       case 'DELETE_LANG':
         if (!this._isDeletingCard) {
           this._cardToDelete = deleteCard;
-          this._modelType = type;
           this._showCardModal = true;
         }
         break;
@@ -331,6 +384,7 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
   public closeModal() {
     this._showCardModal = false;
     this._cardToDelete = <InnovCard>{};
+    this._showModal = false;
   }
 
   public addInnovationCard(event: Event) {

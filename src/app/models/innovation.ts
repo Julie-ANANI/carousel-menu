@@ -9,6 +9,7 @@ import { ClientProject } from './client-project';
 import { Question } from './question';
 import {Community} from './community';
 import {Consent} from './consent';
+import {NotificationTrigger} from './notification';
 
 export interface InnovationFollowUpEmailsCc {
   firstName: string;
@@ -21,7 +22,7 @@ export interface InnovationFollowUpEmails {
   cc?: Array<InnovationFollowUpEmailsCc>;
 
   /**
-   * to show or hide the Follow Up module at the client side
+   * to show or hide the Follow-Up module at the client side
    */
   status?: 'ACTIVE' | 'INACTIVE';
 
@@ -138,6 +139,13 @@ export interface InnovationStats {
 }
 
 export interface Innovation {
+
+  /**
+   * we keep the track of the notification that has been sent for the innovation
+   * because based on that we can show or hide the notification button at the
+   * admin side. We only save the trigger name.
+   */
+  notifications: [NotificationTrigger];
 
   /**
    * innovation data push to the community api.
