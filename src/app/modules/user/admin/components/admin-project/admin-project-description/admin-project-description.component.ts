@@ -13,8 +13,9 @@ import { CommonService } from '../../../../../../services/common/common.service'
 import { RolesFrontService } from '../../../../../../services/roles/roles-front.service';
 import { EtherpadFrontService } from '../../../../../../services/etherpad/etherpad-front.service';
 import { MediaFrontService } from '../../../../../../services/media/media-front.service';
+import {NotificationService} from '../../../../../../services/notification/notification.service';
 
-type modalType = 'NEW_SECTION' | 'DELETE_SECTION' | '';
+type modalType = 'NEW_SECTION' | 'DELETE_SECTION' | 'NOTIFY_TEAM' | '';
 
 interface Toggle {
   title: boolean;
@@ -28,6 +29,10 @@ interface Toggle {
 })
 
 export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
+
+  get isSendingNotification(): boolean {
+    return this._isSendingNotification;
+  }
 
   private _innovation: Innovation = <Innovation>{};
 
@@ -81,8 +86,11 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
 
   private _selectedMedia: string;
 
+  private _isSendingNotification = false;
+
   constructor(private _innovationFrontService: InnovationFrontService,
               private _innovationService: InnovationService,
+              private _notificationService: NotificationService,
               private _etherpadFrontService: EtherpadFrontService,
               /**private _translationService: TranslationService,*/
               private _rolesFrontService: RolesFrontService,
@@ -105,6 +113,29 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
       }
     });
 
+  }
+
+  /**
+   * this function is to register the notification job to send the
+   * emails to the project team.
+   * @param event
+   */
+  public onNotifyTeam(event: Event) {
+    event.preventDefault();
+
+    if (!this._isSendingNotification) {
+      this._isSendingNotification = true;
+      this._notificationService.registerJob(this._innovation, 'TRIGGER_COMMENT_SUGGESTION')
+        .pipe(first()).subscribe((res) => {
+          this.closeModal();
+          this._translateNotificationsService.success('Success', res.message);
+          this._isSendingNotification = false;
+          }, (err: HttpErrorResponse) => {
+          this._isSendingNotification = false;
+          this._translateNotificationsService.error('Error', ErrorFrontService.adminErrorMessage(err));
+          console.error(err);
+        });
+    }
   }
 
   public canAccess(path?: Array<string>) {
@@ -236,7 +267,7 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
 
   /**
    * now for the new custom section we use etherpadElementId property.
-   * If it doesn't exists with use the old one we create one and assign to it..
+   * If it doesn't exist with use the old one we create one and assign to it..
    *
    * @param event
    * @param property
@@ -272,6 +303,10 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
     event.preventDefault();
     this._modalType = type;
     switch (type) {
+
+      case 'NOTIFY_TEAM':
+        this._showModal = true;
+        break;
 
       case 'NEW_SECTION':
         this._newSection = {
