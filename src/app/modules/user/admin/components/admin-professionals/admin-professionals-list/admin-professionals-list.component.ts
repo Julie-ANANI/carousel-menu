@@ -1,7 +1,7 @@
 import {Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
 import { Config } from '@umius/umi-common-component/models';
 import {Professional} from '../../../../../../models/professional';
-import {TranslateNotificationsService} from '../../../../../../services/notifications/notifications.service';
+import {TranslateNotificationsService} from '../../../../../../services/translate-notifications/translate-notifications.service';
 import {TranslateTitleService} from '../../../../../../services/title/title.service';
 import {ProfessionalsService} from '../../../../../../services/professionals/professionals.service';
 import {first} from 'rxjs/operators';

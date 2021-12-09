@@ -4,7 +4,7 @@ import { NotificationAnimationType, Options } from 'angular2-notifications';
 import { initTranslation, TranslateService } from './i18n/i18n';
 import { environment } from '../environments/environment';
 import { AuthService } from './services/auth/auth.service';
-import { TranslateNotificationsService } from './services/notifications/notifications.service';
+import { TranslateNotificationsService } from './services/translate-notifications/translate-notifications.service';
 import { MouseService } from './services/mouse/mouse.service';
 import { SocketService } from './services/socket/socket.service';
 import { takeUntil } from 'rxjs/operators';

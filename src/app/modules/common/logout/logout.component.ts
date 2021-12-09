@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { TranslateNotificationsService } from '../../../services/notifications/notifications.service';
+import { TranslateNotificationsService } from '../../../services/translate-notifications/translate-notifications.service';
 import { TranslateTitleService } from '../../../services/title/title.service';
 import { AuthService } from '../../../services/auth/auth.service';
 import { first } from 'rxjs/operators';

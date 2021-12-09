@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Question } from '../../../../models/question';
 import { Answer } from '../../../../models/answer';
 import { AnswerService } from '../../../../services/answer/answer.service';
-import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
+import { TranslateNotificationsService } from '../../../../services/translate-notifications/translate-notifications.service';
 import { Tag } from '../../../../models/tag';
 import { ProfessionalsService } from '../../../../services/professionals/professionals.service';
 import { Company } from '../../../../models/company';

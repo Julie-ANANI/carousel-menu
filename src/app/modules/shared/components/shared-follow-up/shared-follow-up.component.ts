@@ -1,5 +1,5 @@
 import { Component, Inject, Input, OnInit, PLATFORM_ID } from '@angular/core';
-import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
+import { TranslateNotificationsService } from '../../../../services/translate-notifications/translate-notifications.service';
 import { Innovation } from '../../../../models/innovation';
 import { InnovationFrontService } from '../../../../services/innovation/innovation-front.service';
 import { AnswerService } from '../../../../services/answer/answer.service';

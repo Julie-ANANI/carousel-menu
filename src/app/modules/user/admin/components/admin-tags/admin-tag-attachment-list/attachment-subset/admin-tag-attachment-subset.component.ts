@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 
 import { TagsService } from '../../../../../../../services/tags/tags.service';
-import { TranslateNotificationsService } from '../../../../../../../services/notifications/notifications.service';
+import { TranslateNotificationsService } from '../../../../../../../services/translate-notifications/translate-notifications.service';
 
 
 @Component({

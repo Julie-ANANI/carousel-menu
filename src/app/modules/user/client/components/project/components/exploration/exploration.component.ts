@@ -1,6 +1,6 @@
 import {Component, Inject, OnDestroy, OnInit, PLATFORM_ID} from '@angular/core';
 import { AnswerService } from '../../../../../../../services/answer/answer.service';
-import { TranslateNotificationsService } from '../../../../../../../services/notifications/notifications.service';
+import { TranslateNotificationsService } from '../../../../../../../services/translate-notifications/translate-notifications.service';
 import { Answer } from '../../../../../../../models/answer';
 import { Innovation } from '../../../../../../../models/innovation';
 import { SidebarInterface } from '../../../../../../sidebars/interfaces/sidebar-interface';

@@ -8,7 +8,7 @@ import {HttpErrorResponse} from '@angular/common/http';
 import {InnovationService} from '../../services/innovation/innovation.service';
 import {makeStateKey, TransferState} from '@angular/platform-browser';
 import { Config } from '@umius/umi-common-component/models';
-import {TranslateNotificationsService} from '../../services/notifications/notifications.service';
+import {TranslateNotificationsService} from '../../services/translate-notifications/translate-notifications.service';
 import {ErrorFrontService} from '../../services/error/error-front.service';
 
 const INNOVATION_KEY = makeStateKey('innovation');

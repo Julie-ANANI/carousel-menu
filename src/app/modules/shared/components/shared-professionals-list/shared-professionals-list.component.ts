@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Professional } from '../../../../models/professional';
 import { ProfessionalsService } from '../../../../services/professionals/professionals.service';
 import { first } from 'rxjs/operators';
-import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
+import { TranslateNotificationsService } from '../../../../services/translate-notifications/translate-notifications.service';
 import { SidebarInterface } from '../../../sidebars/interfaces/sidebar-interface';
 import { Campaign } from '../../../../models/campaign';
 import { Router } from '@angular/router';

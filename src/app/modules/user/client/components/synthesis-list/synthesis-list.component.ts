@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { UserService } from '../../../../../services/user/user.service';
 import { InnovationService } from '../../../../../services/innovation/innovation.service';
 import { environment } from '../../../../../../environments/environment';
-import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
+import { TranslateNotificationsService } from '../../../../../services/translate-notifications/translate-notifications.service';
 import { Share } from '../../../../../models/share';
 import { TranslateService } from '@ngx-translate/core';
 import { TranslateTitleService } from '../../../../../services/title/title.service';

@@ -1,7 +1,7 @@
 import {Inject, Injectable, PLATFORM_ID} from '@angular/core';
 import {isPlatformBrowser} from '@angular/common';
 import * as moment from 'moment';
-import {TranslateNotificationsService} from '../notifications/notifications.service';
+import {TranslateNotificationsService} from '../translate-notifications/translate-notifications.service';
 import {Etherpad} from '../../models/etherpad';
 import {environment} from '../../../environments/environment';
 import {TranslateService} from '@ngx-translate/core';

@@ -3,7 +3,7 @@ import { Table } from '@umius/umi-common-component/models';
 import { RolesFrontService } from '../../../../../../../services/roles/roles-front.service';
 import { TrackingService } from '../../../../../../../services/tracking/tracking.service';
 import { AdminProductSharedTrackingTableComponent } from './admin-product-shared-tracking-table.component';
-import { TranslateNotificationsService } from '../../../../../../../services/notifications/notifications.service';
+import { TranslateNotificationsService } from '../../../../../../../services/translate-notifications/translate-notifications.service';
 
 @Component({
   selector: 'app-help-community',

@@ -5,7 +5,7 @@ import { SearchService } from '../../../../services/search/search.service';
 import { AuthService } from '../../../../services/auth/auth.service';
 import { DownloadService } from '../../../../services/download/download.service';
 import { ProfessionalsService } from '../../../../services/professionals/professionals.service';
-import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
+import { TranslateNotificationsService } from '../../../../services/translate-notifications/translate-notifications.service';
 import { Config } from '@umius/umi-common-component/models';
 
 @Component({

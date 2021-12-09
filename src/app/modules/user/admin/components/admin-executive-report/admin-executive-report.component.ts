@@ -13,7 +13,7 @@ import { Answer  } from '../../../../../models/answer';
 import { Question } from '../../../../../models/question';
 import { InnovationFrontService } from '../../../../../services/innovation/innovation-front.service';
 import { AnswerService } from '../../../../../services/answer/answer.service';
-import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
+import { TranslateNotificationsService } from '../../../../../services/translate-notifications/translate-notifications.service';
 import { ErrorFrontService } from '../../../../../services/error/error-front.service';
 import {MissionQuestion} from '../../../../../models/mission';
 

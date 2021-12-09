@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Country } from '../../../../models/country';
-import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
+import { TranslateNotificationsService } from '../../../../services/translate-notifications/translate-notifications.service';
 import { TranslateService } from '@ngx-translate/core';
 import { WorldmapService } from '../../../../services/worldmap/worldmap.service';
 import { GeographySettings } from '../../../../models/innov-settings';

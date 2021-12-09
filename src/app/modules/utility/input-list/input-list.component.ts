@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { TranslateNotificationsService } from '../../../services/notifications/notifications.service';
+import { TranslateNotificationsService } from '../../../services/translate-notifications/translate-notifications.service';
 import { domainRegEx, emailRegEx } from '../../../utils/regex';
 import { ErrorFrontService } from '../../../services/error/error-front.service';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';

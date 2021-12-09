@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { CampaignService } from '../../../../../../services/campaign/campaign.service';
-import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
+import { TranslateNotificationsService } from '../../../../../../services/translate-notifications/translate-notifications.service';
 import { environment } from '../../../../../../../environments/environment';
 import { Campaign } from '../../../../../../models/campaign';
 import { Innovation } from '../../../../../../models/innovation';

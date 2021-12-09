@@ -8,7 +8,7 @@ import {MultilingPipe} from '../../../pipe/pipes/multiling.pipe';
 import {AutoCompleteInputConfigInterface} from './interfaces/auto-complete-input-config-interface';
 import {AnswerList} from './interfaces/auto-complete-input-answerlist-interface';
 import {AutoCompleteInputSuggestionInterface} from './interfaces/auto-complete-input-suggestion-interface';
-import {TranslateNotificationsService} from '../../../services/notifications/notifications.service';
+import {TranslateNotificationsService} from '../../../services/translate-notifications/translate-notifications.service';
 import {ErrorFrontService} from '../../../services/error/error-front.service';
 import {Enterprise} from '../../../models/enterprise';
 

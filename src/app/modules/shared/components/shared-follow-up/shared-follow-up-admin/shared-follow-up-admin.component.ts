@@ -8,7 +8,7 @@ import {first, takeUntil} from 'rxjs/operators';
 import {HttpErrorResponse} from '@angular/common/http';
 import {ErrorFrontService} from '../../../../../services/error/error-front.service';
 import {InnovationService} from '../../../../../services/innovation/innovation.service';
-import {TranslateNotificationsService} from '../../../../../services/notifications/notifications.service';
+import {TranslateNotificationsService} from '../../../../../services/translate-notifications/translate-notifications.service';
 import {InnovationFrontService} from '../../../../../services/innovation/innovation-front.service';
 import {AnswerService} from '../../../../../services/answer/answer.service';
 import {Professional} from '../../../../../models/professional';

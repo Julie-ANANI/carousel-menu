@@ -2,7 +2,7 @@ import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { DashboardService } from '../../../../../services/dashboard/dashboard.service';
 import { first } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
-import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
+import { TranslateNotificationsService } from '../../../../../services/translate-notifications/translate-notifications.service';
 import { ErrorFrontService } from '../../../../../services/error/error-front.service';
 import { TranslateService } from '@ngx-translate/core';
 import { InnovCard } from '../../../../../models/innov-card';

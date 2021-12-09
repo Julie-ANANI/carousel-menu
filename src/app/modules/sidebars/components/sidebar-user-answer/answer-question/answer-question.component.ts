@@ -3,7 +3,7 @@ import { TranslateService } from '@ngx-translate/core';
 import * as _ from 'lodash';
 import { Question } from '../../../../../models/question';
 import { Answer } from '../../../../../models/answer';
-import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
+import { TranslateNotificationsService } from '../../../../../services/translate-notifications/translate-notifications.service';
 import { TranslationService } from '../../../../../services/translation/translation.service';
 import { AnswerService } from '../../../../../services/answer/answer.service';
 import { Tag } from '../../../../../models/tag';

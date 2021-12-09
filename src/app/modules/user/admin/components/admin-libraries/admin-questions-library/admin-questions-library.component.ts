@@ -2,7 +2,7 @@ import {Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
 import {Table, Config} from '@umius/umi-common-component/models';
 import {RolesFrontService} from '../../../../../../services/roles/roles-front.service';
 import {TranslateService} from '@ngx-translate/core';
-import {TranslateNotificationsService} from '../../../../../../services/notifications/notifications.service';
+import {TranslateNotificationsService} from '../../../../../../services/translate-notifications/translate-notifications.service';
 import {MissionService} from '../../../../../../services/mission/mission.service';
 import {MissionQuestion} from '../../../../../../models/mission';
 import {MissionQuestionService} from '../../../../../../services/mission/mission-question.service';

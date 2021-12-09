@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { EmailScenario } from '../../../../../../models/email-scenario';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { CampaignService } from '../../../../../../services/campaign/campaign.service';
-import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
+import { TranslateNotificationsService } from '../../../../../../services/translate-notifications/translate-notifications.service';
 import { Campaign } from '../../../../../../models/campaign';
 import { Table } from '@umius/umi-common-component/models';
 import { Batch } from '../../../../../../models/batch';

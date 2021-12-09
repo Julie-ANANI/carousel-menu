@@ -4,7 +4,7 @@ import { first, takeUntil} from 'rxjs/operators';
 import { Observable, Subject } from 'rxjs';
 import { NavigationEnd, Router } from '@angular/router';
 import { InnovationService } from '../../../../../../../services/innovation/innovation.service';
-import { TranslateNotificationsService } from '../../../../../../../services/notifications/notifications.service';
+import { TranslateNotificationsService } from '../../../../../../../services/translate-notifications/translate-notifications.service';
 import { InnovCard } from '../../../../../../../models/innov-card';
 import { InnovationFrontService } from '../../../../../../../services/innovation/innovation-front.service';
 import { HttpErrorResponse } from '@angular/common/http';

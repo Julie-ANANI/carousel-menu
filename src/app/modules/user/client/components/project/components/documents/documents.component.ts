@@ -6,7 +6,7 @@ import {Subject} from 'rxjs';
 import {AuthService} from '../../../../../../../services/auth/auth.service';
 import {User} from '../../../../../../../models/user.model';
 import {InnovationService} from '../../../../../../../services/innovation/innovation.service';
-import {TranslateNotificationsService} from '../../../../../../../services/notifications/notifications.service';
+import {TranslateNotificationsService} from '../../../../../../../services/translate-notifications/translate-notifications.service';
 import {HttpErrorResponse} from '@angular/common/http';
 import {ErrorFrontService} from '../../../../../../../services/error/error-front.service';
 import {CommonService} from '../../../../../../../services/common/common.service';

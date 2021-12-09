@@ -1,7 +1,7 @@
 import { Component, Output, Input } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
-import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
+import { TranslateNotificationsService } from '../../../../../../services/translate-notifications/translate-notifications.service';
 import { TagsService } from '../../../../../../services/tags/tags.service';
 import { IndexService } from '../../../../../../services/index/index.service';
 import { SearchService } from '../../../../../../services/search/search.service';

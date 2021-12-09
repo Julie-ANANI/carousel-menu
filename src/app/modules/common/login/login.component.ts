@@ -2,7 +2,7 @@ import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { TranslateTitleService } from '../../../services/title/title.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { environment } from '../../../../environments/environment';
-import { TranslateNotificationsService } from '../../../services/notifications/notifications.service';
+import { TranslateNotificationsService } from '../../../services/translate-notifications/translate-notifications.service';
 import { User } from '../../../models/user.model';
 import { AuthService } from '../../../services/auth/auth.service';
 import { first } from 'rxjs/operators';

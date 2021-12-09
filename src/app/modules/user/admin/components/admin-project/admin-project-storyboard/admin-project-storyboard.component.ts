@@ -1,6 +1,6 @@
 import {Component, Inject, OnDestroy, OnInit, PLATFORM_ID} from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
-import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
+import { TranslateNotificationsService } from '../../../../../../services/translate-notifications/translate-notifications.service';
 import { TranslateService } from '@ngx-translate/core';
 import { ExecutiveReport, ExecutiveSection } from '../../../../../../models/executive-report';
 import { Innovation } from '../../../../../../models/innovation';

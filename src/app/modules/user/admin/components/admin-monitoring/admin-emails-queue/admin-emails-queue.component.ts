@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { EmailQueueModel } from '../../../../../../models/mail.queue.model';
 import { EmailService } from '../../../../../../services/email/email.service';
-import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
+import { TranslateNotificationsService } from '../../../../../../services/translate-notifications/translate-notifications.service';
 import { Table } from '@umius/umi-common-component/models';
 import { SidebarInterface } from '../../../../../sidebars/interfaces/sidebar-interface';
 import { Subject } from 'rxjs';

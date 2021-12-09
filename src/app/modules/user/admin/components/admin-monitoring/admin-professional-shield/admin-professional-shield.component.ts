@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
+import { TranslateNotificationsService } from '../../../../../../services/translate-notifications/translate-notifications.service';
 import { Table, Config } from '@umius/umi-common-component/models';
 import { Subject } from 'rxjs';
 import { first } from 'rxjs/operators';

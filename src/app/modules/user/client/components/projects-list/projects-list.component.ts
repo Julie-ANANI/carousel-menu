@@ -4,7 +4,7 @@ import { TranslateTitleService } from '../../../../../services/title/title.servi
 import { UserService } from '../../../../../services/user/user.service';
 import { Innovation } from '../../../../../models/innovation';
 import { Pagination } from '../../../../utility/paginations/interfaces/pagination';
-import { TranslateNotificationsService } from '../../../../../services/notifications/notifications.service';
+import { TranslateNotificationsService } from '../../../../../services/translate-notifications/translate-notifications.service';
 import { first } from 'rxjs/operators';
 import { animate, keyframes, query, stagger, style, transition, trigger } from '@angular/animations';
 import { InnovationService } from '../../../../../services/innovation/innovation.service';

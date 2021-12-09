@@ -1,6 +1,6 @@
 import { Component, Inject, Input, OnInit, PLATFORM_ID } from '@angular/core';
 import { SearchService } from '../../../../services/search/search.service';
-import { TranslateNotificationsService } from '../../../../services/notifications/notifications.service';
+import { TranslateNotificationsService } from '../../../../services/translate-notifications/translate-notifications.service';
 import { first } from 'rxjs/operators';
 import { SidebarInterface } from '../../../sidebars/interfaces/sidebar-interface';
 import { COUNTRIES } from '../shared-search-pros/COUNTRIES';

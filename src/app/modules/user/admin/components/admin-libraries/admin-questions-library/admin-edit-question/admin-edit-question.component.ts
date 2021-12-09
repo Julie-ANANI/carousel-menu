@@ -13,7 +13,7 @@ import {isPlatformBrowser} from '@angular/common';
 import {MissionService} from '../../../../../../../services/mission/mission.service';
 import {first} from 'rxjs/operators';
 import {ErrorFrontService} from '../../../../../../../services/error/error-front.service';
-import {TranslateNotificationsService} from '../../../../../../../services/notifications/notifications.service';
+import {TranslateNotificationsService} from '../../../../../../../services/translate-notifications/translate-notifications.service';
 import {RolesFrontService} from '../../../../../../../services/roles/roles-front.service';
 import {picto, Picto} from '../../../../../../../models/static-data/picto';
 import {TranslateService} from '@ngx-translate/core';
