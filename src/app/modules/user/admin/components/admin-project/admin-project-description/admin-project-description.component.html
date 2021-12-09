@@ -1,6 +1,20 @@
 <div class="container fluid grid-2xl" id="admin-project-description">
-  <!--  </div>-->
   <div class="column col-sm-12 col-11 col-mx-auto p-top-30 p-bottom-30">
+
+    <!-- notify team -->
+    <ng-container *ngIf="innovation.status === 'EVALUATING'">
+      <div class="text-center m-bottom-30">
+        <button
+          (click)="openModal($event, 'NOTIFY_TEAM')"
+          [disabled]="isSendingNotification"
+          class="button is-community is-outlined"
+          id="btn-notify-team">
+          <ng-container *ngIf="isSendingNotification">is notifying team...</ng-container>
+          <ng-container *ngIf="!isSendingNotification">Notify project team</ng-container>
+        </button>
+      </div>
+    </ng-container>
+    <!-- /notify team -->
 
     <!-- sections dynamic -->
     <section
@@ -682,10 +696,17 @@
 
     <h2 [ngSwitch]="{ 'color': '4C4C4C' }" class="title is-4 text-center text-bold m-bottom-30">
       <ng-container *ngIf="modalType === 'NEW_SECTION'">Add new section</ng-container>
+      <ng-container *ngIf="modalType === 'NOTIFY_TEAM'">Notify project team</ng-container>
       <ng-container *ngIf="modalType === 'DELETE_SECTION'">Delete section</ng-container>
     </h2>
 
     <div [ngSwitch]="modalType">
+
+      <!-- notify team -->
+      <div *ngSwitchCase="'NOTIFY_TEAM'">
+        You are about to send an email to the Market Test project team.
+      </div>
+      <!-- /notify team -->
 
       <!-- delete section -->
       <div *ngSwitchCase="'DELETE_SECTION'">
@@ -743,6 +764,18 @@
       type="button">
       Cancel
     </button>
+
+    <!-- notify team -->
+    <button
+      (click)="onNotifyTeam($event)"
+      *ngSwitchCase="'NOTIFY_TEAM'"
+      [disabled]="isSendingNotification"
+      class="button is-community"
+      id="btn-modal-confirm-notify-team"
+      type="button">
+      Confirm
+    </button>
+    <!-- notify team -->
 
     <!-- new section -->
     <button

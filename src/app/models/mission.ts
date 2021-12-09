@@ -39,7 +39,7 @@ export interface MissionTemplateSection {
 
   /**
    * When we save the Template in the mission the type will be 'Mission Question'
-   * other wise it will be
+   * otherwise it will be
    * {
    *   question: questionId,
    *   essential: boolean
@@ -176,7 +176,7 @@ export interface MissionQuestion {
    */
   controlType: MissionQuestionType;
 
-  
+
   attitudeMeasure?: AttitudeMeasureType;
 
   /**
