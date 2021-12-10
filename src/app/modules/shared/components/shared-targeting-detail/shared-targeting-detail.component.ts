@@ -1,8 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { Innovation } from '../../../../models/innovation';
-import { IndexService } from '../../../../services/index/index.service';
-import { Response } from '../../../../models/response';
 import { Country } from '../../../../models/country';
+import { WorldmapService } from "../../../../services/worldmap/worldmap.service";
 
 @Component({
   selector: 'app-shared-targeting-detail',
@@ -34,32 +33,29 @@ export class SharedTargetingDetailComponent {
 
   private _targetCountries: Array<string> = [] ;
 
-  constructor(private _indexService: IndexService) { }
+  constructor(private _worldMapService: WorldmapService) { }
 
   private _getCountries(continent: any) {
-    this._indexService.getWholeSet({ type: 'countries' }).subscribe((response: Response) => {
-
+    this._worldMapService.getCountriesList().then(response => {
       let countries: Array<Country> = [];
 
       for (const prop in continent) {
         if (continent.hasOwnProperty(prop)) {
           if (continent[prop]) {
             if (this._innovation.settings.geography.exclude.length > 0) {
-              countries = response.result.filter((value) => {
+              countries = response.filter((value) => {
                 return !this._innovation.settings.geography.exclude.find((value2) => value2.flag === value.code);
               });
             } else {
-              countries = response.result;
+              countries = response;
             }
           }
         }
       }
-
       this._targetCountries = countries.reduce((acc, country) => {
         acc.push(country.code);
         return acc;
       }, []);
-
     });
   }
 

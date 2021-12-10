@@ -185,6 +185,7 @@ export class SidebarUserAnswerComponent implements OnInit {
             'Success',
             'The answer is updated.'
           );
+          this._userAnswer = res;
           this._resetEdit();
           this._resetSaveVariables();
           this.userAnswerChange.emit(this._userAnswer);
@@ -485,6 +486,13 @@ export class SidebarUserAnswerComponent implements OnInit {
 
   get meta(): any {
     return this._userAnswer.meta || {};
+  }
+
+  /**
+   * Get the list of warnings associated to the answer
+   */
+  get answerWarnings(): Array<{message:string}> {
+    return this._userAnswer.warnings;
   }
 
   get userAnswer(): Answer {

@@ -17,6 +17,14 @@ export const SIDEBAR_USER_ANSWER = {
     'REJECTED_UMIBOT': 'Rejected by bot',
   },
 
+  'ANSWER': {
+    'TARGETING': {
+      'OUTSIDE': 'The country of this answer is OUTSIDE the project targeting',
+      'FROM_EXCLUDED_COUNTRY': 'The country of this answer is in the EXCLUDED countries list',
+      'EMPTY_COUNTRY': 'This answer has no country!'
+    }
+  },
+
   'VALIDATED_ANSWER': 'Answer validated',
   'UNVALIDATED_ANSWER': 'Answer not validated',
   'JOB': 'Job',

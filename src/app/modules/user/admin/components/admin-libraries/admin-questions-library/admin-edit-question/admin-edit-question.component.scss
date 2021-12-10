@@ -107,6 +107,11 @@
             min-height: 100px;
           }
 
+          &.is-editable-small {
+            min-height:30px;
+            text-align: left;
+          }
+
         }
 
         &.has-single-option {

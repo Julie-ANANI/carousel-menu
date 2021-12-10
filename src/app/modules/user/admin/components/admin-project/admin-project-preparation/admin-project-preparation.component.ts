@@ -18,6 +18,7 @@ import { MissionService } from '../../../../../../services/mission/mission.servi
 import { Mission } from '../../../../../../models/mission';
 import { environment } from '../../../../../../../environments/environment';
 import { ErrorFrontService } from '../../../../../../services/error/error-front.service';
+import { Response } from "../../../../../../models/response";
 
 @Component({
   templateUrl: './admin-project-preparation.component.html',
@@ -51,7 +52,7 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
 
   private _selectedCampaign: Campaign = <Campaign>{};
 
-  private _allCampaigns: Array<Campaign> = this._campaignFrontService.allCampaigns;
+  private _allCampaigns: Array<Campaign> = [];
 
   private _ngUnsubscribe: Subject<any> = new Subject<any>();
 
@@ -79,6 +80,9 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this._innovationFrontService.innovation().pipe(takeUntil(this._ngUnsubscribe)).subscribe((innovation) => {
       this._project = innovation || <Innovation>{};
+      if(!this._allCampaigns.length){
+        this.getAllCampaigns();
+      }
       this.setPageTitle();
       this._setActiveCardIndex();
       this._quizPreviewLink = `${environment.quizUrl}/quiz/${this._project._id}/preview`;
@@ -129,6 +133,20 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
 
   private _setInnovation() {
     this._innovationFrontService.setInnovation(this._project);
+  }
+
+  /**
+   *
+   * @private
+   */
+  private getAllCampaigns() {
+    this._innovationService.campaigns(this._project._id).pipe(first()).subscribe((response: Response) => {
+      this._allCampaigns = response && response.result || [];
+      this._campaignFrontService.setAllCampaigns(this._allCampaigns);
+    }, (err: HttpErrorResponse) => {
+      this._translateNotificationsService.error('Campaigns Fetching Error...', ErrorFrontService.adminErrorMessage(err));
+      console.error(err);
+    });
   }
 
   public setCampaign(campaign: Campaign) {

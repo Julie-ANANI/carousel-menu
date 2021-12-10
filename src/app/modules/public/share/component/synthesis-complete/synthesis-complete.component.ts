@@ -1,4 +1,4 @@
-import {Component, Inject, PLATFORM_ID} from '@angular/core';
+import {Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
 import { TranslateTitleService } from '../../../../../services/title/title.service';
 import { ActivatedRoute } from '@angular/router';
 import { Innovation } from '../../../../../models/innovation';
@@ -11,24 +11,28 @@ import {first} from 'rxjs/operators';
 import {HttpErrorResponse} from '@angular/common/http';
 import {ExecutiveReport} from '../../../../../models/executive-report';
 import {InnovationFrontService} from '../../../../../services/innovation/innovation-front.service';
+import {SpinnerService} from '../../../../../services/spinner/spinner.service';
 
 @Component({
-  selector: 'app-synthesis-complete',
   templateUrl: './synthesis-complete.component.html',
   styleUrls: ['./synthesis-complete.component.scss']
 })
 
-export class SynthesisCompleteComponent {
+export class SynthesisCompleteComponent implements OnInit {
+
+  get adminLevel(): number {
+    return this._authService.adminLevel;
+  }
 
   private _projectId: string;
 
   private _shareKey: string;
 
-  private _innovation: Innovation;
+  private _innovation: Innovation = <Innovation>{};
 
-  private _displayReport: boolean;
+  private _displayReport = false;
 
-  private _notFound: boolean;
+  private _notFound = false;
 
   private _pageTitle = 'COMMON.PAGE_TITLE.REPORT';
 
@@ -40,12 +44,16 @@ export class SynthesisCompleteComponent {
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _executiveReportService: ExecutiveReportService,
+              private _spinnerService: SpinnerService,
               private _translateTitleService: TranslateTitleService,
               private _activatedRoute: ActivatedRoute,
               private _innovationService: InnovationService,
               private _translateService: TranslateService,
               private _authService: AuthService) {
+  }
 
+  ngOnInit(): void {
+    this._setSpinner();
     this._setPageTitle();
 
     this._activatedRoute.params.subscribe(params => {
@@ -53,30 +61,35 @@ export class SynthesisCompleteComponent {
       this._shareKey = params['shareKey'];
       this._getSharedSynthesis();
     });
+  }
 
+  private _setSpinner(value= true) {
+    this._spinnerService.state(value);
   }
 
   /***
    * this function is to get the shared synthesis detail from the server.
    */
   private _getSharedSynthesis() {
-
-    this._innovationService.getSharedSynthesis(this._projectId, this._shareKey).subscribe((response: any) => {
-      this._innovation = response;
-      this._getExecutiveReport();
-      this._pageTitle = InnovationFrontService.currentLangInnovationCard(this._innovation, this.userLang, 'TITLE');
-      this._setPageTitle();
+    if (isPlatformBrowser(this._platformId)) {
+      this._innovationService.getSharedSynthesis(this._projectId, this._shareKey).pipe(first()).subscribe((response) => {
+        this._innovation = response;
+        this._getExecutiveReport();
+        console.log(this._innovation);
+        this._pageTitle = InnovationFrontService.currentLangInnovationCard(this._innovation, this.userLang, 'TITLE');
+        this._setPageTitle();
       }, () => {
-      this._displayReport = false;
-      this._notFound = true;
-      }, () => {
-      if (this._innovation !== undefined) {
-        this._displayReport = true;
-      } else {
+        this._displayReport = false;
         this._notFound = true;
-      }
-    });
-
+        this._setSpinner(false);
+      }, () => {
+        if (this._innovation !== undefined) {
+          this._displayReport = true;
+        } else {
+          this._notFound = true;
+        }
+      });
+    }
   }
 
   /**
@@ -85,30 +98,27 @@ export class SynthesisCompleteComponent {
    * @private
    */
   private _getExecutiveReport() {
-    if (isPlatformBrowser(this._platformId)) {
-      if (this._innovation && this._innovation.executiveReportId) {
-        this._executiveReportService.get(this._innovation.executiveReportId).pipe(first()).subscribe((report) => {
-          this._report = report;
-          this._reportMedia = InnovationFrontService.principalMedia(this._innovation, this.userLang);
-          this._reportTitle = InnovationFrontService.currentLangInnovationCard(this._innovation, this.userLang, 'TITLE');
-        }, (err: HttpErrorResponse) => {
-          this._report = this._innovation;
-          console.error(err);
-        });
-      } else {
+    if (this._innovation && this._innovation.executiveReportId) {
+      this._executiveReportService.get(this._innovation.executiveReportId).pipe(first()).subscribe((report) => {
+        this._report = report;
+        this._reportMedia = InnovationFrontService.principalMedia(this._innovation, this.userLang);
+        this._reportTitle = InnovationFrontService.currentLangInnovationCard(this._innovation, this.userLang, 'TITLE');
+        this._setSpinner(false);
+      }, (err: HttpErrorResponse) => {
         this._report = this._innovation;
-      }
+        this._setSpinner(false);
+        console.error(err);
+      });
+    } else {
+      this._report = this._innovation;
+      this._setSpinner(false);
     }
   }
 
-
   private _setPageTitle() {
-    this._translateTitleService.setTitle(this._pageTitle);
-  }
-
-
-  get authService() {
-    return this._authService;
+    if (!!this._pageTitle) {
+      this._translateTitleService.setTitle(this._pageTitle);
+    }
   }
 
   get projectId(): string {

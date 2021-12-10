@@ -103,6 +103,7 @@
         display: flex;
         flex-direction: column;
         overflow-x: auto;
+        margin: auto;
 
         .card {
           flex: 1;
@@ -118,6 +119,17 @@
             min-height: 100px;
           }
 
+          &.is-editable-medium {
+            min-height:70px;
+            justify-content: center ;
+            text-align: center;
+          }
+
+          &.is-editable-small {
+            min-height:30px;
+            text-align: left;
+          }
+
         }
 
         &.has-single-option {
@@ -125,10 +137,19 @@
           flex-wrap: wrap;
           margin-right: -20px;
 
+          &.has-single-option-nowrap {
+            flex-wrap: nowrap;
+          }
+
           .card {
             min-width: 240px;
             max-width: calc(25% - 20px);
             margin-right: 20px;
+
+            &.card-medium {
+              min-width: 100px;
+          }
+
           }
 
         }
@@ -144,9 +165,10 @@
         padding-top: 10px;
         padding-bottom: 10px;
 
-        textarea, .options-wrapper .card {
+        textarea, .options-wrapper, .card, .card-medium   {
           max-width: 90%;
         }
+
 
         .options-wrapper .card textarea {
           max-width: 100%;

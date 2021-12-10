@@ -102,7 +102,20 @@ export class SharedQuestionnaireSectionComponent implements OnInit {
   }
 
   ngOnInit() {
+    // this.prepareSectionName();
   }
+
+  // private prepareSectionName() {
+  //   for (const lang of ['en', 'fr']) {
+  //     if (!this.isLibraryView &&
+  //       this._section['index'] >= 0
+  //       && this.cardsSections[lang][this._section['index']]
+  //       && (this.cardsSections[lang][this._section['index']].title)) {
+  //       const entry = this._section.entry.find(e => e.lang === lang);
+  //       entry.name = this.cardsSections[lang][this._section['index']].title;
+  //     }
+  //   }
+  // }
 
   public addNewQuestion(event: Event) {
     event.preventDefault();
@@ -130,11 +143,7 @@ export class SharedQuestionnaireSectionComponent implements OnInit {
   }
 
   public sectionName(lang: string): string {
-    if (!this.isLibraryView && this._section['index'] >= 0 && this.cardsSections[lang][this._section['index']] && (this.cardsSections[lang][this._section['index']].title)) {
-      return this.cardsSections[lang][this._section['index']].title;
-    } else {
-      return MissionQuestionService.entryInfo(this._section, lang)['name'] || '';
-    }
+    return MissionQuestionService.entryInfo(this._section, lang)['name'] || '';
   }
 
   public removeSection(event: Event): void {

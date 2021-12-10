@@ -107,6 +107,8 @@ export class AdminProjectQuestionnaireComponent implements OnInit, OnDestroy {
       }
     });
 
+
+
     if (!this.hasMissionTemplate) {
       const sectionsNb = frenchTitles.length > englishTitles.length ? frenchTitles.length : englishTitles.length;
       if (sectionsNb > 2 || customSection) {
@@ -116,6 +118,7 @@ export class AdminProjectQuestionnaireComponent implements OnInit, OnDestroy {
       }
     }
   }
+
 
   private _markSectionIndex(section: any, index: number) {
     if (section.type === "OTHER") {

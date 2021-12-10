@@ -11,10 +11,7 @@ import {
   PLATFORM_ID
 } from '@angular/core';
 import { WorldmapService } from '../../../../services/worldmap/worldmap.service';
-import { Response } from '../../../../models/response';
-import { IndexService } from '../../../../services/index/index.service';
 import { Country } from '../../../../models/country';
-import {first} from 'rxjs/operators';
 import {isPlatformBrowser} from '@angular/common';
 
 export interface Tooltip {
@@ -129,7 +126,6 @@ export class SharedWorldmapComponent implements OnInit {
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _elementRef: ElementRef,
-              private _indexService: IndexService,
               private _worldmapService: WorldmapService,
               private _viewContainerRef: ViewContainerRef) {}
 
@@ -158,9 +154,9 @@ export class SharedWorldmapComponent implements OnInit {
 
   private _getAllCountries() {
     if (isPlatformBrowser(this._platformId)) {
-      this._indexService.getWholeSet({ type: 'countries' }).pipe(first()).subscribe((response: Response) => {
-        this._allCountries = response.result;
-      });
+      this._worldmapService.getCountriesList().then(response =>{
+        this._allCountries = response;
+      })
     }
   }
 

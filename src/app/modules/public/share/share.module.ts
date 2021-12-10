@@ -9,7 +9,7 @@ import { ShareComponent } from './share.component';
 import { HeaderUnauthModule } from '../../common/header-unauth/header-unauth.module';
 import { SynthesisCompleteModule } from './component/synthesis-complete/synthesis-complete.module';
 import { FooterModule } from '../../common/footer/footer.module';
-import { HeaderModule } from '../../common/header/header.module';
+import {HeaderModule} from '../../common/header/header.module';
 
 @NgModule({
   imports: [

@@ -68,7 +68,7 @@ export class SynthesisListComponent implements OnInit, OnDestroy {
           objectId: info.sharedObjectId,
           sharedKey: info.sharedKey,
           date: info.created, // TODO use the share date instead...
-          link: `/user/synthesis/${info.sharedObjectId}/${info.sharedKey}`
+          link: `/share/synthesis/${info.sharedObjectId}/${info.sharedKey}`
         };
 
         this._totalReports.push(report);
