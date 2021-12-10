@@ -41,6 +41,10 @@ import { Professional } from '../../../../models/professional';
 import {MissionFrontService} from '../../../../services/mission/mission-front.service';
 import {Mission} from '../../../../models/mission';
 import {MissionQuestionService} from '../../../../services/mission/mission-question.service';
+import {NotificationTrigger} from '../../../../models/notification';
+import {NotificationService} from '../../../../services/notification/notification.service';
+
+type ModalType = 'NOTIFY_DOCUMENTS' | '';
 
 @Component({
   selector: 'app-shared-market-report',
@@ -48,6 +52,23 @@ import {MissionQuestionService} from '../../../../services/mission/mission-quest
   styleUrls: ['./shared-market-report.component.scss'],
 })
 export class SharedMarketReportComponent implements OnInit, OnDestroy, OnChanges {
+
+  get modalType(): ModalType {
+    return this._modalType;
+  }
+
+  get showModal(): boolean {
+    return this._showModal;
+  }
+
+  set showModal(value: boolean) {
+    this._showModal = value;
+  }
+
+  get isSendingNotification(): boolean {
+    return this._isSendingNotification;
+  }
+
   @Input() accessPath: Array<string> = [];
 
   @Input() adminSide = false;
@@ -121,12 +142,19 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy, OnChanges
 
   private _toSaveTemplate = false;
 
+  private _isSendingNotification = false;
+
+  private _showModal = false;
+
+  private _modalType: ModalType = '';
+
   constructor(
     @Inject(PLATFORM_ID) protected _platformId: Object,
     private _translateService: TranslateService,
     private _answerService: AnswerService,
     private _translateNotificationsService: TranslateNotificationsService,
     private _innovationService: InnovationService,
+    private _notificationService: NotificationService,
     private _authService: AuthService,
     private _rolesFrontService: RolesFrontService,
     private _missionQuestionService: MissionQuestionService,
@@ -179,6 +207,41 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy, OnChanges
     } else {
       this._questions = InnovationFrontService.questionsList(this._innovation);
     }
+  }
+
+  public onNotifyDocuments(event: Event) {
+    event.preventDefault();
+
+    if (!this._isSendingNotification) {
+      this._isSendingNotification = true;
+      this._notificationService.registerJob(this._innovation, 'TRIGGER_DOWNLOAD_DOCUMENTS')
+        .pipe(first()).subscribe((res) => {
+        this.closeModal(event);
+        this._translateNotificationsService.success('Success', res.message);
+        this._isSendingNotification = false;
+        this._innovation.notifications.push('TRIGGER_DOWNLOAD_DOCUMENTS');
+      }, (err: HttpErrorResponse) => {
+        this._isSendingNotification = false;
+        this._translateNotificationsService.error('Error', ErrorFrontService.adminErrorMessage(err));
+        console.error(err);
+      });
+    }
+  }
+
+  public triggerDocuments(): boolean {
+    return this._innovation.notifications.some((notification:  NotificationTrigger) => notification === 'TRIGGER_DOWNLOAD_DOCUMENTS');
+  }
+
+  public openModal(event: Event, type: ModalType) {
+    event.preventDefault();
+    this._modalType = type;
+    this._showModal = true;
+  }
+
+  public closeModal(event: Event) {
+    event.preventDefault();
+    this._showModal = false;
+    this._modalType = '';
   }
 
   public canAccess(path: Array<string>) {
