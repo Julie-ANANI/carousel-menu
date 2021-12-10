@@ -135,6 +135,7 @@ export interface InnovationStats {
   nbFirstMail?: number;
   nbSecondMail?: number;
   nbThirdMail?: number;
+  googleRequests?: number;
 }
 
 export interface Innovation {
