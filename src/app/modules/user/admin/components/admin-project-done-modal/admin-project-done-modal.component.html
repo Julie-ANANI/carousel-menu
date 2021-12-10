@@ -1,0 +1,43 @@
+<div [id]="'admin-project-done-modal'">
+  <app-utility-modal-empty [(showModal)]="showModal">
+
+    <section class="modal-body">
+
+      <h2 style="color: #4C4C4C" class="title is-4 text-center text-bold m-bottom-30">
+        Changing status validation
+      </h2>
+
+      <div>
+        You are about to change the status of this project to Done. Once confirmed, you will not be able to change
+        its status.
+        <ul class="p-top-10 p-left-20">
+          <li>No more emails sent</li>
+          <li>Comments and suggestions can no longer be edited or added</li>
+          <li>The stats are no longer updated</li>
+          <li>No changes to the quiz, new answers and synthesis</li>
+        </ul>
+      </div>
+
+    </section>
+
+    <footer class="modal-footer justify-center">
+      <button
+        (click)="closeModal($event)"
+        [disabled]="isSaving"
+        [id]="'btn-cancel'"
+        class="button modal-cancel"
+        type="button">
+        Cancel
+      </button>
+      <button
+        (click)="onConfirm($event)"
+        [disabled]="isSaving"
+        class="button is-community"
+        id="btn-modal-confirm-project-done"
+        type="button">
+        Confirm
+      </button>
+    </footer>
+
+  </app-utility-modal-empty>
+</div>

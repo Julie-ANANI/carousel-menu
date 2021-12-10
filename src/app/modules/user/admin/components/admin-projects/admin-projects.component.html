@@ -11,7 +11,7 @@
       <!-- import button -->
       <section *ngIf="canAccess(['import']) || canImport" class="text-right p-bottom-30">
         <label class="button is-primary is-sm is-outlined">
-          <input #fileupload (change)="onClickImport(fileupload.files[0])" [hidden]="true" type="file"/>
+          <input #fileupload (change)="onClickImport(fileupload.files[0])" [hidden]="true" type="file">
           <i class="fas fa-file-import icon-left"></i> Import project
         </label>
       </section>
@@ -39,3 +39,12 @@
 
   </div>
 </div>
+
+<!-- modal project status done -->
+<ng-container *ngIf="selectedInnovationId">
+  <app-admin-project-done-modal
+    [(showModal)]="showModalDone"
+    [innovationId]="selectedInnovationId">
+  </app-admin-project-done-modal>
+</ng-container>
+<!-- /modal project status done -->

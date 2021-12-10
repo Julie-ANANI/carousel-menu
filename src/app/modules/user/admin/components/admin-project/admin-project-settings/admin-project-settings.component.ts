@@ -59,6 +59,14 @@ export interface UserSuggestion {
 })
 export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
 
+  get showModalDone(): boolean {
+    return this._showModalDone;
+  }
+
+  set showModalDone(value: boolean) {
+    this._showModalDone = value;
+  }
+
   private _isLoading = true;
 
   private _innovation: Innovation = <Innovation>{};
@@ -128,6 +136,8 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
   private _orginalMilestone: Array<Milestone> = [];
 
   private _milestones: Array<Milestone> = [];
+
+  private _showModalDone = false;
 
   constructor(
     @Inject(PLATFORM_ID) protected _platformId: Object,
@@ -788,15 +798,26 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
   }
 
   public onUpdateStatus(status: InnovationStatus) {
-    this._innovation.status = status;
-    const saveObject: any = {};
-    saveObject.status = this._innovation.status;
-    if (status === 'EVALUATING') {
-      if (this._mission._id && this._mission.type === 'USER') {
-        this._mission.type = 'CLIENT';
+    if (status === 'DONE') {
+      this._showModalDone = true;
+    } else {
+      this._innovation.status = status;
+      const saveObject: any = {};
+      saveObject.status = this._innovation.status;
+      if (status === 'EVALUATING') {
+        if (this._mission._id && this._mission.type === 'USER') {
+          this._mission.type = 'CLIENT';
+        }
       }
+      this._saveProject('The status has been updated.', saveObject);
     }
-    this._saveProject('The status has been updated.', saveObject);
+  }
+
+  public onStatusUpdated(event: boolean) {
+    if (event) {
+      this._innovation.status = 'DONE';
+      this._innovationFrontService.setInnovation(this._innovation);
+    }
   }
 
   public onChangeAnonymous(event: Event) {

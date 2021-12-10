@@ -12,6 +12,7 @@ import { MessageErrorModule } from '../../../../utility/messages/message-error/m
 import { AdminProjectsRoutingModule } from './admin-projects-routing.module';
 import { AdminProjectModule } from '../admin-project/admin-project.module';
 import { TableComponentsModule } from '@umius/umi-common-component/table';
+import {AdminProjectDoneModule} from '../admin-project-done-modal/admin-project-done.module';
 
 @NgModule({
     imports: [
@@ -25,7 +26,8 @@ import { TableComponentsModule } from '@umius/umi-common-component/table';
         MessageErrorModule,
         AdminProjectsRoutingModule,
         AdminProjectModule,
-        TableComponentsModule
+        TableComponentsModule,
+        AdminProjectDoneModule
     ],
   declarations: [
     AdminProjectsComponent

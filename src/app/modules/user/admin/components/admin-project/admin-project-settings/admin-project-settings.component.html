@@ -522,7 +522,7 @@
               <label for="admin-project-status">Update Status</label>
 
               <select
-                *ngIf="canAccess(['edit', 'status'])"
+                *ngIf="canAccess(['edit', 'status']) && innovation.status !== 'DONE'"
                 (ngModelChange)="onUpdateStatus($event)"
                 [ngModel]="innovation.status"
                 class="form-select is-sm is-shadowed"
@@ -532,7 +532,7 @@
                 </option>
               </select>
 
-              <span *ngIf="!canAccess(['edit', 'status'])" class="is-text">
+              <span *ngIf="!canAccess(['edit', 'status']) || innovation.status === 'DONE'" class="is-text">
                 {{ innovation.status | titlecase }}
               </span>
 
@@ -677,6 +677,15 @@
 
 </div>
 
+<!-- modal project status done -->
+<ng-container *ngIf="canAccess(['edit', 'status']) && innovation.status !== 'DONE'">
+  <app-admin-project-done-modal
+    (statusUpdated)="onStatusUpdated($event)"
+    [(showModal)]="showModalDone"
+    [innovationId]="innovation._id">
+  </app-admin-project-done-modal>
+</ng-container>
+<!-- /modal project status done -->
 
 <!-- modal -->
 <ng-container *ngIf="canAccess(['edit', 'community']) && !isLoading && !innovation.published">
