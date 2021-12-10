@@ -43,6 +43,7 @@ import {Mission} from '../../../../models/mission';
 import {MissionQuestionService} from '../../../../services/mission/mission-question.service';
 import {NotificationTrigger} from '../../../../models/notification';
 import {NotificationService} from '../../../../services/notification/notification.service';
+import {ExecutiveReport} from '../../../../models/executive-report';
 
 type ModalType = 'NOTIFY_DOCUMENTS' | '';
 
@@ -76,6 +77,8 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy, OnChanges
   @Input() reportShared = false;
 
   @Input() showAnonymousAnswers = false;
+
+  @Input() executiveReport: ExecutiveReport = <ExecutiveReport>{};
 
   @Input() set project(value: Innovation) {
     if (value && value._id) {
@@ -202,7 +205,7 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy, OnChanges
 
   ngOnChanges(changes: SimpleChanges) {
     const currentItem: SimpleChange = changes.project;
-    if (!currentItem.previousValue) {
+    if (!!currentItem && !currentItem.previousValue) {
       this._initializeReport();
     } else {
       this._questions = InnovationFrontService.questionsList(this._innovation);
