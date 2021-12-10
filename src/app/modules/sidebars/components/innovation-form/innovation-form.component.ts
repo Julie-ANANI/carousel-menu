@@ -46,7 +46,7 @@ export class InnovationFormComponent implements OnInit, OnDestroy {
 
   private _type = '';
 
-  private _project: Innovation = {};
+  private _project: Innovation = <Innovation>{};
   private _isChange = false;
 
   private _email = {};
