@@ -56,7 +56,10 @@
           class="menu-item">
           Make project invisible to client
         </div>
-        <div (click)="openModalEnd($event)" class="menu-item">
+        <div
+          *ngIf="innovation.status !== 'DONE'"
+          (click)="openModalEnd($event)"
+          class="menu-item">
           End project
         </div>
       </div>
@@ -489,19 +492,11 @@
 <!-- /Modal to ask the admin to confirm for the preview of the synthesis at the side of the client -->
 
 <!-- Modal to ask the operator to sure about ending the project -->
-<app-utility-modal *ngIf="isAdminSide" [(showModal)]="isModalEnd" [title]="'Confirmation Board'">
-
-  <section class="modal-body">
-    Do you really want to end this project? Please keep in mind that after this you won't be able to make
-    any further changes.
-  </section>
-
-  <!-- footer -->
-  <footer class="modal-footer">
-    <button class="button modal-cancel">Cancel</button>
-    <button class="button is-primary" (click)="onClickEndInnovationConfirm($event)">Confirm</button>
-  </footer>
-  <!-- /footer -->
-
-</app-utility-modal>
+<ng-container *ngIf="isAdminSide && innovation.status !== 'DONE'">
+  <app-admin-project-done-modal
+    (statusUpdated)="onStatusUpdated($event)"
+    [(showModal)]="isModalEnd"
+    [innovationId]="innovation._id">
+  </app-admin-project-done-modal>
+</ng-container>
 <!-- /Modal to ask operator to sure about ending the project -->

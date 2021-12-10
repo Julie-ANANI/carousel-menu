@@ -9,6 +9,7 @@ import {NgxPageScrollModule} from "ngx-page-scroll";
 import {ModalModule} from "../../../utility/modals/modal/modal.module";
 import {SharedWorldListModule} from '../../../shared/components/shared-world-list/shared-world-list.module';
 import {InputListModule} from '../../../utility/input-list/input-list.module';
+import {AdminProjectDoneModule} from '../../../user/admin/components/admin-project-done-modal/admin-project-done.module';
 
 @NgModule({
     imports: [
@@ -19,7 +20,8 @@ import {InputListModule} from '../../../utility/input-list/input-list.module';
         NgxPageScrollModule,
         ModalModule,
         SharedWorldListModule,
-        InputListModule
+        InputListModule,
+        AdminProjectDoneModule
     ],
   declarations: [
     SidebarFilterAnswersComponent

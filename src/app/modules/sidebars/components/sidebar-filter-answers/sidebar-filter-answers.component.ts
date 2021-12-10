@@ -203,6 +203,12 @@ export class SidebarFilterAnswersComponent implements OnChanges, OnDestroy {
     this._isModalPreview = true;
   }
 
+  public onStatusUpdated(event: boolean) {
+    if (event) {
+      this._innovation.status = 'DONE';
+    }
+  }
+
   public openModalEnd(event: Event) {
     event.preventDefault();
     this._isModalEnd = true;
@@ -300,25 +306,6 @@ export class SidebarFilterAnswersComponent implements OnChanges, OnDestroy {
           this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
           console.error(err);
         });
-    }
-  }
-
-  /***
-   * This function will make the project end and synthesis will be available to the client.
-   * @param {Event} event
-   */
-  public onClickEndInnovationConfirm(event: Event) {
-    event.preventDefault();
-    if (this.isAdminSide) {
-      this._innovationService.save(this._innovation._id, {status: 'DONE'}).pipe(first())
-        .subscribe(() => {
-          this._isModalEnd = false;
-          this._translateNotificationsService.success('Success',
-          'The project has been successfully ended, and the complete synthesis is available at the client side.');
-      }, (err: HttpErrorResponse) => {
-          this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
-          console.error(err);
-      });
     }
   }
 

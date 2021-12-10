@@ -30,6 +30,18 @@ import { LocalStorageService } from "@umius/umi-common-component/services/localS
 
 export class AdminProjectsComponent implements OnInit {
 
+  get selectedInnovationId(): string {
+    return this._selectedInnovationId;
+  }
+
+  get showModalDone(): boolean {
+    return this._showModalDone;
+  }
+
+  set showModalDone(value: boolean) {
+    this._showModalDone = value;
+  }
+
   private _projects: Array<any> = [];
 
   private _totalProjects = -1;
@@ -57,6 +69,10 @@ export class AdminProjectsComponent implements OnInit {
   private _fetchingError = false;
 
   private _missionTemplates: Array<MissionTemplate> = [];
+
+  private _showModalDone = false;
+
+  private _selectedInnovationId = '';
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _configService: ConfigService,
@@ -780,12 +796,21 @@ export class AdminProjectsComponent implements OnInit {
 
   private _update(context: any, column: any, value: any) {
     switch (column._attrs[0]) {
+
       case 'status':
-        const saveObject = {
-          status: value.toUpperCase()
-        };
-        this._updateInnovation('The project has been updated.', saveObject, context._id);
+        const newStatus = value.toUpperCase();
+        this._selectedInnovationId = '';
+        if (newStatus === 'DONE') {
+          this._selectedInnovationId = context._id;
+          this._showModalDone = true;
+        } else {
+          const saveObject = {
+            status: newStatus
+          };
+          this._updateInnovation('The project has been updated.', saveObject, context._id);
+        }
         break;
+
       case 'mission.type':
         const missionObject = {
           type: value.toUpperCase()

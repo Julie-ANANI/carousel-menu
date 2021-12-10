@@ -15,6 +15,7 @@ import {TextInputModule} from '../../../../../utility/text-input/text-input.modu
 import { AdminProjectSettingsModalComponent } from './admin-project-settings-modal/admin-project-settings-modal.component';
 import {SharedUploadZonePhotoModule} from '../../../../../shared/components/shared-upload-zone-photo/shared-upload-zone-photo.module';
 import { AutoSuggestionUserModule } from "../../../../../utility/auto-suggestion-user/auto-suggestion-user.module";
+import {AdminProjectDoneModule} from '../../admin-project-done-modal/admin-project-done.module';
 
 @NgModule({
     imports: [
@@ -30,7 +31,8 @@ import { AutoSuggestionUserModule } from "../../../../../utility/auto-suggestion
         TextInputModule,
         SharedUploadZonePhotoModule,
         AutoSuggestionUserModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        AdminProjectDoneModule
     ],
   declarations: [
     AdminProjectSettingsComponent,
