@@ -45,13 +45,15 @@
 
             <ng-container *ngIf="innovation.status === 'EVALUATING'">
               <div
-                [ngClass]="{'tooltip is-multiline': triggerDocuments()}"
+                [ngClass]="{'tooltip is-multiline': triggerDocuments() || !executiveReport.externalDiffusion}"
                 class="m-top-15 m-right-20"
-                data-tooltip="This notification has been already sent.">
+                [attr.data-tooltip]="!executiveReport.externalDiffusion ? 'The toggle in the Storyboard is deactivated.'
+                : 'This notification has been already sent.'">
                 <button
                   (click)="openModal($event, 'NOTIFY_DOCUMENTS')"
-                  [disabled]="isSendingNotification || triggerDocuments()"
-                  [ngClass]="{'is-info': triggerDocuments(), 'is-community': !triggerDocuments()}"
+                  [disabled]="isSendingNotification || triggerDocuments() || !executiveReport.externalDiffusion"
+                  [ngClass]="{'is-info': triggerDocuments() || !executiveReport.externalDiffusion,
+                  'is-community': !triggerDocuments() && executiveReport.externalDiffusion}"
                   class="button is-outlined is-sm"
                   id="btn-notify-documents">
                   Send availability of documents mail
