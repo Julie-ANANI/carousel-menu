@@ -47,7 +47,9 @@ export class InnovationService {
   }
 
   public campaigns(innovationId: string): Observable<{result: Array<Campaign>}> {
-    return this._http.get<{result: Array<Campaign>}>('/innovation/' + innovationId + '/campaigns');
+    // We specify the limit in the query to avoid the default value of 10
+    // 50 should be enough, if one day the ops need more campaigns, please send me a mail it'll make me laugh
+    return this._http.get<{result: Array<Campaign>}>('/innovation/' + innovationId + '/campaigns?limit=50');
   }
 
   public addNewMediaVideoToInnovationCard(innovationId: string, innovationCardId: string, videoInfos: Video): Observable<any> {
