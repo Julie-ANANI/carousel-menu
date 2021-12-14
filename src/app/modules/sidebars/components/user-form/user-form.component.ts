@@ -252,8 +252,8 @@ export class UserFormComponent implements OnInit {
 
 
   private loadInnovations(): void {
-    if (this._user.id) {
-      this.userService.getInnovations(this._user.id).subscribe((innovations: any) => {
+    if (this._user._id) {
+      this.userService.getInnovations(this._user._id).subscribe((innovations: any) => {
         this._projects = innovations.result;
       });
     }

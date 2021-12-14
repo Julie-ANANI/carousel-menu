@@ -4,7 +4,7 @@ import { Model } from './model';
 
 export class User extends Model {
 
-  private _id: string;
+  _id: string;
   private _firstName: string;
   private _lastName: string;
   private _email: string;
