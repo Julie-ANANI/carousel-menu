@@ -166,7 +166,7 @@ export class AnswerQuestionComponent {
             });
           }, (err: HttpErrorResponse) => {
             this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.adminErrorMessage(err));
-            console.error(err);
+            //TODO all errors should be sent to the back for tracking.
           });
       }
     } else {
