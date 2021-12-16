@@ -182,9 +182,11 @@
     <!-- /country edit -->
 
     <!-- Show warnings when the targeting is off-->
-    <div *ngIf="!editCountry" class="m-bottom-30 form-group mxw-500">
-      <div *ngFor="let warning of answerWarnings" class="answer-warnings">
-        <span>{{'SIDEBAR_USER_ANSWER.' + warning.message | translate }} <i class="fas fa-exclamation-triangle"></i></span>
+    <div [hidden]="!adminMode">
+      <div *ngIf="!editCountry" class="m-bottom-30 form-group mxw-500">
+        <div *ngFor="let warning of answerWarnings" class="answer-warnings">
+          <span>{{'SIDEBAR_USER_ANSWER.' + warning.message | translate }} <i class="fas fa-exclamation-triangle"></i></span>
+        </div>
       </div>
     </div>
     <!-- /Show warnings when the targeting is off-->
