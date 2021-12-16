@@ -12,8 +12,8 @@ import { SidebarInterface } from '../../../../sidebars/interfaces/sidebar-interf
 import { distinctUntilChanged, first } from 'rxjs/operators';
 import { countries } from '../../../../../models/static-data/country';
 import { Observable } from 'rxjs';
-import {Clearbit} from "../../../../../models/clearbit";
-import {emailRegEx} from '../../../../../utils/regex';
+import { Clearbit } from "../../../../../models/clearbit";
+import { emailRegEx } from '../../../../../utils/regex';
 
 @Component({
   templateUrl: './account.component.html',
@@ -42,6 +42,10 @@ export class AccountComponent implements OnInit {
 
   private _countries = countries;
 
+  private _originalUserData: any;
+
+  private _toSave = false;
+
   // TODO : description, location
 
   constructor(private userService: UserService,
@@ -62,6 +66,12 @@ export class AccountComponent implements OnInit {
     this.patchForm();
   }
 
+  private formDataOnChange() {
+    this._formData.valueChanges.pipe(distinctUntilChanged()).subscribe((input: any) => {
+      this._toSave = JSON.stringify(input) !== JSON.stringify(this._originalUserData);
+    });
+  }
+
   private buildForm() {
     this._formData = this.formBuilder.group({
       firstName: ['', [Validators.required]],
@@ -73,7 +83,8 @@ export class AccountComponent implements OnInit {
       country: [''],
       sectors: [[]],
       technologies: [[]],
-      language: ['', [Validators.required]]
+      language: ['', [Validators.required]],
+      preferences: ['']
     });
   }
 
@@ -86,6 +97,8 @@ export class AccountComponent implements OnInit {
       this._jobTitle = response.jobTitle;
       this._userProvider = response.provider;
       this._profilePicture = response.profilePic ? response.profilePic.url || '' : '';
+      this._originalUserData = this._formData.value;
+      this.formDataOnChange();
     }, () => {
       this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
     });
@@ -128,7 +141,7 @@ export class AccountComponent implements OnInit {
 
   }
 
-  public companiesSuggestions = (searchString: string): Observable<Array<{name: string, domain: string, logo: string}>> => {
+  public companiesSuggestions = (searchString: string): Observable<Array<{ name: string, domain: string, logo: string }>> => {
     return this.autoCompleteService.get({query: searchString, type: 'company'});
   };
 
@@ -159,23 +172,24 @@ export class AccountComponent implements OnInit {
         this._profilePicture = response.profilePic ? response.profilePic.url || '' : '';
         response.country = this.getCountryName(response.country);
         this._formData.patchValue(response);
-        }, (error: any) => {
+        this._toSave = false;
+        this._originalUserData = this._formData.value;
+      }, (error: any) => {
         this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
       });
 
-    }
-    else {
+    } else {
       this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.INVALID_FORM');
     }
   }
 
 
-  addSector(event: {value: Array<string>}) {
+  addSector(event: { value: Array<string> }) {
     this._formData.get('sectors')!.setValue(event.value);
   }
 
 
-  addTechnology(event: {value: Array<string>}) {
+  addTechnology(event: { value: Array<string> }) {
     this._formData.get('technologies')!.setValue(event.value);
   }
 
@@ -223,6 +237,10 @@ export class AccountComponent implements OnInit {
 
   }
 
+  onChangePreference(event: Event) {
+    this._formData.get('preferences').setValue((event.target as HTMLInputElement).checked);
+  }
+
 
   getCountryName(value: string) {
     for (let code in this._countries) {
@@ -230,9 +248,7 @@ export class AccountComponent implements OnInit {
         return this._countries[code];
       }
     }
-
     return value;
-
   }
 
 
@@ -288,4 +304,7 @@ export class AccountComponent implements OnInit {
     return this._countries;
   }
 
+  get toSave(): boolean {
+    return this._toSave;
+  }
 }

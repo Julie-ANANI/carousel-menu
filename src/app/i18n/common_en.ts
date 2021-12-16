@@ -121,6 +121,9 @@ export const COMMON = {
   },
 
   'LABEL': {
+    'DEACTIVATED': 'Deactivated',
+    'ACTIVATED': 'Activated',
+    'EMAILS_NOTIFICATIONS': 'Emails notifications',
     'CLIENT_COMMENTS': 'Clients\' comments',
     'TENTATIVE_LEFT': 'attempt(s) left',
     'ADD': 'Add',

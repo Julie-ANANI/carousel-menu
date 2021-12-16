@@ -21,6 +21,7 @@ export class User extends Model {
   private _jobTitle: string;
   private _country: string;
   private _provider: string;
+  private _preferences: boolean;
   private _access?: {adminSide?: object};
 
   constructor(user?: any) {
@@ -187,6 +188,15 @@ export class User extends Model {
 
   set provider(value: string) {
     this._provider = value;
+  }
+
+
+  get preferences(): boolean {
+    return this._preferences;
+  }
+
+  set preferences(value: boolean) {
+    this._preferences = value;
   }
 
   get access(): {adminSide?: object} {

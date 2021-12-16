@@ -210,9 +210,30 @@
 
           </div>
 
+          <!-- emails notifications -->
+          <div class="input-group inline">
+            <div class="form-group d-flex align-center" style="margin-left: unset">
+              <label class="form-label" for="user-account-preference">{{'COMMON.LABEL.EMAILS_NOTIFICATIONS' | translate}}</label>
+              <label class="form-switch m-left-25">
+                <input
+                  id="user-account-preference"
+                  (change)="onChangePreference($event)"
+                  [checked]="formData.get('preferences').value"
+                  type="checkbox">
+                <i class="form-icon"></i> {{formData.get('preferences').value? ('COMMON.LABEL.ACTIVATED' | translate)  : ('COMMON.LABEL.DEACTIVATED' | translate)}}
+              </label>
+            </div>
+          </div>
+          <!-- /emails notifications -->
+
           <!-- save button -->
           <div class="save-wrapper text-center">
-            <button class="btn btn-primary" type="submit" [disabled]="formData.invalid">{{ 'COMMON.BUTTON.SAVE' | translate }}</button>
+            <button class="button is-primary badge is-icon" type="submit"
+                    [ngClass]="{'is-active': toSave}"
+                    [disabled]="formData.invalid || !toSave">
+              <i class="fas fa-save" *ngIf="toSave"></i>
+              {{ 'COMMON.BUTTON.SAVE' | translate }}
+            </button>
           </div>
 
         </form>
