@@ -75,6 +75,11 @@
           class="form-input is-shadowed"
           type="text">
       </label>
+      <div
+        *ngIf="errors"
+        class="form-input-error">
+        {{ 'NEW_PROJECT.TITLE.REQUIRED' | translate }}
+      </div>
     </div>
   </div>
   <!-- /title -->
