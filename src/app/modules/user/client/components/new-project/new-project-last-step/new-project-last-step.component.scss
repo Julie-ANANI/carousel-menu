@@ -38,4 +38,12 @@
 
   }
 
+  // Form element: Input hint && validation styles
+  .form-input-error {
+    color: $text-alert-color;
+    font-size: $font-size-sm;
+    padding: $unit-1 0 $layout-spacing;
+    margin: 0;
+  }
+
 }

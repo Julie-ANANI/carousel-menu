@@ -22,6 +22,10 @@ export const NEW_PROJECT = {
     'ANALYSE': '3. Analyse'
   },
 
+  'TITLE': {
+    'REQUIRED': 'Le titre est requis'
+  },
+
   'COLLABORATORS_QUESTION': 'Souhaitez-vous ajouter des collaborateurs ?',
 
   'COLLABORATORS_TERMS': 'Veuillez noter que les collaborateurs ont accès au projet ainsi qu’aux résultats et aux ' +

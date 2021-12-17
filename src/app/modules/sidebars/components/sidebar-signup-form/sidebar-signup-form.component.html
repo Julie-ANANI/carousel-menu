@@ -12,7 +12,7 @@
         type="text">
       <div
         *ngIf="signupForm.get('firstName').touched && signupForm.get('firstName').invalid
-        && signupForm.get('firstName').hasError('required')"
+        && hasError('firstName')"
         class="form-input-hint">
           {{ 'COMMON.REQUIRED.FIRSTNAME' | translate }}
         </div>
@@ -30,7 +30,7 @@
         type="text">
       <div
         *ngIf="signupForm.get('lastName').touched && signupForm.get('lastName').invalid
-        && signupForm.get('lastName').hasError('required')"
+        && hasError('lastName')"
         class="form-input-hint">
         {{ 'COMMON.REQUIRED.LASTNAME' | translate }}
       </div>

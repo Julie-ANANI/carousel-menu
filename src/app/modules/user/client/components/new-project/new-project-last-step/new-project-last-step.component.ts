@@ -84,6 +84,8 @@ export class NewProjectLastStepComponent {
 
   private _restitutionDate: Date = new Date();
 
+  private _errors = false;
+
   /**
    * upto this date all the previous date are disabled for the selection.
    * @private
@@ -119,7 +121,12 @@ export class NewProjectLastStepComponent {
    * when the user enter the title of the project
    */
   public onChangeProject() {
-    this.projectNameChange.emit(this._projectName);
+    if(!!this._projectName && this._projectName.trim().length > 0) {
+      this._errors = false;
+      this.projectNameChange.emit(this._projectName.trim());
+    } else {
+      this._errors = true;
+    }
   }
 
   /**
@@ -212,6 +219,10 @@ export class NewProjectLastStepComponent {
 
   get isRestitutionDateSelected(): boolean {
     return this._isRestitutionDateSelected;
+  }
+
+  get errors():boolean {
+    return this._errors;
   }
 
 }
