@@ -704,6 +704,12 @@
       <!-- notify team -->
       <div *ngSwitchCase="'NOTIFY_TEAM'">
         You are about to send an email to the Market Test project team.
+        <div class="p-left-15 p-top-10">
+          <p class="m-bottom-1">
+            Last mailing date: {{ notificationJobs.length ? (notificationJobs[0].updated | date:'dd/MM/y') : 'NA' }}
+          </p>
+          <p>Number of mailings: {{ notificationJobs.length }}</p>
+        </div>
       </div>
       <!-- /notify team -->
 

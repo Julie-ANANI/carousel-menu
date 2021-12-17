@@ -209,7 +209,7 @@ export class CommonService {
    * one place for the date format based on the platform lang.
    */
   public dateFormat(): string {
-    return this._translateService.currentLang === 'fr' ? 'dd/MM/y' : 'y/MM/dd';
+    return this._translateService.currentLang === 'fr' ? 'dd/MM/y' : 'MM/dd/y';
   }
 
 }

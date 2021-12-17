@@ -220,7 +220,7 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy, OnChanges
       this._notificationService.registerJob(this._innovation, 'TRIGGER_DOWNLOAD_DOCUMENTS')
         .pipe(first()).subscribe((res) => {
         this.closeModal(event);
-        this._translateNotificationsService.success('Success', res.message);
+        this._translateNotificationsService.success('Notification Job Success', res.message);
         this._isSendingNotification = false;
         this._innovation.notifications.push('TRIGGER_DOWNLOAD_DOCUMENTS');
       }, (err: HttpErrorResponse) => {

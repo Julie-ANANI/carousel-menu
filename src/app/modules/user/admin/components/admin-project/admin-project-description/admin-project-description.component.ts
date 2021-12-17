@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {Component, Inject, OnDestroy, OnInit, PLATFORM_ID} from '@angular/core';
 import { InnovationFrontService } from '../../../../../../services/innovation/innovation-front.service';
 import { Innovation } from '../../../../../../models/innovation';
 import { Subject } from 'rxjs';
@@ -14,6 +14,9 @@ import { RolesFrontService } from '../../../../../../services/roles/roles-front.
 import { EtherpadFrontService } from '../../../../../../services/etherpad/etherpad-front.service';
 import { MediaFrontService } from '../../../../../../services/media/media-front.service';
 import {NotificationService} from '../../../../../../services/notification/notification.service';
+import {NotificationJob} from '../../../../../../models/notification';
+import {isPlatformBrowser} from '@angular/common';
+import {Config} from '../../../../../../models/config';
 
 type modalType = 'NEW_SECTION' | 'DELETE_SECTION' | 'NOTIFY_TEAM' | '';
 
@@ -29,6 +32,14 @@ interface Toggle {
 })
 
 export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
+
+  get notificationJobs(): Array<NotificationJob> {
+    return this._notificationJobs;
+  }
+
+  get isFetchingJobs(): boolean {
+    return this._isFetchingJobs;
+  }
 
   get isSendingNotification(): boolean {
     return this._isSendingNotification;
@@ -75,7 +86,6 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
     summary: true
   };
 
-
   private _isSavingMedia = false;
 
   private _isEditableComment = false;
@@ -88,11 +98,15 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
 
   private _isSendingNotification = false;
 
-  constructor(private _innovationFrontService: InnovationFrontService,
+  private _notificationJobs: Array<NotificationJob> = [];
+
+  private _isFetchingJobs = true;
+
+  constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
+              private _innovationFrontService: InnovationFrontService,
               private _innovationService: InnovationService,
               private _notificationService: NotificationService,
               private _etherpadFrontService: EtherpadFrontService,
-              /**private _translationService: TranslationService,*/
               private _rolesFrontService: RolesFrontService,
               private _translateNotificationsService: TranslateNotificationsService) {
   }
@@ -105,6 +119,7 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
       this._innovation = innovation || <Innovation>{};
       this._isEditableComment = this._isEditable && (this._innovation.status === 'SUBMITTED' || this._innovation.status === 'EDITING');
       this._initToggle();
+      this._getAllJobs();
     });
 
     this._innovationFrontService.activeCardIndex().pipe(takeUntil(this._ngUnsubscribe)).subscribe((index) => {
@@ -113,6 +128,29 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
       }
     });
 
+
+  }
+
+  private _getAllJobs() {
+    if (isPlatformBrowser(this._platformId) && !this._notificationJobs.length && this._isFetchingJobs && this._innovation._id) {
+      this._isFetchingJobs = false;
+
+      const config: Config = {
+        fields: 'innovationRef updated',
+        limit: '',
+        offset: '0',
+        search: '{}',
+        innovationRef: this._innovation._id,
+        sort: '{"updated": -1}'
+      };
+
+      this._notificationService.getAllJobs(config).pipe(first()).subscribe((response) => {
+        this._notificationJobs = response && response.result || [];
+      }, (err: HttpErrorResponse) => {
+        this._translateNotificationsService.error('Notification Jobs Error', ErrorFrontService.adminErrorMessage(err));
+        console.error(err);
+      });
+    }
   }
 
   /**
@@ -130,6 +168,7 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
           this.closeModal();
           this._translateNotificationsService.success('Success', res.message);
           this._isSendingNotification = false;
+          this._notificationJobs.unshift(res.job);
           }, (err: HttpErrorResponse) => {
           this._isSendingNotification = false;
           this._translateNotificationsService.error('Error', ErrorFrontService.adminErrorMessage(err));
