@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Campaign } from '../../../../../../models/campaign';
+import {Campaign, ProsStats} from '../../../../../../models/campaign';
 import { ProfessionalsService } from '../../../../../../services/professionals/professionals.service';
 import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
 import { first } from 'rxjs/operators';
@@ -108,16 +108,21 @@ export class AdminCampaignProsComponent implements OnInit {
     this._activatedRoute.data.subscribe((data) => {
       if (data['campaign']) {
         this._campaign = data['campaign'];
-        this._campaignService.getProsStats(this._campaign._id).subscribe((stats) => {
-          this._prosStatsConfig = this.setProsStatsConfig(stats);
-        })
         this._campaignFrontService.setActiveCampaign(this._campaign);
         this._campaignFrontService.setActiveCampaignTab('pros');
         this._initCampaign();
         this._campaignFrontService.setLoadingCampaign(false);
         this._getProfessionals();
+        this._prosStatsConfig = this.setProsStatsConfig((this._campaign.stats && this._campaign.stats.pros) || {});
       }
     });
+  }
+
+  loadStats() {
+    this._campaignService.getProsStats(this._campaign._id).subscribe((result) => {
+      this._campaign.stats = result
+      this._prosStatsConfig = this.setProsStatsConfig(result.pros ||{});
+    })
   }
 
   private _initCampaign() {
@@ -157,67 +162,30 @@ export class AdminCampaignProsComponent implements OnInit {
     }
   }
 
-  public statsConfig(): Array<StatsInterface> {
-    return [
-      {
-        heading: 'Pros',
-        content: [
-          {
-            subHeading: 'Found',
-            value: this._campaignStat('professional').toString(10),
-          },
-          {
-            subHeading: 'Not reached',
-            value: this._campaignStat('notReached').toString(10),
-          },
-          { subHeading: 'Stared', value: '--' },
-          { subHeading: 'Duplicated', value: '--' },
-        ],
-      },
-      {
-        heading: 'Emails',
-        content: [
-          { subHeading: 'Good', value: this._campaignStat('good') + '%' },
-          { subHeading: 'Unsure', value: this._campaignStat('unsure') + '%' },
-          { subHeading: 'Bad', value: this._campaignStat('bad') + '%' },
-        ],
-      },
-      {
-        heading: 'Cost',
-        content: [
-          { subHeading: 'Requested', value: '--' },
-          { subHeading: 'Emails', value: '--' },
-        ],
-      },
-    ];
-  }
-
-  public setProsStatsConfig(stats: {goodEmails: number, badEmails: number, riskyEmails: number, batched: number }):
+  public setProsStatsConfig(stats: ProsStats | {}):
     Array<StatsInterface> {
     return [
       {
         heading: 'Emails',
         content: [
-          { subHeading: 'Good', value: this._campaignProsStats(stats,'goodEmails').toString()},
-          { subHeading: 'Risky', value: this._campaignProsStats(stats, 'riskyEmails').toString()},
-          { subHeading: 'Bad', value: this._campaignProsStats(stats,'badEmails').toString()},
+          { subHeading: 'Good', value: AdminCampaignProsComponent._campaignProsStats(stats,'goodEmails')},
+          { subHeading: 'Risky', value: AdminCampaignProsComponent._campaignProsStats(stats, 'riskyEmails')}
         ]
       },
       {
         heading: 'Batch',
         content: [
-          { subHeading: 'Batched', value: this._campaignProsStats(stats, 'batched').toString()}
+          { subHeading: 'Batched', value: AdminCampaignProsComponent._campaignProsStats(stats, 'batched').toString()}
         ]
       }
     ];
   }
 
-  private _campaignStat(searchKey: string): number {
-    return CampaignFrontService.getBatchCampaignStat(this._campaign, searchKey);
-  }
-
-  private _campaignProsStats(stats: { goodEmails?: number; badEmails?: number; riskyEmails?: number; batched?: number; }, searchKey: string): number {
-    return stats[searchKey] || 0;
+  private static _campaignProsStats(
+    stats: { goodEmails?: number; badEmails?: number; riskyEmails?: number; batched?: number; },
+    searchKey: string
+  ): string {
+    return (stats[searchKey] || 0).toString();
   }
 
   public onClickAdd() {

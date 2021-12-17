@@ -65,8 +65,12 @@ export class CampaignService {
     return this._http.get(`/campaign/${campaignId}/prosStats`);
   }
 
-  public messagesStats(campaignId: string): Observable<Array<Batch>> {
-    return this._http.get<Array<Batch>>(`/campaign/${campaignId}/messagesStats`);
+  public getBatchesStats(campaignId: string): Observable<any> {
+    return this._http.get(`/campaign/${campaignId}/batchesStats`);
+  }
+
+  public getBatches(campaignId: string): Observable<Array<Batch>> {
+    return this._http.get<Array<Batch>>(`/campaign/${campaignId}/batches`);
   }
 
   public createNewBatch(campaignId: string, batch: Batch): Observable<any> {

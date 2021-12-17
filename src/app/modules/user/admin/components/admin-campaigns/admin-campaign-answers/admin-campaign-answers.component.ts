@@ -258,7 +258,7 @@ export class AdminCampaignAnswersComponent implements OnInit {
     });
   }
 
-  private _campaignStat(type: string, searchKey?: any): number {
+  private _answerStat(type: string, searchKey?: any): number {
     return CampaignFrontService.answerStat(this._answers, type, searchKey);
   }
 
@@ -267,18 +267,18 @@ export class AdminCampaignAnswersComponent implements OnInit {
       {
         heading: 'Insight',
         content: [
-          {subHeading: 'Answer rate', value: this._campaignStat('answer_rate').toString(10)},
-          {subHeading: 'Validated', value: this._campaignStat('status', 'VALIDATED').toString(10)},
-          {subHeading: 'Rejected by mail', value: this._campaignStat('status', 'REJECTED_GMAIL').toString(10)},
-          {subHeading: 'Auto validated', value: this._campaignStat('status', 'VALIDATED_UMIBOT').toString(10)},
-          {subHeading: 'Auto rejected', value: this._campaignStat('status', 'REJECTED_UMIBOT').toString(10)}
+          {subHeading: 'Answer rate', value: this._answerStat('answer_rate').toString(10)},
+          {subHeading: 'Validated', value: this._answerStat('status', 'VALIDATED').toString(10)},
+          {subHeading: 'Rejected by mail', value: this._answerStat('status', 'REJECTED_GMAIL').toString(10)},
+          {subHeading: 'Auto validated', value: this._answerStat('status', 'VALIDATED_UMIBOT').toString(10)},
+          {subHeading: 'Auto rejected', value: this._answerStat('status', 'REJECTED_UMIBOT').toString(10)}
           ]
       },
       {
         heading: 'Quality',
         content: [
           {subHeading: 'Fill rate', value: '--'},
-          {subHeading: 'Time spent', value: this._campaignStat('quality', 'time_elapsed').toString(10)},
+          {subHeading: 'Time spent', value: this._answerStat('quality', 'time_elapsed').toString(10)},
         ]
       }
       ];

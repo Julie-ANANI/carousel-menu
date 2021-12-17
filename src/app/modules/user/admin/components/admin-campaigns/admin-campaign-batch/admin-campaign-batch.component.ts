@@ -6,7 +6,7 @@ import {
   PLATFORM_ID,
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Campaign } from '../../../../../../models/campaign';
+import { Campaign, CampaignStats } from '../../../../../../models/campaign';
 import { CampaignService } from '../../../../../../services/campaign/campaign.service';
 import { TranslateNotificationsService } from '../../../../../../services/notifications/notifications.service';
 import { Batch } from '../../../../../../models/batch';
@@ -25,6 +25,7 @@ import { Innovation } from '../../../../../../models/innovation';
 import { InnovationFrontService } from '../../../../../../services/innovation/innovation-front.service';
 import { MissionService } from '../../../../../../services/mission/mission.service';
 import { Mission } from '../../../../../../models/mission';
+import {StatsInterface} from "../../../../../../models/stats";
 
 @Component({
   templateUrl: './admin-campaign-batch.component.html',
@@ -33,7 +34,7 @@ import { Mission } from '../../../../../../models/mission';
 export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
   private _campaign: Campaign = <Campaign>{};
 
-  private _stats: any = {};
+  private _batches: any = {};
 
   private _batchesTable: Array<Table> = [];
 
@@ -71,6 +72,8 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
   private _innovation: Innovation = <Innovation>{};
 
   private _innovationCardLanguages: string[] = [];
+
+  private _statsConfig: Array<StatsInterface> = [];
 
   /***
    * Calcule d'une date d'envoi à partir des inputs de la date et heure
@@ -114,6 +117,7 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
         this._campaignFrontService.setActiveCampaignTab('batch');
         this._initCampaign();
         this._campaignFrontService.setLoadingCampaign(false);
+        this._statsConfig = this.setBatchesStatsConfig(this._campaign.stats);
       }
     });
 
@@ -131,7 +135,7 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
   }*/
 
   public toSend(): string {
-    return CampaignFrontService.getBatchCampaignStat(
+    return CampaignFrontService.getCampaignStats(
       this._campaign,
       'good_emails'
     ).toString(10);
@@ -139,7 +143,6 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
 
   private _initCampaign() {
     this._getInnovationLanguages();
-
     this._getBatches();
 
     const _scenariosNames: Set<string> = new Set<string>();
@@ -174,6 +177,13 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
     }
   }
 
+  public loadStats() {
+    this._campaignService.getBatchesStats(this._campaign._id).subscribe((result) => {
+      this._campaign.stats = result
+      this._statsConfig = this.setBatchesStatsConfig(result);
+    })
+  }
+
   private _getInnovationLanguages() {
     this._innovationCardLanguages = [];
     if (this._campaign
@@ -187,22 +197,22 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
   }
 
   private _reinitializeVariables() {
-    this._stats = {};
+    this._batches = {};
     this._batchesTable = [];
   }
 
   private _getBatches() {
     if (isPlatformBrowser(this._platformId)) {
       this._campaignService
-        .messagesStats(this._campaign._id)
+        .getBatches(this._campaign._id)
         .pipe(first())
         .subscribe(
           (stats) => {
-            this._stats = stats;
+            this._batches = stats;
             this._batchesTable = [];
-            if (this._stats.batches) {
-              this._getMissionToUpdate(this._stats.batches);
-              this._stats.batches.forEach((batch: Batch) => {
+            if (this._batches.batches) {
+              this._getMissionToUpdate(this._batches.batches);
+              this._batches.batches.forEach((batch: Batch) => {
                 this._batchesTable.push(this._initBatchTable(batch));
               });
             }
@@ -373,31 +383,6 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
     };
   }
 
-  public onUpdateStats(value: boolean) {
-    if (value) {
-      this._campaignService
-        .updateStats(this._campaign._id)
-        .pipe(first())
-        .subscribe(
-          () => {
-            this._reinitializeVariables();
-            this._getBatches();
-            this._translateNotificationsService.success(
-              'Success',
-              'The stats have been updated.'
-            );
-          },
-          (err: HttpErrorResponse) => {
-            this._translateNotificationsService.error(
-              'Update Stats Error...',
-              ErrorFrontService.getErrorMessage(err.status)
-            );
-            console.error(err);
-          }
-        );
-    }
-  }
-
   public activateSidebar(type: string) {
     switch (type) {
       case 'NEW_BATCH':
@@ -533,9 +518,9 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
   }
 
   private _getBatchIndex(batchId: string): number {
-    for (const batch of this._stats.batches) {
+    for (const batch of this._batches.batches) {
       if (batchId === batch._id) {
-        return this._stats.batches.indexOf(batch);
+        return this._batches.batches.indexOf(batch);
       }
     }
   }
@@ -617,7 +602,7 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
       .pipe(first())
       .subscribe(
         (modifiedBatch: any) => {
-          this._stats.batches[
+          this._batches.batches[
             this._getBatchIndex(modifiedBatch._id)
             ] = modifiedBatch;
           this._translateNotificationsService.success(
@@ -733,7 +718,7 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
       .subscribe(
         (batch) => {
           if (needToUpdateTable) {
-            this._stats.batches[this._getBatchIndex(batch._id)] = batch;
+            this._batches.batches[this._getBatchIndex(batch._id)] = batch;
             this._batchesTable.every((table, index) => {
               if (table._selector === batch._id) {
                 this._batchesTable[index] = this._initBatchTable(batch);
@@ -771,6 +756,30 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
     }
   }
 
+  private static _campaignBatchesStats(stats: CampaignStats, statKey: string, searchKey: string): string {
+    return ((stats[statKey] && stats[statKey][searchKey]) || 0).toString();
+  }
+
+  public setBatchesStatsConfig(stats: CampaignStats): Array<StatsInterface> {
+    return [
+      {
+        heading: 'Scheduled',
+        content: [
+          {subHeading: 'Pros scheduled', value: AdminCampaignBatchComponent._campaignBatchesStats(stats, 'pros', 'batched')},
+          {subHeading: 'Good emails scheduled', value: AdminCampaignBatchComponent._campaignBatchesStats(stats, 'batches', 'goodEmails')},
+          {subHeading: 'Risky emails scheduled', value: AdminCampaignBatchComponent._campaignBatchesStats(stats,'batches', 'riskyEmails')}
+        ]
+      },
+      {
+        heading: 'Shots',
+        content: [
+          {subHeading: 'Shot 1 excepted', value: AdminCampaignBatchComponent._campaignBatchesStats(stats, 'batches', 'shot1Excepted')},
+          {subHeading: 'Shot 2 excepted', value: AdminCampaignBatchComponent._campaignBatchesStats(stats, 'batches', 'shot2Excepted')},
+          {subHeading: 'Shot 3 excepted', value: AdminCampaignBatchComponent._campaignBatchesStats(stats, 'batches', 'shot3Excepted')}
+        ]
+      }
+    ];
+  }
 
   get dateFormat(): string {
     return this._translateService.currentLang === 'fr' ? 'dd/MM/y' : 'y/MM/dd';
@@ -826,8 +835,8 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
     return this._campaign;
   }
 
-  get stats() {
-    return this._stats;
+  get batches() {
+    return this._batches;
   }
 
   get batchesTable() {
@@ -892,6 +901,10 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
 
   get innovation(): Innovation {
     return this._innovation;
+  }
+
+  get statsConfig(): Array<StatsInterface> {
+    return this._statsConfig;
   }
 
   getBatch(index: number) {

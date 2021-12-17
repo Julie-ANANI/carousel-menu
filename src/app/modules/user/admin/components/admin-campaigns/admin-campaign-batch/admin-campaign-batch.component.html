@@ -1,3 +1,7 @@
+<app-admin-stats-banner (updateStats)="loadStats()"
+                        [updateBtn]="true"
+                        [config]="statsConfig">
+</app-admin-stats-banner>
 <div class="container grid-2xl fluid" id="admin-campaign-batch">
   <div class="column col-sm-12 col-11 col-mx-auto">
 
@@ -97,7 +101,7 @@
 
       <!-- batches -->
       <section
-        *ngFor="let batch of stats['batches'];
+        *ngFor="let batch of batches['batches'];
         let batchIndex = index;"
         [ngStyle]="{ 'animation-duration': ((batchIndex + 1) * 200) + 'ms' }"
         class="card animate-slide slide-down">

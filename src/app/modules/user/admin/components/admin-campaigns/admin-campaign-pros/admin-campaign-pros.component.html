@@ -1,5 +1,5 @@
 <div class="m-bottom-2">
-  <app-admin-stats-banner
+  <app-admin-stats-banner [updateBtn]="true" (updateStats)="loadStats()"
     [config]="prosStatsConfig"></app-admin-stats-banner>
 </div>
 
