@@ -10,6 +10,7 @@ import { countries } from '../../../../models/static-data/country';
 import { TranslateService } from '@ngx-translate/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import {emailRegEx} from '../../../../utils/regex';
+import {UMIFormValidator} from '../../../../validators/UMIFormValidator';
 
 @Component({
   selector: 'app-sidebar-signup-form',
@@ -49,8 +50,8 @@ export class SidebarSignupFormComponent implements OnDestroy {
 
   private _buildForm() {
     this._signupForm = this._formBuilder.group( {
-      firstName: ['', [Validators.required]],
-      lastName: ['', [Validators.required]],
+      firstName: ['', [Validators.required, UMIFormValidator.validFormString]],
+      lastName: ['', [Validators.required, UMIFormValidator.validFormString]],
       company: this._formBuilder.group({name: [''], domain: [''], logo: ['']}),
       jobTitle: [''],
       email: ['', [Validators.required, Validators.pattern(emailRegEx)]],
@@ -144,6 +145,19 @@ export class SidebarSignupFormComponent implements OnDestroy {
   ngOnDestroy(): void {
     this._ngUnsubscribe.next();
     this._ngUnsubscribe.complete();
+  }
+
+  /**
+   * Verifies if there's at least one error on the form
+   * @param field
+   */
+  public hasError(field: string): boolean {
+    const errors = ['required', 'validFormString'];
+    let i = 0;
+    while(i < errors.length && !this._signupForm.get(field).hasError(errors[i])) {
+      i++;
+    }
+    return i < errors.length;
   }
 
 }
