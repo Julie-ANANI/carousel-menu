@@ -1,17 +1,19 @@
-<div *ngIf="isBrowser" class="text-sm text-medium" id="piechart">
+<p>TOTALITY INVALIDED</p>
+<p>{{horizontalStackedChart.validation}}</p>
+<div *ngIf="isBrowser" class="text-sm text-medium" id="horizontal-stacked-chart">
 
-  <p *ngIf="showFavorable && pieChart" class="m-bottom-15 d-flex align-center justify-center">
+  <p *ngIf="showFavorable && horizontalStackedChart" class="m-bottom-15 d-flex align-center justify-center">
     <ng-container  *ngIf="!editFavorableAnswersLabel">
       <span>
-        {{ pieChart.percentage || 0 }}% {{ favorableAnswersLabel[reportingLang] || ('MARKET_REPORT.PIE_CHART' | translateIn: reportingLang) }}
+        {{ horizontalStackedChart.percentage || 0 }}% {{ favorableAnswersLabel[reportingLang] || ('MARKET_REPORT.PIE_CHART' | translateIn: reportingLang) }}
       </span>
-      <span  *ngIf="!pieChart.percentage && favorableAnswersLabel[reportingLang]">
+      <span  *ngIf="!horizontalStackedChart.percentage && favorableAnswersLabel[reportingLang]">
         {{ favorableAnswersLabel[reportingLang]}}
       </span>
     </ng-container>
 
     <span *ngIf="editFavorableAnswersLabel" class="d-flex align-center">
-      <span *ngIf="pieChart.percentage" class="m-right-4">{{ pieChart.percentage || 0 }}%</span>
+      <span *ngIf="horizontalStackedChart.percentage" class="m-right-4">{{ horizontalStackedChart.percentage || 0 }}%</span>
       <input class="form-input text-sm" type="text" (focusout)="editFavorableAnswersLabel = false"
              [(ngModel)]="favorableAnswersLabel[reportingLang]"
              (ngModelChange)="positiveLabelChanged.emit(favorableAnswersLabel)">
@@ -28,15 +30,14 @@
         class="img-responsive">
     </sub>
   </p>
-
   <div class="popover" (mouseleave)="indexSection = -1">
     <canvas
       class="c-hand"
-      *ngIf="pieChart"
+      *ngIf="horizontalStackedChart"
       [chartType]="'pie'"
       [colors]="colors"
       [datasets]="datasets"
-      [labels]="pieChart.labels | multiling:reportingLang"
+      [labels]="horizontalStackedChart.labels | multiling:reportingLang"
       [legend]="false"
       [options]="options"
       (chartClick)="chartClicked($event)"
@@ -45,32 +46,32 @@
     <div *ngIf="!readonly && indexSection >= 0" class="absolute popover-container max-width-250"
          [ngStyle]="{'left': offsetXSection + 'px', 'top': offsetYSection + 'px'}">
       <div class="card p-10">
-        <span>{{(pieChart.labels| multiling:reportingLang)[indexSection] }}</span>
+        <span>{{(horizontalStackedChart.labels| multiling:reportingLang)[indexSection] }}</span>
         <div class="divider"></div>
       </div>
     </div>
   </div>
 
-  <ul *ngIf="pieChart" class="pie-data-wrapper animate-fade is-5">
-    <li *ngFor="let label of (pieChart.labels | multiling:reportingLang); let i = index">
+  <ul *ngIf="horizontalStackedChart" class="horizontal-stacked-data-wrapper animate-fade is-5">
+    <li *ngFor="let label of (horizontalStackedChart.labels | multiling:reportingLang); let i = index">
       <div class="popover" (mouseleave)="indexLegend = -1">
         <span (click)="indexLegend = i" class="shape is-circle is-xs m-right-1 c-hand"
               [ngStyle]="{ 'background-color': colors[0].backgroundColor[i], 'border-color': colors[0].backgroundColor[i] }">
         </span>
         <div *ngIf="!readonly && indexLegend === i" class="absolute popover-container max-width-250">
           <div class="card p-10">
-            <span>{{(pieChart.labels | multiling:reportingLang)[indexLegend]}}</span>
+            <span>{{(horizontalStackedChart.labels | multiling:reportingLang)[indexLegend]}}</span>
             <div class="divider"></div>
             <label class="form-checkbox text-background">
               <input type="checkbox" [(ngModel)]="positiveSections[indexLegend]" (change)="chartPositiveSectionChanged(indexLegend)">
-              <i class="form-icon"></i> {{ 'MARKET_REPORT.POSITIVE_ANSWER' | translateIn: reportingLang }}
+              <i class="form-icon"></i> {{ 'MARKET_REPORT.ANSWER' | translateIn: reportingLang }}
             </label>
           </div>
         </div>
       </div>
-      <span class="m-right-1">{{ pieChart.data[i] }}</span>
+      <span class="m-right-1">{{ horizontalStackedChart.data[i] }}</span>
       <span class="m-right-1">{{ label }}</span>
-      ({{ pieChart.labelPercentage[i] }})
+      ({{ horizontalStackedChart.labelPercentage[i] }})
     </li>
   </ul>
 

@@ -7,17 +7,18 @@ import { Innovation } from '../../../../../models/innovation';
 import { Tag } from '../../../../../models/tag';
 import { Multiling } from '../../../../../models/multiling';
 import { BarData } from '../models/bar-data';
-import { PieChart } from '../../../../../models/pie-chart';
+import { PieChart } from '../../../../../models/chart/pie-chart';
 import { Professional } from '../../../../../models/professional';
 import { MissionQuestion, MissionQuestionOption } from '../../../../../models/mission';
 import { MissionQuestionService } from '../../../../../services/mission/mission-question.service';
-import { StackedData} from '../models/stacked-data';
+import {HorizontalStackedChart} from '../../../../../models/chart/horizontal-stacked-chart';
+
 
 @Injectable({ providedIn: 'root' })
 
 export class ResponseService {
 
-  filteredAnswers = new Subject <Array<Answer>>();
+  filteredAnswers = new Subject<Array<Answer>>();
 
   /***
    * Return the list of tags on every user answers for a given question
@@ -30,7 +31,7 @@ export class ResponseService {
 
     return answers.reduce((tagsList, answer) => {
 
-      const answerTags: Array<Tag&{count?: number}> = answer.answerTags[tagId];
+      const answerTags: Array<Tag & { count?: number }> = answer.answerTags[tagId];
 
       if (Array.isArray(answerTags)) {
         answerTags.forEach((t) => {
@@ -78,7 +79,7 @@ export class ResponseService {
       answers.forEach((answer) => {
         if (answer.professional) {
           const index = professionals.findIndex((pro) => pro._id === answer.professional._id);
-          if (index === -1 ) {
+          if (index === -1) {
             professionals.push(answer.professional);
           }
         }
@@ -96,7 +97,7 @@ export class ResponseService {
    */
   public static getStarsAnswers(question: any, answers: Array<Answer>) {
 
-    let notesData: Array<{label: Multiling, sum: number, percentage: string, entry: []}> = [];
+    let notesData: Array<{ label: Multiling, sum: number, percentage: string, entry: [] }> = [];
 
     if (question && answers) {
 
@@ -143,7 +144,7 @@ export class ResponseService {
    */
   public static getRanksAnswers(question: Question | MissionQuestion, answers: Array<Answer>, lang: string) {
 
-    let ranksData: Array<{label: Multiling, sum: number, identifier: string, percentage: string}> = [];
+    let ranksData: Array<{ label: Multiling, sum: number, identifier: string, percentage: string }> = [];
 
     if (question && answers) {
       const ranking = this.rankingChartData(answers, question, lang);
@@ -169,6 +170,7 @@ export class ResponseService {
    */
   public static barsData(question: any, answers: Array<Answer>) {
 
+    console.log('JE PASSE PAR ICI GETVALUE -BARSDATA au debut');
     let barsData: Array<BarData> = [];
 
     if (question && answers) {
@@ -183,9 +185,9 @@ export class ResponseService {
             && a.answers[question.identifier + 'Quality'] !== 0);
 
 
-        } else if (question.controlType === 'radio' || question.controlType === 'likert-scale')  {
+        } else if (question.controlType === 'radio' || question.controlType === 'likert-scale') {
           filteredAnswers = answers.filter((a) => a.answers[question.identifier] === q.identifier
-            && a.answers[question.identifier + 'Quality'] !== 0 );
+            && a.answers[question.identifier + 'Quality'] !== 0);
 
         }
 
@@ -204,6 +206,7 @@ export class ResponseService {
          * so that we same value for every one.
          */
         if (q.entry && q.entry.length) {
+
           q.label = q.entry.reduce((acc: any, value: any) => {
             acc[value.lang] = value.label;
             return acc;
@@ -222,31 +225,17 @@ export class ResponseService {
         };
 
       });
-
-      // Then calcul percentages
-      const maxAnswersCount = question.controlType === 'checkbox' ?
-        barsData.reduce((acc, bd) => {
-          return (acc < bd.count) ? bd.count : acc;
-        }, 0) :
-        barsData.reduce((acc, bd) => {
-          return (acc + bd.count);
-        }, 0);
-
-      const relativePercentages: {difference: Array<number>, rounded: Array<number>} = {
-        difference: [],
-        rounded: []
-      };
+      const relativePercentages = this.getRelativePercentages(barsData, question).relativePercentages;
 
       barsData.forEach((bd) => {
         const absolutePercentage = bd.count * 100 / answers.length;
         bd.absolutePercentage = `${Math.round(absolutePercentage)}%`;
-        const relativePercentage = bd.count * 100 / maxAnswersCount;
-        relativePercentages.difference.push(Math.round(relativePercentage) - relativePercentage);
-        relativePercentages.rounded.push(Math.round(relativePercentage));
       });
 
-      const fixPercentagesSum = (values: {difference: Array<number>, rounded: Array<number>}, questionType: string) => {
-        if (questionType === 'radio') {
+
+      const fixPercentagesSum = (values: { difference: Array<number>, rounded: Array<number> }, questionType: string) => {
+//TODO JU : ENLEVER LIKERT-SCALE
+        if ((questionType === 'radio' || questionType === 'likert-scale')) {
           // first we check if the sum of rounded values is equal to 100
           let diff = values.rounded.reduce((acc: number, curr: number) => acc + curr, 0);
           diff = diff === 0 ? diff : diff - 100;
@@ -262,109 +251,124 @@ export class ResponseService {
           barsData.forEach((bd, i) => {
             bd.relativePercentage = `${relativePercentages.rounded[i]}%`;
           });
-        }
+        } /*else if ((questionType === 'likert-scale')) {
+
+          console.log('JE PASSE PAR ICI GETVALUE -BARSDATA');
+          this.getValueOfOptionsLikertScale(barsData, question);
+        }*/
       };
       fixPercentagesSum(relativePercentages, question.controlType);
 
-      if (question.controlType === 'checkbox') {
+
+      if ((question.controlType === 'checkbox')) {
         barsData.sort((a, b) => {
           return b.count - a.count;
         });
       }
 
     }
-
+    console.table(barsData);
     return barsData;
   }
 
-  /***
-   * this function is to get the bars data answer for the question type likert-scale.
-   * @param question
-   * @param answers
-   */
-  public static horizontalStackedBarsAnswers(question: any, answers: Array<Answer>) {
+  static getRelativePercentages(barsData: Array<BarData>, question: any): { relativePercentages: any, maxAnswersCount: number } {
 
-    let horizontalStackedBarsAnswers: Array<StackedData> = [];
+    //const maxAnswersCount = this.getMaxAnswersCount(barsData, question).maxAnswersCount;
+    const maxAnswersCount = question.controlType === 'checkbox' || question.controlType === 'likert-scale' ?
+      barsData.reduce((acc, bd) => {
+        return (acc < bd.count) ? bd.count : acc;
+      }, 0) :
+      barsData.reduce((acc, bd) => {
+        return (acc + bd.count);
+      }, 0);
 
-    if (question && answers) {
+    barsData
+      .reduce((acc, bd) => {
+        return (acc + bd.count);
+      }, 0);
 
-      horizontalStackedBarsAnswers = question.options.map((q: any) => {
 
-        let filteredAnswers: Array<Answer> = [];
+    let relativePercentages: { difference: Array<number>, rounded: Array<number> } = {
+      difference: [],
+      rounded: []
+    };
 
-        if (question.controlType === 'likert-scale') {
-          filteredAnswers = answers.filter((a) => a.answers[question.identifier] === q.identifier
-            && a.answers[question.identifier + 'Quality'] !== 0 );
-        }
+    barsData.forEach((bd) => {
+      const relativePercentage = bd.count * 100 / maxAnswersCount;
+      relativePercentages.difference.push(Math.round(relativePercentage) - relativePercentage);
+      relativePercentages.rounded.push(Math.round(relativePercentage));
+    });
 
-        filteredAnswers = filteredAnswers.sort((a, b) => {
-          if ((b.answers[question.identifier + 'Quality'] || 1) - (a.answers[question.identifier + 'Quality'] || 1) === 0) {
-            const a_length = a.answers[question.identifier + 'Comment'] ? a.answers[question.identifier + 'Comment'].length : 0;
-            const b_length = b.answers[question.identifier + 'Comment'] ? b.answers[question.identifier + 'Comment'].length : 0;
-            return b_length - a_length;
-          } else {
-            return (b.answers[question.identifier + 'Quality'] || 1) - (a.answers[question.identifier + 'Quality'] || 1);
+    return {
+      relativePercentages,
+      maxAnswersCount
+
+    };
+  }
+
+/*
+  public static getValueOfOptionsLikertScale(barsData: Array<BarData>,
+                                             question: Question | MissionQuestion = <Question | MissionQuestion>{},
+                                             answers: Array<Answer> = []) {
+    debugger;
+    //const weightImportanceOpt = [2, 1, 1, 1, 2]; //A mettre ailleurs
+    //const nameValidation: any = ['Totally', 'invalidated', 'Invalidated', 'Uncertain', 'Validated', 'Totally invalidated']; //A mettre ailleurs (array)
+
+    const relativePercentagesData = ResponseService.getRelativePercentages(barsData, question);
+    const allAnswerChosen = relativePercentagesData.relativePercentages;
+    const totalAnswersOptions = relativePercentagesData.maxAnswersCount;
+
+    const scale: number = 0.44;
+    let scoreOfValidated: any;
+    let positiveOrNegative: number;
+    const scoreNote = 20;
+    const weightAspectOption = this.computeWeights(question.options.length, question);
+    const weightImportanceOpt = this.computeMultiplier(question.options.length, question);
+
+    question.options.forEach((option: Option | MissionQuestionOption) => {
+        const identifier = option.identifier;
+        const filteredAnswers: Array<Answer> = answers.filter((a) => a.answers[question.identifier]
+          && Object.values(a.answers[question.identifier]).every((i: number) => {
+            return i ;
+          }));
+
+        let weightTotal = 0;
+
+        filteredAnswers.forEach(a => {
+
+          const entry = Object.entries(a.answers[question.identifier]).find(k => k[1] === identifier);
+          if (entry) {
+            const optLikertScale = parseInt(entry[0]);
+              const aspect = weightAspectOption[optLikertScale]; // weight of the likert-scale
+              const importance = weightImportanceOpt[optLikertScale]; // importance of the likert-scale
+              weightTotal += aspect * importance;
+              console.table(weightTotal);
           }
         });
 
-        /**
-         * we are iterating through entry and converting to Multiling label here
-         * so that we same value for every one.
-         */
-        if (question.entry && question.entry.length) {
-          question.label = question.entry.reduce((acc: any, value: any) => {
-            acc[value.lang] = value.label;
-            return acc;
-          }, {});
+        console.table(weightTotal);
+
+        positiveOrNegative = (weightTotal * allAnswerChosen) / totalAnswersOptions
+
+        if (positiveOrNegative > scale) {
+          scoreOfValidated = (positiveOrNegative * scoreNote);
+        } else {
+          //0 + totaly invalided
+          scoreOfValidated = 0;
         }
+        return scoreOfValidated;
 
-        return {
-          label: question.label,
-          answers: filteredAnswers,
-          absolutePercentage: '0%',
-          relativePercentage: '0%',
-          color: question.color,
-          count: filteredAnswers.length,
-          positive: question.positive,
-          identifier: question.identifier
-        };
 
-      });
-
-      const relativePercentages: {difference: Array<number>, rounded: Array<number>} = {
-        difference: [],
-        rounded: []
-      };
-
-      horizontalStackedBarsAnswers.forEach((bd) => {
-        const absolutePercentage = bd.count * 100 / answers.length;
-        bd.absolutePercentage = `${Math.round(absolutePercentage)}%`;
-      });
-
-      const fixPercentagesSum = (values: {difference: Array<number>, rounded: Array<number>}, questionType: string) => {
-        if (questionType === 'likert-scale') {
-          // first we check if the sum of rounded values is equal to 100
-          let diff = values.rounded.reduce((acc: number, curr: number) => acc + curr, 0);
-          diff = diff === 0 ? diff : diff - 100;
-          // if there is a difference, we need to fix it!
-          while (diff) {
-            const index = diff < 0 ?
-              values.difference.findIndex((value: number) => value === Math.min(...values.difference)) :
-              values.difference.findIndex((value: number) => value === Math.max(...values.difference));
-            values.rounded[index] -= diff / Math.abs(diff);
-            values.difference[index] = 1 + values.difference[index];
-            diff = values.rounded.reduce((acc: number, curr: number) => acc + curr, 0) - 100;
-          }
-          horizontalStackedBarsAnswers.forEach((bd, i) => {
-            bd.relativePercentage = `${relativePercentages.rounded[i]}%`;
-          });
-        }
-      };
-      fixPercentagesSum(relativePercentages, question.controlType);
-
-    }
-    return horizontalStackedBarsAnswers;
-  }
+        /!* for (const i in question.options) {
+           let scoreModulo = (scoreOfValidated - scoreOfValidated%4)/4
+           scoreModulo = question.option.nameValidation[i];
+           return question.options.nameValidation.label.value
+         }*!/
+        // @ts-ignore
+        /!*  return barsData;*!/
+      }
+    )
+  };*/
 
   /***
    * this function is to get the pie chart data for the question type radio.
@@ -405,46 +409,14 @@ export class ResponseService {
 
   /***
    * this function is to get the pie chart data for the question type radio.
-   * @param horizontalStackedBarsAnswers
    * @param answers
    */
-  public static horizontalStackedChartData(horizontalStackedBarsAnswers: Array<StackedData>, answers: Array<Answer>) {
+  public static horizontalStackedChartData(answers: Array<Answer> = [],
+                                           question: Question | MissionQuestion = <Question | MissionQuestion>{},
+                                           lang: string) {
 
-    let positiveAnswersCount = 0;
-
-    //TODO JU : METTRE STACKED DATA CHART
-    const horizontalStackedChartData: PieChart = {
-      data: [],
-      colors: [],
-      labels: {fr: [], en: []},
-      labelPercentage: []
-    };
-
-    horizontalStackedBarsAnswers.forEach((horizontalStackedBarsResponse) => {
-
-      if (horizontalStackedBarsResponse.positive) {
-        positiveAnswersCount += horizontalStackedBarsResponse.count;
-      }
-
-      horizontalStackedChartData.data.push(horizontalStackedBarsResponse.count);
-      horizontalStackedChartData.colors.push(horizontalStackedBarsResponse.color);
-      horizontalStackedChartData.labels.fr.push(horizontalStackedBarsResponse.label['fr'] || '');
-      horizontalStackedChartData.labels.en.push(horizontalStackedBarsResponse.label['en'] || '');
-      horizontalStackedChartData.labelPercentage.push(horizontalStackedBarsResponse.absolutePercentage);
-
-    });
-    horizontalStackedChartData.percentage = Math.round((positiveAnswersCount * 20) / answers.length);
-    return horizontalStackedChartData;
-
-  }
-
-
-  public static rankingChartData(answers: Array<Answer> = [],
-                                 question: Question | MissionQuestion = <Question | MissionQuestion>{},
-                                 lang: string) {
-
-    const rankingChart: {label: string, answers: Answer[]; percentage: number; count: number; identifier: string; }[] = [];
-    const weights = this.computeWeights(question.options.length);
+    const horizontalStackedChart: { label: string, answers: Answer[]; percentage: number; count: number; identifier: string; }[] = [];
+    const weights = this.computeWeights(question.options.length, question);
     const multipliers = this.computeMultiplier(question.options.length);
     question.options.forEach((option: Option | MissionQuestionOption) => {
       const identifier = option.identifier;
@@ -458,12 +430,74 @@ export class ResponseService {
       filteredAnswers.forEach(a => {
         // position in ranking
         const entry = Object.entries(a.answers[question.identifier]).find(k => k[1] === identifier);
+        console.table(entry)
         if (entry) {
+          console.table(entry);
           const optRank = parseInt(entry[0]);
+          console.table(optRank);
           if (optRank >= 0) {
+            console.table(optRank);
             const weight = weights[optRank]; // weight of the rank
+            console.table(weight);
             const multiplier = multipliers[optRank]; // multiplier of the rank
             optRankingAvg += weight * multiplier;
+            console.table(multiplier);
+          }
+        }
+      });
+
+      optRankingAvg = Math.round(optRankingAvg / filteredAnswers.length * 100);
+
+      horizontalStackedChart.push({
+        label: MissionQuestionService.label(option, 'label', lang),
+        answers: filteredAnswers,
+        percentage: optRankingAvg || 0,
+        count: filteredAnswers.length,
+        identifier: identifier
+      });
+
+    });
+
+    horizontalStackedChart.sort((a, b) => b.percentage - a.percentage);
+
+ /*   horizontalStackedChartData.percentage = Math.round((positiveAnswersCount * 20) / answers.length);*/
+    return horizontalStackedChart;
+
+  }
+
+
+
+  public static rankingChartData(answers: Array<Answer> = [],
+                                 question: Question | MissionQuestion = <Question | MissionQuestion>{},
+                                 lang: string) {
+
+    const rankingChart: { label: string, answers: Answer[]; percentage: number; count: number; identifier: string; }[] = [];
+    const weights = this.computeWeights(question.options.length, question);
+    const multipliers = this.computeMultiplier(question.options.length);
+    question.options.forEach((option: Option | MissionQuestionOption) => {
+      const identifier = option.identifier;
+      const filteredAnswers: Array<Answer> = answers.filter((a) => a.answers[question.identifier]
+        && Object.values(a.answers[question.identifier]).every((i: number) => {
+          return i >= 0;
+        }));
+
+      let optRankingAvg = 0;
+
+      filteredAnswers.forEach(a => {
+        // position in ranking
+        const entry = Object.entries(a.answers[question.identifier]).find(k => k[1] === identifier);
+        console.table(entry)
+        if (entry) {
+          console.table(entry);
+          const optRank = parseInt(entry[0]);
+          console.table(optRank);
+          if (optRank >= 0) {
+            console.table(optRank);
+            const weight = weights[optRank]; // weight of the rank
+            console.table(weight);
+            const multiplier = multipliers[optRank]; // multiplier of the rank
+            optRankingAvg += weight * multiplier;
+            console.table(multiplier);
           }
         }
       });
@@ -494,32 +528,58 @@ export class ResponseService {
    * Compute positions weights depending of number of options
    * First position will always be 1
    * Last position will always be 0
-   * @param n
+   * @param n + question
    */
-  public static computeWeights(n: number) {
-    const weights = [].constructor(n);
-    const steps = 1 / (n - 1);
-    for (let i = 0; i < weights.length; i++) {
-      weights[i] = 1 - steps * i;
+  public static computeWeights(n: number, question?: any) {
+    if ((question.controlType === 'ranking')) {
+      console.log('je suis à la condition ranking');
+      const weights = [].constructor(n);
+      const steps = 1 / (n - 1);
+      for (let i = 0; i < weights.length; i++) {
+        weights[i] = 1 - steps * i;
+      }
     }
-
-    return weights;
+    if ((question.controlType === 'likert-scale')) {
+      const weights = [0, 0.25, 0.5, 0.75, 1];
+      const steps = 1 / (5 - 1);
+      for (let i = 0; i < weights.length; i++) {
+        weights[i] = 1 - steps * i;
+      }
+      return {
+        n: n
+      };
+    }
   }
 
   /**
    * Compute positions multiplier depending of number of options
-   * @param n
+   * @param n + question?
    */
-  public static computeMultiplier(n: number) {
-    const multipliers = [].constructor(n);
-    const steps = 1 / (n - 1);
-    for (let i = 0; i < multipliers.length / 2; i++) {
-      multipliers[i] = 1 - steps * i;
-      multipliers[n - i - 1 ] = 1 - steps * i;
+  public static computeMultiplier(n: number, question?: any) {
+    if ((question.controlType === 'ranking')) {
+      const multipliers = [].constructor(n);
+      const steps = 1 / (n - 1);
+      console.log(steps);
+      // n = nombre option
+      console.log(n);
+      for (let i = 0; i < multipliers.length / 2; i++) {
+        multipliers[i] = 1 - steps * i;
+        multipliers[n - i - 1] = 1 - steps * i;
+      }
     }
-
-    return multipliers;
+    if ((question.controlType === 'likert-scale')) {
+      const multipliers = [2, 1, 1, 1, 2];
+      //const steps = 5;
+      for (let i = 0; i <  multipliers.length; i++) {
+        multipliers[i] = 1 - 5 * i;
+        multipliers[5 - i - 1] = 1 - 5 * i;
+      }
+      return multipliers;
+    };
   }
+
+
+
 
   public static filterCommentAnswers(question: any = <any>{}, answers: Array<Answer> = []) {
     if (question && question.controlType && question.identifier && answers.length > 0) {

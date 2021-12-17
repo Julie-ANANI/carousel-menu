@@ -1,20 +1,22 @@
 import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {FilterService} from '../../services/filters.service';
+import {DataService} from '../../services/data.service';
+import {ResponseService} from '../../services/response.service';
+import {MissionFrontService} from '../../../../../../services/mission/mission-front.service';
+import {MissionQuestionService} from '../../../../../../services/mission/mission-question.service';
+import {Mission, MissionQuestion} from '../../../../../../models/mission';
+
 import {Answer} from '../../../../../../models/answer';
 import {Innovation} from '../../../../../../models/innovation';
 import {Question} from '../../../../../../models/question';
-import {ResponseService} from '../../services/response.service';
 import {BarData} from '../../models/bar-data';
-import {PieChart} from '../../../../../../models/pie-chart';
-import {DataService} from '../../services/data.service';
 import {AnswersStats} from '../../models/stats';
 import {Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
-import {Mission, MissionQuestion} from '../../../../../../models/mission';
-import {MissionFrontService} from '../../../../../../services/mission/mission-front.service';
-import {MissionQuestionService} from '../../../../../../services/mission/mission-question.service';
-import {StackedData} from '../../models/stacked-data';
+
+import {PieChart} from '../../../../../../models/chart/pie-chart';
+/*import {HorizontalStackedChart} from '../../../../../../models/chart/horizontal-stacked-chart';*/
 
 @Component({
   selector: 'app-bar-chart',
@@ -36,19 +38,27 @@ export class BarChartComponent implements OnInit, OnDestroy {
   @Input() reportingLang = this._translateService.currentLang;
 
   @Output() modalAnswerChange = new EventEmitter<any>();
-
   @Output() answerButtonClicked = new EventEmitter<boolean>();
-
   @Output() questionChanged = new EventEmitter<Question>();
 
   private _barsData: Array<BarData> = [];
-  private _stackedData: Array<StackedData> = [];
-
   private _pieChart: PieChart = <PieChart>{};
+ /* private _horizontalStackedChart : HorizontalStackedChart = <HorizontalStackedChart>{}*/
   private _showAnswers: {[index: string]: boolean} = {};
   private _toggleFilterIcon: {[index: string]: boolean} = {};
   private _ngUnsubscribe: Subject<any> = new Subject<any>();
 
+  private _updateAnswersData() {
+    this._dataService.getAnswers(this.question).pipe(takeUntil(this._ngUnsubscribe))
+      .subscribe((answers: Array<Answer>) => {
+        this._barsData = ResponseService.barsData(this.question, answers);
+        if ( this.question.controlType === 'radio' ) {
+          this._pieChart = ResponseService.pieChartData(this._barsData, answers);
+        } /*else if (this.question.controlType === 'likert-scale'){
+          this._horizontalStackedChart = ResponseService.horizontalStackedChartData(this._barsData, answers);
+        }*/
+      });
+  }
 
 
   constructor(private _translateService: TranslateService,
@@ -59,20 +69,7 @@ export class BarChartComponent implements OnInit, OnDestroy {
    this._updateAnswersData();
   }
 
-  private _updateAnswersData() {
-    this._dataService.getAnswers(this.question).pipe(takeUntil(this._ngUnsubscribe))
-      .subscribe((answers: Array<Answer>) => {
-        this._barsData = ResponseService.barsData(this.question, answers);
-        this._stackedData = ResponseService.horizontalStackedBarsAnswers(this.question, answers)
-        if ( this.question.controlType === 'radio' ) {
-          this._pieChart = ResponseService.pieChartData(this._barsData, answers);
-        } else if (this.question.controlType === 'likert-scale'){
-          this._pieChart = ResponseService.horizontalStackedChartData(this._stackedData, answers);
-        }
-      });
-  }
 
-  // TODO JU : A CHANGER FOR STACKEDATA
   public filterAnswer(data: BarData, event: Event) {
     event.preventDefault();
     let filterValue: any;
@@ -89,7 +86,7 @@ export class BarChartComponent implements OnInit, OnDestroy {
       this._filterService.deleteFilter(this.question.identifier);
     } else {
       this._filterService.addFilter({
-        status: <'CHECKBOX'|'RADIO'| 'LIKERT-SCALE'> this.question.controlType.toUpperCase(),
+        status: <'CHECKBOX'|'RADIO'> this.question.controlType.toUpperCase(),
         questionId: this.question.identifier,
         value: filterValue
       });
@@ -123,6 +120,7 @@ export class BarChartComponent implements OnInit, OnDestroy {
     return MissionQuestionService.label(barData, 'label', this.reportingLang);
   }
 
+
   get filter() {
     return this._filterService.filters[this.question.identifier];
   }
@@ -134,6 +132,10 @@ export class BarChartComponent implements OnInit, OnDestroy {
   get pieChart(): PieChart {
     return this._pieChart;
   }
+
+  /*get horizontalStackedChart(): HorizontalStackedChart {
+    return this._horizontalStackedChart;
+  }*/
 
   get showAnswers(): { [p: string]: boolean } {
     return this._showAnswers;

@@ -40,7 +40,7 @@ import {SharedColorPickerModule} from '../shared-color-picker/shared-color-picke
 import {RankingChartModule} from './components/ranking-chart/ranking-chart.module';
 import {RanksModule} from './components/ranks/ranks.module';
 import {ModalEmptyModule} from '../../../utility/modals/modal-empty/modal-empty.module';
-import {HorizontalStackedChartModule} from '../../../utility/canvas/horizontal-stacked-chart/horizontal-stacked-chart.module';
+import {HorizontalStackedChartModule} from './components/horizontal-stacked-chart/horizontal-stacked-chart.module';
 
 @NgModule({
   imports: [

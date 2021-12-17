@@ -25,8 +25,6 @@ export class MissionQuestionService {
     this._cardsSections = value;
   }
 
-  optionLikertList = optionLikert;
-
   get allQuestions(): Array<MissionQuestion> {
     return this._allQuestions;
   }
@@ -344,9 +342,8 @@ export class MissionQuestionService {
    * @param question
    */
   public static setOptionsPositiveAnswer(question: MissionQuestion = <MissionQuestion>{}): MissionQuestion {
-    const nbOptions = question.options && question.options.length;
 
-    console.table(nbOptions);
+    const nbOptions = question.options && question.options.length;
 
     if (question.controlType === 'likert-scale') {
       if (nbOptions === 4) {
@@ -395,13 +392,7 @@ export class MissionQuestionService {
       }
       if (question.controlType === 'likert-scale') {
         question.attitudeMeasure = question.attitudeMeasure || 'agreement';
-
-        const nbOptions = question.options.length;
-
-        console.table(nbOptions);
-
         delete question.options;
-        console.table(nbOptions);
       }
 
       question = this.configureQuestionOptions(question);
@@ -466,7 +457,7 @@ export class MissionQuestionService {
     if (question.controlType === 'radio' || question.controlType === 'checkbox'
       || question.controlType === 'stars' || question.controlType === 'ranking') {
       const id = question.options.length;
-      console.table(id)
+
       return {
         identifier: id.toString(),
         positive: false,
@@ -500,7 +491,6 @@ export class MissionQuestionService {
   public addOptionLikert(question: MissionQuestion = <MissionQuestion>{}, measureOptions: any): MissionQuestionOption {
     if (question.controlType === 'likert-scale') {
       const id = question.options.length;
-      console.table(id)
       return {
         identifier: id.toString(),
         positive: false,

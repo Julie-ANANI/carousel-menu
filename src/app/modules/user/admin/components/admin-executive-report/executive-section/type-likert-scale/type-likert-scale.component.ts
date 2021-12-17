@@ -4,6 +4,7 @@ import {
   SectionLikertScale
 } from '../../../../../../../models/executive-report';
 import {CommonService} from '../../../../../../../services/common/common.service';
+import colorsAndNamesAndPercentage from '../../../../../../../../../assets/json/likert-scale_executive-report.json';
 
 @Component({
   selector: 'app-admin-section-type-likert-scale',
@@ -25,26 +26,17 @@ export class TypeLikertScaleComponent {
   @Output() sectionChange: EventEmitter<ExecutiveSection> = new EventEmitter<ExecutiveSection>();
   @Output() playSection: EventEmitter<void> = new EventEmitter<void>();
 
- /* the names of the colours are already defined*/
-  private _colorsAndNames = [
-    { color: '#EA5858', name: 'TOTALLY_INVALIDATED'},
-    { color: '#F89424', name: 'INVALIDED'},
-    { color: '#BBC7D6', name: 'UNCERTAIN'},
-    { color: '#99E04B', name: 'VALIDATED'},
-    { color: '#2ECC71', name: 'TOTALLY_VALIDATED'}
-  ]
-
+  private _colorsAndNames = colorsAndNamesAndPercentage;
   private _section: ExecutiveSection = <ExecutiveSection>{};
+  private _titleColor = '';
+  private _abstractColor = '';
+  private _legendColor = '';
 
   private _content: SectionLikertScale = {
     name: this._colorsAndNames[2].name,
     legend: '',
     color: this._colorsAndNames[2].color
   };
-
-  private _titleColor = '';
-  private _abstractColor = '';
-  private _legendColor = '';
 
 
   constructor() { }
@@ -80,6 +72,9 @@ export class TypeLikertScaleComponent {
   }
 
   public chooseColor(index: number) {
+
+    debugger;
+
     this._content.color = this._colorsAndNames[index].color;
     this._content.name = this._colorsAndNames[index].name;
     this.emitChanges();

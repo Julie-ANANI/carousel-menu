@@ -1,8 +1,8 @@
-@import "../../../../../style/framework/src/variables";
+@import "../../../../../../../style/framework/src/variables";
 
-#piechart {
+#horizontal-stacked-chart {
 
-  .pie-data-wrapper {
+  .horizontal-stacked-data-wrapper {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -15,6 +15,12 @@
       margin-right: 15px;
       font-size: 13px;
     }
+
+    #validation {
+    color: darkred;
+    font-size: x-large;
+      z-index: 100;
+  }
 
   }
 

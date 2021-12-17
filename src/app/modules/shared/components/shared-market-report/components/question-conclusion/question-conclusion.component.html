@@ -128,17 +128,17 @@
         [readonly]="readonly"
         [percentage]="stats.percentage"
         [subtitle]="questionSubtitle()">
-        <app-utility-piechart
+        <app-utility-horizontal-stacked-chart
           (positiveLabelChanged)="positiveAnswerLabelChanged($event)"
           (chartSectionColorChanged)="chartSectionColorChanged($event)"
           (chartSectionPositiveChanged)="positiveAnswerChange($event)"
-          [pieChart]="pieChart"
+          [horizontalStackedChart]="horizontalStackedChart"
           [readonly]="readonly"
           [reportingLang]="reportingLang"
           [showFavorable]="showPositiveAnswers"
           [positiveSections]="positivesAnswers"
           [favorableAnswersLabel]="positiveAnswerLabels()"
-        ></app-utility-piechart>
+        ></app-utility-horizontal-stacked-chart>
       </app-bluesquare>
     </ng-container>
     <!-- /horizontal stacked chart -->

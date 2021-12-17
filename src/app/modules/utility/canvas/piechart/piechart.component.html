@@ -47,7 +47,7 @@
       <div class="card p-10">
         <span>{{(pieChart.labels| multiling:reportingLang)[indexSection] }}</span>
         <div class="divider"></div>
-       <!-- <app-shared-color-picker
+        <app-shared-color-picker
           [reportingLang]="reportingLang"
           [color]="pieChart.colors[indexSection]"
           [nbColors]="pieChart.colors.length"
@@ -56,7 +56,7 @@
             <input type="checkbox" [(ngModel)]="positiveSections[indexSection]" (change)="chartPositiveSectionChanged(indexSection)">
             <i class="form-icon"></i> {{ 'MARKET_REPORT.POSITIVE_ANSWER' | translateIn: reportingLang }}
           </label>
-        </app-shared-color-picker>-->
+        </app-shared-color-picker>
       </div>
     </div>
   </div>
@@ -75,12 +75,12 @@
               <input type="checkbox" [(ngModel)]="positiveSections[indexLegend]" (change)="chartPositiveSectionChanged(indexLegend)">
               <i class="form-icon"></i> {{ 'MARKET_REPORT.POSITIVE_ANSWER' | translateIn: reportingLang }}
             </label>
-        <!--    <app-shared-color-picker
+            <app-shared-color-picker
               [reportingLang]="reportingLang"
               [color]="pieChart.colors[indexLegend]"
               [nbColors]="pieChart.colors.length"
               (colorChanged)="chartColorChanged($event, indexLegend)">
-            </app-shared-color-picker>-->
+            </app-shared-color-picker>
           </div>
         </div>
       </div>

@@ -5,7 +5,7 @@ import { ExecutiveSection } from '../../../../../../models/executive-report';
 import { ResponseService } from '../../../../../shared/components/shared-market-report/services/response.service';
 import { Professional } from '../../../../../../models/professional';
 import { BarData } from '../../../../../shared/components/shared-market-report/models/bar-data';
-import { PieChart } from '../../../../../../models/pie-chart';
+import { PieChart } from '../../../../../../models/chart/pie-chart';
 import { ExecutiveReportFrontService } from '../../../../../../services/executive-report/executive-report-front.service';
 import {MissionQuestion} from '../../../../../../models/mission';
 import {MissionQuestionService} from '../../../../../../services/mission/mission-question.service';

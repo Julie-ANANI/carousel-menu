@@ -3,7 +3,7 @@ import {CommonModule} from '@angular/common';
 import { TranslateModule} from '@ngx-translate/core';
 
 import { HorizontalStackedChartComponent} from './horizontal-stacked-chart.component';
-import { PipeModule} from '../../../../pipe/pipe.module';
+import { PipeModule} from '../../../../../../pipe/pipe.module';
 import {ChartsModule} from 'ng2-charts';
 import {FormsModule} from '@angular/forms';
 
@@ -11,9 +11,9 @@ import {FormsModule} from '@angular/forms';
   imports: [
   CommonModule,
   TranslateModule,
-  ChartsModule,
   PipeModule,
-  FormsModule
+  FormsModule,
+    ChartsModule,
   ],
   declarations: [
     HorizontalStackedChartComponent
