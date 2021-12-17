@@ -136,10 +136,10 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
       this._isFetchingJobs = false;
 
       const config: Config = {
-        fields: 'innovationRef updated',
+        fields: 'updated',
         limit: '',
         offset: '0',
-        search: '{}',
+        search: '{"notification.trigger": "TRIGGER_COMMENT_SUGGESTION"}',
         innovationRef: this._innovation._id,
         sort: '{"updated": -1}'
       };
