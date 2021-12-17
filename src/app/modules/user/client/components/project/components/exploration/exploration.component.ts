@@ -25,14 +25,6 @@ export class ExplorationComponent implements OnInit, OnDestroy {
 
   private _innovation: Innovation = <Innovation>{};
 
-  private _campaignsStats: {
-    nbPros: number,
-    nbProsSent: number,
-    nbProsOpened: number,
-    nbProsClicked: number,
-    nbValidatedResp: number
-  };
-
   private _countries: Array<string> = [];
 
   private _questions: Array<any> = [];
@@ -166,10 +158,6 @@ export class ExplorationComponent implements OnInit, OnDestroy {
       const percentage = (value2 / value1) * 100;
       return percentage === Infinity ? 0 : Math.floor(percentage);
     }
-  }
-
-  get campaignStats() {
-    return this._campaignsStats;
   }
 
   get countries() {

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Campaign } from '../../../../../../models/campaign';
+import {Campaign, CampaignStats, SearchStats} from '../../../../../../models/campaign';
 import { RolesFrontService } from '../../../../../../services/roles/roles-front.service';
 import { CampaignFrontService } from '../../../../../../services/campaign/campaign-front.service';
 import { StatsReferentsService } from '../../../../../../services/stats-referents/stats-referents.service';
@@ -10,15 +10,6 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorFrontService } from '../../../../../../services/error/error-front.service';
 import {  TranslateNotificationsService } from '../../../../../../services/translate-notifications/translate-notifications.service';
 import { CommonService } from '../../../../../../services/common/common.service';import {CampaignService} from '../../../../../../services/campaign/campaign.service';
-
-export interface ProMailsStats {
-  uniqueGoodEmails: number;
-  uniqueBadEmails: number;
-  uniqueUncertain: number;
-  uniqueShielded: number;
-  uniqueIdentified: number;
-  identified: number;
-}
 
 export interface ProMailsIndicators {
   identificationEfficiency: string;
@@ -38,7 +29,7 @@ export class AdminCampaignHistoryComponent implements OnInit {
 
   private _referents: { identificationEfficiency: any; shieldImpact?: number; inabilityToValidate?: number; redundancy?: number; deductionEfficiency?: number; };
 
-  private _stats: ProMailsStats;
+  private _stats: SearchStats;
 
   private _statsConfig: Array<StatsInterface> = [];
 
@@ -62,18 +53,11 @@ export class AdminCampaignHistoryComponent implements OnInit {
         this._campaignFrontService.setActiveCampaign(this._campaign);
         this._campaignFrontService.setActiveCampaignTab('history');
         this._campaignFrontService.setLoadingCampaign(false);
+        this._stats = this._campaign.stats.search;
 
         this._statsReferentsService.get().subscribe((referents) => {
           this._referents = referents.campaigns;
-          this._stats = (this.campaign.stats && !!this.campaign.stats.pro) ? this.campaign.stats.pro : {
-            uniqueGoodEmails: 0,
-            uniqueBadEmails: 0,
-            uniqueUncertain: 0,
-            uniqueShielded: 0,
-            uniqueIdentified: 0,
-            identified: 0
-          };
-          this.setIndicators();
+          this._setIndicators();
           this._setStats();
         });
       }
@@ -85,10 +69,11 @@ export class AdminCampaignHistoryComponent implements OnInit {
   }
 
   public loadStats() {
-    this._campaignService.getUpdatedHistoryStats(this.campaign._id).pipe(first()).subscribe((result: any) => {
-      if (result.stats) {
-        this._stats = result.stats;
-        this.setIndicators();
+    this._campaignService.getUpdatedHistoryStats(this.campaign._id).pipe(first()).subscribe((result: CampaignStats) => {
+      if (result) {
+        this._campaign.stats = result
+        this._stats = result.search;
+        this._setIndicators();
         this._setStats();
       }
     }, (err: HttpErrorResponse) => {
@@ -97,7 +82,7 @@ export class AdminCampaignHistoryComponent implements OnInit {
     });
   }
 
-  public setIndicators() {
+  private _setIndicators() {
     if (!this.stats) {
       this._indicators = {
         identificationEfficiency: 'NA',
@@ -184,7 +169,7 @@ export class AdminCampaignHistoryComponent implements OnInit {
     }];
   }
 
-  get stats(): ProMailsStats {
+  get stats(): SearchStats {
     return this._stats;
   }
 

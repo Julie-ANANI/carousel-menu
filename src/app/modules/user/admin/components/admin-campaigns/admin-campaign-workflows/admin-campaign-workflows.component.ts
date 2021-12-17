@@ -13,7 +13,6 @@ import { Response } from '../../../../../../models/response';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorFrontService } from '../../../../../../services/error/error-front.service';
 import { RolesFrontService } from '../../../../../../services/roles/roles-front.service';
-import { StatsInterface } from '../../../../../../models/stats';
 import { CampaignFrontService } from '../../../../../../services/campaign/campaign-front.service';
 import { AuthService } from '../../../../../../services/auth/auth.service';
 
@@ -174,45 +173,6 @@ export class AdminCampaignWorkflowsComponent implements OnInit {
           console.error(err);
         }
       );
-  }
-
-  public statsConfig(): Array<StatsInterface> {
-    return [
-      {
-        heading: 'Pros',
-        content: [
-          {
-            subHeading: 'Found',
-            value: this._campaignStat('professional').toString(10),
-          },
-          {
-            subHeading: 'Not reached',
-            value: this._campaignStat('notReached').toString(10),
-          },
-          {subHeading: 'Stared', value: '--'},
-          {subHeading: 'Duplicated', value: '--'},
-        ],
-      },
-      {
-        heading: 'Emails',
-        content: [
-          {subHeading: 'Good', value: this._campaignStat('good') + '%'},
-          {subHeading: 'Unsure', value: this._campaignStat('unsure') + '%'},
-          {subHeading: 'Bad', value: this._campaignStat('bad') + '%'},
-        ],
-      },
-      {
-        heading: 'Cost',
-        content: [
-          {subHeading: 'Requested', value: '--'},
-          {subHeading: 'Emails', value: '--'},
-        ],
-      },
-    ];
-  }
-
-  private _campaignStat(searchKey: string): number {
-    return CampaignFrontService.getBatchCampaignStat(this._campaign, searchKey);
   }
 
   public updateAvailableScenario(scenario: EmailScenario) {

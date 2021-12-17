@@ -2,34 +2,56 @@ import { CampaignSettings } from './camp-settings';
 import { Innovation } from './innovation';
 import { TargetPros } from './targetPros';
 
+export interface SearchStats {
+  uniqueGoodEmails: number;
+  uniqueBadEmails: number;
+  uniqueUncertain: number;
+  uniqueShielded: number;
+  uniqueIdentified: number;
+  identified: number;
+}
+
+export interface ProsStats {
+  goodEmails: number;
+  riskyEmails: number;
+  badEmails: number;
+  batched: number;
+}
+
+export interface MailStats {
+  totalPros: number;
+  totalMails: number;
+  statuses: {
+    opened: number;
+    delivered: number;
+    clicked: number;
+    accepted: number;
+  },
+  nbFirstMail: number;
+  nbSecondMail: number;
+  nbThirdMail: 0
+}
+
+export interface BatchesStats {
+  goodEmails: number;
+  riskyEmails: number;
+  shot1Excepted: number;
+  shot2Excepted: number;
+  shot3Excepted: number;
+}
+
 export interface CampaignStats {
   campaign: {
     nbProfessionals: number,
     nbFirstTierMails: number,
-    nbSecondTierMails: number,
-    nbResp: number,
     nbValidatedResp: number,
     nbToValidateResp: number
   };
-  pro: {
-    uniqueGoodEmails: number;
-    uniqueBadEmails: number;
-    uniqueUncertain: number;
-    uniqueShielded: number;
-    uniqueIdentified: number;
-    identified: number;
-  };
+  search: SearchStats;
+  pros: ProsStats;
+  mail: MailStats;
+  batches: BatchesStats;
   nbPros90: number;
-  mail: any;
-  nbProsSent: number;
-  nbStartedAnswer: number;
-  nbValidatedAnswers: number;
-  nbProsReceived: number;
-  nbProsOpened: number;
-  nbProsClicked: number;
-  nbAnswers: number;
-  nbPros: number;
-  nbTotalMails: number;
 }
 
 export interface Campaign {

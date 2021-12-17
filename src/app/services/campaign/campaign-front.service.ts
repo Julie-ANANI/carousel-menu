@@ -36,11 +36,7 @@ export class CampaignFrontService {
    * @param requestFor
    * @param searchKey string | number
    */
-  public static answerStat(
-    answers: Array<Answer>,
-    requestFor: string,
-    searchKey: any
-  ): number {
+  public static answerStat(answers: Array<Answer>, requestFor: string, searchKey: any): number {
     let value = 0;
 
     if (answers.length > 0) {
@@ -82,146 +78,18 @@ export class CampaignFrontService {
   }
 
   /***
-   * this function is to calculate the campaign stat for the pros and quiz component in the
-   * campaign component.
-   * @param campaign
-   * @param searchKey
-   */
-  static getProsCampaignStat(campaign: Campaign, searchKey: any): number {
-    let value = 0;
-
-    if (campaign && campaign.stats) {
-      switch (searchKey) {
-        case 'professional':
-          value = campaign.stats.nbPros ? campaign.stats.nbPros : 0;
-          break;
-
-        case 'notReached':
-          value =
-            campaign.stats.nbPros && campaign.stats.nbProsSent
-              ? Math.round(
-                  ((campaign.stats.nbPros - campaign.stats.nbProsSent) /
-                    campaign.stats.nbPros) *
-                    100
-                )
-              : 0;
-          break;
-
-        case 'good':
-          value =
-            campaign.stats.campaign &&
-            campaign.stats.campaign.nbFirstTierMails &&
-            campaign.stats.nbPros
-              ? Math.round(
-                  (campaign.stats.campaign.nbFirstTierMails /
-                    campaign.stats.nbPros) *
-                    100
-                )
-              : 0;
-          break;
-
-        case 'unsure':
-          value =
-            campaign.stats.campaign &&
-            campaign.stats.campaign.nbSecondTierMails &&
-            campaign.stats.nbPros
-              ? Math.round(
-                  (campaign.stats.campaign.nbSecondTierMails /
-                    campaign.stats.nbPros) *
-                    100
-                )
-              : 0;
-          break;
-
-        case 'bad':
-          value =
-            campaign.stats.nbPros &&
-            campaign.stats.campaign &&
-            campaign.stats.campaign.nbFirstTierMails &&
-            campaign.stats.campaign.nbSecondTierMails
-              ? Math.round(
-                  ((campaign.stats.nbPros -
-                    (campaign.stats.campaign.nbFirstTierMails +
-                      campaign.stats.campaign.nbSecondTierMails)) /
-                    campaign.stats.nbPros) *
-                    100
-                )
-              : 0;
-          break;
-
-        default:
-        // do nothing...
-      }
-    }
-
-    return isNaN(value) ? 0 : value;
-  }
-
-  /***
    * this function is to calculate the campaign stat for the workflows and batch component in the
    * campaign component.
    * @param campaign
    * @param searchKey
    */
-  static getBatchCampaignStat(campaign: Campaign, searchKey: string): number {
+  static getCampaignStats(campaign: Campaign, searchKey: string): number {
     let value = 0;
 
     if (campaign && campaign.stats && campaign.stats.campaign) {
       switch (searchKey) {
         case 'good_emails':
           value = campaign.stats.campaign.nbFirstTierMails || 0;
-          break;
-
-        case 'received':
-          value = campaign.stats.nbProsReceived || 0;
-          break;
-
-        case 'bounces':
-          value =
-            campaign.stats.nbProsReceived && campaign.stats.nbProsSent
-              ? campaign.stats.nbProsSent - campaign.stats.nbProsReceived
-              : 0;
-          break;
-
-        case 'opened':
-          value =
-            campaign.stats.nbProsReceived && campaign.stats.nbProsOpened
-              ? Math.round(
-                  (campaign.stats.nbProsOpened /
-                    campaign.stats.nbProsReceived) *
-                    10000
-                ) / 100
-              : 0;
-          break;
-
-        case 'clicked':
-          value =
-            campaign.stats.nbProsClicked && campaign.stats.nbProsOpened
-              ? Math.round(
-                  (campaign.stats.nbProsClicked / campaign.stats.nbProsOpened) *
-                    10000
-                ) / 100
-              : 0;
-          break;
-
-        case 'answer_rate':
-          value =
-            campaign.stats.campaign.nbValidatedResp &&
-            campaign.stats.nbProsReceived
-              ? Math.round(
-                  (campaign.stats.campaign.nbValidatedResp /
-                    campaign.stats.nbProsReceived) *
-                    10000
-                ) / 100
-              : 0;
-          break;
-
-        case 'email':
-          value = campaign.stats.nbProsOpened || 0;
-          break;
-
-        case 'questionnaire':
-          value = campaign.stats.nbProsClicked || 0;
           break;
 
         default:

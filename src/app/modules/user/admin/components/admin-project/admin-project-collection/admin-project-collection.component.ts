@@ -26,6 +26,7 @@ import { Professional } from '../../../../../../models/professional';
 import {MissionQuestion} from '../../../../../../models/mission';
 import {ErrorFrontService} from '../../../../../../services/error/error-front.service';
 import { Table, Config } from '@umius/umi-common-component/models';
+import {CommonService} from "../../../../../../services/common/common.service";
 
 @Component({
   templateUrl: './admin-project-collection.component.html',
@@ -194,10 +195,10 @@ export class AdminProjectCollectionComponent implements OnInit, OnDestroy {
         content: [
           {
             subHeading: 'Answer rate',
-            value: AdminProjectCollectionComponent._campaignStat(
-              answers,
-              'answer_rate'
-            ).toString(10),
+            value: CommonService.getRate(
+              this._innovation.stats && this._innovation.stats.validatedAnswers,
+              this._innovation.stats && this._innovation.stats.nbFirstMail
+            )
           },
           {
             subHeading: 'Validated',
