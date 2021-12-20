@@ -110,7 +110,7 @@
 
           <!-- edit mode -->
           <div *ngIf="editMode" class="m-1">
-            <div class="flex-between text-primary-dark m-bottom-10">
+            <div class="">
               <label class="form-checkbox" for="{{question.identifier}}-{{option.identifier}}">
                 <input
                   (change)="emitChanges()"
@@ -325,6 +325,24 @@
         <div class="text-alert">Unknown Response Type.</div>
       </div>
       <!-- /default case -->
+
+      <!-- likert scale case -->
+      <div *ngSwitchCase="'likert-scale'" class="flex-between" id="likert-scale">
+
+        <ng-container>
+          <div
+            (click)="selectOption($event, option)"
+            *ngFor="let option of question.options"
+            [ngClass]="{'text-normal': editMode,
+            'text-notify': option.identifier !== fullAnswer.answers[question.identifier] && !editMode,
+            'text-primary-dark': option.identifier !== fullAnswer.answers[question.identifier]}"
+            class="c-hand">
+            {{ optionLabel(option.identifier) }}
+          </div>
+        </ng-container>
+
+      </div>
+      <!-- /likert scale case -->
 
     </div>
   </div>
