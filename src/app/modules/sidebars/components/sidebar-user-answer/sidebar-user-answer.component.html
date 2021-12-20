@@ -375,8 +375,9 @@
       <label [ngClass]="status.class" class="form-radio p-no-left p-right-15">
         <input
           (change)="updateStatus($event, status.name)"
-          [id]="status.name"
           [checked]="status.name === userAnswer.status"
+          [disabled]="(userAnswer.status === 'VALIDATED' || userAnswer.status === 'VALIDATED_UMIBOT')"
+          [id]="status.name"
           name="sidebar-user-answer-status"
           type="radio">
         <i class="form-icon"></i>
