@@ -250,13 +250,12 @@ export class SidebarUserAnswerComponent implements OnInit {
     this.enableSave();
   }
 
-  public updateStatus(
-    event: Event,
-    status: 'REJECTED' | 'VALIDATED' | 'SUBMITTED'
-  ) {
-    event.preventDefault();
-    this._userAnswer.status = status;
-    this.enableSave();
+  public updateStatus(event: Event, status: 'REJECTED' | 'VALIDATED' | 'SUBMITTED') {
+    if (this._userAnswer.status !== 'VALIDATED') {
+      event.preventDefault();
+      this._userAnswer.status = status;
+      this.enableSave();
+    }
   }
 
   public addTag(tag: Tag): void {
