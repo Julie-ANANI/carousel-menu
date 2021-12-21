@@ -15,7 +15,7 @@
   .menu-item {
     @include control-transition();
     font-size: $font-size-sm;
-    text-decoration: none;
+    text-decoration: none !important;
     margin-top: 0;
     color: $dark-color;
     font-weight: normal;

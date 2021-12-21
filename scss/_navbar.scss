@@ -56,7 +56,7 @@
     list-style: none;
     align-items: center;
     margin: 0 $unit-3;
-    text-decoration: none;
+    text-decoration: none !important;
 
     &.active, &:active, &:hover, &:visited, &:focus {
       color: $white-color;
@@ -153,11 +153,18 @@
     .navbar-item {
       display: flex;
       background-color: transparent;
+      text-decoration: none !important;
       margin: 0;
       font-weight: $font-weight-medium;
+      color: $dark-color;
       line-height: $line-height;
       padding: $unit-3 22px;
       border-bottom: $border-width solid $border-default-color;
+
+      &.active, &:hover {
+        color: $primary-color;
+      }
+
     }
 
   }

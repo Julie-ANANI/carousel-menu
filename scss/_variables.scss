@@ -181,6 +181,11 @@ $size-2x: 1440px !default;
 $responsive-breakpoint: $size-xs !default;
 
 // Z index
+$z-index-0: 1 !default;
+$z-index-1: 100 !default;
+$z-index-2: 200 !default;
+$z-index-3: 300 !default;
+$z-index-4: 400 !default;
 $z-index-sticky: 99 !default;
 $z-index-overlay: 7997 !default;
 $z-index-sidebar: 7999 !default;
