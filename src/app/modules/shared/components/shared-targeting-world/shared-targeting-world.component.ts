@@ -140,6 +140,7 @@ export class SharedTargetingWorldComponent implements OnInit {
         });
       }
     });
+    console.log(this._geography.include);
   }
 
   public getCountriesByContinent(continent_name: string): Array<Country> {

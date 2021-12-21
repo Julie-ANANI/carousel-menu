@@ -21,6 +21,7 @@ export class SharedProjectSettingsComponent implements OnInit, OnDestroy {
     this._setTargetCountries();
   }
 
+
   @Input() set editable(value: boolean) {
     this._canEdit = value;
   }
