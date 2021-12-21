@@ -46,6 +46,11 @@ export class SharedWorldmapComponent implements OnInit {
 
     this._reinitializeMap();
 
+    this._selectedCountries = value;
+
+    this._countriesNotFoundOnMap = this._countriesNotFoundOnMap.filter(country =>
+      this._selectedCountries.find(selectedCountry => selectedCountry === country));
+
     if (Array.isArray(value) && value.length > 0) {
       value.forEach((country) => {
         this._colorCountry(country);
@@ -100,6 +105,8 @@ export class SharedWorldmapComponent implements OnInit {
   @Output() countriesNotFoundOnMap: EventEmitter<Array<string>> = new EventEmitter<Array<string>>();
 
   private _showLegend = false;
+
+  private _selectedCountries: Array<string> = [];
 
   private _firstThreshold: number;
 
@@ -163,8 +170,8 @@ export class SharedWorldmapComponent implements OnInit {
     if (!this._countriesNotFoundOnMap.filter(code => code === country).length) {
       this._countriesNotFoundOnMap.push(country);
     }
-    console.log(this._countriesNotFoundOnMap);
-    console.log(this._countriesData);
+    this._countriesNotFoundOnMap = this._countriesNotFoundOnMap.filter(country =>
+    this._selectedCountries.find(selectedCountry => selectedCountry === country));
   }
 
   private _getAllCountries() {
