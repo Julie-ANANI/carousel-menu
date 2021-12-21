@@ -12,7 +12,7 @@ import {
 } from '@angular/core';
 import { WorldmapService } from '../../../../services/worldmap/worldmap.service';
 import { Country } from '../../../../models/country';
-import {isPlatformBrowser} from '@angular/common';
+import { isPlatformBrowser } from '@angular/common';
 
 export interface Tooltip {
   flag?: string;
@@ -25,6 +25,7 @@ export interface Tooltip {
   templateUrl: 'shared-worldmap.component.html',
   styleUrls: ['shared-worldmap.component.scss']
 })
+
 
 export class SharedWorldmapComponent implements OnInit {
 
@@ -66,7 +67,7 @@ export class SharedWorldmapComponent implements OnInit {
    * thresholds to color the countries.
    * @param value
    */
-  @Input() set quartiles (value: [number, number, number]) {
+  @Input() set quartiles(value: [number, number, number]) {
     this._quartiles = value;
   }
 
@@ -89,12 +90,14 @@ export class SharedWorldmapComponent implements OnInit {
    * and base on that data you want to paint the map.
    * @param value
    */
-  @Input() set countriesData (value: any) {
+  @Input() set countriesData(value: any) {
     this._countriesData = value;
     this._initializeTemplate();
   }
 
   @Output() onCountryClick: EventEmitter<string> = new EventEmitter<string>();
+
+  @Output() countriesNotFoundOnMap: EventEmitter<Array<string>> = new EventEmitter<Array<string>>();
 
   private _showLegend = false;
 
@@ -114,6 +117,8 @@ export class SharedWorldmapComponent implements OnInit {
 
   private _countriesData: any;
 
+  private _countriesNotFoundOnMap: Array<string> = [];
+
   @HostListener('click', ['$event'])
   onMouseClick(event: MouseEvent) {
     if (this.type === 'demo') {
@@ -127,7 +132,8 @@ export class SharedWorldmapComponent implements OnInit {
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _elementRef: ElementRef,
               private _worldmapService: WorldmapService,
-              private _viewContainerRef: ViewContainerRef) {}
+              private _viewContainerRef: ViewContainerRef) {
+  }
 
   ngOnInit() {
     this._worldmapService.loadCountriesFromViewContainerRef(this._viewContainerRef);
@@ -147,14 +153,23 @@ export class SharedWorldmapComponent implements OnInit {
         country_el.style.fill = color;
       });
     } else {
+      this._countryNotFoundOnMap(country);
       console.log(`${country} is nowhere to be found in the map.`);
     }
 
   }
 
+  private _countryNotFoundOnMap(country: string) {
+    if (!this._countriesNotFoundOnMap.filter(code => code === country).length) {
+      this._countriesNotFoundOnMap.push(country);
+    }
+    console.log(this._countriesNotFoundOnMap);
+    console.log(this._countriesData);
+  }
+
   private _getAllCountries() {
     if (isPlatformBrowser(this._platformId)) {
-      this._worldmapService.getCountriesList().then(response =>{
+      this._worldmapService.getCountriesList().then(response => {
         this._allCountries = response;
       })
     }
@@ -283,7 +298,7 @@ export class SharedWorldmapComponent implements OnInit {
         if (document.documentElement.clientWidth - event.clientX > 200) {
           leftPosition = `${event.clientX - (event.clientX - event.layerX) - 3}px`;
         } else {
-          leftPosition =  `${event.layerX - 180}px`;
+          leftPosition = `${event.layerX - 180}px`;
         }
 
         this._tooltipPosition = {
