@@ -12,6 +12,7 @@ import {UserService} from '../../../services/user/user.service';
 import {RandomUtil} from '../../../utils/randomUtil';
 import {isPlatformBrowser} from '@angular/common';
 import {MediaFrontService} from '../../../services/media/media-front.service';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-signup',
@@ -44,19 +45,19 @@ export class SignupComponent implements OnInit {
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _translateTitleService: TranslateTitleService,
               private _activatedRoute: ActivatedRoute,
+              private _translateService: TranslateService,
               private _translateNotificationsService: TranslateNotificationsService,
               private _authService: AuthService,
               private _userService: UserService,
               private _router: Router) {
-
     this._translateTitleService.setTitle('COMMON.PAGE_TITLE.SIGN_UP');
-
-    this._activatedRoute.queryParams.subscribe((params: Params) => {
-      this._isInvitation = params['invitation'] && params['invitation'] === 'true';
-    });
   }
 
   ngOnInit() {
+    this._activatedRoute.queryParams.subscribe((params: Params) => {
+      this._isInvitation = params['invitation'] && params['invitation'] === 'true';
+    });
+
     if (isPlatformBrowser(this._platformId)) {
       this._backgroundImage = MediaFrontService.customDefaultImageSrc(environment.background, '480', '2000');
       this.linkedInUrl();
@@ -86,7 +87,6 @@ export class SignupComponent implements OnInit {
 
     this._authService.preRegisterDataOAuth2('linkedin', data).pipe(first()).subscribe(_ => {
       this._isCreatingAccountLinkedin = false;
-      // console.log(_);
     }, err => {
       this._isCreatingAccountLinkedin = false;
       console.error(err);
@@ -108,6 +108,7 @@ export class SignupComponent implements OnInit {
   public createUser(formValue: FormGroup) {
     if (formValue.valid) {
       const user = new User(formValue.value);
+      user.language = this._translateService.currentLang;
       user.domain = environment.domain;
 
       if (user.email.match(/umi.us/gi) && user.domain !== 'umi') {
