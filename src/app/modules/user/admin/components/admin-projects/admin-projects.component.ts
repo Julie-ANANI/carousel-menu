@@ -16,7 +16,7 @@ import { InnovationFrontService } from '../../../../../services/innovation/innov
 import { RolesFrontService } from '../../../../../services/roles/roles-front.service';
 import { AuthService } from '../../../../../services/auth/auth.service';
 import { ObjectivesPrincipal } from '../../../../../models/static-data/missionObjectives';
-import { Mission, MissionTemplate } from '../../../../../models/mission';
+import { MissionTemplate } from '../../../../../models/mission';
 import { MissionService } from '../../../../../services/mission/mission.service';
 import { MissionFrontService } from '../../../../../services/mission/mission-front.service';
 import { Column, Config, Table } from '@umius/umi-common-component/models';
@@ -105,9 +105,9 @@ export class AdminProjectsComponent implements OnInit {
         if (this._authService.user && this._authService.user.roles !== 'market-test-manager-umi-back') {
           this._configOperator();
         }
-        this._getInnovations();
+        this._getProjects();
       }, (err: HttpErrorResponse) => {
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+        this._translateNotificationsService.error('Operators Fetching Error...', ErrorFrontService.getErrorMessage(err.status));
         this._isLoading = false;
         this._fetchingError = true;
         console.error(err);
@@ -657,16 +657,12 @@ export class AdminProjectsComponent implements OnInit {
     this._config = value; // TODO how to change the config when searching things like the operator?
     try {
       // Parse the config.search field to see if there's something
-      this._getInnovations();
+      this._getProjects();
     } catch (ex) {
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(ex.status));
+      this._translateNotificationsService.error('Project Fetching Error...', ErrorFrontService.getErrorMessage(ex.status));
       this._getProjects();
       console.error(ex);
     }
-  }
-
-  private _getInnovations() {
-    this._getProjects();
   }
 
   /**
@@ -691,7 +687,7 @@ export class AdminProjectsComponent implements OnInit {
       this._totalProjects = response && response._metadata && response._metadata.totalCount;
       this._initializeTable();
     }, (err: HttpErrorResponse) => {
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      this._translateNotificationsService.error('Project Fetching Error...', ErrorFrontService.getErrorMessage(err.status));
       this._isLoading = false;
       this._fetchingError = true;
       console.error(err);
@@ -725,9 +721,11 @@ export class AdminProjectsComponent implements OnInit {
 
   private _initProjects() {
     this._projects = this._projects.map((project) => {
+
       if (project.innovationCards && project.innovationCards.length) {
         project.innovationCards = InnovationFrontService.currentLangInnovationCard(project, this._currentLang, 'CARD');
       }
+
       if (!!project.useCase) {
         project.mainObjective = project.useCase[this._currentLang];
       } else if (project.objective) {
@@ -775,9 +773,10 @@ export class AdminProjectsComponent implements OnInit {
    */
   public onClickImport(file: File) {
     this._innovationService.import(file).pipe(first()).subscribe(() => {
-      this._translateNotificationsService.success('Success', 'The project is imported.');
+      this._translateNotificationsService.success('Project Import Success...', 'The project is imported successfully.');
+      this._getProjects();
     }, (err: HttpErrorResponse) => {
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      this._translateNotificationsService.error('Project Import Error...', ErrorFrontService.getErrorMessage(err.status));
       console.error(err);
     });
   }
@@ -821,7 +820,7 @@ export class AdminProjectsComponent implements OnInit {
             this._updateInnovation('The project has been updated.', saveObject, context._id);
           }
         } else {
-          this._translateNotificationsService.error('Project Status Error', 'This project status is already done. ' +
+          this._translateNotificationsService.error('Project Status Error...', 'This project status is already done. ' +
             'It could not be updated.');
         }
         break;
@@ -832,6 +831,7 @@ export class AdminProjectsComponent implements OnInit {
         };
         this._updateMission(missionObject, context.mission._id);
         break;
+
       case 'owner.firstName':
         const ownerObject = {
           owner: value
@@ -842,43 +842,28 @@ export class AdminProjectsComponent implements OnInit {
     }
   }
 
-  private _updateMission(missionObj: { [P in keyof Mission]?: Mission[P] }, missionId: any,
-                         notifyMessage = 'The project has been updated.') {
-    this._missionService
-      .save(missionId, missionObj)
-      .pipe(first())
-      .subscribe(
-        (mission) => {
-          this._translateNotificationsService.success('Success', notifyMessage);
-        },
-        (err: HttpErrorResponse) => {
-          this._translateNotificationsService.error(
-            'Mission Error...',
-            ErrorFrontService.getErrorMessage(err.status)
-          );
-          console.error(err);
-        }
-      );
+  private _updateMission(missionObj: any, missionId: string, notifyMessage = 'The project has been updated.') {
+    this._missionService.save(missionId, missionObj).pipe(first()).subscribe(() => {
+      this._translateNotificationsService.success('Mission Save Success...', notifyMessage);
+      }, (err: HttpErrorResponse) => {
+      this._translateNotificationsService.error('Mission Save Error...', ErrorFrontService.getErrorMessage(err.status));
+      console.error(err);
+    });
   }
 
-  private _updateInnovation(notifyMessage = 'The project has been updated.', saveObject: any, _innovationId: any) {
-    this._innovationService
-      .save(_innovationId, saveObject)
-      .pipe(first())
-      .subscribe(
-        (res) => {
-          this._translateNotificationsService.success('Success', notifyMessage);
-        },
-        (err: HttpErrorResponse) => {
-          this._translateNotificationsService.error(
-            'Project Error...',
-            ErrorFrontService.getErrorMessage(err.status)
-          );
-          console.error(err);
-        }
-      );
+  private _updateInnovation(notifyMessage = 'The project has been updated.', saveObject: any, _innovationId: string) {
+    this._innovationService.save(_innovationId, saveObject).pipe(first()).subscribe((innovation) => {
+      this._translateNotificationsService.success('Project Save Success...', notifyMessage);
+      const index = this._projects.findIndex((_project) => _project._id === innovation._id);
+      if (index !== -1) {
+        this._projects[index] = innovation;
+        this._initialProjects = JSON.parse(JSON.stringify(this._projects));
+      }
+      }, (err: HttpErrorResponse) => {
+      this._translateNotificationsService.error('Project Save Error...', ErrorFrontService.getErrorMessage(err.status));
+      console.error(err);
+    });
   }
-
 
   get canImport(): boolean {
     return this._rolesFrontService.isTechRole() || this._rolesFrontService.isOperSupervisorRole();
@@ -907,6 +892,5 @@ export class AdminProjectsComponent implements OnInit {
   get authUserId() {
     return this._authService.userId;
   }
-
 
 }
