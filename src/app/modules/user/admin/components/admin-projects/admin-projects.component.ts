@@ -74,6 +74,11 @@ export class AdminProjectsComponent implements OnInit {
 
   private _selectedInnovationId = '';
 
+  /**
+   * temporary solution until we change the functionality of table
+   */
+  private _initialProjects: Array<Innovation> = [];
+
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _configService: ConfigService,
               private _innovationService: InnovationService,
@@ -681,6 +686,7 @@ export class AdminProjectsComponent implements OnInit {
   private _getProjects() {
     this._innovationService.getMarketTests(this._config).pipe(first()).subscribe((response: Response) => {
       this._projects = response && response.result;
+      this._initialProjects = JSON.parse(JSON.stringify(this._projects));
       this._initProjects();
       this._totalProjects = response && response._metadata && response._metadata.totalCount;
       this._initializeTable();
@@ -794,20 +800,29 @@ export class AdminProjectsComponent implements OnInit {
     }
   }
 
+  public isAlreadyDone(innovationId: string): boolean {
+    return this._initialProjects.some((_project: Innovation) => _project._id === innovationId && _project.status === 'DONE');
+  }
+
   private _update(context: any, column: any, value: any) {
     switch (column._attrs[0]) {
 
       case 'status':
         const newStatus = value.toUpperCase();
         this._selectedInnovationId = '';
-        if (newStatus === 'DONE') {
-          this._selectedInnovationId = context._id;
-          this._showModalDone = true;
+        if (!this.isAlreadyDone(context._id)) {
+          if (newStatus === 'DONE') {
+            this._selectedInnovationId = context._id;
+            this._showModalDone = true;
+          } else {
+            const saveObject = {
+              status: newStatus
+            };
+            this._updateInnovation('The project has been updated.', saveObject, context._id);
+          }
         } else {
-          const saveObject = {
-            status: newStatus
-          };
-          this._updateInnovation('The project has been updated.', saveObject, context._id);
+          this._translateNotificationsService.error('Project Status Error', 'This project status is already done. ' +
+            'It could not be updated.');
         }
         break;
 
