@@ -49,14 +49,14 @@ export class AdminProjectDoneModalComponent {
 
     if (!this._isSaving && this.innovationId) {
       this._isSaving = true;
-      this._innovationService.save(this.innovationId, {status: 'DONE'}).pipe(first()).subscribe((res) => {
+      this._innovationService.save(this.innovationId, {status: 'DONE'}).pipe(first()).subscribe(() => {
         this.statusUpdated.emit(true);
         this.closeModal(event);
-        this._translateNotificationsService.success('Success', 'The project status has been updated to Done.');
+        this._translateNotificationsService.success('Project Status Success...', 'The project status has been updated to Done.');
         this._isSaving = false;
       }, (err: HttpErrorResponse) => {
         this._isSaving = false;
-        this._translateNotificationsService.error('Error', ErrorFrontService.adminErrorMessage(err));
+        this._translateNotificationsService.error('Project Status Error...', ErrorFrontService.adminErrorMessage(err));
         console.error(err);
       });
     }

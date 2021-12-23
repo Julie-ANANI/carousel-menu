@@ -30,6 +30,10 @@ export class RolesFrontService {
     return !!(this._authService.user && this._authService.user.roles && this._authService.user.roles === 'community');
   }
 
+  public isMTMUMIBack(): boolean {
+    return !!(this._authService.user && this._authService.user.roles && this._authService.user.roles === 'market-test-manager-umi-back');
+  }
+
   /***
 	 * returns the key/route if the Admin has access to that provided in the path.
 	 * Here the order in the routes matter.

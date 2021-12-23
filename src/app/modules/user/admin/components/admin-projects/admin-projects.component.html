@@ -9,7 +9,7 @@
     <div [hidden]="fetchingError && !isLoading" class="p-top-30 p-bottom-30">
 
       <!-- import button -->
-      <section *ngIf="canAccess(['import']) || canImport" class="text-right p-bottom-30">
+      <section *ngIf="canImport" class="text-right p-bottom-30">
         <label class="button is-primary is-sm is-outlined">
           <input #fileupload (change)="onClickImport(fileupload.files[0])" [hidden]="true" type="file">
           <i class="fas fa-file-import icon-left"></i> Import project
@@ -43,6 +43,7 @@
 <!-- modal project status done -->
 <ng-container *ngIf="selectedInnovationId">
   <app-admin-project-done-modal
+    (statusUpdated)="onStatusUpdated($event)"
     [(showModal)]="showModalDone"
     [innovationId]="selectedInnovationId">
   </app-admin-project-done-modal>

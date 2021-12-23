@@ -30,6 +30,10 @@ import { LocalStorageService } from "@umius/umi-common-component/services/localS
 
 export class AdminProjectsComponent implements OnInit {
 
+  get canImport(): boolean {
+    return this._canImport;
+  }
+
   get selectedInnovationId(): string {
     return this._selectedInnovationId;
   }
@@ -79,6 +83,8 @@ export class AdminProjectsComponent implements OnInit {
    */
   private _initialProjects: Array<Innovation> = [];
 
+  private _canImport = false;
+
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _configService: ConfigService,
               private _innovationService: InnovationService,
@@ -101,8 +107,9 @@ export class AdminProjectsComponent implements OnInit {
       this._getMissionTemplates();
       this._isLoading = false;
       this._setConfigForUmiBack();
+
       this._getOperators().then(_ => {
-        if (this._authService.user && this._authService.user.roles !== 'market-test-manager-umi-back') {
+        if (!this._rolesFrontService.isMTMUMIBack()) {
           this._configOperator();
         }
         this._getProjects();
@@ -112,6 +119,9 @@ export class AdminProjectsComponent implements OnInit {
         this._fetchingError = true;
         console.error(err);
       });
+
+      this._canImport = this._rolesFrontService.isTechRole() || this._rolesFrontService.isOperSupervisorRole()
+        || this.canAccess(['import']);
     }
 
   }
@@ -820,7 +830,7 @@ export class AdminProjectsComponent implements OnInit {
             this._updateInnovation('The project has been updated.', saveObject, context._id);
           }
         } else {
-          this._translateNotificationsService.error('Project Status Error...', 'This project status is already done. ' +
+          this._translateNotificationsService.error('Project Status Error...', 'This project status is already Done. ' +
             'It could not be updated.');
         }
         break;
@@ -842,6 +852,13 @@ export class AdminProjectsComponent implements OnInit {
     }
   }
 
+  /**
+   *
+   * @param missionObj
+   * @param missionId
+   * @param notifyMessage
+   * @private
+   */
   private _updateMission(missionObj: any, missionId: string, notifyMessage = 'The project has been updated.') {
     this._missionService.save(missionId, missionObj).pipe(first()).subscribe(() => {
       this._translateNotificationsService.success('Mission Save Success...', notifyMessage);
@@ -851,22 +868,34 @@ export class AdminProjectsComponent implements OnInit {
     });
   }
 
+  /**
+   *
+   * @param notifyMessage
+   * @param saveObject
+   * @param _innovationId
+   * @private
+   */
   private _updateInnovation(notifyMessage = 'The project has been updated.', saveObject: any, _innovationId: string) {
-    this._innovationService.save(_innovationId, saveObject).pipe(first()).subscribe((innovation) => {
+    this._innovationService.save(_innovationId, saveObject).pipe(first()).subscribe(() => {
       this._translateNotificationsService.success('Project Save Success...', notifyMessage);
-      const index = this._projects.findIndex((_project) => _project._id === innovation._id);
-      if (index !== -1) {
-        this._projects[index] = innovation;
-        this._initialProjects = JSON.parse(JSON.stringify(this._projects));
-      }
       }, (err: HttpErrorResponse) => {
       this._translateNotificationsService.error('Project Save Error...', ErrorFrontService.getErrorMessage(err.status));
       console.error(err);
     });
   }
 
-  get canImport(): boolean {
-    return this._rolesFrontService.isTechRole() || this._rolesFrontService.isOperSupervisorRole();
+  /**
+   *
+   * @param event
+   */
+  public onStatusUpdated(event: boolean) {
+    if (event) {
+      const index = this._projects.findIndex((_project) => _project._id === this._selectedInnovationId);
+      if (index !== -1) {
+        this._projects[index].status = 'DONE';
+        this._initialProjects = JSON.parse(JSON.stringify(this._projects));
+      }
+    }
   }
 
   get config(): Config {
