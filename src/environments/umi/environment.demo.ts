@@ -12,7 +12,7 @@ export const environment = {
   logoSynthURL: 'https://res.cloudinary.com/umi/image/upload/app/default-images/company-logo/logo-umi-trans-2020.png',
   logoURL: 'https://res.cloudinary.com/umi/image/upload/app/default-images/company-logo/logo-umi-animated-2020.gif',
   background: 'https://res.cloudinary.com/umi/image/upload/f_auto/app/default-images/backgrounds/umi-welcome-picture-2021.jpg',
-  commercialContact: 'klegrand@umi.us',
+  commercialContact: 'achampagne@umi.us',
   secureCookie: true,
   cookieTime: 3600 * 1000
 };
