@@ -1,5 +1,5 @@
 import { Component, Inject, Input, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
-import { JobConfig, JobsTypologies, SeniorityLevel, TargetPros } from '../../../../models/targetPros';
+import { JobConfig, JobsTypologies, SeniorityLevel, TargetPros } from '../../../../models/target-pros';
 import { takeUntil } from 'rxjs/operators';
 import { JobsFrontService } from '../../../../services/jobs/jobs-front.service';
 import { Subject } from 'rxjs';

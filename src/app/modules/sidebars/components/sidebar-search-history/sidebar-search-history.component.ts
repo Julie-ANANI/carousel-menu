@@ -5,7 +5,7 @@ import { TranslateNotificationsService } from '../../../../services/translate-no
 import { RolesFrontService } from '../../../../services/roles/roles-front.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorFrontService } from '../../../../services/error/error-front.service';
-import { JobConfig } from '../../../../models/targetPros';
+import { JobConfig } from '../../../../models/target-pros';
 import { Table, Config } from '@umius/umi-common-component/models';
 
 @Component({

@@ -5,7 +5,7 @@ import {Answer} from '../../models/answer';
 import {Batch} from '../../models/batch';
 import {Campaign} from '../../models/campaign';
 import {Professional} from '../../models/professional';
-import {TargetPros} from '../../models/targetPros';
+import {TargetPros} from '../../models/target-pros';
 
 @Injectable({providedIn: 'root'})
 export class CampaignService {

@@ -1,5 +1,5 @@
 import { Component, Inject, Input, OnInit, PLATFORM_ID } from '@angular/core';
-import { JobConfig } from '../../../../models/targetPros';
+import { JobConfig } from '../../../../models/target-pros';
 import { JobsFrontService } from '../../../../services/jobs/jobs-front.service';
 
 /**
