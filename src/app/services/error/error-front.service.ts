@@ -1,10 +1,19 @@
 import { Injectable } from '@angular/core';
-import {HttpErrorResponse} from '@angular/common/http';
+import { HttpErrorResponse } from '@angular/common/http';
 
-@Injectable({ providedIn: 'root' })
+export interface UMIError {
+  status: number;
+  detailedCode?: string;
+  key: string;
+
+  [property: string]: any;
+}
+
+@Injectable({providedIn: 'root'})
 export class ErrorFrontService {
 
-  constructor() {}
+  constructor() {
+  }
 
   /**
    * return the error message for the admin side. We try to show the genuine message we receive from the back.
@@ -15,6 +24,20 @@ export class ErrorFrontService {
       || ErrorFrontService.getErrorMessage(err.status);
   }
 
+  public static getErrorKey(error: UMIError): string {
+    if (error) {
+      const detailedCode = error.detailedCode || '';
+      const key = error.key;
+      const status = error.status;
+      if (detailedCode) {
+        return 'ERROR.' + detailedCode + '.' + key;
+      } else {
+        return 'ERROR.' + status + '.' + key;
+      }
+    }
+    return 'ERROR.OPERATION_ERROR'
+  }
+
   public static getErrorMessage(status?: number): string {
     if (status) {
       switch (status) {
@@ -23,13 +46,13 @@ export class ErrorFrontService {
           return 'ERROR.OPERATION_ERROR';
 
         case 401:
-          return 'ERROR.NO_AUTHORIZED';
+          return 'ERROR.401.NO_AUTHORIZED';
 
         case 403:
-          return 'ERROR.NO_PERMISSION';
+          return 'ERROR.403.PERMISSION_DENIED';
 
         case 404:
-          return 'ERROR.URL_NOT_FOUND';
+          return 'ERROR.404.NOT_FOUND';
 
         default:
           return 'ERROR.OPERATION_ERROR';

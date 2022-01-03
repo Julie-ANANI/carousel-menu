@@ -14,6 +14,7 @@ import { RouteFrontService } from '../../../services/route/route-front.service';
 import { UserService } from '../../../services/user/user.service';
 import {MediaFrontService} from '../../../services/media/media-front.service';
 import {emailRegEx} from '../../../utils/regex';
+import { ErrorFrontService } from "../../../services/error/error-front.service";
 
 @Component({
   selector: 'app-login',
@@ -137,12 +138,11 @@ export class LoginComponent implements OnInit {
           this._router.navigate([redirect], navigationExtras);
         }
         }, (error: HttpErrorResponse) => {
-        console.log(error);
         this._nbTentatives -= 1;
         this._displayLoading = false;
-        const messageKey = error.error.detailedCode? error.error.detailedCode[error.message] : error.status[error.message];
-        console.log(messageKey);
-        this._translateNotificationsService.error('ERROR.ERROR', messageKey);
+        const key = ErrorFrontService.getErrorKey(error.error);
+        console.log(key);
+        this._translateNotificationsService.error('ERROR.ERROR', key);
         this._formData.get('password').reset();
       });
     } else {

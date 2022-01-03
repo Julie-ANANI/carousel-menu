@@ -75,6 +75,7 @@ export class AdminUsersComponent implements OnInit {
       this._checkJuan();
       this._initializeTable();
     }, (err: HttpErrorResponse) => {
+      console.log(err);
       this._translateNotificationsService.error('Error', ErrorFrontService.getErrorMessage(err.status));
       this._isLoading = false;
       this._fetchingError = true;

@@ -1,12 +1,16 @@
 export const ERROR = {
   400: {
     INVALID_ARGUMENT: 'The input is invalid. Please check the input and try again.',
-    EMPTY_PARAM: 'The parameter was empty.',
-    EMPTY_BODY: 'The body was empty.'
+    EMPTY_PARAM: 'The parameter of the request is missing. Please check and try again.',
+    EMPTY_BODY: 'The data in the request is empty. Please check and try again.'
+  },
+
+  401:{
+    NO_AUTHORIZED: 'You are not authorized to perform this request.',
   },
 
   403: {
-    PERMISSION_DENIED: 'Sorry, you are not authorised on the platform.'
+    PERMISSION_DENIED: 'You don\'t have permission to perform this request.'
   },
 
   404: {
@@ -24,17 +28,19 @@ export const ERROR = {
   },
 
   AUTH_400: {
+    INVALID_USERID: 'The user id is invalid. Please check and try again.',
     MISSING_BODY_EMAIL: 'Please enter your email address in the provided field.',
     MISSING_BODY_PASSWORD: 'Please enter your password in the provided field.',
     LOGIN_FAILED: 'Sorry, the authentification failed. Please check the email/password combination and try again.',
   },
 
   AUTH_404: {
-    USER_NOT_FOUND: 'The entered email could not be found please check it and try again.',
+    USER_NOT_FOUND: 'The user could not be found please check it and try again.',
   },
 
   AUTH_500: {
-    OUT_OF_ATTEMPTS: 'Sorry, you have reached the maximum attempts. Please contact UMI support service.',
+    ATTEMPTS_TOO_SOON: 'Sorry, the login is too frequent. Please catch a break and try again.',
+    OUT_OF_ATTEMPTS: 'Sorry, you have run out of 5 attempts. Please contact UMI support service.',
     USER_STATUS_ANORMAL: 'Sorry, we detected that your account status is anormal. Please contact UMI support service.'
   },
 

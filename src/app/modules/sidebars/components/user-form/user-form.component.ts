@@ -437,8 +437,11 @@ export class UserFormComponent implements OnInit {
       this._authService.forceLogin(user.id).subscribe(response => {
         this.translateNotificationsService.success('ERROR.SUCCESS', '');
         this.router.navigate(['/user']);
-      }, err => {
-        this.translateNotificationsService.error('ERROR.ERROR', err.message);
+      }, error => {
+        console.log(error);
+        const key = ErrorFrontService.getErrorKey(error.error);
+        console.log(key);
+        this.translateNotificationsService.error('ERROR.ERROR', key);
       });
     }
   }
