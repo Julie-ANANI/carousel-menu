@@ -1,7 +1,7 @@
 import {Component, HostListener, Inject, OnDestroy, OnInit, PLATFORM_ID} from '@angular/core';
 import {InnovationFrontService} from '../../../../../../../services/innovation/innovation-front.service';
 import {Innovation} from '../../../../../../../models/innovation';
-import {Milestone, Mission, MissionQuestion, MissionTemplate} from '../../../../../../../models/mission';
+import {MissionMilestone, Mission, MissionQuestion, MissionTemplate} from '../../../../../../../models/mission';
 import {first, takeUntil} from 'rxjs/operators';
 import {Subject} from 'rxjs';
 import {AuthService} from '../../../../../../../services/auth/auth.service';
@@ -961,7 +961,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
     return this._mission.milestoneDates.findIndex((value) => value.code === 'RDO');
   }
 
-  get dateRDO(): Milestone {
+  get dateRDO(): MissionMilestone {
     return this._mission.milestoneDates.find((value) => value.code === 'RDO');
   }
 

@@ -1,4 +1,4 @@
-import {Component, ElementRef, EventEmitter, Input, Output, ViewChild, ViewEncapsulation} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild, ViewEncapsulation} from '@angular/core';
 import {EmailSignature} from '../../../../models/email-signature';
 import {EmailTemplate} from '../../../../models/email-template';
 import {TranslateService} from '@ngx-translate/core';
@@ -23,7 +23,7 @@ interface Mapping {
   encapsulation: ViewEncapsulation.None,
 })
 
-export class SharedMailEditorComponent {
+export class SharedMailEditorComponent implements OnInit {
 
   @Input() isEnablePreviewBtn = false; // to show / Hide the Preview button in the Default template.
 
@@ -37,6 +37,7 @@ export class SharedMailEditorComponent {
 
   @Input() innovationCardLanguages: string [] = [];
 
+  // TODO remove multiling
   @Input() set emailsObject(value: EmailsObject) {
     if (value) {
       this._emailsObject = value;
@@ -117,12 +118,17 @@ export class SharedMailEditorComponent {
 
   private _professionalPreview = '';
 
-  private readonly _innovationId: string;
+  private _innovationId: string;
 
-  constructor(private _translateService: TranslateService, private _routeFrontService: RouteFrontService) {
+  constructor(private _translateService: TranslateService,
+              private _routeFrontService: RouteFrontService) {
+  }
+
+  ngOnInit(): void {
     this._innovationId = this._routeFrontService.activeInnovationId();
   }
 
+  // TODO remove multiling
   public changeLanguage(value: string) {
     this._language = value;
     this._languageHasBeenSet = true;
@@ -169,12 +175,14 @@ export class SharedMailEditorComponent {
     this.languageChange.emit(value);
   }
 
+  // TODO remove multiling
   public onUpdate(event: any, language?: string) {
     language = language || this._language;
     this._emailsObject[language].subject = event;
     this.emailChange.emit(this._emailsObject);
   }
 
+  // TODO remove multiling
   public updateContent(event: any, language?: string) {
     language = language || this._language;
     this._emailsObject[language].content = event.content;
@@ -220,4 +228,5 @@ export class SharedMailEditorComponent {
   get innovationId(): string {
     return this._innovationId;
   }
+
 }

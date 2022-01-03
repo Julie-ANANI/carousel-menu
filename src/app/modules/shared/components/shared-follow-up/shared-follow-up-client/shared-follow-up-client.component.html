@@ -150,10 +150,10 @@
                   </div>
                   <div>
                     <span class="mail_label">{{ 'COMMON.LABEL.SUBJECT' | translate }}: </span>
-                    <span [innerHTML]="emailsObjectReplaced[selectedLang].subject" class="text-13"></span>
+                    <span [innerHTML]="mail(emailsObjectReplaced, selectedLang, 'subject')" class="text-13"></span>
                   </div>
                   <div class="p-top-10">
-                    <div [innerHTML]="emailsObjectReplaced[selectedLang].content" class="text-13"></div>
+                    <div [innerHTML]="mail(emailsObjectReplaced, selectedLang, 'content')" class="text-13"></div>
                   </div>
                 </div>
               </div>
@@ -288,9 +288,9 @@
                   </div>
                   <div>
                     <span class="mail_label">{{ 'COMMON.LABEL.SUBJECT' | translate }}: </span>
-                    <span [innerHTML]="emailsObject[selectedLang].subject" class="text-13"></span>
+                    <span [innerHTML]="mail(emailsObject, selectedLang, 'subject')" class="text-13"></span>
                   </div>
-                  <div class="text-13 p-top-10" [innerHTML]="emailsObject[selectedLang].content"></div>
+                  <div [innerHTML]="mail(emailsObject, selectedLang, 'content')" class="text-13 p-top-10"></div>
 
                 </div>
 

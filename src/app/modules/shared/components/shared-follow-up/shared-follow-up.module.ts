@@ -17,6 +17,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {ModalEmptyModule} from '../../../utility/modals/modal-empty/modal-empty.module';
 import { TableComponentsModule } from '@umius/umi-common-component/table';
 import {SharedWorldmapModule} from '../shared-worldmap/shared-worldmap.module';
+import {LangEntryPipeModule} from '../../../../pipe/lang-entry/langEntryPipe.module';
 
 @NgModule({
   imports: [
@@ -33,7 +34,8 @@ import {SharedWorldmapModule} from '../shared-worldmap/shared-worldmap.module';
     ModalEmptyModule,
     ReactiveFormsModule,
     SharedWorldmapModule,
-    TableComponentsModule
+    TableComponentsModule,
+    LangEntryPipeModule
   ],
   declarations: [
     SharedFollowUpComponent,

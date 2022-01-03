@@ -20,6 +20,7 @@ import {emailRegEx} from '../../../../../utils/regex';
 import {ScrapeHTMLTags} from '../../../../../pipe/pipes/ScrapeHTMLTags';
 import {TranslateService} from '@ngx-translate/core';
 import {UserFrontService} from '../../../../../services/user/user-front.service';
+import {LangEntryService} from '../../../../../services/lang-entry/lang-entry.service';
 
 @Component({
   selector: 'app-shared-follow-up-client',
@@ -153,6 +154,7 @@ export class SharedFollowUpClientComponent implements OnInit, OnDestroy {
               private _answerService: AnswerService,
               private _filterService: FilterService,
               private _translateService: TranslateService,
+              private _langEntryService: LangEntryService,
               private _translateNotificationsService: TranslateNotificationsService) { }
 
   ngOnInit() {
@@ -397,27 +399,64 @@ export class SharedFollowUpClientComponent implements OnInit, OnDestroy {
     });
   }
 
+  // TODO remove multiling
   private _highlightFields(lang: string, card: InnovCard, cc: string) {
-    this._emailsObject[lang]['subject'] = this._emailsObject[lang]['subject']
-      .replace(/\*\|TITLE\|\*/g,
-        `<span class="label is-mail width-120 is-sm m-h text-xs text-background m-no-right">${card.title}</span>`
-      );
+    if (this._emailsObject.templates && this._emailsObject.templates.length) {
+      const index = this._langEntryService.transform(this._emailsObject.templates, lang,'INDEX');
 
-    this._emailsObject[lang]['content'] = this._emailsObject[lang]['content']
-      .replace(/\*\|COMPANY_NAME\|\*/g, `<span class="label is-mail width-120 is-sm text-xs
+      this._emailsObject.templates[index].template['subject'] = this._emailsObject.templates[index].template['subject']
+        .replace(/\*\|TITLE\|\*/g,
+          `<span class="label is-mail width-120 is-sm m-h text-xs text-background m-no-right">${card.title}</span>`
+        );
+
+      this._emailsObject.templates[index].template['content'] = this._emailsObject.templates[index].template['content']
+        .replace(/\*\|COMPANY_NAME\|\*/g, `<span class="label is-mail width-120 is-sm text-xs
        text-background m-h m-no-right">${new ScrapeHTMLTags().transform(this.companyName.trim())}</span>`)
-      .replace(/\*\|CLIENT_NAME\|\*/g, `<span class="label is-mail width-120 is-sm text-xs text-background m-h m-no-right">${cc}</span>`)
-      .replace(/\*\|TITLE\|\*/g, `<span class="label is-mail width-120 is-sm text-xs text-background m-h m-no-right">${card.title}</span>`);
+        .replace(/\*\|CLIENT_NAME\|\*/g, `<span class="label is-mail width-120 is-sm text-xs text-background m-h m-no-right">${cc}</span>`)
+        .replace(/\*\|TITLE\|\*/g, `<span class="label is-mail width-120 is-sm text-xs text-background m-h m-no-right">${card.title}</span>`);
+    } else {
+      this._emailsObject[lang]['subject'] = this._emailsObject[lang]['subject']
+        .replace(/\*\|TITLE\|\*/g,
+          `<span class="label is-mail width-120 is-sm m-h text-xs text-background m-no-right">${card.title}</span>`
+        );
+
+      this._emailsObject[lang]['content'] = this._emailsObject[lang]['content']
+        .replace(/\*\|COMPANY_NAME\|\*/g, `<span class="label is-mail width-120 is-sm text-xs
+       text-background m-h m-no-right">${new ScrapeHTMLTags().transform(this.companyName.trim())}</span>`)
+        .replace(/\*\|CLIENT_NAME\|\*/g, `<span class="label is-mail width-120 is-sm text-xs text-background m-h m-no-right">${cc}</span>`)
+        .replace(/\*\|TITLE\|\*/g, `<span class="label is-mail width-120 is-sm text-xs text-background m-h m-no-right">${card.title}</span>`);
+    }
   }
 
+  // TODO remove multiling
   private _replaceVariables(lang: string, card: InnovCard, cc: string) {
-    this._emailsObjectReplaced[lang]['subject'] = this._emailsObjectReplaced[lang]['subject'].
-    replace(/\*\|TITLE\|\*/g, card.title);
+    if (this._emailsObjectReplaced.templates && this._emailsObjectReplaced.templates.length) {
+      const index = this._langEntryService.transform(this._emailsObjectReplaced.templates, lang, 'INDEX');
 
-    this._emailsObjectReplaced[lang]['content'] = this._emailsObjectReplaced[lang]['content']
-      .replace(/\*\|COMPANY_NAME\|\*/g, new ScrapeHTMLTags().transform(this.companyName.trim()))
-      .replace(/\*\|CLIENT_NAME\|\*/g, cc)
-      .replace(/\*\|TITLE\|\*/g, `${card.title}`);
+      this._emailsObject.templates[index].template['subject'] = this._emailsObject.templates[index].template['subject'].
+      replace(/\*\|TITLE\|\*/g, card.title);
+
+      this._emailsObject.templates[index].template['content'] = this._emailsObject.templates[index].template['content']
+        .replace(/\*\|COMPANY_NAME\|\*/g, new ScrapeHTMLTags().transform(this.companyName.trim()))
+        .replace(/\*\|CLIENT_NAME\|\*/g, cc)
+        .replace(/\*\|TITLE\|\*/g, `${card.title}`);
+    } else {
+      this._emailsObjectReplaced[lang]['subject'] = this._emailsObjectReplaced[lang]['subject'].
+      replace(/\*\|TITLE\|\*/g, card.title);
+
+      this._emailsObjectReplaced[lang]['content'] = this._emailsObjectReplaced[lang]['content']
+        .replace(/\*\|COMPANY_NAME\|\*/g, new ScrapeHTMLTags().transform(this.companyName.trim()))
+        .replace(/\*\|CLIENT_NAME\|\*/g, cc)
+        .replace(/\*\|TITLE\|\*/g, `${card.title}`);
+    }
+  }
+
+  // TODO remove multiling
+  public mail(email: EmailsObject, lang: string, requested: 'subject' | 'content'): string {
+    if (email.templates && email.templates.length) {
+      return this._langEntryService.transform(email.templates, lang).template[requested];
+    }
+    return email[lang][requested];
   }
 
   public onChangePhrase(event: string) {
