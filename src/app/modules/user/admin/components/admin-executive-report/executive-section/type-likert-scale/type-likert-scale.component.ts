@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {ExecutiveSection, SectionRanking} from '../../../../../../../models/executive-report';
+import {ExecutiveSection, SectionLikertScale} from '../../../../../../../models/executive-report';
 import {CommonService} from '../../../../../../../services/common/common.service';
 
 @Component({
@@ -12,15 +12,11 @@ export class TypeLikertScaleComponent {
 
   @Input() set section(value: ExecutiveSection) {
     this._section = value;
-    this._content = <SectionRanking>this._section.content;
+    this._content = <SectionLikertScale>this._section.content;
     this.textColor('title');
     this.textColor('abstract');
     this.textColor('name', 1);
-    this.textColor('name', 2);
-    this.textColor('name', 3);
     this.textColor('legend', 1);
-    this.textColor('legend', 2);
-    this.textColor('legend', 3);
   }
 
   @Output() sectionChange: EventEmitter<ExecutiveSection> = new EventEmitter<ExecutiveSection>();
@@ -29,7 +25,7 @@ export class TypeLikertScaleComponent {
 
   private _section: ExecutiveSection = <ExecutiveSection>{};
 
-  private _content: SectionRanking = {
+  private _content: SectionLikertScale = {
     values: []
   };
 
@@ -60,9 +56,7 @@ export class TypeLikertScaleComponent {
         break;
 
       case 'name':
-          this._resultsColor = CommonService.getLimitColor(this._content.values[0] && this._content.values[0].name, 20);
-
-
+        this._resultsColor = CommonService.getLimitColor(this._content.values[0] && this._content.values[0].name, 20);
         break;
 
     }
@@ -86,7 +80,7 @@ export class TypeLikertScaleComponent {
     return this._section;
   }
 
-  get content(): SectionRanking {
+  get content(): SectionLikertScale {
     return this._content;
   }
 
