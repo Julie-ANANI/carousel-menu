@@ -8,7 +8,7 @@ export interface CountryEntry {
 }
 
 export interface Country {
-  readonly name?: string;
+  name?: string;
   readonly latitude?: number;
   readonly longitude?: number;
   readonly code?: string;
