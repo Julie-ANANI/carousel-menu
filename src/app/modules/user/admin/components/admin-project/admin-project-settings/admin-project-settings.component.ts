@@ -16,7 +16,7 @@ import { first, takeUntil } from 'rxjs/operators';
 import { RolesFrontService } from '../../../../../../services/roles/roles-front.service';
 import { StatsInterface } from '../../../../../../models/stats';
 import {
-  Milestone,
+  MissionMilestone,
   Mission, MissionQuestion,
   MissionType,
 } from '../../../../../../models/mission';
@@ -133,9 +133,9 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
 
   private _canDeactivateFollowUp = false;
 
-  private _orginalMilestone: Array<Milestone> = [];
+  private _orginalMilestone: Array<MissionMilestone> = [];
 
-  private _milestones: Array<Milestone> = [];
+  private _milestones: Array<MissionMilestone> = [];
 
   private _showModalDone = false;
 
@@ -969,17 +969,17 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
     }
   }
 
-  editMilestone(milestone: Milestone, type: string) {
+  editMilestone(milestone: MissionMilestone, type: string) {
     milestone['edit' + type] = true;
   }
 
-  disableEditing(event: Event, milestone: Milestone, type: string) {
+  disableEditing(event: Event, milestone: MissionMilestone, type: string) {
     event.preventDefault();
     milestone['edit' + type] = false;
     this._milestones = JSON.parse(JSON.stringify(this._orginalMilestone));
   }
 
-  validateRoadmap(event: KeyboardEvent, milestone: Milestone, type: string) {
+  validateRoadmap(event: KeyboardEvent, milestone: MissionMilestone, type: string) {
     event.preventDefault();
     if (event.keyCode === 13) {
       if (milestone.name && milestone.dueDate) {
@@ -994,7 +994,7 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
     }
   }
 
-  dueDateOnChange(event: any, milestone: Milestone) {
+  dueDateOnChange(event: any, milestone: MissionMilestone) {
     milestone.dueDate = new Date(event);
   }
 
@@ -1093,7 +1093,7 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
     return [];
   }
 
-  get milestones(): Array<Milestone> {
+  get milestones(): Array<MissionMilestone> {
     return this._milestones;
   }
 
