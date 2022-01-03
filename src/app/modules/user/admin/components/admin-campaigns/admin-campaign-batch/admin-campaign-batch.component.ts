@@ -773,9 +773,9 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
       {
         heading: 'Shots',
         content: [
-          {subHeading: 'Shot 1 excepted', value: AdminCampaignBatchComponent._campaignBatchesStats(stats, 'batches', 'shot1Excepted')},
-          {subHeading: 'Shot 2 excepted', value: AdminCampaignBatchComponent._campaignBatchesStats(stats, 'batches', 'shot2Excepted')},
-          {subHeading: 'Shot 3 excepted', value: AdminCampaignBatchComponent._campaignBatchesStats(stats, 'batches', 'shot3Excepted')}
+          {subHeading: 'Shot 1 expected', value: AdminCampaignBatchComponent._campaignBatchesStats(stats, 'batches', 'shot1Expected')},
+          {subHeading: 'Shot 2 expected', value: AdminCampaignBatchComponent._campaignBatchesStats(stats, 'batches', 'shot2Expected')},
+          {subHeading: 'Shot 3 expected', value: AdminCampaignBatchComponent._campaignBatchesStats(stats, 'batches', 'shot3Expected')}
         ]
       }
     ];

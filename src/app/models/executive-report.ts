@@ -60,7 +60,7 @@ export interface ExecutiveSection {
   questionId: string;
   title: string;
   abstract: string;
-  questionType: 'PIE' | 'RANKING' | 'BAR' | 'QUOTE' | 'KPI' | '';
+  questionType: 'PIE' | 'RANKING' | 'BAR' | 'QUOTE' | 'KPI' | 'LIKERT-SCALE';
   content: SectionPie | SectionRanking | SectionBar | SectionQuote | SectionKpi;
 }
 

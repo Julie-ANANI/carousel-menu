@@ -94,4 +94,9 @@ export const ADMIN_EXECUTIVE_REPORT = {
     'FAVOURABLE': ' of responses are favorable'
   },
 
+  'LIKERT-SCALE_SECTION': {
+    'LEGEND': 'Legend',
+    'RESULTS': 'Results'
+  },
+
 };

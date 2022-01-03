@@ -102,6 +102,20 @@ export class ReportSectionComponent implements OnChanges {
             this._initPieChartData();
             break;
 
+          case 'likert-scale':
+            this._section = {
+              questionId: _quesId,
+              title: this.report.lang === 'fr' ? _titleFrench : _titleEnglish,
+              abstract: _abstract,
+              questionType: 'LIKERT-SCALE',
+              content: <SectionRanking>{}
+            };
+         /*   const _barsData = ResponseService.barsData(_question, _answers);
+            this._content = this._initPieContent(ResponseService.pieChartData(_barsData, _answers));
+            this._initPieChartData();*/
+            this._content = this._initRankingContent(ResponseService.tagsList(_answers, _question), _question.title);
+            break;
+
           case 'stars':
             this._section = {
               questionId: _quesId,

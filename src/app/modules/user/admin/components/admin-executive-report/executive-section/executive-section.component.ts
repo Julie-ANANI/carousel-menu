@@ -134,6 +134,14 @@ export class ExecutiveSectionComponent {
           }
           break;
 
+        case 'LIKERT-SCALE':
+          if (this._enableVisualRanking) {
+            this._section.questionType = type;
+            this._initializeSection();
+            this.emitChanges();
+          }
+          break;
+
       }
     }
   }
@@ -164,6 +172,10 @@ export class ExecutiveSectionComponent {
 
       case 'PIE':
         this._setPieData();
+        break;
+
+      case 'LIKERT-SCALE':
+        this._setRankingData();
         break;
     }
   }

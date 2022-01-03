@@ -16,6 +16,7 @@ import { ExecutiveTargetingComponent } from './executive-targeting/executive-tar
 import { TypeBarComponent } from './executive-section/type-bar/type-bar.component';
 import { TypeRankingComponent } from './executive-section/type-ranking/type-ranking.component';
 import { TypePieComponent } from './executive-section/type-pie/type-pie.component';
+import {TypeLikertScaleComponent} from './executive-section/type-likert-scale/type-likert-scale.component';
 
 import { PipeModule } from '../../../../../pipe/pipe.module';
 import { CountryFlagModule } from '../../../../utility/country-flag/country-flag.module';
@@ -56,7 +57,8 @@ import { SharedUploadZonePhotoModule } from "../../../../shared/components/share
     TypeQuoteComponent,
     TypeBarComponent,
     TypeRankingComponent,
-    TypePieComponent
+    TypePieComponent,
+    TypeLikertScaleComponent
   ],
   exports: [
     AdminExecutiveReportComponent

@@ -35,9 +35,9 @@ export interface MailStats {
 export interface BatchesStats {
   goodEmails: number;
   riskyEmails: number;
-  shot1Excepted: number;
-  shot2Excepted: number;
-  shot3Excepted: number;
+  shot1Expected: number;
+  shot2Expected: number;
+  shot3Expected: number;
 }
 
 export interface CampaignStats {
