@@ -2,14 +2,15 @@ import { Innovation } from './innovation';
 import { User } from './user.model';
 import { Multiling } from './multiling';
 import { InnovCardSection } from './innov-card';
-
+import {MailConfiguration} from './mail-configuration';
 
 export type MissionType = 'USER' | 'CLIENT' | 'DEMO' | 'TEST';
 export type MissionTemplateSectionType = 'NOTHING' | 'ISSUE' | 'SOLUTION' | 'OTHER' | 'CONTEXT';
 export type MissionQuestionType = 'checkbox' | 'radio' | 'stars' | 'textarea' | 'ranking' | 'scale' | 'likert-scale';
 export type MissionQuestionParameterType = 'color' | 'date' |'datetime-local' | 'email' | 'month' | 'number'
   | 'password' | 'tel' | 'text' | 'time' | 'url' | 'week' | '';
-export type AttitudeMeasureType = 'agreement' | 'frequency' | 'satisfaction' | 'use'| 'quality' | 'relevance' | 'importance' | 'interest' |'criticality' ;
+export type AttitudeMeasureType = 'agreement' | 'frequency' | 'satisfaction' | 'use'| 'quality' | 'relevance' | 'importance'
+  | 'interest' |'criticality' ;
 
 export interface MissionCardTitle {
   en: Array<InnovCardSection>;
@@ -21,12 +22,10 @@ export interface MissionTemplateSectionEntry {
   lang: string;
 }
 
-
 export interface OptionEntry {
   label: string;
   lang: string;
 }
-
 
 export interface MissionTemplateSection {
   readonly _id?: string;
@@ -55,7 +54,7 @@ export interface MissionTemplateSection {
   entry: Array<MissionTemplateSectionEntry>;
 
   /**
-   * if we have more then one sections in the innovation card of same type in that case
+   * if we have more than one sections in the innovation card of same type in that case
    * we assign the section name as the identifier so that at the time of the quiz generation
    * we can identify which to take.
    * this value is assigned when the questionnaire is being created.
@@ -122,7 +121,7 @@ export interface MissionQuestionOption {
   color?: string;
 
   /**
-   * (ie à prendre en compte dans l'infographie dans les x% de réponses positives à la question)
+   * (i.e à prendre en compte dans l'infographie dans les x% de réponses positives à la question)
    * Comes from the preset model.
    */
   positive?: boolean;
@@ -132,8 +131,9 @@ export interface MissionQuestionOption {
 
 
 export interface MissionQuestion {
-  _id?: string;
+  readonly _id?: string;
   readonly created?: Date;
+  readonly updated?: Date;
 
   /**
    * this value we use when we save the question in the innovation mission only so that in the settings
@@ -141,7 +141,7 @@ export interface MissionQuestion {
    * COMPLEMENTARY - each template has some additional questions that can be selected or not. client has right
    * to change these questions.
    * ESSENTIALS - these are questions defined by us for each template every template has fixed number of these
-   * questions client dose not have right to change them.
+   * questions' client does not have right to change them.
    */
   type: 'COMPLEMENTARY' | 'ESSENTIAL';
 
@@ -175,7 +175,6 @@ export interface MissionQuestion {
    * Comes from the preset model.
    */
   controlType: MissionQuestionType;
-
 
   attitudeMeasure?: AttitudeMeasureType;
 
@@ -262,8 +261,7 @@ export interface MissionTemplate {
   }>;
 }
 
-
-export interface  Milestone {
+export interface  MissionMilestone {
  name: string;
  code: string;
  dueDate: Date;
@@ -271,18 +269,9 @@ export interface  Milestone {
  [property: string]: any;
 }
 
-
-export interface MailConfiguration {
-  domain: string;
-  service: string;
-  region: string;
-}
-
-
 export interface Mission {
   readonly _id?: string;
   readonly created?: Date;
-  mailConf?: Array<MailConfiguration>;
 
   /**
    * if the client deleted the project we make the status of the mission Hidden
@@ -297,6 +286,8 @@ export interface Mission {
 
   innovations?: Array<Innovation>;
   goal?: string;
+  mailConf?: Array<MailConfiguration>;
+
 
   /**
    * same as owner of the innovation
@@ -312,7 +303,7 @@ export interface Mission {
    * use name & code 'RDO', when save the restitution date by owner while creating new project.
    * for code use the 'Page name' like 'NEW_PROJECT' when save any dates
    */
-  milestoneDates?: Array<Milestone>;
+  milestoneDates?: Array<MissionMilestone>;
 
   /**
    * the use case selected by the user for the Market Test.
@@ -326,7 +317,7 @@ export interface Mission {
 
   /**
    * not using anymore. It's there for the old projects.
-   * on 1st June, 2021
+   * on 1st June 2021
    */
   objective?: {
     principal: Multiling;
@@ -346,7 +337,7 @@ export interface Mission {
 
   /**
    * USER - means the project is in Editing mode
-   * CLIENT - means the project is accepted and now it's market test.
+   * CLIENT - means the project is accepted, and now it's market test.
    */
   type?: MissionType;
 

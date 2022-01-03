@@ -1,7 +1,6 @@
 import {Tag} from './tag';
 
 export type PublicationType = 'pain_point' | 'innovation' | 'sourcing' | '';
-
 export type PublicationSectionType = 'ISSUE' | 'SOLUTION' | 'SUMMARY';
 
 export interface CommunityCircle {
@@ -34,7 +33,7 @@ export interface Community {
   media: Array<any>;
 
   /**
-   * in the community they represents the domains.
+   * in the community they represent the domains.
    */
   sectors: Array<Tag>;
 

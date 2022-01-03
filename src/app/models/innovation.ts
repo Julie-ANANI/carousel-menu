@@ -10,6 +10,7 @@ import { Question } from './question';
 import {Community} from './community';
 import {Consent} from './consent';
 import {NotificationTrigger} from './notification';
+import {Campaign} from './campaign';
 
 export interface InnovationFollowUpEmailsCc {
   firstName: string;
@@ -159,9 +160,22 @@ export interface Innovation {
   published?: Date | null;
 
   readonly _id?: string;
-  owner?: User;
-  readonly campaigns?: Array<any>;
+  readonly campaigns?: Array<Campaign>;
+  readonly principalMedia?: Media;
+  readonly quizId?: string;
+  readonly stats?: InnovationStats;
+  readonly reviewing?: any;
+  readonly launched?: Date;
+  readonly created?: Date;
+  readonly updated?: Date;
 
+  readonly similar?: Array<{
+    matched_inno_id: string,
+    score: number
+  }>;
+
+  _metadata?: any;
+  owner?: User;
   status?: InnovationStatus;
 
   statusLogs?: Array<{
@@ -173,11 +187,9 @@ export interface Innovation {
   name?: string;
   domain?: string;
   questionnaireComment?: string;
-  readonly principalMedia?: Media;
   innovationCards?: Array<InnovCard>;
   tags?: Array<Tag>;
   preset?: any; // This isn't preset anymore -> we don't have ObjectID.
-  readonly quizId?: string;
 
   marketReport?: {
     [questionIdentifier: string]: QuestionReport
@@ -185,9 +197,7 @@ export interface Innovation {
 
   collaborators?: Array<User>;
   collaboratorsConsent?: Consent;
-
   settings?: InnovationSettings;
-  readonly stats?: InnovationStats;
   updatedStats?: Date;
   restitution?: boolean;
   proofreading?: boolean;
@@ -199,34 +209,17 @@ export interface Innovation {
 
   feedback?: string;
   thanks?: boolean;
-  readonly reviewing?: any;
   isPublic?: boolean;
   external_diffusion?: boolean;
-  readonly launched?: Date;
-  readonly created?: Date;
-  readonly updated?: Date;
-
   ownerConsent?: Consent;
 
   // not use anymore. It's for the innovations old executive report.
   executiveReport?: OldExecutiveReport;
-
   executiveReportId?: string;
   clientProject?: ClientProject | string;
   mission?: Mission | string;
-
   operator?: User;
   previewMode?: boolean;
-
-  readonly similar?: Array<{
-    matched_inno_id: string,
-    score: number
-  }>;
-
   percentages?: InnovationMetadataValues;
-
-  _metadata?: any;
-
   followUpEmails?: InnovationFollowUpEmails;
-
 }

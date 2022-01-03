@@ -1,14 +1,21 @@
 import {Multiling} from './multiling';
 
+// TODO remove multiling
+
+export interface CountryEntry {
+  lang: string;
+  value: string
+}
+
 export interface Country {
-  name?: string;
-  latitude?: number;
-  longitude?: number;
-  code?: string;
-  uri?: string;
-  continent?: string;
-  subcontinent?: string;
-  flag?: string;
-  names?: Multiling;
-  domain?: string;
+  readonly name?: string;
+  readonly latitude?: number;
+  readonly longitude?: number;
+  readonly code?: string;
+  readonly uri?: string;
+  readonly continent?: string;
+  readonly subcontinent?: string;
+  readonly flag?: string;
+  readonly names?: Multiling | Array<CountryEntry>;
+  readonly domain?: string;
 }
