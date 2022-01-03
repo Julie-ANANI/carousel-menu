@@ -18,6 +18,7 @@ import {isPlatformBrowser} from '@angular/common';
 import {ExecutiveReportService} from '../../../../../../../services/executive-report/executive-report.service';
 import {ContactFrontService} from '../../../../../../../services/contact/contact-front.service';
 import {ClientProject} from '../../../../../../../models/client-project';
+import {ShareService} from '../../../../../../../services/share/share.service';
 
 interface Document {
   name: string;
@@ -86,6 +87,7 @@ export class DocumentsComponent implements OnInit, OnDestroy {
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _innovationFrontService: InnovationFrontService,
               private _authService: AuthService,
+              private _shareService: ShareService,
               private _commonService: CommonService,
               private _answerService: AnswerService,
               private _executiveReportService: ExecutiveReportService,
@@ -180,8 +182,7 @@ export class DocumentsComponent implements OnInit, OnDestroy {
     if (!this._isLinkCopied && this.isOwner && this._ownerConsent) {
       this._isGeneratingLink = true;
       this._innovationService.shareSynthesis(this._innovation._id).pipe(first()).subscribe((share) => {
-        const url = `${environment.clientUrl}/share/synthesis/${share.objectId}/${share.shareKey}`;
-        this._commonService.copyToClipboard(url);
+        this._commonService.copyToClipboard(this._shareService.generateShareSynthesisUrl(share));
         this._isGeneratingLink = false;
         this._isLinkCopied = true;
         this._timeout = setTimeout(() => {
@@ -254,7 +255,7 @@ export class DocumentsComponent implements OnInit, OnDestroy {
     event.preventDefault();
     if (this.isOwner && this._ownerConsent) {
       const clientProject = <ClientProject>this._innovation.clientProject;
-      const email = clientProject && clientProject.commercial && clientProject.commercial.email || 'achampagne@umi.us';
+      const email = clientProject && clientProject.commercial && clientProject.commercial.email || environment.commercialContact;
       window.open(ContactFrontService.commercialVideo(this._innovation, email, this.userLang), '_blank');
     }
   }

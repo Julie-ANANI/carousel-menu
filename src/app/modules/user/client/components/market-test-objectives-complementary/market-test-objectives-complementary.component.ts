@@ -56,7 +56,7 @@ export class MarketTestObjectivesComplementaryComponent {
     if (((event.target) as HTMLInputElement).checked) {
       this.selectedSectionsObjectives[sectionIndex].questions.push(value);
     } else {
-      const index = this.selectedSectionsObjectives[sectionIndex].questions.findIndex((objective) => {
+      const index = this.selectedSectionsObjectives[sectionIndex].questions.findIndex((objective: MissionQuestion) => {
         return objective._id === value._id;
       });
       if (index !== -1) {
@@ -69,7 +69,7 @@ export class MarketTestObjectivesComplementaryComponent {
 
   public isChecked(value: MissionQuestion, sectionIndex: number): boolean {
     if (this.selectedSectionsObjectives.length && this.selectedSectionsObjectives[sectionIndex]) {
-      return this.selectedSectionsObjectives[sectionIndex].questions.some((objective) => {
+      return this.selectedSectionsObjectives[sectionIndex].questions.some((objective: MissionQuestion) => {
         return objective._id === value._id;
       });
     }

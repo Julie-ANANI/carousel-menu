@@ -165,5 +165,4 @@ export class MarketTestObjectivesComponent {
     return this._objectiveComment;
   }
 
-
 }

@@ -16,7 +16,6 @@ import {MediaFrontService} from '../../../services/media/media-front.service';
 import {emailRegEx} from '../../../utils/regex';
 
 @Component({
-  selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })

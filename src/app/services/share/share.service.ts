@@ -118,4 +118,12 @@ export class ShareService {
 
   }
 
+  /**
+   * return the project synthesis url to share with the clients.
+   * @param shareObj
+   */
+  public generateShareSynthesisUrl(shareObj: any): string {
+    return `${environment.clientUrl}/share/synthesis/${shareObj.objectId}/${shareObj.shareKey}`;
+  }
+
 }
