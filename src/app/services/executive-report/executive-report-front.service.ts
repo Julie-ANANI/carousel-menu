@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { SectionBar, SectionKpi, SectionPie, SectionQuote, SectionRanking } from '../../models/executive-report';
+import { SectionBar, SectionKpi, SectionPie, SectionQuote, SectionRanking, SectionLikertScale} from '../../models/executive-report';
 import { Professional } from '../../models/professional';
 import { BarData } from '../../modules/shared/components/shared-market-report/models/bar-data';
 import { ResponseService } from '../../modules/shared/components/shared-market-report/services/response.service';
@@ -196,6 +196,44 @@ export class ExecutiveReportFrontService {
   }
 
 
+
+  /***
+   * this returns the content of the LIKERT-SCALE section for tags.
+   * @param tagsData
+   * @param lang
+   */
+
+  public likertScaleTagsSection(tagsData: Array<Tag>, lang: string): SectionLikertScale {
+
+    const section: SectionLikertScale = {
+      values: []
+    };
+
+    if (tagsData && tagsData.length > 0) {
+      tagsData.slice(0, 3).forEach((tag) => {
+        section.values.push({
+          legend: tag.count + 'X',
+          color: '#4F5D6B',
+          name: this._multilingPipe.transform(tag.label, lang),
+          visibility: tag.count > 0
+        });
+      });
+    } else {
+      for (let i = 0; i < 1; i++) {
+        section.values.push({
+          color: '#4F5D6B',
+          legend: '',
+          name: '',
+          visibility: false
+        });
+      }
+    }
+
+    return section;
+
+  }
+
+
   /***
    * this returns the content of the RANKING section.
    * @param rankingData
@@ -219,6 +257,43 @@ export class ExecutiveReportFrontService {
       });
     } else {
       for (let i = 0; i < 3; i++) {
+        section.values.push({
+          color: '#4F5D6B',
+          legend: '',
+          name: '',
+          visibility: false
+        });
+      }
+    }
+
+    return section;
+
+  }
+
+
+  /***
+   * this returns the content of the Likert-scale section.
+   * @param rankingData
+   * @param lang
+   */
+  public likertScaleSection(rankingData: {label: string, answers: Answer[]; percentage: number; count: number; identifier: string; }[],
+                        lang: string): SectionLikertScale {
+
+    const section: SectionRanking = {
+      values: []
+    };
+
+    if (rankingData && rankingData.length > 0) {
+      rankingData.slice(0, 3).forEach((rank, index) => {
+        section.values.push({
+          legend: (index + 1).toString(),
+          color: '#4F5D6B',
+          name: rank.label,
+          visibility: true
+        });
+      });
+    } else {
+      for (let i = 0; i < 1; i++) {
         section.values.push({
           color: '#4F5D6B',
           legend: '',

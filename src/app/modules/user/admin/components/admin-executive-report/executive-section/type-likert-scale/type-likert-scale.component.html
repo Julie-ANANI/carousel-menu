@@ -62,17 +62,12 @@
           <label>
             <input readonly="readonly"
               (change)="emitChanges()"
-              (keyup)="textColor('name' , (i + 1)  ); checkVisibility(i)"
+              (keyup)="textColor('name' , (i + 1)  );"
               [(ngModel)]="tag.name"
               [attr.placeholder]="'ADMIN_EXECUTIVE_REPORT.LIKERT-SCALE_SECTION.RESULTS_' + (i + 1) | translate"
               maxlength="20"
               class="form-input"
               type="text">
-
-            <span [ngStyle]="{ 'color': resultsColor }"
-                  class="text-limit-wrapper">
-              {{ 20 - tag.name.length }}
-            </span>
           </label>
         </div>
         <!-- /element -->
@@ -89,6 +84,11 @@
               maxlength="13"
               class="form-input"
               type="text">
+
+            <span [ngStyle]="{ 'color': legendColor }"
+                  class="text-limit-wrapper">
+              {{ 13 - tag.legend.length }}
+            </span>
           </label>
         </div>
         <!-- /legend -->
@@ -97,16 +97,31 @@
         <div class="popover">
           <div [ngStyle]="{ 'background-color': tag.color }" class="shape is-circle is-sm"></div>
           <div class="popover-container">
-            <div class="card">
-              <div (click)="setColor('#2ECC71', i)" class="shape is-circle bg-success-color is-sm"></div>
-              <div (click)="setColor('#99E04B', i)" class="shape is-circle green-light is-sm"></div>
+            <div class="card-likert"
+            >
+              <div (click)="setColor('#2ECC71', i)" class="shape is-circle bg-success is-sm"></div>
+              <div (click)="setColor('#99E04B', i)" class="shape is-circle bg-green-light is-sm"></div>
               <div (click)="setColor('#BBC7D6', i)" class="shape is-circle bg-draft is-sm"></div>
-              <div (click)="setColor('#F89424', i)" class="shape is-circle bg-pending-color is-sm"></div>
+              <div (click)="setColor('#F89424', i)" class="shape is-circle bg-pending is-sm"></div>
               <div (click)="setColor('#EA5858', i)" class="shape is-circle bg-alert is-sm"></div>
             </div>
           </div>
         </div>
         <!-- /color -->
+
+
+        <!--Je veux que le click d'une couleur  soit relié à un résulat précis
+        chaque couleur est relié à un événement affiché totality invalided index = 1
+        relié par les index ?
+
+        @Input() myColorChoice: string[]; >> événement
+        @Output() myDataColorChange = new EventEmitter<string[]>();
+        <my-component [(myData)]="data" (myDataChange)="dataHasChange($event)"></my-component>
+        Qui JE VEUX ÉCOUTER ? LES COULEURS
+
+
+
+        -->
 
       </div>
     </div>
@@ -124,11 +139,11 @@
     <div *ngFor="let tag of content.values; let i = index;" class="m-bottom-20 text-center">
 
       <p style="min-height: 24px; line-height: 24px" class="text-lg text-medium">
-        <ng-container *ngIf="tag.legend && tag.visibility">{{ tag.legend }}</ng-container>
+        <ng-container *ngIf="tag.legend">{{ tag.legend }}</ng-container>
       </p>
 
       <div style="min-height: 30px">
-        <div *ngIf="tag.visibility && tag.name" [ngStyle]="{ 'background-color': tag.color }" class="label is-rounded">
+        <div *ngIf="tag.name" [ngStyle]="{ 'background-color': tag.color }" class="label is-rounded">
           {{ tag.name }}
         </div>
       </div>
@@ -139,5 +154,6 @@
 
   </div>
   <!-- view side -->
+
 
 </div>
