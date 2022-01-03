@@ -1,4 +1,43 @@
 export const ERROR = {
+  400: {
+    INVALID_ARGUMENT: 'The input is invalid. Please check the input and try again.',
+    EMPTY_PARAM: 'The parameter was empty.',
+    EMPTY_BODY: 'The body was empty.'
+  },
+
+  403: {
+    PERMISSION_DENIED: 'Sorry, you are not authorised on the platform.'
+  },
+
+  404: {
+    NOT_FOUND: 'Sorry, we can\'t find the data.'
+  },
+
+  500: {
+    NOT_FOUND: 'Sorry, we can\'t find the data.',
+    UNKNOWN_ERROR: 'There were some technical issues to carry out this request. Please try again.',
+    DB_ERROR: 'We are having trouble while fetching the data in the database.'
+  },
+
+  504: {
+    SERVER_ERROR: 'We are having trouble while connecting to the server.'
+  },
+
+  AUTH_400: {
+    MISSING_BODY_EMAIL: 'Please enter your email address in the provided field.',
+    MISSING_BODY_PASSWORD: 'Please enter your password in the provided field.',
+    LOGIN_FAILED: 'Sorry, the authentification failed. Please check the email/password combination and try again.',
+  },
+
+  AUTH_404: {
+    USER_NOT_FOUND: 'The entered email could not be found please check it and try again.',
+  },
+
+  AUTH_500: {
+    OUT_OF_ATTEMPTS: 'Sorry, you have reached the maximum attempts. Please contact UMI support service.',
+    USER_STATUS_ANORMAL: 'Sorry, we detected that your account status is anormal. Please contact UMI support service.'
+  },
+
   'ERROR': 'Oups...',
 
   'SUCCESS': 'Success',

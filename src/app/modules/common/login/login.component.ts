@@ -136,10 +136,13 @@ export class LoginComponent implements OnInit {
           // Redirect the user
           this._router.navigate([redirect], navigationExtras);
         }
-        }, () => {
+        }, (error: HttpErrorResponse) => {
+        console.log(error);
         this._nbTentatives -= 1;
         this._displayLoading = false;
-        this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.INVALID_FORM_DATA');
+        const messageKey = error.error.detailedCode? error.error.detailedCode[error.message] : error.status[error.message];
+        console.log(messageKey);
+        this._translateNotificationsService.error('ERROR.ERROR', messageKey);
         this._formData.get('password').reset();
       });
     } else {
