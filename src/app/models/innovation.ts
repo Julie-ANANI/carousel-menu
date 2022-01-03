@@ -12,14 +12,38 @@ import {Consent} from './consent';
 import {NotificationTrigger} from './notification';
 import {Campaign} from './campaign';
 
+export type InnovationStatus = 'EDITING' | 'SUBMITTED' | 'EVALUATING' | 'DONE';
+export type InnovationStatusLogsType = 'SUBMIT' | 'REJECT' | 'VALIDATE' | 'FINISH';
+export type InnovationClientSatisfactionType = 'VERY_HAPPY' | 'HAPPY' | 'NORMAL' | 'BAD' | 'VERY_BAD';
+export type InnovationFollowUpTemplateType = 'DISCUSSION' | 'INFORM' | 'INTERVIEW' | 'OPENING' | 'NOFOLLOW';
+
 export interface InnovationFollowUpEmailsCc {
   firstName: string;
   lastName: string;
   email: string;
 }
 
+export interface InnovationFollowUpEmailsTemplateEntry {
+  lang: string;
+  subject: string;
+  content: string;
+}
+
+export interface InnovationFollowUpEmailsTemplates {
+  name: InnovationFollowUpTemplateType;
+  entry: Array<InnovationFollowUpEmailsTemplateEntry>;
+}
+
+// TODO remove multiling
 export interface InnovationFollowUpEmails {
+  /**
+   * for the old follow up at the admin side.
+   */
   ccEmail?: string;
+
+  /**
+   * use this with the new implementation.
+   */
   cc?: Array<InnovationFollowUpEmailsCc>;
 
   /**
@@ -32,6 +56,14 @@ export interface InnovationFollowUpEmails {
    */
   entity?: string;
 
+  /**
+   * TODO send this format from back.
+   */
+  templates?: Array<InnovationFollowUpEmailsTemplates>;
+
+  /**
+   * TODO remove these pattern
+   */
   discussion?: {
     fr: {
       subject: string;
@@ -106,8 +138,6 @@ export interface InnovationMetadataValues {
   delivery?: number;
 }
 
-export type InnovationStatus = 'EDITING' | 'SUBMITTED' | 'EVALUATING' | 'DONE';
-
 // not use anymore. It's for the innovations old executive report.
 export interface OldExecutiveReport {
   totalSections: number;
@@ -170,8 +200,8 @@ export interface Innovation {
   readonly updated?: Date;
 
   readonly similar?: Array<{
-    matched_inno_id: string,
-    score: number
+    matched_inno_id: string;
+    score: number;
   }>;
 
   _metadata?: any;
@@ -179,9 +209,9 @@ export interface Innovation {
   status?: InnovationStatus;
 
   statusLogs?: Array<{
-    action: 'SUBMIT' | 'REJECT' | 'VALIDATE' | 'FINISH'
-    user: User,
-    date: Date
+    action: InnovationStatusLogsType;
+    user: User;
+    date: Date;
   }>;
 
   name?: string;
@@ -203,8 +233,8 @@ export interface Innovation {
   proofreading?: boolean;
 
   clientSatisfaction?: {
-    satisfaction?: 'VERY_HAPPY' | 'HAPPY' | 'NORMAL' | 'BAD' | 'VERY_BAD',
-    message?: string
+    satisfaction?: InnovationClientSatisfactionType;
+    message?: string;
   };
 
   feedback?: string;
@@ -212,14 +242,24 @@ export interface Innovation {
   isPublic?: boolean;
   external_diffusion?: boolean;
   ownerConsent?: Consent;
-
-  // not use anymore. It's for the innovations old executive report.
-  executiveReport?: OldExecutiveReport;
-  executiveReportId?: string;
   clientProject?: ClientProject | string;
   mission?: Mission | string;
   operator?: User;
   previewMode?: boolean;
-  percentages?: InnovationMetadataValues;
   followUpEmails?: InnovationFollowUpEmails;
+
+  /**
+   * not use anymore. It's for the innovations old executive report.
+   */
+  executiveReport?: OldExecutiveReport;
+
+  /**
+   * store the id of the Executive Report
+   */
+  executiveReportId?: string;
+
+  /**
+   * TODO discuss this. not use anymore
+   */
+  percentages?: InnovationMetadataValues;
 }

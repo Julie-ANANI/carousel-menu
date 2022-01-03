@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {SeniorityClassification} from '../../models/SeniorityClassification';
-import {JobsClassification} from '../../models/jobsClassification';
+import {JobsClassification} from '../../models/jobs-classification';
 
 @Injectable({providedIn: 'root'})
 export class ClassificationService {
