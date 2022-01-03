@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { EmailQueueModel } from '../../../../../../models/mail.queue.model';
+import { EmailQueueModel } from '../../../../../../models/mail-queue';
 import { EmailService } from '../../../../../../services/email/email.service';
 import { TranslateNotificationsService } from '../../../../../../services/translate-notifications/translate-notifications.service';
 import { Table } from '@umius/umi-common-component/models';

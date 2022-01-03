@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { EmailQueueModel } from '../../../../models/mail.queue.model';
+import { EmailQueueModel } from '../../../../models/mail-queue';
 import { first } from 'rxjs/operators';
 import { InnovationService } from '../../../../services/innovation/innovation.service';
 import { ErrorFrontService } from '../../../../services/error/error-front.service';

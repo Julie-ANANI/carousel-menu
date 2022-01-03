@@ -1,10 +1,24 @@
+/**
+ * not use anymore. Only for Old innovation with not mission templates value.
+ */
+
 import { Multiling } from './multiling';
 import { Question } from './question';
 
+export interface PresetSectionLabel {
+  lang: string;
+  value: string;
+}
+
+// TODO remove multiling
 export interface PresetSection {
-  readonly label: Multiling;
   readonly description: 'nothing' | '1st' | '2nd';
   readonly questions: Array<Question>;
+
+  /**
+   * TODO replace this with Array<PresetSectionLabel>
+   */
+  readonly label: Multiling;
 }
 
 export interface PresetRequirement {
