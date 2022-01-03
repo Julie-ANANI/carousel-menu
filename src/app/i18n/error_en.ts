@@ -31,7 +31,7 @@ export const ERROR = {
     INVALID_USERID: 'The user id is invalid. Please check and try again.',
     MISSING_BODY_EMAIL: 'Please enter your email address in the provided field.',
     MISSING_BODY_PASSWORD: 'Please enter your password in the provided field.',
-    LOGIN_FAILED: 'Sorry, the authentification failed. Please check the email/password combination and try again.',
+    LOGIN_FAILED: 'Sorry, login failed. Please check the email/password combination and try again.',
   },
 
   AUTH_404: {
@@ -42,6 +42,21 @@ export const ERROR = {
     ATTEMPTS_TOO_SOON: 'Sorry, the login is too frequent. Please catch a break and try again.',
     OUT_OF_ATTEMPTS: 'Sorry, you have run out of 5 attempts. Please contact UMI support service.',
     USER_STATUS_ANORMAL: 'Sorry, we detected that your account status is anormal. Please contact UMI support service.'
+  },
+
+  USER_400: {
+    ALREADY_EXISTS: 'The e-mail address is already registered in the system.',
+    PASSWORD_NOT_MATCH: 'The new password and confirm password must be same.',
+    WRONG_PASSWORD: 'Old password is incorrect.',
+    MISSING_BODY_EMAIL: 'The email address is missing. Please check it and try again.',
+    MISSING_BODY_FIRSTNAME: 'The firstname is  missing. Please check it and try again.',
+    MISSING_BODY_LASTNAME: 'The lastname is missing. Please check it and try again.',
+    MISSING_BODY_PASSWORD: 'The password is missing. Please check it and try again.',
+    MISSING_BODY_COMPANY_NAME: 'The company name is missing. Please check it and try again.'
+  },
+
+  USER_404: {
+    USER_NOT_FOUND: 'We can\'t find your information please check it and try again.',
   },
 
   'ERROR': 'Oups...',

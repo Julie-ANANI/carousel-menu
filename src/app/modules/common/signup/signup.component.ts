@@ -13,6 +13,8 @@ import {RandomUtil} from '../../../utils/randomUtil';
 import {isPlatformBrowser} from '@angular/common';
 import {MediaFrontService} from '../../../services/media/media-front.service';
 import {TranslateService} from '@ngx-translate/core';
+import { HttpErrorResponse } from "@angular/common/http";
+import { ErrorFrontService } from "../../../services/error/error-front.service";
 
 @Component({
   selector: 'app-signup',
@@ -114,21 +116,25 @@ export class SignupComponent implements OnInit {
       if (user.email.match(/umi.us/gi) && user.domain !== 'umi') {
         this._isCreatingAccount = false;
         this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.INVALID_DOMAIN');
-      } else {
+      }
+      else {
         this._userService.create(user).pipe(first()).subscribe(() => {
           this._authService.login(user).pipe(first()).subscribe(() => {
             this._router.navigate(['/welcome']);
-          }, () => {
+          }, (error: HttpErrorResponse) => {
+            console.log(error);
             this._isCreatingAccount = false;
-            this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH');
+            this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(error.error));
           });
-        }, () => {
+        }, (error: HttpErrorResponse) => {
+          console.log(error);
           this._isCreatingAccount = false;
-          this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.ALREADY_EXIST');
+          this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(error.error));
         });
       }
 
-    } else {
+    }
+    else {
       this._isCreatingAccount = false;
       this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.INVALID_FORM');
     }
