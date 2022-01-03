@@ -1,5 +1,5 @@
 import {Multiling} from './multiling';
-import {EmailType} from "./SeniorityClassification";
+import {EmailType} from "./seniority-classification";
 
 export interface JobClassificationCategoryLabel {
   lang: string;
