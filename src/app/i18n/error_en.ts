@@ -2,7 +2,8 @@ export const ERROR = {
   400: {
     INVALID_ARGUMENT: 'The input is invalid. Please check the input and try again.',
     EMPTY_PARAM: 'The parameter of the request is missing. Please check and try again.',
-    EMPTY_BODY: 'The data in the request is empty. Please check and try again.'
+    EMPTY_BODY: 'The data in the request is empty. Please check and try again.',
+    ALREADY_EXISTS: 'The data already exists.'
   },
 
   401:{

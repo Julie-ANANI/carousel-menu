@@ -29,6 +29,7 @@ import {HttpErrorResponse} from '@angular/common/http';
 import {MissionService} from '../../../../../../services/mission/mission.service';
 import {Objective, ObjectivesPrincipal} from '../../../../../../models/static-data/missionObjectives';
 import {RolesFrontService} from '../../../../../../services/roles/roles-front.service';
+import { ErrorFrontService } from "../../../../../../services/error/error-front.service";
 
 // todo remove this
 
@@ -728,7 +729,7 @@ export class AdminProjectManagementComponent implements OnInit {
         this._notificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.SAVED_TEXT');
       }, (err: HttpErrorResponse) => {
         console.log(err);
-        this._notificationsService.error('ERROR.ERROR', err.message);
+        this._notificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
       });
 
     }

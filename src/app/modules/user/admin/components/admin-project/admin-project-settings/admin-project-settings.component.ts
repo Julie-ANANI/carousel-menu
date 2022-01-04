@@ -575,7 +575,7 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
           this._translateNotificationsService.success('Success', notifyMessage);
         },
         (err: HttpErrorResponse) => {
-          this._translateNotificationsService.error('Client Project Error...', ErrorFrontService.adminErrorMessage(err));
+          this._translateNotificationsService.error('Client Project Error...', ErrorFrontService.getErrorKey(err.error));
           console.error(err);
         }
       );
