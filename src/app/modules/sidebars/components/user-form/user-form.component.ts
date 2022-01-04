@@ -290,7 +290,8 @@ export class UserFormComponent implements OnInit {
 
       if (this._isEditUser) {
         const user = new User(this._userForm.value);
-        user.id = this._user.id;
+        // TODO we have to correct the problem of user.id || user._id
+        user.id = this._user.id || this._user._id;
         this.finalUserData.emit(user);
       } else if (this._isProfessional && this._type === 'professional') {
         const pro = this._userForm.value;
