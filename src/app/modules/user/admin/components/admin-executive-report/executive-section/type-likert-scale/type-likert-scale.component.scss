@@ -1,7 +1,35 @@
-.green-light{
-  color : #99E04B;
+@import "src/style/framework/src/_mixins.scss";
+
+// The results are already defined by default for the likert-scale type
+//Here I use the same type of input for the ranking type
+.admin-executive-wrapper .content-wrapper .falsePlaceholder {
+  appearance: none;
+  border: $border-width solid $form-border-color;
+  color: $form-input-color;
+  border-radius: $border-radius;
+  display: flex;
+  align-items: center;
+  width: 211px;
+  height: 50px;
+  outline: none;
+  padding: 14.5px;
+  position: relative;
+  background: $bg-white-color none;
+  max-width: 100%;
+  line-height: $line-height-sm;
+  border: 2px solid #000000;
+  font-size: $font-size-sm;
 }
 
-.admin-executive-wrapper .content-wrapper .form-input[readonly] {
-  background: white;
+#type-likert-scale .card-likert {
+  padding: 10px;
+}
+
+#type-likert-scale .card-likert div {
+  margin-right: 0.3rem;
+}
+
+#type-likert-scale .card-likert div .shape.is-circle.is-sm {
+  justify-content: center;
+  align-items: center;
 }

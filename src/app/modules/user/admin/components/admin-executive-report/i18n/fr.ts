@@ -95,12 +95,12 @@ export const ADMIN_EXECUTIVE_REPORT = {
   },
 
   'LIKERT-SCALE_SECTION': {
-    'LEGEND': 'Légende',
-    'RESULTS_1': 'Totalement invalidé',
-    'RESULTS_2': 'Invalidé',
-    'RESULTS_3': 'Incertain',
-    'RESULTS_4': 'Validé',
-    'RESULTS_5': 'Totalement validé',
+    'LEGEND': 'Legend',
+    'TOTALLY_INVALIDATED': 'TOTALEMENT INVALIDÉ',
+    'INVALIDED': 'INVALIDÉ',
+    'UNCERTAIN': 'INCERTAIN',
+    'VALIDATED': 'VALIDÉ',
+    'TOTALLY_VALIDATED': 'TOTALEMENT VALIDÉ',
   },
 
 };

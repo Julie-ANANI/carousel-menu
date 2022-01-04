@@ -344,19 +344,20 @@ export class ReportSectionComponent implements OnChanges {
    * @private
    */
   private _initLikertScaleContent(tagsData: Array<Tag>, title: Multiling): SectionLikertScale {
-    const _content = <SectionLikertScale>{};
-    _content.values = [];
     if (tagsData.length > 0) {
-      for (let i = 0; i < 1; i++) {
-        _content.values[i] = {
-          name: tagsData[i].label[this.report.lang] || '',
-          visibility: true,
-          legend: tagsData[i].count > 1 ? tagsData[i].count + 'X' : '',
-          color: this._getLikertScaleColor(title)
-        };
-      }
+       return {
+        name: tagsData[0].label[this.report.lang] || '',
+        visibility: true,
+        legend: tagsData[0].count > 1 ? tagsData[0].count + 'X' : '',
+        color: this._getLikertScaleColor(title)
+      };
     }
-    return _content;
+    return {
+      color: '#BBC7D6',
+      legend: '',
+      name: 'UNCERTAIN',
+      visibility: false
+    };
   }
 
   get section(): ExecutiveSection {

@@ -1,4 +1,4 @@
-<div class="admin-executive-wrapper" id="type-ranking">
+<div class="admin-executive-wrapper" id="type-likert-scale">
 
   <!-- edit side -->
   <div *ngIf="isEditable" class="content-wrapper">
@@ -53,78 +53,59 @@
     <!-- /abstract -->
 
 
-    <!-- name / occurrence / color -->
-    <div *ngFor="let tag of content.values; let i = index;">
-      <div [ngClass]="{ 'm-bottom-15': i !== content.values.length - 1 }" class="d-flex justify-space">
+    <!-- name / legend / color -->
+    <div class="d-flex justify-space">
 
-        <!-- name -->
-        <div class="m-right-10">
-          <label>
-            <input readonly="readonly"
-              (change)="emitChanges()"
-              (keyup)="textColor('name' , (i + 1)  );"
-              [(ngModel)]="tag.name"
-              [attr.placeholder]="'ADMIN_EXECUTIVE_REPORT.LIKERT-SCALE_SECTION.RESULTS_' + (i + 1) | translate"
-              maxlength="20"
-              class="form-input"
-              type="text">
-          </label>
-        </div>
-        <!-- /element -->
+      <!-- name -->
+      <div class="m-right-10">
+        <label>
+          <div class="falsePlaceholder"
+               (change)="emitChanges()">
+            {{('ADMIN_EXECUTIVE_REPORT.LIKERT-SCALE_SECTION.' + content.name) | uppercase| translate }}
+          </div>
+        </label>
+      </div>
+      <!-- /name -->
 
+      <!-- legend -->
+      <div class="m-right-10">
+        <label>
+          <input
+            (change)="emitChanges()"
+            (keyup)="textColor('legend')"
+            [(ngModel)]="content.legend"
+            [attr.placeholder]="'ADMIN_EXECUTIVE_REPORT.LIKERT-SCALE_SECTION.LEGEND'| translate"
+            maxlength="13"
+            class="form-input"
+            type="text">
 
-        <!-- legend -->
-        <div class="m-right-10">
-          <label>
-            <input
-              (change)="emitChanges()"
-              (keyup)="textColor('legend' , (i + 1))"
-              [(ngModel)]="tag.legend"
-              [attr.placeholder]="'ADMIN_EXECUTIVE_REPORT.LIKERT-SCALE_SECTION.LEGEND'| translate"
-              maxlength="13"
-              class="form-input"
-              type="text">
-
-            <span [ngStyle]="{ 'color': legendColor }"
-                  class="text-limit-wrapper">
-              {{ 13 - tag.legend.length }}
+          <span [ngStyle]="{ 'color': legendColor }"
+                class="text-limit-wrapper">
+              {{ 13 - content.legend.length }}
             </span>
-          </label>
-        </div>
-        <!-- /legend -->
+        </label>
+      </div>
+      <!-- /legend -->
 
-        <!-- color -->
-        <div class="popover">
-          <div [ngStyle]="{ 'background-color': tag.color }" class="shape is-circle is-sm"></div>
-          <div class="popover-container">
-            <div class="card-likert"
-            >
-              <div (click)="setColor('#2ECC71', i)" class="shape is-circle bg-success is-sm"></div>
-              <div (click)="setColor('#99E04B', i)" class="shape is-circle bg-green-light is-sm"></div>
-              <div (click)="setColor('#BBC7D6', i)" class="shape is-circle bg-draft is-sm"></div>
-              <div (click)="setColor('#F89424', i)" class="shape is-circle bg-pending is-sm"></div>
-              <div (click)="setColor('#EA5858', i)" class="shape is-circle bg-alert is-sm"></div>
-            </div>
+      <!-- color -->
+      <div class="popover">
+        <div
+          [ngStyle]="{ 'background-color': content.color }" class="shape is-circle is-sm"></div>
+        <div class="popover-container">
+          <div class="card-likert"
+               (change)="emitChanges()">
+            <div (click)="chooseColor(0);" class="shape is-circle bg-alert is-sm"></div>
+            <div (click)="chooseColor(1);" class="shape is-circle bg-pending is-sm"></div>
+            <div (click)="chooseColor(2);" class="shape is-circle bg-gray is-sm"></div>
+            <div (click)="chooseColor(3);" class="shape is-circle bg-green-light is-sm"></div>
+            <div (click)="chooseColor(4);" class="shape is-circle bg-success is-sm"></div>
           </div>
         </div>
-        <!-- /color -->
-
-
-        <!--Je veux que le click d'une couleur  soit relié à un résulat précis
-        chaque couleur est relié à un événement affiché totality invalided index = 1
-        relié par les index ?
-
-        @Input() myColorChoice: string[]; >> événement
-        @Output() myDataColorChange = new EventEmitter<string[]>();
-        <my-component [(myData)]="data" (myDataChange)="dataHasChange($event)"></my-component>
-        Qui JE VEUX ÉCOUTER ? LES COULEURS
-
-
-
-        -->
-
       </div>
+      <!-- /color -->
+
     </div>
+
     <!-- /element / legend / color -->
 
   </div>
@@ -136,15 +117,16 @@
 
     <h4 class="m-bottom-15 text-center">{{ section.title }}</h4>
 
-    <div *ngFor="let tag of content.values; let i = index;" class="m-bottom-20 text-center">
+    <div class="m-bottom-20 text-center">
 
       <p style="min-height: 24px; line-height: 24px" class="text-lg text-medium">
-        <ng-container *ngIf="tag.legend">{{ tag.legend }}</ng-container>
+        <ng-container *ngIf="content.legend">{{ content.legend }}</ng-container>
       </p>
 
       <div style="min-height: 30px">
-        <div *ngIf="tag.name" [ngStyle]="{ 'background-color': tag.color }" class="label is-rounded">
-          {{ tag.name }}
+        <div
+          [ngStyle]="{ 'background-color': content.color }" class="label is-rounded">
+          {{('ADMIN_EXECUTIVE_REPORT.LIKERT-SCALE_SECTION.' + content.name) | uppercase| translate}}
         </div>
       </div>
 

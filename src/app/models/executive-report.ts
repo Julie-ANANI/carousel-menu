@@ -111,10 +111,8 @@ export interface SectionRanking {
 }
 
 export interface SectionLikertScale {
-  values: Array<{
-    name:string;
-    legend:string;
-    visibility:boolean;
-    color:string;
-  }>;
+  name:string;
+  legend:string;
+  visibility?:boolean;
+  color:string;
 }

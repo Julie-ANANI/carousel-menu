@@ -280,6 +280,11 @@ export class AdminProjectStoryboardComponent implements OnInit, OnDestroy {
               sections[index].content = this._executiveReportFrontService.rankingSection(rankingData, this._executiveReport.lang);
               break;
 
+            /*case 'likert-scale':
+              const likertScaleData = ResponseService.rankingChartData(answersToShow, question, this.currentLang);
+              sections[index].questionType = 'LIKERT-SCALE';
+              sections[index].content = this._executiveReportFrontService.likertScaleSection(likertScaleData, this._executiveReport.lang);*/
+
             default:
               const tagsData: Array<Tag> = ResponseService.tagsList(answersToShow, question);
               sections[index].questionType = 'RANKING';

@@ -1,18 +1,25 @@
-import { Injectable } from '@angular/core';
-import { SectionBar, SectionKpi, SectionPie, SectionQuote, SectionRanking, SectionLikertScale} from '../../models/executive-report';
-import { Professional } from '../../models/professional';
-import { BarData } from '../../modules/shared/components/shared-market-report/models/bar-data';
-import { ResponseService } from '../../modules/shared/components/shared-market-report/services/response.service';
-import { specialCharRegEx } from '../../utils/regex';
-import { MultilingPipe } from '../../pipe/pipes/multiling.pipe';
-import { Tag } from '../../models/tag';
-import { PieChart } from '../../models/pie-chart';
-import { ExecutiveReportService } from './executive-report.service';
-import { TranslateNotificationsService } from '../translate-notifications/translate-notifications.service';
-import { first} from 'rxjs/operators';
-import { HttpErrorResponse } from '@angular/common/http';
-import { ErrorFrontService } from '../error/error-front.service';
-import { CommonService } from '../common/common.service';
+import {Injectable} from '@angular/core';
+import {
+  SectionBar,
+  SectionKpi,
+  SectionLikertScale,
+  SectionPie,
+  SectionQuote,
+  SectionRanking
+} from '../../models/executive-report';
+import {Professional} from '../../models/professional';
+import {BarData} from '../../modules/shared/components/shared-market-report/models/bar-data';
+import {ResponseService} from '../../modules/shared/components/shared-market-report/services/response.service';
+import {specialCharRegEx} from '../../utils/regex';
+import {MultilingPipe} from '../../pipe/pipes/multiling.pipe';
+import {Tag} from '../../models/tag';
+import {PieChart} from '../../models/pie-chart';
+import {ExecutiveReportService} from './executive-report.service';
+import {TranslateNotificationsService} from '../translate-notifications/translate-notifications.service';
+import {first} from 'rxjs/operators';
+import {HttpErrorResponse} from '@angular/common/http';
+import {ErrorFrontService} from '../error/error-front.service';
+import {CommonService} from '../common/common.service';
 import {Answer} from '../../models/answer';
 
 @Injectable({ providedIn: 'root' })
@@ -204,33 +211,21 @@ export class ExecutiveReportFrontService {
    */
 
   public likertScaleTagsSection(tagsData: Array<Tag>, lang: string): SectionLikertScale {
-
-    const section: SectionLikertScale = {
-      values: []
-    };
-
     if (tagsData && tagsData.length > 0) {
-      tagsData.slice(0, 3).forEach((tag) => {
-        section.values.push({
-          legend: tag.count + 'X',
-          color: '#4F5D6B',
-          name: this._multilingPipe.transform(tag.label, lang),
-          visibility: tag.count > 0
-        });
-      });
+      return {
+        color: '#BBC7D6',
+        legend:  tagsData[0].count + 'X',
+        name: this._multilingPipe.transform(tagsData[0].label, lang),
+        visibility: tagsData[0].count > 0
+      };
     } else {
-      for (let i = 0; i < 1; i++) {
-        section.values.push({
-          color: '#4F5D6B',
-          legend: '',
-          name: '',
-          visibility: false
-        });
-      }
+      return {
+        color: '#BBC7D6',
+        legend: '',
+        name: 'UNCERTAIN',
+        visibility: false
+      };
     }
-
-    return section;
-
   }
 
 
@@ -273,37 +268,18 @@ export class ExecutiveReportFrontService {
 
   /***
    * this returns the content of the Likert-scale section.
-   * @param rankingData
+   * @param likertScaleData
    * @param lang
    */
-  public likertScaleSection(rankingData: {label: string, answers: Answer[]; percentage: number; count: number; identifier: string; }[],
+  public likertScaleSection(likertScaleData: {label: string, answers: Answer[]; percentage: number; count: number; identifier: string; }[],
                         lang: string): SectionLikertScale {
 
-    const section: SectionRanking = {
-      values: []
+    return {
+      color: '#BBC7D6',
+      legend: '',
+      name: 'UNCERTAIN',
+      visibility: false
     };
-
-    if (rankingData && rankingData.length > 0) {
-      rankingData.slice(0, 3).forEach((rank, index) => {
-        section.values.push({
-          legend: (index + 1).toString(),
-          color: '#4F5D6B',
-          name: rank.label,
-          visibility: true
-        });
-      });
-    } else {
-      for (let i = 0; i < 1; i++) {
-        section.values.push({
-          color: '#4F5D6B',
-          legend: '',
-          name: '',
-          visibility: false
-        });
-      }
-    }
-
-    return section;
 
   }
 
