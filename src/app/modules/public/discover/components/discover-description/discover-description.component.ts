@@ -6,13 +6,13 @@ import { Innovation } from '../../../../../models/innovation';
 import { ShareService } from '../../../../../services/share/share.service';
 import { Tag } from '../../../../../models/tag';
 import { MultilingPipe } from '../../../../../pipe/pipes/multiling.pipe';
-import { environment } from '../../../../../../environments/environment';
 import { InnovationService } from '../../../../../services/innovation/innovation.service';
 import { first } from 'rxjs/operators';
 import { Media } from '../../../../../models/media';
 import { InnovationFrontService } from '../../../../../services/innovation/innovation-front.service';
 import { TranslateTitleService } from '../../../../../services/title/title.service';
 import { ContactFrontService } from '../../../../../services/contact/contact-front.service';
+import {QuizService} from '../../../../../services/quiz/quiz.service';
 
 @Component({
   templateUrl: './discover-description.component.html',
@@ -135,7 +135,7 @@ export class DiscoverDescriptionComponent implements OnInit {
   private _getAllShareLinks() {
 
     if (this._innovation.quizId && this._innovation.campaigns && this._innovation.campaigns.length > 0) {
-      this._quizUrl = environment.quizUrl + '/quiz/' + this._innovation.quizId + '/' + this._innovation.campaigns[0].id + '?lang=' + this._lang;
+      this._quizUrl = QuizService.quizUrl(this._innovation.campaigns[0]._id, this._innovation.quizId, this._lang);
     }
 
     this._linkedInUrl = ShareService.linkedinProjectShareLink(this._innovationCard);
