@@ -37,7 +37,6 @@ export class SharedMailEditorComponent implements OnInit {
 
   @Input() innovationCardLanguages: string [] = [];
 
-  // TODO remove multiling
   @Input() set emailsObject(value: EmailsObject) {
     if (value) {
       this._emailsObject = value;
@@ -128,7 +127,6 @@ export class SharedMailEditorComponent implements OnInit {
     this._innovationId = this._routeFrontService.activeInnovationId();
   }
 
-  // TODO remove multiling
   public changeLanguage(value: string) {
     this._language = value;
     this._languageHasBeenSet = true;
@@ -175,14 +173,12 @@ export class SharedMailEditorComponent implements OnInit {
     this.languageChange.emit(value);
   }
 
-  // TODO remove multiling
   public onUpdate(event: any, language?: string) {
     language = language || this._language;
     this._emailsObject[language].subject = event;
     this.emailChange.emit(this._emailsObject);
   }
 
-  // TODO remove multiling
   public updateContent(event: any, language?: string) {
     language = language || this._language;
     this._emailsObject[language].content = event.content;
