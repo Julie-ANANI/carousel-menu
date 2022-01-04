@@ -43,6 +43,8 @@ export class UserComponent implements OnInit, OnDestroy {
     this._initRoutes();
 
     if (isPlatformBrowser(this._platformId)) {
+      this._checkVariables();
+
       this._loaderService.isLoading$.pipe(takeUntil(this._ngUnsubscribe)).subscribe((loading: boolean) => {
         this._clearTimeout = setTimeout(() => {
           this._displayLoader = loading;
@@ -57,10 +59,14 @@ export class UserComponent implements OnInit, OnDestroy {
         this._displayLoader = true;
       } else if (event instanceof NavigationEnd || event instanceof NavigationCancel || event instanceof NavigationError) {
         this._displayLoader = false;
-        this._adminSide = this._location.path().slice(5, 11) === '/admin';
-        this._initHelpDesk();
+        this._checkVariables();
       }
     });
+  }
+
+  private _checkVariables() {
+    this._adminSide = this._location.path().slice(5, 11) === '/admin';
+    this._initHelpDesk();
   }
 
   /***
