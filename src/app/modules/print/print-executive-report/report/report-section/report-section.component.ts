@@ -14,6 +14,7 @@ import {
 import { ExecutivePieChart, PieChart } from '../../../../../models/pie-chart';
 import { BarData } from '../../../../shared/components/shared-market-report/models/bar-data';
 import { Multiling } from '../../../../../models/multiling';
+import {LangEntryService} from '../../../../../services/lang-entry/lang-entry.service';
 
 @Component({
   selector: 'app-print-report-section',
@@ -41,7 +42,8 @@ export class ReportSectionComponent implements OnChanges {
     labelPercentage: []
   };
 
-  constructor(private _responseService: ResponseService) { }
+  constructor(private _responseService: ResponseService,
+              private _langEntryService: LangEntryService) { }
 
   ngOnChanges(): void {
     if (this.report['totalSections'] && this.answers.length > 0 && !this.report['_id']) {
@@ -199,6 +201,7 @@ export class ReportSectionComponent implements OnChanges {
   }
 
   /***
+   * TODO remove multiling
    * returns the content of the Section Pie
    * @param pieData
    * @private
@@ -210,13 +213,14 @@ export class ReportSectionComponent implements OnChanges {
       percentage: pieData.percentage,
       visibility: pieData.percentage !== 0
     };
+
     if (pieData.data) {
       for (let i = 0; i < pieData.data.length; i++) {
         _content.values[i] = {
           percentage: (Number)(pieData.labelPercentage[i].substring(0, pieData.labelPercentage[i].length - 1))
             || 0,
           answers: pieData.data[i],
-          legend: pieData.labels[this.report.lang][i],
+          legend: this._langEntryService.pieChartLabel(pieData, this.report.lang, i),
           color: pieData.colors[i],
         };
       }

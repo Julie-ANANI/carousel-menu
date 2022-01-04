@@ -247,14 +247,14 @@ export class ExecutiveSectionComponent {
   private _setPieData() {
     if (this._section.questionIdentifier === `quesCustom_${this.sectionIndex}`) {
       this._section.title = 'Custom pie';
-      this._section.content = ExecutiveReportFrontService.pieChartSection(null, this.reportLang);
+      this._section.content = this._executiveReportFrontService.pieChartSection(null, this.reportLang);
     } else {
       const question: Question | MissionQuestion = this._getQuestion(this._section.questionIdentifier);
       const answers: Array<Answer> = this._responseService.answersToShow(this.answers, question);
       const barsData: Array<BarData> = ResponseService.barsData(question, answers);
       const pieChartData: PieChart = ResponseService.pieChartData(barsData, answers);
       this._section.title = MissionQuestionService.label(question, 'title', this.reportLang);
-      this._section.content = ExecutiveReportFrontService.pieChartSection(pieChartData, this.reportLang);
+      this._section.content = this._executiveReportFrontService.pieChartSection(pieChartData, this.reportLang);
     }
   }
 

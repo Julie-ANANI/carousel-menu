@@ -4,6 +4,7 @@
 
 import { Injectable } from '@angular/core';
 import {LangEntryPipe} from '../../pipe/lang-entry/lang-entry.pipe';
+import {PieChart, PieChartLabel} from '../../models/pie-chart';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +20,27 @@ export class LangEntryService extends LangEntryPipe {
    */
   transform(entry: Array<any>, lang: string = 'en', requested: 'ENTRY' | 'INDEX' = 'ENTRY',  returnDefault: boolean = false): any {
     return super.transform(entry, lang, requested, returnDefault);
+  }
+
+  /**
+   * return the label of the PieChart.
+   * @param pieData
+   * @param lang
+   * @param index
+   */
+  public pieChartLabel(pieData: PieChart, lang: string, index: number): string {
+    let label = '';
+
+    if (Array.isArray(pieData.labels) && pieData.labels.length > 0) {
+      const entry: PieChartLabel = this.transform(pieData.labels, lang);
+      if (entry && entry.value && entry.value.length) {
+        label = entry.value[index];
+      }
+    } else if (pieData.labels && pieData.labels[lang] && pieData.labels[lang][index]) {
+      label = pieData.labels[lang][index];
+    }
+
+    return label;
   }
 
 }

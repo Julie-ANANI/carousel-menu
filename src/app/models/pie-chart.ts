@@ -12,8 +12,9 @@ export interface PieChart {
 
   /**
    * TODO replace this with Array<PieChartLabel>
+   * current {[lang: string]: Array<string>}
    */
-  labels: {[lang: string]: Array<string>};
+  labels: any;
 }
 
 export interface ExecutivePieChart {

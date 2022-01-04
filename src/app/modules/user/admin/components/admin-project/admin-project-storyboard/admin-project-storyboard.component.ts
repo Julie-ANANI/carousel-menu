@@ -266,7 +266,7 @@ export class AdminProjectStoryboardComponent implements OnInit, OnDestroy {
             case 'radio':
               const pieChartData: PieChart = ResponseService.pieChartData(barsData, answersToShow);
               sections[index].questionType = 'PIE';
-              sections[index].content = ExecutiveReportFrontService.pieChartSection(pieChartData, this._executiveReport.lang);
+              sections[index].content = this._executiveReportFrontService.pieChartSection(pieChartData, this._executiveReport.lang);
               break;
 
             case 'checkbox':

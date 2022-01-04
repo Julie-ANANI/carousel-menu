@@ -14,12 +14,14 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorFrontService } from '../error/error-front.service';
 import { CommonService } from '../common/common.service';
 import {Answer} from '../../models/answer';
+import {LangEntryService} from '../lang-entry/lang-entry.service';
 
 @Injectable({ providedIn: 'root' })
 export class ExecutiveReportFrontService {
 
   constructor(private _multilingPipe: MultilingPipe,
               private _commonService: CommonService,
+              private _langEntryService: LangEntryService,
               private _translateNotificationsService: TranslateNotificationsService,
               private _executiveReportService: ExecutiveReportService) { }
 
@@ -64,7 +66,7 @@ export class ExecutiveReportFrontService {
    * @param pieChartData
    * @param lang
    */
-  public static pieChartSection(pieChartData: PieChart, lang: string): SectionPie {
+  public pieChartSection(pieChartData: PieChart, lang: string): SectionPie {
 
     const section: SectionPie = {
       favorable_answers: {
@@ -89,7 +91,7 @@ export class ExecutiveReportFrontService {
             percentage: pieChartData.labelPercentage && pieChartData.labelPercentage[index]
               && Number(pieChartData.labelPercentage[index].replace(specialCharRegEx, '')) || 0,
             color: pieChartData.colors && pieChartData.colors[index],
-            legend: pieChartData.labels && pieChartData.labels[lang] && pieChartData.labels[lang][index],
+            legend: this._langEntryService.pieChartLabel(pieChartData, lang, index),
             answers: data
           });
         });
