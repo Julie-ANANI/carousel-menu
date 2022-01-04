@@ -14,6 +14,8 @@ import { countries } from '../../../../../models/static-data/country';
 import { Observable } from 'rxjs';
 import { Clearbit } from "../../../../../models/clearbit";
 import { emailRegEx } from '../../../../../utils/regex';
+import { HttpErrorResponse } from "@angular/common/http";
+import { ErrorFrontService } from "../../../../../services/error/error-front.service";
 
 @Component({
   templateUrl: './account.component.html',
@@ -224,12 +226,15 @@ export class AccountComponent implements OnInit {
 
     if (newPassword === confirmPassword) {
       this.userService.changePassword({
-        email: email, oldPassword: value.value.oldPassword, newPassword: newPassword, confirmPassword: confirmPassword
+        email: email,
+        oldPassword: value.value.oldPassword,
+        newPassword: newPassword,
+        confirmPassword: confirmPassword
       }).pipe(first()).subscribe(() => {
         this.showPasswordSidebar(event);
         this.translateNotificationsService.success('ERROR.ACCOUNT.PASSWORD_UPDATED', 'ERROR.ACCOUNT.PASSWORD_UPDATED_TEXT');
-      }, () => {
-        this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.ACCOUNT.OLD_PASSWORD');
+      }, (error: HttpErrorResponse) => {
+        this.translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(error.error));
       })
     } else {
       this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.ACCOUNT.SAME_PASSWORD');

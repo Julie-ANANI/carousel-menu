@@ -8,6 +8,8 @@ import { AuthService } from '../../../../../services/auth/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { first } from 'rxjs/operators';
 import {emailRegEx} from '../../../../../utils/regex';
+import { HttpErrorResponse } from "@angular/common/http";
+import { ErrorFrontService } from "../../../../../services/error/error-front.service";
 
 @Component({
   templateUrl: './reset-password.component.html',
@@ -72,11 +74,10 @@ export class ResetPasswordComponent {
               this.translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.PASSWORD_UPDATED_TEXT');
               this.router.navigate(['/']);
             },
-            () => {
-              this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
+            (error: HttpErrorResponse) => {
+              this.translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(error.error));
           });
         });
-
       } else {
         this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.ACCOUNT.SAME_PASSWORD');
       }

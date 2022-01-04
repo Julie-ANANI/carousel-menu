@@ -44,6 +44,10 @@ export const ERROR = {
     USER_STATUS_ANORMAL: 'Sorry, we detected that your account status is anormal. Please contact UMI support service.'
   },
 
+  USER_200:{
+    PASSWORD_UPDATED: 'The password has been updated successfully.'
+  },
+
   USER_400: {
     ALREADY_EXISTS: 'The e-mail address is already registered in the system.',
     PASSWORD_NOT_MATCH: 'The new password and confirm password must be same.',
