@@ -17,7 +17,7 @@ export class LangEntryService extends LangEntryPipe {
    * @param lang - requested lang
    * @param returnDefault = true means if not find the entry in the given lang then return the entry at index 0
    */
-  transform(entry: Array<any>, lang: string = 'en', requested: 'ENTRY' | 'INDEX' = 'ENTRY',  returnDefault: boolean = true): any {
+  transform(entry: Array<any>, lang: string = 'en', requested: 'ENTRY' | 'INDEX' = 'ENTRY',  returnDefault: boolean = false): any {
     return super.transform(entry, lang, requested, returnDefault);
   }
 

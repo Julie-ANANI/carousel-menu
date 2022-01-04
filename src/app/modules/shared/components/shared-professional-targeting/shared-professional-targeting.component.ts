@@ -6,6 +6,7 @@ import { Subject } from 'rxjs';
 
 import * as _ from 'lodash';
 import { isPlatformBrowser } from '@angular/common';
+import {LangEntryService} from '../../../../services/lang-entry/lang-entry.service';
 
 @Component({
   selector: 'app-shared-professional-targeting',
@@ -56,6 +57,7 @@ export class SharedProfessionalTargetingComponent implements OnInit, OnDestroy {
   private _currentJobIdentifier = '';
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
+              private _langEntryService: LangEntryService,
               private _jobFrontService: JobsFrontService) {
   }
 
@@ -230,6 +232,7 @@ export class SharedProfessionalTargetingComponent implements OnInit, OnDestroy {
   }
 
   /**
+   * TODO remove multiling
    * search jobs by keyword
    * @param keyword
    */
@@ -237,13 +240,33 @@ export class SharedProfessionalTargetingComponent implements OnInit, OnDestroy {
     if (!!keyword) {
       this._filteredJobsTypologies = {};
       Object.keys(this._jobsTypologies).forEach(jobTypoKey => {
-        if (this._jobsTypologies[jobTypoKey].name.en.toLowerCase().includes(keyword.toLowerCase())
-          || this._jobsTypologies[jobTypoKey].name.fr.toLowerCase().includes(keyword.toLowerCase())) {
+        let topNameEN: string;
+        let topNameFR: string;
+
+        if (Array.isArray(this._jobsTypologies[jobTypoKey].name) && this._jobsTypologies[jobTypoKey].name.length > 0) {
+          topNameEN = this._langEntryService.transform(this._jobsTypologies[jobTypoKey].name, 'en').value;
+          topNameFR = this._langEntryService.transform(this._jobsTypologies[jobTypoKey].name, 'fr').value;
+        } else {
+          topNameEN = this._jobsTypologies[jobTypoKey].name.en;
+          topNameFR = this._jobsTypologies[jobTypoKey].name.fr;
+        }
+        if (topNameEN.toLowerCase().includes(keyword.toLowerCase()) || topNameFR.toLowerCase().includes(keyword.toLowerCase())) {
           this._filteredJobsTypologies[jobTypoKey] = JSON.parse(JSON.stringify(this._jobsTypologies[jobTypoKey]));
           this._filteredJobsTypologies[jobTypoKey].isToggle = false;
         } else {
-          const filteredJobs = this._jobsTypologies[jobTypoKey].jobs.filter(j => j.label.en.toLowerCase().includes(keyword.toLowerCase())
-            || j.label.fr.toLowerCase().includes(keyword.toLowerCase()));
+          let topLabelEN: string;
+          let topLabelFR: string;
+
+          const filteredJobs = this._jobsTypologies[jobTypoKey].jobs.filter(j => {
+            if (Array.isArray(j.label) && j.label.length > 0) {
+              topLabelEN = this._langEntryService.transform(j.label, 'en').value;
+              topLabelFR = this._langEntryService.transform(j.label, 'fr').value;
+            } else {
+              topLabelEN = j.label.en;
+              topLabelFR = j.label.fr;
+            }
+            return topLabelEN.toLowerCase().includes(keyword.toLowerCase()) || topLabelFR.toLowerCase().includes(keyword.toLowerCase());
+          });
           if (filteredJobs.length) {
             this._filteredJobsTypologies[jobTypoKey] = JSON.parse(JSON.stringify(this._jobsTypologies[jobTypoKey]));
             this._filteredJobsTypologies[jobTypoKey].jobs = filteredJobs;
@@ -276,6 +299,17 @@ export class SharedProfessionalTargetingComponent implements OnInit, OnDestroy {
         job.isToggle = false;
       });
     }
+  }
+
+  //TODO remove multiling
+  public configProOption(value: JobsTypologies): {name: string, state: number} {
+    let name: string;
+    if (Array.isArray(value.name) && value.name.length > 0) {
+      name = this._langEntryService.transform(value.name, 'en').value
+    } else {
+     name = value.name.en;
+    }
+    return {name: name, state: value.state};
   }
 
 

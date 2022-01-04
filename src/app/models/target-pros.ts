@@ -13,8 +13,9 @@ export interface JobConfig {
 
   /**
    * replace this with Array<TargetProsJobEntry>
+   * current: { en: string, fr: string }
    */
-  label: { en: string, fr: string };
+  label: any;
 }
 
 export interface JobsTypologies {
@@ -26,8 +27,9 @@ export interface JobsTypologies {
 
   /**
    * replace this with Array<TargetProsJobEntry>
+   * current: { en: string, fr: string }
    */
-  name: { en: string, fr: string };
+  name: any;
 }
 
 export interface JobsCategory {
@@ -37,8 +39,9 @@ export interface JobsCategory {
 
   /**
    * replace this with Array<TargetProsJobEntry>
+   * current: { en: string, fr: string }
    */
-  label: { en: string, fr: string };
+  label: any;
 }
 
 export interface SeniorityLevel {

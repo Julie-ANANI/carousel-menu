@@ -20,7 +20,7 @@ export class LangEntryPipe implements PipeTransform {
    * @param lang - requested lang
    * @param returnDefault = true means if not find the entry in the given lang then return the entry at index 0
    */
-  transform(entry: Array<any>, lang = 'en', requested: 'ENTRY' | 'INDEX' = 'ENTRY', returnDefault = true): any {
+  transform(entry: Array<any>, lang = 'en', requested: 'ENTRY' | 'INDEX' = 'ENTRY', returnDefault = false): any {
     if (!entry.length) return '';
 
     const _entryIndex = entry.findIndex((_entry) => _entry.lang === lang);
