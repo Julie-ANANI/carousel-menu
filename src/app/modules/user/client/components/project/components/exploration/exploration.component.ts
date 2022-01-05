@@ -102,7 +102,7 @@ export class ExplorationComponent implements OnInit, OnDestroy {
             }, []);
           this._isFetching = false;
           }, (err: HttpErrorResponse) => {
-          this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+          this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
           this._isFetching = false;
           console.error(err);
         });

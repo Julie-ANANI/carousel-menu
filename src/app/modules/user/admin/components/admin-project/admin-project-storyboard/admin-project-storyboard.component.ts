@@ -232,7 +232,7 @@ export class AdminProjectStoryboardComponent implements OnInit, OnDestroy {
         this._setReportSections(answers);
       }, (err: HttpErrorResponse) => {
         this._isChargingReport = false;
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.adminErrorMessage(err));
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
         console.error(err);
       });
   }

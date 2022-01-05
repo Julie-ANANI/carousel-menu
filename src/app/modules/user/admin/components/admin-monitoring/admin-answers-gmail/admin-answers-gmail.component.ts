@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { TranslateNotificationsService } from '../../../../../../services/translate-notifications/translate-notifications.service';
 import {AnswerService} from '../../../../../../services/answer/answer.service';
+import { ErrorFrontService } from "../../../../../../services/error/error-front.service";
+import { HttpErrorResponse } from "@angular/common/http";
 
 @Component({
   selector: 'app-admin-email-queue',
@@ -24,6 +26,7 @@ export class AdminAnswersGmailComponent implements OnInit {
   };*/
 
   constructor(private _answerService: AnswerService,
+              private _translateNotificationsService: TranslateNotificationsService,
               private _notificationsService: TranslateNotificationsService) { }
 
   ngOnInit() {
@@ -36,9 +39,8 @@ export class AdminAnswersGmailComponent implements OnInit {
       .subscribe((res: any) => {
         const total = (res.regSuccess || []).length + (res.regErrors || []).length;
         this._notificationsService.success('ERROR.SUCCESS', `${(res.regSuccess|| []).length}/${total} answers has been created`);
-
-      }, (err: any) => {
-        this._notificationsService.error('ERROR.ERROR', err.message);
+      }, (err: HttpErrorResponse) => {
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
       });
   }
 

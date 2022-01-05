@@ -8,6 +8,8 @@ import { first } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
 import { isPlatformBrowser } from '@angular/common';
 import { Clearbit } from '../../../../../models/clearbit';
+import { TranslateNotificationsService } from "../../../../../services/translate-notifications/translate-notifications.service";
+import { ErrorFrontService } from "../../../../../services/error/error-front.service";
 
 interface ProfessionalColumn {
   countries: Array<string>;
@@ -39,6 +41,7 @@ export class ReportProfessionalComponent implements OnChanges {
   private _anonymous = false;
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
+              private _translateNotificationsService: TranslateNotificationsService,
               private _answerService: AnswerService) { }
 
   ngOnChanges(): void {
@@ -157,6 +160,7 @@ export class ReportProfessionalComponent implements OnChanges {
           });
         }
       }, (err: HttpErrorResponse) => {
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
         console.error(err);
       });
     }

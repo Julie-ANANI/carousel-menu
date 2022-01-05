@@ -194,7 +194,7 @@ export class SidebarUserAnswerComponent implements OnInit {
         (err: HttpErrorResponse) => {
           this._translateNotificationsService.error(
             'ERROR.ERROR',
-            ErrorFrontService.getErrorMessage(err.status)
+            ErrorFrontService.getErrorKey(err.error)
           );
           this._resetSaveVariables();
           console.error(err);
@@ -274,7 +274,7 @@ export class SidebarUserAnswerComponent implements OnInit {
         (err: HttpErrorResponse) => {
           this._translateNotificationsService.error(
             'Error',
-            'The tag is already added to the answer.'
+            ErrorFrontService.getErrorKey(err.error)
           );
           console.error(err);
         }
@@ -297,7 +297,7 @@ export class SidebarUserAnswerComponent implements OnInit {
         (err: HttpErrorResponse) => {
           this._translateNotificationsService.error(
             'Error',
-            'The tag is already created/added to the answer.'
+            ErrorFrontService.getErrorKey(err.error)
           );
           console.error(err);
         }
@@ -322,7 +322,7 @@ export class SidebarUserAnswerComponent implements OnInit {
         (err: HttpErrorResponse) => {
           this._translateNotificationsService.error(
             'ERROR.ERROR',
-            ErrorFrontService.getErrorMessage(err.status)
+            ErrorFrontService.getErrorKey(err.error)
           );
           console.error(err);
         }

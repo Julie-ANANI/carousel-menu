@@ -82,7 +82,7 @@ export class SharedFollowUpComponent implements OnInit {
           this._initValues();
         }, (err: HttpErrorResponse) => {
           this.answers = [];
-          this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+          this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
           console.error(err);
         });
     }

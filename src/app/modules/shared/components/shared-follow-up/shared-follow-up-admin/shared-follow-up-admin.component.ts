@@ -312,7 +312,7 @@ export class SharedFollowUpAdminComponent implements OnInit {
       const answerToUpdate = this._answers.findIndex(answer => answer._id === answerId);
       this._answers[answerToUpdate].followUp.objective = objective;
     }, (err: HttpErrorResponse) => {
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
       console.error(err);
     });
 
