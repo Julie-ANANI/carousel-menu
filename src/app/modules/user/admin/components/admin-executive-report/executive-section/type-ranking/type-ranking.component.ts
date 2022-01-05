@@ -5,6 +5,7 @@ import { CommonService } from '../../../../../../../services/common/common.servi
 @Component({
   selector: 'app-admin-section-type-ranking',
   templateUrl: './type-ranking.component.html',
+  styleUrls: ['./type-ranking.component.scss']
 })
 
 export class TypeRankingComponent {
