@@ -326,7 +326,8 @@
 
     <div class="form-group m-top-20 d-flex"
          (click)="onClickSearch($event)">
-      <button class="button is-primary is-lg m-auto" [disabled]="errorMessageLaunch || !params['keywords']">Launch</button>
+      <!--<button class="button is-primary is-lg m-auto" [disabled]="errorMessageLaunch || !params['keywords']">Launch</button>-->
+      <button class="button is-primary is-lg m-auto" [disabled]="false || !params['keywords']">Launch</button>
     </div>
 
   </div>
