@@ -124,6 +124,7 @@ export class AdminProjectManagementComponent implements OnInit {
               private _translateService: TranslateService,
               private _formBuilder: FormBuilder,
               private _clientProjectService: ClientProjectService,
+              private _translateNotificationsService: TranslateNotificationsService,
               private _missionService: MissionService,
               private _frontendService: FrontendService) {}
 
@@ -157,7 +158,7 @@ export class AdminProjectManagementComponent implements OnInit {
             this.generateModifiedScenarios();
           }
         },
-        (error: any) => this._notificationsService.error('ERROR', error.message)
+        (error: HttpErrorResponse) => this._translateNotificationsService.error('ERROR.ERROR', error.error)
       );
   }
 
@@ -198,8 +199,8 @@ export class AdminProjectManagementComponent implements OnInit {
       this._innovationService.updateStats(this._project._id)
         .subscribe((project: any) => {
           this._project = project;
-        }, (error: any) => {
-          this._notificationsService.error('ERROR', error.message);
+        }, (error: HttpErrorResponse) => {
+          this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(error.error));
         });
     }
   }
@@ -712,8 +713,8 @@ export class AdminProjectManagementComponent implements OnInit {
         this._project = data;
         this.resetData();
         this._notificationsService.success('ERROR.ACCOUNT.UPDATE' , notification);
-      }, (err: any) => {
-        this._notificationsService.error('ERROR.PROJECT.UNFORBIDDEN', err.message);
+      }, (err: HttpErrorResponse) => {
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
       });
   }
 

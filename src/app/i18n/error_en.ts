@@ -64,6 +64,20 @@ export const ERROR = {
     USER_NOT_FOUND: 'We can\'t find your information please check it and try again.',
   },
 
+  INNOVATION_400:{
+    MISSING_COLLABORATOR: 'The collaborator information is missing please check it and try again.'
+  },
+
+  INNOVATION_404:{
+    CARD_NOT_FOUND: 'We can\'t find the innovation card please check it and try again.',
+    EMPTY_SYNTHESIS: 'We can\'t find any synthesis please check it and try again.',
+    NOT_SUBMITTED_MODE: 'The comments can only be added when the innovation status is Submitted.'
+  },
+
+  INNOVATION_500:{
+    PUBLISH_COMMUNITY_FAILED: 'Sorry, we are having trouble to publish the project on Community.'
+  },
+
   'ERROR': 'Oups...',
 
   'SUCCESS': 'Success',

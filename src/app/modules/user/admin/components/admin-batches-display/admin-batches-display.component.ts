@@ -150,7 +150,7 @@ export class AdminBatchesDisplayComponent implements OnInit {
             lastInnovationId = innovationId;
           }, (err: HttpErrorResponse) => {
             console.error(err);
-            this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+            this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
           });
       } else {
         this._openSidebar();

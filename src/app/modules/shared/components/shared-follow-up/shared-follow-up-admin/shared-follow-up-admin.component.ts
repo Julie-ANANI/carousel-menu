@@ -243,7 +243,7 @@ export class SharedFollowUpAdminComponent implements OnInit {
       this._loadingButton = false;
     }, (err: HttpErrorResponse) => {
       this._loadingButton = false;
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
       console.error(err);
     });
 
@@ -254,7 +254,7 @@ export class SharedFollowUpAdminComponent implements OnInit {
     this._innovationService.sendFollowUpEmails(this._project._id, objective).pipe(first()).subscribe(() => {
       this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.SEND_EMAILS_OK');
     }, (err: HttpErrorResponse) => {
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
       console.error(err);
     });
   }
@@ -266,7 +266,7 @@ export class SharedFollowUpAdminComponent implements OnInit {
       this._project = response;
       this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.SAVED_TEXT');
     }, (err: HttpErrorResponse) => {
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
       console.error(err);
     });
   }

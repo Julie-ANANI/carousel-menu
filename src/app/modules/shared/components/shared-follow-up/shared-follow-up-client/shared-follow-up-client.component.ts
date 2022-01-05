@@ -238,12 +238,12 @@ export class SharedFollowUpClientComponent implements OnInit, OnDestroy {
           this.toggleStartContact(false);
         }, (err: HttpErrorResponse) => {
           this._isSending = false;
-          this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+          this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
           console.error(err);
         });
       }, (err: HttpErrorResponse) => {
         this._isSending = false;
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
         console.error(err);
       });
     }

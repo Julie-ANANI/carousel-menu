@@ -697,7 +697,7 @@ export class AdminProjectsComponent implements OnInit {
       this._totalProjects = response && response._metadata && response._metadata.totalCount;
       this._initializeTable();
     }, (err: HttpErrorResponse) => {
-      this._translateNotificationsService.error('Project Fetching Error...', ErrorFrontService.getErrorMessage(err.status));
+      this._translateNotificationsService.error('Project Fetching Error...', ErrorFrontService.getErrorKey(err.error));
       this._isLoading = false;
       this._fetchingError = true;
       console.error(err);
@@ -786,7 +786,7 @@ export class AdminProjectsComponent implements OnInit {
       this._translateNotificationsService.success('Project Import Success...', 'The project is imported successfully.');
       this._getProjects();
     }, (err: HttpErrorResponse) => {
-      this._translateNotificationsService.error('Project Import Error...', ErrorFrontService.getErrorMessage(err.status));
+      this._translateNotificationsService.error('Project Import Error...', ErrorFrontService.getErrorKey(err.error));
       console.error(err);
     });
   }
@@ -879,7 +879,7 @@ export class AdminProjectsComponent implements OnInit {
     this._innovationService.save(_innovationId, saveObject).pipe(first()).subscribe(() => {
       this._translateNotificationsService.success('Project Save Success...', notifyMessage);
       }, (err: HttpErrorResponse) => {
-      this._translateNotificationsService.error('Project Save Error...', ErrorFrontService.getErrorMessage(err.status));
+      this._translateNotificationsService.error('Project Save Error...', ErrorFrontService.getErrorKey(err.error));
       console.error(err);
     });
   }

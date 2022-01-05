@@ -7,6 +7,8 @@ import { Share } from '../../../../../models/share';
 import { TranslateService } from '@ngx-translate/core';
 import { TranslateTitleService } from '../../../../../services/title/title.service';
 import { InnovationFrontService } from '../../../../../services/innovation/innovation-front.service';
+import { HttpErrorResponse } from "@angular/common/http";
+import { ErrorFrontService } from "../../../../../services/error/error-front.service";
 
 @Component({
   templateUrl: './synthesis-list.component.html',
@@ -73,8 +75,9 @@ export class SynthesisListComponent implements OnInit, OnDestroy {
 
         this._totalReports.push(report);
 
-        }, () => {
-        this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
+        }, (err: HttpErrorResponse) => {
+        console.log(err);
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
       })
       );
     });

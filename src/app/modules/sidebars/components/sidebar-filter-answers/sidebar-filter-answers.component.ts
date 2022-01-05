@@ -303,7 +303,7 @@ export class SidebarFilterAnswersComponent implements OnChanges, OnDestroy {
           }
         }, (err: HttpErrorResponse) => {
           this._innovation.previewMode = !this._innovation.previewMode;
-          this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+          this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
           console.error(err);
         });
     }

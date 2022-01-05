@@ -7,6 +7,8 @@ import { InnovCard } from '../../../../../../models/innov-card';
 import { TagStats } from '../../../../../../models/tag-stats';
 import { TranslateNotificationsService } from '../../../../../../services/translate-notifications/translate-notifications.service';
 import { AuthService } from '../../../../../../services/auth/auth.service';
+import { HttpErrorResponse } from "@angular/common/http";
+import { ErrorFrontService } from "../../../../../../services/error/error-front.service";
 
 @Component({
   selector: 'app-showcase-innovations[tagsStats]',
@@ -38,8 +40,8 @@ export class ShowcaseInnovationsComponent {
             this.topInnovationsChange.emit(response.result.slice(0, 6));
           }
         }
-      }, () => {
-        this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
+      }, (err: HttpErrorResponse) => {
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
       });
     } else {
       this.topInnovationsChange.emit([]);

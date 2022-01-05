@@ -311,7 +311,7 @@ export class AdminProjectComponent implements OnInit, OnDestroy {
       this._setInnovation();
       this._translateNotificationsService.success('Success', 'The e-mails have been imported into the project.');
     }, (err: HttpErrorResponse) => {
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
       console.error(err);
     });
   }

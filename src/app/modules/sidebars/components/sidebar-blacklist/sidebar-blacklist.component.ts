@@ -299,7 +299,7 @@ export class SidebarBlacklistComponent implements OnInit {
       }, err => {
         this._translateNotificationsService.error(
           'ERROR.ERROR',
-          ErrorFrontService.getErrorMessage(err.status)
+          ErrorFrontService.getErrorKey(err.error)
         );
       });
     }

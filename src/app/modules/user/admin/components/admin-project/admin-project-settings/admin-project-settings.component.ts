@@ -456,7 +456,7 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
           );
         },
         (err: HttpErrorResponse) => {
-          this._translateNotificationsService.error('Stats Error...', ErrorFrontService.adminErrorMessage(err));
+          this._translateNotificationsService.error('Stats Error...', ErrorFrontService.getErrorKey(err.error));
           console.error(err);
         }
       );
@@ -547,7 +547,7 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
           this._translateNotificationsService.success('Success', notifyMessage);
         },
         (err: HttpErrorResponse) => {
-          this._translateNotificationsService.error('Project Error...', ErrorFrontService.adminErrorMessage(err));
+          this._translateNotificationsService.error('Project Error...', ErrorFrontService.getErrorKey(err.error));
           console.error(err);
         }
       );
@@ -657,7 +657,7 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
             }
           },
           (err: HttpErrorResponse) => {
-            this._translateNotificationsService.error('Publish Error...', ErrorFrontService.adminErrorMessage(err));
+            this._translateNotificationsService.error('Publish Error...', ErrorFrontService.getErrorKey(err.error));
             console.error(err);
             this._isPublishingCommunity = false;
           }

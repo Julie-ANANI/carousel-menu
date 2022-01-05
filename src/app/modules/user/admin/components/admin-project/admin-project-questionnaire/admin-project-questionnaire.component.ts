@@ -140,7 +140,7 @@ export class AdminProjectQuestionnaireComponent implements OnInit, OnDestroy {
       this._setQuizLink();
       this._translateNotificationsService.success('Success', 'The preset is updated.');
     }, (err: HttpErrorResponse) => {
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.adminErrorMessage(err));
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
       console.error(err);
     });
   }
@@ -158,7 +158,7 @@ export class AdminProjectQuestionnaireComponent implements OnInit, OnDestroy {
       this._setQuizLink();
       this._translateNotificationsService.success('Success', 'The quiz is generated.');
     }, (err: HttpErrorResponse) => {
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.adminErrorMessage(err));
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
       console.error(err);
     });
   }

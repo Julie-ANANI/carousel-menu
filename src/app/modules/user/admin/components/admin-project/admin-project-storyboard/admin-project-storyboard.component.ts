@@ -165,7 +165,7 @@ export class AdminProjectStoryboardComponent implements OnInit, OnDestroy {
       this._setPrincipalMediaBoolean();
     }, (err: HttpErrorResponse) => {
       this._isChargingReport = false;
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.adminErrorMessage(err));
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
       console.error(err);
     });
     this._realtimeUpdate(this._innovation.executiveReportId);
@@ -187,6 +187,7 @@ export class AdminProjectStoryboardComponent implements OnInit, OnDestroy {
           }
         }
       }, (err: HttpErrorResponse) => {
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
         console.error(err);
       });
     }
@@ -434,7 +435,7 @@ export class AdminProjectStoryboardComponent implements OnInit, OnDestroy {
         FileSaver.saveAs(blob, filename);
         this._isGeneratingReport = false;
       }, (err: HttpErrorResponse) => {
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.adminErrorMessage(err));
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
         this._isGeneratingReport = false;
         console.error(err);
       });

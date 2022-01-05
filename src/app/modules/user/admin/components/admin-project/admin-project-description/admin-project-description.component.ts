@@ -427,7 +427,7 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
         }
       }, (err: HttpErrorResponse) => {
         this._isUploadingVideo = false;
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
         console.error(err);
       });
   }
@@ -444,7 +444,7 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
           this._setInnovation();
           this._translateNotificationsService.success('Success', 'The media has been set as a principal media.');
         }, (err: HttpErrorResponse) => {
-          this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+          this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
           this._isSavingMedia = false;
           console.error(err);
         });
@@ -468,7 +468,7 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
           this._verifyPrincipal(media);
           this._translateNotificationsService.success('Success', 'The media has been deleted.');
         }, (err: HttpErrorResponse) => {
-          this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+          this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
           this._isSavingMedia = false;
           console.error(err);
         });
