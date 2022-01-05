@@ -189,7 +189,7 @@ export class DocumentsComponent implements OnInit, OnDestroy {
         }, 8000);
       }, (err: HttpErrorResponse) => {
         this._isGeneratingLink = false;
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
         console.error(err);
       });
     }
