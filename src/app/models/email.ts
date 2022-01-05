@@ -1,5 +1,13 @@
 import {EmailTemplate} from './email-template';
 
+export interface EmailMultiling {
+  [lang: string]: {
+    subject: string;
+    content?: string;
+    body?: string;
+  }
+}
+
 export interface EmailsObjectEntry {
   lang: string;
   template: EmailTemplate;

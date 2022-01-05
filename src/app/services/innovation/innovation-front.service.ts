@@ -126,7 +126,7 @@ export class InnovationFrontService {
 
   /**
    * if the mission template has the question with the identifier 'Recontact'
-   * then at the client side we show the Follow Up module.
+   * then at the client side we show the Follow-Up module.
    * @returns {string}
    * @param template
    */
@@ -159,7 +159,7 @@ export class InnovationFrontService {
 
   /**
    * update to work with the new template mission
-   * on 8th June, 2021
+   * on 8th June 2021
    * @param objective
    */
   public static publicationType(objective: string): PublicationType {
