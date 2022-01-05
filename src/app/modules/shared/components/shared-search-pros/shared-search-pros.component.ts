@@ -534,8 +534,8 @@ export class SharedSearchProsComponent implements OnInit, OnDestroy {
         this._isReset = false;
         this._toSave = false;
         this._translateNotificationsService.success('Success', 'The saved professional targeting has been applied.');
-      }, err => {
-        this._translateNotificationsService.error('Error', 'An error occurred');
+      }, (err: HttpErrorResponse) => {
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
         this._toSave = true;
         this._isReset = false;
         console.error(err);
@@ -594,11 +594,12 @@ export class SharedSearchProsComponent implements OnInit, OnDestroy {
         this._toSave = false;
         this._initialTargetedPro = JSON.parse(JSON.stringify(this._targetedProsToUpdate));
         this._translateNotificationsService.success('Success', 'The saved professional targeting has been saved.');
-      }, err => {
+      }, (err: HttpErrorResponse) => {
         this._translateNotificationsService.error('Error', 'An error occurred');
         this._toSave = false;
         this._initialTargetedPro = JSON.parse(JSON.stringify(this._targetedProsToUpdate));
         console.error(err);
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
       });
   }
 

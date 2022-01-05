@@ -181,6 +181,8 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
     this._campaignService.getBatchesStats(this._campaign._id).subscribe((result) => {
       this._campaign.stats = result
       this._statsConfig = this.setBatchesStatsConfig(result);
+    }, (err: HttpErrorResponse) =>{
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error))
     })
   }
 
@@ -221,7 +223,7 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
           (err: HttpErrorResponse) => {
             this._translateNotificationsService.error(
               'Message Stats Error...',
-              ErrorFrontService.getErrorMessage(err.status)
+              ErrorFrontService.getErrorKey(err.error)
             );
             this._isLoading = false;
             console.error(err);
@@ -425,7 +427,7 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
         (err: HttpErrorResponse) => {
           this._translateNotificationsService.error(
             'Auto Batch Error...',
-            ErrorFrontService.getErrorMessage(err.status)
+            ErrorFrontService.getErrorKey(err.error)
           );
           console.error(err);
         }
@@ -454,7 +456,7 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
         (err: HttpErrorResponse) => {
           this._translateNotificationsService.error(
             'Nuggets Error...',
-            ErrorFrontService.getErrorMessage(err.status)
+            ErrorFrontService.getErrorKey(err.error)
           );
           console.error(err);
         }
@@ -504,7 +506,7 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
         (err: HttpErrorResponse) => {
           this._translateNotificationsService.error(
             'Create Error...',
-            ErrorFrontService.getErrorMessage(err.status)
+            ErrorFrontService.getErrorKey(err.error)
           );
           console.error(err);
         }
@@ -587,7 +589,7 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
             this._isDeletingBatch = false;
             this._translateNotificationsService.error(
               'Delete Error...',
-              ErrorFrontService.getErrorMessage(err.status)
+              ErrorFrontService.getErrorKey(err.error)
             );
             console.error(err);
           }
@@ -614,7 +616,7 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
           (event.target as HTMLInputElement).checked = batch.active;
           this._translateNotificationsService.error(
             'Freeze Error...',
-            ErrorFrontService.getErrorMessage(err.status)
+            ErrorFrontService.getErrorKey(err.error)
           );
           console.error(err);
         }
@@ -735,7 +737,7 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
         (err: HttpErrorResponse) => {
           this._translateNotificationsService.error(
             'Update Error...',
-            ErrorFrontService.getErrorMessage(err.status)
+            ErrorFrontService.getErrorKey(err.error)
           );
           console.error(err);
         }

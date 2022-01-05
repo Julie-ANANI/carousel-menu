@@ -763,8 +763,8 @@ export class AdminProjectManagementComponent implements OnInit {
       this._notificationsService.success('ERROR.ACCOUNT.UPDATE', notification);
       this.currentCampaign = savedCampaign;
       this.resetData();
-    }, (err: any) => {
-      this._notificationsService.error('ERROR', err.message);
+    }, (err: HttpErrorResponse) => {
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
     });
   }
 

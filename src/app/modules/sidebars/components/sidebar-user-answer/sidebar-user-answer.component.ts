@@ -347,7 +347,7 @@ export class SidebarUserAnswerComponent implements OnInit {
           (err: HttpErrorResponse) => {
             this._translateNotificationsService.error(
               'ERROR.ERROR',
-              ErrorFrontService.getErrorMessage(err.status)
+              ErrorFrontService.getErrorKey(err.error)
             );
             this._isImporting = false;
             console.error(err);
@@ -385,7 +385,7 @@ export class SidebarUserAnswerComponent implements OnInit {
           (err: HttpErrorResponse) => {
             this._translateNotificationsService.error(
               'ERROR.ERROR',
-              ErrorFrontService.getErrorMessage(err.status)
+              ErrorFrontService.getErrorKey(err.error)
             );
             this._isReassigning = false;
             console.error(err);

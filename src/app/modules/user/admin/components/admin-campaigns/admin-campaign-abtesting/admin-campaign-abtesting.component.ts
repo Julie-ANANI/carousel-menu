@@ -7,6 +7,8 @@ import { Campaign } from '../../../../../../models/campaign';
 import { Table } from '@umius/umi-common-component/models';
 import { Batch } from '../../../../../../models/batch';
 import { first } from 'rxjs/operators';
+import { HttpErrorResponse } from "@angular/common/http";
+import { ErrorFrontService } from "../../../../../../services/error/error-front.service";
 
 @Component({
   selector: 'app-admin-campaign-abtesting',
@@ -61,6 +63,7 @@ export class AdminCampaignAbtestingComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
               private _campaignService: CampaignService,
+              private _translateNotificationsService: TranslateNotificationsService,
               private _notificationsService: TranslateNotificationsService) {
   }
 
@@ -68,6 +71,8 @@ export class AdminCampaignAbtestingComponent implements OnInit {
 
     this._campaignService.getBatches(this._campaign._id).pipe(first()).subscribe((stats: any) => {
       this._batchesLength = stats.batches.length;
+    }, (err: HttpErrorResponse)=>{
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error))
     });
 
 
@@ -114,6 +119,8 @@ export class AdminCampaignAbtestingComponent implements OnInit {
       this._statsA = result.batches[0].stats;
       this._statsB = result.batches[1].stats;
       this._generateStatsTable();
+    }, (error: HttpErrorResponse) =>{
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(error.error))
     });
   }
 
@@ -121,8 +128,8 @@ export class AdminCampaignAbtestingComponent implements OnInit {
     this._campaign.settings.ABsettings.status = '2';
     this._campaignService.put(this._campaign).pipe(first()).subscribe((savedCampaign: any) => {
       this._notificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.UPDATE');
-    }, (err: any) => {
-      this._notificationsService.error('ERROR', err);
+    }, (err: HttpErrorResponse) => {
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
     });
   }
 
@@ -147,11 +154,11 @@ export class AdminCampaignAbtestingComponent implements OnInit {
             this._generateStatsTable();
             this._notificationsService.success('ERROR.SUCCESS', 'ERROR.ACCOUNT.UPDATE');
           }
-        }, (err: any) => {
-          this._notificationsService.error('ERROR.ERROR', err);
+        }, (err: HttpErrorResponse) => {
+          this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
         });
     } else {
-      this._notificationsService.error('ERROR.ERROR', 'Please, update stats of campaign or wait for pros. ');
+      this._translateNotificationsService.error('ERROR.ERROR', 'Please, update stats of campaign or wait for pros. ');
     }
   }
 
@@ -244,6 +251,8 @@ export class AdminCampaignAbtestingComponent implements OnInit {
       this._sizeA = obj[0].size;
       this._sizeB = obj[1].size;
       this._generateStatsTable();
+    }, (err: HttpErrorResponse) =>{
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
     });
   }
 

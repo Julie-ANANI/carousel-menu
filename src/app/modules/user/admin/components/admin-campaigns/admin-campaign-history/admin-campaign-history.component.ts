@@ -77,7 +77,7 @@ export class AdminCampaignHistoryComponent implements OnInit {
         this._setStats();
       }
     }, (err: HttpErrorResponse) => {
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
       console.error(err);
     });
   }

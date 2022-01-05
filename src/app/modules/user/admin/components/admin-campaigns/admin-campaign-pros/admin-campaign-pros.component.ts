@@ -122,6 +122,8 @@ export class AdminCampaignProsComponent implements OnInit {
     this._campaignService.getProsStats(this._campaign._id).subscribe((result) => {
       this._campaign.stats = result
       this._prosStatsConfig = this.setProsStatsConfig(result.pros ||{});
+    }, (err: HttpErrorResponse) =>{
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error))
     })
   }
 

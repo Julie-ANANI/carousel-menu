@@ -273,7 +273,7 @@ export class AdminProjectCollectionComponent implements OnInit, OnDestroy {
             this._isImportingAnswers = false;
           },
           (err: HttpErrorResponse) => {
-            this._translateNotificationsService.error('Importing Error...', ErrorFrontService.adminErrorMessage(err));
+            this._translateNotificationsService.error('Importing Error...', ErrorFrontService.getErrorKey(err.error));
             this._isImportingAnswers = false;
             console.error(err);
           }

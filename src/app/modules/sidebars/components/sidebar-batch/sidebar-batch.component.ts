@@ -110,7 +110,7 @@ export class SidebarBatchComponent implements OnChanges {
     this._campaignService.updateBatchStatus(this.content._id, _status).subscribe(() => {
       this._translateNotificationsService.success('Success', 'The batch status has been modified.');
     }, (err: HttpErrorResponse) => {
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
       console.error(err);
     });
   }
