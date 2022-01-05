@@ -4,9 +4,10 @@
 
 import { Injectable } from '@angular/core';
 import {LangEntryPipe} from '../../pipe/lang-entry/lang-entry.pipe';
-import {PieChart, PieChartLabel} from '../../models/pie-chart';
+import {PieChart} from '../../models/pie-chart';
 import {InnovationFollowUpEmails} from '../../models/innovation';
 import {EmailMultiling} from '../../models/email';
+import {Tag} from '../../models/tag';
 
 @Injectable({
   providedIn: 'root'
@@ -14,14 +15,14 @@ import {EmailMultiling} from '../../models/email';
 export class LangEntryService extends LangEntryPipe {
 
   /**
-   * from the list of the entry it will return the single entry based on the 'lang' param.
-   * @param entry - actual entry list can be of any type, but it should have the lang property.
-   * @param requested
+   * from the list of the entry or type of Entry it will return the requested based on the 'lang' param.
+   * @param value - actual entry it can be of type or Array<any> but in that case it should have the lang property.
+   * @param requested - the label or value you want
    * @param lang - requested lang
    * @param returnDefault = true means if not find the entry in the given lang then return the entry at index 0
    */
-  transform(entry: Array<any>, lang: string = 'en', requested: 'ENTRY' | 'INDEX' = 'ENTRY',  returnDefault: boolean = false): any {
-    return super.transform(entry, lang, requested, returnDefault);
+  transform(value: any, requested: string, lang: string = 'en',  returnDefault: boolean = false): any {
+    return super.transform(value, requested, lang, returnDefault);
   }
 
   /**
@@ -49,24 +50,34 @@ export class LangEntryService extends LangEntryPipe {
   }
 
   /**
+   * return the requested value from the tag object.
+   * @param tag
+   * @param requested
+   * @param lang
+   * @param returnDefault
+   */
+  public tagEntry(tag: Tag, requested: 'label' | 'description' | 'originalLabel', lang = 'en',
+                  returnDefault = true): string {
+    if (!tag || !requested) return '';
+    if (tag.entry && tag.entry.length) {
+      return this.transform(tag.entry, requested, lang, returnDefault)
+    }
+    return this.transform(tag, requested, lang, returnDefault)
+  }
+
+  /**
    * return the label of the PieChart.
    * @param pieData
    * @param lang
    * @param index
    */
   public pieChartLabel(pieData: PieChart, lang: string, index: number): string {
-    let label = '';
-
+    if (!pieData || !lang) return '';
     if (Array.isArray(pieData.labels) && pieData.labels.length > 0) {
-      const entry: PieChartLabel = this.transform(pieData.labels, lang);
-      if (entry && entry.value && entry.value.length) {
-        label = entry.value[index];
-      }
-    } else if (pieData.labels && pieData.labels[lang] && pieData.labels[lang][index]) {
-      label = pieData.labels[lang][index];
+      const value: Array<string> = this.transform(pieData.labels, 'value', lang);
+      return (value.length && value[index]) || '';
     }
-
-    return label;
+    return (pieData.labels && pieData.labels[lang] && pieData.labels[lang][index]) || '';
   }
 
 }
