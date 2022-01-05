@@ -378,7 +378,7 @@
         <input
           (change)="updateStatus($event, status.name)"
           [checked]="status.name === userAnswer.status"
-          [disabled]="(userAnswer.status === 'VALIDATED' || userAnswer.status === 'VALIDATED_UMIBOT')"
+          [disabled]="userAnswer.status === 'VALIDATED'"
           [id]="status.name"
           name="sidebar-user-answer-status"
           type="radio">
