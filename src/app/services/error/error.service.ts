@@ -5,8 +5,8 @@ import { AuthService } from '../auth/auth.service';
 import { environment } from '../../../environments/environment';
 import { version } from '../../../environments/version';
 import * as Sentry from '@sentry/browser';
-import {RolesFrontService} from '../roles/roles-front.service';
-import {UserFrontService} from '../user/user-front.service';
+import { RolesFrontService } from '../roles/roles-front.service';
+import { UserFrontService } from '../user/user-front.service';
 
 Sentry.init({
   environment: environment.domain,
@@ -22,7 +22,8 @@ export class ErrorService {
   constructor(@Inject(PLATFORM_ID) protected platformId: Object,
               private router: Router,
               private _rolesFrontService: RolesFrontService,
-              private _authService: AuthService) {}
+              private _authService: AuthService) {
+  }
 
   public handleError(error: Error | HttpErrorResponse) {
     if (!environment.production || this._rolesFrontService.isTechRole()) {
@@ -40,8 +41,15 @@ export class ErrorService {
         /*if (this.auth.adminLevel > 0) {
           Sentry.showReportDialog({ eventId });
         }*/
+
+        if (error && error.message) {
+          Sentry.captureException(new Error(error.message));
+        } else {
+          Sentry.captureException(error);
+        }
       });
     }
   }
+
 
 }
