@@ -9,6 +9,7 @@ import {InnovationFollowUpEmails} from '../../models/innovation';
 import {EmailMultiling} from '../../models/email';
 import {Tag} from '../../models/tag';
 import {TransactionalEmail} from '../../models/transactional-email';
+import {JobConfig, JobsTypologies} from '../../models/target-pros';
 
 @Injectable({
   providedIn: 'root'
@@ -35,6 +36,8 @@ export class LangEntryService extends LangEntryPipe {
     if (!followEmails || !templateName) return {};
 
     if (followEmails.templates && followEmails.templates.length) {
+      // TODO remove console
+      console.log('New Multi-language system.');
       const template = followEmails.templates.find((_template) => _template.name === templateName);
       if (!template && !template.entry && !template.entry.length) return {};
       const email = {};
@@ -58,7 +61,10 @@ export class LangEntryService extends LangEntryPipe {
   public static transactionalEmails(email: TransactionalEmail): TransactionalEmail {
     if (!email) return <TransactionalEmail>{};
     if (email.templates && email.templates.length) {
+      // TODO remove console
+      console.log('New Multi-language system.');
       email.templates.forEach((_template) => {
+        if (!email[_template.lang]) email[_template.lang] = {};
         email[_template.lang] = _template.template;
       });
     }
@@ -66,14 +72,34 @@ export class LangEntryService extends LangEntryPipe {
   }
 
   /**
+   * this is to convert the Array<TargetProsJobEntry> into the already existing properties
+   * given through type.
+   * like this: name: { en: string, fr: string } or label: { en: string, fr: string }
+   * @param job
+   * @param type
+   */
+  public static jobEntry(job: JobConfig | JobsTypologies, type: 'name' | 'label'): any {
+    if (!job || !type) return <JobConfig | JobsTypologies>{};
+    if (job.entry && job.entry.length) {
+      // TODO remove console
+      console.log('New Multi-language system.');
+      const object = {};
+      job.entry.forEach((_entry) => {
+        object[_entry.lang] = _entry.value;
+      });
+      job[type] = object;
+    }
+    return job;
+  }
+
+  /**
    * return the requested value from the tag object.
    * @param tag
-   * @param requested
+   * @param requested - 'label' | 'description' | 'originalLabel'
    * @param lang
    * @param returnDefault
    */
-  public tagEntry(tag: Tag, requested: 'label' | 'description' | 'originalLabel', lang = 'en',
-                  returnDefault = true): string {
+  public tagEntry(tag: Tag, requested: string, lang = 'en', returnDefault = true): string {
     if (!tag || !requested) return '';
     if (tag.entry && tag.entry.length) {
       return this.transform(tag.entry, requested, lang, returnDefault)

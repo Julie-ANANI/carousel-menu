@@ -57,7 +57,6 @@ export class SharedProfessionalTargetingComponent implements OnInit, OnDestroy {
   private _currentJobIdentifier = '';
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
-              private _langEntryService: LangEntryService,
               private _jobFrontService: JobsFrontService) {
   }
 
@@ -144,6 +143,14 @@ export class SharedProfessionalTargetingComponent implements OnInit, OnDestroy {
    * @param targetedPros
    */
   initialiseTargetedPros(targetedPros: TargetPros) {
+    Object.keys(targetedPros.jobsTypologies).forEach((_job) => {
+      targetedPros.jobsTypologies = LangEntryService.jobEntry(targetedPros.jobsTypologies[_job], 'name');
+      if (targetedPros.jobsTypologies[_job].jobs && targetedPros.jobsTypologies[_job].jobs.length) {
+        targetedPros.jobsTypologies[_job].jobs.map((_jobConfig) => {
+          return LangEntryService.jobEntry(_jobConfig, 'label');
+        });
+      }
+    });
     this._jobsTypologies = targetedPros.jobsTypologies;
     this._searchOperator = targetedPros.searchOperator;
     this._seniorityLevels = targetedPros.seniorityLevels;
@@ -240,33 +247,17 @@ export class SharedProfessionalTargetingComponent implements OnInit, OnDestroy {
     if (!!keyword) {
       this._filteredJobsTypologies = {};
       Object.keys(this._jobsTypologies).forEach(jobTypoKey => {
-        let topNameEN: string;
-        let topNameFR: string;
-
-        if (Array.isArray(this._jobsTypologies[jobTypoKey].name) && this._jobsTypologies[jobTypoKey].name.length > 0) {
-          topNameEN = this._langEntryService.transform(this._jobsTypologies[jobTypoKey].name, 'en').value;
-          topNameFR = this._langEntryService.transform(this._jobsTypologies[jobTypoKey].name, 'fr').value;
-        } else {
-          topNameEN = this._jobsTypologies[jobTypoKey].name.en;
-          topNameFR = this._jobsTypologies[jobTypoKey].name.fr;
-        }
-        if (topNameEN.toLowerCase().includes(keyword.toLowerCase()) || topNameFR.toLowerCase().includes(keyword.toLowerCase())) {
+        this._jobsTypologies[jobTypoKey] = LangEntryService.jobEntry(this._jobsTypologies[jobTypoKey], 'name');
+        if (this._jobsTypologies[jobTypoKey].name.en.toLowerCase().includes(keyword.toLowerCase())
+          || this._jobsTypologies[jobTypoKey].name.fr.toLowerCase().includes(keyword.toLowerCase())) {
           this._filteredJobsTypologies[jobTypoKey] = JSON.parse(JSON.stringify(this._jobsTypologies[jobTypoKey]));
           this._filteredJobsTypologies[jobTypoKey].isToggle = false;
         } else {
-          let topLabelEN: string;
-          let topLabelFR: string;
-
-          const filteredJobs = this._jobsTypologies[jobTypoKey].jobs.filter(j => {
-            if (Array.isArray(j.label) && j.label.length > 0) {
-              topLabelEN = this._langEntryService.transform(j.label, 'en').value;
-              topLabelFR = this._langEntryService.transform(j.label, 'fr').value;
-            } else {
-              topLabelEN = j.label.en;
-              topLabelFR = j.label.fr;
-            }
-            return topLabelEN.toLowerCase().includes(keyword.toLowerCase()) || topLabelFR.toLowerCase().includes(keyword.toLowerCase());
+          this._jobsTypologies[jobTypoKey].jobs = this._jobsTypologies[jobTypoKey].jobs.map((_job) => {
+            return LangEntryService.jobEntry(_job, 'label');
           });
+          const filteredJobs = this._jobsTypologies[jobTypoKey].jobs.filter(j => j.label.en.toLowerCase().includes(keyword.toLowerCase())
+            || j.label.fr.toLowerCase().includes(keyword.toLowerCase()));
           if (filteredJobs.length) {
             this._filteredJobsTypologies[jobTypoKey] = JSON.parse(JSON.stringify(this._jobsTypologies[jobTypoKey]));
             this._filteredJobsTypologies[jobTypoKey].jobs = filteredJobs;
@@ -299,17 +290,6 @@ export class SharedProfessionalTargetingComponent implements OnInit, OnDestroy {
         job.isToggle = false;
       });
     }
-  }
-
-  //TODO remove multiling
-  public configProOption(value: JobsTypologies): {name: string, state: number} {
-    let name: string;
-    if (Array.isArray(value.name) && value.name.length > 0) {
-      name = this._langEntryService.transform(value.name, 'en').value
-    } else {
-     name = value.name.en;
-    }
-    return {name: name, state: value.state};
   }
 
 
