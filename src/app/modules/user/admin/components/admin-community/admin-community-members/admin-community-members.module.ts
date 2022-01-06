@@ -15,24 +15,26 @@ import { SidebarCommunityFormModule } from '../../../../../sidebars/components/c
 import { ErrorTemplate1Module } from '../../../../../utility/errors/error-template-1/error-template-1.module';
 import { NguiAutoCompleteModule } from '../../../../../utility/auto-complete/auto-complete.module';
 import { TableComponentsModule } from '@umius/umi-common-component/table';
+import {LangEntryPipeModule} from '../../../../../../pipe/lang-entry/langEntryPipe.module';
 
 
 @NgModule({
-    imports: [
-        CommonModule,
-        FormsModule,
-        ReactiveFormsModule,
-        SharedAmbassadorListModule,
-        TranslateModule.forChild(),
-        PipeModule,
-        SidebarModule,
-        SidebarAdvsearchFormModule,
-        SidebarAddAmbassadorFormModule,
-        SidebarCommunityFormModule,
-        ErrorTemplate1Module,
-        NguiAutoCompleteModule,
-        TableComponentsModule
-    ],
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    SharedAmbassadorListModule,
+    TranslateModule.forChild(),
+    PipeModule,
+    SidebarModule,
+    SidebarAdvsearchFormModule,
+    SidebarAddAmbassadorFormModule,
+    SidebarCommunityFormModule,
+    ErrorTemplate1Module,
+    NguiAutoCompleteModule,
+    TableComponentsModule,
+    LangEntryPipeModule
+  ],
   declarations: [
     AdminCommunityMembersComponent,
     AdminCommunityMemberComponent,

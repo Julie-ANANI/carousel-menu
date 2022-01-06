@@ -17,21 +17,21 @@ import {AdminProjectCollectionModule} from './admin-project-collection/admin-pro
 import {SharedActivityModalModule} from '../../../../shared/components/shared-activity-modal/shared-activity-modal.module';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        TranslateModule.forChild(),
-        RouterModule,
-        MessageErrorModule,
-        BannerModule,
-        ModalModule,
-        AdminProjectFollowUpModule,
-        AdminProjectPreparationModule,
-        AdminProjectAnalysisModule,
-        AdminProjectSettingsModule,
-        AdminProjectCollectionModule,
-        AdminProjectRoutingModule,
-        SharedActivityModalModule,
-    ],
+  imports: [
+    CommonModule,
+    TranslateModule.forChild(),
+    RouterModule,
+    MessageErrorModule,
+    BannerModule,
+    ModalModule,
+    AdminProjectFollowUpModule,
+    AdminProjectPreparationModule,
+    AdminProjectAnalysisModule,
+    AdminProjectSettingsModule,
+    AdminProjectCollectionModule,
+    AdminProjectRoutingModule,
+    SharedActivityModalModule,
+  ],
   declarations: [
     AdminProjectComponent
   ],

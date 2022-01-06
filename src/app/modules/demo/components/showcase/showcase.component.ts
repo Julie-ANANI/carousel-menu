@@ -1,8 +1,7 @@
-import { Component, Inject, PLATFORM_ID } from '@angular/core';
+import {Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { MultilingPipe } from '../../../../pipe/pipes/multiling.pipe';
 import { TranslateNotificationsService } from '../../../../services/translate-notifications/translate-notifications.service';
 import { TagsService } from '../../../../services/tags/tags.service';
 import { Answer } from '../../../../models/answer';
@@ -13,6 +12,7 @@ import { SidebarInterface } from '../../../sidebars/interfaces/sidebar-interface
 import { Tag } from '../../../../models/tag';
 import { TagStats } from '../../../../models/tag-stats';
 import { forkJoin } from 'rxjs';
+import {CommonService} from '../../../../services/common/common.service';
 
 @Component({
   selector: 'app-showcase',
@@ -20,7 +20,7 @@ import { forkJoin } from 'rxjs';
   styleUrls: ['./showcase.component.scss']
 })
 
-export class ShowcaseComponent {
+export class ShowcaseComponent implements OnInit {
 
   public selectedAnswers: Array<Answer> = [];
 
@@ -54,17 +54,16 @@ export class ShowcaseComponent {
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _activatedRoute: ActivatedRoute,
-              private _multilingPipe: MultilingPipe,
               private _tagService: TagsService,
+              private _commonService: CommonService,
               private _translateService: TranslateService,
               private _translateNotificationService: TranslateNotificationsService) {
+  }
 
+  ngOnInit(): void {
     if (Array.isArray(this._activatedRoute.snapshot.data['tags'])) {
-      this._sectorTags = this._activatedRoute.snapshot.data['tags'].sort((t1: Tag, t2: Tag) => {
-        const label1 = this._multilingPipe.transform(t1.label, this._translateService.currentLang);
-        const label2 = this._multilingPipe.transform(t2.label, this._translateService.currentLang);
-        return label1.localeCompare(label2);
-      });
+      this._sectorTags = this._commonService.sortTags(this._activatedRoute.snapshot.data['tags'],
+        this._translateService.currentLang);
     } else {
       this._fetchingError = true;
     }
@@ -78,7 +77,6 @@ export class ShowcaseComponent {
       this._selectedTagsStats = [];
       this._fetchingError = true;
     }
-
   }
 
   public displayCustomShowcase(showcase: Showcase) {

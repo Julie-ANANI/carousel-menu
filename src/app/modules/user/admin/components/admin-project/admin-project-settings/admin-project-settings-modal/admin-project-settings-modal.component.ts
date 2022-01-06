@@ -13,6 +13,7 @@ import {TranslateNotificationsService} from '../../../../../../../services/trans
 import {ErrorFrontService} from '../../../../../../../services/error/error-front.service';
 import {cloudinaryImageRegEx, videoDomainRegEx} from '../../../../../../../utils/regex';
 import {MissionFrontService} from '../../../../../../../services/mission/mission-front.service';
+import {LangEntryService} from '../../../../../../../services/lang-entry/lang-entry.service';
 
 interface PubType {
   key: string;
@@ -81,6 +82,7 @@ export class AdminProjectSettingsModalComponent implements OnInit {
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _translateNotificationsService: TranslateNotificationsService,
+              private _langEntryService: LangEntryService,
               private _communityService: CommunityService) { }
 
   ngOnInit() {
@@ -94,7 +96,9 @@ export class AdminProjectSettingsModalComponent implements OnInit {
   }
 
   private _checkTagsError() {
-    this._tagsError = this._community.sectors.filter((tag) => !tag.label || !tag.label['en']);
+    this._tagsError = this._community.sectors.filter((tag) => {
+      return !this._langEntryService.tagEntry(tag, 'label', 'en', false);
+    });
   }
 
   public _initPublicationType() {
@@ -285,7 +289,7 @@ export class AdminProjectSettingsModalComponent implements OnInit {
   }
 
   public hasError(sector: Tag): boolean {
-    return !sector.label || !sector.label['en'];
+    return !this._langEntryService.tagEntry(sector, 'label', 'en', false);
   }
 
   public hasMedia(index: number): boolean {

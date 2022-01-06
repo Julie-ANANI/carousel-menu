@@ -5,12 +5,15 @@ import {TranslateNotificationsService} from '../translate-notifications/translat
 import {Etherpad} from '../../models/etherpad';
 import {environment} from '../../../environments/environment';
 import {TranslateService} from '@ngx-translate/core';
+import {Tag} from '../../models/tag';
+import {LangEntryService} from '../lang-entry/lang-entry.service';
 
 @Injectable({ providedIn: 'root' })
 export class CommonService {
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _translateService: TranslateService,
+              private _langEntryService: LangEntryService,
               private _translateNotificationsService: TranslateNotificationsService) {
 
   }
@@ -173,6 +176,20 @@ export class CommonService {
         document.body.removeChild(textbox);
       }
     }
+  }
+
+  /**
+   * return the sorted tag.
+   * @param tags
+   * @param userLang
+   */
+  public sortTags(tags: Array<Tag> = [], userLang: string) {
+    if (!tags.length || !userLang) return [];
+    return tags.sort((a: Tag, b: Tag) => {
+      const labelA = this._langEntryService.tagEntry(a, 'label', userLang).toLocaleLowerCase();
+      const labelB = this._langEntryService.tagEntry(b, 'label', userLang).toLocaleLowerCase();
+      return labelA.localeCompare(labelB);
+    });
   }
 
   /***

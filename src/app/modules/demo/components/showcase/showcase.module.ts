@@ -21,23 +21,25 @@ import { MessageTemplateModule } from '../../../utility/messages/message-templat
 import { ErrorTemplate1Module } from '../../../utility/errors/error-template-1/error-template-1.module';
 import { MessageTemplate2Module } from '../../../utility/messages/message-template-2/message-template-2.module';
 import { SharedWorldmapModule } from '../../../shared/components/shared-worldmap/shared-worldmap.module';
+import {LangEntryPipeModule} from '../../../../pipe/lang-entry/langEntryPipe.module';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    TranslateModule.forChild(),
-    CountryFlagModule,
-    ModalModule,
-    PipeModule,
-    ShowcaseRoutingModule,
-    SidebarModule,
-    ShowcaseHistoryModule,
-    MessageTemplateModule,
-    ErrorTemplate1Module,
-    MessageTemplate2Module,
-    SharedWorldmapModule
-  ],
+    imports: [
+        CommonModule,
+        ReactiveFormsModule,
+        TranslateModule.forChild(),
+        CountryFlagModule,
+        ModalModule,
+        PipeModule,
+        ShowcaseRoutingModule,
+        SidebarModule,
+        ShowcaseHistoryModule,
+        MessageTemplateModule,
+        ErrorTemplate1Module,
+        MessageTemplate2Module,
+        SharedWorldmapModule,
+        LangEntryPipeModule
+    ],
   declarations: [
     ShowcaseAnswersComponent,
     ShowcaseClientsComponent,

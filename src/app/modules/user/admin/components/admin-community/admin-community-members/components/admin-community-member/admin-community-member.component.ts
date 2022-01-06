@@ -17,6 +17,7 @@ import { InnovCard } from '../../../../../../../../models/innov-card';
 import { TranslateTitleService } from '../../../../../../../../services/title/title.service';
 import { Table } from '@umius/umi-common-component/models';
 import { Company } from '../../../../../../../../models/company';
+import {CommonService} from '../../../../../../../../services/common/common.service';
 
 @Component({
   selector: 'admin-community-member',
@@ -85,6 +86,7 @@ export class AdminCommunityMemberComponent implements OnInit {
 
   constructor(private _activatedRoute: ActivatedRoute,
               private _autoCompleteService: AutocompleteService,
+              private _commonService: CommonService,
               private _translateService: TranslateService,
               private _translateTitleService: TranslateTitleService,
               private _professionalService: ProfessionalsService,
@@ -205,9 +207,8 @@ export class AdminCommunityMemberComponent implements OnInit {
    * getting all the tags from the server to show under the lable sector tags.
    */
   private _getAllTags() {
-    const activeLang = this.userLang;
-    const tagsProfessional: Array<Tag> = [];
-    const tagsRest: Array<Tag> = [];
+    let tagsProfessional: Array<Tag> = [];
+    let tagsRest: Array<Tag> = [];
 
     if (this._allSectorTags && this._allSectorTags.length > 0) {
       this._allSectorTags.forEach((tag) => {
@@ -219,14 +220,8 @@ export class AdminCommunityMemberComponent implements OnInit {
         }
       });
 
-      tagsProfessional.sort((a, b) => {
-        return a.label[activeLang].localeCompare(b.label[activeLang]);
-      });
-
-      tagsRest.sort((a, b) => {
-        return a.label[activeLang].localeCompare(b.label[activeLang]);
-      });
-
+      tagsProfessional = this._commonService.sortTags(tagsProfessional, this.userLang);
+      tagsRest = this._commonService.sortTags(tagsRest, this.userLang);
       this._totalTags = tagsProfessional.concat(tagsRest);
     }
 

@@ -239,8 +239,9 @@ export class ReportSectionComponent implements OnChanges {
     _content.values = [];
     if (tagsData.length > 0) {
       for (let i = 0; i < 3; i++) {
+        const label = this._langEntryService.tagEntry(tagsData[i], 'label', this.report.lang) || '';
         _content.values[i] = {
-          name: tagsData[i].label[this.report.lang] || '',
+          name: label,
           visibility: true,
           legend: tagsData[i].count > 1 ? tagsData[i].count + 'X' : '',
           color: this._getRankingColor(title)
