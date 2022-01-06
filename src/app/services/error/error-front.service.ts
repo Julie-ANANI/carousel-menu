@@ -14,17 +14,18 @@ export class ErrorFrontService {
   constructor() {
   }
 
-  /**
-   * return the error message for the admin side. We try to show the genuine message we receive from the back.
-   * @param error
-   */
   // public static adminErrorMessage(err: HttpErrorResponse): string {
   //   return err && (err.error && (err.error['err'] || err.error.message)) || err.message
   //     || ErrorFrontService.getErrorKey(err.error);
   // }
 
+  /**
+   * return the error message for the admin side.
+   * We try to show the genuine message we receive from the back.
+   * @param error
+   */
   public static getErrorKey(error: UMIError): string {
-    if (error) {
+    if (error && error.key && error.status) {
       const detailedCode = error.detailedCode || '';
       const key = error.key;
       const status = error.status;
