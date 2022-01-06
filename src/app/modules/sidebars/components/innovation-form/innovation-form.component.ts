@@ -8,6 +8,7 @@ import {TranslateNotificationsService} from '../../../../services/translate-noti
 import { InnovationService } from '../../../../services/innovation/innovation.service';
 import {takeUntil} from 'rxjs/operators';
 import {InnovationFrontService} from '../../../../services/innovation/innovation-front.service';
+import {EmailsObject} from '../../../../models/email';
 
 @Component({
   selector: 'app-innovation-form',
@@ -49,7 +50,7 @@ export class InnovationFormComponent implements OnInit, OnDestroy {
   private _project: Innovation = <Innovation>{};
   private _isChange = false;
 
-  private _email = {};
+  private _email: EmailsObject = <EmailsObject>{};
 
   status = [
     {name: 'EDITING', alias: 'Editing'},
@@ -256,11 +257,11 @@ export class InnovationFormComponent implements OnInit, OnDestroy {
     this._isChange = value;
   }
 
-  get email(): {} {
+  get email(): EmailsObject {
     return this._email;
   }
 
-  set email(value: {}) {
+  set email(value: EmailsObject) {
     this._email = value;
     this.isChange = true;
   }

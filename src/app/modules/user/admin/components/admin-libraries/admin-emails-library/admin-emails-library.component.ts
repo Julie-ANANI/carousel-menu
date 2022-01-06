@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TemplatesService } from '../../../../../../services/templates/templates.service';
-import {TransactionalEmail, TransactionalEmailTemplate} from '../../../../../../models/transactional-email';
+import {TransactionalEmail} from '../../../../../../models/transactional-email';
 import { Table } from '@umius/umi-common-component/models';
 import { TranslateNotificationsService } from '../../../../../../services/translate-notifications/translate-notifications.service';
 import { SidebarInterface } from '../../../../../sidebars/interfaces/sidebar-interface';
@@ -41,7 +41,6 @@ export class AdminEmailsLibraryComponent implements OnInit {
   };
 
   constructor(private templatesService: TemplatesService,
-              private _langEntryService: LangEntryService,
               private translateNotificationsService: TranslateNotificationsService) {}
 
   ngOnInit() {
@@ -75,23 +74,11 @@ export class AdminEmailsLibraryComponent implements OnInit {
     this._modalAdd = true;
   }
 
-  // TODO remove multiling
   private _initEmails() {
     this._emails.forEach((email: TransactionalEmail) => {
-      if (email.templates && email.templates.length > 0) {
+      email = LangEntryService.transactionalEmails(email);
 
-        const enTemplate: TransactionalEmailTemplate = this._langEntryService.transform(email.templates, 'en');
-        const frTemplate: TransactionalEmailTemplate = this._langEntryService.transform(email.templates, 'fr');
-
-        if (enTemplate && enTemplate.template && enTemplate.template.signature) {
-          const fullSignature = this._signatures.find(s => s._id === enTemplate.template.signature.toString());
-          if (!!fullSignature) enTemplate.template.signatureName = fullSignature.name;
-        }
-        if (frTemplate && frTemplate.template && frTemplate.template.signature) {
-          const fullSignature = this._signatures.find(s => s._id === frTemplate.template.signature.toString());
-          if (!!fullSignature) frTemplate.template.signatureName = fullSignature.name;
-        }
-      } else {
+      if (!!email) {
         if (email.en && email.en.signature) {
           const fullSignature = this._signatures.find(s => s._id === email.en.signature.toString());
           if (fullSignature) email.en.signatureName = fullSignature.name;

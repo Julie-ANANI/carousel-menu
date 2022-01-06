@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, Output} from '@angular/core';
 import {Answer} from '../../../../../models/answer';
 import {Table, Config} from '@umius/umi-common-component/models';
 import {Innovation, InnovationFollowUpEmails, InnovationFollowUpEmailsCc} from '../../../../../models/innovation';
@@ -27,7 +27,7 @@ import {LangEntryService} from '../../../../../services/lang-entry/lang-entry.se
   templateUrl: './shared-follow-up-client.component.html',
   styleUrls: ['./shared-follow-up-client.component.scss']
 })
-export class SharedFollowUpClientComponent implements OnInit, OnDestroy {
+export class SharedFollowUpClientComponent implements OnDestroy {
 
   @Input() set startContactProcess(value: boolean) {
     if (!!value) {
@@ -155,9 +155,6 @@ export class SharedFollowUpClientComponent implements OnInit, OnDestroy {
               private _filterService: FilterService,
               private _translateService: TranslateService,
               private _translateNotificationsService: TranslateNotificationsService) { }
-
-  ngOnInit() {
-  }
 
   private _initFilter() {
     if (this._answers.length) {

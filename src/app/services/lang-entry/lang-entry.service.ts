@@ -8,6 +8,7 @@ import {PieChart} from '../../models/pie-chart';
 import {InnovationFollowUpEmails} from '../../models/innovation';
 import {EmailMultiling} from '../../models/email';
 import {Tag} from '../../models/tag';
+import {TransactionalEmail} from '../../models/transactional-email';
 
 @Injectable({
   providedIn: 'root'
@@ -47,6 +48,21 @@ export class LangEntryService extends LangEntryPipe {
     }
 
     return followEmails[templateName.toLocaleLowerCase()] || {};
+  }
+
+  /**
+   * this is to convert the Array<TransactionalEmailTemplate> into en: EmailTemplate format
+   * to work with the current components.
+   * @param email
+   */
+  public static transactionalEmails(email: TransactionalEmail): TransactionalEmail {
+    if (!email) return <TransactionalEmail>{};
+    if (email.templates && email.templates.length) {
+      email.templates.forEach((_template) => {
+        email[_template.lang] = _template.template;
+      });
+    }
+    return email;
   }
 
   /**
