@@ -317,7 +317,7 @@ export class SharedProfessionalsListComponent {
         (err: HttpErrorResponse) => {
           this._translateNotificationsService.error(
             'ERROR.ERROR',
-            ErrorFrontService.getErrorMessage(err.status)
+            ErrorFrontService.getErrorKey(err.error)
           );
           console.error(err);
         }
@@ -370,7 +370,7 @@ export class SharedProfessionalsListComponent {
         (err: HttpErrorResponse) => {
           this._translateNotificationsService.error(
             'ERROR.ERROR',
-            ErrorFrontService.getErrorMessage(err.status)
+            ErrorFrontService.getErrorKey(err.error)
           );
           if (index === this._professionalsToRemove.length - 1) {
             this._isDeleting = false;
@@ -400,7 +400,7 @@ export class SharedProfessionalsListComponent {
         (err: HttpErrorResponse) => {
           this._translateNotificationsService.error(
             'ERROR.ERROR',
-            ErrorFrontService.getErrorMessage(err.status)
+            ErrorFrontService.getErrorKey(err.error)
           );
           if (index === this._professionalsToRemove.length - 1) {
             this._isDeleting = false;
@@ -563,7 +563,7 @@ export class SharedProfessionalsListComponent {
           } else {
             this._translateNotificationsService.error(
               'ERROR.ERROR',
-              ErrorFrontService.getErrorMessage(err.status)
+              ErrorFrontService.getErrorKey(err.error)
             );
           }
           console.error(err);
@@ -632,7 +632,7 @@ export class SharedProfessionalsListComponent {
             console.error(error);
             this._translateNotificationsService.error(
               'ERROR.ERROR',
-              ErrorFrontService.getErrorMessage(error.status)
+              ErrorFrontService.getErrorKey(error.error)
             );
             this._isShowModal = false;
             this._localConfig.limit = '10';

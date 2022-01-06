@@ -349,7 +349,7 @@ export class SharedQuestionnaireSectionComponent implements OnInit {
             this._identifierError.exist = !!(response && response.length);
             this._isAvailableIdentifier = !(response && response.length);
           }, (error: HttpErrorResponse) => {
-            this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.adminErrorMessage(error));
+            this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(error.error));
             this._isCheckingAvailability = false;
             console.error(error);
           });

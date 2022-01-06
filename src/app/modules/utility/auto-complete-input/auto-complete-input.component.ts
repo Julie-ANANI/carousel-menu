@@ -9,7 +9,6 @@ import {AutoCompleteInputConfigInterface} from './interfaces/auto-complete-input
 import {AnswerList} from './interfaces/auto-complete-input-answerlist-interface';
 import {AutoCompleteInputSuggestionInterface} from './interfaces/auto-complete-input-suggestion-interface';
 import {TranslateNotificationsService} from '../../../services/translate-notifications/translate-notifications.service';
-import {ErrorFrontService} from '../../../services/error/error-front.service';
 import {Enterprise} from '../../../models/enterprise';
 
 @Component({
@@ -164,7 +163,7 @@ export class AutoCompleteInputComponent implements OnInit {
         this.add.emit({value: val});
       }
     } else {
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(403));
+      this._translateNotificationsService.error('ERROR.ERROR', '403.PERMISSION_DENIED');
     }
   }
 

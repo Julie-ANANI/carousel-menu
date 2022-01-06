@@ -205,7 +205,7 @@ export class SharedSearchHistoryComponent implements OnInit {
 
       }
       , (err: HttpErrorResponse) => {
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
         console.error(err);
       });
   }
@@ -409,7 +409,7 @@ export class SharedSearchHistoryComponent implements OnInit {
         });
         this._translateNotificationsService.success('Success', 'The requests have been cancelled.');
       }, (err: HttpErrorResponse) => {
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
         console.error(err);
       });
 
@@ -424,7 +424,7 @@ export class SharedSearchHistoryComponent implements OnInit {
         });
         this._translateNotificationsService.success('Success', 'The queries have been put on hold.');
       }, (err: HttpErrorResponse) => {
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
         console.error(err);
       });
     } else if (value._action === 'Pause the requests') {
@@ -436,7 +436,7 @@ export class SharedSearchHistoryComponent implements OnInit {
         });
         this._translateNotificationsService.success('Success', 'The requests have been paused.');
       }, (err: HttpErrorResponse) => {
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
         console.error(err);
       });
 
@@ -445,7 +445,7 @@ export class SharedSearchHistoryComponent implements OnInit {
       this._searchService.addManyRequests(requestsIds).pipe(first()).subscribe((_: any) => {
         this._translateNotificationsService.success('Success', 'The requests have been added.');
       }, (err: HttpErrorResponse) => {
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
         console.error(err);
       });
 
@@ -465,7 +465,7 @@ export class SharedSearchHistoryComponent implements OnInit {
               `The search for e-mails has been launched.`);
           }
         }, (err: HttpErrorResponse) => {
-          this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+          this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
           console.error(err);
         });
       });
@@ -514,7 +514,7 @@ export class SharedSearchHistoryComponent implements OnInit {
       }
       this._requestsToImport = [];
     }, (err: HttpErrorResponse) => {
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
       console.error(err);
     });
   }
@@ -523,7 +523,7 @@ export class SharedSearchHistoryComponent implements OnInit {
     this._searchService.relaunchRequests().pipe(first()).subscribe((_: any) => {
       this._loadHistory();
     }, (err: HttpErrorResponse) => {
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
       console.error(err);
     });
   }

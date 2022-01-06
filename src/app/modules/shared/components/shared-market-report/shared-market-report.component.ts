@@ -225,7 +225,7 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy, OnChanges
         this._innovation.notifications.push('TRIGGER_DOWNLOAD_DOCUMENTS');
       }, (err: HttpErrorResponse) => {
         this._isSendingNotification = false;
-        this._translateNotificationsService.error('Error', ErrorFrontService.adminErrorMessage(err));
+        this._translateNotificationsService.error('Error', ErrorFrontService.getErrorKey(err.error));
         console.error(err);
       });
     }

@@ -111,7 +111,7 @@ export class AdminProjectTagsPoolComponent implements OnInit, OnDestroy {
       this._initializeTable();
     }, (err: HttpErrorResponse) => {
       this._fetchingError = true;
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
       console.error(err);
     });
   }
@@ -154,7 +154,7 @@ export class AdminProjectTagsPoolComponent implements OnInit, OnDestroy {
           if (this._tags.length > 0 && this._tags.find((existTag) => existTag.originalTagId === tag._id)) {
             this._translateNotificationsService.error('Error', 'The tag is already exists.');
           } else {
-            this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+            this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
           }
         });
       });
@@ -169,7 +169,7 @@ export class AdminProjectTagsPoolComponent implements OnInit, OnDestroy {
           this._getTagsFromPool();
         }
       }, (err: HttpErrorResponse) => {
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
         console.error(err);
       });
     });
@@ -190,7 +190,7 @@ export class AdminProjectTagsPoolComponent implements OnInit, OnDestroy {
       this._getTagsFromPool();
       this._translateNotificationsService.success('Success' , 'The tag is updated.');
     }, (err: HttpErrorResponse) => {
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
       console.error(err);
     });
   }

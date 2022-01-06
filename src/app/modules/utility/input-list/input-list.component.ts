@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { TranslateNotificationsService } from '../../../services/translate-notifications/translate-notifications.service';
 import { domainRegEx, emailRegEx } from '../../../utils/regex';
-import { ErrorFrontService } from '../../../services/error/error-front.service';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { Observable } from 'rxjs';
 import { AutocompleteService } from '../../../services/autocomplete/autocomplete.service';
@@ -113,7 +112,7 @@ export class InputListComponent {
     } else {
       this._translateNotificationsService.error(
         'ERROR.ERROR',
-        ErrorFrontService.getErrorMessage(403)
+        '403.PERMISSION_DENIED'
       );
     }
   }

@@ -12,6 +12,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { Router } from '@angular/router';
 import { MissionQuestionService } from '../../../../../../services/mission/mission-question.service';
 import { LocalStorageService } from "@umius/umi-common-component/services/localStorage";
+import { HttpErrorResponse } from "@angular/common/http";
 
 @Component({
   selector: 'app-admin-use-cases-library',
@@ -84,8 +85,8 @@ export class AdminUseCasesLibraryComponent implements OnInit {
         this._total = response && response._metadata && response._metadata.totalCount || 0;
         this._prepareTemplates();
         this._initializeTable();
-      }, error => {
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.adminErrorMessage(error));
+      }, (error: HttpErrorResponse) => {
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(error.error));
         this._fetchingError = true;
         console.error(error);
       });

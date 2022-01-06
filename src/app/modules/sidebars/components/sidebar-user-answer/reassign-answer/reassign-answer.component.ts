@@ -79,7 +79,7 @@ export class ReassignAnswerComponent {
           this._emit();
         }
       }, (err: HttpErrorResponse) => {
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.adminErrorMessage(err));
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
         this._isSearchingPro = false;
         console.error(err);
       });

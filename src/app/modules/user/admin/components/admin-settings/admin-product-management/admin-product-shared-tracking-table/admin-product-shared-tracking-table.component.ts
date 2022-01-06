@@ -108,7 +108,7 @@ export class AdminProductSharedTrackingTableComponent implements OnInit {
         }
         this.changeDetectorRef.detectChanges();
       }, (err: HttpErrorResponse) => {
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
         console.log(err);
         this._trackingTable._total = 0;
       });

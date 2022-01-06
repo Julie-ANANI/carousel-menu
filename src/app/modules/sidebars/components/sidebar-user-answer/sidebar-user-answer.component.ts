@@ -227,7 +227,7 @@ export class SidebarUserAnswerComponent implements OnInit {
           (err: HttpErrorResponse) => {
             this._translateNotificationsService.error(
               'ERROR.ERROR',
-              ErrorFrontService.getErrorMessage(err.status)
+              ErrorFrontService.getErrorKey(err.error)
             );
             this._isSaving = false;
             console.error(err);
@@ -410,7 +410,7 @@ export class SidebarUserAnswerComponent implements OnInit {
         (err: HttpErrorResponse) => {
           this._translateNotificationsService.error(
             'ERROR.ERROR',
-            ErrorFrontService.getErrorMessage(err.status)
+            ErrorFrontService.getErrorKey(err.error)
           );
           this._resetSaveVariables();
           this._editSecondEmail = false;

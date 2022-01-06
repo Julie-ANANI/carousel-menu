@@ -111,7 +111,7 @@ export class AdminEditQuestionComponent implements OnInit {
         this._questions = response && response.result || [];
         this._jsonParse();
       }, (error: HttpErrorResponse) => {
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.adminErrorMessage(error));
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(error.error));
         console.error(error);
       });
     }
@@ -143,7 +143,7 @@ export class AdminEditQuestionComponent implements OnInit {
         this._canBeDeleted = response && response.result && response.result.length === 0;
       }, (error: HttpErrorResponse) => {
         this._isPartUseCase = true;
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.adminErrorMessage(error));
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(error.error));
         console.error(error);
       });
     }
@@ -156,7 +156,7 @@ export class AdminEditQuestionComponent implements OnInit {
         this._initVariables();
       }, (error: HttpErrorResponse) => {
         this._fetchingError = true;
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.adminErrorMessage(error));
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(error.error));
         console.error(error);
       });
     }
@@ -220,7 +220,7 @@ export class AdminEditQuestionComponent implements OnInit {
         this._router.navigate(['/user/admin/libraries/questions']);
       }, (error: HttpErrorResponse) => {
         this._isRemoving = false;
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.adminErrorMessage(error));
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(error.error));
         console.error(error);
       });
     }
@@ -271,7 +271,7 @@ export class AdminEditQuestionComponent implements OnInit {
       this._translateNotificationsService.success('Success', 'The question has been updated successfully.');
     }, (error: HttpErrorResponse) => {
       this._isSaving = false;
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.adminErrorMessage(error));
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(error.error));
       console.error(error);
     });
   }

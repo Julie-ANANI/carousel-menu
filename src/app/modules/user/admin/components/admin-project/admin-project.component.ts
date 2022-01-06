@@ -299,7 +299,7 @@ export class AdminProjectComponent implements OnInit, OnDestroy {
       this._allCampaigns = response && response.result || [];
       this._campaignFrontService.setAllCampaigns(this._allCampaigns);
     }, (err: HttpErrorResponse) => {
-      this._translateNotificationsService.error('Campaigns Fetching Error...', ErrorFrontService.adminErrorMessage(err));
+      this._translateNotificationsService.error('Campaigns Fetching Error...', ErrorFrontService.getErrorKey(err.error));
       console.error(err);
     });
   }

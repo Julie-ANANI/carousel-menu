@@ -222,7 +222,7 @@ export class SharedFollowUpClientComponent implements OnInit, OnDestroy {
     this._saveProject({followUpEmails: this._followUpObj('entity')}).then(() => {
       this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.UPDATED_COMPANY');
     }).catch((err: HttpErrorResponse) => {
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
       console.error(err);
     });
   }
@@ -261,7 +261,7 @@ export class SharedFollowUpClientComponent implements OnInit, OnDestroy {
       this.initEmailObject();
     }).catch((err: HttpErrorResponse) => {
       this._selectedCC.push(value);
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
       console.error(err);
     });
   }
@@ -307,7 +307,7 @@ export class SharedFollowUpClientComponent implements OnInit, OnDestroy {
         this.initEmailObject();
       }).catch((err: HttpErrorResponse) => {
         this._selectedCC.pop();
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
         console.error(err);
       });
     } else {

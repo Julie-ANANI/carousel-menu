@@ -186,7 +186,7 @@ export class AdminProjectQuestionnaireComponent implements OnInit, OnDestroy {
     this._presetService.get(event._id).pipe(first()).subscribe((preset) => {
       this._chosenPreset = preset;
     }, (err: HttpErrorResponse) => {
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.adminErrorMessage(err));
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
       console.error(err);
     });
   }

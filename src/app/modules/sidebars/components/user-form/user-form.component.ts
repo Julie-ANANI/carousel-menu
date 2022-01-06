@@ -191,7 +191,7 @@ export class UserFormComponent implements OnInit {
         this._roles = roles.result || [];
       }, err => {
         if (err.status !== 401) {
-          this.translateNotificationsService.error('Error', ErrorFrontService.getErrorMessage(err.status));
+          this.translateNotificationsService.error('Error', ErrorFrontService.getErrorKey(err.error));
         }
       });
   }

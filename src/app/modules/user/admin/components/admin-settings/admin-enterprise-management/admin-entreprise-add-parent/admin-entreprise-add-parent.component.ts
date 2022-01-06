@@ -393,7 +393,7 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
         },
         (err: HttpErrorResponse) => {
           console.log(err);
-          this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.error))
+          this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error))
         }
       );
   }

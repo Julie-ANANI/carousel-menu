@@ -85,7 +85,7 @@ export class AdminPresetsListComponent implements OnInit {
     this._presetService.getAll(this._config).pipe(first()).subscribe((response: Response) => {
       this._initPresets(response);
     }, (err: HttpErrorResponse) => {
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
       console.error(err);
     });
   }
@@ -177,7 +177,7 @@ export class AdminPresetsListComponent implements OnInit {
       this._translateNotificationsService.error('Error', 'The preset with the same name already exists.');
     } else {
       this._modalOpen = false;
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
       console.error(err);
     }
   }
@@ -202,7 +202,7 @@ export class AdminPresetsListComponent implements OnInit {
           this._getPresets();
         }
       }, (err: HttpErrorResponse) => {
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
         console.error(err);
       });
     });

@@ -78,6 +78,20 @@ export const ERROR = {
     PUBLISH_COMMUNITY_FAILED: 'Sorry, we are having trouble to publish the project on Community.'
   },
 
+  NOTIFICATION_400:{
+    ALREADY_SENT: 'We have already sent this notification, this notification is sent just once.',
+    AT_LEAST_3_ANSWERS:'We could not send this notification. It requires minimum 3 validated answers.',
+    THIRD_ANSWER_OVERTIME: 'We could not send this notification because third answer is validated after 3 days of the first mail.',
+    MISSING_USER_INFO: 'We could not found the user info so we can not proceed further.',
+    MISSING_INNOVATION_INFO: 'We could not found the innovation info so we can not proceed further.',
+    MISSING_RECIPIENTS_INFO: 'We could not found the recipients info so we can not proceed further.',
+    MISSING_BATCH_INFO: 'We could not send this notification. We did not find any batches.',
+    MISSING_TEMPLATE_INFO: 'We could not found the notification template content so we can not proceed further.',
+    MISSING_DATE_INFO: 'We could not send this notification. We did not find first mail or answer updated date.',
+    TRIGGER_NOT_FOUND: 'We could not found the notification for the trigger.',
+    NOTIFICATION_CANNOT_SAVE: 'There was a problem while saving the notification job',
+  },
+
   'ERROR': 'Oups...',
 
   'SUCCESS': 'Success',

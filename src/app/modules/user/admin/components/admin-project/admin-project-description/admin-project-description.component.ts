@@ -147,7 +147,7 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
       this._notificationService.getAllJobs(config).pipe(first()).subscribe((response) => {
         this._notificationJobs = response && response.result || [];
       }, (err: HttpErrorResponse) => {
-        this._translateNotificationsService.error('Notification Jobs Error', ErrorFrontService.adminErrorMessage(err));
+        this._translateNotificationsService.error('Notification Jobs Error', ErrorFrontService.getErrorKey(err.error));
         console.error(err);
       });
     }
@@ -171,7 +171,7 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
           this._notificationJobs.unshift(res.job);
           }, (err: HttpErrorResponse) => {
           this._isSendingNotification = false;
-          this._translateNotificationsService.error('Error', ErrorFrontService.adminErrorMessage(err));
+          this._translateNotificationsService.error('Error', ErrorFrontService.getErrorKey(err.error));
           console.error(err);
         });
     }

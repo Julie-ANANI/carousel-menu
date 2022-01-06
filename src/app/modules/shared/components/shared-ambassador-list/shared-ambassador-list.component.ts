@@ -127,7 +127,7 @@ export class SharedAmbassadorListComponent {
 
     }, (err: HttpErrorResponse) => {
       this._fetchingError = true;
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.error));
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
     });
 
   }

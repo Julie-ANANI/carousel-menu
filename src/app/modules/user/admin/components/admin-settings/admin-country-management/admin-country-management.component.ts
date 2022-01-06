@@ -70,7 +70,7 @@ export class AdminCountryManagementComponent implements OnInit {
           this._initTable();
         }
       }, (error: HttpErrorResponse) => {
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(error.status));
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(error.error));
       console.error(error);
       this._fetchingError = true;
     });
@@ -137,7 +137,7 @@ export class AdminCountryManagementComponent implements OnInit {
       this._getCountries(this._config);
       this._translateNotificationsService.success('Success', `The country ${country.name} has been filtered.`);
       }, (error: HttpErrorResponse) => {
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(error.status));
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(error.error));
       console.error(error);
     });
   }
@@ -156,7 +156,7 @@ export class AdminCountryManagementComponent implements OnInit {
       this._getCountries(this._config);
       this._translateNotificationsService.success('Success', 'The country has been updated.');
       }, (error: HttpErrorResponse) => {
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(error.status));
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(error.error));
       console.error(error);
     });
   }
@@ -180,7 +180,7 @@ export class AdminCountryManagementComponent implements OnInit {
       this._getCountries(this._config);
       this._translateNotificationsService.success('Success', 'The country has been deleted.')
     }, (err: HttpErrorResponse) => {
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
       console.error(err);
     });
   }

@@ -170,7 +170,7 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
         this._setInnovation();
       }, (err: HttpErrorResponse) => {
         this._isSendingNotification = false;
-        this._translateNotificationsService.error('Error', ErrorFrontService.adminErrorMessage(err));
+        this._translateNotificationsService.error('Error', ErrorFrontService.getErrorKey(err.error));
         console.error(err);
       });
     }
@@ -319,7 +319,7 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
             this._isSaving = false;
             this._toBeSavedComment = true;
             this._translateNotificationsService.error(
-              'Comment Saving Error...', ErrorFrontService.adminErrorMessage(err));
+              'Comment Saving Error...', ErrorFrontService.getErrorKey(err.error));
             console.error(err);
           });
         } else if (!!saveObject) {
@@ -339,7 +339,7 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
         this._setInnovation();
         this._translateNotificationsService.success('Success', 'The project has been updated.');
       }, (err: HttpErrorResponse) => {
-        this._translateNotificationsService.error('Project Saving Error...', ErrorFrontService.adminErrorMessage(err));
+        this._translateNotificationsService.error('Project Saving Error...', ErrorFrontService.getErrorKey(err.error));
         this._isSaving = false;
         console.error(err);
       });

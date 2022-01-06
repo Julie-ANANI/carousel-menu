@@ -100,7 +100,7 @@ export class SidebarTagsComponent {
       this._tags.push(res && res.tags && res.tags.length && res.tags[0]);
       this.saveButton(true);
     }, (err: HttpErrorResponse) => {
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
       console.error(err);
     });
   }
@@ -118,7 +118,7 @@ export class SidebarTagsComponent {
     this._tagsService.create(value).pipe(first()).subscribe(() => {
       this._translateNotificationsService.success('Success' , 'The tag is created.');
     }, (err: HttpErrorResponse) => {
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
       console.error(err);
     });
   }
@@ -155,7 +155,7 @@ export class SidebarTagsComponent {
       this._translateNotificationsService.success('Success' , 'The tag is updated.');
       this._needToSetOriginalTag = false;
     }, (err: HttpErrorResponse) => {
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
       console.error(err);
     });
   }

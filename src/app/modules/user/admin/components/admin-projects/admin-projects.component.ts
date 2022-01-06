@@ -114,7 +114,7 @@ export class AdminProjectsComponent implements OnInit {
         }
         this._getProjects();
       }, (err: HttpErrorResponse) => {
-        this._translateNotificationsService.error('Operators Fetching Error...', ErrorFrontService.getErrorMessage(err.status));
+        this._translateNotificationsService.error('Operators Fetching Error...', ErrorFrontService.getErrorKey(err.error));
         this._isLoading = false;
         this._fetchingError = true;
         console.error(err);
@@ -669,7 +669,7 @@ export class AdminProjectsComponent implements OnInit {
       // Parse the config.search field to see if there's something
       this._getProjects();
     } catch (ex) {
-      this._translateNotificationsService.error('Project Fetching Error...', ErrorFrontService.getErrorMessage(ex.status));
+      this._translateNotificationsService.error('Project Fetching Error...', '500.UNKNOWN_ERROR');
       this._getProjects();
       console.error(ex);
     }
@@ -863,7 +863,7 @@ export class AdminProjectsComponent implements OnInit {
     this._missionService.save(missionId, missionObj).pipe(first()).subscribe(() => {
       this._translateNotificationsService.success('Mission Save Success...', notifyMessage);
       }, (err: HttpErrorResponse) => {
-      this._translateNotificationsService.error('Mission Save Error...', ErrorFrontService.getErrorMessage(err.status));
+      this._translateNotificationsService.error('Mission Save Error...', ErrorFrontService.getErrorKey(err.error));
       console.error(err);
     });
   }

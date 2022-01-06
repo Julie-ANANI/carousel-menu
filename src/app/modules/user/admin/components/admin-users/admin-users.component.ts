@@ -76,7 +76,7 @@ export class AdminUsersComponent implements OnInit {
       this._initializeTable();
     }, (err: HttpErrorResponse) => {
       console.log(err);
-      this._translateNotificationsService.error('Error', ErrorFrontService.getErrorMessage(err.status));
+      this._translateNotificationsService.error('Error', ErrorFrontService.getErrorKey(err.error));
       this._isLoading = false;
       this._fetchingError = true;
       console.error(err);
@@ -180,11 +180,11 @@ export class AdminUsersComponent implements OnInit {
       this._userService.updateOther(value).pipe(first()).subscribe(() => {
         this._translateNotificationsService.success('Success', 'The user has been updated.');
       }, (err: HttpErrorResponse) => {
-        this._translateNotificationsService.error('Error', ErrorFrontService.getErrorMessage(err.status));
+        this._translateNotificationsService.error('Error', ErrorFrontService.getErrorKey(err.error));
         console.error(err);
       });
     } else {
-      this._translateNotificationsService.error('Error', ErrorFrontService.getErrorMessage(403));
+      this._translateNotificationsService.error('Error', '403.PERMISSION_DENIED');
     }
   }
 
@@ -207,7 +207,7 @@ export class AdminUsersComponent implements OnInit {
     this._userService.deleteUser(value).pipe(first()).subscribe(() => {
       this._translateNotificationsService.success('Success', 'The user has been deleted.');
     }, (err: HttpErrorResponse) => {
-      this._translateNotificationsService.error('Error', ErrorFrontService.getErrorMessage(err.status));
+      this._translateNotificationsService.error('Error', ErrorFrontService.getErrorKey(err.error));
       console.error(err);
     });
   }

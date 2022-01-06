@@ -62,7 +62,7 @@ export class AdminBatchesDisplayComponent implements OnInit {
       this._weekBatches = batches;
       this._isLoading = false;
     }, (err: HttpErrorResponse) => {
-      this._translateNotificationsService.error('Batch Error...', ErrorFrontService.getErrorMessage(err.status));
+      this._translateNotificationsService.error('Batch Error...', ErrorFrontService.getErrorKey(err.error));
       console.error(err);
     });
   }

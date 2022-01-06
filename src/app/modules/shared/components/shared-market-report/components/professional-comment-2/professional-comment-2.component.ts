@@ -56,7 +56,7 @@ export class SharedMarketComment2Component {
           this._translation[lang] = value.translation;
           this._showTranslation = true;
         }, (err: HttpErrorResponse) => {
-          this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+          this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
           console.error(err);
         });
     }

@@ -90,7 +90,7 @@ export class NewProjectComponent implements OnInit, OnDestroy {
         this._missionTemplates = response.result;
       }
     }, (err: HttpErrorResponse) => {
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
       console.error(err);
     });
   }

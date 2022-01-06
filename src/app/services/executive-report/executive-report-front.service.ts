@@ -243,7 +243,7 @@ export class ExecutiveReportFrontService {
         this._commonService.playAudio(file.audioContent);
       }, (err: HttpErrorResponse) => {
         console.error(err);
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
       });
     } else {
       this._translateNotificationsService.error('Error', 'The text could not be empty.');

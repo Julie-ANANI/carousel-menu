@@ -80,7 +80,7 @@ export class SharedUploadZonePhotoComponent {
             this.cbFn.emit(data);
             this._isUploading = false;
           }, (err: HttpErrorResponse) => {
-            this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+            this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
             this._isUploading = false;
             console.error(err);
           });

@@ -243,7 +243,7 @@ export class SidebarFilterAnswersComponent implements OnChanges, OnDestroy {
         this._sharedFiltersList.push(res);
         this._filterName = '';
       }, (err: HttpErrorResponse) => {
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
         console.error(err);
       });
     } else {

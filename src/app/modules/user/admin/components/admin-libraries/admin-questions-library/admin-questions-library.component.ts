@@ -92,7 +92,7 @@ export class AdminQuestionsLibraryComponent implements OnInit {
         });
         this._initializeTable();
       }, (error: HttpErrorResponse) => {
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.adminErrorMessage(error));
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(error.error));
         this._fetchingError = true;
         console.error(error);
       });
@@ -213,7 +213,7 @@ export class AdminQuestionsLibraryComponent implements OnInit {
         this._router.navigate([`${this._router.url}/${response._id}`]);
         this.onCloseModal();
       }, (error: HttpErrorResponse) => {
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.adminErrorMessage(error));
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(error.error));
         this._isAdding = false;
         console.error(error);
       });

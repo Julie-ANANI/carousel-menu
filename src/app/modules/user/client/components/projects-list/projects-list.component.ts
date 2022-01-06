@@ -89,7 +89,7 @@ export class ProjectsListComponent implements OnInit {
       this._innovations = response.result;
       this._total = Math.max(response._metadata.totalCount, response.result.length);
     }, (err: HttpErrorResponse) => {
-      this._translateNotificationService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      this._translateNotificationService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
       this._isError = true;
       console.error(err);
     });

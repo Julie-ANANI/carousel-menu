@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { HttpErrorResponse } from '@angular/common/http';
 
 export interface UMIError {
   status: number;
@@ -17,12 +16,12 @@ export class ErrorFrontService {
 
   /**
    * return the error message for the admin side. We try to show the genuine message we receive from the back.
-   * @param err
+   * @param error
    */
-  public static adminErrorMessage(err: HttpErrorResponse): string {
-    return err && (err.error && (err.error['err'] || err.error.message)) || err.message
-      || ErrorFrontService.getErrorMessage(err.status);
-  }
+  // public static adminErrorMessage(err: HttpErrorResponse): string {
+  //   return err && (err.error && (err.error['err'] || err.error.message)) || err.message
+  //     || ErrorFrontService.getErrorKey(err.error);
+  // }
 
   public static getErrorKey(error: UMIError): string {
     if (error) {
@@ -38,31 +37,31 @@ export class ErrorFrontService {
     return 'ERROR.OPERATION_ERROR'
   }
 
-  public static getErrorMessage(status?: number): string {
-    if (status) {
-      switch (status) {
-
-        case 400:
-          return 'ERROR.OPERATION_ERROR';
-
-        case 401:
-          return 'ERROR.401.NO_AUTHORIZED';
-
-        case 403:
-          return 'ERROR.403.PERMISSION_DENIED';
-
-        case 404:
-          return 'ERROR.404.NOT_FOUND';
-
-        default:
-          return 'ERROR.OPERATION_ERROR';
-
-      }
-    }
-
-    return 'ERROR.OPERATION_ERROR';
-
-  }
+  // public static getErrorMessage(status?: number): string {
+  //   if (status) {
+  //     switch (status) {
+  //
+  //       case 400:
+  //         return 'ERROR.OPERATION_ERROR';
+  //
+  //       case 401:
+  //         return 'ERROR.401.NO_AUTHORIZED';
+  //
+  //       case 403:
+  //         return 'ERROR.403.PERMISSION_DENIED';
+  //
+  //       case 404:
+  //         return 'ERROR.404.NOT_FOUND';
+  //
+  //       default:
+  //         return 'ERROR.OPERATION_ERROR';
+  //
+  //     }
+  //   }
+  //
+  //   return 'ERROR.OPERATION_ERROR';
+  //
+  // }
 
   /***
    * this function will check the error and navigate to the

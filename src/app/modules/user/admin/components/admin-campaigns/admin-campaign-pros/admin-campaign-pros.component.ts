@@ -156,7 +156,7 @@ export class AdminCampaignProsComponent implements OnInit {
           (err: HttpErrorResponse) => {
             this._translateNotificationsService.error(
               'ERROR.ERROR',
-              ErrorFrontService.getErrorMessage(err.status)
+              ErrorFrontService.getErrorKey(err.error)
             );
             console.error(err);
           }
@@ -237,7 +237,7 @@ export class AdminCampaignProsComponent implements OnInit {
               (err: HttpErrorResponse) => {
                 this._translateNotificationsService.error(
                   'ERROR.ERROR',
-                  ErrorFrontService.getErrorMessage(err.status)
+                  ErrorFrontService.getErrorKey(err.error)
                 );
                 this._isImporting = false;
                 this._csvImportError = err.error.message;
@@ -276,7 +276,7 @@ export class AdminCampaignProsComponent implements OnInit {
               (err: HttpErrorResponse) => {
                 this._translateNotificationsService.error(
                   'ERROR.ERROR',
-                  ErrorFrontService.getErrorMessage(err.status)
+                  ErrorFrontService.getErrorKey(err.error)
                 );
                 this._isImporting = false;
                 this._csvImportError = err.error.message;
@@ -314,7 +314,7 @@ export class AdminCampaignProsComponent implements OnInit {
           (err: HttpErrorResponse) => {
             this._translateNotificationsService.error(
               'ERROR.ERROR',
-              ErrorFrontService.getErrorMessage(err.status)
+              ErrorFrontService.getErrorKey(err.error)
             );
             this._isImporting = false;
             this._csvImportError = err.error.message;
@@ -352,7 +352,7 @@ export class AdminCampaignProsComponent implements OnInit {
           (err: HttpErrorResponse) => {
             this._translateNotificationsService.error(
               'ERROR.ERROR',
-              ErrorFrontService.getErrorMessage(err.status)
+              ErrorFrontService.getErrorKey(err.error)
             );
             this._isImporting = false;
             console.error(err);
@@ -403,7 +403,7 @@ export class AdminCampaignProsComponent implements OnInit {
           (err: HttpErrorResponse) => {
             this._translateNotificationsService.error(
               'ERROR.ERROR',
-              ErrorFrontService.getErrorMessage(err.status)
+              ErrorFrontService.getErrorKey(err.error)
             );
             this._isCreating = false;
             console.error(err);
@@ -458,7 +458,7 @@ export class AdminCampaignProsComponent implements OnInit {
           (err: HttpErrorResponse) => {
             this._translateNotificationsService.error(
               'ERROR.ERROR',
-              ErrorFrontService.getErrorMessage(err.status)
+              ErrorFrontService.getErrorKey(err.error)
             );
             this._isExporting = false;
             console.error(err);
