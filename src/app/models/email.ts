@@ -2,9 +2,10 @@ import {EmailTemplate} from './email-template';
 
 export interface EmailMultiling {
   [lang: string]: {
-    subject: string;
+    subject?: string;
     content?: string;
     body?: string;
+    signature?: string;
   }
 }
 

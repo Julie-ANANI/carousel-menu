@@ -28,11 +28,15 @@ export class LangEntryPipe implements PipeTransform {
     if (!value || !requested) return '';
 
     if (Array.isArray(value) && !!value.length) {
+      // TODO remove console
+      console.log('New Multi-language system.');
       const entry = value.find((_value) => _value.lang === lang);
       return !!entry ? requested === 'FULL_ENTRY' ? entry : entry[requested] : returnDefault ? value[0][requested] : '';
     }
 
     if (value[requested] && value[requested][lang]) {
+      // TODO remove console
+      console.log('Old Multi-language system.');
       return value[requested] && value[requested][lang];
     }
 
