@@ -236,6 +236,10 @@ export class AdminProjectStoryboardComponent implements OnInit, OnDestroy {
       });
   }
 
+  /**
+  * @private
+   * @param answers: Array<Answer>
+  * */
   private _setReportSections(answers: Array<Answer>) {
 
     const sections: Array<ExecutiveSection> = [];
@@ -245,7 +249,7 @@ export class AdminProjectStoryboardComponent implements OnInit, OnDestroy {
 
         sections[index] = {
           questionId: '',
-          questionType: '',
+          questionType: 'RANKING' ,
           questionIdentifier: '',
           title: '',
           abstract: '',
@@ -280,10 +284,10 @@ export class AdminProjectStoryboardComponent implements OnInit, OnDestroy {
               sections[index].content = this._executiveReportFrontService.rankingSection(rankingData, this._executiveReport.lang);
               break;
 
-            /*case 'likert-scale':
+            case 'likert-scale':
               const likertScaleData = ResponseService.rankingChartData(answersToShow, question, this.currentLang);
               sections[index].questionType = 'LIKERT-SCALE';
-              sections[index].content = this._executiveReportFrontService.likertScaleSection(likertScaleData, this._executiveReport.lang);*/
+              sections[index].content = this._executiveReportFrontService.likertScaleSection(likertScaleData, this._executiveReport.lang);
 
             default:
               const tagsData: Array<Tag> = ResponseService.tagsList(answersToShow, question);
@@ -468,6 +472,7 @@ export class AdminProjectStoryboardComponent implements OnInit, OnDestroy {
   }
 
   public updateReport(value: any) {
+
     Object.keys(value).forEach(key => {
       if (key.slice(0, 8) === 'section_') {
         const index = parseInt(key[8], 10);

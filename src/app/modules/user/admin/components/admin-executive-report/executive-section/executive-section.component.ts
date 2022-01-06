@@ -94,6 +94,11 @@ export class ExecutiveSectionComponent {
 
   }
 
+  /**
+   * Return the questionType selected
+   * @public
+   * @param type : any
+   * */
   public selectQuestionType(type: any) {
     if (this._section.questionIdentifier) {
       switch (type) {
@@ -320,6 +325,9 @@ export class ExecutiveSectionComponent {
     return this._enableVisualPie;
   }
 
+  /**
+  * @type {boolean}
+  * */
   get enableVisualLikertScale(): boolean {
     return this._enableVisualLikertScale;
   }

@@ -5,7 +5,8 @@ import { OldExecutiveReport } from '../../../../../models/innovation';
 import { Tag } from '../../../../../models/tag';
 import {
   ExecutiveReport,
-  ExecutiveSection, SectionBar,
+  ExecutiveSection,
+  SectionBar,
   SectionKpi,
   SectionPie,
   SectionQuote,
@@ -111,9 +112,6 @@ export class ReportSectionComponent implements OnChanges {
               questionType: 'LIKERT-SCALE',
               content: <SectionLikertScale>{}
             };
-         /*   const _barsData = ResponseService.barsData(_question, _answers);
-            this._content = this._initPieContent(ResponseService.pieChartData(_barsData, _answers));
-            this._initPieChartData();*/
             this._content = this._initLikertScaleContent(ResponseService.tagsList(_answers, _question), _question.title);
             break;
 
@@ -294,7 +292,7 @@ export class ReportSectionComponent implements OnChanges {
 
 
   /***
-   * returns the label color for Ranking content
+   * returns the label color for Likert-scale content
    * @param title
    * @private
    */
@@ -338,10 +336,17 @@ export class ReportSectionComponent implements OnChanges {
 
 
   /***
-   * returns the content of the Section Likert-Scale
-   * @param tagsData
-   * @param title
+   * Returns the content of the SectionLikertScale
    * @private
+   * @param tagsData : Array<Tag>
+   * @param title : Multiling
+   * @example
+   * return {
+      color: '#BBC7D6',
+      legend: '',
+      name: 'UNCERTAIN',
+      visibility: false
+    };wq
    */
   private _initLikertScaleContent(tagsData: Array<Tag>, title: Multiling): SectionLikertScale {
     if (tagsData.length > 0) {
