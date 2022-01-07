@@ -72,7 +72,8 @@ export const ERROR = {
     CARD_NOT_FOUND: 'We can\'t find the innovation card please check it and try again.',
     MEDIA_NOT_FOUND: 'We can\'t find the innovation media please check it and try again.',
     EMPTY_SYNTHESIS: 'We can\'t find any synthesis please check it and try again.',
-    NOT_SUBMITTED_MODE: 'The comments can only be added when the innovation status is Submitted.'
+    NOT_SUBMITTED_MODE: 'The comments can only be added when the innovation status is Submitted.',
+    INNOVATION_NOT_FOUND: 'We can\'t find the innovation please check it and try again.'
   },
 
   INNOVATION_500:{
@@ -89,7 +90,6 @@ export const ERROR = {
     REMOVE_INNOVATION_CARD_FAILED: 'Sorry, we are having trouble to delete the innovation card.',
     REMOVE_INNOVATION_FAILED: 'Sorry, we are having trouble to delete the innovation.',
     IMPORT_ANSWER_FAILED: 'Sorry, we are having trouble to import the answers.',
-    CVS_PARSE_FAILED: 'Sorry, we are having trouble to parse the cvs file.'
   },
 
   NOTIFICATION_400:{
@@ -104,6 +104,41 @@ export const ERROR = {
     MISSING_DATE_INFO: 'We could not send this notification. We did not find first mail or answer updated date.',
     TRIGGER_NOT_FOUND: 'We could not found the notification for the trigger.',
     NOTIFICATION_CANNOT_SAVE: 'There was a problem while saving the notification job',
+  },
+
+  CVS_500:{
+    CVS_PARSE_FAILED: 'Sorry, we are having trouble to parse the cvs file.'
+  },
+
+  BATCH_404:{
+    BATCH_NOT_FOUND: 'Sorry, we can\'t find the batch.'
+  },
+
+  BATCH_500:{
+    UPDATE_BATCH_FAILED: 'Sorry, we are having trouble to update the batch.'
+  },
+
+  CAMPAIGN_400:{
+    MISSING_PARAM_CAMPAIGN_ID: 'Sorry, the campaign id is missing.'
+  },
+
+  CAMPAIGN_404:{
+    CAMPAIGN_NOT_FOUND: 'Sorry, we can\'t find the campaign.'
+  },
+
+  CAMPAIGN_500:{
+    SAVE_CAMPAIGN_FAILED: 'Sorry, we are having trouble to save the campaign.',
+    UPDATE_CAMPAIGN_FAILED: 'Sorry, we are having trouble to update the campaign.',
+    UPDATE_STATS_SEARCH_FAILED: 'Sorry, we are having trouble to update the search in stats.',
+    UPDATE_STATS_PROS_FAILED: 'Sorry, we are having trouble to update the pros in stats.',
+    UPDATE_STATS_FAILED: 'Sorry, we are having trouble to update the stats.',
+    UPDATE_STATS_BATCH_FAILED: 'Sorry, we are having trouble to update the batch in stats.',
+    SAVE_TARGET_PROS_FAILED: 'Sorry, we are having trouble to save the targeted pros.'
+  },
+
+  CLIENT_PROJECT_500:{
+    CREATE_PROJECT_FAILED: 'Sorry, we are having trouble to create the project.',
+    DELETE_PROJECT_FAILED: 'Sorry, we are having trouble to delete the project.'
   },
 
   'ERROR': 'Oups...',
