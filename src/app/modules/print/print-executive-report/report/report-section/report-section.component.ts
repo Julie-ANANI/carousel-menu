@@ -346,7 +346,7 @@ export class ReportSectionComponent implements OnChanges {
       legend: '',
       name: 'UNCERTAIN',
       visibility: false
-    };wq
+    };
    */
   private _initLikertScaleContent(tagsData: Array<Tag>, title: Multiling): SectionLikertScale {
     if (tagsData.length > 0) {

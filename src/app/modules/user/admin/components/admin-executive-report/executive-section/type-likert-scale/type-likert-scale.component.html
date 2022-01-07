@@ -61,7 +61,7 @@
         <label>
           <div class="falsePlaceholder"
                (change)="emitChanges()">
-            {{('ADMIN_EXECUTIVE_REPORT.LIKERT-SCALE_SECTION.' + content.name) | uppercase| translate }}
+            {{('ADMIN_EXECUTIVE_REPORT.LIKERT-SCALE_SECTION.' + content.name) | uppercase| translate | titlecase }}
           </div>
         </label>
       </div>
