@@ -70,12 +70,26 @@ export const ERROR = {
 
   INNOVATION_404:{
     CARD_NOT_FOUND: 'We can\'t find the innovation card please check it and try again.',
+    MEDIA_NOT_FOUND: 'We can\'t find the innovation media please check it and try again.',
     EMPTY_SYNTHESIS: 'We can\'t find any synthesis please check it and try again.',
     NOT_SUBMITTED_MODE: 'The comments can only be added when the innovation status is Submitted.'
   },
 
   INNOVATION_500:{
-    PUBLISH_COMMUNITY_FAILED: 'Sorry, we are having trouble to publish the project on Community.'
+    PUBLISH_COMMUNITY_FAILED: 'Sorry, we are having trouble to publish the project on Community.',
+    UPDATE_OWNER_FAILED: 'Sorry, we are having trouble to update the owner.',
+    UPDATE_MISSION_TYPE_FAILED: 'Sorry, we are having trouble to update mission type.',
+    UPDATE_MISSION_TEAM_FAILED: 'Sorry, we are having trouble to update mission team.',
+    UPDATE_MISSION_TEMPLATE_FAILED: 'Sorry, we are having trouble to update mission template',
+    SAVE_INNOVATION_FAILED: 'Sorry, we are having trouble to save the innovation.',
+    SAVE_MEDIA_FAILED: 'Sorry, we are having trouble to save the media.',
+    DELETE_MEDIA_FAILED: 'Sorry, we are having trouble to delete the media.',
+    DELETE_TAG_FAILED: 'Sorry, we are having trouble to delete the tag from the innovation.',
+    SAVE_INNOVATION_CARD_FAILED: 'Sorry, we are having trouble to save the innovation card.',
+    REMOVE_INNOVATION_CARD_FAILED: 'Sorry, we are having trouble to delete the innovation card.',
+    REMOVE_INNOVATION_FAILED: 'Sorry, we are having trouble to delete the innovation.',
+    IMPORT_ANSWER_FAILED: 'Sorry, we are having trouble to import the answers.',
+    CVS_PARSE_FAILED: 'Sorry, we are having trouble to parse the cvs file.'
   },
 
   NOTIFICATION_400:{
