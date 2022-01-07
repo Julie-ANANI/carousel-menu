@@ -5,11 +5,13 @@ import { OldExecutiveReport } from '../../../../../models/innovation';
 import { Tag } from '../../../../../models/tag';
 import {
   ExecutiveReport,
-  ExecutiveSection, SectionBar,
+  ExecutiveSection,
+  SectionBar,
   SectionKpi,
   SectionPie,
   SectionQuote,
-  SectionRanking
+  SectionRanking,
+  SectionLikertScale
 } from '../../../../../models/executive-report';
 import { ExecutivePieChart, PieChart } from '../../../../../models/pie-chart';
 import { BarData } from '../../../../shared/components/shared-market-report/models/bar-data';
@@ -31,8 +33,8 @@ export class ReportSectionComponent implements OnChanges {
 
   private _section: ExecutiveSection = <ExecutiveSection>{};
 
-  private _content: SectionKpi | SectionQuote | SectionRanking | SectionPie | SectionBar
-    = <SectionKpi | SectionQuote | SectionRanking | SectionPie | SectionBar>{};
+  private _content: SectionKpi | SectionQuote | SectionRanking | SectionPie | SectionBar | SectionLikertScale
+    = <SectionKpi | SectionQuote | SectionRanking | SectionPie | SectionBar | SectionLikertScale>{};
 
   private _pieChart: ExecutivePieChart = {
     data: [],
@@ -100,6 +102,17 @@ export class ReportSectionComponent implements OnChanges {
             const _barsData = ResponseService.barsData(_question, _answers);
             this._content = this._initPieContent(ResponseService.pieChartData(_barsData, _answers));
             this._initPieChartData();
+            break;
+
+          case 'likert-scale':
+            this._section = {
+              questionId: _quesId,
+              title: this.report.lang === 'fr' ? _titleFrench : _titleEnglish,
+              abstract: _abstract,
+              questionType: 'LIKERT-SCALE',
+              content: <SectionLikertScale>{}
+            };
+            this._content = this._initLikertScaleContent(ResponseService.tagsList(_answers, _question), _question.title);
             break;
 
           case 'stars':
@@ -277,6 +290,23 @@ export class ReportSectionComponent implements OnChanges {
     return '';
   }
 
+
+  /***
+   * returns the label color for Likert-scale content
+   * @param title
+   * @private
+   */
+  private _getLikertScaleColor(title: Multiling): string {
+    if (title) {
+      if (title['en'].toLowerCase().indexOf('objections') !== -1) {
+        return '#EA5858';
+      } else if (title['en'].toLowerCase().indexOf('strengths') !== -1 || title['fr'].toLowerCase().indexOf('points forts') !== -1) {
+        return '#2ECC71';
+      }
+    }
+    return '#4F5D6B';
+  }
+
   /***
    * if the object type is Executive report
    * @private
@@ -284,7 +314,7 @@ export class ReportSectionComponent implements OnChanges {
   private _typeExecutive() {
     const data: ExecutiveReport = <ExecutiveReport>this.report;
     this._section = data.sections[this.currentSection];
-    this._content = <SectionKpi | SectionQuote | SectionRanking | SectionPie | SectionBar>this._section.content;
+    this._content = <SectionKpi | SectionQuote | SectionRanking | SectionPie | SectionBar | SectionLikertScale>this._section.content;
     this._initPieChartData();
   }
 
@@ -304,11 +334,42 @@ export class ReportSectionComponent implements OnChanges {
     }
   }
 
+
+  /***
+   * Returns the content of the SectionLikertScale
+   * @private
+   * @param tagsData : Array<Tag>
+   * @param title : Multiling
+   * @example
+   * return {
+      color: '#BBC7D6',
+      legend: '',
+      name: 'UNCERTAIN',
+      visibility: false
+    };
+   */
+  private _initLikertScaleContent(tagsData: Array<Tag>, title: Multiling): SectionLikertScale {
+    if (tagsData.length > 0) {
+       return {
+        name: tagsData[0].label[this.report.lang] || '',
+        visibility: true,
+        legend: tagsData[0].count > 1 ? tagsData[0].count + 'X' : '',
+        color: this._getLikertScaleColor(title)
+      };
+    }
+    return {
+      color: '#BBC7D6',
+      legend: '',
+      name: 'UNCERTAIN',
+      visibility: false
+    };
+  }
+
   get section(): ExecutiveSection {
     return this._section;
   }
 
-  get content(): SectionKpi | SectionQuote | SectionRanking | SectionPie | SectionBar {
+  get content(): SectionKpi | SectionQuote | SectionRanking | SectionPie | SectionBar | SectionLikertScale {
     return this._content;
   }
 

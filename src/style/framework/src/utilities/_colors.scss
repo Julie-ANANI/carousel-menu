@@ -115,3 +115,14 @@
   background: $primary-gradient-color;
   color: $text-white-color;
 }
+
+.bg-green-light {
+  background: $bg-green-light !important;
+  color: $text-white-color;
+}
+
+.bg-pending {
+  background: $bg-pending-color !important;
+  color: $text-white-color;
+}
+

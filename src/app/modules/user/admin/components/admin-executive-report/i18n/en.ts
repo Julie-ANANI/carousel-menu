@@ -94,4 +94,13 @@ export const ADMIN_EXECUTIVE_REPORT = {
     'FAVOURABLE': ' of responses are favorable'
   },
 
+  'LIKERT-SCALE_SECTION': {
+    'LEGEND': 'Legend',
+    'TOTALLY_INVALIDATED': 'TOTALLY INVALIDATED',
+    'INVALIDED': 'INVALIDED',
+    'UNCERTAIN': 'UNCERTAIN',
+    'VALIDATED': 'VALIDATED',
+    'TOTALLY_VALIDATED': 'TOTALLY VALIDATED',
+  },
 };
+

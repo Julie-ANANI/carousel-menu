@@ -19,19 +19,14 @@ import {MissionQuestionService} from '../../../../../../services/mission/mission
 export class ExecutiveSectionComponent {
 
   @Input() isEditable = false;
-
   @Input() questions: Array<Question | MissionQuestion> = [];
-
   @Input() answers: Array<Answer> = [];
-
   @Input() reportLang: 'en';
-
   @Input() sectionIndex = 0;
-
   @Input() set section(value: ExecutiveSection) {
     this._section = {
       questionId: value.questionId || '',
-      questionType: value.questionType || '',
+      questionType: value.questionType,
       questionIdentifier: value.questionIdentifier || '',
       abstract: value.abstract || '',
       title: value.title || '',
@@ -42,12 +37,16 @@ export class ExecutiveSectionComponent {
   @Output() sectionChange: EventEmitter<ExecutiveSection> = new EventEmitter<ExecutiveSection>();
 
   private _section: ExecutiveSection = <ExecutiveSection>{};
-
   private _enableVisualBar = false;
-
   private _enableVisualRanking = false;
-
   private _enableVisualPie = false;
+  private _enableVisualLikertScale = false;
+  private _resetVisuals() {
+    this._enableVisualBar = false;
+    this._enableVisualRanking = false;
+    this._enableVisualPie = false;
+    this._enableVisualLikertScale = false;
+  }
 
   constructor(private _executiveReportFrontService: ExecutiveReportFrontService,
               private _responseService: ResponseService) { }
@@ -58,11 +57,6 @@ export class ExecutiveSectionComponent {
     }
   }
 
-  private _resetVisuals() {
-    this._enableVisualBar = false;
-    this._enableVisualRanking = false;
-    this._enableVisualPie = false;
-  }
 
   /***
    * assign the question id to the section and based on the question
@@ -95,10 +89,16 @@ export class ExecutiveSectionComponent {
       this._enableVisualBar = true;
       this._enableVisualBar = true;
       this._enableVisualRanking = true;
+      this._enableVisualLikertScale = true;
     }
 
   }
 
+  /**
+   * Return the questionType selected
+   * @public
+   * @param type : any
+   * */
   public selectQuestionType(type: any) {
     if (this._section.questionIdentifier) {
       switch (type) {
@@ -128,6 +128,14 @@ export class ExecutiveSectionComponent {
 
         case 'BAR':
           if (this._enableVisualBar) {
+            this._section.questionType = type;
+            this._initializeSection();
+            this.emitChanges();
+          }
+          break;
+
+        case 'LIKERT-SCALE':
+          if (this._enableVisualLikertScale) {
             this._section.questionType = type;
             this._initializeSection();
             this.emitChanges();
@@ -164,6 +172,10 @@ export class ExecutiveSectionComponent {
 
       case 'PIE':
         this._setPieData();
+        break;
+
+      case 'LIKERT-SCALE':
+        this._setLikertScaleData();
         break;
     }
   }
@@ -258,6 +270,30 @@ export class ExecutiveSectionComponent {
     }
   }
 
+
+  /***
+   *
+   * @private
+   */
+  private _setLikertScaleData() {
+    if (this._section.questionIdentifier === `quesCustom_${this.sectionIndex}`) {
+      this._section.title = 'Custom likert scale';
+      this._section.content = this._executiveReportFrontService.likertScaleTagsSection([], this.reportLang);
+    } else {
+      const question: Question | MissionQuestion = this._getQuestion(this._section.questionIdentifier);
+      const answers: Array<Answer> = this._responseService.answersToShow(this.answers, question);
+      this._section.title = MissionQuestionService.label(question, 'title', this.reportLang);
+      let data;
+      if (question.controlType === 'likert-scale') {
+        data = ResponseService.rankingChartData(answers, question, this.reportLang);
+        this._section.content = this._executiveReportFrontService.likertScaleSection(data, this.reportLang);
+      } else {
+        data = ResponseService.tagsList(answers, question);
+        this._section.content = this._executiveReportFrontService.likertScaleTagsSection(data, this.reportLang);
+      }
+    }
+  }
+
   private _getQuestion(identifier: string): Question | MissionQuestion {
     const index = this.questions.findIndex((ques) => ques.identifier === identifier);
     if (index !== -1) {
@@ -287,6 +323,13 @@ export class ExecutiveSectionComponent {
 
   get enableVisualPie(): boolean {
     return this._enableVisualPie;
+  }
+
+  /**
+  * @type {boolean}
+  * */
+  get enableVisualLikertScale(): boolean {
+    return this._enableVisualLikertScale;
   }
 
 }

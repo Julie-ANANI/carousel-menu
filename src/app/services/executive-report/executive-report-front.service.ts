@@ -1,18 +1,25 @@
-import { Injectable } from '@angular/core';
-import { SectionBar, SectionKpi, SectionPie, SectionQuote, SectionRanking } from '../../models/executive-report';
-import { Professional } from '../../models/professional';
-import { BarData } from '../../modules/shared/components/shared-market-report/models/bar-data';
-import { ResponseService } from '../../modules/shared/components/shared-market-report/services/response.service';
-import { specialCharRegEx } from '../../utils/regex';
-import { MultilingPipe } from '../../pipe/pipes/multiling.pipe';
-import { Tag } from '../../models/tag';
-import { PieChart } from '../../models/pie-chart';
-import { ExecutiveReportService } from './executive-report.service';
-import { TranslateNotificationsService } from '../translate-notifications/translate-notifications.service';
-import { first} from 'rxjs/operators';
-import { HttpErrorResponse } from '@angular/common/http';
-import { ErrorFrontService } from '../error/error-front.service';
-import { CommonService } from '../common/common.service';
+import {Injectable} from '@angular/core';
+import {
+  SectionBar,
+  SectionKpi,
+  SectionLikertScale,
+  SectionPie,
+  SectionQuote,
+  SectionRanking
+} from '../../models/executive-report';
+import {Professional} from '../../models/professional';
+import {BarData} from '../../modules/shared/components/shared-market-report/models/bar-data';
+import {ResponseService} from '../../modules/shared/components/shared-market-report/services/response.service';
+import {specialCharRegEx} from '../../utils/regex';
+import {MultilingPipe} from '../../pipe/pipes/multiling.pipe';
+import {Tag} from '../../models/tag';
+import {PieChart} from '../../models/pie-chart';
+import {ExecutiveReportService} from './executive-report.service';
+import {TranslateNotificationsService} from '../translate-notifications/translate-notifications.service';
+import {first} from 'rxjs/operators';
+import {HttpErrorResponse} from '@angular/common/http';
+import {ErrorFrontService} from '../error/error-front.service';
+import {CommonService} from '../common/common.service';
 import {Answer} from '../../models/answer';
 
 @Injectable({ providedIn: 'root' })
@@ -196,6 +203,32 @@ export class ExecutiveReportFrontService {
   }
 
 
+
+  /***
+   * this returns the content of the LIKERT-SCALE section for tags.
+   * @param tagsData
+   * @param lang
+   */
+
+  public likertScaleTagsSection(tagsData: Array<Tag>, lang: string): SectionLikertScale {
+    if (tagsData && tagsData.length > 0) {
+      return {
+        color: '#BBC7D6',
+        legend:  tagsData[0].count + 'X',
+        name: this._multilingPipe.transform(tagsData[0].label, lang),
+        visibility: tagsData[0].count > 0
+      };
+    } else {
+      return {
+        color: '#BBC7D6',
+        legend: '',
+        name: 'UNCERTAIN',
+        visibility: false
+      };
+    }
+  }
+
+
   /***
    * this returns the content of the RANKING section.
    * @param rankingData
@@ -229,6 +262,24 @@ export class ExecutiveReportFrontService {
     }
 
     return section;
+
+  }
+
+
+  /***
+   * this returns the content of the Likert-scale section.
+   * @param likertScaleData
+   * @param lang
+   */
+  public likertScaleSection(likertScaleData: {label: string, answers: Answer[]; percentage: number; count: number; identifier: string; }[],
+                        lang: string): SectionLikertScale {
+
+    return {
+      color: '#BBC7D6',
+      legend: '',
+      name: 'UNCERTAIN',
+      visibility: false
+    };
 
   }
 

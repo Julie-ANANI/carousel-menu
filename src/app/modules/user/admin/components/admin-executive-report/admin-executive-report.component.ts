@@ -26,7 +26,6 @@ import {MissionQuestion} from '../../../../../models/mission';
 export class AdminExecutiveReportComponent implements OnInit, OnDestroy {
 
   @Input() isEditable = false;
-
   @Input() set executiveReport(value: ExecutiveReport) {
     this._executiveReport = value;
     this._setData();
@@ -35,31 +34,18 @@ export class AdminExecutiveReportComponent implements OnInit, OnDestroy {
   @Output() executiveReportUpdate: EventEmitter<any> = new EventEmitter<any>();
 
   private _executiveReport: ExecutiveReport = <ExecutiveReport>{};
-
   private _objectiveConfig: ExecutiveObjective = <ExecutiveObjective>{};
-
   private _summary = '';
-
   private _targetingConfig: ExecutiveTargeting = <ExecutiveTargeting>{};
-
   private _professionalConfig: ExecutiveProfessional = <ExecutiveProfessional>{};
-
   private _conclusionConfig: ExecutiveConclusion = <ExecutiveConclusion>{};
-
   private _answers: Array<Answer> = [];
-
   private _topAnswers: Array<Answer> = [];
-
   private _questions: Array<Question | MissionQuestion> = [];
-
   private _ngUnsubscribe: Subject<any> = new Subject<any>();
-
   private _showModal = false;
-
   private _isResetModal = false;
-
   private _activeIndex: number = null;
-
   private _anonymous = false;
 
   constructor (private _innovationFrontService: InnovationFrontService,

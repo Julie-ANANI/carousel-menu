@@ -60,8 +60,9 @@ export interface ExecutiveSection {
   questionId: string;
   title: string;
   abstract: string;
-  questionType: 'PIE' | 'RANKING' | 'BAR' | 'QUOTE' | 'KPI' | '';
-  content: SectionPie | SectionRanking | SectionBar | SectionQuote | SectionKpi;
+  questionType: 'PIE' | 'RANKING' | 'BAR' | 'QUOTE' | 'KPI' | 'LIKERT-SCALE';
+  content: SectionPie | SectionRanking | SectionBar | SectionQuote | SectionKpi | SectionLikertScale;
+  color?:string;
 }
 
 export interface SectionKpi {
@@ -90,7 +91,7 @@ export interface SectionBar {
 export interface SectionPie {
   favorable_answers: {
     percentage: number;
-    visibility: boolean
+    visibility: boolean;
   };
   values: Array<{
     percentage: number;
@@ -105,6 +106,13 @@ export interface SectionRanking {
     name: string;
     legend: string;
     visibility: boolean;
-    color: string
+    color: string;
   }>;
+}
+
+export interface SectionLikertScale {
+  name:string;
+  legend:string;
+  visibility?:boolean;
+  color:string;
 }
