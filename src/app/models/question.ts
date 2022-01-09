@@ -7,12 +7,12 @@ import { Multiling } from './multiling';
 export type QuestionType = 'checkbox' | 'clearbit' | 'list' | 'radio' | 'scale' | 'stars' | 'textarea' | 'toggle'
   | 'ranking'| 'likert-scale';
 
-export type QuestionParametersType = 'color' | 'date' | 'datetime-local' | 'email' | 'month' | 'number' | 'password' | 'tel'
-  | 'text' | 'time' | 'url' | 'week';
+export type QuestionParametersType = 'color' | 'date' | 'datetime-local' | 'email' | 'month'
+  | 'number' | 'password' | 'tel' | 'text' | 'time' | 'url' | 'week';
 
 export interface QuestionOptionLabel {
   lang: string;
-  value: string;
+  label: string;
 }
 
 export interface QuestionEntry {
@@ -28,9 +28,10 @@ export interface Option {
   identifier: string;
   color?: string;
   positive?: boolean;
+  entry?: Array<QuestionOptionLabel>
 
   /**
-   * TODO replace this with Array<QuestionOptionLabel>
+   * TODO remove this
    */
   label: Multiling;
 }
@@ -45,6 +46,7 @@ export interface Question {
   sensitiveAnswerData: boolean;
   options?: Array<Option>;
   visibility?: boolean;
+  entry?: Array<QuestionEntry>;
 
   parameters?: {
     type: QuestionParametersType;
@@ -65,8 +67,6 @@ export interface Question {
    */
   maxOptionsSelect?: number;
 
-  entry?: Array<QuestionEntry>;
-
   // TODO replace this with entry
   label: Multiling;
   title: Multiling;
@@ -77,5 +77,4 @@ export interface Question {
    *  it's a text used in the quiz front for help or an instruction based on the questionType.
    */
   instruction?: Multiling;
-
 }

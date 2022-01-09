@@ -102,9 +102,9 @@ export class LangEntryService extends LangEntryPipe {
   public tagEntry(tag: Tag, requested: string, lang = 'en', returnDefault = true): string {
     if (!tag || !requested) return '';
     if (tag.entry && tag.entry.length) {
-      return this.transform(tag.entry, requested, lang, returnDefault)
+      return this.transform(tag.entry, requested, lang, returnDefault);
     }
-    return this.transform(tag, requested, lang, returnDefault)
+    return this.transform(tag, requested, lang, returnDefault);
   }
 
   /**

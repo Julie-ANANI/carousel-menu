@@ -14,7 +14,11 @@ export interface PresetSectionLabel {
 export interface PresetSection {
   readonly description: 'nothing' | '1st' | '2nd';
   readonly questions: Array<Question>;
-  readonly entry?: Array<PresetSectionLabel>;
+
+  /**
+   * TODO uncomment this
+   */
+  // readonly entry?: Array<PresetSectionLabel>;
 
   /**
    * TODO remove this
