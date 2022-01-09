@@ -8,16 +8,18 @@ import { SharedPresetQuestionComponent } from './shared-preset-question/shared-p
 import { SharedPresetSectionComponent } from './shared-preset-section/shared-preset-section.component';
 import { SharedPresetComponent } from './shared-preset.component';
 import { ColorPickerModule } from 'ngx-color-picker';
+import {LangEntryPipeModule} from '../../../../pipe/lang-entry/langEntryPipe.module';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    TranslateModule.forChild(),
-    RouterModule,
-    FormsModule,
-    PipeModule,
-    ColorPickerModule
-  ],
+    imports: [
+        CommonModule,
+        TranslateModule.forChild(),
+        RouterModule,
+        FormsModule,
+        PipeModule,
+        ColorPickerModule,
+        LangEntryPipeModule
+    ],
   declarations: [
     SharedPresetQuestionComponent,
     SharedPresetSectionComponent,

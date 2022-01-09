@@ -14,6 +14,7 @@ export interface SectionLabel {
 export interface Section {
   description: 'nothing' | '1st' | '2nd';
   readonly questions: Array<Question>;
+  entry?: Array<SectionLabel>;
 
   /**
    * TODO replace this with Array<SectionLabel>

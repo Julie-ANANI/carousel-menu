@@ -29,7 +29,10 @@
                 {{ 'COMMON.LANG.' + lang | uppercase | translate }}:
               </label>
             </ng-container>
-            {{ section.label[lang] }}
+            <ng-container *ngIf="section.entry && section.entry.length; else noPresetSectionEntry">
+              {{ section.entry | langEntry: 'label':lang }}
+            </ng-container>
+            <ng-template #noPresetSectionEntry>{{ section | langEntry: 'label':lang }}</ng-template>
           </div>
         </div>
 

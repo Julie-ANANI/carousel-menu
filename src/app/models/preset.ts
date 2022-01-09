@@ -14,9 +14,10 @@ export interface PresetSectionLabel {
 export interface PresetSection {
   readonly description: 'nothing' | '1st' | '2nd';
   readonly questions: Array<Question>;
+  readonly entry?: Array<PresetSectionLabel>;
 
   /**
-   * TODO replace this with Array<PresetSectionLabel>
+   * TODO remove this
    */
   readonly label: Multiling;
 }
@@ -29,15 +30,12 @@ export interface PresetRequirement {
 export interface Preset {
   _id?: string;
   name: string;
-
   accessibility?: {
     editable: boolean;
     hidden: boolean;
   },
-
   requirements?: Array<PresetRequirement>;
   readonly sections: Array<PresetSection>;
   readonly created?: Date;
   readonly updated?: Date;
-
 }

@@ -11,7 +11,7 @@ import {takeUntil} from 'rxjs/operators';
 export class SharedPresetComponent implements OnInit {
 
   /***
-   * the preset can be edit by the user or not.
+   * the preset can be edited by the user or not.
    */
   @Input() isEditable = false;
 
