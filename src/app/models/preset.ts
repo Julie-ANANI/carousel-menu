@@ -7,7 +7,7 @@ import { Question } from './question';
 
 export interface PresetSectionLabel {
   lang: string;
-  value: string;
+  label: string;
 }
 
 // TODO remove multiling
