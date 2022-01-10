@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { TemplatesService } from '../../../../../../services/templates/templates.service';
-import { TransactionalEmail } from '../../../../../../models/transactionnal-email';
+import {TransactionalEmail} from '../../../../../../models/transactional-email';
 import { Table } from '@umius/umi-common-component/models';
 import { TranslateNotificationsService } from '../../../../../../services/translate-notifications/translate-notifications.service';
 import { SidebarInterface } from '../../../../../sidebars/interfaces/sidebar-interface';
 import { EmailSignature } from '../../../../../../models/email-signature';
 import { first } from 'rxjs/operators';
+import {LangEntryService} from '../../../../../../services/lang-entry/lang-entry.service';
 
 @Component({
   selector: 'app-admin-emails-library',
@@ -73,18 +74,25 @@ export class AdminEmailsLibraryComponent implements OnInit {
     this._modalAdd = true;
   }
 
-
-  private initTable() {
+  private _initEmails() {
     this._emails.forEach((email: TransactionalEmail) => {
-      if (email.en && email.en.signature) {
-        const fullSignature = this._signatures.find(s => s._id === email.en.signature.toString());
-        if (fullSignature) email.en.signatureName = fullSignature.name;
-      }
-      if (email.fr && email.fr.signature) {
-        const fullSignature = this._signatures.find(s => s._id === email.fr.signature.toString());
-        if (fullSignature) email.fr.signatureName = fullSignature.name;
+      email = LangEntryService.transactionalEmails(email);
+
+      if (!!email) {
+        if (email.en && email.en.signature) {
+          const fullSignature = this._signatures.find(s => s._id === email.en.signature.toString());
+          if (fullSignature) email.en.signatureName = fullSignature.name;
+        }
+        if (email.fr && email.fr.signature) {
+          const fullSignature = this._signatures.find(s => s._id === email.fr.signature.toString());
+          if (fullSignature) email.fr.signatureName = fullSignature.name;
+        }
       }
     });
+  }
+
+  private initTable() {
+    this._initEmails();
 
     this._tableInfos = {
       _selector: 'admin-emails',

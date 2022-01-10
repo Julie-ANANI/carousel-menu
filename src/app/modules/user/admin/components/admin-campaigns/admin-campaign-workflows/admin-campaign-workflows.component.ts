@@ -50,17 +50,14 @@ export class AdminCampaignWorkflowsComponent implements OnInit {
 
   private _innovationCardLanguages: string[] = [];
 
-  constructor(
-    @Inject(PLATFORM_ID) protected _platformId: Object,
-    private _activatedRoute: ActivatedRoute,
-    private _campaignService: CampaignService,
-    private _campaignFrontService: CampaignFrontService,
-    private _templatesService: TemplatesService,
-    private _rolesFrontService: RolesFrontService,
-    private _authService: AuthService,
-    private _translateNotificationsService: TranslateNotificationsService,
-  ) {
-  }
+  constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
+              private _activatedRoute: ActivatedRoute,
+              private _campaignService: CampaignService,
+              private _campaignFrontService: CampaignFrontService,
+              private _templatesService: TemplatesService,
+              private _rolesFrontService: RolesFrontService,
+              private _authService: AuthService,
+              private _translateNotificationsService: TranslateNotificationsService) { }
 
   ngOnInit() {
     if (isPlatformBrowser(this._platformId)) {

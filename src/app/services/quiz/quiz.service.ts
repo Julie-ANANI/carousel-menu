@@ -1,13 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Campaign } from '../../models/campaign';
 import { environment } from '../../../environments/environment';
-
-const proIdRegex = /^[a-f\d]{24}$/i;
+import {proIdRegex} from '../../utils/regex';
 
 @Injectable({providedIn: 'root'})
 export class QuizService {
-
-  constructor() { }
 
   /**
    * Builds the URL of a quiz given a campaign a lang and optionally a professional ID

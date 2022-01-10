@@ -5,14 +5,14 @@ import { InnovCard } from '../../../../../models/innov-card';
 import { Innovation } from '../../../../../models/innovation';
 import { ShareService } from '../../../../../services/share/share.service';
 import { Tag } from '../../../../../models/tag';
-import { MultilingPipe } from '../../../../../pipe/pipes/multiling.pipe';
-import { environment } from '../../../../../../environments/environment';
 import { InnovationService } from '../../../../../services/innovation/innovation.service';
 import { first } from 'rxjs/operators';
 import { Media } from '../../../../../models/media';
 import { InnovationFrontService } from '../../../../../services/innovation/innovation-front.service';
 import { TranslateTitleService } from '../../../../../services/title/title.service';
 import { ContactFrontService } from '../../../../../services/contact/contact-front.service';
+import {QuizService} from '../../../../../services/quiz/quiz.service';
+import {LangEntryService} from '../../../../../services/lang-entry/lang-entry.service';
 
 @Component({
   templateUrl: './discover-description.component.html',
@@ -64,7 +64,7 @@ export class DiscoverDescriptionComponent implements OnInit {
   private _fetchingError: boolean;
 
   constructor(private _activatedRoute: ActivatedRoute,
-              private _multiling: MultilingPipe,
+              private _langEntryService: LangEntryService,
               private _domSanitizer1: DomSanitizer,
               private _translateTitleService: TranslateTitleService,
               private _innovationService: InnovationService) {
@@ -107,7 +107,7 @@ export class DiscoverDescriptionComponent implements OnInit {
   private _getAllTags() {
     this._innovation.tags.forEach((tag: Tag) => {
       if (tag.type === 'SECTOR') {
-        this._tags.push(this._multiling.transform(tag.label, this._lang));
+        this._tags.push(this._langEntryService.tagEntry(tag, 'label', this._lang));
         this._tags = this._tags.sort();
       }
     });
@@ -135,7 +135,7 @@ export class DiscoverDescriptionComponent implements OnInit {
   private _getAllShareLinks() {
 
     if (this._innovation.quizId && this._innovation.campaigns && this._innovation.campaigns.length > 0) {
-      this._quizUrl = environment.quizUrl + '/quiz/' + this._innovation.quizId + '/' + this._innovation.campaigns[0].id + '?lang=' + this._lang;
+      this._quizUrl = QuizService.quizUrl(this._innovation.campaigns[0]._id, this._innovation.quizId, this._lang);
     }
 
     this._linkedInUrl = ShareService.linkedinProjectShareLink(this._innovationCard);

@@ -1,6 +1,6 @@
 import { CampaignSettings } from './camp-settings';
 import { Innovation } from './innovation';
-import { TargetPros } from './targetPros';
+import { TargetPros } from './target-pros';
 
 export interface SearchStats {
   uniqueGoodEmails: number;

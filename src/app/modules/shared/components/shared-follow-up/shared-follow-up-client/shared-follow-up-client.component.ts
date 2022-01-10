@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, Output} from '@angular/core';
 import {Answer} from '../../../../../models/answer';
 import {Table, Config} from '@umius/umi-common-component/models';
 import {Innovation, InnovationFollowUpEmails, InnovationFollowUpEmailsCc} from '../../../../../models/innovation';
@@ -20,13 +20,14 @@ import {emailRegEx} from '../../../../../utils/regex';
 import {ScrapeHTMLTags} from '../../../../../pipe/pipes/ScrapeHTMLTags';
 import {TranslateService} from '@ngx-translate/core';
 import {UserFrontService} from '../../../../../services/user/user-front.service';
+import {LangEntryService} from '../../../../../services/lang-entry/lang-entry.service';
 
 @Component({
   selector: 'app-shared-follow-up-client',
   templateUrl: './shared-follow-up-client.component.html',
   styleUrls: ['./shared-follow-up-client.component.scss']
 })
-export class SharedFollowUpClientComponent implements OnInit, OnDestroy {
+export class SharedFollowUpClientComponent implements OnDestroy {
 
   @Input() set startContactProcess(value: boolean) {
     if (!!value) {
@@ -154,9 +155,6 @@ export class SharedFollowUpClientComponent implements OnInit, OnDestroy {
               private _filterService: FilterService,
               private _translateService: TranslateService,
               private _translateNotificationsService: TranslateNotificationsService) { }
-
-  ngOnInit() {
-  }
 
   private _initFilter() {
     if (this._answers.length) {
@@ -382,8 +380,7 @@ export class SharedFollowUpClientComponent implements OnInit, OnDestroy {
   }
 
   public initEmailObject() {
-    this._emailsObject = JSON.parse(JSON.stringify(this._project.followUpEmails[this._selectedPhrase.toLocaleLowerCase()] || {}))
-      || {};
+    this._emailsObject = JSON.parse(JSON.stringify(LangEntryService.followUpEmails(this._project.followUpEmails, this._selectedPhrase)));
     this._emailsObjectReplaced = null;
     this._emailsObjectReplaced = JSON.parse(JSON.stringify(this._emailsObject));
     const cc = this._selectedCC.map((_cc) => {

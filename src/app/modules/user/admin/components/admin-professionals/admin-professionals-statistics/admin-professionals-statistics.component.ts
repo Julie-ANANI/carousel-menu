@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {RolesFrontService} from '../../../../../../services/roles/roles-front.service';
 import {ClassificationService} from '../../../../../../services/classification/classification.service';
-import {EmailType, SeniorityClassification} from '../../../../../../models/SeniorityClassification';
-import {JobsClassification} from '../../../../../../models/jobsClassification';
+import {EmailType, SeniorityClassification} from '../../../../../../models/seniority-classification';
+import {JobsClassification} from '../../../../../../models/jobs-classification';
 import {HttpErrorResponse} from '@angular/common/http';
 import * as moment from 'moment';
 

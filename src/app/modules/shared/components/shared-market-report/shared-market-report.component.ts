@@ -151,23 +151,21 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy, OnChanges
 
   private _modalType: ModalType = '';
 
-  constructor(
-    @Inject(PLATFORM_ID) protected _platformId: Object,
-    private _translateService: TranslateService,
-    private _answerService: AnswerService,
-    private _translateNotificationsService: TranslateNotificationsService,
-    private _innovationService: InnovationService,
-    private _notificationService: NotificationService,
-    private _authService: AuthService,
-    private _rolesFrontService: RolesFrontService,
-    private _missionQuestionService: MissionQuestionService,
-    private _innovationFrontService: InnovationFrontService,
-    private _filterService: FilterService,
-    private _tagFiltersService: TagsFiltersService,
-    private _sharedWorldMapService: WorldmapService,
-    private _socketService: SocketService,
-    private _worldmapFiltersService: WorldmapFiltersService
-  ) {}
+  constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
+              private _translateService: TranslateService,
+              private _answerService: AnswerService,
+              private _translateNotificationsService: TranslateNotificationsService,
+              private _innovationService: InnovationService,
+              private _notificationService: NotificationService,
+              private _authService: AuthService,
+              private _rolesFrontService: RolesFrontService,
+              private _missionQuestionService: MissionQuestionService,
+              private _innovationFrontService: InnovationFrontService,
+              private _filterService: FilterService,
+              private _tagFiltersService: TagsFiltersService,
+              private _sharedWorldMapService: WorldmapService,
+              private _socketService: SocketService,
+              private _worldmapFiltersService: WorldmapFiltersService) { }
 
   ngOnInit() {
     this.reportingLang =

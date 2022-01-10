@@ -1,6 +1,20 @@
 import {Innovation} from './innovation';
 import {Campaign} from './campaign';
 
+export interface BatchStat {
+  delivered: number;
+  opened: number;
+  clicked: number;
+  bounced: number;
+  insights: number;
+}
+
+export interface BatchPrediction {
+  opened: number;
+  clicked: number;
+  insights: number;
+}
+
 export interface Batch {
   _id?: string,
   innovation?: Innovation,
@@ -14,17 +28,7 @@ export interface Batch {
   status?: number,
   active: boolean,
   nuggets?: Boolean,
-  stats?: Array<{
-    delivered: number,
-    opened: number,
-    clicked: number,
-    bounced: number,
-    insights: number
-  }>;
-  predictions?: Array<{
-    opened: number,
-    clicked: number,
-    insights: number
-  }>;
+  stats?: Array<BatchStat>;
+  predictions?: Array<BatchPrediction>;
   childBatch?: Array<string>;
 }

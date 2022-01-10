@@ -9,18 +9,20 @@ import { SharedTagsComponent } from './shared-tags.component';
 import { NguiAutoCompleteModule } from '../../../utility/auto-complete/auto-complete.module';
 import { ModalModule } from '../../../utility/modals/modal/modal.module';
 import { PipeModule } from '../../../../pipe/pipe.module';
+import {LangEntryPipeModule} from '../../../../pipe/lang-entry/langEntryPipe.module';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    TranslateModule.forChild(),
-    FormsModule,
-    ModalModule,
-    ReactiveFormsModule,
-    NguiAutoCompleteModule,
-    RouterModule,
-    PipeModule
-  ],
+    imports: [
+        CommonModule,
+        TranslateModule.forChild(),
+        FormsModule,
+        ModalModule,
+        ReactiveFormsModule,
+        NguiAutoCompleteModule,
+        RouterModule,
+        PipeModule,
+        LangEntryPipeModule
+    ],
   declarations: [
     SharedTagsComponent
   ],

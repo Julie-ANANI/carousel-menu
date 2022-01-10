@@ -16,6 +16,7 @@ import { AdminProjectSettingsModalComponent } from './admin-project-settings-mod
 import {SharedUploadZonePhotoModule} from '../../../../../shared/components/shared-upload-zone-photo/shared-upload-zone-photo.module';
 import { AutoSuggestionUserModule } from "../../../../../utility/auto-suggestion-user/auto-suggestion-user.module";
 import {AdminProjectDoneModule} from '../../admin-project-done-modal/admin-project-done.module';
+import {LangEntryPipeModule} from '../../../../../../pipe/lang-entry/langEntryPipe.module';
 
 @NgModule({
     imports: [
@@ -32,7 +33,8 @@ import {AdminProjectDoneModule} from '../../admin-project-done-modal/admin-proje
         SharedUploadZonePhotoModule,
         AutoSuggestionUserModule,
         ReactiveFormsModule,
-        AdminProjectDoneModule
+        AdminProjectDoneModule,
+        LangEntryPipeModule
     ],
   declarations: [
     AdminProjectSettingsComponent,

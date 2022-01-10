@@ -214,9 +214,16 @@
           [ngClass]="{'p-top-20': i !== 0 }"
           class="preset-wrapper">
 
-          <p *ngIf="section.label[activeInnovCard.lang]">
-            SECTION {{ section.label[activeInnovCard.lang] | uppercase }}
-          </p>
+          <ng-container *ngIf="section.entry && section.entry.length; else noPresetSectionEntry">
+            <ng-container *ngIf="section.entry | langEntry: 'label':activeInnovCard.lang:false">
+              <p>SECTION {{ section.entry | langEntry: 'label':activeInnovCard.lang:false }}</p>
+            </ng-container>
+          </ng-container>
+          <ng-template #noPresetSectionEntry>
+            <ng-container *ngIf="section | langEntry: 'label':activeInnovCard.lang:false">
+              <p>SECTION {{ section | langEntry: 'label':activeInnovCard.lang:false }}</p>
+            </ng-container>
+          </ng-template>
 
           <div
             *ngFor="let question of section.questions; let j = index;"

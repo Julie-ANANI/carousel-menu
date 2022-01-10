@@ -94,6 +94,7 @@ export class SharedTagsComponent implements OnInit {
     this.removeTag.emit(tag);
   }
 
+  // TODO Create tag send entry object
   public createNewTag(): void {
     const name = this._tagForm.get('tag').value;
     this._tagForm.get('tag').reset();

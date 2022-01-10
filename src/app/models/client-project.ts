@@ -3,6 +3,8 @@ import { User } from './user.model';
 export interface ClientProject {
   readonly _id?: string;
   readonly created?: string;
+  readonly updated?: string;
+
   /**
    * if the client deleted the project we make the status of the mission Hidden
    * instead of deleting it. (back takes care of it.)

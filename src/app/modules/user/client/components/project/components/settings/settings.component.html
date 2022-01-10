@@ -275,7 +275,7 @@
 
               <!-- LANGUAGE -->
               <div *ngSwitchCase="'LANGUAGE'">
-                <div *ngFor="let card of innovation.innovationCards" class="lang-wrapper">
+                <div *ngFor="let card of innovation.innovationCards" class="lang-wrapper m-no-bottom">
                   <span class="m-right-40">
                     {{ 'PROJECT_SETTINGS.PROJECT_IN' | translate }}
                     {{ 'COMMON.LANG.' + card.lang.toUpperCase() | translate }}.

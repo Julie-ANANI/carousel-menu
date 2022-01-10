@@ -20,24 +20,26 @@ import { SearchInput2Module } from '../../utility/search-inputs/search-template-
 import { ErrorTemplate1Module } from '../../utility/errors/error-template-1/error-template-1.module';
 import { PaginationTemplate2Module } from '../../utility/paginations/pagination-template-2/pagination-template-2.module';
 import {CleanHtmlModule} from '../../../pipe/cleanHtml/cleanHtml.module';
+import {LangEntryPipeModule} from '../../../pipe/lang-entry/langEntryPipe.module';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    DiscoverRoutingModule,
-    TranslateModule.forChild(),
-    PipeModule,
-    SharedLoaderModule,
-    FooterModule,
-    HeaderUnauthModule,
-    ModalMediaModule,
-    ModalModule,
-    HeaderModule,
-    SearchInput2Module,
-    ErrorTemplate1Module,
-    PaginationTemplate2Module,
-    CleanHtmlModule
-  ],
+    imports: [
+        CommonModule,
+        DiscoverRoutingModule,
+        TranslateModule.forChild(),
+        PipeModule,
+        SharedLoaderModule,
+        FooterModule,
+        HeaderUnauthModule,
+        ModalMediaModule,
+        ModalModule,
+        HeaderModule,
+        SearchInput2Module,
+        ErrorTemplate1Module,
+        PaginationTemplate2Module,
+        CleanHtmlModule,
+        LangEntryPipeModule
+    ],
   declarations: [
     DiscoverComponent,
     DiscoverDescriptionComponent,

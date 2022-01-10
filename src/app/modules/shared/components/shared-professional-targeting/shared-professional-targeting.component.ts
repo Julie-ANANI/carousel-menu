@@ -1,11 +1,12 @@
 import { Component, Inject, Input, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
-import { JobConfig, JobsTypologies, SeniorityLevel, TargetPros } from '../../../../models/targetPros';
+import { JobConfig, JobsTypologies, SeniorityLevel, TargetPros } from '../../../../models/target-pros';
 import { takeUntil } from 'rxjs/operators';
 import { JobsFrontService } from '../../../../services/jobs/jobs-front.service';
 import { Subject } from 'rxjs';
 
 import * as _ from 'lodash';
 import { isPlatformBrowser } from '@angular/common';
+import {LangEntryService} from '../../../../services/lang-entry/lang-entry.service';
 
 @Component({
   selector: 'app-shared-professional-targeting',
@@ -142,6 +143,14 @@ export class SharedProfessionalTargetingComponent implements OnInit, OnDestroy {
    * @param targetedPros
    */
   initialiseTargetedPros(targetedPros: TargetPros) {
+    Object.keys(targetedPros.jobsTypologies).forEach((_job) => {
+      targetedPros.jobsTypologies = LangEntryService.jobEntry(targetedPros.jobsTypologies[_job], 'name');
+      if (targetedPros.jobsTypologies[_job].jobs && targetedPros.jobsTypologies[_job].jobs.length) {
+        targetedPros.jobsTypologies[_job].jobs.map((_jobConfig) => {
+          return LangEntryService.jobEntry(_jobConfig, 'label');
+        });
+      }
+    });
     this._jobsTypologies = targetedPros.jobsTypologies;
     this._searchOperator = targetedPros.searchOperator;
     this._seniorityLevels = targetedPros.seniorityLevels;
@@ -230,6 +239,7 @@ export class SharedProfessionalTargetingComponent implements OnInit, OnDestroy {
   }
 
   /**
+   * TODO remove multiling
    * search jobs by keyword
    * @param keyword
    */
@@ -237,11 +247,15 @@ export class SharedProfessionalTargetingComponent implements OnInit, OnDestroy {
     if (!!keyword) {
       this._filteredJobsTypologies = {};
       Object.keys(this._jobsTypologies).forEach(jobTypoKey => {
+        this._jobsTypologies[jobTypoKey] = LangEntryService.jobEntry(this._jobsTypologies[jobTypoKey], 'name');
         if (this._jobsTypologies[jobTypoKey].name.en.toLowerCase().includes(keyword.toLowerCase())
           || this._jobsTypologies[jobTypoKey].name.fr.toLowerCase().includes(keyword.toLowerCase())) {
           this._filteredJobsTypologies[jobTypoKey] = JSON.parse(JSON.stringify(this._jobsTypologies[jobTypoKey]));
           this._filteredJobsTypologies[jobTypoKey].isToggle = false;
         } else {
+          this._jobsTypologies[jobTypoKey].jobs = this._jobsTypologies[jobTypoKey].jobs.map((_job) => {
+            return LangEntryService.jobEntry(_job, 'label');
+          });
           const filteredJobs = this._jobsTypologies[jobTypoKey].jobs.filter(j => j.label.en.toLowerCase().includes(keyword.toLowerCase())
             || j.label.fr.toLowerCase().includes(keyword.toLowerCase()));
           if (filteredJobs.length) {

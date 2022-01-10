@@ -1,4 +1,4 @@
-import {Component, ElementRef, EventEmitter, Input, Output, ViewChild, ViewEncapsulation} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild, ViewEncapsulation} from '@angular/core';
 import {EmailSignature} from '../../../../models/email-signature';
 import {EmailTemplate} from '../../../../models/email-template';
 import {TranslateService} from '@ngx-translate/core';
@@ -23,7 +23,7 @@ interface Mapping {
   encapsulation: ViewEncapsulation.None,
 })
 
-export class SharedMailEditorComponent {
+export class SharedMailEditorComponent implements OnInit {
 
   @Input() isEnablePreviewBtn = false; // to show / Hide the Preview button in the Default template.
 
@@ -117,9 +117,13 @@ export class SharedMailEditorComponent {
 
   private _professionalPreview = '';
 
-  private readonly _innovationId: string;
+  private _innovationId: string;
 
-  constructor(private _translateService: TranslateService, private _routeFrontService: RouteFrontService) {
+  constructor(private _translateService: TranslateService,
+              private _routeFrontService: RouteFrontService) {
+  }
+
+  ngOnInit(): void {
     this._innovationId = this._routeFrontService.activeInnovationId();
   }
 
@@ -220,4 +224,5 @@ export class SharedMailEditorComponent {
   get innovationId(): string {
     return this._innovationId;
   }
+
 }

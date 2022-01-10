@@ -288,9 +288,9 @@
                   </div>
                   <div>
                     <span class="mail_label">{{ 'COMMON.LABEL.SUBJECT' | translate }}: </span>
-                    <span [innerHTML]="emailsObject[selectedLang].subject" class="text-13"></span>
+                    <span [innerHTML]="emailsObjectReplaced[selectedLang].subject" class="text-13"></span>
                   </div>
-                  <div class="text-13 p-top-10" [innerHTML]="emailsObject[selectedLang].content"></div>
+                  <div [innerHTML]="emailsObjectReplaced[selectedLang].content" class="text-13 p-top-10"></div>
 
                 </div>
 

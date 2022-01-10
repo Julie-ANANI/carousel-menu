@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Inject, Input, Output, PLATFORM_ID } from '@angular/core';
+import {Component, EventEmitter, Inject, Input, OnInit, Output, PLATFORM_ID} from '@angular/core';
 import { Tag } from '../../../../../../../models/tag';
 import { TranslateService } from '@ngx-translate/core';
 import { isPlatformBrowser } from '@angular/common';
@@ -8,6 +8,7 @@ import { TagsService } from '../../../../../../../services/tags/tags.service';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../../../../../../services/auth/auth.service';
 import { animate, query, stagger, style, transition, trigger } from '@angular/animations';
+import {CommonService} from '../../../../../../../services/common/common.service';
 
 @Component({
   selector: 'app-filters',
@@ -28,7 +29,7 @@ import { animate, query, stagger, style, transition, trigger } from '@angular/an
   ]
 })
 
-export class FiltersComponent {
+export class FiltersComponent implements OnInit {
 
   @Input() set tags(value: Array<Tag>) {
     if (value) {
@@ -70,10 +71,13 @@ export class FiltersComponent {
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _authService: AuthService,
               private _translateService: TranslateService,
+              private _discoverService: DiscoverService,
+              private _commonService: CommonService,
               private _tagsService: TagsService,
               private _activatedRoute: ActivatedRoute,
-              private _filterService: DiscoverService) {
+              private _filterService: DiscoverService) { }
 
+  ngOnInit(): void {
     this._filterService.getFilterToRemove().subscribe((tagId: string) => {
       if (this._selectedSimilarTags.length === 0) {
         this.removeFilter(tagId);
@@ -88,7 +92,6 @@ export class FiltersComponent {
         }
       }
     });
-
   }
 
   /***
@@ -100,15 +103,15 @@ export class FiltersComponent {
     switch (type) {
 
       case 'allTags':
-        this._allTags = this._filterService.sortTags(this._allTags, this.userLang);
+        this._allTags = this._commonService.sortTags(this._allTags, this.userLang);
         break;
 
       case 'suggested':
-        this._suggestedTags = this._filterService.sortTags(this._suggestedTags, this.userLang);
+        this._suggestedTags = this._commonService.sortTags(this._suggestedTags, this.userLang);
         break;
 
       case 'highlight':
-        this._highLightTags = this._filterService.sortTags(this._highLightTags, this.userLang);
+        this._highLightTags = this._commonService.sortTags(this._highLightTags, this.userLang);
         break;
 
     }
@@ -119,7 +122,7 @@ export class FiltersComponent {
    * @private
    */
   private _getHighlightedTags() {
-    this._highLightTags = DiscoverService.getHighlightedTags(this._allTags);
+    this._highLightTags = this._discoverService.getHighlightedTags(this._allTags);
     this._sortTags('highlight');
   }
 

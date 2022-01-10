@@ -14,7 +14,6 @@ import { TargetingComponent } from './components/setup/components/targeting/targ
 
 import { PipeModule } from '../../../../../pipe/pipe.module';
 import { SidebarModule } from '../../../../sidebars/templates/sidebar/sidebar.module';
-// tslint:disable-next-line:max-line-length
 import { SharedProjectSettingsModule } from '../../../../shared/components/shared-project-settings-component/shared-project-settings.module';
 import { SharedWorldmapModule } from '../../../../shared/components/shared-worldmap/shared-worldmap.module';
 import { SidebarUserAnswerModule } from '../../../../sidebars/components/sidebar-user-answer/sidebar-user-answer.module';
@@ -43,6 +42,8 @@ import {SidebarInPageModule} from '../../../../sidebars/templates/sidebar-in-pag
 import {SharedFollowUpModule} from '../../../../shared/components/shared-follow-up/shared-follow-up.module';
 import {MessageTemplate2Module} from '../../../../utility/messages/message-template-2/message-template-2.module';
 import { TableComponentsModule } from '@umius/umi-common-component/table';
+import {LangEntryPipeModule} from '../../../../../pipe/lang-entry/langEntryPipe.module';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -76,7 +77,8 @@ import { TableComponentsModule } from '@umius/umi-common-component/table';
     SidebarInPageModule,
     SharedFollowUpModule,
     MessageTemplate2Module,
-    TableComponentsModule
+    TableComponentsModule,
+    LangEntryPipeModule
   ],
   declarations: [
     ProjectComponent,

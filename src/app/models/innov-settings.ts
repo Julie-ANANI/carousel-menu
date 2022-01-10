@@ -15,7 +15,6 @@ export interface GeographySettings {
 }
 
 export interface InnovationSettings {
-
   geography: GeographySettings;
 
   readonly market: {

@@ -12,5 +12,5 @@ export interface EmailTemplate {
   status?: string;
   defaultSignatureName?: string;
   modified?: boolean;
-  nameWorkflow?: string; // Nom du workflow. On doit l'inserer dans le back end sans changer la route.
+  nameWorkflow?: string; // Nom du workflow. On doit l'insérer dans le back end sans changer la route.
 }

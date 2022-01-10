@@ -16,7 +16,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { isPlatformBrowser } from '@angular/common';
 import { RolesFrontService } from '../../../../services/roles/roles-front.service';
 import { ErrorFrontService } from '../../../../services/error/error-front.service';
-import { JobConfig, TargetPros } from '../../../../models/targetPros';
+import { JobConfig, TargetPros } from '../../../../models/target-pros';
 import { Table, Config } from '@umius/umi-common-component/models';
 import * as _ from 'lodash';
 

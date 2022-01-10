@@ -12,7 +12,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorFrontService } from '../../../../services/error/error-front.service';
 import { LocalStorageService } from '@umius/umi-common-component/services/localStorage';
 import { CampaignService } from '../../../../services/campaign/campaign.service';
-import { TargetPros } from '../../../../models/targetPros';
+import { TargetPros } from '../../../../models/target-pros';
 import { JobsFrontService } from '../../../../services/jobs/jobs-front.service';
 
 import { Subject } from 'rxjs/Subject';

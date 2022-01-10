@@ -10,9 +10,9 @@
           (valueChanged)="addTagSelected($event)"
           [attr.placeholder]="placeholder | translate"
           [list-formatter]="autocompleListFormatter"
+          [ngClass]="{'is-sm': isSmall}"
           [source]="tagSuggestions.bind(this)"
           [value-formatter]="autocompleValueFormatter"
-          [ngClass]="{'is-sm': isSmall}"
           auto-complete
           class="form-input is-shadowed"
           formControlName="tag">
@@ -34,11 +34,26 @@
 
   <!-- displaying tags -->
   <div *ngIf="tags.length" style="margin: -4px" class="flex-wrap d-flex p-top-10">
-    <div *ngFor="let tag of tags" [title]="tag.description | multiling:currentLang" class="label is-tag is-rounded">
-      <i class="fas fa-tag icon-left"></i>
-      {{ tag.label | multiling:currentLang }}
-      <i (click)="onRemoveTag(tag)" *ngIf="editMode" class="icon icon-cross icon-right c-hand"></i>
-    </div>
+    <ng-container *ngFor="let tag of tags">
+      <ng-container *ngIf="tag.entry && tag.entry.length; else noTagsEntry">
+        <div
+          [title]="tag.entry | langEntry:'description':currentLang:true"
+          class="label is-tag is-rounded">
+          <i class="fas fa-tag icon-left"></i>
+          {{ tag.entry | langEntry:'label':currentLang:true }}
+          <i (click)="onRemoveTag(tag)" *ngIf="editMode" class="icon icon-cross icon-right c-hand"></i>
+        </div>
+      </ng-container>
+      <ng-template #noTagsEntry>
+        <div
+          [title]="tag | langEntry:'description':currentLang:true"
+          class="label is-tag is-rounded">
+          <i class="fas fa-tag icon-left"></i>
+          {{ tag | langEntry:'label':currentLang:true }}
+          <i (click)="onRemoveTag(tag)" *ngIf="editMode" class="icon icon-cross icon-right c-hand"></i>
+        </div>
+      </ng-template>
+    </ng-container>
   </div>
   <!-- /displaying tags -->
 

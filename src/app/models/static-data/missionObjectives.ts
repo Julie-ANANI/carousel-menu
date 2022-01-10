@@ -1,6 +1,6 @@
 /**
- * not using it any more. still here for the old project.
- * on 1st June, 2021
+ * not using it anymore. still here for the old project.
+ * on 1st June 2021
  */
 
 export interface Objective {

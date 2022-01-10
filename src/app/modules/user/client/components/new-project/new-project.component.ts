@@ -32,7 +32,7 @@ export class NewProjectComponent implements OnInit, OnDestroy {
   };
 
   /**
-   * by default we assign index 0 to the first emails send.
+   * by default, we assign index 0 to the first emails send.
    * @private
    */
   private _mission: Mission = {

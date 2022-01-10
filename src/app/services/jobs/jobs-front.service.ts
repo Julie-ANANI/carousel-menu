@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { JobConfig, TargetPros } from '../../models/targetPros';
+import { JobConfig, TargetPros } from '../../models/target-pros';
 
 @Injectable({providedIn: 'root'})
 export class JobsFrontService {

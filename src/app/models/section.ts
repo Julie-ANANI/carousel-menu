@@ -1,9 +1,23 @@
+/**
+ * Not use anymore. Only there to work with old presets.
+ */
+
 import { Question } from './question';
 import { Multiling } from './multiling';
 
-// todo remove
+export interface SectionLabel {
+  lang: string;
+  value: string;
+}
+
+// TODO remove multiling
 export interface Section {
-  readonly label: Multiling;
   description: 'nothing' | '1st' | '2nd';
   readonly questions: Array<Question>;
+  entry?: Array<SectionLabel>;
+
+  /**
+   * TODO replace this with Array<SectionLabel>
+   */
+  readonly label: Multiling;
 }

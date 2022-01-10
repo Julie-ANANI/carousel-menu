@@ -6,6 +6,8 @@ import { EmailSignature } from '../../../../models/email-signature';
   templateUrl: './sidebar-workflow.component.html',
 })
 
+// TODO update this if the emailsObject have not multiling functionality.
+// TODO see the example of AdminEmailsLibraryComponent
 export class SidebarWorkflowComponent {
 
   @Input() isEditable = false;

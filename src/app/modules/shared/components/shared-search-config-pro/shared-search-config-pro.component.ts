@@ -1,6 +1,7 @@
 import { Component, Inject, Input, OnInit, PLATFORM_ID } from '@angular/core';
-import { JobConfig } from '../../../../models/targetPros';
+import { JobConfig } from '../../../../models/target-pros';
 import { JobsFrontService } from '../../../../services/jobs/jobs-front.service';
+import {LangEntryService} from '../../../../services/lang-entry/lang-entry.service';
 
 /**
  * SL - 0: excluded, 1: included
@@ -42,6 +43,9 @@ export class SharedSearchConfigProComponent implements OnInit {
 
   @Input() set jobs(jobs: Array<JobConfig>) {
     this._jobConfigs = jobs;
+    this._jobConfigs = this._jobConfigs.map((_job) => {
+      return LangEntryService.jobEntry(_job, 'label');
+    })
     this._currentState = this._jobFrontService.checkJobTypoState(jobs);
   }
 
