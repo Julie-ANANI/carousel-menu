@@ -139,7 +139,7 @@ export class AdminProjectCampaignsComponent implements OnInit, OnDestroy {
           this._isLoading = false;
           this._translateNotificationsService.error(
             'ERROR.ERROR',
-            ErrorFrontService.getErrorMessage(err.status)
+            ErrorFrontService.getErrorKey(err.error)
           );
           console.error(err);
         }
@@ -197,7 +197,7 @@ export class AdminProjectCampaignsComponent implements OnInit, OnDestroy {
           (err: HttpErrorResponse) => {
             this._translateNotificationsService.error(
               'ERROR.ERROR',
-              ErrorFrontService.getErrorMessage(err.status)
+              ErrorFrontService.getErrorKey(err.error)
             );
             this._isAddingCampaign = false;
             console.error(err);
@@ -253,7 +253,7 @@ export class AdminProjectCampaignsComponent implements OnInit, OnDestroy {
         (err: HttpErrorResponse) => {
           this._translateNotificationsService.error(
             'ERROR.ERROR',
-            ErrorFrontService.getErrorMessage(err.status)
+            ErrorFrontService.getErrorKey(err.error)
           );
           this._selectCampaign = null;
           console.error(err);
@@ -282,7 +282,7 @@ export class AdminProjectCampaignsComponent implements OnInit, OnDestroy {
         (err: HttpErrorResponse) => {
           this._translateNotificationsService.error(
             'ERROR.ERROR',
-            ErrorFrontService.getErrorMessage(err.status)
+            ErrorFrontService.getErrorKey(err.error)
           );
           console.error(err);
         }
@@ -323,7 +323,7 @@ export class AdminProjectCampaignsComponent implements OnInit, OnDestroy {
         (err: HttpErrorResponse) => {
           this._translateNotificationsService.error(
             'ERROR.ERROR',
-            ErrorFrontService.getErrorMessage(err.status)
+            ErrorFrontService.getErrorKey(err.error)
           );
           this._selectCampaign = null;
           console.error(err);

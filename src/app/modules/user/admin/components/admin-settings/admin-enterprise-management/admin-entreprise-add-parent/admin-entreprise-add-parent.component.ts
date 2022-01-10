@@ -7,6 +7,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Enterprise } from '../../../../../../../models/enterprise';
 import { NotificationsService } from 'angular2-notifications';
 import { Table, Config, Column } from '@umius/umi-common-component/models';
+import { TranslateNotificationsService } from "../../../../../../../services/translate-notifications/translate-notifications.service";
+import { ErrorFrontService } from "../../../../../../../services/error/error-front.service";
 
 
 @Component({
@@ -43,7 +45,8 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
     private _router: Router,
     private _notificationService: NotificationsService,
     private _entrepriseService: EnterpriseService,
-    private _rolesFrontService: RolesFrontService
+    private _rolesFrontService: RolesFrontService,
+    private _translateNotificationsService: TranslateNotificationsService
   ) {
   }
 
@@ -210,6 +213,7 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
           this.replaceChildrenWithParentValue();
         },
         (err: HttpErrorResponse) => {
+          this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
           console.error(err);
         }
       );
@@ -389,6 +393,7 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
         },
         (err: HttpErrorResponse) => {
           console.log(err);
+          this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error))
         }
       );
   }

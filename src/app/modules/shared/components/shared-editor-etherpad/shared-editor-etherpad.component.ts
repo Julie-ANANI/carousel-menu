@@ -112,7 +112,7 @@ export class SharedEditorEtherpadComponent implements OnInit, OnDestroy {
           this._detectPadTextChange();
       }, (err: HttpErrorResponse) => {
         this.disableEtherpad();
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
           console.error(err);
         });
     }

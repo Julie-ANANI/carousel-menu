@@ -52,7 +52,7 @@ export class AdminProjectFollowUpComponent implements OnInit {
       this._answerService.getInnovationValidAnswers(this._innovation._id).pipe(first()).subscribe((response) => {
         this._validAnswers = response && response.answers || [];
       }, (err: HttpErrorResponse) => {
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
         this._validAnswers = [];
         console.error(err);
       });

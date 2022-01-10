@@ -106,7 +106,7 @@ export class AdminCampaignAnswersComponent implements OnInit {
         this._totalAnswers = this._answers.length;
         this._initTable();
       }, (err: HttpErrorResponse) => {
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
         console.error(err);
       });
     }
@@ -127,7 +127,7 @@ export class AdminCampaignAnswersComponent implements OnInit {
         this._translateNotificationsService.success('Success', 'The answers has been imported.');
         this._isImportingAnswers = false;
       }, (err: HttpErrorResponse) => {
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
         this._isImportingAnswers = false;
         console.error(err);
       });
@@ -252,7 +252,7 @@ export class AdminCampaignAnswersComponent implements OnInit {
           this._getAnswers();
         }
       }, (err: HttpErrorResponse) => {
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
         console.error(err);
       });
     });

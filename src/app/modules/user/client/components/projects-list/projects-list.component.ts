@@ -89,7 +89,7 @@ export class ProjectsListComponent implements OnInit {
       this._innovations = response.result;
       this._total = Math.max(response._metadata.totalCount, response.result.length);
     }, (err: HttpErrorResponse) => {
-      this._translateNotificationService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      this._translateNotificationService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
       this._isError = true;
       console.error(err);
     });
@@ -143,7 +143,7 @@ export class ProjectsListComponent implements OnInit {
       this._translateNotificationService.success('ERROR.SUCCESS', 'ERROR.PROJECT.DELETED_PROJECT_TEXT');
       this.closeModal(event);
     }, (err: HttpErrorResponse) => {
-      this._translateNotificationService.error('ERROR.ERROR', 'ERROR.PROJECT.NOT_DELETED_TEXT');
+      this._translateNotificationService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
       console.error(err);
     });
   }

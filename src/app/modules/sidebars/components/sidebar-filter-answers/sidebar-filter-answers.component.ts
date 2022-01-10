@@ -155,7 +155,7 @@ export class SidebarFilterAnswersComponent implements OnChanges, OnDestroy {
           this._sharedFiltersList = results;
         }
       }, (err: HttpErrorResponse) => {
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
         console.error(err);
       });
     }
@@ -243,7 +243,7 @@ export class SidebarFilterAnswersComponent implements OnChanges, OnDestroy {
         this._sharedFiltersList.push(res);
         this._filterName = '';
       }, (err: HttpErrorResponse) => {
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
         console.error(err);
       });
     } else {
@@ -259,7 +259,7 @@ export class SidebarFilterAnswersComponent implements OnChanges, OnDestroy {
           .pipe(first()).subscribe((res) => {
         this._sharedFiltersList[index] = res;
       }, (err: HttpErrorResponse) => {
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
         console.error(err);
       });
     }
@@ -303,7 +303,7 @@ export class SidebarFilterAnswersComponent implements OnChanges, OnDestroy {
           }
         }, (err: HttpErrorResponse) => {
           this._innovation.previewMode = !this._innovation.previewMode;
-          this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+          this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
           console.error(err);
         });
     }
@@ -316,7 +316,7 @@ export class SidebarFilterAnswersComponent implements OnChanges, OnDestroy {
         this._sharedFiltersList = this._sharedFiltersList.filter((filter) => filter.name !== name);
       }
     }, (err: HttpErrorResponse) => {
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
       console.error(err);
     });
   }
@@ -335,7 +335,7 @@ export class SidebarFilterAnswersComponent implements OnChanges, OnDestroy {
           this._activatedCustomFilters.push(name);
         }
       }, (err: HttpErrorResponse) => {
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
         console.error(err);
       });
     } else {

@@ -52,7 +52,7 @@ export class AdminPresetsEditComponent implements OnInit {
       }, (err: HttpErrorResponse) => {
         this._toSave = true;
         this._isSaving = false;
-        this._translateNotificationsService.error('Oups...', ErrorFrontService.getErrorMessage(err.status));
+        this._translateNotificationsService.error('Oups...', ErrorFrontService.getErrorKey(err.error));
         console.error(err);
       });
     }

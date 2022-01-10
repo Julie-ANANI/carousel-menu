@@ -106,7 +106,7 @@ export class AnswerQuestionComponent {
         }
         this._translateNotificationsService.success('Success', 'The tag is added to the answer.');
       }, (err: HttpErrorResponse) => {
-        this._translateNotificationsService.error('Error', 'The tag is already added to the answer.');
+        this._translateNotificationsService.error('Error', ErrorFrontService.getErrorKey(err.error));
         console.error(err);
       });
   }
@@ -122,7 +122,7 @@ export class AnswerQuestionComponent {
         }
         this._translateNotificationsService.success('Success', 'The tag is created and added to the answer.');
       }, (err: HttpErrorResponse) => {
-        this._translateNotificationsService.error('Error', 'The tag is already created/added to the answer.');
+        this._translateNotificationsService.error('Error', ErrorFrontService.getErrorKey(err.error));
         console.error(err);
       });
   }
@@ -134,7 +134,7 @@ export class AnswerQuestionComponent {
         this.fullAnswer.answerTags[q_identifier] = this.fullAnswer.answerTags[q_identifier].filter(t => t._id !== tag._id);
         this._translateNotificationsService.success('Success', 'The tag is removed from the answer.');
       }, (err: HttpErrorResponse) => {
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.adminErrorMessage(err));
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
         console.error(err);
       });
   }
@@ -165,7 +165,7 @@ export class AnswerQuestionComponent {
             this._answerService.save(this._fullAnswer._id, objToSave).pipe(first()).subscribe(() => {
             });
           }, (err: HttpErrorResponse) => {
-            this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.adminErrorMessage(err));
+            this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
             //TODO all errors should be sent to the back for tracking.
           });
       }
@@ -205,7 +205,7 @@ export class AnswerQuestionComponent {
             this._answerService.save(this._fullAnswer._id, objToSave).pipe(first()).subscribe(() => {
             });
           }, (err: HttpErrorResponse) => {
-            this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.adminErrorMessage(err));
+            this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
             console.error(err);
           });
       }

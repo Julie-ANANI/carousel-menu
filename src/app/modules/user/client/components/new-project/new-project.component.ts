@@ -90,7 +90,7 @@ export class NewProjectComponent implements OnInit, OnDestroy {
         this._missionTemplates = response.result;
       }
     }, (err: HttpErrorResponse) => {
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
       console.error(err);
     });
   }
@@ -180,7 +180,7 @@ export class NewProjectComponent implements OnInit, OnDestroy {
       .subscribe((response) => {
         this._router.navigate([`/user/projects/${response['innovation']['_id']}/settings`]);
       }, (err: HttpErrorResponse) => {
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
         this._isCreating = false;
         console.error(err);
       });

@@ -14,6 +14,7 @@ import { RouteFrontService } from '../../../services/route/route-front.service';
 import { UserService } from '../../../services/user/user.service';
 import {MediaFrontService} from '../../../services/media/media-front.service';
 import {emailRegEx} from '../../../utils/regex';
+import { ErrorFrontService } from "../../../services/error/error-front.service";
 
 @Component({
   templateUrl: './login.component.html',
@@ -135,10 +136,12 @@ export class LoginComponent implements OnInit {
           // Redirect the user
           this._router.navigate([redirect], navigationExtras);
         }
-        }, () => {
+        }, (error: HttpErrorResponse) => {
         this._nbTentatives -= 1;
         this._displayLoading = false;
-        this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.INVALID_FORM_DATA');
+        const key = ErrorFrontService.getErrorKey(error.error);
+        console.log(key);
+        this._translateNotificationsService.error('ERROR.ERROR', key);
         this._formData.get('password').reset();
       });
     } else {

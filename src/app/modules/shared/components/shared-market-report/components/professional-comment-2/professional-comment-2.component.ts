@@ -56,7 +56,7 @@ export class SharedMarketComment2Component {
           this._translation[lang] = value.translation;
           this._showTranslation = true;
         }, (err: HttpErrorResponse) => {
-          this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+          this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
           console.error(err);
         });
     }
@@ -76,7 +76,7 @@ export class SharedMarketComment2Component {
       this._dataService.updateTagsList(this.question);
       this._translateNotificationsService.success('Success' , 'The tag has been added.');
     }, (err: HttpErrorResponse) => {
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
       console.error(err);
     });
   }
@@ -91,7 +91,7 @@ export class SharedMarketComment2Component {
       this._dataService.updateTagsList(this.question);
       this._translateNotificationsService.success('Success' , 'The tag has been added.');
     }, (err: HttpErrorResponse) => {
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
       console.error(err);
     });
   }
@@ -102,7 +102,7 @@ export class SharedMarketComment2Component {
       this._dataService.updateTagsList(this.question);
       this._translateNotificationsService.success('Success' , 'The tag has been removed.');
     }, (err: HttpErrorResponse) => {
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
       console.error(err);
     });
   }

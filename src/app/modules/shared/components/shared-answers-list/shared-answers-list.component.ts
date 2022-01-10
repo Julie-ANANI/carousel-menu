@@ -2,6 +2,9 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Answer } from '../../../../models/answer';
 import { AnswerService } from '../../../../services/answer/answer.service';
 import { Table } from '@umius/umi-common-component/models';
+import { HttpErrorResponse } from "@angular/common/http";
+import { TranslateNotificationsService } from "../../../../services/translate-notifications/translate-notifications.service";
+import { ErrorFrontService } from "../../../../services/error/error-front.service";
 
 @Component({
   selector: 'app-shared-answers-list',
@@ -32,7 +35,8 @@ export class SharedAnswersListComponent {
 
   private _tableInfos: Table;
 
-  constructor( private _answerService: AnswerService ) { }
+  constructor( private _answerService: AnswerService,
+               private _translateNotificationsService: TranslateNotificationsService) { }
 
   loadAnswers() {
 
@@ -60,7 +64,8 @@ export class SharedAnswersListComponent {
             ]},
         ]
       };
-    }, err => {
+    }, (err: HttpErrorResponse) => {
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
       console.error(err);
     });
   }

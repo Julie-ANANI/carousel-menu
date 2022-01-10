@@ -163,7 +163,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
           }
           }, (err: HttpErrorResponse) => {
           this._getCollaborators = true;
-          this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+          this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
           console.error(err);
         });
     }
@@ -181,7 +181,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
         this._initDefinedTemplate();
         this._isFetchingTemplates = false;
       }, (err: HttpErrorResponse) => {
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
         this._isFetchingTemplates = false;
         console.error(err);
       });
@@ -610,7 +610,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
       this._initDefinedTemplate();
       this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.SAVED_TEXT');
     }, (err: HttpErrorResponse) => {
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
       this._isSaving = false;
       console.error(err);
     });
@@ -628,7 +628,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
         this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.SAVED_TEXT');
       }
     }, (err: HttpErrorResponse) => {
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
       this._isSaving = false;
       console.error(err);
     });
@@ -646,7 +646,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
       this.closeModal();
       this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.SAVED_TEXT');
     }, (err: HttpErrorResponse) => {
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
       this._isSaving = false;
       console.error(err);
     });
@@ -659,7 +659,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
       this.closeModal();
       this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.SAVED_TEXT');
     }, (err: HttpErrorResponse) => {
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
       this._isSaving = false;
       console.error(err);
     });
@@ -694,7 +694,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
           this.closeModal();
           }, (err: HttpErrorResponse) => {
-          this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+          this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
           this._isSaving = false;
           console.error(err);
         });
@@ -760,7 +760,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
       }, (err: HttpErrorResponse) => {
         console.error(err);
         this._isDeleting = false;
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
       });
   }
 
@@ -780,7 +780,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
       }, (err: HttpErrorResponse) => {
         console.error(err);
         this._isDeleting = false;
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
       });
   }
 
@@ -799,7 +799,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
       }, (err: HttpErrorResponse) => {
         console.error(err);
         this._isDeleting = false;
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
       });
     }
   }

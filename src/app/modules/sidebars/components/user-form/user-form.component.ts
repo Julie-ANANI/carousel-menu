@@ -191,7 +191,7 @@ export class UserFormComponent implements OnInit {
         this._roles = roles.result || [];
       }, err => {
         if (err.status !== 401) {
-          this.translateNotificationsService.error('Error', ErrorFrontService.getErrorMessage(err.status));
+          this.translateNotificationsService.error('Error', ErrorFrontService.getErrorKey(err.error));
         }
       });
   }
@@ -438,8 +438,11 @@ export class UserFormComponent implements OnInit {
       this._authService.forceLogin(user.id).subscribe(response => {
         this.translateNotificationsService.success('ERROR.SUCCESS', '');
         this.router.navigate(['/user']);
-      }, err => {
-        this.translateNotificationsService.error('ERROR.ERROR', err.message);
+      }, error => {
+        console.log(error);
+        const key = ErrorFrontService.getErrorKey(error.error);
+        console.log(key);
+        this.translateNotificationsService.error('ERROR.ERROR', key);
       });
     }
   }

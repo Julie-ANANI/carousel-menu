@@ -220,7 +220,7 @@ export class SetupComponent implements OnInit, OnDestroy, CanComponentDeactivate
         this.closeModal();
         this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.SAVED_TEXT');
         }, (err: HttpErrorResponse) => {
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
         this._isAddingCard = false;
         console.error(err);
       });
@@ -253,7 +253,7 @@ export class SetupComponent implements OnInit, OnDestroy, CanComponentDeactivate
           this._innovationFrontService.setNotifyChanges(this._saveChanges);
           this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.SAVED_TEXT');
           }, (err: HttpErrorResponse) => {
-          this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+          this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
           this._isSavingProject = false;
           console.error(err);
         });

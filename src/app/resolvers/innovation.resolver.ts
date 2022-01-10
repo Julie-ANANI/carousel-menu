@@ -11,6 +11,8 @@ import {EMPTY, Observable} from 'rxjs';
 import {catchError, first, tap} from 'rxjs/operators';
 import {HttpErrorResponse} from '@angular/common/http';
 import { Config } from '@umius/umi-common-component/models';
+import { TranslateNotificationsService } from "../services/translate-notifications/translate-notifications.service";
+import { ErrorFrontService } from "../services/error/error-front.service";
 
 const INNOVATION_KEY = makeStateKey('innovation');
 const config: Config = {
@@ -26,6 +28,7 @@ export class InnovationResolver implements Resolve<Innovation> {
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object,
               private _innovationService: InnovationService,
+              private _translateNotificationsService: TranslateNotificationsService,
               private _transferState: TransferState) { }
 
   resolve(activatedRouteSnapshot: ActivatedRouteSnapshot, routerStateSnapshot: RouterStateSnapshot): Observable<Innovation> {
@@ -52,6 +55,7 @@ export class InnovationResolver implements Resolve<Innovation> {
           }),
           catchError((err: HttpErrorResponse) => {
             console.error(err);
+            this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
             return EMPTY;
           })
         );

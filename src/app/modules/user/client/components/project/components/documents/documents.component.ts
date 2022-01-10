@@ -167,7 +167,7 @@ export class DocumentsComponent implements OnInit, OnDestroy {
       this._innovationService.saveConsent(this._innovation._id, Date.now()).pipe(first()).subscribe(() => {
       }, (err: HttpErrorResponse) => {
         this._innovation.ownerConsent.value = !this._innovation.ownerConsent.value;
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
         console.error(err);
       });
     }
@@ -190,7 +190,7 @@ export class DocumentsComponent implements OnInit, OnDestroy {
         }, 8000);
       }, (err: HttpErrorResponse) => {
         this._isGeneratingLink = false;
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
         console.error(err);
       });
     }
@@ -241,7 +241,7 @@ export class DocumentsComponent implements OnInit, OnDestroy {
         this._isGeneratingReport = false;
       }, (err: HttpErrorResponse) => {
         this._isGeneratingReport = false;
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
         console.error(err);
       });
     }

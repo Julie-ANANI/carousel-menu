@@ -10,6 +10,8 @@ import { TranslateNotificationsService } from '../../../../services/translate-no
 import { ProfessionalsService } from '../../../../services/professionals/professionals.service';
 import { ContextInterface } from '../../../user/admin/components/admin-community/interfaces/context-interface';
 import { Config } from '@umius/umi-common-component/models';
+import { HttpErrorResponse } from "@angular/common/http";
+import { ErrorFrontService } from "../../../../services/error/error-front.service";
 
 export interface SelectedProfessional extends Professional {
   isSelected: boolean;
@@ -123,9 +125,9 @@ export class SharedAmbassadorListComponent {
 
       this._loadTableData();
 
-    }, () => {
+    }, (err: HttpErrorResponse) => {
       this._fetchingError = true;
-      this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
     });
 
   }

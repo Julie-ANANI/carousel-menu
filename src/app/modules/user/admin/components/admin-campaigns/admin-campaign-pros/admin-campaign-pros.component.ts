@@ -122,6 +122,8 @@ export class AdminCampaignProsComponent implements OnInit {
     this._campaignService.getProsStats(this._campaign._id).subscribe((result) => {
       this._campaign.stats = result
       this._prosStatsConfig = this.setProsStatsConfig(result.pros ||{});
+    }, (err: HttpErrorResponse) =>{
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error))
     })
   }
 
@@ -154,7 +156,7 @@ export class AdminCampaignProsComponent implements OnInit {
           (err: HttpErrorResponse) => {
             this._translateNotificationsService.error(
               'ERROR.ERROR',
-              ErrorFrontService.getErrorMessage(err.status)
+              ErrorFrontService.getErrorKey(err.error)
             );
             console.error(err);
           }
@@ -235,7 +237,7 @@ export class AdminCampaignProsComponent implements OnInit {
               (err: HttpErrorResponse) => {
                 this._translateNotificationsService.error(
                   'ERROR.ERROR',
-                  ErrorFrontService.getErrorMessage(err.status)
+                  ErrorFrontService.getErrorKey(err.error)
                 );
                 this._isImporting = false;
                 this._csvImportError = err.error.message;
@@ -274,7 +276,7 @@ export class AdminCampaignProsComponent implements OnInit {
               (err: HttpErrorResponse) => {
                 this._translateNotificationsService.error(
                   'ERROR.ERROR',
-                  ErrorFrontService.getErrorMessage(err.status)
+                  ErrorFrontService.getErrorKey(err.error)
                 );
                 this._isImporting = false;
                 this._csvImportError = err.error.message;
@@ -312,7 +314,7 @@ export class AdminCampaignProsComponent implements OnInit {
           (err: HttpErrorResponse) => {
             this._translateNotificationsService.error(
               'ERROR.ERROR',
-              ErrorFrontService.getErrorMessage(err.status)
+              ErrorFrontService.getErrorKey(err.error)
             );
             this._isImporting = false;
             this._csvImportError = err.error.message;
@@ -350,7 +352,7 @@ export class AdminCampaignProsComponent implements OnInit {
           (err: HttpErrorResponse) => {
             this._translateNotificationsService.error(
               'ERROR.ERROR',
-              ErrorFrontService.getErrorMessage(err.status)
+              ErrorFrontService.getErrorKey(err.error)
             );
             this._isImporting = false;
             console.error(err);
@@ -401,7 +403,7 @@ export class AdminCampaignProsComponent implements OnInit {
           (err: HttpErrorResponse) => {
             this._translateNotificationsService.error(
               'ERROR.ERROR',
-              ErrorFrontService.getErrorMessage(err.status)
+              ErrorFrontService.getErrorKey(err.error)
             );
             this._isCreating = false;
             console.error(err);
@@ -456,7 +458,7 @@ export class AdminCampaignProsComponent implements OnInit {
           (err: HttpErrorResponse) => {
             this._translateNotificationsService.error(
               'ERROR.ERROR',
-              ErrorFrontService.getErrorMessage(err.status)
+              ErrorFrontService.getErrorKey(err.error)
             );
             this._isExporting = false;
             console.error(err);

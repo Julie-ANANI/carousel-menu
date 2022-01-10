@@ -35,7 +35,7 @@ export class MonitoringComponent implements OnInit {
       });
       this._status['monitoring'] = 'ok';
     }, (err: HttpErrorResponse) => {
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
       console.error(err);
     });
   }

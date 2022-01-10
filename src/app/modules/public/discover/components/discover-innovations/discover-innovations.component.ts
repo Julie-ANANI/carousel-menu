@@ -11,6 +11,9 @@ import {isPlatformBrowser} from '@angular/common';
 import {first} from 'rxjs/operators';
 import {Response} from '../../../../../models/response';
 import { LocalStorageService } from '@umius/umi-common-component/services/localStorage';
+import { HttpErrorResponse } from "@angular/common/http";
+import { TranslateNotificationsService } from "../../../../../services/translate-notifications/translate-notifications.service";
+import { ErrorFrontService } from "../../../../../services/error/error-front.service";
 
 @Component({
   templateUrl: './discover-innovations.component.html',
@@ -60,6 +63,7 @@ export class DiscoverInnovationsComponent implements OnInit {
               private _activatedRoute: ActivatedRoute,
               private _innovationService: InnovationService,
               private _localStorage: LocalStorageService,
+              private _translateNotificationsService: TranslateNotificationsService,
               private _filterService: DiscoverService) {
 
     this._translateTitleService.setTitle('COMMON.PAGE_TITLE.DISCOVER');
@@ -90,8 +94,9 @@ export class DiscoverInnovationsComponent implements OnInit {
             this._getLatestInnovations(response.result);
             this._stopLoading = true;
             this._stopLoadingLatest = true;
-          }, () => {
+          }, (err: HttpErrorResponse) => {
             this._fetchingError = true;
+            this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
           });
         }
       }, 1000);
@@ -180,8 +185,9 @@ export class DiscoverInnovationsComponent implements OnInit {
         this._totalFilteredInnovations = response._metadata.totalCount;
         this._config.offset = oldOffset;
         this._stopLoading = true;
-      }, () => {
+      }, (err: HttpErrorResponse) => {
         this._fetchingError = true;
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
       });
     }
   }

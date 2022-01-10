@@ -55,7 +55,7 @@ export class AdminLibrariesWorkflowsComponent implements OnInit {
       this._getAllScenarios().then(() => {
         this._getAllSignatures();
       }, (err: HttpErrorResponse) => {
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
         this._isLoading = false;
         this._fetchingError = true;
         console.error(err);
@@ -74,7 +74,7 @@ export class AdminLibrariesWorkflowsComponent implements OnInit {
         this._signatures = response && response.result;
         this._localStorageService.setItem('allSignatures',  JSON.stringify(response));
       }, (err: HttpErrorResponse) => {
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
         this._isLoading = false;
         this._fetchingError = true;
         console.error(err);
@@ -139,7 +139,7 @@ export class AdminLibrariesWorkflowsComponent implements OnInit {
           this._modalAdd = false;
           this._isAdding = false;
         }, (err: HttpErrorResponse) => {
-          this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+          this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
           this._isAdding = false;
           console.error(err);
         });
@@ -159,7 +159,7 @@ export class AdminLibrariesWorkflowsComponent implements OnInit {
       this._scenarios[scenarioIndex] = updatedScenario;
       this._translateNotificationsService.success('Success', 'The workflow is updated.');
     }, (err: HttpErrorResponse) => {
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
       console.error(err);
     });
   }
@@ -174,7 +174,7 @@ export class AdminLibrariesWorkflowsComponent implements OnInit {
       this._scenarios.splice(scenarioIndex, 1);
       this._translateNotificationsService.success('Success', 'The workflow is deleted.');
     }, (err: HttpErrorResponse) => {
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
       console.error(err);
     });
   }

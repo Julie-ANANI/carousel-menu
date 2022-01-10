@@ -4,6 +4,9 @@ import { EmailService } from '../../../../../../services/email/email.service';
 import { CampaignService } from '../../../../../../services/campaign/campaign.service';
 import { Campaign } from '../../../../../../models/campaign';
 import { first } from 'rxjs/operators';
+import { TranslateNotificationsService } from "../../../../../../services/translate-notifications/translate-notifications.service";
+import { HttpErrorResponse } from "@angular/common/http";
+import { ErrorFrontService } from "../../../../../../services/error/error-front.service";
 
 @Component({
   selector: 'app-admin-batch-information',
@@ -18,6 +21,7 @@ export class AdminBatchInformationComponent implements OnInit {
 
   constructor(private _activatedRoute: ActivatedRoute,
               private _campaignService: CampaignService,
+              private _translateNotificationsService: TranslateNotificationsService,
               private _emailService: EmailService) { }
 
   ngOnInit() {
@@ -31,8 +35,9 @@ export class AdminBatchInformationComponent implements OnInit {
           this._campaignService.get(this._batch.payload.metadata.campaign_id)
             .pipe(first())
             .subscribe((campaign: Campaign) => this._campaign = campaign, (error: any) => { console.error(error); });
-        }, (error: any) => {
+        }, (error: HttpErrorResponse) => {
           console.error(error); // notify error
+          this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(error.error));
         });
     });
   }

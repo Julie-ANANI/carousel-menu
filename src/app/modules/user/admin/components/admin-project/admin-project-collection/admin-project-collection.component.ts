@@ -154,7 +154,7 @@ export class AdminProjectCollectionComponent implements OnInit, OnDestroy {
           this._initAnswers();
         },
         (err: HttpErrorResponse) => {
-          this._translateNotificationsService.error('Answers Error...', ErrorFrontService.adminErrorMessage(err));
+          this._translateNotificationsService.error('Answers Error...', ErrorFrontService.getErrorKey(err.error));
           console.error(err);
         }
       );
@@ -273,7 +273,7 @@ export class AdminProjectCollectionComponent implements OnInit, OnDestroy {
             this._isImportingAnswers = false;
           },
           (err: HttpErrorResponse) => {
-            this._translateNotificationsService.error('Importing Error...', ErrorFrontService.adminErrorMessage(err));
+            this._translateNotificationsService.error('Importing Error...', ErrorFrontService.getErrorKey(err.error));
             this._isImportingAnswers = false;
             console.error(err);
           }
@@ -467,7 +467,7 @@ export class AdminProjectCollectionComponent implements OnInit, OnDestroy {
             }
           },
           (err: HttpErrorResponse) => {
-            this._translateNotificationsService.error('Answer Update Error...', ErrorFrontService.adminErrorMessage(err));
+            this._translateNotificationsService.error('Answer Update Error...', ErrorFrontService.getErrorKey(err.error));
             console.error(err);
           }
         );

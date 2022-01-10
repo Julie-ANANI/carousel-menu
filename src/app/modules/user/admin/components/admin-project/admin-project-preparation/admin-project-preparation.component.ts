@@ -170,7 +170,7 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
         this._setInnovation();
       }, (err: HttpErrorResponse) => {
         this._isSendingNotification = false;
-        this._translateNotificationsService.error('Error', ErrorFrontService.adminErrorMessage(err));
+        this._translateNotificationsService.error('Error', ErrorFrontService.getErrorKey(err.error));
         console.error(err);
       });
     }
@@ -193,7 +193,7 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
       this._allCampaigns = response && response.result || [];
       this._campaignFrontService.setAllCampaigns(this._allCampaigns);
     }, (err: HttpErrorResponse) => {
-      this._translateNotificationsService.error('Campaigns Fetching Error...', ErrorFrontService.adminErrorMessage(err));
+      this._translateNotificationsService.error('Campaigns Fetching Error...', ErrorFrontService.getErrorKey(err.error));
       console.error(err);
     });
   }
@@ -319,7 +319,7 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
             this._isSaving = false;
             this._toBeSavedComment = true;
             this._translateNotificationsService.error(
-              'Comment Saving Error...', ErrorFrontService.adminErrorMessage(err));
+              'Comment Saving Error...', ErrorFrontService.getErrorKey(err.error));
             console.error(err);
           });
         } else if (!!saveObject) {
@@ -339,7 +339,7 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
         this._setInnovation();
         this._translateNotificationsService.success('Success', 'The project has been updated.');
       }, (err: HttpErrorResponse) => {
-        this._translateNotificationsService.error('Project Saving Error...', ErrorFrontService.adminErrorMessage(err));
+        this._translateNotificationsService.error('Project Saving Error...', ErrorFrontService.getErrorKey(err.error));
         this._isSaving = false;
         console.error(err);
       });
@@ -354,7 +354,7 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
       this._translateNotificationsService.success('Success', 'The project has been updated.');
     }, (err: HttpErrorResponse) => {
       this._isSaving = false;
-      this._translateNotificationsService.error('Project Saving Error...', ErrorFrontService.adminErrorMessage(err));
+      this._translateNotificationsService.error('Project Saving Error...', ErrorFrontService.getErrorKey(err.error));
       console.error(err);
     });
   }
@@ -402,7 +402,7 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
           `The project has been added in the ${_lang === 'fr' ? 'French' : 'English'} language.`);
         this.closeModal();
       }, (err: HttpErrorResponse) => {
-        this._translateNotificationsService.error('Card Adding Error...', ErrorFrontService.adminErrorMessage(err));
+        this._translateNotificationsService.error('Card Adding Error...', ErrorFrontService.getErrorKey(err.error));
         this._isAddingCard = false;
         console.error(err);
       });
@@ -424,7 +424,7 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
         this.closeModal();
       }, (err: HttpErrorResponse) => {
         this._cardToDelete = <InnovCard>{};
-        this._translateNotificationsService.error('Card Deleting Error...', ErrorFrontService.adminErrorMessage(err));
+        this._translateNotificationsService.error('Card Deleting Error...', ErrorFrontService.getErrorKey(err.error));
         this._isDeletingCard = false;
         console.error(err);
       });

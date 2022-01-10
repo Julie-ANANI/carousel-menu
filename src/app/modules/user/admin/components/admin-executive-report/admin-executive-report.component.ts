@@ -71,7 +71,7 @@ export class AdminExecutiveReportComponent implements OnInit, OnDestroy {
         });
         this._topAnswers = this.answers.filter(ans => ans.profileQuality === 2);
       }, (err: HttpErrorResponse) => {
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
         console.error(err);
       });
     }

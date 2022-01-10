@@ -144,7 +144,7 @@ export class AdminCampaignWorkflowsComponent implements OnInit {
         (err: HttpErrorResponse) => {
           this._translateNotificationsService.error(
             'ERROR.ERROR',
-            ErrorFrontService.getErrorMessage(err.status)
+            ErrorFrontService.getErrorKey(err.error)
           );
           console.error(err);
         }
@@ -165,7 +165,7 @@ export class AdminCampaignWorkflowsComponent implements OnInit {
         (err: HttpErrorResponse) => {
           this._translateNotificationsService.error(
             'ERROR.ERROR',
-            ErrorFrontService.getErrorMessage(err.status)
+            ErrorFrontService.getErrorKey(err.error)
           );
           console.error(err);
         }
@@ -281,7 +281,7 @@ export class AdminCampaignWorkflowsComponent implements OnInit {
             (err: HttpErrorResponse) => {
               this._translateNotificationsService.error(
                 'ERROR.ERROR',
-                ErrorFrontService.getErrorMessage(err.status)
+                ErrorFrontService.getErrorKey(err.error)
               );
               this._isTesting = false;
               console.error(err);
@@ -307,7 +307,7 @@ export class AdminCampaignWorkflowsComponent implements OnInit {
         (err: HttpErrorResponse) => {
           this._translateNotificationsService.error(
             'ERROR.ERROR',
-            ErrorFrontService.getErrorMessage(err.status)
+            ErrorFrontService.getErrorKey(err.error)
           );
           if (this._isImporting) {
             this._isImporting = false;

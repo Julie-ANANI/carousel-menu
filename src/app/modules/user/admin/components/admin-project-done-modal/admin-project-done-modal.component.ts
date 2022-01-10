@@ -56,7 +56,7 @@ export class AdminProjectDoneModalComponent {
         this._isSaving = false;
       }, (err: HttpErrorResponse) => {
         this._isSaving = false;
-        this._translateNotificationsService.error('Project Status Error...', ErrorFrontService.adminErrorMessage(err));
+        this._translateNotificationsService.error('Project Status Error...', ErrorFrontService.getErrorKey(err.error));
         console.error(err);
       });
     }

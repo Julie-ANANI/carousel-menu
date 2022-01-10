@@ -55,7 +55,7 @@ export class AdminProjectSynthesisComponent implements OnInit, OnDestroy {
       this._executiveReportService.get(id).pipe(first()).subscribe((response) => {
         this._report = response;
       }, (err: HttpErrorResponse) => {
-        this._translateNotificationsService.error('Error', ErrorFrontService.adminErrorMessage(err));
+        this._translateNotificationsService.error('Error', ErrorFrontService.getErrorKey(err.error));
         console.error(err);
       });
     }

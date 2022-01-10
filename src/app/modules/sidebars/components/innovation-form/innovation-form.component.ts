@@ -8,6 +8,8 @@ import {TranslateNotificationsService} from '../../../../services/translate-noti
 import { InnovationService } from '../../../../services/innovation/innovation.service';
 import {takeUntil} from 'rxjs/operators';
 import {InnovationFrontService} from '../../../../services/innovation/innovation-front.service';
+import { ErrorFrontService } from "../../../../services/error/error-front.service";
+import { HttpErrorResponse } from "@angular/common/http";
 import {EmailsObject} from '../../../../models/email';
 
 @Component({
@@ -172,8 +174,8 @@ export class InnovationFormComponent implements OnInit, OnDestroy {
     if (this._saveCardComment) {
       this._saveCardComment = false;
       this._innovationService.saveInnovationCardComment(this._project._id, this._project.innovationCards[this._selectedCardIndex]._id,
-        this._project.innovationCards[this._selectedCardIndex].operatorComment).subscribe(() => { }, (err) => {
-        this._translateNotificationsService.error('ERROR.ERROR', err.error.message)
+        this._project.innovationCards[this._selectedCardIndex].operatorComment).subscribe(() => { }, (err: HttpErrorResponse) => {
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error))
       });
     }
   }

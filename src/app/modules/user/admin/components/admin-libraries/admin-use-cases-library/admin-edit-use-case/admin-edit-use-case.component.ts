@@ -97,7 +97,7 @@ export class AdminEditUseCaseComponent implements OnInit {
         this._templates = response && response.result || [];
         this._jsonParse();
       }, (error: HttpErrorResponse) => {
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.adminErrorMessage(error));
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(error.error));
         console.error(error);
       });
     }
@@ -111,7 +111,7 @@ export class AdminEditUseCaseComponent implements OnInit {
         this._setTitle();
       }, (error: HttpErrorResponse) => {
         this._fetchingError = true;
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.adminErrorMessage(error));
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(error.error));
         console.error(error);
       });
     }
@@ -199,7 +199,7 @@ export class AdminEditUseCaseComponent implements OnInit {
         this._translateNotificationsService.success('Success', 'The use case has been updated successfully.');
       }, (error: HttpErrorResponse) => {
         this._isSaving = false;
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.adminErrorMessage(error));
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(error.error));
         console.error(error);
       });
   }

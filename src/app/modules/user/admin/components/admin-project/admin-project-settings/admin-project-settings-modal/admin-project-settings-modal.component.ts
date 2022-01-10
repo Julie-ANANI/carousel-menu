@@ -139,7 +139,7 @@ export class AdminProjectSettingsModalComponent implements OnInit {
       this._communityService.getAllCircles().pipe(first()).subscribe((response) => {
         this._circles = response;
       }, (err: HttpErrorResponse) => {
-        this._translateNotificationsService.error('Circles Error...', ErrorFrontService.getErrorMessage(err.status));
+        this._translateNotificationsService.error('Circles Error...', ErrorFrontService.getErrorKey(err.error));
         console.error(err);
       });
     }

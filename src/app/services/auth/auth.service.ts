@@ -2,7 +2,7 @@ import {Inject, Injectable, PLATFORM_ID} from '@angular/core';
 import {isPlatformBrowser, isPlatformServer} from '@angular/common';
 import {makeStateKey, TransferState} from '@angular/platform-browser';
 import {CookieOptions, CookieService} from 'ngx-cookie';
-import {HttpClient} from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import {Observable, of, throwError} from 'rxjs';
 import {catchError, first, map, tap} from 'rxjs/operators';
 import {User} from '../../models/user.model';
@@ -104,7 +104,7 @@ export class AuthService {
           }
           return res;
         }),
-        catchError((error: Response) => throwError(error.json()))
+        catchError((error: HttpErrorResponse) => throwError(error))
       );
   }
 
@@ -125,7 +125,7 @@ export class AuthService {
           }
           return res;
         }),
-        catchError((error: Response) => throwError(error.json()))
+        catchError((error: HttpErrorResponse) => throwError(error))
       );
   }
 
@@ -145,7 +145,7 @@ export class AuthService {
           clearInterval(this._cookieObserver);
           return res;
         }),
-        catchError((error: Response) => throwError(error.json()))
+        catchError((error: HttpErrorResponse) => throwError(error))
       );
   }
 

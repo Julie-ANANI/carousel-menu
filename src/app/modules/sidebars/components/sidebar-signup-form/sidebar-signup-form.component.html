@@ -156,8 +156,8 @@
     <!-- Submit button -->
     <div class="p-top-30 text-center">
       <button
-        [disabled]="signupForm.invalid || isCreating"
         class="button is-primary is-lg gtm-signup-email-validated"
+        [disabled]="signupForm.invalid || isCreating"
         id="btn-submit"
         type="submit">
         <ng-container *ngIf="isCreating; else createText">

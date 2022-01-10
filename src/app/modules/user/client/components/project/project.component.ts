@@ -16,6 +16,8 @@ import { SocketService } from '../../../../../services/socket/socket.service';
 import { AuthService } from '../../../../../services/auth/auth.service';
 import {RouteFrontService} from '../../../../../services/route/route-front.service';
 import {CommonService} from '../../../../../services/common/common.service';
+import { TranslateNotificationsService } from "../../../../../services/translate-notifications/translate-notifications.service";
+import { ErrorFrontService } from "../../../../../services/error/error-front.service";
 
 interface Tab {
   route: string;
@@ -75,6 +77,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
               private _commonService: CommonService,
               private _translateTitleService: TranslateTitleService,
               private _innovationService: InnovationService,
+              private _translateNotificationsService: TranslateNotificationsService,
               private _router: Router,
               private _spinnerService: SpinnerService,
               private _translateService: TranslateService,
@@ -215,6 +218,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
       }, (err: HttpErrorResponse) => {
         console.error(err);
         this._fetchingError = true;
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
         this._setSpinner(false);
       });
     }

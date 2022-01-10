@@ -75,7 +75,7 @@ export class AdminEmailBlacklistComponent implements OnInit, OnDestroy {
         this._initTable();
       }
     }, (error: HttpErrorResponse) => {
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(error.status));
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(error.error));
       console.error(error);
       this._fetchingError = true;
     });

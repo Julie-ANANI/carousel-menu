@@ -449,7 +449,7 @@ export class PitchComponent implements OnInit, OnDestroy {
       this._resetVariables();
       this._translateNotificationsService.success('ERROR.SUCCESS', message);
     }, (err: HttpErrorResponse) => {
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
       this._resetVariables();
       console.error(err);
     });
@@ -488,7 +488,7 @@ export class PitchComponent implements OnInit, OnDestroy {
         this._innovationFrontService.setInnovation(this._innovation);
       }, (err: HttpErrorResponse) => {
         this._isUploadingVideo = false;
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
         this._resetVariables();
         console.error(err);
       });
@@ -501,7 +501,7 @@ export class PitchComponent implements OnInit, OnDestroy {
       this._resetVariables();
       this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.UPDATED_TEXT');
     }, (err: HttpErrorResponse) => {
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
       this._resetVariables();
       console.error(err);
     });
@@ -517,7 +517,7 @@ export class PitchComponent implements OnInit, OnDestroy {
         this._resetVariables();
         this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.UPDATED_TEXT');
       }, (err: HttpErrorResponse) => {
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
         this._resetVariables();
         console.error(err);
       });

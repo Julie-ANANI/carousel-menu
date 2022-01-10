@@ -220,7 +220,7 @@ export class SharedFollowUpClientComponent implements OnDestroy {
     this._saveProject({followUpEmails: this._followUpObj('entity')}).then(() => {
       this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.UPDATED_COMPANY');
     }).catch((err: HttpErrorResponse) => {
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
       console.error(err);
     });
   }
@@ -236,12 +236,12 @@ export class SharedFollowUpClientComponent implements OnDestroy {
           this.toggleStartContact(false);
         }, (err: HttpErrorResponse) => {
           this._isSending = false;
-          this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+          this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
           console.error(err);
         });
       }, (err: HttpErrorResponse) => {
         this._isSending = false;
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
         console.error(err);
       });
     }
@@ -259,7 +259,7 @@ export class SharedFollowUpClientComponent implements OnDestroy {
       this.initEmailObject();
     }).catch((err: HttpErrorResponse) => {
       this._selectedCC.push(value);
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
       console.error(err);
     });
   }
@@ -305,7 +305,7 @@ export class SharedFollowUpClientComponent implements OnDestroy {
         this.initEmailObject();
       }).catch((err: HttpErrorResponse) => {
         this._selectedCC.pop();
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
         console.error(err);
       });
     } else {

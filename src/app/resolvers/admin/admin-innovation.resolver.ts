@@ -48,7 +48,7 @@ export class AdminInnovationResolver implements Resolve<Innovation> {
             this._transferState.set(INNOVATION_KEY, innovation as Innovation);
           }
         }), catchError((err: HttpErrorResponse) => {
-          this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.adminErrorMessage(err));
+          this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
           console.error(err);
           return EMPTY;
         }));

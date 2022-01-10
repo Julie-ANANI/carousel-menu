@@ -62,7 +62,7 @@ export class AdminBatchesDisplayComponent implements OnInit {
       this._weekBatches = batches;
       this._isLoading = false;
     }, (err: HttpErrorResponse) => {
-      this._translateNotificationsService.error('Batch Error...', ErrorFrontService.getErrorMessage(err.status));
+      this._translateNotificationsService.error('Batch Error...', ErrorFrontService.getErrorKey(err.error));
       console.error(err);
     });
   }
@@ -150,7 +150,7 @@ export class AdminBatchesDisplayComponent implements OnInit {
             lastInnovationId = innovationId;
           }, (err: HttpErrorResponse) => {
             console.error(err);
-            this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorMessage(err.status));
+            this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
           });
       } else {
         this._openSidebar();

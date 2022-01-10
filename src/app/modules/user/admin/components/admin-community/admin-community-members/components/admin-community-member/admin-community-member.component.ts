@@ -17,6 +17,8 @@ import { InnovCard } from '../../../../../../../../models/innov-card';
 import { TranslateTitleService } from '../../../../../../../../services/title/title.service';
 import { Table } from '@umius/umi-common-component/models';
 import { Company } from '../../../../../../../../models/company';
+import { HttpErrorResponse } from "@angular/common/http";
+import { ErrorFrontService } from "../../../../../../../../services/error/error-front.service";
 import {CommonService} from '../../../../../../../../services/common/common.service';
 
 @Component({
@@ -250,8 +252,8 @@ export class AdminCommunityMemberComponent implements OnInit {
           });
         });
       }
-    }, () => {
-      this._translateNotificationService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
+    }, (err: HttpErrorResponse) => {
+      this._translateNotificationService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
     });
 
   }
