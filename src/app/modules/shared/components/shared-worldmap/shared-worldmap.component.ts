@@ -48,8 +48,17 @@ export class SharedWorldmapComponent implements OnInit {
 
     this._selectedCountries = value;
 
-    this._countriesNotFoundOnMap = this._countriesNotFoundOnMap.filter(country =>
-      this._selectedCountries.find(selectedCountry => selectedCountry === country));
+    console.log(value);
+
+    if(!value.length){
+      this._countriesNotFoundOnMap = [];
+    }else{
+      this._countriesNotFoundOnMap = this._countriesNotFoundOnMap.filter(country =>
+        this._selectedCountries.find(selectedCountry => selectedCountry === country));
+    }
+
+
+    console.log(this._countriesNotFoundOnMap);
 
     if (Array.isArray(value) && value.length > 0) {
       value.forEach((country) => {
@@ -167,11 +176,13 @@ export class SharedWorldmapComponent implements OnInit {
   }
 
   private _countryNotFoundOnMap(country: string) {
-    if (!this._countriesNotFoundOnMap.filter(code => code === country).length) {
+    if (!this._countriesNotFoundOnMap.find(code => code.toUpperCase() === country.toUpperCase())) {
       this._countriesNotFoundOnMap.push(country);
     }
     this._countriesNotFoundOnMap = this._countriesNotFoundOnMap.filter(country =>
     this._selectedCountries.find(selectedCountry => selectedCountry === country));
+    console.log(this._countriesNotFoundOnMap);
+    console.log(this._selectedCountries);
   }
 
   private _getAllCountries() {
