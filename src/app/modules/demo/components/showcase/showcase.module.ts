@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 
-import { CountryFlagModule } from '../../../utility/country-flag/country-flag.module';
+import { CountryFlagModule } from '@umius/umi-common-component/country-flag';
 import { ModalModule } from '../../../utility/modals/modal/modal.module';
 
 import { ShowcaseAnswersComponent } from './components/showcase-answers/showcase-answers.component';

@@ -18,7 +18,7 @@ import { TypeRankingComponent } from './executive-section/type-ranking/type-rank
 import { TypePieComponent } from './executive-section/type-pie/type-pie.component';
 
 import { PipeModule } from '../../../../../pipe/pipe.module';
-import { CountryFlagModule } from '../../../../utility/country-flag/country-flag.module';
+import { CountryFlagModule } from '@umius/umi-common-component/country-flag';
 import { SharedWorldmapModule } from '../../../../shared/components/shared-worldmap/shared-worldmap.module';
 import { ProgressBarModule } from '../../../../utility/progress-bar/progress-bar.module';
 import { PiechartExecutiveModule } from '../../../../utility/canvas/piechart-executive/piechart-executive.module';
