@@ -3,8 +3,7 @@ import { Injectable } from '@angular/core';
 export interface UMIError {
   status: number;
   detailedCode?: string;
-  key: string;
-
+  message: string;
   [property: string]: any;
 }
 
@@ -25,9 +24,9 @@ export class ErrorFrontService {
    * @param error
    */
   public static getErrorKey(error: UMIError): string {
-    if (error && error.key && error.status) {
+    if (error && error.message && error.status) {
       const detailedCode = error.detailedCode || '';
-      const key = error.key;
+      const key = error.message;
       const status = error.status;
       if (detailedCode) {
         return 'ERROR.' + detailedCode + '.' + key;
