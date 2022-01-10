@@ -141,6 +141,10 @@ export const ERROR = {
     DELETE_PROJECT_FAILED: 'Nous ne pouvons pas supprimer votre project pour le moment.'
   },
 
+  DELIVERABLE_JOB_500:{
+    SAVE_DELIVERABLE_JOB_FAILED: 'Sorry, we are having trouble to save the job.',
+  },
+
   'ERROR': 'Oups..',
 
   'SUCCESS': 'Succès',
