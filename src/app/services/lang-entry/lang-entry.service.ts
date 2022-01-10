@@ -3,28 +3,59 @@
  */
 
 import { Injectable } from '@angular/core';
-import {LangEntryPipe} from '../../pipe/lang-entry/lang-entry.pipe';
 import {PieChart} from '../../models/pie-chart';
 import {InnovationFollowUpEmails} from '../../models/innovation';
 import {EmailMultiling} from '../../models/email';
 import {Tag} from '../../models/tag';
 import {TransactionalEmail} from '../../models/transactional-email';
 import {JobConfig, JobsTypologies} from '../../models/target-pros';
+import {TranslateService} from '@ngx-translate/core';
 
 @Injectable({
   providedIn: 'root'
 })
-export class LangEntryService extends LangEntryPipe {
+export class LangEntryService {
+
+  constructor(private _translateService: TranslateService) {
+  }
 
   /**
    * from the list of the entry or type of Entry it will return the requested based on the 'lang' param.
+   *
+   * This function is also extended by the pipe 'LangEntryPipe' to use in the component.html file so
+   * if you make changes in the param take care there also.
+   *
    * @param value - actual entry it can be of type or Array<any> but in that case it should have the lang property.
    * @param requested - the label or value you want
    * @param lang - requested lang
    * @param returnDefault = true means if not find the entry in the given lang then return the entry at index 0
    */
   transform(value: any, requested: string, lang: string = 'en',  returnDefault: boolean = false): any {
-    return super.transform(value, requested, lang, returnDefault);
+    if (!value || !requested) return '';
+
+    if (Array.isArray(value) && !!value.length) {
+      // TODO remove console
+      console.log('New Multi-language system.');
+      const entry = value.find((_value) => _value.lang === lang);
+      return !!entry ? requested === 'FULL_ENTRY' ? entry : entry[requested] : returnDefault ? value[0][requested] : '';
+    }
+
+    if (value[requested] && value[requested][lang]) {
+      // TODO remove console
+      console.log('Old Multi-language system.');
+      return value[requested] && value[requested][lang];
+    }
+
+    if (returnDefault) {
+      if (lang !== this._translateService.defaultLang && value[requested][this._translateService.defaultLang]) {
+        return value[requested][this._translateService.defaultLang];
+      } else {
+        for (const a in value[requested]) {
+          if(value[requested][a]) return value[requested][a];
+        }
+        return '';
+      }
+    }
   }
 
   /**
