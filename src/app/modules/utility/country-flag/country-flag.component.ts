@@ -28,7 +28,7 @@ export class CountryFlagComponent {
 
     if (this._country && typeof this._country === 'string') {
       flag = this._country.toUpperCase();
-    } else if (this._country && this._country.flag) {
+    } else if (this._country && this._country.flag && typeof this._country.flag === 'string') {
       flag = this._country.flag.toUpperCase();
     }
 
