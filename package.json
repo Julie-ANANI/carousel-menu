@@ -1,6 +1,6 @@
 {
   "name": "umi-application-client",
-  "version": "2.10.18-RC2",
+  "version": "2.10.18-RC3",
   "license": "MIT",
   "scripts": {
     "serve": "ng serve umi -c=local",

@@ -28,8 +28,8 @@ export class CountryFlagComponent {
 
     if (this._country && typeof this._country === 'string') {
       flag = this._country.toUpperCase();
-    } else if (this._country && this._country.flag && !!this._country.flag.toUpperCase) {
-      flag = this._country.flag.toUpperCase();
+    } else if (this._country && this._country.flag) {
+      flag = this._country.flag.toUpperCase ? this._country.flag.toUpperCase() : '00';
     }
 
     this._url = `https://res.cloudinary.com/umi/image/upload/app/flags/${flag}.png`;
