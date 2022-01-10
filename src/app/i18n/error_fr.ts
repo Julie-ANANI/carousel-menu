@@ -1,12 +1,17 @@
 export const ERROR = {
   400: {
     INVALID_ARGUMENT: 'The input is invalid. Please check the input and try again.',
-    EMPTY_PARAM: 'The parameter was empty.',
-    EMPTY_BODY: 'The body was empty.'
+    EMPTY_PARAM: 'The parameter of the request is missing. Please check and try again.',
+    EMPTY_BODY: 'The data in the request is empty. Please check and try again.',
+    ALREADY_EXISTS: 'The data already exists.'
+  },
+
+  401:{
+    NO_AUTHORIZED: 'You are not authorized to perform this request.',
   },
 
   403: {
-    PERMISSION_DENIED: 'Sorry, you are not authorised on the platform. Please check your login status.'
+    PERMISSION_DENIED: 'You don\'t have permission to perform this request.'
   },
 
   404: {
@@ -24,19 +29,118 @@ export const ERROR = {
   },
 
   AUTH_400: {
+    INVALID_USERID: 'The user id is invalid. Please check and try again.',
     MISSING_BODY_EMAIL: 'Please enter your email address in the provided field.',
     MISSING_BODY_PASSWORD: 'Please enter your password in the provided field.',
-    WRONG_PASSWORD: 'The email/password combination is not valid.',
+    LOGIN_FAILED: 'Sorry, login failed. Please check the email/password combination and try again.',
   },
 
   AUTH_404: {
-    USER_NOT_FOUND: 'The entered email could not be found please check it and try again.',
+    USER_NOT_FOUND: 'The user could not be found please check it and try again.',
   },
 
   AUTH_500: {
-    OUT_OF_ATTEMPTS: 'Sorry, you have reached the maximum attempts. Please contact UMI support service.',
+    ATTEMPTS_TOO_SOON: 'Sorry, the login is too frequent. Please catch a break and try again.',
+    OUT_OF_ATTEMPTS: 'Sorry, you have run out of 5 attempts. Please contact UMI support service.',
     USER_STATUS_ANORMAL: 'Sorry, we detected that your account status is anormal. Please contact UMI support service.'
   },
+
+  USER_200:{
+    PASSWORD_UPDATED: 'The password has been updated successfully.'
+  },
+
+  USER_400: {
+    ALREADY_EXISTS: 'The e-mail address is already registered in the system.',
+    PASSWORD_NOT_MATCH: 'The new password and confirm password must be same.',
+    WRONG_PASSWORD: 'Old password is incorrect.',
+    MISSING_BODY_EMAIL: 'The email address is missing. Please check it and try again.',
+    MISSING_BODY_FIRSTNAME: 'The firstname is  missing. Please check it and try again.',
+    MISSING_BODY_LASTNAME: 'The lastname is missing. Please check it and try again.',
+    MISSING_BODY_PASSWORD: 'The password is missing. Please check it and try again.',
+    MISSING_BODY_COMPANY_NAME: 'The company name is missing. Please check it and try again.'
+  },
+
+  USER_404: {
+    USER_NOT_FOUND: 'We can\'t find your information please check it and try again.',
+  },
+
+  INNOVATION_400:{
+    MISSING_COLLABORATOR: 'The collaborator information is missing please check it and try again.'
+  },
+
+  INNOVATION_404:{
+    CARD_NOT_FOUND: 'Nous n\'avons pas trouvé l\'innovation que vous recherchez.',
+    MEDIA_NOT_FOUND: 'We can\'t find the innovation media please check it and try again.',
+    EMPTY_SYNTHESIS: 'We can\'t find any synthesis please check it and try again.',
+    NOT_SUBMITTED_MODE: 'The comments can only be added when the innovation status is Submitted.',
+    INNOVATION_NOT_FOUND: 'We can\'t find the innovation please check it and try again.'
+  },
+
+  INNOVATION_500:{
+    PUBLISH_COMMUNITY_FAILED: 'Sorry, we are having trouble to publish the project on Community.',
+    UPDATE_OWNER_FAILED: 'Sorry, we are having trouble to update the owner.',
+    UPDATE_MISSION_TYPE_FAILED: 'Sorry, we are having trouble to update mission type.',
+    UPDATE_MISSION_TEAM_FAILED: 'Sorry, we are having trouble to update mission team.',
+    UPDATE_MISSION_TEMPLATE_FAILED: 'Sorry, we are having trouble to update mission template',
+    SAVE_INNOVATION_FAILED: 'Sorry, we are having trouble to save the innovation.',
+    SAVE_MEDIA_FAILED: 'Sorry, we are having trouble to save the media.',
+    DELETE_MEDIA_FAILED: 'Sorry, we are having trouble to delete the media.',
+    DELETE_TAG_FAILED: 'Sorry, we are having trouble to delete the tag from the innovation.',
+    SAVE_INNOVATION_CARD_FAILED: 'Sorry, we are having trouble to save the innovation card.',
+    REMOVE_INNOVATION_CARD_FAILED: 'Sorry, we are having trouble to delete the innovation card.',
+    REMOVE_INNOVATION_FAILED: 'Sorry, we are having trouble to delete the innovation.',
+    IMPORT_ANSWER_FAILED: 'Sorry, we are having trouble to import the answers.',
+  },
+
+  NOTIFICATION_400:{
+    ALREADY_SENT: 'We have already sent this notification, this notification is sent just once.',
+    AT_LEAST_3_ANSWERS:'We could not send this notification. It requires minimum 3 validated answers.',
+    THIRD_ANSWER_OVERTIME: 'We could not send this notification because third answer is validated after 3 days of the first mail.',
+    MISSING_USER_INFO: 'We could not found the user info so we can not proceed further.',
+    MISSING_INNOVATION_INFO: 'We could not found the innovation info so we can not proceed further.',
+    MISSING_RECIPIENTS_INFO: 'We could not found the recipients info so we can not proceed further.',
+    MISSING_BATCH_INFO: 'We could not send this notification. We did not find any batches.',
+    MISSING_TEMPLATE_INFO: 'We could not found the notification template content so we can not proceed further.',
+    MISSING_DATE_INFO: 'We could not send this notification. We did not find first mail or answer updated date.',
+    TRIGGER_NOT_FOUND: 'We could not found the notification for the trigger.',
+    NOTIFICATION_CANNOT_SAVE: 'There was a problem while saving the notification job',
+  },
+
+  CVS_500:{
+    CVS_PARSE_FAILED: 'Sorry, we are having trouble to parse the cvs file.'
+  },
+
+  BATCH_404:{
+    BATCH_NOT_FOUND: 'Nous n\'avons pas trouvé le batch que vous recherchez.'
+  },
+
+  BATCH_500:{
+    UPDATE_BATCH_FAILED: 'Sorry, we are having trouble to update the batch.'
+  },
+
+  CAMPAIGN_400:{
+    MISSING_PARAM_CAMPAIGN_ID: 'Nous n\'avons pas trouvé l\'innovation que vous recherchez.'
+  },
+
+  CAMPAIGN_404:{
+    CAMPAIGN_NOT_FOUND: 'Nous n\'avons pas trouvé la campaign que vous recherchez.'
+  },
+
+  CAMPAIGN_500:{
+    SAVE_CAMPAIGN_FAILED: 'Nous ne pouvons pas sauvegarder la campaign pour le moment.',
+    UPDATE_CAMPAIGN_FAILED: 'Nous ne pouvons pas mettre à jour la campaign project pour le moment.',
+    UPDATE_STATS_SEARCH_FAILED: 'Sorry, we are having trouble to update the search in stats.',
+    UPDATE_STATS_PROS_FAILED: 'Sorry, we are having trouble to update the pros in stats.',
+    UPDATE_STATS_FAILED: 'Sorry, we are having trouble to update the stats.',
+    UPDATE_STATS_BATCH_FAILED: 'Sorry, we are having trouble to update the batch in stats.',
+    SAVE_TARGET_PROS_FAILED: 'Nous ne pouvons pas sauvegarder targeted-pros pour le moment.'
+  },
+
+  CLIENT_PROJECT_500:{
+    CREATE_PROJECT_FAILED: 'Nous rencontrons des problèmes lors de la creation du project.',
+    DELETE_PROJECT_FAILED: 'Nous ne pouvons pas supprimer votre project pour le moment.'
+  },
+
   'ERROR': 'Oups..',
 
   'SUCCESS': 'Succès',
