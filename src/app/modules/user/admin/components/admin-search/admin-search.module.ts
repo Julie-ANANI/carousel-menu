@@ -14,7 +14,7 @@ import { AdminSearchResultsComponent } from './admin-search-results/admin-search
 import { SharedSearchMailModule } from '../../../../shared/components/shared-search-mail/shared-search-mail.module';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from "@angular/forms";
-import { CountryFlagModule } from "../../../../utility/country-flag/country-flag.module";
+import { CountryFlagModule } from "@umius/umi-common-component/country-flag";
 import { ModalModule } from "../../../../utility/modals/modal/modal.module";
 import { AdminSearchScrapingComponent } from './admin-search-scraping/admin-search-scraping.component';
 import {SidebarModule} from '../../../../sidebars/templates/sidebar/sidebar.module';

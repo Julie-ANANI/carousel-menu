@@ -9,7 +9,7 @@ import { SharedSearchHistoryComponent} from './shared-search-history.component';
 import { SharedFilterInputModule } from '../shared-filter-input/shared-filter-input.module';
 import { PaginationTemplate1Module } from '../../../utility/paginations/pagination-template-1/pagination-template-1.module';
 import { SharedSearchMultiModule } from '../shared-search-multi/shared-search-multi.module';
-import { CountryFlagModule } from '../../../utility/country-flag/country-flag.module';
+import { CountryFlagModule } from '@umius/umi-common-component/country-flag';
 import { SidebarModule } from '../../../sidebars/templates/sidebar/sidebar.module';
 import { SidebarSearchHistoryModule } from '../../../sidebars/components/sidebar-search-history/sidebar-search-history.module';
 import { AutoCompleteInputModule } from '../../../utility/auto-complete-input/auto-complete-input.module';

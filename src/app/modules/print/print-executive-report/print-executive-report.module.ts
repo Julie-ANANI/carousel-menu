@@ -12,7 +12,7 @@ import { ReportComponent } from './report/report.component';
 
 import { ProjectFrontPageModule } from '../../user/client/components/project-front-page/project-front-page.module';
 import { SharedWorldmapModule } from '../../shared/components/shared-worldmap/shared-worldmap.module';
-import { CountryFlagModule } from '../../utility/country-flag/country-flag.module';
+import { CountryFlagModule } from '@umius/umi-common-component/country-flag';
 import { NgxPageScrollModule } from 'ngx-page-scroll';
 import { ChartsModule } from 'ng2-charts';
 import { PieChartModule } from '../../utility/canvas/piechart/pie-chart.module';

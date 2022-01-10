@@ -152,11 +152,11 @@
 
       <!-- country -->
       <div class="d-flex align-center m-bottom-20">
-        <app-utility-country-flag
+        <umius-country-flag
           [country]="userAnswer.country"
           [width]="50"
           [height]="35">
-        </app-utility-country-flag>
+        </umius-country-flag>
         <div
           (click)="onClickEdit('COUNTRY')"
           *ngIf="editMode"
