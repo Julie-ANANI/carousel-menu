@@ -5,7 +5,7 @@
 import { Multiling } from './multiling';
 import { Question } from './question';
 
-export interface PresetSectionLabel {
+export interface PresetSectionEntry {
   lang: string;
   label: string;
 }
@@ -18,7 +18,7 @@ export interface PresetSection {
   /**
    * TODO uncomment this
    */
-  // readonly entry?: Array<PresetSectionLabel>;
+  // readonly entry?: Array<PresetSectionEntry>;
 
   /**
    * TODO remove this

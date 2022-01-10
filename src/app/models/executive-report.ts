@@ -62,7 +62,7 @@ export interface ExecutiveSection {
   abstract: string;
   questionType: 'PIE' | 'RANKING' | 'BAR' | 'QUOTE' | 'KPI' | 'LIKERT-SCALE';
   content: SectionPie | SectionRanking | SectionBar | SectionQuote | SectionKpi | SectionLikertScale;
-  color?:string;
+  color?: string;
 }
 
 export interface SectionKpi {
