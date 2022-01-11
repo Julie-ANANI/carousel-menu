@@ -180,12 +180,11 @@ export class SidebarUserAnswerComponent implements OnInit {
       .save(this._userAnswer._id, this._userAnswer)
       .pipe(first())
       .subscribe(
-        (res) => {
+        () => {
           this._translateNotificationsService.success(
             'Success',
             'The answer is updated.'
           );
-          this._userAnswer = res;
           this._resetEdit();
           this._resetSaveVariables();
           this.userAnswerChange.emit(this._userAnswer);
