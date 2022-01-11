@@ -36,6 +36,8 @@ export class SharedTargetingWorldComponent implements OnInit {
 
   private _searchCountries: Array<Country> = [];
 
+  private _showSelectedCountries = false;
+
   constructor(
     private _translateService: TranslateService,
     private _worldMapService: WorldmapService,
@@ -74,7 +76,7 @@ export class SharedTargetingWorldComponent implements OnInit {
       if (!this.isEditable || this.isAdmin) {
         this._emitChanges();
       }
-    })
+    });
   }
 
   /***
@@ -308,6 +310,8 @@ export class SharedTargetingWorldComponent implements OnInit {
   }
 
   private _emitChanges() {
+    console.log(this._geography);
+    console.log(this._continentCountries);
     this.geographyChange.emit(this._geography);
   }
 
@@ -340,6 +344,10 @@ export class SharedTargetingWorldComponent implements OnInit {
     }
   }
 
+  toggleSelectedCountries() {
+    this._showSelectedCountries = !this._showSelectedCountries;
+  }
+
   get continents(): Array<string> {
     return WorldmapService.continentsList;
   }
@@ -362,5 +370,14 @@ export class SharedTargetingWorldComponent implements OnInit {
 
   get currentLang(): string {
     return this._translateService.currentLang;
+  }
+
+
+  get showSelectedCountries(): boolean {
+    return this._showSelectedCountries;
+  }
+
+  set showSelectedCountries(value: boolean) {
+    this._showSelectedCountries = value;
   }
 }

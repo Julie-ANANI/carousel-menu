@@ -179,8 +179,8 @@ export class SharedWorldmapComponent implements OnInit {
     if (!this._countriesNotFoundOnMap.find(code => code.toUpperCase() === country.toUpperCase())) {
       this._countriesNotFoundOnMap.push(country);
     }
-    this._countriesNotFoundOnMap = this._countriesNotFoundOnMap.filter(country =>
-    this._selectedCountries.find(selectedCountry => selectedCountry === country));
+    this._countriesNotFoundOnMap = this._countriesNotFoundOnMap.filter((countryName: string) =>
+    this._selectedCountries.find(selectedCountry => selectedCountry === countryName));
     console.log(this._countriesNotFoundOnMap);
     console.log(this._selectedCountries);
   }
@@ -189,7 +189,7 @@ export class SharedWorldmapComponent implements OnInit {
     if (isPlatformBrowser(this._platformId)) {
       this._worldmapService.getCountriesList().then(response => {
         this._allCountries = response;
-      })
+      });
     }
   }
 
