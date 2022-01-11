@@ -53,7 +53,7 @@
     <div [ngClass]="showSelectedCountries ? 'd-block' : 'd-none'" class="m-top-25">
       <!-- countries selected-->
       <div class="stw-continent-list-wrapper p-top-10">
-        <div class="country-list-wrapper">
+        <div class="country-list-wrapper" style="max-height: 300px; overflow-y: scroll">
           <div *ngFor="let country of geography.include.slice(0, 16)" class="card is-responsive">
             <div class="d-flex align-center" style="min-height: 40px">
 
