@@ -11,7 +11,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { first, takeUntil } from 'rxjs/operators';
 import { InnovationFrontService } from '../../../../../../services/innovation/innovation-front.service';
 import { StatsInterface } from '../../../../../../models/stats';
-import {ConfigService} from '@umius/umi-common-component/services/config';
+import { ConfigService } from '@umius/umi-common-component/services/config';
 import { RolesFrontService } from '../../../../../../services/roles/roles-front.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { TranslateNotificationsService } from '../../../../../../services/translate-notifications/translate-notifications.service';
@@ -23,10 +23,10 @@ import { Question } from '../../../../../../models/question';
 import { Company } from '../../../../../../models/company';
 import { SocketService } from '../../../../../../services/socket/socket.service';
 import { Professional } from '../../../../../../models/professional';
-import {MissionQuestion} from '../../../../../../models/mission';
-import {ErrorFrontService} from '../../../../../../services/error/error-front.service';
+import { MissionQuestion } from '../../../../../../models/mission';
+import { ErrorFrontService } from '../../../../../../services/error/error-front.service';
 import { Table, Config } from '@umius/umi-common-component/models';
-import {CommonService} from "../../../../../../services/common/common.service";
+import { CommonService } from "../../../../../../services/common/common.service";
 
 @Component({
   templateUrl: './admin-project-collection.component.html',
@@ -86,7 +86,8 @@ export class AdminProjectCollectionComponent implements OnInit, OnDestroy {
     private _rolesFrontService: RolesFrontService,
     private _socketService: SocketService,
     private _innovationFrontService: InnovationFrontService
-  ) {}
+  ) {
+  }
 
   ngOnInit() {
     if (isPlatformBrowser(this._platformId)) {
@@ -140,7 +141,11 @@ export class AdminProjectCollectionComponent implements OnInit, OnDestroy {
           this._answers = response.answers;
           this._targetWarnings = this._areThereWarnings();
           this._answers.forEach((answer) => {
-            if ( answer.campaign &&
+            if (answer.professional &&
+              !answer.professional.jobTitle && answer.job) {
+              answer.professional.jobTitle = answer.job;
+            }
+            if (answer.campaign &&
               this._campaignList.findIndex(
                 (list) => list._name === answer.campaign['_id']
               ) === -1
@@ -165,7 +170,9 @@ export class AdminProjectCollectionComponent implements OnInit, OnDestroy {
    * @private
    */
   private _areThereWarnings(): number {
-    return this._answers.filter(ans => {return !!ans.warnings ? ans.warnings.length > 0 : false;}).length;
+    return this._answers.filter(ans => {
+      return !!ans.warnings ? ans.warnings.length > 0 : false;
+    }).length;
   }
 
   private _initAnswers() {
@@ -507,7 +514,7 @@ export class AdminProjectCollectionComponent implements OnInit, OnDestroy {
     const idx = this._answers.findIndex(ans => {
       return ans._id === answer._id;
     });
-    if(idx > -1) {
+    if (idx > -1) {
       this._answers[idx] = answer;
     }
   }
