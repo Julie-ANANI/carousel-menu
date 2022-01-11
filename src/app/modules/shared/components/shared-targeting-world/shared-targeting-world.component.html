@@ -43,7 +43,9 @@
   <div class="stw-toggle-list-wrapper" *ngIf="geography.include.length > 0">
 
     <!-- toggle button -->
-    <button class="button is-link p-no" type="button" (click)="toggleSelectedCountries()">{{ 'SHARED_TARGETING_WORLD.COUNTRY_SELECTED' | translate }} ({{ geography.include.length }})
+    <button class="button is-link p-no" type="button"
+            (click)="toggleSelectedCountries()">{{ 'SHARED_TARGETING_WORLD.COUNTRY_SELECTED' | translate }}
+      ({{ geography.include.length }})
       <i class="icon icon-right" [ngClass]="showSelectedCountries ? 'icon-arrow-down' : 'icon-arrow-right' "></i>
     </button>
     <!-- /toggle button -->
@@ -52,7 +54,7 @@
       <!-- countries selected-->
       <div class="stw-continent-list-wrapper p-top-10">
         <div class="country-list-wrapper">
-          <div *ngFor="let country of geography.include" class="card is-responsive">
+          <div *ngFor="let country of geography.include.slice(0, 16)" class="card is-responsive">
             <div class="d-flex align-center" style="min-height: 40px">
 
               <label class="form-checkbox p-no-right">
@@ -72,17 +74,17 @@
               </figure>
 
               <span class="text-xs">{{ country.names | multiling:currentLang }}</span>
-
             </div>
           </div>
         </div>
+        <button class="button is-link text-sm" *ngIf="geography.include.length > 16">show more...</button>
       </div>
       <!-- /countries selected -->
     </div>
 
   </div>
 
-    <!-- toggle list -->
+  <!-- toggle list -->
   <div class="stw-toggle-list-wrapper">
 
     <!-- toggle button -->
