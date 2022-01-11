@@ -10,7 +10,7 @@ export type QuestionType = 'checkbox' | 'clearbit' | 'list' | 'radio' | 'scale' 
 export type QuestionParametersType = 'color' | 'date' | 'datetime-local' | 'email' | 'month'
   | 'number' | 'password' | 'tel' | 'text' | 'time' | 'url' | 'week';
 
-export interface QuestionOptionLabel {
+export interface QuestionOptionEntry {
   lang: string;
   label: string;
 }
@@ -28,7 +28,7 @@ export interface Option {
   identifier: string;
   color?: string;
   positive?: boolean;
-  entry?: Array<QuestionOptionLabel>
+  entry?: Array<QuestionOptionEntry>
 
   /**
    * TODO remove this
@@ -67,7 +67,7 @@ export interface Question {
    */
   maxOptionsSelect?: number;
 
-  // TODO replace this with entry
+  // TODO remove this
   label: Multiling;
   title: Multiling;
   subtitle: Multiling;

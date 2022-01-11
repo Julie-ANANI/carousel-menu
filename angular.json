@@ -65,6 +65,7 @@
           },
           "configurations": {
             "local": {
+              "buildOptimizer": false,
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",

@@ -28,7 +28,7 @@
 
   <tr *ngFor="let pro of pros" [ngClass]="{'active': pro.isSelected}" (click)="selectPro(pro)">
     <td><input type="checkbox" [(ngModel)]="pro.isSelected"/></td>
-    <td><app-utility-country-flag [country]="pro.country"></app-utility-country-flag></td>
+    <td><umius-country-flag [country]="pro.country"></umius-country-flag></td>
     <td>
       <a *ngIf="pro.profileUrl" [href]="pro.profileUrl" target="_blank"><i class="fa fa-link"></i></a>
       <i class="fa fa-list" (click)="showKeywords(pro._id)"></i>

@@ -8,7 +8,7 @@ import { SidebarUserAnswerComponent } from './sidebar-user-answer.component';
 import { AnswerQuestionComponent } from './answer-question/answer-question.component';
 import { RatingItemComponent } from './rating-item/rating-item.component';
 
-import { CountryFlagModule } from '../../../utility/country-flag/country-flag.module';
+import { CountryFlagModule } from '@umius/umi-common-component/country-flag';
 import { AutoCompleteInputModule } from '../../../utility/auto-complete-input/auto-complete-input.module';
 import { SharedTagsModule } from '../../../shared/components/shared-tags/shared-tags.module';
 import { PipeModule } from '../../../../pipe/pipe.module';

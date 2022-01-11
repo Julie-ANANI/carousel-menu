@@ -8,8 +8,9 @@ export interface CampaignSettingsAB {
   nameWorkflowB: string,
 }
 
-export interface CampaignSettingsEmailTemplateEntry {
+export interface CampaignSettingsEntry {
   readonly lang: string;
+  readonly signature: string;
   readonly launching: {
     subject: string;
     body: string;
@@ -28,20 +29,16 @@ export interface CampaignSettingsEmailTemplateEntry {
   };
 }
 
-export interface CampaignSettingsSignatureEntry {
-  readonly lang: string;
-  readonly signature: string;
-}
-
 // TODO remove multiling
 export interface CampaignSettings {
   defaultWorkflow: string;
   clonedInfo: boolean;
   emails?: Array<EmailTemplate>;
   ABsettings?: CampaignSettingsAB;
+  entry?: Array<CampaignSettingsEntry>;
 
   /**
-   * TODO replace the type with CampaignSettingsEmailTemplateEntry
+   * TODO remove this.
    */
   readonly emailTemplates: {
     readonly launching: {
@@ -86,7 +83,7 @@ export interface CampaignSettings {
     };
   };
 
-  // TODO replace the type with CampaignSettingsSignatureEntry
+  // TODO remove this.
   readonly signatures: {
     readonly en: {
       readonly signature: string;

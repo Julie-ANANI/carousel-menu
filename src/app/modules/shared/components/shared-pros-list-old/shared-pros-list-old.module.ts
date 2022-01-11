@@ -9,7 +9,7 @@ import { SharedSortModule } from '../shared-sort/shared-sort.module';
 import { SharedFilterInputModule } from '../shared-filter-input/shared-filter-input.module';
 import { SharedSmartSelectModule } from '../shared-smart-select/shared-smart-select.module';
 import { PaginationTemplate1Module} from '../../../utility/paginations/pagination-template-1/pagination-template-1.module';
-import { CountryFlagModule } from '../../../utility/country-flag/country-flag.module';
+import { CountryFlagModule } from '@umius/umi-common-component/country-flag';
 import { ModalModule } from "../../../utility/modals/modal/modal.module";
 
 @NgModule({

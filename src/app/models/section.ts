@@ -5,16 +5,16 @@
 import { Question } from './question';
 import { Multiling } from './multiling';
 
-export interface SectionLabel {
+export interface SectionEntry {
   lang: string;
-  value: string;
+  label: string;
 }
 
 // TODO remove multiling
 export interface Section {
   description: 'nothing' | '1st' | '2nd';
   readonly questions: Array<Question>;
-  entry?: Array<SectionLabel>;
+  entry?: Array<SectionEntry>;
 
   /**
    * TODO replace this with Array<SectionLabel>
