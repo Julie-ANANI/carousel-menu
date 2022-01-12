@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import {User} from '../../../models/user.model';
-
-import * as sha1 from 'js-sha1';
+const sha1 = require('js-sha1');
 
 // declare let swellrt;
 
