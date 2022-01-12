@@ -16,7 +16,7 @@ import {Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
 
 import {PieChart} from '../../../../../../models/chart/pie-chart';
-/*import {HorizontalStackedChart} from '../../../../../../models/chart/horizontal-stacked-chart';*/
+
 
 @Component({
   selector: 'app-bar-chart',
@@ -43,7 +43,6 @@ export class BarChartComponent implements OnInit, OnDestroy {
 
   private _barsData: Array<BarData> = [];
   private _pieChart: PieChart = <PieChart>{};
- /* private _horizontalStackedChart : HorizontalStackedChart = <HorizontalStackedChart>{}*/
   private _showAnswers: {[index: string]: boolean} = {};
   private _toggleFilterIcon: {[index: string]: boolean} = {};
   private _ngUnsubscribe: Subject<any> = new Subject<any>();
@@ -54,9 +53,7 @@ export class BarChartComponent implements OnInit, OnDestroy {
         this._barsData = ResponseService.barsData(this.question, answers);
         if ( this.question.controlType === 'radio' ) {
           this._pieChart = ResponseService.pieChartData(this._barsData, answers);
-        } /*else if (this.question.controlType === 'likert-scale'){
-          this._horizontalStackedChart = ResponseService.horizontalStackedChartData(this._barsData, answers);
-        }*/
+        }
       });
   }
 
@@ -132,10 +129,6 @@ export class BarChartComponent implements OnInit, OnDestroy {
   get pieChart(): PieChart {
     return this._pieChart;
   }
-
-  /*get horizontalStackedChart(): HorizontalStackedChart {
-    return this._horizontalStackedChart;
-  }*/
 
   get showAnswers(): { [p: string]: boolean } {
     return this._showAnswers;

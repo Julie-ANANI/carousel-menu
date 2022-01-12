@@ -268,17 +268,11 @@ export class AdminProjectStoryboardComponent implements OnInit, OnDestroy {
 
           switch (question.controlType) {
 
-            case 'likert-scale':
+            case 'radio':
               const pieChartData: PieChart = ResponseService.pieChartData(barsData, answersToShow);
               sections[index].questionType = 'PIE';
               sections[index].content = this._executiveReportFrontService.pieChartSection(pieChartData, this._executiveReport.lang);
               break;
-
-            /*case 'likert-scale':
-              const pieChartData: PieChart = ResponseService.pieChartData(barsData, answersToShow);
-              sections[index].questionType = 'PIE';
-              sections[index].content = ExecutiveReportFrontService.pieChartSection(pieChartData, this._executiveReport.lang);
-              break; */
 
             case 'checkbox':
               sections[index].questionType = 'BAR';
@@ -294,7 +288,6 @@ export class AdminProjectStoryboardComponent implements OnInit, OnDestroy {
             case 'likert-scale':
               const likertScaleData = ResponseService.likertScaleChartData(answersToShow, question, this.currentLang);
               sections[index].questionType = 'LIKERT-SCALE';
-              // @ts-ignore
               sections[index].content = this._executiveReportFrontService.likertScaleSection(likertScaleData, this._executiveReport.lang);
 
             default:
@@ -359,7 +352,7 @@ export class AdminProjectStoryboardComponent implements OnInit, OnDestroy {
   }
 
   private _createExecutiveReport() {
-    console.log(this._selectedLang, this._innovation._id);
+
     this._executiveReportService.create(this._selectedLang, this._innovation._id)
       .pipe(first())
       .subscribe((response) => {

@@ -502,7 +502,6 @@ export class MissionQuestionService {
         })
       };
     }
-
     return <MissionQuestionOption>{};
   }
 

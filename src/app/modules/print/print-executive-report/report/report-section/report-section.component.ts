@@ -11,7 +11,7 @@ import {
   SectionPie,
   SectionQuote,
   SectionRanking,
-  SectionLikertScale
+  SectionLikertScale,
 } from '../../../../../models/executive-report';
 import { ExecutivePieChart, PieChart } from '../../../../../models/chart/pie-chart';
 import { BarData } from '../../../../shared/components/shared-market-report/models/bar-data';
@@ -79,7 +79,7 @@ export class ReportSectionComponent implements OnChanges {
       const _answers = this._responseService.answersToShow(this.answers, _question);
 
       if (_question && _question.controlType) {
-
+        console.log(_question.controlType);
         switch (_question.controlType) {
 
           case 'checkbox':
@@ -107,6 +107,7 @@ export class ReportSectionComponent implements OnChanges {
             break;
 
           case 'likert-scale':
+
             this._section = {
               questionId: _quesId,
               title: this.report.lang === 'fr' ? _titleFrench : _titleEnglish,
@@ -354,7 +355,7 @@ export class ReportSectionComponent implements OnChanges {
    */
   private _initLikertScaleContent(tagsData: Array<Tag>, title: Multiling): SectionLikertScale {
     if (tagsData.length > 0) {
-       return {
+      return {
         name: tagsData[0].label[this.report.lang] || '',
         visibility: true,
         legend: tagsData[0].count > 1 ? tagsData[0].count + 'X' : '',

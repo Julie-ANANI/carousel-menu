@@ -216,6 +216,14 @@ export const MARKET_REPORT = {
     'REALLY_RESET_REPORT': 'Do you really want to reset the executive report?',
     'REALLY_END_PROJECT': 'Do you really want to end this project? Please keep in mind that after this you won\'t be able to make any further changes.',
     '': '',
+  },
+
+  'LIKERT-SCALE_SECTION': {
+    'TOTALLY_INVALIDATED': 'TOTALLY INVALIDATED',
+    'INVALIDED': 'INVALIDED',
+    'UNCERTAIN': 'UNCERTAIN',
+    'VALIDATED': 'VALIDATED',
+    'TOTALLY_VALIDATED': 'TOTALLY VALIDATED',
   }
 
 };

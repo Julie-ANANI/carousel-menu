@@ -1,26 +1,16 @@
 [{
   "name": "TOTALLY_INVALIDATED",
-  "color": "#EA5858",
-  "scale_start": 0,
-  "scale_end": 4
+  "color": "#EA5858"
 }, {
   "name": "INVALIDED",
-  "color": "#F89424",
-  "scale_start": 4,
-  "scale_end": 8
+  "color": "#F89424"
 }, {
   "name": "UNCERTAIN",
-  "color": "#BBC7D6",
-  "scale_start": 8,
-  "scale_end": 12
+  "color": "#BBC7D6"
 }, {
   "name": "VALIDATED",
-  "color": "#99E04B",
-  "scale_start": 12,
-  "scale_end": 16
+  "color": "#99E04B"
 }, {
   "name": "TOTALLY_VALIDATED",
-  "color": "#2ECC71",
-  "scale_start": 16,
-  "scale_end": 20
+  "color": "#2ECC71"
 }]

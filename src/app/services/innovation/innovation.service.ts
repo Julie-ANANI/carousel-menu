@@ -216,7 +216,7 @@ export class InnovationService {
   public executiveReportPDF(innovationId: string): Observable<any> {
     let headers = new HttpHeaders();
     headers = headers.set('Accept', 'application/pdf');
-    return this._http.get(`/innovation/${innovationId}/©`, {headers: headers, responseType: 'blob'});
+    return this._http.get(`/innovation/${innovationId}/executiveReportExport`, {headers: headers, responseType: 'blob'});
   }
 
   public getDeliverableJob(innovationId: string, type?: JobType): Observable<Array<Job>> {

@@ -13,7 +13,6 @@ import {htmlTagsRegex} from '../../../../../../utils/regex';
 import {Mission, MissionQuestion, MissionTemplate} from '../../../../../../models/mission';
 import {MissionFrontService} from '../../../../../../services/mission/mission-front.service';
 import {MissionQuestionService} from '../../../../../../services/mission/mission-question.service';
-import {HorizontalStackedChart} from '../../../../../../models/chart/horizontal-stacked-chart';
 
 @Component({
   selector: 'app-question-conclusion',
@@ -31,14 +30,16 @@ export class QuestionConclusionComponent implements OnInit {
       this._missionQuestionService.template = (<Mission>this._innovation.mission).template || <MissionTemplate>{};
     }
   }
+
   @Input() set question(value: Question | MissionQuestion) {
     this._question = value;
   }
   @Input() stats: { nbAnswers: number, percentage: number } = null;
-  @Input() horizontalStackedChart : HorizontalStackedChart = <HorizontalStackedChart>{};
+  @Input() reportingLang = this._translateService.currentLang;
+
 
   @Output() questionChanged = new EventEmitter<Question>();
-  @Input() reportingLang = this._translateService.currentLang;
+
 
   private _isMainDomain = environment.domain === 'umi' || false;
   private _showEditor = false;
@@ -48,10 +49,12 @@ export class QuestionConclusionComponent implements OnInit {
   private _innovation: Innovation = <Innovation>{};
   private _question: Question | MissionQuestion = <MissionQuestion | Question>{};
 
+
   constructor(private _translateService: TranslateService,
               private _missionQuestionService: MissionQuestionService,
               private _dataService: DataService,
               private _innovationFrontService: InnovationFrontService) {}
+
 
   ngOnInit() {
     if (!!this._innovation && !this._innovation.marketReport) {

@@ -4,7 +4,7 @@ import {
   SectionLikertScale
 } from '../../../../../../../models/executive-report';
 import {CommonService} from '../../../../../../../services/common/common.service';
-import colorsAndNamesAndPercentage from '../../../../../../../../../assets/json/likert-scale_executive-report.json';
+import colorsAndNames from '../../../../../../../../../assets/json/likert-scale_executive-report.json';
 
 @Component({
   selector: 'app-admin-section-type-likert-scale',
@@ -26,7 +26,7 @@ export class TypeLikertScaleComponent {
   @Output() sectionChange: EventEmitter<ExecutiveSection> = new EventEmitter<ExecutiveSection>();
   @Output() playSection: EventEmitter<void> = new EventEmitter<void>();
 
-  private _colorsAndNames = colorsAndNamesAndPercentage;
+  private _colorsAndNames = colorsAndNames;
   private _section: ExecutiveSection = <ExecutiveSection>{};
   private _titleColor = '';
   private _abstractColor = '';
@@ -73,8 +73,6 @@ export class TypeLikertScaleComponent {
 
   public chooseColor(index: number) {
 
-    debugger;
-
     this._content.color = this._colorsAndNames[index].color;
     this._content.name = this._colorsAndNames[index].name;
     this.emitChanges();
@@ -100,7 +98,7 @@ export class TypeLikertScaleComponent {
     return this._legendColor;
   }
 
-  get colorsAndNames(): { color: string; name: string }[] {
+  get colorsAndNames(): { name: string , color: string; }[] {
     return this._colorsAndNames;
   }
 }

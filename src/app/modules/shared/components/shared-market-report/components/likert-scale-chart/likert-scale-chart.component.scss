@@ -1,0 +1,149 @@
+@import "../../../../../../../style/framework/src/variables";
+
+// Container //
+.likert-scale-chart {
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  justify-content: center;
+  width: 300px;
+  height: 250px;
+
+
+  // Name of Result //
+  .name-result{
+    display: inline-block;
+    font-size: 25px;
+    font-weight: $font-weight-bold;
+    width:184px;
+    justify-content: center;
+    justify-items: center;
+    align-items: center;
+    margin-bottom: 40px;
+  }
+
+
+  // Icons //
+
+  //Icons for marker//
+  .icon-container {
+
+    .icon-location::before,::after {
+      border: 2px solid currentColor;
+      font-size: 40px;
+      color: white;
+      //left: -5.5px;
+    }
+
+    /*.icon-location::before,::after:hover {
+      border: 2px solid currentColor;
+      font-size: 40px;
+      color: white;
+      left: -5.5px;
+    }*/
+  }
+
+  .fas.icon-container {
+    margin: 0 0 1em 8.5em;
+    position: relative;
+
+    .fa-user {
+
+      &.one {
+        font-size: 50px;
+        z-index: $zindex-1;
+        color: #2E6188;
+        margin: -16px 23px 0px 2px;;
+      }
+
+      &.two {
+        position: absolute;
+        font-size: 47px;
+        margin: -0.2em 0em 0em -0.5em;
+        z-index: $zindex-1;
+      }
+
+      &.three {
+        position: absolute;
+        font-size: 37px;
+        margin: -2.3px -42px 7px -0.5px;
+        z-index: $zindex-0;
+      }
+
+    }
+
+  }
+
+
+  // Progress bar //
+  .bar-progress {
+    background: linear-gradient(to right, rgba(234, 88, 88, 0.5) 20%, rgba(248, 148, 36, 0.5) 20% 40%,
+    rgba(187, 199, 214, 0.5) 40% 60%, rgba(46, 204, 113, 0.5) 60% 80%, rgba(153, 224, 75, 0.5) 80%);
+    border-radius: 20px;
+    justify-content: center;
+    justify-items: center;
+    height: 20px;
+    z-index: $zindex-0;
+
+    .totally-invalidated {
+      background: linear-gradient(to right, rgba(234, 88, 88, 1) 20%, rgba(248, 148, 36, 0.5) 20% 40%,
+      rgba(187, 199, 214, 0.5) 40% 60%, rgba(46, 204, 113, 0.5) 60% 80%, rgba(153, 224, 75, 0.5) 80%);
+      z-index: $zindex-1;
+    }
+
+    &.invalided {
+      background: linear-gradient(to right, rgba(234, 88, 88, 0.5) 20%, rgba(248, 148, 36, 1) 20% 40%,
+      rgba(187, 199, 214, 0.5) 40% 60%, rgba(46, 204, 113, 0.5) 60% 80%, rgba(153, 224, 75, 0.5) 80%);
+      z-index: $zindex-1;
+    }
+
+    &.uncertain {
+      background: linear-gradient(to right, rgba(234, 88, 88, 0.5) 20%, rgba(248, 148, 36, 0.5) 20% 40%,
+      rgba(187, 199, 214, 1) 40% 60%, rgba(46, 204, 113, 0.5) 60% 80%, rgba(153, 224, 75, 0.5) 80%);
+      z-index: $zindex-1;
+    }
+
+      &.validated {
+        background: linear-gradient(to right, rgba(234, 88, 88, 0.5) 20%, rgba(248, 148, 36, 0.5) 20% 40%,
+        rgba(187, 199, 214, 0.5) 40% 60%, rgba(46, 204, 113, 1) 60% 80%, rgba(153, 224, 75, 0.5) 80%);
+        z-index: $zindex-1;
+      }
+
+      &.totally-validated {
+        background: linear-gradient(to right, rgba(234, 88, 88, 0.5) 20%, rgba(248, 148, 36, 0.5) 20% 40%,
+        rgba(187, 199, 214, 0.5) 40% 60%, rgba(46, 204, 113, 0.5) 60% 80%, rgba(153, 224, 75, 1) 80%);
+        z-index: $zindex-1;
+      }
+    }
+
+
+  // Container marker //
+  .bar-progress-marker {
+    position: absolute;
+    text-align: center;
+    top: -39px;
+    left: 0;
+
+    .marker-pointer {
+      background-color: white;
+      width: 2px;
+      height: 23px;
+      z-index: $zindex-3;
+      margin: 4px 0  0 3px;
+    }
+
+    .average-evaluation {
+      display: block;
+      left: 0%;
+      align-content: center;
+      justify-content: center;
+      margin: 5px 0 0 -16px;
+      font-weight: $font-weight-medium;
+      font-size: $font-size-sm;
+    }
+  }
+
+}
+
+
+

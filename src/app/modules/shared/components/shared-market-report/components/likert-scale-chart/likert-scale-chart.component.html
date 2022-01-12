@@ -1,0 +1,49 @@
+<div class="likert-scale-chart">
+
+    <div class="fas icon-container">
+        <div class="fa-user one"></div>
+        <div class="fa-user two"></div>
+        <div class="fa-user three"></div>
+    </div>
+
+  <div *ngIf="stackedChart && stackedChart.likertScaleChart">
+
+    <span [ngStyle]="{ 'color': content }" class="name-result">
+      {{ ('MARKET_REPORT.LIKERT-SCALE_SECTION.' + label) | uppercase| translate }}
+    </span>
+
+    <div class="relative">
+      <div class="bar-progress"
+        (mouseover)="isShowResult=true"
+        (mouseout)="isShowResult=false"
+
+        [ngClass]="{
+        'totally-invalidated': (label | uppercase) === 'TOTALLY_INVALIDATED',
+        'invalided': (label | uppercase) === 'INVALIDED',
+        'uncertain': (label | uppercase) === 'UNCERTAIN',
+        'validated': (label | uppercase) === 'VALIDATED',
+        'totally-validated ': (label | uppercase) === 'TOTALLY_VALIDATED'
+        }">
+      </div>
+
+      <div class="bar-progress-marker"
+         (mouseover)="isShowResult=true"
+         (mouseout)="isShowResult=false"
+
+         [ngStyle]="{ 'left': scorePercentage + '%' }">
+
+        <div class="icon-container"><i class="icon icon-location"
+                                    ></i></div>
+        <div class="marker-pointer"></div>
+        <div class="average-evaluation"
+         *ngIf="isShowResult">
+          {{ stackedChart.averageGeneralEvaluation }} /20
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

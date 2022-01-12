@@ -23,6 +23,7 @@ export class ExecutiveSectionComponent {
   @Input() answers: Array<Answer> = [];
   @Input() reportLang: 'en';
   @Input() sectionIndex = 0;
+
   @Input() set section(value: ExecutiveSection) {
     this._section = {
       questionId: value.questionId || '',
@@ -41,6 +42,7 @@ export class ExecutiveSectionComponent {
   private _enableVisualRanking = false;
   private _enableVisualPie = false;
   private _enableVisualLikertScale = false;
+
   private _resetVisuals() {
     this._enableVisualBar = false;
     this._enableVisualRanking = false;
@@ -50,6 +52,7 @@ export class ExecutiveSectionComponent {
 
   constructor(private _executiveReportFrontService: ExecutiveReportFrontService,
               private _responseService: ResponseService) { }
+
 
   public emitChanges() {
     if (this.isEditable) {
@@ -77,8 +80,7 @@ export class ExecutiveSectionComponent {
           break;
 
         case 'likert-scale':
-          this._enableVisualPie = true;
-          this._enableVisualBar = true;
+          this._enableVisualLikertScale = true;
           break;
 
         case 'checkbox':
@@ -291,7 +293,6 @@ export class ExecutiveSectionComponent {
       let data;
       if (question.controlType === 'likert-scale') {
         data = ResponseService.likertScaleChartData(answers, question, this.reportLang);
-        // @ts-ignore
         this._section.content = this._executiveReportFrontService.likertScaleSection(data, this.reportLang);
       } else {
         data = ResponseService.tagsList(answers, question);
@@ -299,6 +300,7 @@ export class ExecutiveSectionComponent {
       }
     }
   }
+
 
   private _getQuestion(identifier: string): Question | MissionQuestion {
     const index = this.questions.findIndex((ques) => ques.identifier === identifier);
@@ -315,18 +317,30 @@ export class ExecutiveSectionComponent {
     return MissionQuestionService.label(question, 'title', this.reportLang);
   }
 
+  /**
+   * @type {boolean}
+   * */
   get section(): ExecutiveSection {
     return this._section;
   }
 
+  /**
+   * @type {boolean}
+   * */
   get enableVisualBar(): boolean {
     return this._enableVisualBar;
   }
 
+  /**
+   * @type {boolean}
+   * */
   get enableVisualRanking(): boolean {
     return this._enableVisualRanking;
   }
 
+  /**
+   * @type {boolean}
+   * */
   get enableVisualPie(): boolean {
     return this._enableVisualPie;
   }

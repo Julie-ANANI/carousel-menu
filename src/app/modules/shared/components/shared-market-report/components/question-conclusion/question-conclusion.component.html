@@ -120,7 +120,7 @@
     </ng-container>
     <!-- /pie chart -->
 
-    <!-- horizontal stacked chart -->
+    <!-- likert-scale chart -->
     <ng-container *ngSwitchCase="'likert-scale'">
 
       <app-bluesquare
@@ -128,20 +128,13 @@
         [readonly]="readonly"
         [percentage]="stats.percentage"
         [subtitle]="questionSubtitle()">
-        <app-utility-horizontal-stacked-chart
-          (positiveLabelChanged)="positiveAnswerLabelChanged($event)"
-          (chartSectionColorChanged)="chartSectionColorChanged($event)"
-          (chartSectionPositiveChanged)="positiveAnswerChange($event)"
-          [horizontalStackedChart]="horizontalStackedChart"
-          [readonly]="readonly"
+        <app-likert-scale-chart
           [reportingLang]="reportingLang"
-          [showFavorable]="showPositiveAnswers"
-          [positiveSections]="positivesAnswers"
-          [favorableAnswersLabel]="positiveAnswerLabels()"
-        ></app-utility-horizontal-stacked-chart>
+          [question]="question"
+        ></app-likert-scale-chart>
       </app-bluesquare>
     </ng-container>
-    <!-- /horizontal stacked chart -->
+    <!-- /likert-scale chart -->
 
     <!-- ranking chart -->
     <ng-container *ngSwitchCase="'ranking'">
