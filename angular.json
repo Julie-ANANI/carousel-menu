@@ -47,7 +47,6 @@
           },
           "configurations": {
             "local": {
-              "buildOptimizer": false,
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
@@ -218,14 +217,6 @@
             "serverTarget": "umi:server"
           },
           "configurations": {
-            "local": {
-              "browserTarget": "umi:build:local",
-              "serverTarget": "umi:server:local"
-            },
-            "dev": {
-              "browserTarget": "umi:build:dev",
-              "serverTarget": "umi:server:dev"
-            },
             "production": {
               "browserTarget": "umi:build:production",
               "serverTarget": "umi:server:production"
