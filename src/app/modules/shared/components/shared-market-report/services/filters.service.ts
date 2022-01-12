@@ -61,9 +61,22 @@ export class FilterService {
               answer.answers[filter.questionId].some((item: any) => item.name === filter.value);
           });
           break;
+        /**
+         * country exists in answer and pro.
+         * in Answer.country,
+         * usually it's an object contains {name: '', flag: '', domain:''},
+         * but sometimes it would be a string, so we add a condition to avoid this case
+         * in pro, it's a string. could be upperCase or lowerCase
+         */
         case 'COUNTRIES':
           filteredAnswers = filteredAnswers.filter((answer) => {
-            const country = (answer.country && answer.country.flag) || answer.professional.country;
+            let country = '';
+            if(answer.country && typeof answer.country === 'object' && answer.country.flag){
+              country = answer.country.flag.toUpperCase()
+            }
+            if(!country){
+              country = answer.professional.country.toUpperCase();
+            }
             const selectedCountries = Object.keys(filter.value.countries).filter((key) => filter.value.countries[key]);
             return selectedCountries.includes(country);
           });
