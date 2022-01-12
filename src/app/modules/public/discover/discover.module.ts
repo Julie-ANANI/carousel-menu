@@ -23,23 +23,23 @@ import {CleanHtmlModule} from '../../../pipe/cleanHtml/cleanHtml.module';
 import {LangEntryPipeModule} from '../../../pipe/lang-entry/langEntryPipe.module';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        DiscoverRoutingModule,
-        TranslateModule.forChild(),
-        PipeModule,
-        SharedLoaderModule,
-        FooterModule,
-        HeaderUnauthModule,
-        ModalMediaModule,
-        ModalModule,
-        HeaderModule,
-        SearchInput2Module,
-        ErrorTemplate1Module,
-        PaginationTemplate2Module,
-        CleanHtmlModule,
-        LangEntryPipeModule
-    ],
+  imports: [
+    CommonModule,
+    DiscoverRoutingModule,
+    TranslateModule.forChild(),
+    PipeModule,
+    SharedLoaderModule,
+    FooterModule,
+    HeaderUnauthModule,
+    ModalMediaModule,
+    ModalModule,
+    HeaderModule,
+    SearchInput2Module,
+    ErrorTemplate1Module,
+    PaginationTemplate2Module,
+    CleanHtmlModule,
+    LangEntryPipeModule
+  ],
   declarations: [
     DiscoverComponent,
     DiscoverDescriptionComponent,

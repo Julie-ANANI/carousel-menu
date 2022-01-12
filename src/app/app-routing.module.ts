@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { ExtraOptions, Routes, RouterModule } from '@angular/router';
+import { Routes, RouterModule } from '@angular/router';
 
 import { NonAuthGuard } from './guards/non-auth-guard.service';
 import { AuthGuard } from './guards/auth-guard.service';
@@ -61,20 +61,13 @@ const appRoutes: Routes = [
   { path: '**', component: NotFoundComponent },
 ];
 
-/**
- * Remember: to work perfectly of the QuicklinkStrategy you need to import and export the module 'QuicklinkModule'
- * in the modules if and only that contains the link and its need to <a> tag.
- * More info: npmjs.com/package/ngx-quicklink
- */
-const config: ExtraOptions = {
-  initialNavigation: 'enabled',
-  scrollPositionRestoration: 'top',
-  onSameUrlNavigation: 'reload',
-  anchorScrolling: 'enabled'
-};
-
 @NgModule({
-  imports: [RouterModule.forRoot(appRoutes, config)],
+  imports: [RouterModule.forRoot(appRoutes, {
+    initialNavigation: 'enabled',
+    scrollPositionRestoration: 'top',
+    onSameUrlNavigation: 'reload',
+    anchorScrolling: 'enabled'
+})],
   exports: [RouterModule]
 })
 

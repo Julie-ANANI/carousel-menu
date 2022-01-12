@@ -7,90 +7,111 @@ import 'reflect-metadata';
 import * as XHR2 from 'xhr2';
 XHR2.prototype._restrictedHeaders.cookie = false;
 
-import { enableProdMode } from '@angular/core';
+import { ngExpressEngine } from '@nguniversal/express-engine';
 
 import * as express from 'express';
 import * as compression from 'compression';
+import * as cookieparser from 'cookie-parser';
 
+import { extname, join } from 'path';
 import { lookup } from 'mime-types';
-import { join, extname } from 'path';
 
-enableProdMode();
+import { AppServerModule } from './src/main.server';
+import { APP_BASE_HREF } from '@angular/common';
 
-// Express server
-const app = express();
+import { environment} from './src/environments/environment';
+import { enableProdMode } from '@angular/core';
+import { REQUEST, RESPONSE } from '@nguniversal/express-engine/tokens';
 
-const PORT = process.env.PORT || 3080;
-const DIST_FOLDER = join(process.cwd(), 'dist');
+if (environment.production) {
+  enableProdMode();
+}
 
-// * NOTE :: leave this as require() since this file is built Dynamically from webpack
-const { AppServerModuleNgFactory, LAZY_MODULE_MAP } = require('./dist/server/main');
+// The Express app is exported so that it can be used by serverless Functions.
+export function app() {
+  const server = express();
+  const distFolder = join(process.cwd(), 'dist/browser');
 
-// Express Engine
-import { ngExpressEngine } from '@nguniversal/express-engine';
-// Import module map for lazy loading
-import { provideModuleMap } from '@nguniversal/module-map-ngfactory-loader';
+  // Our Universal express-engine (found @ https://github.com/angular/universal/tree/master/modules/express-engine)
+  server.engine('html', ngExpressEngine({
+    bootstrap: AppServerModule,
+  }));
 
-app.engine('html', ngExpressEngine({
-  bootstrap: AppServerModuleNgFactory,
-  providers: [
-    provideModuleMap(LAZY_MODULE_MAP)
-  ]
-}));
+  server.set('view engine', 'html');
+  server.set('views', distFolder);
 
-app.set('view engine', 'html');
-app.set('views', join(DIST_FOLDER, 'browser'));
+  server.use('*', (req, res, next) => {
+    res.header('X-powered-by', 'Blood, sweat, and tears');
+    next();
+  });
 
-app.use('*', (req, res, next) => {
-  res.header('X-powered-by', 'Blood, sweat, and tears!');
-  next();
-});
-
-app.use('*.*', function (req, res, next) {
-  const indexParams = req.url.indexOf('?');
-  if (indexParams !== - 1) {
-    req.url = req.url.substring(0, indexParams) + '.gz' + req.url.substring(indexParams);
-  } else {
-    req.url = req.url + '.gz';
-  }
-  res.set('Content-Encoding', 'gzip');
-  res.set('Content-Type', lookup(extname(req.originalUrl)) as any);
-  next();
-});
-
-// Server static files from /browser
-app.get('*.*', express.static(join(DIST_FOLDER, 'browser'), {
-  maxAge: '1y'
-}));
-
-// Use compression only for Universal routes, not static files
-app.use(compression());
-
-// All regular routes use the Universal engine
-app.get('*', (req, res) => {
-  res.sendFile(join(DIST_FOLDER, 'browser/index.html'));
-  /*res.render('index', {
-    req: req,
-    res: res,
-    providers: [
-      {
-        provide: 'REQUEST', useValue: (req)
-      },
-      {
-        provide: 'RESPONSE', useValue: (res)
-      }
-    ]
-  }, (err, html) => {
-    if (err) {
-      // Here we catch the errors and we send back a generic error message.
-      console.error(err);
-      res.send('An error occurred ' + err.message);
+  server.use('*.*', (req, res, next) => {
+    const indexParams = req.url.indexOf('?');
+    if (indexParams !== - 1) {
+      req.url = req.url.substring(0, indexParams) + '.gz' + req.url.substring(indexParams);
+    } else {
+      req.url = req.url + '.gz';
     }
-    res.send(html);
-  });*/
-});
+    res.set('Content-Encoding', 'gzip');
+    res.set('Content-Type', lookup(extname(req.originalUrl)) as any);
+    next();
+  });
 
-// Start up the Node server
-app.listen(PORT, () => {
-  console.log(`Node Express server listening on http://localhost:${PORT}`);
-});
+  // Example Express Rest API endpoints
+  // server.get('/api/**', (req, res) => { });
+  // Serve static files from /browser
+  server.get('*.*', express.static(distFolder, {
+    maxAge: '1y'
+  }));
+
+  // gzip
+  server.use(compression());
+
+  // cookies
+  server.use(cookieparser());
+
+  // All regular routes use the Universal engine
+  server.get('*', (req, res) => {
+    res.render('index', {
+      req,
+      res,
+      providers: [
+        {provide: APP_BASE_HREF, useValue: req.baseUrl},
+        {provide: REQUEST, useValue: req},
+        {provide: RESPONSE, useValue: res}
+      ]
+    }, (err, html) => {
+      if (err) {
+        // Here we catch the errors, and we send back a generic error message.
+        console.error(err);
+        res.send(`An error occured: ${err.message}`);
+      }
+      return res.send(html)
+    });
+  });
+
+  return server;
+}
+
+function run() {
+  const port = process.env.PORT || 3080;
+
+  // Start up the Node server
+  const server = app();
+
+  server.listen(port, () => {
+    console.log(`Node Express server listening on http://localhost:${port}`);
+  });
+}
+
+// Webpack will replace 'require' with '__webpack_require__'
+// '__non_webpack_require__' is a proxy to Node 'require'
+// The below code is to ensure that the server is run only when not requiring the bundle.
+declare const __non_webpack_require__: NodeRequire;
+const mainModule = __non_webpack_require__.main;
+const moduleFilename = mainModule && mainModule.filename || '';
+if (moduleFilename === __filename || moduleFilename.includes('iisnode')) {
+  run();
+}
+
+export * from './src/main.server';

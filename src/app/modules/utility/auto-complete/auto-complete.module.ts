@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import {ModuleWithProviders, NgModule} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -13,10 +13,10 @@ import { NguiAutoComplete } from './auto-complete';
     entryComponents: [NguiAutoCompleteComponent]
 })
 export class NguiAutoCompleteModule {
-    public static forRoot() {
-        return {
-            ngModule: NguiAutoCompleteModule,
-            providers: [NguiAutoComplete]
-        };
-    }
+    public static forRoot(): ModuleWithProviders<NguiAutoCompleteModule> {
+    return {
+        ngModule: NguiAutoCompleteModule,
+        providers: [NguiAutoComplete]
+    };
+}
 }

@@ -1,4 +1,5 @@
 {
+  "baseUrl": "./",
   "buildOnSave": false,
   "compileOnSave": false,
   "compilerOptions": {
@@ -8,6 +9,7 @@
     "moduleResolution": "node",
     "sourceMap": true,
     "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true,
     "emitDecoratorMetadata": true,
     "importHelpers": true,
     "experimentalDecorators": true,
@@ -27,6 +29,8 @@
     "dist",
     "node_modules",
     "server.ts",
-    "e2e"
+    "e2e",
+    "test.ts",
+    "**/*.spec.ts"
   ]
 }
