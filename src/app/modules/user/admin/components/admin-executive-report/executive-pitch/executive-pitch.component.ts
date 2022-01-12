@@ -23,7 +23,7 @@ export class ExecutivePitchComponent {
 
   @Output() pitchChange: EventEmitter<string> = new EventEmitter<string>();
 
-  @ViewChild('pitchText', {read: ElementRef, static: false}) pitchText: ElementRef;
+  @ViewChild('pitchText', { read: ElementRef }) pitchText: ElementRef;
 
   private _pitch = '';
 

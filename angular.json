@@ -9,32 +9,14 @@
       "prefix": "app",
       "schematics": {
         "@schematics/angular:component": {
-          "styleext": "scss",
-          "spec": false
-        },
-        "@schematics/angular:class": {
-          "spec": false
-        },
-        "@schematics/angular:directive": {
-          "spec": false
-        },
-        "@schematics/angular:guard": {
-          "spec": false
-        },
-        "@schematics/angular:module": {
-          "spec": false
-        },
-        "@schematics/angular:pipe": {
-          "spec": false
-        },
-        "@schematics/angular:service": {
-          "spec": false
+          "style": "scss"
         }
       },
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "aot": true,
             "outputPath": "dist/browser",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -65,6 +47,12 @@
           },
           "configurations": {
             "local": {
+              "budgets": [
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ],
               "buildOptimizer": false,
               "fileReplacements": [
                 {
@@ -74,6 +62,12 @@
               ]
             },
             "dev": {
+              "budgets": [
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ],
               "optimization": true,
               "outputHashing": "all",
               "extractCss": true,
@@ -95,6 +89,12 @@
               ]
             },
             "production": {
+              "budgets": [
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ],
               "optimization": true,
               "outputHashing": "all",
               "extractCss": true,
@@ -116,6 +116,12 @@
               ]
             },
             "demo": {
+              "budgets": [
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ],
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
@@ -139,7 +145,8 @@
                   "replace": "src/environments/environment.ts",
                   "with": "src/environments/umi/environment.dev.ts"
                 }
-              ]
+              ],
+              "optimization": true
             },
             "local": {
               "fileReplacements": [
@@ -147,7 +154,8 @@
                   "replace": "src/environments/environment.ts",
                   "with": "src/environments/umi/environment.local.ts"
                 }
-              ]
+              ],
+              "optimization": true
             },
             "production": {
               "fileReplacements": [
@@ -155,7 +163,8 @@
                   "replace": "src/environments/environment.ts",
                   "with": "src/environments/umi/environment.prod.ts"
                 }
-              ]
+              ],
+              "optimization": true
             }
           }
         },
@@ -261,6 +270,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "aot": true,
             "outputPath": "dist/browser",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -291,6 +301,12 @@
           },
           "configurations": {
             "local": {
+              "budgets": [
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ],
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
@@ -299,6 +315,12 @@
               ]
             },
             "dev": {
+              "budgets": [
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ],
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
@@ -307,6 +329,12 @@
               ]
             },
             "production": {
+              "budgets": [
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ],
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": {
@@ -343,7 +371,8 @@
                   "replace": "src/environments/environment.ts",
                   "with": "src/environments/dynergie/environment.dynergie.dev.ts"
                 }
-              ]
+              ],
+              "optimization": true
             },
             "local": {
               "fileReplacements": [
@@ -351,7 +380,8 @@
                   "replace": "src/environments/environment.ts",
                   "with": "src/environments/dynergie/environment.dynergie.local.ts"
                 }
-              ]
+              ],
+              "optimization": true
             },
             "production": {
               "fileReplacements": [
@@ -359,7 +389,8 @@
                   "replace": "src/environments/environment.ts",
                   "with": "src/environments/dynergie/environment.dynergie.prod.ts"
                 }
-              ]
+              ],
+              "optimization": true
             }
           }
         },
@@ -438,6 +469,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "aot": true,
             "outputPath": "dist/browser",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -468,6 +500,12 @@
           },
           "configurations": {
             "local": {
+              "budgets": [
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ],
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
@@ -476,6 +514,12 @@
               ]
             },
             "production": {
+              "budgets": [
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ],
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": {
@@ -512,7 +556,8 @@
                   "replace": "src/environments/environment.ts",
                   "with": "src/environments/multivalente/environment.multivalente.local.ts"
                 }
-              ]
+              ],
+              "optimization": true
             },
             "production": {
               "fileReplacements": [
@@ -520,7 +565,8 @@
                   "replace": "src/environments/environment.ts",
                   "with": "src/environments/multivalente/environment.multivalente.prod.ts"
                 }
-              ]
+              ],
+              "optimization": true
             }
           }
         },
@@ -592,7 +638,7 @@
   "schematics": {
     "@schematics/angular:component": {
       "prefix": "app",
-      "styleext": "scss"
+      "style": "scss"
     },
     "@schematics/angular:directive": {
       "prefix": "app",

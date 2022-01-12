@@ -6,3 +6,5 @@ export { AppServerModule } from './app/app.server.module';
 if (environment.production) {
   enableProdMode();
 }
+
+export { renderModule, renderModuleFactory } from '@angular/platform-server';
