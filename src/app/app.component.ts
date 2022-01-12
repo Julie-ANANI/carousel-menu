@@ -10,7 +10,7 @@ import { SocketService } from './services/socket/socket.service';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
-// import { WorldmapService } from "./services/worldmap/worldmap.service";
+import { WorldmapService } from "./services/worldmap/worldmap.service";
 
 @Component({
   selector: 'app-root',
@@ -51,7 +51,7 @@ export class AppComponent implements OnInit, OnDestroy {
               private _authService: AuthService,
               private _mouseService: MouseService,
               private _socketService: SocketService,
-              // private _worldMapService: WorldmapService,
+              private _worldMapService: WorldmapService,
               private _translateNotificationsService: TranslateNotificationsService) {
   }
 
@@ -69,9 +69,9 @@ export class AppComponent implements OnInit, OnDestroy {
       this._mouseEvent();
     }
 
-    /*this._worldMapService.getCountriesList().then(_ => {
+    this._worldMapService.getCountriesList().then(_ => {
       console.log('worldMap service connected');
-    })*/
+    });
   }
 
   @HostListener('mouseup', ['$event'])

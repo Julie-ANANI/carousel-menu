@@ -20,7 +20,7 @@ steps:
     event:
       - push
     branch:
-      - UMI-2193_angular-9.1.15
+      - development
 
 - name: dockerDev
   image: plugins/docker
@@ -39,7 +39,7 @@ steps:
     event:
       - push
     branch:
-      - UMI-2193_angular-9.1.15
+      - development
 
 - name: rancherDev
   image: peloton/drone-rancher
@@ -57,7 +57,7 @@ steps:
     event:
       - push
     branch:
-      - UMI-2193_angular-9.1.15
+      - development
 
 ## UMI production steps
 ## This will build the base image. The base image for the front is the same for all instances
@@ -70,7 +70,7 @@ steps:
     dockerfile: ./Dockerfile.image
     build_args:
       - APP_NAME=umi
-      - ENV_NAME=dev
+      - ENV_NAME=production
       - VERSION=${DRONE_TAG}
     username:
       from_secret: docker_username

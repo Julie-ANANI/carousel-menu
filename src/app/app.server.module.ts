@@ -28,10 +28,10 @@ import { CookieBackendModule } from 'ngx-cookie-backend';
   providers: [
     // Add universal-only providers here
     { provide: HTTP_INTERCEPTORS, useClass: CookieServerInterceptor, multi: true },
-    { provide: ErrorService, useClass: ErrorBackendService },
     { provide: LocalStorageService, useClass: LocalStorageBackendService },
     { provide: SocketService, useClass: SocketSsrService },
     { provide: EtherpadSocketService, useClass: EtherpadSocketSsrService },
+    { provide: ErrorService, useClass: ErrorBackendService }
   ],
   // Since the bootstrapped component is not inherited from your
   // imported AppModule, it needs to be repeated here.
