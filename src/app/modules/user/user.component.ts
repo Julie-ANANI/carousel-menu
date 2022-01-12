@@ -27,7 +27,7 @@ export class UserComponent implements OnInit, OnDestroy {
 
   private _ngUnsubscribe: Subject<any> = new Subject<any>();
 
-  private _clearTimeout: ReturnType<typeof setTimeout>;
+  private _clearTimeout: any;
 
   private static _toggleVisibilityHelp(value: string) {
     document.getElementById('jsd-widget').style.visibility = value;
