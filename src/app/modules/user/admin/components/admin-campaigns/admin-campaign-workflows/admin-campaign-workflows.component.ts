@@ -176,9 +176,6 @@ export class AdminCampaignWorkflowsComponent implements OnInit {
   }
 
   public updateAvailableScenario(scenario: EmailScenario) {
-    console.log('scenario name is + ' + scenario.name);
-    console.log('before drop');
-    console.log(this._campaign.settings.emails);
     // DROP
     this._campaign.settings.emails = this._campaign.settings.emails.filter(
       (mail) => {
@@ -186,16 +183,11 @@ export class AdminCampaignWorkflowsComponent implements OnInit {
       }
     );
 
-    console.log('after drop');
-    console.log(this._campaign.settings.emails);
-
     // on choppe l'index avant de l'enlever dans le but de le rajouter en bonne position
     // (evite le deplacement incompréhensible de l'element dans le DOM)
-    console.log(this._availableScenarios);
     const index = this._availableScenarios.findIndex((x) => {
       return x.name === scenario.name;
     });
-    console.log('the index is +:' + index);
     this._availableScenarios = this._availableScenarios.filter((scenar) => {
       return scenar.name !== scenario.name;
     });
@@ -203,11 +195,8 @@ export class AdminCampaignWorkflowsComponent implements OnInit {
     this._campaign.settings.emails = this._campaign.settings.emails.concat(
       scenario.emails
     );
-    console.log('after insert');
-    console.log(this._campaign.settings.emails);
     // INSERT scenario in the same place
     this._availableScenarios.splice(index, 0, scenario);
-    console.log(this._availableScenarios);
     if (this._availableScenarios.length === 1) {
       this._campaign.settings.defaultWorkflow = this._availableScenarios[0].name;
     }
@@ -338,8 +327,6 @@ export class AdminCampaignWorkflowsComponent implements OnInit {
   public onClickConfirm() {
     if (!this._isImporting) {
       this._isImporting = true;
-      console.log('importing template');
-      console.log(this._selectedTemplate.emails);
       this.updateAvailableScenario(this._selectedTemplate);
       this._saveTemplates('The workflow is added.');
     }

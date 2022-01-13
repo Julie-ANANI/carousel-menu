@@ -293,6 +293,11 @@ export class SharedEditorTinymceComponent implements AfterViewInit, OnDestroy {
             }
             console.log("Goodbye motherfucker!");*!/
           });*/
+          /**
+           * Why we use 'change' event as a trigger to send modified context?
+           * Before we used 'MouseLeave' event, but sometimes, this trigger doesn't work, the modificaion will be missing
+           * So we use 'change' event as a trigger, send context as soon as the users make changes
+           */
           editor.on('change', ()=>{
             const actualHash = this._contentHash;
             const content = SharedEditorTinymceComponent._htmlToString(editor.getContent());
@@ -317,9 +322,5 @@ export class SharedEditorTinymceComponent implements AfterViewInit, OnDestroy {
     if (isPlatformBrowser(this.platformId)) {
       tinymce.remove(this._editor);
     }
-  }
-
-  textOnChangeTest($event: any) {
-    console.log($event);
   }
 }
