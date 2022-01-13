@@ -435,6 +435,7 @@ export class UserFormComponent implements OnInit {
     if (this.canImpersonate) {
       // Ugly hack, but without it we cannot acces to 'id' field...
       const user = new User(this._user);
+      user.id = this._user.id || this._user._id;
       this._authService.forceLogin(user.id).subscribe(response => {
         this.translateNotificationsService.success('ERROR.SUCCESS', '');
         this.router.navigate(['/user']);
@@ -446,12 +447,12 @@ export class UserFormComponent implements OnInit {
 
   public resetLoginAttempts(event: Event) {
     event.preventDefault();
-    this.userService.resetLoginAttempts(this.user.id)
-      .subscribe(result => {
-        this.user = result;
+    const userId = this._user.id || this._user._id;
+    this.userService.resetLoginAttempts(userId).pipe(first()).subscribe(result => {
+      this.user = result;
       }, err => {
-        this.translateNotificationsService.error('ERROR.ERROR', err.message);
-      });
+      this.translateNotificationsService.error('ERROR.ERROR', err.message);
+    });
   }
 
   public getLoginAttempts(): string {
