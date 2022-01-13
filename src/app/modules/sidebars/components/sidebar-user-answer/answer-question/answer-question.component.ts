@@ -11,6 +11,7 @@ import { first } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorFrontService } from '../../../../../services/error/error-front.service';
 import { MissionQuestionService } from '../../../../../services/mission/mission-question.service';
+import {MissionQuestion} from '../../../../../models/mission';
 
 @Component({
   selector: 'app-answer-question',
@@ -22,7 +23,7 @@ export class AnswerQuestionComponent {
 
   @Input() projectId = '';
 
-  @Input() question: Question = <Question>{};
+  @Input() question: Question | MissionQuestion = <Question>{};
 
   @Input() editMode = false;
 
