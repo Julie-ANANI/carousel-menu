@@ -47,13 +47,9 @@
           },
           "configurations": {
             "local": {
-              "optimization": true,
-              "outputHashing": "media",
-              "namedChunks": false,
+              "outputHashing": "none",
+              "namedChunks": true,
               "aot": true,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
               "sourceMap": true,
               "fileReplacements": [
                 {
@@ -126,7 +122,7 @@
                 }
               ],
               "optimization": true,
-              "outputHashing": "media",
+              "outputHashing": "none",
               "sourceMap": true,
               "namedChunks": true
             },
