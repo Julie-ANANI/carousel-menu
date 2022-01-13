@@ -192,6 +192,7 @@ export class AdminCampaignWorkflowsComponent implements OnInit {
     this._campaign.settings.emails = this._campaign.settings.emails.concat(
       scenario.emails
     );
+    // INSERT scenario in the same place
     this._availableScenarios.splice(index, 0, scenario);
     if (this._availableScenarios.length === 1) {
       this._campaign.settings.defaultWorkflow = this._availableScenarios[0].name;

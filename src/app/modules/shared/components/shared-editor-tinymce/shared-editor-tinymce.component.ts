@@ -257,7 +257,7 @@ export class SharedEditorTinymceComponent implements AfterViewInit, OnDestroy {
     if (isPlatformBrowser(this.platformId) && !this._readonly) {
       tinymce.init({
         selector: '#' + this._htmlId,
-        plugins: ['link', 'paste', 'lists', 'advlist', 'textcolor', 'code'], // Voir .angular-cli.json
+        plugins: ['link', 'paste', 'lists', 'advlist', 'textcolor', 'code', 'paste code'], // Voir .angular-cli.json
         variable_valid: ["TITLE", "FIRSTNAME", "LASTNAME", "COMPANY_NAME", "CLIENT_NAME"],
         variable_mapper: this._variableMapping,
         default_link_target: '_blank',
@@ -277,8 +277,28 @@ export class SharedEditorTinymceComponent implements AfterViewInit, OnDestroy {
         setup: (editor: any) => {
           this._editor = editor;
           this._contentHash = SharedEditorTinymceComponent.hashString(this._text);
-          editor.on('MouseLeave', () => {
+          /*editor.on('MouseLeave', () => {
             //When the user leaves the tinyMCE box, we save the content
+            const actualHash = this._contentHash;
+            const content = SharedEditorTinymceComponent._htmlToString(editor.getContent());
+            this._contentHash = SharedEditorTinymceComponent.hashString(content);
+            if (this._contentHash !== actualHash) {
+              this._isSaving = true;
+              console.log('init');
+              console.log(content);
+              this.onTextChange.emit({content: content});
+            }
+            /!*if(this._sharedEditor) {
+              this._sharedEditor.set('text', this._text);
+            }
+            console.log("Goodbye motherfucker!");*!/
+          });*/
+          /**
+           * Why we use 'change' event as a trigger to send modified context?
+           * Before we used 'MouseLeave' event, but sometimes, this trigger doesn't work, the modificaion will be missing
+           * So we use 'change' event as a trigger, send context as soon as the users make changes
+           */
+          editor.on('change', ()=>{
             const actualHash = this._contentHash;
             const content = SharedEditorTinymceComponent._htmlToString(editor.getContent());
             this._contentHash = SharedEditorTinymceComponent.hashString(content);
@@ -286,11 +306,7 @@ export class SharedEditorTinymceComponent implements AfterViewInit, OnDestroy {
               this._isSaving = true;
               this.onTextChange.emit({content: content});
             }
-            /*if(this._sharedEditor) {
-              this._sharedEditor.set('text', this._text);
-            }
-            console.log("Goodbye motherfucker!");*/
-          });
+          })
         },
       });
       if (this._text && this._editor) {
@@ -307,5 +323,4 @@ export class SharedEditorTinymceComponent implements AfterViewInit, OnDestroy {
       tinymce.remove(this._editor);
     }
   }
-
 }
