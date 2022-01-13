@@ -22,11 +22,6 @@
       class="shape is-circle m-left-2">
       <i [ngClass]="{'font-size': '10px'}" class="fas fa-check"></i>
     </div>
-    <!--    <div-->
-    <!--      [ngClass]="inCampaign && isModifiedEn ? 'complete' : 'incomplete'"-->
-    <!--      class="shape is-circle m-left-2">-->
-    <!--      <i [ngClass]="{'font-size': '10px'}" class="fas fa-check"></i>-->
-    <!--    </div>-->
 
     <div
       *ngIf="innovationCardLanguages && innovationCardLanguages.indexOf('en') !== -1"
@@ -36,15 +31,8 @@
       English
     </div>
 
-    <!--    <div-->
-    <!--      (click)="changeLanguage('en')"-->
-    <!--      [ngClass]="{ 'active': language === 'en' }"-->
-    <!--      class="text-link">-->
-    <!--      English-->
-    <!--    </div>-->
 
     &nbsp;&nbsp;<span *ngIf="innovationCardLanguages && innovationCardLanguages.length===2">|</span>
-    <!--    &nbsp;&nbsp;<span>|</span>-->
 
 
     <div
@@ -54,12 +42,6 @@
       <i [ngClass]="{'font-size': '10px'}" class="fas fa-check"></i>
     </div>
 
-    <!--    <div-->
-    <!--      [ngClass]="inCampaign && isModifiedFr ? 'complete' : 'incomplete'"-->
-    <!--      class="shape is-circle m-left-2">-->
-    <!--      <i [ngClass]="{'font-size': '10px'}" class="fas fa-check"></i>-->
-    <!--    </div>-->
-
     <div
       *ngIf="innovationCardLanguages && innovationCardLanguages.indexOf('fr') !== -1"
       (click)="changeLanguage('fr')"
@@ -67,13 +49,6 @@
       class="text-link">
       French
     </div>
-
-<!--    <div-->
-<!--      (click)="changeLanguage('fr')"-->
-<!--      [ngClass]="{ 'active': language === 'fr' }"-->
-<!--      class="text-link">-->
-<!--      French-->
-<!--    </div>-->
 
     <div
       (click)="onClickDelete()"

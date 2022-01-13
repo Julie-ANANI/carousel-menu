@@ -33,6 +33,7 @@ export class SidebarWorkflowComponent {
   }
 
   public onChangeEmail(value: any) {
+    console.log(value);
     this.emailsObject = value;
   }
 
