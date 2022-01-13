@@ -52,7 +52,7 @@
 </div>
 
 <!-- sidebar to view user answer -->
-<app-sidebar [(template)]="sidebarValue">
+<app-sidebar *ngIf="!isFetching" [(template)]="sidebarValue">
   <app-sidebar-user-answer
     [(userAnswer)]="modalAnswer"
     [innovationCards]="innovation.innovationCards"
