@@ -81,7 +81,7 @@ export class MissionQuestionService {
    */
   dataOfChoiceLikertScale = optionLikert;
 
-  get optionsNamesLikert(): any {
+  get optionsNamesLikert(): Object {
     return this.dataOfChoiceLikertScale;
   }
 
