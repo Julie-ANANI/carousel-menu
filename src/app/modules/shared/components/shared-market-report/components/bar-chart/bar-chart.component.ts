@@ -14,6 +14,7 @@ import {takeUntil} from 'rxjs/operators';
 import {Mission, MissionQuestion} from '../../../../../../models/mission';
 import {MissionFrontService} from '../../../../../../services/mission/mission-front.service';
 import {MissionQuestionService} from '../../../../../../services/mission/mission-question.service';
+import {StackedData} from '../../models/stacked-data';
 
 @Component({
   selector: 'app-bar-chart',
@@ -32,6 +33,7 @@ export class BarChartComponent implements OnInit, OnDestroy {
   @Input() stats: AnswersStats = null;
 
   @Input() toggleAnswers = false;
+  @Input() reportingLang = this._translateService.currentLang;
 
   @Output() modalAnswerChange = new EventEmitter<any>();
 
@@ -40,16 +42,14 @@ export class BarChartComponent implements OnInit, OnDestroy {
   @Output() questionChanged = new EventEmitter<Question>();
 
   private _barsData: Array<BarData> = [];
+  private _stackedData: Array<StackedData> = [];
 
   private _pieChart: PieChart = <PieChart>{};
-
   private _showAnswers: {[index: string]: boolean} = {};
-
   private _toggleFilterIcon: {[index: string]: boolean} = {};
-
-  @Input() reportingLang = this._translateService.currentLang;
-
   private _ngUnsubscribe: Subject<any> = new Subject<any>();
+
+
 
   constructor(private _translateService: TranslateService,
               private _dataService: DataService,
@@ -63,12 +63,16 @@ export class BarChartComponent implements OnInit, OnDestroy {
     this._dataService.getAnswers(this.question).pipe(takeUntil(this._ngUnsubscribe))
       .subscribe((answers: Array<Answer>) => {
         this._barsData = ResponseService.barsData(this.question, answers);
-        if (this.question.controlType === 'radio') {
+        this._stackedData = ResponseService.horizontalStackedBarsAnswers(this.question, answers)
+        if ( this.question.controlType === 'radio' ) {
           this._pieChart = ResponseService.pieChartData(this._barsData, answers);
+        } else if (this.question.controlType === 'likert-scale'){
+          this._pieChart = ResponseService.horizontalStackedChartData(this._stackedData, answers);
         }
       });
   }
 
+  // TODO JU : A CHANGER FOR STACKEDATA
   public filterAnswer(data: BarData, event: Event) {
     event.preventDefault();
     let filterValue: any;
@@ -85,7 +89,7 @@ export class BarChartComponent implements OnInit, OnDestroy {
       this._filterService.deleteFilter(this.question.identifier);
     } else {
       this._filterService.addFilter({
-        status: <'CHECKBOX'|'RADIO'> this.question.controlType.toUpperCase(),
+        status: <'CHECKBOX'|'RADIO'| 'LIKERT-SCALE'> this.question.controlType.toUpperCase(),
         questionId: this.question.identifier,
         value: filterValue
       });

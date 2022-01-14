@@ -214,7 +214,6 @@ export class ReportSectionComponent implements OnChanges {
   }
 
   /***
-   * TODO remove multiling
    * returns the content of the Section Pie
    * @param pieData
    * @private

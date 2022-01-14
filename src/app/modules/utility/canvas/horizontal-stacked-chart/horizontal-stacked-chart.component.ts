@@ -1,19 +1,18 @@
 import {Component, EventEmitter, Inject, Input, Output, PLATFORM_ID, ViewChild} from '@angular/core';
-import {isPlatformBrowser} from '@angular/common';
-import {TranslateService} from '@ngx-translate/core';
 import {PieChart} from '../../../../models/pie-chart';
-import {BaseChartDirective} from 'ng2-charts';
 import {Multiling} from '../../../../models/multiling';
+import {BaseChartDirective} from 'ng2-charts';
+import {isPlatformBrowser} from '@angular/common';
 import {Picto, picto} from '../../../../models/static-data/picto';
+import {TranslateService} from '@ngx-translate/core';
 import {oldColorsToNewMapping} from '../../../../utils/chartColors';
 
 @Component({
-  selector: 'app-utility-piechart',
-  templateUrl: 'piechart.component.html',
-  styleUrls: ['piechart.component.scss']
+  selector: 'app-utility-horizontal-stacked-chart',
+  templateUrl: './horizontal-stacked-chart.component.html',
+  styleUrls: ['./horizontal-stacked-chart.component.scss']
 })
-
-export class PiechartComponent {
+export class HorizontalStackedChartComponent {
 
   @Input() showFavorable = true;
 
@@ -30,7 +29,7 @@ export class PiechartComponent {
 
   @Input() reportingLang = this._translateService.currentLang;
 
-  @ViewChild(BaseChartDirective) chart: BaseChartDirective;
+  @ViewChild(BaseChartDirective, {static: false}) chart: BaseChartDirective;
 
   @Output() chartSectionColorChanged = new EventEmitter<{index: number, color: string}>();
 
@@ -39,7 +38,6 @@ export class PiechartComponent {
   @Output() positiveLabelChanged = new EventEmitter<Multiling>();
 
   private _pieChart: PieChart = <PieChart>{};
-
 
   private _datasets: Array<{data: Array<number>}> = [];
 
@@ -79,9 +77,8 @@ export class PiechartComponent {
     this.chartSectionPositiveChanged.emit({index: index, positive: this.positiveSections[index]});
   }
 
-
-
   private _loadData() {
+
     //Object composed of
     //   data?: Array<number>;
     //   colors?: Array<string>;
@@ -89,16 +86,14 @@ export class PiechartComponent {
     //   percentage?: number;
     //   labelPercentage?: Array<string>;
     if (this._pieChart) {
+      console.table(this._pieChart);
+      console.table(this._pieChart.labels);
 
       //_color.example = 'background-color': colors[0].backgroundColor[i] return an color for all labels
       this._colors = [{backgroundColor: this._pieChart.colors.map(color => oldColorsToNewMapping[color || ''] || color) || []}];
       this._datasets = [{data: this._pieChart.data || []}];
 
       if (this.chart) {
-        console.table(this._pieChart.colors);
-        console.table(this.chart);
-        console.table(this._pieChart);
-        console.table(this._pieChart.labels);
         this.chart.chart.data.datasets[0].backgroundColor = this._pieChart.colors || [];
         this.chart.chart.update();
       }
@@ -166,4 +161,5 @@ export class PiechartComponent {
   set indexLegend(value: number) {
     this._indexLegend = value;
   }
+
 }

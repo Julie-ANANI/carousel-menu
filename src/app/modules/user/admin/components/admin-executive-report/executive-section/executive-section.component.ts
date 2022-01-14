@@ -76,6 +76,11 @@ export class ExecutiveSectionComponent {
           this._enableVisualBar = true;
           break;
 
+        case 'likert-scale':
+          this._enableVisualPie = true;
+          this._enableVisualBar = true;
+          break;
+
         case 'checkbox':
           this._enableVisualBar = true;
           break;

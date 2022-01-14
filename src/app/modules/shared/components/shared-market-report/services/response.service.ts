@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Answer } from '../../../../../models/answer';
 import { Subject } from 'rxjs/Subject';
-import {Option, Question} from '../../../../../models/question';
+import { Option, Question } from '../../../../../models/question';
 import { Section } from '../../../../../models/section';
 import { Innovation } from '../../../../../models/innovation';
 import { Tag } from '../../../../../models/tag';
@@ -9,10 +9,12 @@ import { Multiling } from '../../../../../models/multiling';
 import { BarData } from '../models/bar-data';
 import { PieChart } from '../../../../../models/pie-chart';
 import { Professional } from '../../../../../models/professional';
-import {MissionQuestion, MissionQuestionOption} from '../../../../../models/mission';
-import {MissionQuestionService} from '../../../../../services/mission/mission-question.service';
+import { MissionQuestion, MissionQuestionOption } from '../../../../../models/mission';
+import { MissionQuestionService } from '../../../../../services/mission/mission-question.service';
+import { StackedData} from '../models/stacked-data';
 
 @Injectable({ providedIn: 'root' })
+
 export class ResponseService {
 
   filteredAnswers = new Subject <Array<Answer>>();
@@ -179,9 +181,12 @@ export class ResponseService {
           filteredAnswers = answers.filter((a) => a.answers[question.identifier]
             && a.answers[question.identifier][q.identifier]
             && a.answers[question.identifier + 'Quality'] !== 0);
-        } else if (question.controlType === 'radio')  {
+
+
+        } else if (question.controlType === 'radio' || question.controlType === 'likert-scale')  {
           filteredAnswers = answers.filter((a) => a.answers[question.identifier] === q.identifier
             && a.answers[question.identifier + 'Quality'] !== 0 );
+
         }
 
         filteredAnswers = filteredAnswers.sort((a, b) => {
@@ -231,6 +236,7 @@ export class ResponseService {
         difference: [],
         rounded: []
       };
+
       barsData.forEach((bd) => {
         const absolutePercentage = bd.count * 100 / answers.length;
         bd.absolutePercentage = `${Math.round(absolutePercentage)}%`;
@@ -269,7 +275,95 @@ export class ResponseService {
     }
 
     return barsData;
+  }
 
+  /***
+   * this function is to get the bars data answer for the question type likert-scale.
+   * @param question
+   * @param answers
+   */
+  public static horizontalStackedBarsAnswers(question: any, answers: Array<Answer>) {
+
+    let horizontalStackedBarsAnswers: Array<StackedData> = [];
+
+    if (question && answers) {
+
+      horizontalStackedBarsAnswers = question.options.map((q: any) => {
+
+        let filteredAnswers: Array<Answer> = [];
+
+        if (question.controlType === 'likert-scale') {
+          filteredAnswers = answers.filter((a) => a.answers[question.identifier] === q.identifier
+            && a.answers[question.identifier + 'Quality'] !== 0 );
+        }
+
+        filteredAnswers = filteredAnswers.sort((a, b) => {
+          if ((b.answers[question.identifier + 'Quality'] || 1) - (a.answers[question.identifier + 'Quality'] || 1) === 0) {
+            const a_length = a.answers[question.identifier + 'Comment'] ? a.answers[question.identifier + 'Comment'].length : 0;
+            const b_length = b.answers[question.identifier + 'Comment'] ? b.answers[question.identifier + 'Comment'].length : 0;
+            return b_length - a_length;
+          } else {
+            return (b.answers[question.identifier + 'Quality'] || 1) - (a.answers[question.identifier + 'Quality'] || 1);
+          }
+        });
+
+        /**
+         * we are iterating through entry and converting to Multiling label here
+         * so that we same value for every one.
+         */
+        if (question.entry && question.entry.length) {
+          question.label = question.entry.reduce((acc: any, value: any) => {
+            acc[value.lang] = value.label;
+            return acc;
+          }, {});
+        }
+
+        return {
+          label: question.label,
+          answers: filteredAnswers,
+          absolutePercentage: '0%',
+          relativePercentage: '0%',
+          color: question.color,
+          count: filteredAnswers.length,
+          positive: question.positive,
+          identifier: question.identifier
+        };
+
+      });
+
+      const relativePercentages: {difference: Array<number>, rounded: Array<number>} = {
+        difference: [],
+        rounded: []
+      };
+
+      horizontalStackedBarsAnswers.forEach((bd) => {
+        const absolutePercentage = bd.count * 100 / answers.length;
+        bd.absolutePercentage = `${Math.round(absolutePercentage)}%`;
+      });
+
+      const fixPercentagesSum = (values: {difference: Array<number>, rounded: Array<number>}, questionType: string) => {
+        if (questionType === 'likert-scale') {
+          // first we check if the sum of rounded values is equal to 100
+          let diff = values.rounded.reduce((acc: number, curr: number) => acc + curr, 0);
+          diff = diff === 0 ? diff : diff - 100;
+          // if there is a difference, we need to fix it!
+          while (diff) {
+            const index = diff < 0 ?
+              values.difference.findIndex((value: number) => value === Math.min(...values.difference)) :
+              values.difference.findIndex((value: number) => value === Math.max(...values.difference));
+            values.rounded[index] -= diff / Math.abs(diff);
+            values.difference[index] = 1 + values.difference[index];
+            diff = values.rounded.reduce((acc: number, curr: number) => acc + curr, 0) - 100;
+          }
+          horizontalStackedBarsAnswers.forEach((bd, i) => {
+            bd.relativePercentage = `${relativePercentages.rounded[i]}%`;
+          });
+        }
+      };
+      fixPercentagesSum(relativePercentages, question.controlType);
+
+    }
+    return horizontalStackedBarsAnswers;
   }
 
   /***
@@ -288,6 +382,7 @@ export class ResponseService {
       labelPercentage: []
     };
 
+
     barsData.forEach((barData) => {
 
       if (barData.positive) {
@@ -303,10 +398,46 @@ export class ResponseService {
     });
 
     pieChartData.percentage = Math.round((positiveAnswersCount * 100) / answers.length);
-
     return pieChartData;
 
   }
+
+
+  /***
+   * this function is to get the pie chart data for the question type radio.
+   * @param horizontalStackedBarsAnswers
+   * @param answers
+   */
+  public static horizontalStackedChartData(horizontalStackedBarsAnswers: Array<StackedData>, answers: Array<Answer>) {
+
+    let positiveAnswersCount = 0;
+
+    //TODO JU : METTRE STACKED DATA CHART
+    const horizontalStackedChartData: PieChart = {
+      data: [],
+      colors: [],
+      labels: {fr: [], en: []},
+      labelPercentage: []
+    };
+
+    horizontalStackedBarsAnswers.forEach((horizontalStackedBarsResponse) => {
+
+      if (horizontalStackedBarsResponse.positive) {
+        positiveAnswersCount += horizontalStackedBarsResponse.count;
+      }
+
+      horizontalStackedChartData.data.push(horizontalStackedBarsResponse.count);
+      horizontalStackedChartData.colors.push(horizontalStackedBarsResponse.color);
+      horizontalStackedChartData.labels.fr.push(horizontalStackedBarsResponse.label['fr'] || '');
+      horizontalStackedChartData.labels.en.push(horizontalStackedBarsResponse.label['en'] || '');
+      horizontalStackedChartData.labelPercentage.push(horizontalStackedBarsResponse.absolutePercentage);
+
+    });
+    horizontalStackedChartData.percentage = Math.round((positiveAnswersCount * 20) / answers.length);
+    return horizontalStackedChartData;
+
+  }
+
 
   public static rankingChartData(answers: Array<Answer> = [],
                                  question: Question | MissionQuestion = <Question | MissionQuestion>{},
@@ -402,7 +533,7 @@ export class ResponseService {
               && a.answers[_id + 'Comment'] && a.answers[_id + 'CommentQuality'] !== 0;
           });
 
-        case 'radio':
+        case 'likert-scale':
           return  answers.filter(function(a) {
             return !a.answers[_id] && a.answers[_id + 'Comment'] && a.answers[_id + 'CommentQuality'] !== 0;
           });
@@ -460,6 +591,17 @@ export class ResponseService {
           (a) => Object.keys(a.answers[questionID]).some((k) => a.answers[questionID][k])
         );
 
+        break;
+
+     /* case 'likert-scale':
+        /!***
+         * here we are checking that at least one of the options of the answer is true.
+         * @type {Answer[]}
+         *!/
+        answersToShow = answersToShow.filter(
+          (a) => Object.keys(a.answers[questionID]).some((k) => a.answers[questionID][k])
+        );
+*/
         break;
 
       case 'stars':

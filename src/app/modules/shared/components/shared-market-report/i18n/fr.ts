@@ -134,6 +134,8 @@ export const MARKET_REPORT = {
 
   'ANSWERS': 'réponse(s)',
 
+  'ANSWERS_PRO': 'professionnel(s)',
+
   'SEE_ANSWERS': 'Voir la réponse',
 
   'BTN_EDITION_MODE': 'Passer en mode édition',
