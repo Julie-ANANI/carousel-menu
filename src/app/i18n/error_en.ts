@@ -203,8 +203,8 @@ export const ERROR = {
     'EMAIL_SENT': 'Email sent',
     'CHANGE_PASSWORD': 'To change your password, please click on the link we have just sent you by email.',
     'EMAIL_NOT_FOUND': 'The entered email could not be found please check it and try again.',
-    'LOGOUT': 'Logout',
-    'LOGOUT_TEXT': 'You have been logged out successfully.',
+    'LOGOUT': 'Logout Success',
+    'LOGOUT_TEXT': 'You have been logged out.',
   },
 
 

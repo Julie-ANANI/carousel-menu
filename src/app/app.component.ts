@@ -11,6 +11,8 @@ import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { WorldmapService } from "./services/worldmap/worldmap.service";
+import {NavigationEnd, Router} from '@angular/router';
+import {RouteFrontService} from './services/route/route-front.service';
 
 @Component({
   selector: 'app-root',
@@ -18,6 +20,14 @@ import { WorldmapService } from "./services/worldmap/worldmap.service";
 })
 
 export class AppComponent implements OnInit, OnDestroy {
+
+  get isBrowser(): boolean {
+    return this._isBrowser;
+  }
+
+  get spinnerState(): boolean {
+    return this._spinnerState;
+  }
 
   private _notificationsOptions: Options = {
     position: ['bottom', 'right'],
@@ -35,6 +45,10 @@ export class AppComponent implements OnInit, OnDestroy {
 
   private _ngUnsubscribe: Subject<any> = new Subject<any>();
 
+  private _isBrowser = false
+
+  private _spinnerState = true;
+
   private static _setFavicon() {
     if (environment.domain !== 'umi' && environment.domain !== 'dynergie') {
       const linkElement = document.createElement('link');
@@ -47,9 +61,11 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
+              private _router: Router,
               private _translateService: TranslateService,
               private _authService: AuthService,
               private _mouseService: MouseService,
+              private _routeFrontService: RouteFrontService,
               private _socketService: SocketService,
               private _worldMapService: WorldmapService,
               private _translateNotificationsService: TranslateNotificationsService) {
@@ -57,6 +73,8 @@ export class AppComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     initTranslation(this._translateService);
+    this._routeFrontService.initSide();
+    this._spinner();
 
     if (isPlatformServer(this._platformId)) {
       console.log('New connection has been made with the front.');
@@ -65,13 +83,37 @@ export class AppComponent implements OnInit, OnDestroy {
     if (isPlatformBrowser(this._platformId)) {
       AppComponent._setFavicon();
       this._initializeSession();
+      this._isBrowser = true;
+      this._getCountries();
       this._socketEvent();
       this._mouseEvent();
     }
+  }
 
+  private _getCountries(): void {
     this._worldMapService.getCountriesList().then(_ => {
       console.log('worldMap service connected');
     });
+  }
+
+  /***
+   * configuring the full page spinner when the application instance is started again.
+   * @private
+   */
+  private _spinner() {
+    if (this._spinnerState) {
+      this._router.events.subscribe((events) => {
+        if (events instanceof NavigationEnd) {
+          this._stopSpinner();
+        }
+      });
+    }
+  }
+
+  private _stopSpinner() {
+    if (this._isBrowser && this._spinnerState && this._router.navigated) {
+      this._spinnerState = false;
+    }
   }
 
   @HostListener('mouseup', ['$event'])
@@ -82,17 +124,20 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * we initialize session if we haven't use the guard for the page.
+   * we initialize session if we haven't used the guard for the page.
    * @private
    */
   private _initializeSession() {
     if (!this._authService.user) {
-      this._authService.initializeSession().pipe(takeUntil(this._ngUnsubscribe)).subscribe((_) => {
+      this._authService.initializeSession().pipe(takeUntil(this._ngUnsubscribe)).subscribe(() => {
         console.log('The application has been started.');
+        this._stopSpinner();
       }, () => {
+        this._stopSpinner();
         this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.CANNOT_REACH');
       });
     } else {
+      this._stopSpinner();
       console.log('The application has been started.');
     }
   }

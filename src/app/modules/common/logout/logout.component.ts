@@ -1,30 +1,34 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import { TranslateNotificationsService } from '../../../services/translate-notifications/translate-notifications.service';
 import { TranslateTitleService } from '../../../services/title/title.service';
 import { AuthService } from '../../../services/auth/auth.service';
 import { first } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import {HttpErrorResponse} from '@angular/common/http';
-import {SpinnerService} from '../../../services/spinner/spinner.service';
 
 @Component({
   selector: 'app-logout',
   templateUrl: './logout.component.html',
+  styleUrls: ['./logout.component.scss']
 })
 
-export class LogoutComponent implements OnInit {
+export class LogoutComponent implements OnInit, OnDestroy {
+
+  get clearTimeout(): any {
+    return this._clearTimeout;
+  }
+
+  private _clearTimeout: any;
 
   constructor(private authService: AuthService,
               private translateTitleService: TranslateTitleService,
-              private spinnerService: SpinnerService,
               private translateNotificationsService: TranslateNotificationsService,
               private router: Router) {
     this.translateTitleService.setTitle('COMMON.PAGE_TITLE.LOG_OUT');
   }
 
-  ngOnInit() {
-    this.spinnerService.state(false);
-    this.authService.logout().pipe(first()).subscribe((_) => {
+  ngOnInit(): void {
+    this.authService.logout().pipe(first()).subscribe(() => {
       this._navigateTo('SUCCESS');
     }, (err: HttpErrorResponse) => {
       console.error(err);
@@ -32,21 +36,27 @@ export class LogoutComponent implements OnInit {
     });
   }
 
-  private _navigateTo(type: 'SUCCESS' | 'ERROR') {
+  private _navigateTo(type: 'SUCCESS' | 'ERROR'): void {
     switch (type) {
       case 'ERROR':
         this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
-        setTimeout(() => {
-          this.router.navigate(['/']);
+        this._clearTimeout = setTimeout(() => {
+          this.router.navigate(['/']).then();
         }, 2000);
         break;
 
       case 'SUCCESS':
         this.translateNotificationsService.success('ERROR.LOGIN.LOGOUT', 'ERROR.LOGIN.LOGOUT_TEXT');
-        setTimeout(() => {
-          this.router.navigate(['/login']);
+        this._clearTimeout = setTimeout(() => {
+          this.router.navigate(['/login']).then();
         }, 2000);
         break;
+    }
+  }
+
+  ngOnDestroy(): void {
+    if (!!this._clearTimeout) {
+      clearTimeout(this._clearTimeout);
     }
   }
 

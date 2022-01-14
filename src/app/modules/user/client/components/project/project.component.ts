@@ -6,7 +6,6 @@ import { TranslateService } from '@ngx-translate/core';
 import { first, takeUntil } from 'rxjs/operators';
 import { InnovationFrontService } from '../../../../../services/innovation/innovation-front.service';
 import { Subject } from 'rxjs';
-import { SpinnerService } from '../../../../../services/spinner/spinner.service';
 import { isPlatformBrowser } from '@angular/common';
 import { InnovationService } from '../../../../../services/innovation/innovation.service';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -79,7 +78,6 @@ export class ProjectComponent implements OnInit, OnDestroy {
               private _innovationService: InnovationService,
               private _translateNotificationsService: TranslateNotificationsService,
               private _router: Router,
-              private _spinnerService: SpinnerService,
               private _translateService: TranslateService,
               private _socketService: SocketService,
               private _authService: AuthService,
@@ -87,12 +85,10 @@ export class ProjectComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this._setSpinner(true);
     this._initPageTitle();
 
     this._activatedRoute.params.subscribe((params) => {
       if (params['projectId']) {
-        this._setSpinner(true);
         this._getInnovation(params['projectId']);
       }
     });
@@ -165,15 +161,6 @@ export class ProjectComponent implements OnInit, OnDestroy {
   }
 
   /***
-   * this is to start/stop the full page spinner.
-   * @param value
-   * @private
-   */
-  private _setSpinner(value: boolean) {
-    this._spinnerService.state(value);
-  }
-
-  /***
    * initialize the title of the page.
    * @private
    */
@@ -210,16 +197,12 @@ export class ProjectComponent implements OnInit, OnDestroy {
         this._initPageTitle();
         if (!this._authService.user) {
           this._authService.initializeSession().pipe(first()).subscribe(() => {
-            this._setSpinner(false);
           });
-        } else {
-          this._setSpinner(false);
         }
       }, (err: HttpErrorResponse) => {
         console.error(err);
         this._fetchingError = true;
         this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
-        this._setSpinner(false);
       });
     }
   }

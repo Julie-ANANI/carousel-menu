@@ -1,12 +1,18 @@
-import {Injectable} from '@angular/core';
+import {Inject, Injectable, PLATFORM_ID} from '@angular/core';
 import {AuthService} from '../auth/auth.service';
 import {environment} from '../../../environments/environment';
-import {Router} from '@angular/router';
+import {NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router} from '@angular/router';
+import {Location} from '@angular/common';
+import {BehaviorSubject} from 'rxjs';
 
 @Injectable({providedIn: 'root'})
 export class RouteFrontService {
 
-  constructor(private _authService: AuthService,
+  private _isAdminSideObj: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+
+  constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
+              private _authService: AuthService,
+              private _location: Location,
               private _router: Router) { }
 
   private static _firstAccessRoute(object: any, url: string): string {
@@ -70,6 +76,24 @@ export class RouteFrontService {
       return _url[indexProject + 1];
     }
     return null;
+  }
+
+  /**
+   * initialize isAdminSideObj value to true if we are on admin side,
+   * and we can listen to isAdminSide for updated value.
+   */
+  public initSide(): void {
+    this._isAdminSideObj.next(this._location.path().slice(5, 11) === '/admin');
+    this._router.events.subscribe((event) => {
+      if (event instanceof NavigationStart || event instanceof NavigationEnd || event instanceof NavigationCancel
+        || event instanceof NavigationError) {
+        this._isAdminSideObj.next(this._location.path().slice(5, 11) === '/admin');
+      }
+    });
+  }
+
+  public isAdminSide(): BehaviorSubject<boolean> {
+    return this._isAdminSideObj;
   }
 
 }

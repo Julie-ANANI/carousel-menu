@@ -1,7 +1,7 @@
 <header id="header">
   <div class="container fluid grid-2xl">
     <div class="column col-sm-12 col-11 col-mx-auto">
-      <nav [ngClass]="{'animate-fade is-5': !hide}" class="navbar header-height">
+      <nav class="navbar header-height">
 
         <!-- brand -->
         <div class="navbar-brand header-height">
@@ -156,7 +156,7 @@
 
               <!-- admin side -->
               <a
-                (click)="toggleBackOfficeState(); onClickLink();"
+                (click)="onClickLink();"
                 *ngIf="!backOfficeValue && hasAdminSide"
                 [routerLink]="adminDefaultRoute"
                 class="navbar-item"
@@ -167,7 +167,7 @@
 
               <!-- client side -->
               <a
-                (click)="toggleBackOfficeState(); onClickLink();"
+                (click)="onClickLink();"
                 *ngIf="backOfficeValue && hasAdminSide"
                 [routerLinkActiveOptions]="{ exact: true }"
                 [routerLink]="'/user/projects'"
@@ -179,7 +179,7 @@
 
               <!-- account page -->
               <a
-                (click)="onClickLink(); onClickAccount();"
+                (click)="onClickLink();"
                 [routerLinkActiveOptions]="{ exact: true }"
                 [routerLink]="'/user/account'"
                 class="gtm-menu-my-account navbar-item"
@@ -309,7 +309,7 @@
 
         <!-- account page -->
         <a
-          (click)="onClickLink(); onClickAccount();"
+          (click)="onClickLink();"
           *ngIf="user && user.state === 'confirmed'"
           [routerLinkActiveOptions]="{ exact: true }"
           [routerLink]="'/user/account'"
@@ -321,7 +321,7 @@
 
         <!-- admin side -->
         <a
-          (click)="toggleBackOfficeState(); onClickLink();"
+          (click)="onClickLink();"
           *ngIf="user && user.state === 'confirmed' && !backOfficeValue && hasAdminSide"
           [routerLinkActiveOptions]="{ exact: true }"
           [routerLink]="adminDefaultRoute"
@@ -333,7 +333,7 @@
 
         <!-- client side -->
         <a
-          (click)="toggleBackOfficeState(); onClickLink();"
+          (click)="onClickLink();"
           *ngIf="user && user.state === 'confirmed' && backOfficeValue && hasAdminSide"
           [routerLinkActiveOptions]="{ exact: true }"
           [routerLink]="'/user/projects'"

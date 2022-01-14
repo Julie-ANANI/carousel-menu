@@ -1,10 +1,11 @@
 import {Component, Inject, OnDestroy, OnInit, PLATFORM_ID} from '@angular/core';
-import {isPlatformBrowser, Location} from '@angular/common';
+import {isPlatformBrowser} from '@angular/common';
 import {NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router} from '@angular/router';
 import {LoaderService} from '../../services/loader/loader.service';
 import {Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
 import {environment} from '../../../environments/environment';
+import {RouteFrontService} from '../../services/route/route-front.service';
 
 @Component({
   templateUrl: './user.component.html',
@@ -34,7 +35,7 @@ export class UserComponent implements OnInit, OnDestroy {
   }
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
-              private _location: Location,
+              private _routeFrontService: RouteFrontService,
               private _loaderService: LoaderService,
               private _router: Router) {
   }
@@ -43,7 +44,11 @@ export class UserComponent implements OnInit, OnDestroy {
     this._initRoutes();
 
     if (isPlatformBrowser(this._platformId)) {
-      this._checkVariables();
+
+      this._routeFrontService.isAdminSide().pipe(takeUntil(this._ngUnsubscribe)).subscribe((value) => {
+        this._adminSide = value;
+        this._initHelpDesk();
+      });
 
       this._loaderService.isLoading$.pipe(takeUntil(this._ngUnsubscribe)).subscribe((loading: boolean) => {
         this._clearTimeout = setTimeout(() => {
@@ -59,14 +64,8 @@ export class UserComponent implements OnInit, OnDestroy {
         this._displayLoader = true;
       } else if (event instanceof NavigationEnd || event instanceof NavigationCancel || event instanceof NavigationError) {
         this._displayLoader = false;
-        this._checkVariables();
       }
     });
-  }
-
-  private _checkVariables() {
-    this._adminSide = this._location.path().slice(5, 11) === '/admin';
-    this._initHelpDesk();
   }
 
   /***

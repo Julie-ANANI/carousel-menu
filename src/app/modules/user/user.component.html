@@ -1,7 +1,7 @@
 <div *ngIf="displayLoader" class="loading-bar"></div>
-<div class="d-flex flex-d-column" id="user">
+<div class="d-flex flex-d-column" id="user" style="min-height: 100vh;">
   <app-header></app-header>
-  <main [ngClass]="{'admin-side': adminSide}" id="main-wrapper">
+  <main [ngClass]="{'admin-side': adminSide}" id="main-wrapper" style="flex: 1 0 auto;">
     <router-outlet></router-outlet>
   </main>
   <app-footer></app-footer>

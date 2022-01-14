@@ -1,19 +1,17 @@
 import { Component, HostListener, Inject, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
 import { environment} from '../../../../environments/environment';
 import { AuthService } from '../../../services/auth/auth.service';
-import {isPlatformBrowser, Location} from '@angular/common';
+import {isPlatformBrowser} from '@angular/common';
 import { User } from '../../../models/user.model';
-import { initTranslation, TranslateService} from '../../../i18n/i18n';
+import { TranslateService} from '../../../i18n/i18n';
 import { CookieService } from 'ngx-cookie';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { SidebarInterface } from '../../sidebars/interfaces/sidebar-interface';
-import { NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router } from '@angular/router';
-import { SpinnerService } from '../../../services/spinner/spinner.service';
 import { UserFrontService } from '../../../services/user/user-front.service';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
 import { RolesFrontService } from '../../../services/roles/roles-front.service';
 import { RouteFrontService } from '../../../services/route/route-front.service';
+import {takeUntil} from 'rxjs/operators';
 
 interface Header {
   pageName: string;
@@ -64,7 +62,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   private _backOfficeValue = false; // if true, then display back office menu options.
 
-  private _flag = this._translateService.currentLang === 'fr' ? 'FR' : 'US';
+  private _flag = this.currentLang === 'fr' ? 'FR' : 'US';
 
   private _sidebarValues: SidebarInterface = {
     animate_state: 'inactive'
@@ -101,8 +99,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   private _ngUnsubscribe: Subject<any> = new Subject<any>();
 
-  private _hide = false;
-
   private _company = environment.companyShortName;
 
   private _logo = environment.logoSynthURL;
@@ -113,29 +109,16 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _authService: AuthService,
-              private _location: Location,
-              private _router: Router,
               private _routeFrontService: RouteFrontService,
               private _rolesFrontService: RolesFrontService,
-              private _spinnerService: SpinnerService,
               private _translateService: TranslateService,
               private _cookieService: CookieService) {
-
-    initTranslation(this._translateService);
-
-    this._router.events.subscribe((event) => {
-      if (event instanceof NavigationStart || event instanceof NavigationEnd || event instanceof NavigationCancel
-        || event instanceof NavigationError) {
-        this._backOfficeValue = this._location.path().slice(5, 11) === '/admin';
-      }
-    });
-
   }
 
   ngOnInit(): void {
     if (isPlatformBrowser(this._platformId)) {
-      this._spinnerService.spinner().pipe(takeUntil(this._ngUnsubscribe)).subscribe((_state) => {
-        this._hide = _state;
+      this._routeFrontService.isAdminSide().pipe(takeUntil(this._ngUnsubscribe)).subscribe((value) => {
+        this._backOfficeValue = value;
       });
       this._isLoading = false;
     }
@@ -167,13 +150,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   /***
-   * to toggle the back office value.
-   */
-  public toggleBackOfficeState() {
-    this._backOfficeValue = !this._backOfficeValue;
-  }
-
-  /***
    * to toggle the value of menu options display.
    */
   public toggleMenuState() {
@@ -192,14 +168,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
       this.closeSidebar();
     }
   }
-
-  public onClickAccount() {
-    this._backOfficeValue = false;
-  }
-
-  /*public canShow(reqLevel: number): boolean {
-    return reqLevel && ( this.authService.adminLevel & reqLevel) === reqLevel;
-  }*/
 
   public canAccessRoute(key: string) {
     return this._rolesFrontService.hasAccessAdminSide([key]);
@@ -271,10 +239,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   get showLangs(): boolean {
     return this._showLangs;
-  }
-
-  get hide(): boolean {
-    return this._hide;
   }
 
   get company(): string {

@@ -1,0 +1,10 @@
+@import "../../../../style/framework/src/variables";
+@import "../../../../style/framework/src/mixins";
+
+#logout {
+  @include flex-centered();
+  @include fixed-full-page();
+  background: $white-color;
+  flex-direction: column;
+  z-index: 9090;
+}

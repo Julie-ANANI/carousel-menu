@@ -11,7 +11,6 @@ import {first} from 'rxjs/operators';
 import {HttpErrorResponse} from '@angular/common/http';
 import {ExecutiveReport} from '../../../../../models/executive-report';
 import {InnovationFrontService} from '../../../../../services/innovation/innovation-front.service';
-import {SpinnerService} from '../../../../../services/spinner/spinner.service';
 
 @Component({
   templateUrl: './synthesis-complete.component.html',
@@ -44,7 +43,6 @@ export class SynthesisCompleteComponent implements OnInit {
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _executiveReportService: ExecutiveReportService,
-              private _spinnerService: SpinnerService,
               private _translateTitleService: TranslateTitleService,
               private _activatedRoute: ActivatedRoute,
               private _innovationService: InnovationService,
@@ -53,7 +51,6 @@ export class SynthesisCompleteComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this._setSpinner();
     this._setPageTitle();
 
     this._activatedRoute.params.subscribe(params => {
@@ -61,10 +58,6 @@ export class SynthesisCompleteComponent implements OnInit {
       this._shareKey = params['shareKey'];
       this._getSharedSynthesis();
     });
-  }
-
-  private _setSpinner(value= true) {
-    this._spinnerService.state(value);
   }
 
   /***
@@ -81,7 +74,6 @@ export class SynthesisCompleteComponent implements OnInit {
       }, () => {
         this._displayReport = false;
         this._notFound = true;
-        this._setSpinner(false);
       }, () => {
         if (this._innovation !== undefined) {
           this._displayReport = true;
@@ -103,15 +95,12 @@ export class SynthesisCompleteComponent implements OnInit {
         this._report = report;
         this._reportMedia = InnovationFrontService.principalMedia(this._innovation, this.userLang);
         this._reportTitle = InnovationFrontService.currentLangInnovationCard(this._innovation, this.userLang, 'TITLE');
-        this._setSpinner(false);
       }, (err: HttpErrorResponse) => {
         this._report = this._innovation;
-        this._setSpinner(false);
         console.error(err);
       });
     } else {
       this._report = this._innovation;
-      this._setSpinner(false);
     }
   }
 

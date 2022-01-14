@@ -1,16 +1,14 @@
-<ng-container *ngIf="spinnerState">
-  <div class="flex-centered bg-white fixed" id="spinner-loader">
-    <div *ngIf="isUmiDomain" class="m-bottom-20">
-      <img
-        [src]="logoSrc"
-        height="72.75"
-        width="139"
-        alt="UMI"
-        class="img-responsive">
-    </div>
-    <div class="loader-wrapper">
-      <div class="circle"></div>
-      <div class="circle"></div>
-    </div>
+<div *ngIf="spinnerState" id="spinner-loader" style="min-height: 100vh;">
+  <div *ngIf="isUmiDomain" style="margin-bottom: 20px;">
+    <img
+      [src]="logoSrc"
+      alt="UMI"
+      class="img-responsive"
+      height="72.75"
+      width="139">
   </div>
-</ng-container>
+  <div class="loader-wrapper">
+    <div class="circle"></div>
+    <div class="circle"></div>
+  </div>
+</div>
