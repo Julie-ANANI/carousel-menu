@@ -46,8 +46,10 @@ export class UserComponent implements OnInit, OnDestroy {
     if (isPlatformBrowser(this._platformId)) {
 
       this._routeFrontService.isAdminSide().pipe(takeUntil(this._ngUnsubscribe)).subscribe((value) => {
-        this._adminSide = value;
-        this._initHelpDesk();
+        if (value !== this._adminSide) {
+          this._adminSide = value;
+          this._initHelpDesk();
+        }
       });
 
       this._loaderService.isLoading$.pipe(takeUntil(this._ngUnsubscribe)).subscribe((loading: boolean) => {
