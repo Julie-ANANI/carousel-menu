@@ -71,7 +71,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
     this._worldMapService.getCountriesList().then(_ => {
       console.log('worldMap service connected');
-    })
+    });
   }
 
   @HostListener('mouseup', ['$event'])

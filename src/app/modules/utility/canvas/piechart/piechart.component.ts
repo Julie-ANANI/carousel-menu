@@ -30,7 +30,7 @@ export class PiechartComponent {
 
   @Input() reportingLang = this._translateService.currentLang;
 
-  @ViewChild(BaseChartDirective, {static: false}) chart: BaseChartDirective;
+  @ViewChild(BaseChartDirective) chart: BaseChartDirective;
 
   @Output() chartSectionColorChanged = new EventEmitter<{index: number, color: string}>();
 

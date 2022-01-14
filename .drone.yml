@@ -70,7 +70,7 @@ steps:
     dockerfile: ./Dockerfile.image
     build_args:
       - APP_NAME=umi
-      - ENV_NAME=dev
+      - ENV_NAME=production
       - VERSION=${DRONE_TAG}
     username:
       from_secret: docker_username

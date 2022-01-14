@@ -18,7 +18,7 @@
  * BROWSER POLYFILLS
  */
 
-/** IE9, IE10 and IE11 requires all of the following polyfills. **/
+/** IE9, IE10 and IE11 requires all the following polyfills. **/
 import 'core-js/es/symbol';
 import 'core-js/es/object';
 import 'core-js/es/function';

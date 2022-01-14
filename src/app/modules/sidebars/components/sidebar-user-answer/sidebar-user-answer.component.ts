@@ -15,6 +15,7 @@ import { UserFrontService } from '../../../../services/user/user-front.service';
 import { Professional } from '../../../../models/professional';
 import { TranslateService } from '@ngx-translate/core';
 import { MissionQuestion } from '../../../../models/mission';
+import {InnovCard} from '../../../../models/innov-card';
 
 @Component({
   selector: 'app-sidebar-user-answer',
@@ -24,12 +25,15 @@ import { MissionQuestion } from '../../../../models/mission';
 export class SidebarUserAnswerComponent implements OnInit {
 
   @Input() set sidebarState(value: any) {
-    this._reinitVariables();
+    this._reinitializeVariables();
   }
 
   @Input() projectId = ''; // id of the innovation
 
-  @Input() innovationCards: any[] = [];
+  @Input() set innovationCards(value: Array<InnovCard>) {
+    this._getInnovationCardLanguages(value);
+    this._initCurrentLang();
+  }
 
   @Input() questions: Array<Question | MissionQuestion> = [];
 
@@ -38,7 +42,7 @@ export class SidebarUserAnswerComponent implements OnInit {
   @Input() adminMode = false; // true to show the Edit toggle button and also shows the actions for the admin.
 
   @Input() set userAnswer(value: Answer) {
-    this._reinitVariables();
+    this._reinitializeVariables();
     this._userAnswer = value || <Answer>{};
     if (!this._userAnswer.company) {
       this._userAnswer.company = {};
@@ -91,20 +95,16 @@ export class SidebarUserAnswerComponent implements OnInit {
 
   private _currentLang = this._translateService.currentLang;
 
-  constructor(
-    private _answerService: AnswerService,
-    private _professionalsService: ProfessionalsService,
-    private _translateNotificationsService: TranslateNotificationsService,
-    private _translateService: TranslateService
-  ) {
+  constructor(private _answerService: AnswerService,
+              private _professionalsService: ProfessionalsService,
+              private _translateNotificationsService: TranslateNotificationsService,
+              private _translateService: TranslateService) {
   }
 
   ngOnInit(): void {
-    this._getInnovationCardLanguages();
-    this._initCurrentLang();
   }
 
-  private _reinitVariables() {
+  private _reinitializeVariables() {
     this._editMode = false;
     this._toBeSaved = false;
     this._resetEdit();
@@ -122,7 +122,7 @@ export class SidebarUserAnswerComponent implements OnInit {
     if ((event.target as HTMLInputElement).checked) {
       this._editMode = true;
     } else {
-      this._reinitVariables();
+      this._reinitializeVariables();
     }
   }
 
@@ -424,12 +424,10 @@ export class SidebarUserAnswerComponent implements OnInit {
     return momentTimeZone(date).tz('Europe/Paris').format('h:mm a');
   }
 
-  private _getInnovationCardLanguages() {
+  private _getInnovationCardLanguages(cards: Array<InnovCard> = []) {
     this._innovationCardLanguages = [];
-    if (this.innovationCards && this.innovationCards.length) {
-      this.innovationCards.map(innoCard => {
-        this._innovationCardLanguages.push(innoCard.lang);
-      });
+    if (!!cards.length) {
+      cards.map(innoCard => this._innovationCardLanguages.push(innoCard.lang));
     }
   }
 

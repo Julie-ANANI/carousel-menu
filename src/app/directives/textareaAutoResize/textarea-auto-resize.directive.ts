@@ -12,7 +12,7 @@ export class TextareaAutoResizeDirective implements OnInit, OnDestroy {
 
   private readonly element: ElementRef;
 
-  private clearTimeout: ReturnType<typeof setTimeout>;
+  private clearTimeout: any;
 
   constructor(private _elementRef: ElementRef) {
     this.element = this._elementRef;

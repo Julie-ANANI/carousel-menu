@@ -81,7 +81,7 @@ export class SharedWorldmapComponent implements OnInit {
    * thresholds to color the countries.
    * @param value
    */
-  @Input() set quartiles(value: [number, number, number]) {
+  @Input() set quartiles (value: [number, number, number]) {
     this._quartiles = value;
   }
 
@@ -104,7 +104,7 @@ export class SharedWorldmapComponent implements OnInit {
    * and base on that data you want to paint the map.
    * @param value
    */
-  @Input() set countriesData(value: any) {
+  @Input() set countriesData (value: any) {
     this._countriesData = value;
     this._initializeTemplate();
   }
@@ -304,6 +304,7 @@ export class SharedWorldmapComponent implements OnInit {
 
   }
 
+  // TODO look into layerX
   @HostListener('mousemove', ['$event'])
   onMouseMove(event: MouseEvent) {
     if (this._isShowableTooltip) {
@@ -314,14 +315,14 @@ export class SharedWorldmapComponent implements OnInit {
         let leftPosition;
 
         if (document.documentElement.clientWidth - event.clientX > 200) {
-          leftPosition = `${event.clientX - (event.clientX - event.layerX) - 3}px`;
+          leftPosition = `${event.clientX - (event.clientX - event['layerX']) - 3}px`;
         } else {
-          leftPosition = `${event.layerX - 180}px`;
+          leftPosition =  `${event['layerX'] - 180}px`;
         }
 
         this._tooltipPosition = {
           left: leftPosition,
-          top: `${event.layerY + 25}px`,
+          top: `${event['layerX'] + 25}px`,
           opacity: 1,
           display: 'block'
         };
