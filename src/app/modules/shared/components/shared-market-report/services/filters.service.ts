@@ -70,15 +70,17 @@ export class FilterService {
          */
         case 'COUNTRIES':
           filteredAnswers = filteredAnswers.filter((answer) => {
-            let country = '';
-            if(answer.country && typeof answer.country === 'object' && answer.country.flag){
-              country = answer.country.flag.toUpperCase()
+            const types = {
+              string: answer.country,
+              object: answer.country && answer.country.flag
             }
-            if(!country){
-              country = answer.professional.country.toUpperCase();
+            let country = types[typeof answer.country];
+            if(!country) {
+              country = (answer.professional && answer.professional.country) || '';
             }
+
             const selectedCountries = Object.keys(filter.value.countries).filter((key) => filter.value.countries[key]);
-            return selectedCountries.includes(country);
+            return selectedCountries.includes(country.toUpperCase());
           });
           break;
         case 'CUSTOM':
