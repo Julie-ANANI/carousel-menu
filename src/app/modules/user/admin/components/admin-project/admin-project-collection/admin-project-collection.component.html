@@ -23,11 +23,9 @@
             [ngClass]="{'disabled': !selectedCampaign}"
             class="button is-primary is-sm is-outlined m-bottom-15">
             <input
-              #fileupload
-              (change)="onImport(fileupload.files[0])"
+              (click)="openImportModal()"
               *ngIf="selectedCampaign"
-              [hidden]="true"
-              type="file"/>
+              [hidden]="true"/>
             {{ isImportingAnswers ? 'importing...' : 'Import' }}
           </label>
         </span>
@@ -46,6 +44,31 @@
         </span>
         <!-- /export -->
 
+        <!-- modal to import -->
+        <app-utility-modal [(showModal)]="isImportingAnswers" [title]="'Import Board'">
+
+          <section class="modal-body">
+            <app-shared-import-answers
+              (importingError)="onImport($event)"
+              [accessPath]="accessPath"
+              [campaign]="selectedCampaign">
+            </app-shared-import-answers>
+          </section>
+
+          <footer class="modal-footer">
+            <span *ngIf="importingError" class="text-error text-xs m-right-25">{{importingError}}</span>
+
+            <button
+              (click)="closeModal($event)"
+              [id]="'btn-cancel'"
+              class="button modal-cancel"
+              type="button">
+              Cancel
+            </button>
+          </footer>
+
+        </app-utility-modal>
+        <!-- /modal to import -->
       </section>
       <!-- /action buttons -->
 
