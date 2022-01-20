@@ -318,7 +318,7 @@
   <!-- /user details not assignPro -->
 
   <!-- received date and time, and time spent -->
-  <div *ngIf="userAnswer.created || userAnswer.time_elapsed" class="text-notify text-bold m-bottom-10">
+  <div *ngIf="adminMode && (userAnswer.created || userAnswer.time_elapsed)" class="text-notify text-bold m-bottom-10">
     <ng-container *ngIf="userAnswer.created">
       {{ 'SIDEBAR_USER_ANSWER.RECEIVED.A' | translate }}
       {{ createdDate(userAnswer.created) }}
