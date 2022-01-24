@@ -123,6 +123,12 @@
           </div>
           <!-- rating -->
 
+          <!-- likert-scale -->
+          <div *ngSwitchCase="'likert-scale'">
+            <app-ranks [question]="questionReceived"></app-ranks>
+          </div>
+          <!-- likert-scale -->
+
           <!-- textarea -->
           <div *ngSwitchCase="'textarea'" class="textarea-wrapper p-top-25">
             <div class="card-wrapper">

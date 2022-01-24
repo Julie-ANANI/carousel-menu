@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {
+  LikertScaleChart,
   SectionBar,
   SectionKpi,
   SectionLikertScale,
@@ -269,12 +270,12 @@ export class ExecutiveReportFrontService {
 
 
   /***
-   * this returns the content of the Likert-scale section.
+   * this returns the content of the Section LIKERT-SCALE
    * @param likertScaleData
    * @param lang
+   * @type SectionLikertScale
    */
-  public likertScaleSection(likertScaleData: {label: string, answers: Answer[]; percentage: number; count: number; identifier: string; }[],
-                        lang: string): SectionLikertScale {
+  public likertScaleSection(likertScaleData: LikertScaleChart, lang: string): SectionLikertScale {
 
     return {
       color: '#BBC7D6',
