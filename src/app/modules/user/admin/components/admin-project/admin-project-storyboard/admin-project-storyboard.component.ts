@@ -286,7 +286,6 @@ export class AdminProjectStoryboardComponent implements OnInit, OnDestroy {
               break;
 
             case 'likert-scale':
-             /* const likertScaleData = ResponseService.rankingChartData(answersToShow, question, this.currentLang);*/
               const likertScaleData = ResponseService.likertScaleChartData(answersToShow, question, this.currentLang);
               sections[index].questionType = 'LIKERT-SCALE';
               // @ts-ignore
