@@ -5,7 +5,7 @@ import { ExecutiveSection } from '../../../../../../models/executive-report';
 import { ResponseService } from '../../../../../shared/components/shared-market-report/services/response.service';
 import { Professional } from '../../../../../../models/professional';
 import { BarData } from '../../../../../shared/components/shared-market-report/models/bar-data';
-import { PieChart } from '../../../../../../models/pie-chart';
+import { PieChart } from '../../../../../../models/chart/pie-chart';
 import { ExecutiveReportFrontService } from '../../../../../../services/executive-report/executive-report-front.service';
 import {MissionQuestion} from '../../../../../../models/mission';
 import {MissionQuestionService} from '../../../../../../services/mission/mission-question.service';
@@ -285,7 +285,8 @@ export class ExecutiveSectionComponent {
       this._section.title = MissionQuestionService.label(question, 'title', this.reportLang);
       let data;
       if (question.controlType === 'likert-scale') {
-        data = ResponseService.rankingChartData(answers, question, this.reportLang);
+        data = ResponseService.likertScaleChartData(answers, question, this.reportLang);
+        // @ts-ignore
         this._section.content = this._executiveReportFrontService.likertScaleSection(data, this.reportLang);
       } else {
         data = ResponseService.tagsList(answers, question);

@@ -14,7 +14,7 @@ import {ResponseService} from '../../modules/shared/components/shared-market-rep
 import {specialCharRegEx} from '../../utils/regex';
 import {MultilingPipe} from '../../pipe/pipes/multiling.pipe';
 import {Tag} from '../../models/tag';
-import {PieChart} from '../../models/pie-chart';
+import {PieChart} from '../../models/chart/pie-chart';
 import {ExecutiveReportService} from './executive-report.service';
 import {TranslateNotificationsService} from '../translate-notifications/translate-notifications.service';
 import {first} from 'rxjs/operators';

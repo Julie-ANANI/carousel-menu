@@ -5,7 +5,7 @@ import {Innovation} from '../../../../../../models/innovation';
 import {Question} from '../../../../../../models/question';
 import {Tag} from '../../../../../../models/tag';
 import {environment} from '../../../../../../../environments/environment';
-import {PieChart} from '../../../../../../models/pie-chart';
+import {PieChart} from '../../../../../../models/chart/pie-chart';
 import {InnovationFrontService} from '../../../../../../services/innovation/innovation-front.service';
 import {Multiling} from '../../../../../../models/multiling';
 import {Picto, picto} from '../../../../../../models/static-data/picto';

@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Inject, Input, Output, PLATFORM_ID, ViewChild} from '@angular/core';
 import {isPlatformBrowser} from '@angular/common';
 import {TranslateService} from '@ngx-translate/core';
-import {PieChart} from '../../../../models/pie-chart';
+import {PieChart} from '../../../../models/chart/pie-chart';
 import {BaseChartDirective} from 'ng2-charts';
 import {Multiling} from '../../../../models/multiling';
 import {Picto, picto} from '../../../../models/static-data/picto';

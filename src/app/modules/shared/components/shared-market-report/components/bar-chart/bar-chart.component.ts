@@ -6,7 +6,7 @@ import {Innovation} from '../../../../../../models/innovation';
 import {Question} from '../../../../../../models/question';
 import {ResponseService} from '../../services/response.service';
 import {BarData} from '../../models/bar-data';
-import {PieChart} from '../../../../../../models/pie-chart';
+import {PieChart} from '../../../../../../models/chart/pie-chart';
 import {DataService} from '../../services/data.service';
 import {AnswersStats} from '../../models/stats';
 import {Subject} from 'rxjs';
