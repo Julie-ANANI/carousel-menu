@@ -1,3 +1,5 @@
+import {Answer} from './answer';
+
 export interface ExecutiveReport {
   readonly _id: string;
   readonly completion: {
@@ -115,4 +117,9 @@ export interface SectionLikertScale {
   legend:string;
   visibility?:boolean;
   color:string;
+}
+
+export interface LikertScaleChart {
+  likertScaleChart: Array<{label: string; answers: Answer[]; percentage: number; count: number; identifier: string;}>;
+  averageGeneralEvaluation: number;
 }

@@ -69,14 +69,12 @@
         <!-- /type BAR -->
 
         <!-- type LIKERT-SCALE -->
-          <div *ngSwitchCase="'LIKERT-SCALE'" id="likert-scale-content">
-          <ng-container *ngFor="let value of content.values">
-            <ng-container *ngIf="value.visibility">
-              <p>{{ value.legend }}</p>
-              <div [ngStyle]="{ 'background-color': value.color }" class="label is-rounded">
-                {{ value.name }}
-              </div>
-            </ng-container>
+        <div *ngSwitchCase="'LIKERT-SCALE'" id="likert-scale-content">
+          <ng-container *ngIf="!content.visibility">
+            <p>{{ content.legend }}</p>
+            <div [ngStyle]="{ 'background-color': content.color }" class="label is-rounded">
+              {{ content.name }}
+            </div>
           </ng-container>
         </div>
         <!-- /type LIKERT-SCALE -->

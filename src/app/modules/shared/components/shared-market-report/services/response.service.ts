@@ -7,7 +7,7 @@ import { Innovation } from '../../../../../models/innovation';
 import { Tag } from '../../../../../models/tag';
 import { Multiling } from '../../../../../models/multiling';
 import { BarData } from '../models/bar-data';
-import { PieChart } from '../../../../../models/pie-chart';
+import { PieChart } from '../../../../../models/chart/pie-chart';
 import { Professional } from '../../../../../models/professional';
 import {MissionQuestion, MissionQuestionOption} from '../../../../../models/mission';
 import {MissionQuestionService} from '../../../../../services/mission/mission-question.service';
@@ -354,6 +354,11 @@ export class ResponseService {
     return rankingChart;
   }
 
+
+  static likertScaleChartData(answersToShow: Array<Answer>, question: Question | MissionQuestion, currentLang: string) {
+
+  }
+
   /**
    * Compute positions weights depending of number of options
    * First position will always be 1
@@ -528,5 +533,6 @@ export class ResponseService {
       ques.quesId === quesId);
     return abstract ? abstract.value : '';
   }
+
 
 }

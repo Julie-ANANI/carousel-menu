@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {
+  LikertScaleChart,
   SectionBar,
   SectionKpi,
   SectionLikertScale,
@@ -13,7 +14,7 @@ import {ResponseService} from '../../modules/shared/components/shared-market-rep
 import {specialCharRegEx} from '../../utils/regex';
 import {MultilingPipe} from '../../pipe/pipes/multiling.pipe';
 import {Tag} from '../../models/tag';
-import {PieChart} from '../../models/pie-chart';
+import {PieChart} from '../../models/chart/pie-chart';
 import {ExecutiveReportService} from './executive-report.service';
 import {TranslateNotificationsService} from '../translate-notifications/translate-notifications.service';
 import {first} from 'rxjs/operators';
@@ -269,12 +270,12 @@ export class ExecutiveReportFrontService {
 
 
   /***
-   * this returns the content of the Likert-scale section.
+   * this returns the content of the Section LIKERT-SCALE
    * @param likertScaleData
    * @param lang
+   * @type SectionLikertScale
    */
-  public likertScaleSection(likertScaleData: {label: string, answers: Answer[]; percentage: number; count: number; identifier: string; }[],
-                        lang: string): SectionLikertScale {
+  public likertScaleSection(likertScaleData: LikertScaleChart, lang: string): SectionLikertScale {
 
     return {
       color: '#BBC7D6',

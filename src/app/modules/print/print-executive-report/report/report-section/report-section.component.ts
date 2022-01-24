@@ -13,7 +13,7 @@ import {
   SectionRanking,
   SectionLikertScale
 } from '../../../../../models/executive-report';
-import { ExecutivePieChart, PieChart } from '../../../../../models/pie-chart';
+import { ExecutivePieChart, PieChart } from '../../../../../models/chart/pie-chart';
 import { BarData } from '../../../../shared/components/shared-market-report/models/bar-data';
 import { Multiling } from '../../../../../models/multiling';
 import {LangEntryService} from '../../../../../services/lang-entry/lang-entry.service';
