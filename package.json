@@ -1,10 +1,6 @@
 {
   "name": "umi-application-client",
-<<<<<<< HEAD
   "version": "2.10.26-RC1",
-=======
-  "version": "2.10.25",
->>>>>>> 5e32047a5 (:label: Add type likert type for executive report + 2.10.25)
   "license": "MIT",
   "scripts": {
     "serve": "ng serve umi -c=local",
