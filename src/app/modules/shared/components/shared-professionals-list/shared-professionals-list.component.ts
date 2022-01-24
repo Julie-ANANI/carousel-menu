@@ -249,6 +249,10 @@ export class SharedProfessionalsListComponent {
     };
   }
 
+  /**
+   * it not emailConfidence then we assign 0 as default.
+   * @private
+   */
   private _emailConfCol(): Column {
     return {
       _attrs: ['emailConfidence'],
@@ -257,7 +261,10 @@ export class SharedProfessionalsListComponent {
       _width: '180px',
       _isHidden: !this.canAccess(['tableColumns', 'emailConfidence']),
       _choices: this._professionals.map((_pro) => {
-        const _choice = {_name: _pro.emailConfidence.toString(), _alias: '--'};
+        const _choice = {
+          _name: _pro.emailConfidence ? _pro.emailConfidence.toString() : '0',
+          _alias: '--'
+        };
         if (_pro.emailConfidence >= 90) {
           _choice._alias = 'Good';
           _choice['_class'] = 'label is-success';
