@@ -3,7 +3,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import {PieChart} from '../../models/chart/pie-chart';
+import {PieChart} from '../../models/pie-chart';
 import {InnovationFollowUpEmails} from '../../models/innovation';
 import {EmailMultiling} from '../../models/email';
 import {Tag} from '../../models/tag';

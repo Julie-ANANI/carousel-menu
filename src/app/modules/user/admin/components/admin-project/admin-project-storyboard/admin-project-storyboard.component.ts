@@ -13,7 +13,7 @@ import { ResponseService } from '../../../../../shared/components/shared-market-
 import { AnswerService } from '../../../../../../services/answer/answer.service';
 import { Answer } from '../../../../../../models/answer';
 import { BarData } from '../../../../../shared/components/shared-market-report/models/bar-data';
-import { PieChart } from '../../../../../../models/chart/pie-chart';
+import { PieChart } from '../../../../../../models/pie-chart';
 import { ExecutiveReportFrontService } from '../../../../../../services/executive-report/executive-report-front.service';
 import { Tag } from '../../../../../../models/tag';
 import { InnovationService } from '../../../../../../services/innovation/innovation.service';

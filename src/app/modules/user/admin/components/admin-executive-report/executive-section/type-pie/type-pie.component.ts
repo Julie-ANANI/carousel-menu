@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ExecutiveSection, SectionPie } from '../../../../../../../models/executive-report';
 import { CommonService } from '../../../../../../../services/common/common.service';
-import { ExecutivePieChart } from '../../../../../../../models/chart/pie-chart';
+import { ExecutivePieChart } from '../../../../../../../models/pie-chart';
 
 @Component({
   selector: 'app-admin-section-type-pie',

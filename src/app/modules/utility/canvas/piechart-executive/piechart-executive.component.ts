@@ -1,5 +1,5 @@
 import { Component, Inject, Input, PLATFORM_ID } from '@angular/core';
-import { ExecutivePieChart } from '../../../../models/chart/pie-chart';
+import { ExecutivePieChart } from '../../../../models/pie-chart';
 import { isPlatformBrowser } from '@angular/common';
 import {oldColorsToNewMapping} from "../../../../utils/chartColors";
 
