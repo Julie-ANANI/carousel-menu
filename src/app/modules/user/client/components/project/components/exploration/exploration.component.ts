@@ -119,8 +119,7 @@ export class ExplorationComponent implements OnInit, OnDestroy {
         _isLocal: true,
         _isPaginable: true,
         _columns: [
-          {_attrs: ['job'], _name: 'TABLE.HEADING.JOB_TITLE', _type: 'TEXT'},
-          {_attrs: ['created'], _name: 'TABLE.HEADING.CREATED', _type: 'DATE'},
+          {_attrs: ['job'], _name: 'TABLE.HEADING.JOB_TITLE', _type: 'TEXT'}
         ]
       };
     } else {
@@ -135,8 +134,7 @@ export class ExplorationComponent implements OnInit, OnDestroy {
           {_attrs: ['professional.firstName', 'professional.lastName'], _name: 'TABLE.HEADING.NAME', _type: 'TEXT'},
           {_attrs: ['job'], _name: 'TABLE.HEADING.JOB_TITLE', _type: 'TEXT'},
           {_attrs: ['country'], _name: 'TABLE.HEADING.COUNTRY', _type: 'COUNTRY', _width: '150px'},
-          {_attrs: ['company.name'], _name: 'TABLE.HEADING.COMPANY', _type: 'TEXT'},
-          {_attrs: ['created'], _name: 'TABLE.HEADING.CREATED', _type: 'DATE'},
+          {_attrs: ['company.name'], _name: 'TABLE.HEADING.COMPANY', _type: 'TEXT'}
         ]
       };
     }
