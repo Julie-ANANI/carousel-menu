@@ -139,7 +139,7 @@ export class ResponseService {
    * @param answers
    * @param lang
    */
-  public static getRanksAnswers(question: Question, answers: Array<Answer>, lang: string) {
+  public static getRanksAnswers(question: Question | MissionQuestion, answers: Array<Answer>, lang: string) {
 
     let ranksData: Array<{label: Multiling, sum: number, identifier: string, percentage: string}> = [];
 

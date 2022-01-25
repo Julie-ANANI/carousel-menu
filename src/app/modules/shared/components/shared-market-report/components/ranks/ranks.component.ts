@@ -9,6 +9,7 @@ import {Answer} from '../../../../../../models/answer';
 import {ResponseService} from '../../services/response.service';
 import * as _ from 'lodash';
 import {MissionQuestionService} from '../../../../../../services/mission/mission-question.service';
+import {MissionQuestion} from '../../../../../../models/mission';
 
 @Component({
   selector: 'app-ranks',
@@ -16,14 +17,13 @@ import {MissionQuestionService} from '../../../../../../services/mission/mission
 })
 export class RanksComponent implements OnInit, OnDestroy {
 
-  @Input() question: Question = <Question>{};
+  @Input() question: Question | MissionQuestion = <Question | MissionQuestion>{};
+
   @Input() reportingLang = this._translateService.currentLang;
 
   private _ranksData: Array<{label: Multiling, sum: number, identifier: string, percentage: string}> = [];
 
   private _ngUnsubscribe: Subject<any> = new Subject<any>();
-
-  private _currentLang = this._translateService.currentLang;
 
   constructor(private _translateService: TranslateService,
               private _dataService: DataService) { }
@@ -37,11 +37,7 @@ export class RanksComponent implements OnInit, OnDestroy {
 
   public optionLabel(identifier: string) {
     const option = _.find(this.question.options, (o: any) => o.identifier === identifier);
-    return MissionQuestionService.label(option, 'label', this.currentLang);
-  }
-
-  get currentLang(): string {
-    return this._currentLang;
+    return MissionQuestionService.label(option, 'label', this.reportingLang);
   }
 
   get ranksData(): Array<{ label: Multiling; sum: number; identifier: string; percentage: string }> {
