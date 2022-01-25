@@ -9,6 +9,7 @@ import {Answer} from '../../../../../../models/answer';
 import {ResponseService} from '../../services/response.service';
 import * as _ from 'lodash';
 import {MissionQuestionService} from '../../../../../../services/mission/mission-question.service';
+import {MissionQuestion} from '../../../../../../models/mission';
 
 @Component({
   selector: 'app-ranks',
@@ -16,7 +17,7 @@ import {MissionQuestionService} from '../../../../../../services/mission/mission
 })
 export class RanksComponent implements OnInit, OnDestroy {
 
-  @Input() question: Question = <Question>{};
+  @Input() question: Question | MissionQuestion = <Question | MissionQuestion>{};
 
   @Input() reportingLang = this._translateService.currentLang;
 
