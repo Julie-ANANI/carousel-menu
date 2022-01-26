@@ -63,12 +63,16 @@ export class LikertScaleChartComponent implements OnInit, OnDestroy {
 
         // Choose which score label to display
         const index = (averageGeneralEvaluation - averageGeneralEvaluation % 4) / 4; // will give 0,1,2,3,4
-        const scorePercentage = (averageGeneralEvaluation* 99) / 20; // will give margin percentage for the pointer of marker
+        const scorePercentage = (averageGeneralEvaluation * 98) / 20; // will give margin percentage for the pointer of marker
 
         this._scorePercentage = scorePercentage;
         this._label = this._colorsAndNames[index].name;
         this._content.color = this._colorsAndNames[index].color;
       });
+  }
+
+  getValueForAverageText(): string {
+    return (this.scorePercentage - 5).toString() +'%';
   }
 
   public optionLabel(identifier: string) {

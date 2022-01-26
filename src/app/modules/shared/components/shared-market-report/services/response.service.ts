@@ -152,7 +152,7 @@ export class ResponseService {
           identifier: rank.identifier,
           label: rank.label,
           sum: rank.count,
-          percentage: `${rank.percentage || 0}%`
+          percentage: `${ rank.percentage || 0 }%`
         };
       });
 
@@ -262,14 +262,15 @@ export class ResponseService {
     return barsData;
   }
 
-  /**
-   * @static
-   * @param {Array} barsData
-   * @param {Any} Question
-   * */
+/**
+ * This function calculated percentage for checkbox
+ * @static
+ * @param {Array} barsData
+ * @param {Any} Question
+ * */
   static getRelativePercentagebarsData(barsData: Array<BarData>, question: any): { relativePercentages: any, maxAnswersCount: number } {
 
-    const maxAnswersCount = question.controlType === 'checkbox' || question.controlType === 'likert-scale' ?
+    const maxAnswersCount = question.controlType === 'checkbox'?
       barsData.reduce((acc, bd) => {
         return (acc < bd.count) ? bd.count : acc;
       }, 0) :
@@ -301,69 +302,6 @@ export class ResponseService {
     };
   }
 
-  /*
-    public static getValueOfOptionsLikertScale(barsData: Array<BarData>,
-                                               question: Question | MissionQuestion = <Question | MissionQuestion>{},
-                                               answers: Array<Answer> = []) {
-      debugger;
-      //const weightImportanceOpt = [2, 1, 1, 1, 2]; //A mettre ailleurs
-      //const nameValidation: any = ['Totally', 'invalidated', 'Invalidated', 'Uncertain', 'Validated', 'Totally invalidated']; //A mettre ailleurs (array)
-
-      const relativePercentagesData = ResponseService.getRelativePercentages(barsData, question);
-      const allAnswerChosen = relativePercentagesData.relativePercentages;
-      const totalAnswersOptions = relativePercentagesData.maxAnswersCount;
-
-      const scale: number = 0.44;
-      let scoreOfValidated: any;
-      let positiveOrNegative: number;
-      const scoreNote = 20;
-      const weightAspectOption = this.computeWeights(question.options.length, question);
-      const weightImportanceOpt = this.computeMultiplier(question.options.length, question);
-
-      question.options.forEach((option: Option | MissionQuestionOption) => {
-          const identifier = option.identifier;
-          const filteredAnswers: Array<Answer> = answers.filter((a) => a.answers[question.identifier]
-            && Object.values(a.answers[question.identifier]).every((i: number) => {
-              return i ;
-            }));
-
-          let weightTotal = 0;
-
-          filteredAnswers.forEach(a => {
-
-            const entry = Object.entries(a.answers[question.identifier]).find(k => k[1] === identifier);
-            if (entry) {
-              const optLikertScale = parseInt(entry[0]);
-                const aspect = weightAspectOption[optLikertScale]; // weight of the likert-scale
-                const importance = weightImportanceOpt[optLikertScale]; // importance of the likert-scale
-                weightTotal += aspect * importance;
-                console.table(weightTotal);
-            }
-          });
-
-          console.table(weightTotal);
-
-          positiveOrNegative = (weightTotal * allAnswerChosen) / totalAnswersOptions
-
-          if (positiveOrNegative > scale) {
-            scoreOfValidated = (positiveOrNegative * scoreNote);
-          } else {
-            //0 + totaly invalided
-            scoreOfValidated = 0;
-          }
-          return scoreOfValidated;
-
-
-          /!* for (const i in question.options) {
-             let scoreModulo = (scoreOfValidated - scoreOfValidated%4)/4
-             scoreModulo = question.option.nameValidation[i];
-             return question.options.nameValidation.label.value
-           }*!/
-          // @ts-ignore
-          /!*  return barsData;*!/
-        }
-      )
-    };*/
 
   /***
    * this function is to get the pie chart data for the question type radio.
@@ -410,8 +348,7 @@ export class ResponseService {
       answers: Answer[];
       percentage: number;
       count: number;
-      identifier: string;
-    }[] = [];
+      identifier: string; }[] = [];
 
     const weights = this.computeWeights(question.options.length);
     const multipliers = this.computeMultiplier(question.options.length);
