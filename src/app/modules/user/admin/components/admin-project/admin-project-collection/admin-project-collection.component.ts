@@ -284,9 +284,11 @@ export class AdminProjectCollectionComponent implements OnInit, OnDestroy {
   public onImport(errorMessage: []) {
     if(errorMessage) {
       this._importingErrors = errorMessage
-      this._errorsModal = true;
-      this._isImportingAnswers = false;
-      this._slicedErrors = this._importingErrors.slice(0, 10);
+      if(this._importingErrors.length > 1) {
+        this._errorsModal = true;
+        this._isImportingAnswers = false;
+        this._slicedErrors = this._importingErrors.slice(0, 10);
+      }
     } else {
       this._isImportingAnswers = false;
     }
