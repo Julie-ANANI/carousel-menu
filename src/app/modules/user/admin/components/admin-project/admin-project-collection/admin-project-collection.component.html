@@ -56,6 +56,9 @@
           </section>
 
           <footer class="modal-footer">
+            <ng-container *ngIf="importingErrors && importingErrors.length === 1">
+              <app-shared-csv-error [error]="importingErrors[0]"></app-shared-csv-error>
+            </ng-container>
 
             <button
               (click)="closeModal($event)"
@@ -72,16 +75,12 @@
         <!-- errors modal -->
         <app-utility-modal [(showModal)]="errorsModal" [title]="'Import errors'">
 
-          <section class="modal-body max-height-365">
-            <ng-container *ngIf="importingErrors && importingErrors.length" >
+          <section *ngIf="importingErrors && slicedErrors" class="modal-body max-height-365">
+            <ng-container *ngIf="importingErrors.length" >
               <div class="flex-d-column d-flex width-75 errors-box">
                 <span class="text-error text-sm"> {{ importingErrors.length }} error(s) </span>
                 <ul>
-                  <li *ngFor="let err of slicedErrors" class="text-error text-xs">
-                    <span *ngIf="err.column" class="text-bold"> Column {{ err.column }} - </span>
-                    <span> {{ err.error }} </span>
-                    <span *ngIf="err.lines && err.lines.length"> - Lines {{ (err.lines.length > 10)? err.lines.slice(0,10) + '...':err.lines }} </span>
-                  </li>
+                  <app-shared-csv-error *ngFor="let err of slicedErrors" [error]="err" [htmlTag]="'li'"></app-shared-csv-error>
                 </ul>
               </div>
 
