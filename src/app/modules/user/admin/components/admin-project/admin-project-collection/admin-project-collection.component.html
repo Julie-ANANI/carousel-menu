@@ -56,7 +56,6 @@
           </section>
 
           <footer class="modal-footer">
-            <span *ngIf="importingError" class="text-error text-xs m-right-25">{{importingError}}</span>
 
             <button
               (click)="closeModal($event)"
@@ -69,6 +68,35 @@
 
         </app-utility-modal>
         <!-- /modal to import -->
+
+        <!-- errors modal -->
+        <app-utility-modal [(showModal)]="errorsModal" [title]="'Import errors'">
+
+          <section class="modal-body max-height-365">
+            <ng-container *ngIf="importingErrors && importingErrors.length" >
+              <div class="flex-d-column d-flex width-75 errors-box">
+                <span class="text-error text-sm"> {{ importingErrors.length }} error(s) </span>
+                <ul>
+                  <li *ngFor="let err of slicedErrors" class="text-error text-xs">
+                    <span *ngIf="err.column" class="text-bold"> Column {{ err.column }} - </span>
+                    <span> {{ err.error }} </span>
+                    <span *ngIf="err.lines && err.lines.length"> - Lines {{ (err.lines.length > 10)? err.lines.slice(0,10) + '...':err.lines }} </span>
+                  </li>
+                </ul>
+              </div>
+
+              <!-- button to show more errors -->
+              <div class="text-center" *ngIf="importingErrors.length > slicedErrors.length">
+                <a class="text-link text-xs" (click)="onClickSeeMore()">{{ 'COMMON.BUTTON.SEE_MORE' | translate}}</a>
+              </div>
+              <!-- /button to show more errors -->
+            </ng-container>
+          </section>
+
+        </app-utility-modal>
+        <!-- /errors modal -->
+
+
       </section>
       <!-- /action buttons -->
 
