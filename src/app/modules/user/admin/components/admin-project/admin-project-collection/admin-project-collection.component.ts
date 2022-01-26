@@ -30,6 +30,7 @@ import { CommonService } from "../../../../../../services/common/common.service"
 
 @Component({
   templateUrl: './admin-project-collection.component.html',
+  styleUrls: ['./admin-project-collection.component.scss'],
 })
 export class AdminProjectCollectionComponent implements OnInit, OnDestroy {
   private _isLoading = true;
@@ -50,7 +51,11 @@ export class AdminProjectCollectionComponent implements OnInit, OnDestroy {
 
   private _isImportingAnswers = false;
 
-  private _importingError = '';
+  private _errorsModal = false;
+
+  private _importingErrors: Array<any>;
+
+  private _slicedErrors: Array<any> = [];
 
   private _tableData: Table = <Table>{};
 
@@ -270,13 +275,18 @@ export class AdminProjectCollectionComponent implements OnInit, OnDestroy {
   }
 
   public openImportModal() {
-    this._importingError = '';
+    this._importingErrors = null;
+    this._slicedErrors = null;
     this._isImportingAnswers = true;
+    this._errorsModal = false;
   }
 
-  public onImport(errorMessage: string) {
+  public onImport(errorMessage: []) {
     if(errorMessage) {
-      this._importingError = errorMessage
+      this._importingErrors = errorMessage
+      this._errorsModal = true;
+      this._isImportingAnswers = false;
+      this._slicedErrors = this._importingErrors.slice(0, 10);
     } else {
       this._isImportingAnswers = false;
     }
@@ -513,10 +523,20 @@ export class AdminProjectCollectionComponent implements OnInit, OnDestroy {
     }
   }
 
+  public onClickSeeMore() {
+    const currentNumberOfErrors = this._slicedErrors.length;
+    const end = currentNumberOfErrors + 10 > this._importingErrors.length ?
+      this._importingErrors.length : currentNumberOfErrors + 10;
+    this._slicedErrors = this._importingErrors.slice(0, end);
+  }
+
+
   public closeModal(event: Event) {
     event.preventDefault();
     this._isImportingAnswers = false;
-    this._importingError = '';
+    this._errorsModal = false;
+    this._importingErrors = null;
+    this._slicedErrors = null;
   }
 
   get localConfig(): Config {
@@ -594,12 +614,24 @@ export class AdminProjectCollectionComponent implements OnInit, OnDestroy {
     return this._accessPath;
   }
 
-  get importingError(): string {
-    return this._importingError;
+  get importingErrors(): any[] {
+    return this._importingErrors;
   }
 
   set isImportingAnswers(value: boolean) {
     this._isImportingAnswers = value;
+  }
+
+  get slicedErrors(): Array<any> {
+    return this._slicedErrors;
+  }
+
+  set errorsModal(value: boolean) {
+    this._errorsModal = value;
+  }
+
+  get errorsModal(): boolean {
+    return this._errorsModal;
   }
 
   ngOnDestroy(): void {
