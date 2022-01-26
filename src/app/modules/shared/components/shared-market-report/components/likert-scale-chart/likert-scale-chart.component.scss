@@ -1,7 +1,7 @@
 @import "../../../../../../../style/framework/src/variables";
 
 // Container //
-.likert-scale-chart {
+.chart__likert_scale {
   display: flex;
   flex-direction: column;
   justify-items: center;
@@ -10,8 +10,8 @@
   height: 250px;
 
 
-  // Name of Result //
-  .name-result{
+  // Name of result chart //
+  .chart__name{
     display: inline-block;
     font-size: 25px;
     font-weight: $font-weight-bold;
@@ -42,21 +42,21 @@
 
     .fa-user {
 
-      &.one {
+      &.user__one {
         font-size: 50px;
         z-index: $zindex-1;
         color: #2E6188;
         margin: -16px 23px 0px 2px;;
       }
 
-      &.two {
+      &.user__two {
         position: absolute;
         font-size: 47px;
         margin: -0.2em 0em 0em -0.5em;
         z-index: $zindex-1;
       }
 
-      &.three {
+      &.user__three {
         position: absolute;
         font-size: 37px;
         margin: -2.3px -42px 7px -0.5px;
@@ -69,7 +69,7 @@
 
 
   // Progress bar //
-  .bar-progress {
+  .progress__bar {
     background: linear-gradient(to right, rgba(234, 88, 88, 0.5) 20%, rgba(248, 148, 36, 0.5) 20% 40%,
     rgba(187, 199, 214, 0.5) 40% 60%, rgba(46, 204, 113, 0.5) 60% 80%, rgba(153, 224, 75, 0.5) 80%);
     border-radius: 20px;
@@ -78,7 +78,7 @@
     height: 20px;
     z-index: $zindex-0;
 
-    .totally-invalidated {
+    .totally--invalidated {
       background: linear-gradient(to right, rgba(234, 88, 88, 1) 20%, rgba(248, 148, 36, 0.5) 20% 40%,
       rgba(187, 199, 214, 0.5) 40% 60%, rgba(46, 204, 113, 0.5) 60% 80%, rgba(153, 224, 75, 0.5) 80%);
       z-index: $zindex-1;
@@ -102,7 +102,7 @@
         z-index: $zindex-1;
       }
 
-      &.totally-validated {
+      &.totally--validated {
         background: linear-gradient(to right, rgba(234, 88, 88, 0.5) 20%, rgba(248, 148, 36, 0.5) 20% 40%,
         rgba(187, 199, 214, 0.5) 40% 60%, rgba(46, 204, 113, 0.5) 60% 80%, rgba(153, 224, 75, 1) 80%);
         z-index: $zindex-1;
@@ -111,12 +111,12 @@
 
 
   // Container marker //
-  .bar-progress-marker {
+  .progress__bar__marker {
     position: absolute;
     text-align: center;
     top: -39px;
 
-    .marker-pointer {
+    .marker__pointer {
       background-color: white;
       width: 2px;
       height: 23px;
@@ -126,11 +126,11 @@
   }
 
   // score //
-  .average-evaluation {
+  .average__evaluation {
     font-weight: $font-weight-medium;
     font-size: $font-size-sm;
 
-    .average-text {
+    .average__text {
       position: absolute;
       width: fit-content;
     }

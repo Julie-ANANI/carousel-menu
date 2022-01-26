@@ -72,8 +72,10 @@
 .answer-question .answer-wrapper .text-primary-dark {
   color: $text-meta-color;
   font-style: italic;
-}/*the option checked*/
-.answer-question .answer-wrapper #likert-scale{
+}
+
+/*the option checked*/
+.answer-question .answer-wrapper #likert-scale {
   font-style: italic;
   font-weight: $font-weight-bold;
 }

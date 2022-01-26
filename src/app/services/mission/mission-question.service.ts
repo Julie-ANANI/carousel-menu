@@ -345,7 +345,7 @@ export class MissionQuestionService {
 
     const nbOptions = question.options && question.options.length;
 
-    if (question.controlType === 'likert-scale') {
+    if (question.controlType === 'radio') {
       if (nbOptions === 4) {
         question.options[2].positive = true;
         question.options[3].positive = true;

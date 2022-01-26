@@ -25,6 +25,7 @@ import {Answer} from '../../models/answer';
 import {LangEntryService} from '../lang-entry/lang-entry.service';
 
 @Injectable({ providedIn: 'root' })
+
 export class ExecutiveReportFrontService {
 
   constructor(private _multilingPipe: MultilingPipe,
@@ -248,7 +249,6 @@ export class ExecutiveReportFrontService {
    * @param tagsData
    * @param lang
    */
-
   public likertScaleTagsSection(tagsData: Array<Tag>, lang: string): SectionLikertScale {
 
     if (tagsData && tagsData.length > 0) {

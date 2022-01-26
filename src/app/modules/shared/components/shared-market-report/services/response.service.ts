@@ -417,18 +417,19 @@ export class ResponseService {
       identifier: string;
     }[] = [];
 
-    // Depends on likert scale type
+    // Depends on likert scale type, it's for calculated
+    //These are weights to be included in the score for each specific value of each option
     const characterSureOrNegative = [0, 0.25, 0.5, 0.75, 1];
     const weightImportanceOpt = [2, 1, 1, 1, 2];
 
-    // N
+    //Retrieves all answers from the 5 identifiers
     answers = answers.filter((a) => a.answers[question.identifier]);
 
     question.options.forEach((option: Option | MissionQuestionOption) => {
 
-      const identifier = option.identifier; // 0 1 2 3 4   Ok
+      const identifier = option.identifier; // 0 1 2 3 4
 
-      // Recupère les réponses qui ont choisie cette option
+      // Collects the answers that have chosen the same option
       const filteredAnswers: Array<Answer> = answers.filter((a) => a.answers[question.identifier]
         && a.answers[question.identifier] === identifier);
 
@@ -437,9 +438,7 @@ export class ResponseService {
       const weightCharacter = characterSureOrNegative[identifier]; // weight of the option - 0, 0.25, 0.5, 0.75, 1
       const weightImportance = weightImportanceOpt[identifier]; // multiplier of the option - 2, 1, 1, 1, 2
       const allWeightsOption = weightCharacter * weightImportance; // 0, 0.25, 0.5, 0.75, 2
-      const weightsResultsFilteredOption = filteredAnswers.length * allWeightsOption;// n * W * I
-      // example 0, 0,5 0 14
-
+      const weightsResultsFilteredOption = filteredAnswers.length * allWeightsOption;
 
       // Score total for the question
       averageGeneralEvaluation += weightsResultsFilteredOption;
@@ -457,12 +456,14 @@ export class ResponseService {
 
     // Compute score of question
     const scale: number = 0.44;
-    averageGeneralEvaluation = averageGeneralEvaluation / scoreTotalOptionWithoutCharacterValue;
-    // console.log(averageGeneralEvaluation); //0,96666
+
+    //This score is calculated according to the likert-scale methodology
+    // It returns a score with only the importance weights of the selected options per occurrence
+    averageGeneralEvaluation = averageGeneralEvaluation/ scoreTotalOptionWithoutCharacterValue;
     averageGeneralEvaluation = (averageGeneralEvaluation - scale) / (1 - scale);
-    //console.log(averageGeneralEvaluation); // 0,9404
-    averageGeneralEvaluation = parseFloat(((averageGeneralEvaluation < 0) ? 0 : averageGeneralEvaluation * 20).toFixed(2));
-    //console.log(averageGeneralEvaluation); // 18,81
+
+    averageGeneralEvaluation = parseFloat(((averageGeneralEvaluation < 0) ? 0 : averageGeneralEvaluation * 20) .toFixed(2));
+
 
     if (isNaN(averageGeneralEvaluation)) {
       averageGeneralEvaluation = 0;

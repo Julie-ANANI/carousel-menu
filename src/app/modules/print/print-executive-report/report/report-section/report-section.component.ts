@@ -79,7 +79,7 @@ export class ReportSectionComponent implements OnChanges {
       const _answers = this._responseService.answersToShow(this.answers, _question);
 
       if (_question && _question.controlType) {
-        console.log(_question.controlType);
+
         switch (_question.controlType) {
 
           case 'checkbox':

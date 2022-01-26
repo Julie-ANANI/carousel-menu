@@ -1,45 +1,45 @@
-<div class="likert-scale-chart">
+<div class=" chart chart__likert_scale">
 
     <div class="fas icon-container">
-        <div class="fa-user one"></div>
-        <div class="fa-user two"></div>
-        <div class="fa-user three"></div>
+        <div class="fa-user user__one"></div>
+        <div class="fa-user user__two"></div>
+        <div class="fa-user user__three"></div>
     </div>
 
   <div *ngIf="stackedChart && stackedChart.likertScaleChart">
 
-    <span [ngStyle]="{ 'color': content }" class="name-result">
+    <span [ngStyle]="{ 'color': content }" class="chart__name">
       {{ ('MARKET_REPORT.LIKERT-SCALE_SECTION.' + label) | uppercase| translate }}
     </span>
 
     <div class="relative">
-      <div class="bar-progress"
+      <div class="progress__bar"
         (mouseover)="isShowResult=true"
         (mouseout)="isShowResult=false"
 
         [ngClass]="{
-        'totally-invalidated': (label | uppercase) === 'TOTALLY_INVALIDATED',
+        'totally--invalidated': (label | uppercase) === 'TOTALLY_INVALIDATED',
         'invalided': (label | uppercase) === 'INVALIDED',
         'uncertain': (label | uppercase) === 'UNCERTAIN',
         'validated': (label | uppercase) === 'VALIDATED',
-        'totally-validated ': (label | uppercase) === 'TOTALLY_VALIDATED'
+        'totally--validated ': (label | uppercase) === 'TOTALLY_VALIDATED'
         }">
       </div>
 
-      <div class="bar-progress-marker"
+      <div class="progress__bar__marker"
            (mouseover)="isShowResult=true"
            (mouseout)="isShowResult=false"
            [ngStyle]="{ 'left': scorePercentage + '%' }">
 
         <div class="icon-container"><i class="icon icon-location"></i></div>
-        <div class="marker-pointer"></div>
+        <div class="marker__pointer"></div>
 
       </div>
 
-      <div class="average-evaluation"
+      <div class=" average average__evaluation"
            [ngStyle]="{ 'visibility': isShowResult? 'visible': 'hidden' }">
 
-        <div class="average-text"
+        <div class="average__text"
              [ngStyle]="{'left': getValueForAverageText()}">
 
           {{ stackedChart.averageGeneralEvaluation }} /20

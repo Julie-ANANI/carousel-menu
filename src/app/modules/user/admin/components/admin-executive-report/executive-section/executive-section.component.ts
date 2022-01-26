@@ -279,21 +279,23 @@ export class ExecutiveSectionComponent {
 
 
   /***
-   *
    * @private
    */
   private _setLikertScaleData() {
     if (this._section.questionIdentifier === `quesCustom_${this.sectionIndex}`) {
       this._section.title = 'Custom likert scale';
       this._section.content = this._executiveReportFrontService.likertScaleTagsSection([], this.reportLang);
+
     } else {
       const question: Question | MissionQuestion = this._getQuestion(this._section.questionIdentifier);
       const answers: Array<Answer> = this._responseService.answersToShow(this.answers, question);
       this._section.title = MissionQuestionService.label(question, 'title', this.reportLang);
       let data;
+
       if (question.controlType === 'likert-scale') {
         data = ResponseService.likertScaleChartData(answers, question, this.reportLang);
         this._section.content = this._executiveReportFrontService.likertScaleSection(data, this.reportLang);
+
       } else {
         data = ResponseService.tagsList(answers, question);
         this._section.content = this._executiveReportFrontService.likertScaleTagsSection(data, this.reportLang);
