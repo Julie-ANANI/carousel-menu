@@ -74,6 +74,18 @@
   font-style: italic;
 }
 
+/*the option checked*/
+.answer-question .answer-wrapper #likert-scale {
+  font-style: italic;
+  font-weight: $font-weight-bold;
+}
+
+.answer-question .answer-wrapper .text-primary-dark {
+  color: $text-meta-color;
+  opacity: 0.33;
+  font-style: italic;
+}
+
 .answer-question .answer-wrapper #likert-scale .text-normal {
   font-style: normal;
   opacity:1;

@@ -1,7 +1,7 @@
 <div class="question-section" [id]="questionReceived.identifier">
 
   <!-- if the question type is checkbox or radio -->
-  <div *ngIf="questionReceived.controlType === 'checkbox' || questionReceived.controlType === 'radio'">
+  <div *ngIf="questionReceived.controlType === 'checkbox' || questionReceived.controlType === 'radio'|| questionReceived.controlType === 'likert-scale'">
     <app-bar-chart
       [reportingLang]="reportingLang"
       (questionChanged)="questionChanged.emit($event)"
@@ -14,11 +14,11 @@
       [toggleAnswers]="toggleAnswers">
     </app-bar-chart>
   </div>
-  <!-- /if the question type is checkbox or radio -->
+  <!-- /if the question type is checkbox or radio or likert-scale -->
 
-  <!-- if the question type is not checkbox and radio -->
+  <!-- if the question type is not checkbox and radio and likert-scale -->
   <div
-    *ngIf="questionReceived.controlType !== 'checkbox' && questionReceived.controlType !== 'radio'"
+    *ngIf="questionReceived.controlType !== 'checkbox' && questionReceived.controlType !== 'radio' && questionReceived.controlType !== 'likert-scale'"
     class="box-style">
     <app-question-conclusion
       [reportingLang]="reportingLang"
@@ -86,7 +86,7 @@
 
   <!-- showing answers if the question type is not clearbit, radio, checkbox and list -->
   <div *ngIf="questionReceived.controlType !== 'checkbox' && questionReceived.controlType !== 'radio'
-  && questionReceived.controlType !== 'list' && questionReceived.controlType !== 'clearbit'">
+  && questionReceived.controlType !== 'list' && questionReceived.controlType !== 'clearbit' && questionReceived.controlType !== 'likert-scale'" >
 
     <!-- answer toggle button -->
     <div *ngIf="!hideAnswers" class="p-top-25 text-center">

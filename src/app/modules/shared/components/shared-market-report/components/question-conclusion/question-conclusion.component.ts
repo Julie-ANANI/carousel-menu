@@ -5,7 +5,7 @@ import {Innovation} from '../../../../../../models/innovation';
 import {Question} from '../../../../../../models/question';
 import {Tag} from '../../../../../../models/tag';
 import {environment} from '../../../../../../../environments/environment';
-import {PieChart} from '../../../../../../models/pie-chart';
+import {PieChart} from '../../../../../../models/chart/pie-chart';
 import {InnovationFrontService} from '../../../../../../services/innovation/innovation-front.service';
 import {Multiling} from '../../../../../../models/multiling';
 import {Picto, picto} from '../../../../../../models/static-data/picto';
@@ -22,11 +22,8 @@ import {MissionQuestionService} from '../../../../../../services/mission/mission
 export class QuestionConclusionComponent implements OnInit {
 
   @Input() originAnswers: {[continent: string]: {count: any, countries: {[country: string]: {count: number, names: any}}}} = null;
-
   @Input() readonly = true;
-
   @Input() pieChart: PieChart = <PieChart>{};
-
   @Input() set innovation(value: Innovation) {
     this._innovation = value;
     if (this.hasMissionTemplate) {
@@ -37,31 +34,27 @@ export class QuestionConclusionComponent implements OnInit {
   @Input() set question(value: Question | MissionQuestion) {
     this._question = value;
   }
-
   @Input() stats: { nbAnswers: number, percentage: number } = null;
+  @Input() reportingLang = this._translateService.currentLang;
+
 
   @Output() questionChanged = new EventEmitter<Question>();
 
-  @Input() reportingLang = this._translateService.currentLang;
 
   private _isMainDomain = environment.domain === 'umi' || false;
-
   private _showEditor = false;
-
   private _editTitle = false;
-
   private _editSubtitle = false;
-
   private _picto: Picto = picto;
-
   private _innovation: Innovation = <Innovation>{};
-
   private _question: Question | MissionQuestion = <MissionQuestion | Question>{};
+
 
   constructor(private _translateService: TranslateService,
               private _missionQuestionService: MissionQuestionService,
               private _dataService: DataService,
               private _innovationFrontService: InnovationFrontService) {}
+
 
   ngOnInit() {
     if (!!this._innovation && !this._innovation.marketReport) {

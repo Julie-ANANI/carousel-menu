@@ -1,0 +1,16 @@
+[{
+  "name": "TOTALLY_INVALIDATED",
+  "color": "#EA5858"
+}, {
+  "name": "INVALIDED",
+  "color": "#F89424"
+}, {
+  "name": "UNCERTAIN",
+  "color": "#BBC7D6"
+}, {
+  "name": "VALIDATED",
+  "color": "#99E04B"
+}, {
+  "name": "TOTALLY_VALIDATED",
+  "color": "#2ECC71"
+}]

@@ -25,8 +25,6 @@ export class MissionQuestionService {
     this._cardsSections = value;
   }
 
-  optionLikertList = optionLikert;
-
   get allQuestions(): Array<MissionQuestion> {
     return this._allQuestions;
   }
@@ -302,20 +300,41 @@ export class MissionQuestionService {
   public static setOptionsColors(question: MissionQuestion): MissionQuestion {
     const nbOptions = question.options.length;
 
-    if (question.controlType === 'radio') {
-      if (nbOptions > 4 && nbOptions <= 6) {
-        for (let i = 0; i < nbOptions; i++) {
-          question.options[i].color = colors[i + 4].value;
-        }
-      } else {
-        for (let i = 0; i < nbOptions; i++) {
+
+      if (nbOptions > 4 && nbOptions <= 6 && question.controlType === 'radio') {
+            for (const indexOption in question.options) {
+              question.options[indexOption].color = colors[indexOption + 4].value;
+            }
+      } else
+       for (let i = 0; i < nbOptions; i++) {
           question.options[i].color = colors[i % 10].value;
-        }
-      }
-    }
+       }
+
 
     return question;
   }
+
+
+    /**
+     * return the options color for controlType === 'liker-scale'
+     * @param question
+     */
+  public static setOptionsColorsLikert(question: MissionQuestion): MissionQuestion {
+
+    const nbOptions = question.options.length;
+
+      if (nbOptions > 5 && question.controlType === 'likert-scale') {
+
+        for (const indexOption in question.options) {
+          question.options[indexOption].color = colors[indexOption + 5].value;
+        }
+
+        } else
+          for (let i = 0; i < nbOptions; i++) {
+            question.options[i].color = colors[i % 10].value;
+          }
+        return question;
+      }
 
   /**
    * return the options are positive answers or not for control type === 'radio'
@@ -323,6 +342,7 @@ export class MissionQuestionService {
    * @param question
    */
   public static setOptionsPositiveAnswer(question: MissionQuestion = <MissionQuestion>{}): MissionQuestion {
+
     const nbOptions = question.options && question.options.length;
 
     if (question.controlType === 'radio') {
@@ -416,6 +436,10 @@ export class MissionQuestionService {
       const measureOptions = this.dataOfChoiceLikertScale[question.attitudeMeasure];
       for (let i = 0; i < measureOptions.length; i++) {
         question.options.push(this.addOptionLikert(question, measureOptions[i]));
+
+        question = MissionQuestionService.setOptionsColorsLikert(question);
+        question = MissionQuestionService.setOptionsPositiveAnswer(question);
+
       }
     }
 
@@ -433,6 +457,7 @@ export class MissionQuestionService {
     if (question.controlType === 'radio' || question.controlType === 'checkbox'
       || question.controlType === 'stars' || question.controlType === 'ranking') {
       const id = question.options.length;
+
       return {
         identifier: id.toString(),
         positive: false,
@@ -477,7 +502,6 @@ export class MissionQuestionService {
         })
       };
     }
-
     return <MissionQuestionOption>{};
   }
 

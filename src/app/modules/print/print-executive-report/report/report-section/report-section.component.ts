@@ -11,9 +11,9 @@ import {
   SectionPie,
   SectionQuote,
   SectionRanking,
-  SectionLikertScale
+  SectionLikertScale,
 } from '../../../../../models/executive-report';
-import { ExecutivePieChart, PieChart } from '../../../../../models/pie-chart';
+import { ExecutivePieChart, PieChart } from '../../../../../models/chart/pie-chart';
 import { BarData } from '../../../../shared/components/shared-market-report/models/bar-data';
 import { Multiling } from '../../../../../models/multiling';
 import {LangEntryService} from '../../../../../services/lang-entry/lang-entry.service';
@@ -107,6 +107,7 @@ export class ReportSectionComponent implements OnChanges {
             break;
 
           case 'likert-scale':
+
             this._section = {
               questionId: _quesId,
               title: this.report.lang === 'fr' ? _titleFrench : _titleEnglish,
@@ -214,7 +215,6 @@ export class ReportSectionComponent implements OnChanges {
   }
 
   /***
-   * TODO remove multiling
    * returns the content of the Section Pie
    * @param pieData
    * @private
@@ -355,7 +355,7 @@ export class ReportSectionComponent implements OnChanges {
    */
   private _initLikertScaleContent(tagsData: Array<Tag>, title: Multiling): SectionLikertScale {
     if (tagsData.length > 0) {
-       return {
+      return {
         name: tagsData[0].label[this.report.lang] || '',
         visibility: true,
         legend: tagsData[0].count > 1 ? tagsData[0].count + 'X' : '',

@@ -217,6 +217,14 @@ export const MARKET_REPORT = {
     'REALLY_MAKE_INVISIBLE': 'Voulez vous vraiment rendre le projet invisible pour le client ?',
     'REALLY_RESET_REPORT': 'Voulez vous vraiment réinitialiser l\'executive report ?',
     'REALLY_END_PROJECT': 'Voulez vous vraiment terminer le projet ? Vous ne serez plus en mesure d\'apporter des changements au projet.',
+  },
+
+  'LIKERT-SCALE_SECTION': {
+    'TOTALLY_INVALIDATED': 'TOTALEMENT INVALIDÉ',
+    'INVALIDED': 'INVALIDÉ',
+    'UNCERTAIN': 'INCERTAIN',
+    'VALIDATED': 'VALIDÉ',
+    'TOTALLY_VALIDATED': 'TOTALEMENT VALIDÉ',
   }
 
 };

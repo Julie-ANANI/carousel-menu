@@ -10,7 +10,6 @@ import {Md5} from 'ts-md5/dist/md5';
 export class AdHocAuthGuard implements CanActivate {
   constructor(private _authService: AuthService,
               private _router: Router) {
-    // console.log(this);
   }
 
   canActivate(_: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {

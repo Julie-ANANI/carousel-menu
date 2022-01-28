@@ -14,6 +14,7 @@ import {MissionQuestionService} from '../../../../../../services/mission/mission
   templateUrl: './ranking-chart.component.html',
   styleUrls: ['./ranking-chart.component.scss']
 })
+
 export class RankingChartComponent implements OnInit, OnDestroy {
 
   @Input() question: Question = <Question>{};

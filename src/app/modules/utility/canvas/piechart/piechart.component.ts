@@ -1,11 +1,11 @@
 import {Component, EventEmitter, Inject, Input, Output, PLATFORM_ID, ViewChild} from '@angular/core';
 import {isPlatformBrowser} from '@angular/common';
 import {TranslateService} from '@ngx-translate/core';
-import {PieChart} from '../../../../models/pie-chart';
+import {PieChart} from '../../../../models/chart/pie-chart';
 import {BaseChartDirective} from 'ng2-charts';
 import {Multiling} from '../../../../models/multiling';
 import {Picto, picto} from '../../../../models/static-data/picto';
-import {oldColorsToNewMapping} from "../../../../utils/chartColors";
+import {oldColorsToNewMapping} from '../../../../utils/chartColors';
 
 @Component({
   selector: 'app-utility-piechart',
@@ -39,6 +39,7 @@ export class PiechartComponent {
   @Output() positiveLabelChanged = new EventEmitter<Multiling>();
 
   private _pieChart: PieChart = <PieChart>{};
+
 
   private _datasets: Array<{data: Array<number>}> = [];
 
@@ -78,9 +79,19 @@ export class PiechartComponent {
     this.chartSectionPositiveChanged.emit({index: index, positive: this.positiveSections[index]});
   }
 
+
+
   private _loadData() {
+    //Object composed of
+    //   data?: Array<number>;
+    //   colors?: Array<string>;
+    //   labels: {[lang: string]: Array<string>};
+    //   percentage?: number;
+    //   labelPercentage?: Array<string>;
     if (this._pieChart) {
-      this._colors = [{backgroundColor: this._pieChart.colors.map(c => oldColorsToNewMapping[c || ''] || c) || []}];
+
+      //_color.example = 'background-color': colors[0].backgroundColor[i] return an color for all labels
+      this._colors = [{backgroundColor: this._pieChart.colors.map(color => oldColorsToNewMapping[color || ''] || color) || []}];
       this._datasets = [{data: this._pieChart.data || []}];
 
       if (this.chart) {

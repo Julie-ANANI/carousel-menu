@@ -102,6 +102,12 @@ export class FilterService {
             return filter.value[answer.answers[filter.questionId]];
           });
           break;
+
+        case 'LIKERT-SCALE':
+          filteredAnswers = filteredAnswers.filter((answer) => {
+            return filter.value[answer.answers[filter.questionId]];
+          });
+          break;
         default:
           console.log(`Unknown filter type: ${filter.status}.`);
       }
