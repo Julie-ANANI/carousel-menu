@@ -33,6 +33,7 @@
   <!-- /input field -->
 
   <!-- displaying tags -->
+  <!--IT's for EDIT TAGS-->
   <div *ngIf="tags.length" style="margin: -4px" class="flex-wrap d-flex p-top-10">
     <ng-container *ngFor="let tag of tags">
       <ng-container *ngIf="tag.entry && tag.entry.length; else noTagsEntry">
@@ -44,7 +45,7 @@
           <i (click)="onRemoveTag(tag)" *ngIf="editMode" class="icon icon-cross icon-right c-hand"></i>
         </div>
       </ng-container>
-      <ng-template #noTagsEntry>
+      <ng-template #noTagsEntry class="d-none">
         <div
           [title]="tag | langEntry:'description':currentLang:true"
           class="label is-tag is-rounded">
