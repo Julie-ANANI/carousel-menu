@@ -137,7 +137,7 @@ export const MARKET_REPORT = {
 
   'ANSWER': 'answer',
 
-  'ANSWERS': 'answer(s)',
+  'ANSWERS': 'professionals(s)',
 
   'SEE_ANSWERS': 'Show answer',
 
