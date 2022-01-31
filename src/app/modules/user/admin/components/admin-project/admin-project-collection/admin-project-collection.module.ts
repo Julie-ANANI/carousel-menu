@@ -9,19 +9,17 @@ import {SidebarUserAnswerModule} from '../../../../../sidebars/components/sideba
 import { TableComponentsModule } from '@umius/umi-common-component/table';
 import {SharedImportAnswersModule} from "../../../../../shared/components/shared-import-answers/shared-import-answers.module";
 import {ModalModule} from "../../../../../utility/modals/modal/modal.module";
-import {TranslateModule} from "@ngx-translate/core";
 
 @NgModule({
-    imports: [
-        CommonModule,
-        AdminStatsBannerModule,
-        TableComponentsModule,
-        SidebarModule,
-        SidebarUserAnswerModule,
-        SharedImportAnswersModule,
-        ModalModule,
-        TranslateModule,
-    ],
+  imports: [
+    CommonModule,
+    AdminStatsBannerModule,
+    TableComponentsModule,
+    SidebarModule,
+    SidebarUserAnswerModule,
+    SharedImportAnswersModule,
+    ModalModule,
+  ],
   declarations: [
     AdminProjectCollectionComponent
   ],

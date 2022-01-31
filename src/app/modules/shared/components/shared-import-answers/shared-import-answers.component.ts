@@ -16,7 +16,7 @@ export class SharedImportAnswersComponent implements OnInit {
 
   @Input() campaign: string = '';
 
-  @Output() importingError: EventEmitter<any[]> = new EventEmitter<any[]>();
+  @Output() importingError: EventEmitter<string> = new EventEmitter<string>();
 
   constructor(private _answerService: AnswerService,
               private _rolesFrontService: RolesFrontService,
@@ -46,9 +46,10 @@ export class SharedImportAnswersComponent implements OnInit {
         },
         (err: HttpErrorResponse) => {
           this._translateNotificationsService.error('Importing Error...', ErrorFrontService.getErrorKey(err.error));
-          if(!!err.error.detailedMessage) {
+          if(!!err.error.detailedMessage && typeof err.error.detailedMessage === 'string') {
             this.importingError.emit(err.error.detailedMessage);
           }
+          console.error(err);
         }
       );
   }
