@@ -1,17 +1,40 @@
-<div class="container">
-  <h3>Tags</h3>
-  <ul class="tab tab-block">
-    <li class="tab-item"><a [routerLink]="['list']" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-      {{ 'TAGS.LIST' | translate }}
-    </a></li>
-    <li class="tab-item"><a [routerLink]="['attachments']" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-      {{ 'TAGS.ATTACHMENTS' | translate }}
-    </a></li>
-  </ul>
+<div id="admin-tags">
 
-  <div class="tabs">
-    <div class="tab-content">
-      <router-outlet></router-outlet>
+  <div class="p-top-25 bg-white">
+    <div class="container fluid grid-2xl">
+      <div class="column col-sm-12 col-11 col-mx-auto">
+
+        <!-- heading -->
+        <h1 class="title is-4">Tags</h1>
+        <!-- /heading -->
+
+        <!-- tabs -->
+        <ul class="tab">
+          <li class="tab-item">
+            <a
+              [routerLinkActiveOptions]="{ exact: true }"
+              [routerLink]="['list']"
+              routerLinkActive="active">
+              {{ 'TAGS.LIST' | translate }}
+            </a>
+          </li>
+          <li class="tab-item">
+            <a
+              [routerLinkActiveOptions]="{ exact: true }"
+              [routerLink]="['attachments']"
+              routerLinkActive="active">
+              {{ 'TAGS.ATTACHMENTS' | translate }}
+            </a>
+          </li>
+        </ul>
+        <!-- /tabs -->
+
+      </div>
     </div>
   </div>
+
+  <div>
+    <router-outlet></router-outlet>
+  </div>
+
 </div>

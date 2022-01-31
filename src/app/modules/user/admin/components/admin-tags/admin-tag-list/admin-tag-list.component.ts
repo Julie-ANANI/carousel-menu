@@ -9,7 +9,6 @@ import {Pagination} from '../../../../../utility/paginations/interfaces/paginati
 import { first } from 'rxjs/operators';
 import { Config } from '@umius/umi-common-component/models';
 
-
 @Component({
   selector: 'app-admin-tag-list',
   templateUrl: 'admin-tag-list.component.html',
@@ -17,6 +16,7 @@ import { Config } from '@umius/umi-common-component/models';
 export class AdminTagListComponent implements OnInit {
 
   private _data: Array<Tag> = [];
+
   total = 0;
 
   private _config: Config = {
@@ -59,6 +59,7 @@ export class AdminTagListComponent implements OnInit {
   public loadData(config: any) {
     this._config = config;
     this._tagsService.getAll(this._config).pipe(first()).subscribe((result: any) => {
+      console.log(result);
       if (result) {
         this._data = result.result;
         this.total = result._metadata.totalCount;
