@@ -106,8 +106,8 @@ export const ERROR = {
     NOTIFICATION_CANNOT_SAVE: 'Un problème est survenu lors de l\'enregistrement de la tâche de notification.',
   },
 
-  CSV_500:{
-    CSV_PARSE_FAILED: 'Désolé, nous avons rencontré un problem lors de l\'analyse du fichier csv.'
+  CVS_500:{
+    CVS_PARSE_FAILED: 'Désolé, nous avons rencontré un problem lors de l\'analyse du fichier cvs.'
   },
 
   BATCH_404:{
