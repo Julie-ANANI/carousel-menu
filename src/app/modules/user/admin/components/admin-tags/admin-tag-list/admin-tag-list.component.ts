@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Tag } from '../../../../../../models/tag';
 import { TagAttachment } from '../../../../../../models/tag-attachment';
-import { MultilingPipe } from '../../../../../../pipe/pipes/multiling.pipe';
 import { TagsService } from '../../../../../../services/tags/tags.service';
 import { TranslateService } from '@ngx-translate/core';
 import { TranslateNotificationsService } from '../../../../../../services/translate-notifications/translate-notifications.service';
 import {Pagination} from '../../../../../utility/paginations/interfaces/pagination';
 import { first } from 'rxjs/operators';
 import { Config } from '@umius/umi-common-component/models';
+import {LangEntryService} from '../../../../../../services/lang-entry/lang-entry.service';
 
 @Component({
   selector: 'app-admin-tag-list',
@@ -47,7 +47,7 @@ export class AdminTagListComponent implements OnInit {
 
   constructor(private _tagsService: TagsService,
               private _translateService: TranslateService,
-              private _multiling: MultilingPipe,
+              private _langEntryService: LangEntryService,
               private _notificationsService: TranslateNotificationsService) {}
 
 
@@ -59,12 +59,18 @@ export class AdminTagListComponent implements OnInit {
   public loadData(config: any) {
     this._config = config;
     this._tagsService.getAll(this._config).pipe(first()).subscribe((result: any) => {
-      console.log(result);
       if (result) {
         this._data = result.result;
         this.total = result._metadata.totalCount;
       }
     });
+  }
+
+  public onUpdateEntry(value: string, index: number, update: 'label' | 'description', lang: string) {
+    const _index = LangEntryService.entryIndex(this._data[index].entry, 'lang', lang);
+    if (_index !== -1) {
+      this._data[index].entry[_index][update] = value;
+    }
   }
 
   configChange(value: any) {
@@ -80,7 +86,7 @@ export class AdminTagListComponent implements OnInit {
     this._tagsService.save(datum._id, datum)
         .subscribe((result) => {
           if (result) {
-            const t_label = this._multiling.transform(result.label, this._translateService.currentLang);
+            const t_label = this._langEntryService.tagEntry(result, 'label', this.lang);
             this._notificationsService.success('Tag update', `The tag ${t_label} has been updated.`);
           } else {
             this._notificationsService.error('ERROR.ERROR', 'Empty response from server');

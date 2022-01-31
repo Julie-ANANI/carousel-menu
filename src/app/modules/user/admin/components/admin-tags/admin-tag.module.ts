@@ -14,6 +14,7 @@ import { RouterModule } from '@angular/router';
 import { AutoCompleteInputModule } from '../../../../utility/auto-complete-input/auto-complete-input.module';
 import { PaginationTemplate1Module } from '../../../../utility/paginations/pagination-template-1/pagination-template-1.module';
 import {AdminTagsRoutingModule} from './admin-tags-routing.module';
+import {LangEntryPipeModule} from '../../../../../pipe/lang-entry/langEntryPipe.module';
 
 @NgModule({
   imports: [
@@ -26,7 +27,8 @@ import {AdminTagsRoutingModule} from './admin-tags-routing.module';
     RouterModule,
     FormsModule,
     ReactiveFormsModule,
-    AdminTagsRoutingModule
+    AdminTagsRoutingModule,
+    LangEntryPipeModule
   ],
   declarations: [
     AdminTagsComponent,
