@@ -51,13 +51,15 @@ export class AdminTagNewComponent {
   ];
 
   public formData: FormGroup = new FormGroup({
-    label: new FormGroup({
-      en: new FormControl(),
-      fr: new FormControl()
-    }),
-    description: new FormGroup({
-      en: new FormControl(),
-      fr: new FormControl()
+    entry: new FormGroup({
+      en: new FormGroup({
+        label: new FormControl(),
+        description: new FormControl()
+      }),
+      fr: new FormGroup({
+        label: new FormControl(),
+        description: new FormControl()
+      })
     }),
     attachments: new FormControl(),
     type: new FormControl()
@@ -71,7 +73,14 @@ export class AdminTagNewComponent {
               private _notificationsService: TranslateNotificationsService) {}
 
   public onSubmit(_event: any) {
-    this._tagsService.create(this.formData.value)
+    const _tagObject = this.formData.value
+    const en = _tagObject.entry['en'];
+    en['lang'] = 'en';
+    const fr = _tagObject.entry['fr'];
+    fr['lang'] = 'en';
+    _tagObject.entry = [en, fr];
+    console.log(_tagObject);
+    this._tagsService.create(_tagObject)
       .pipe(first())
       .subscribe((result: any) => {
         if (result) {

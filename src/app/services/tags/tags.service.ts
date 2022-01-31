@@ -36,8 +36,8 @@ export class TagsService {
     return this._http.delete('/tags/entity/' + tagId);
   }
 
-  public save(tagId: string, tagObj: Tag): Observable<any> {
-    return this._http.put('/tags/entity/' + tagId, tagObj);
+  public save(tagId: string, tagObj: Tag): Observable<Tag> {
+    return this._http.put<Tag>('/tags/entity/' + tagId, tagObj);
   }
 
   /*

@@ -28,6 +28,18 @@ export class LangEntryService extends UmiusLangEntryService {
   }
 
   /**
+   * return the entry index based on the searchValue and the searchKey with which we compare the value
+   * for ex: _entry[lang] === 'en' => lang (searchKey) & en (searchValue)
+   * @param entry
+   * @param searchKey
+   * @param searchValue
+   */
+  public static entryIndex(entry: Array<any>, searchKey: string, searchValue: string): number {
+    if (!entry.length || !searchKey || !searchValue) return -1;
+    return entry.findIndex((_entry) => _entry[searchKey] === searchValue);
+  }
+
+  /**
    * return the innovation follow-up email object
    * @param followEmails
    * @param templateName - should be same InnovationFollowUpTemplateType and also in uppercase.

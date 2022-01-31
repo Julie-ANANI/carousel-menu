@@ -2,45 +2,66 @@
   <div class="container fluid grid-2xl">
     <div class="column col-11 col-sm-12 col-mx-auto">
 
-      <h2 class="title is-5 text-notify">{{ total }} result</h2>
+      <div>
+        <app-admin-tag-new></app-admin-tag-new>
+      </div>
 
+      <h2 class="title is-6 text-notify">{{ total }} result</h2>
 
-    </div>
-  </div>
-</div>
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+          <tr>
+            <th></th>
+            <th><umius-sort [(sortConfig)]="sortConfig" [property]="'label'">Label</umius-sort></th>
+            <th><umius-sort [(sortConfig)]="sortConfig" [property]="'description'">Description</umius-sort></th>
+            <th><umius-sort [(sortConfig)]="sortConfig" [property]="'type'">Type</umius-sort></th>
+            <th><umius-sort [(sortConfig)]="sortConfig" [property]="'attachments'" >Attachments</umius-sort></th>
+            <th><umius-sort [(sortConfig)]="sortConfig" [property]="'created'" >Created</umius-sort></th>
+            <th>{{ 'CAMPAIGNS.ACTIONS' | translate }}</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let datum of data; let i = index;" [ngClass]="{'active': datum['isSelected']}">
+            <ng-container [ngSwitch]="editDatum[datum._id]">
 
-
-<div [hidden]="false">
-    <app-admin-tag-new></app-admin-tag-new>
-</div>
-
-<table class="table pros">
-    <thead>
-    <tr>
-        <th></th>
-        <th><umius-sort [(sortConfig)]="sortConfig" [property]="'label'">Label</umius-sort></th>
-        <th><umius-sort [(sortConfig)]="sortConfig" [property]="'description'">Description</umius-sort></th>
-        <th><umius-sort [(sortConfig)]="sortConfig" [property]="'type'">Type</umius-sort></th>
-        <th><umius-sort [(sortConfig)]="sortConfig" [property]="'attachments'" >Attachments</umius-sort></th>
-        <th><umius-sort [(sortConfig)]="sortConfig" [property]="'created'" >Created</umius-sort></th>
-        <th>{{ 'CAMPAIGNS.ACTIONS' | translate }}</th>
-    </tr>
-    </thead>
-    <tbody>
-
-    <tr *ngFor="let datum of data" [ngClass]="{'active': datum.isSelected}">
-
-        <ng-container [ngSwitch]="editDatum[datum._id]">
-
-            <ng-container *ngSwitchCase="true">
-                <td><input type="checkbox" [(ngModel)]="datum.isSelected"/></td>
+              <ng-container *ngSwitchCase="true">
+                <td><input type="checkbox" [(ngModel)]="datum['isSelected']"/></td>
                 <td>
-                  <input type="text" size="20" [(ngModel)]="datum.label.en" alt="label" placeholder="label in english"/>
-                  <input type="text" size="20" [(ngModel)]="datum.label.fr" alt="label" placeholder="label en français"/>
+                  <input
+                    #tagEntryLabelEn
+                    (ngModelChange)="onUpdateEntry(tagEntryLabelEn.value, i, 'label', 'en')"
+                    [ngModel]="datum.entry | langEntry:'label': 'en'"
+                    alt="label"
+                    placeholder="label in english"
+                    size="20"
+                    type="text"/>
+                  <input
+                    #tagEntryLabelFr
+                    (ngModelChange)="onUpdateEntry(tagEntryLabelFr.value, i, 'label', 'fr')"
+                    [ngModel]="datum.entry | langEntry:'label': 'fr'"
+                    alt="label"
+                    placeholder="label en français"
+                    size="20"
+                    type="text"/>
                 </td>
                 <td>
-                  <input type="text" size="40" [(ngModel)]="datum.description.en" alt="description" placeholder="description in english"/>
-                  <input type="text" size="40" [(ngModel)]="datum.description.fr" alt="description" placeholder="description en français"/>
+                  <input
+                    #tagEntryDescEn
+                    (ngModelChange)="onUpdateEntry(tagEntryDescEn.value, i, 'description', 'en')"
+                    [ngModel]="datum.entry | langEntry:'description': 'en'"
+                    alt="description"
+                    placeholder="description in english"
+                    size="40"
+                    type="text"/>
+                  <input
+                    #tagEntryDescFr
+                    (ngModelChange)="onUpdateEntry(tagEntryDescFr.value, i, 'description', 'fr')"
+                    [ngModel]="datum.entry | langEntry:'description': 'fr'"
+                    alt="description"
+                    placeholder="description en français"
+                    size="40"
+                    type="text"/>
                 </td>
                 <td>
                   <select [(ngModel)]="datum.type">
@@ -52,31 +73,33 @@
                   </select>
                 </td>
                 <td>
-                    <app-utility-auto-complete-input id="attachments"
-                                            (update)="addAttachment($event, datum)"
-                                            [config]="buildAttachmentsListConfig(datum.attachments)"></app-utility-auto-complete-input>
+                  <app-utility-auto-complete-input
+                    id="attachments"
+                    (update)="addAttachment($event, datum)"
+                    [config]="buildAttachmentsListConfig(datum.attachments)">
+                  </app-utility-auto-complete-input>
                 </td>
                 <td>{{ datum.created | date}}</td>
                 <td>
-                    <button class="button is-circled is-sm"
+                    <button class="button btn-action is-circled is-sm"
                             (click)="editDatum[datum._id] = false"><i class="fas fa-times"></i></button>
-                    <button class="button is-circled is-sm" (click)="updateEntry(datum, $event)"><i class="far fa-save"></i></button>
+                    <button class="button btn-action is-circled is-sm" (click)="updateEntry(datum, $event)"><i class="far fa-save"></i></button>
                 </td>
-            </ng-container>
+              </ng-container>
 
-            <ng-container *ngSwitchDefault>
-                <ng-container (click)="selectPro(datum)">
-                    <td><input type="checkbox" [(ngModel)]="datum.isSelected"/></td>
-                    <td>{{ datum.label | multiling:lang }}</td>
-                    <td>{{ datum.description | multiling:lang }}</td>
-                    <td [textContent]="'TAGS.TYPE.'+datum.type" translate></td>
-                    <td>{{ datum.attachments?.length || 0 }}</td>
-                    <td>{{ datum.created | date }}</td>
+              <ng-container *ngSwitchDefault>
+                <ng-container>
+                  <td><input type="checkbox" [(ngModel)]="datum['isSelected']"/></td>
+                  <td>{{ (datum.entry | langEntry:'label': lang) || '--' }}</td>
+                  <td>{{ (datum.entry | langEntry:'description': lang) || '--' }}</td>
+                  <td>{{ ('TAGS.TYPE.'+datum.type | translate) || '--' }}</td>
+                  <td>{{ datum.attachments?.length || 0 }}</td>
+                  <td>{{ datum.created | date }}</td>
                 </ng-container>
                 <td>
-                    <button class="button is-circled is-sm" (click)="editDatum[datum._id] = true"><i class="fas fa-edit"></i></button>
+                    <button class="btn btn-action is-circled is-sm" (click)="editDatum[datum._id] = true"><i class="fas fa-edit"></i></button>
                 </td>
-            </ng-container>
+              </ng-container>
 
         </ng-container>
     </tr>
