@@ -77,7 +77,7 @@
 
           <section *ngIf="importingErrors && slicedErrors" class="modal-body max-height-365">
             <ng-container *ngIf="importingErrors.length" >
-              <div class="flex-d-column d-flex errors-box">
+              <div class="flex-d-column d-flex width-75 errors-box">
                 <span class="text-error text-sm"> {{ importingErrors.length }} error(s) </span>
                 <ul>
                   <app-shared-csv-error *ngFor="let err of slicedErrors" [error]="err" [htmlTag]="'li'"></app-shared-csv-error>
