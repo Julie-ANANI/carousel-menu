@@ -50,8 +50,6 @@ export class AdminProjectCollectionComponent implements OnInit, OnDestroy {
 
   private _isImportingAnswers = false;
 
-  private _importingError = '';
-
   private _tableData: Table = <Table>{};
 
   private _answers: Array<Answer> = [];
@@ -71,8 +69,6 @@ export class AdminProjectCollectionComponent implements OnInit, OnDestroy {
   private _socketListening = false;
 
   private _targetWarnings = 0;
-
-  private _accessPath: Array<string> = ['projects', 'project', 'campaigns', 'campaign', 'search'];
 
   private static _campaignStat(
     answers: Array<Answer>,
@@ -269,16 +265,26 @@ export class AdminProjectCollectionComponent implements OnInit, OnDestroy {
     return this._rolesFrontService.hasAccessAdminSide(_default.concat(path));
   }
 
-  public openImportModal() {
-    this._importingError = '';
-    this._isImportingAnswers = true;
-  }
-
-  public onImport(errorMessage: string) {
-    if(errorMessage) {
-      this._importingError = errorMessage
-    } else {
-      this._isImportingAnswers = false;
+  public onImport(file: File) {
+    if (!this._isImportingAnswers && this._selectedCampaign) {
+      this._isImportingAnswers = true;
+      this._answerService
+        .importAsCsv(this._selectedCampaign, file)
+        .pipe(first())
+        .subscribe(
+          () => {
+            this._translateNotificationsService.success(
+              'Success',
+              'The answers has been imported.'
+            );
+            this._isImportingAnswers = false;
+          },
+          (err: HttpErrorResponse) => {
+            this._translateNotificationsService.error('Importing Error...', ErrorFrontService.getErrorKey(err.error));
+            this._isImportingAnswers = false;
+            console.error(err);
+          }
+        );
     }
   }
 
@@ -513,11 +519,6 @@ export class AdminProjectCollectionComponent implements OnInit, OnDestroy {
     }
   }
 
-  public closeModal(event: Event) {
-    event.preventDefault();
-    this._isImportingAnswers = false;
-    this._importingError = '';
-  }
 
   get localConfig(): Config {
     return this._localConfig;
@@ -588,18 +589,6 @@ export class AdminProjectCollectionComponent implements OnInit, OnDestroy {
    */
   get targetWarnings(): number {
     return this._targetWarnings;
-  }
-
-  get accessPath(): Array<string> {
-    return this._accessPath;
-  }
-
-  get importingError(): string {
-    return this._importingError;
-  }
-
-  set isImportingAnswers(value: boolean) {
-    this._isImportingAnswers = value;
   }
 
   ngOnDestroy(): void {
