@@ -108,7 +108,7 @@ export class NguiAutoCompleteDirective implements OnInit, OnChanges, AfterViewIn
             this.wrapperEl.className = 'ngui-auto-complete-wrapper';
             this.wrapperEl.style.position = 'relative';
             this.wrapperEl.style.width = '100%';
-            this.wrapperEl.style.textAlign = 'left';
+            // this.wrapperEl.style.textAlign = 'left';
             this.el.parentElement.insertBefore(this.wrapperEl, this.el.nextSibling);
             this.wrapperEl.appendChild(this.el);
 
@@ -280,9 +280,11 @@ export class NguiAutoCompleteDirective implements OnInit, OnChanges, AfterViewIn
 
             this.acDropdownEl.style.width = thisInputElBCR.width + 'px';
             this.acDropdownEl.style.position = 'absolute';
-            this.acDropdownEl.style.zIndex = this.zIndex;
-            this.acDropdownEl.style[directionOfStyle] = '0';
+            this.acDropdownEl.style.zIndex = '9999';
+            // this.acDropdownEl.style[directionOfStyle] = '0';
+            console.log(directionOfStyle);
             this.acDropdownEl.style.display = 'inline-block';
+            this.acDropdownEl.style.marginTop = '40px';
 
             if (closeToBottom) {
                 this.acDropdownEl.style.bottom = `${thisInputElBCR.height}px`;

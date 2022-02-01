@@ -58,6 +58,9 @@ export class SharedTagsComponent implements OnInit {
 
   public tagSuggestions(query: string): Observable<Array<any>> {
     if (this.projectId && !this.type) {
+      this._tagsService.searchTagInPool(this.projectId, query).subscribe(res =>{
+        console.log(res);
+      })
       return this._tagsService.searchTagInPool(this.projectId, query);
     } else {
       const queryConf: any = {query: query, type: 'tags'};
