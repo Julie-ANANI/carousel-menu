@@ -5,7 +5,8 @@
   <form (ngSubmit)="onSubmit()" *ngIf="editMode" [formGroup]="tagForm">
     <div class="form-group flex-between">
 
-      <label class="d-block w-full">
+
+      <label class="d-block w-full relative">
         <input
           (keyup)="addNewTags($event)"
           (valueChanged)="addTagSelected($event)"
