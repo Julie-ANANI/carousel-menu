@@ -30,7 +30,6 @@ import { CommonService } from "../../../../../../services/common/common.service"
 
 @Component({
   templateUrl: './admin-project-collection.component.html',
-  styleUrls: ['./admin-project-collection.component.scss'],
 })
 export class AdminProjectCollectionComponent implements OnInit, OnDestroy {
   private _isLoading = true;
@@ -51,12 +50,6 @@ export class AdminProjectCollectionComponent implements OnInit, OnDestroy {
 
   private _isImportingAnswers = false;
 
-  private _errorsModal = false;
-
-  private _importingErrors: Array<any>;
-
-  private _slicedErrors: Array<any> = [];
-
   private _tableData: Table = <Table>{};
 
   private _answers: Array<Answer> = [];
@@ -76,8 +69,6 @@ export class AdminProjectCollectionComponent implements OnInit, OnDestroy {
   private _socketListening = false;
 
   private _targetWarnings = 0;
-
-  private _accessPath: Array<string> = ['projects', 'project', 'campaigns', 'campaign', 'search'];
 
   private static _campaignStat(
     answers: Array<Answer>,
@@ -274,23 +265,26 @@ export class AdminProjectCollectionComponent implements OnInit, OnDestroy {
     return this._rolesFrontService.hasAccessAdminSide(_default.concat(path));
   }
 
-  public openImportModal() {
-    this._importingErrors = null;
-    this._slicedErrors = null;
-    this._isImportingAnswers = true;
-    this._errorsModal = false;
-  }
-
-  public onImport(errorMessage: []) {
-    if(errorMessage) {
-      this._importingErrors = errorMessage
-      if(this._importingErrors.length > 1) {
-        this._errorsModal = true;
-        this._isImportingAnswers = false;
-        this._slicedErrors = this._importingErrors.slice(0, 10);
-      }
-    } else {
-      this._isImportingAnswers = false;
+  public onImport(file: File) {
+    if (!this._isImportingAnswers && this._selectedCampaign) {
+      this._isImportingAnswers = true;
+      this._answerService
+        .importAsCsv(this._selectedCampaign, file)
+        .pipe(first())
+        .subscribe(
+          () => {
+            this._translateNotificationsService.success(
+              'Success',
+              'The answers has been imported.'
+            );
+            this._isImportingAnswers = false;
+          },
+          (err: HttpErrorResponse) => {
+            this._translateNotificationsService.error('Importing Error...', ErrorFrontService.getErrorKey(err.error));
+            this._isImportingAnswers = false;
+            console.error(err);
+          }
+        );
     }
   }
 
@@ -525,21 +519,6 @@ export class AdminProjectCollectionComponent implements OnInit, OnDestroy {
     }
   }
 
-  public onClickSeeMore() {
-    const currentNumberOfErrors = this._slicedErrors.length;
-    const end = currentNumberOfErrors + 10 > this._importingErrors.length ?
-      this._importingErrors.length : currentNumberOfErrors + 10;
-    this._slicedErrors = this._importingErrors.slice(0, end);
-  }
-
-
-  public closeModal(event: Event) {
-    event.preventDefault();
-    this._isImportingAnswers = false;
-    this._errorsModal = false;
-    this._importingErrors = null;
-    this._slicedErrors = null;
-  }
 
   get localConfig(): Config {
     return this._localConfig;
@@ -610,30 +589,6 @@ export class AdminProjectCollectionComponent implements OnInit, OnDestroy {
    */
   get targetWarnings(): number {
     return this._targetWarnings;
-  }
-
-  get accessPath(): Array<string> {
-    return this._accessPath;
-  }
-
-  get importingErrors(): any[] {
-    return this._importingErrors;
-  }
-
-  set isImportingAnswers(value: boolean) {
-    this._isImportingAnswers = value;
-  }
-
-  get slicedErrors(): Array<any> {
-    return this._slicedErrors;
-  }
-
-  set errorsModal(value: boolean) {
-    this._errorsModal = value;
-  }
-
-  get errorsModal(): boolean {
-    return this._errorsModal;
   }
 
   ngOnDestroy(): void {

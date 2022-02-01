@@ -99,6 +99,7 @@
   <div *ngIf="question.controlType" [ngSwitch]="question.controlType" class="stats-wrapper relative">
     <!-- pie chart -->
     <ng-container *ngSwitchCase="'radio'">
+
       <app-bluesquare
         (subtitleChanged)="subtitleChange($event)"
         [readonly]="readonly"
@@ -118,6 +119,22 @@
       </app-bluesquare>
     </ng-container>
     <!-- /pie chart -->
+
+    <!-- likert-scale chart -->
+    <ng-container *ngSwitchCase="'likert-scale'">
+
+      <app-bluesquare
+        (subtitleChanged)="subtitleChange($event)"
+        [readonly]="readonly"
+        [percentage]="stats.percentage"
+        [subtitle]="questionSubtitle()">
+        <app-likert-scale-chart
+          [reportingLang]="reportingLang"
+          [question]="question"
+        ></app-likert-scale-chart>
+      </app-bluesquare>
+    </ng-container>
+    <!-- /likert-scale chart -->
 
     <!-- ranking chart -->
     <ng-container *ngSwitchCase="'ranking'">

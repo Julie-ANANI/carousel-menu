@@ -5,7 +5,7 @@ import { ExecutiveSection } from '../../../../../../models/executive-report';
 import { ResponseService } from '../../../../../shared/components/shared-market-report/services/response.service';
 import { Professional } from '../../../../../../models/professional';
 import { BarData } from '../../../../../shared/components/shared-market-report/models/bar-data';
-import { PieChart } from '../../../../../../models/pie-chart';
+import { PieChart } from '../../../../../../models/chart/pie-chart';
 import { ExecutiveReportFrontService } from '../../../../../../services/executive-report/executive-report-front.service';
 import {MissionQuestion} from '../../../../../../models/mission';
 import {MissionQuestionService} from '../../../../../../services/mission/mission-question.service';
@@ -23,6 +23,7 @@ export class ExecutiveSectionComponent {
   @Input() answers: Array<Answer> = [];
   @Input() reportLang: 'en';
   @Input() sectionIndex = 0;
+
   @Input() set section(value: ExecutiveSection) {
     this._section = {
       questionId: value.questionId || '',
@@ -41,6 +42,7 @@ export class ExecutiveSectionComponent {
   private _enableVisualRanking = false;
   private _enableVisualPie = false;
   private _enableVisualLikertScale = false;
+
   private _resetVisuals() {
     this._enableVisualBar = false;
     this._enableVisualRanking = false;
@@ -50,6 +52,7 @@ export class ExecutiveSectionComponent {
 
   constructor(private _executiveReportFrontService: ExecutiveReportFrontService,
               private _responseService: ResponseService) { }
+
 
   public emitChanges() {
     if (this.isEditable) {
@@ -74,6 +77,10 @@ export class ExecutiveSectionComponent {
         case 'radio':
           this._enableVisualPie = true;
           this._enableVisualBar = true;
+          break;
+
+        case 'likert-scale':
+          this._enableVisualLikertScale = true;
           break;
 
         case 'checkbox':
@@ -272,28 +279,30 @@ export class ExecutiveSectionComponent {
 
 
   /***
-   *
    * @private
    */
   private _setLikertScaleData() {
     if (this._section.questionIdentifier === `quesCustom_${this.sectionIndex}`) {
       this._section.title = 'Custom likert scale';
       this._section.content = this._executiveReportFrontService.likertScaleTagsSection([], this.reportLang);
+
     } else {
       const question: Question | MissionQuestion = this._getQuestion(this._section.questionIdentifier);
       const answers: Array<Answer> = this._responseService.answersToShow(this.answers, question);
       this._section.title = MissionQuestionService.label(question, 'title', this.reportLang);
       let data;
+
       if (question.controlType === 'likert-scale') {
         data = ResponseService.likertScaleChartData(answers, question, this.reportLang);
-        // @ts-ignore
         this._section.content = this._executiveReportFrontService.likertScaleSection(data, this.reportLang);
+
       } else {
         data = ResponseService.tagsList(answers, question);
         this._section.content = this._executiveReportFrontService.likertScaleTagsSection(data, this.reportLang);
       }
     }
   }
+
 
   private _getQuestion(identifier: string): Question | MissionQuestion {
     const index = this.questions.findIndex((ques) => ques.identifier === identifier);
@@ -310,18 +319,30 @@ export class ExecutiveSectionComponent {
     return MissionQuestionService.label(question, 'title', this.reportLang);
   }
 
+  /**
+   * @type {boolean}
+   * */
   get section(): ExecutiveSection {
     return this._section;
   }
 
+  /**
+   * @type {boolean}
+   * */
   get enableVisualBar(): boolean {
     return this._enableVisualBar;
   }
 
+  /**
+   * @type {boolean}
+   * */
   get enableVisualRanking(): boolean {
     return this._enableVisualRanking;
   }
 
+  /**
+   * @type {boolean}
+   * */
   get enableVisualPie(): boolean {
     return this._enableVisualPie;
   }

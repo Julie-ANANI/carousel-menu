@@ -7,15 +7,17 @@ import { Innovation } from '../../../../../models/innovation';
 import { Tag } from '../../../../../models/tag';
 import { Multiling } from '../../../../../models/multiling';
 import { BarData } from '../models/bar-data';
-import { PieChart } from '../../../../../models/pie-chart';
+import { PieChart } from '../../../../../models/chart/pie-chart';
 import { Professional } from '../../../../../models/professional';
-import {MissionQuestion, MissionQuestionOption} from '../../../../../models/mission';
-import {MissionQuestionService} from '../../../../../services/mission/mission-question.service';
+import { MissionQuestion, MissionQuestionOption } from '../../../../../models/mission';
+import { MissionQuestionService } from '../../../../../services/mission/mission-question.service';
+import {LikertScaleChart} from '../../../../../models/executive-report';
 
 @Injectable({ providedIn: 'root' })
+
 export class ResponseService {
 
-  filteredAnswers = new Subject <Array<Answer>>();
+  filteredAnswers = new Subject<Array<Answer>>();
 
   /***
    * Return the list of tags on every user answers for a given question
@@ -28,7 +30,7 @@ export class ResponseService {
 
     return answers.reduce((tagsList, answer) => {
 
-      const answerTags: Array<Tag&{count?: number}> = answer.answerTags[tagId];
+      const answerTags: Array<Tag & { count?: number }> = answer.answerTags[tagId];
 
       if (Array.isArray(answerTags)) {
         answerTags.forEach((t) => {
@@ -64,7 +66,6 @@ export class ResponseService {
     return questions;
   }
 
-
   /***
    * this will return the professionals of the provided answers.
    * @param answers
@@ -76,7 +77,7 @@ export class ResponseService {
       answers.forEach((answer) => {
         if (answer.professional) {
           const index = professionals.findIndex((pro) => pro._id === answer.professional._id);
-          if (index === -1 ) {
+          if (index === -1) {
             professionals.push(answer.professional);
           }
         }
@@ -94,7 +95,7 @@ export class ResponseService {
    */
   public static getStarsAnswers(question: any, answers: Array<Answer>) {
 
-    let notesData: Array<{label: Multiling, sum: number, percentage: string, entry: []}> = [];
+    let notesData: Array<{ label: Multiling, sum: number, percentage: string, entry: [] }> = [];
 
     if (question && answers) {
 
@@ -141,7 +142,7 @@ export class ResponseService {
    */
   public static getRanksAnswers(question: Question | MissionQuestion, answers: Array<Answer>, lang: string) {
 
-    let ranksData: Array<{label: Multiling, sum: number, identifier: string, percentage: string}> = [];
+    let ranksData: Array<{ label: Multiling, sum: number, identifier: string, percentage: string }> = [];
 
     if (question && answers) {
       const ranking = this.rankingChartData(answers, question, lang);
@@ -151,7 +152,7 @@ export class ResponseService {
           identifier: rank.identifier,
           label: rank.label,
           sum: rank.count,
-          percentage: `${rank.percentage || 0}%`
+          percentage: `${ rank.percentage || 0 }%`
         };
       });
 
@@ -179,9 +180,12 @@ export class ResponseService {
           filteredAnswers = answers.filter((a) => a.answers[question.identifier]
             && a.answers[question.identifier][q.identifier]
             && a.answers[question.identifier + 'Quality'] !== 0);
-        } else if (question.controlType === 'radio')  {
+
+
+        } else if (question.controlType === 'radio' || question.controlType === 'likert-scale') {
           filteredAnswers = answers.filter((a) => a.answers[question.identifier] === q.identifier
-            && a.answers[question.identifier + 'Quality'] !== 0 );
+            && a.answers[question.identifier + 'Quality'] !== 0);
+
         }
 
         filteredAnswers = filteredAnswers.sort((a, b) => {
@@ -199,6 +203,7 @@ export class ResponseService {
          * so that we same value for every one.
          */
         if (q.entry && q.entry.length) {
+
           q.label = q.entry.reduce((acc: any, value: any) => {
             acc[value.lang] = value.label;
             return acc;
@@ -217,30 +222,17 @@ export class ResponseService {
         };
 
       });
+      const relativePercentages = this.getRelativePercentagebarsData(barsData, question).relativePercentages;
 
-      // Then calcul percentages
-      const maxAnswersCount = question.controlType === 'checkbox' ?
-        barsData.reduce((acc, bd) => {
-          return (acc < bd.count) ? bd.count : acc;
-        }, 0) :
-        barsData.reduce((acc, bd) => {
-          return (acc + bd.count);
-        }, 0);
-
-      const relativePercentages: {difference: Array<number>, rounded: Array<number>} = {
-        difference: [],
-        rounded: []
-      };
       barsData.forEach((bd) => {
         const absolutePercentage = bd.count * 100 / answers.length;
         bd.absolutePercentage = `${Math.round(absolutePercentage)}%`;
-        const relativePercentage = bd.count * 100 / maxAnswersCount;
-        relativePercentages.difference.push(Math.round(relativePercentage) - relativePercentage);
-        relativePercentages.rounded.push(Math.round(relativePercentage));
       });
 
-      const fixPercentagesSum = (values: {difference: Array<number>, rounded: Array<number>}, questionType: string) => {
-        if (questionType === 'radio') {
+
+      const fixPercentagesSum = (values: { difference: Array<number>, rounded: Array<number> }, questionType: string) => {
+
+        if ((questionType === 'radio')) {
           // first we check if the sum of rounded values is equal to 100
           let diff = values.rounded.reduce((acc: number, curr: number) => acc + curr, 0);
           diff = diff === 0 ? diff : diff - 100;
@@ -260,17 +252,56 @@ export class ResponseService {
       };
       fixPercentagesSum(relativePercentages, question.controlType);
 
-      if (question.controlType === 'checkbox') {
+      if ((question.controlType === 'checkbox')) {
         barsData.sort((a, b) => {
           return b.count - a.count;
         });
       }
 
     }
-
     return barsData;
-
   }
+
+/**
+ * This function calculated percentage for checkbox
+ * @static
+ * @param {Array} barsData
+ * @param {Any} Question
+ * */
+  static getRelativePercentagebarsData(barsData: Array<BarData>, question: any): { relativePercentages: any, maxAnswersCount: number } {
+
+    const maxAnswersCount = question.controlType === 'checkbox'?
+      barsData.reduce((acc, bd) => {
+        return (acc < bd.count) ? bd.count : acc;
+      }, 0) :
+      barsData.reduce((acc, bd) => {
+        return (acc + bd.count);
+      }, 0);
+
+    barsData
+      .reduce((acc, bd) => {
+        return (acc + bd.count);
+      }, 0);
+
+
+    let relativePercentages: { difference: Array<number>, rounded: Array<number> } = {
+      difference: [],
+      rounded: []
+    };
+
+    barsData.forEach((bd) => {
+      const relativePercentage = bd.count * 100 / maxAnswersCount;
+      relativePercentages.difference.push(Math.round(relativePercentage) - relativePercentage);
+      relativePercentages.rounded.push(Math.round(relativePercentage));
+    });
+
+    return {
+      relativePercentages,
+      maxAnswersCount
+
+    };
+  }
+
 
   /***
    * this function is to get the pie chart data for the question type radio.
@@ -288,6 +319,7 @@ export class ResponseService {
       labelPercentage: []
     };
 
+
     barsData.forEach((barData) => {
 
       if (barData.positive) {
@@ -303,7 +335,6 @@ export class ResponseService {
     });
 
     pieChartData.percentage = Math.round((positiveAnswersCount * 100) / answers.length);
-
     return pieChartData;
 
   }
@@ -312,11 +343,19 @@ export class ResponseService {
                                  question: Question | MissionQuestion = <Question | MissionQuestion>{},
                                  lang: string) {
 
-    const rankingChart: {label: string, answers: Answer[]; percentage: number; count: number; identifier: string; }[] = [];
+    const rankingChart: {
+      label: string,
+      answers: Answer[];
+      percentage: number;
+      count: number;
+      identifier: string; }[] = [];
+
     const weights = this.computeWeights(question.options.length);
     const multipliers = this.computeMultiplier(question.options.length);
     question.options.forEach((option: Option | MissionQuestionOption) => {
       const identifier = option.identifier;
+
+      // Recupère les réponses qui ont choisie accord
       const filteredAnswers: Array<Answer> = answers.filter((a) => a.answers[question.identifier]
         && Object.values(a.answers[question.identifier]).every((i: number) => {
           return i >= 0;
@@ -354,10 +393,87 @@ export class ResponseService {
     return rankingChart;
   }
 
+  /**
+   * @public
+   * @static
+   * @param answers
+   * @param question
+   * @param {String} lang
+   * @returns {likertScaleChart: likertScaleChart, scoreTotal: scoreTotal}
+   * */
+  public static likertScaleChartData(answers: Array<Answer> = [],
+                                     question: Question | MissionQuestion = <Question | MissionQuestion>{},
+                                     lang: string): LikertScaleChart {
 
-  static likertScaleChartData(answersToShow: Array<Answer>, question: Question | MissionQuestion, currentLang: string) {
 
+    let averageGeneralEvaluation: number = 0;
+    let scoreTotalOptionWithoutCharacterValue: number = 0;
+
+    const likertScaleChart: {
+      label: string,
+      answers: Answer[];
+      percentage: number;
+      count: number;
+      identifier: string;
+    }[] = [];
+
+    // Depends on likert scale type, it's for calculated
+    //These are weights to be included in the score for each specific value of each option
+    const characterSureOrNegative = [0, 0.25, 0.5, 0.75, 1];
+    const weightImportanceOpt = [2, 1, 1, 1, 2];
+
+    //Retrieves all answers from the 5 identifiers
+    answers = answers.filter((a) => a.answers[question.identifier]);
+
+    question.options.forEach((option: Option | MissionQuestionOption) => {
+
+      const identifier = option.identifier; // 0 1 2 3 4
+
+      // Collects the answers that have chosen the same option
+      const filteredAnswers: Array<Answer> = answers.filter((a) => a.answers[question.identifier]
+        && a.answers[question.identifier] === identifier);
+
+
+      // Score by option
+      const weightCharacter = characterSureOrNegative[identifier]; // weight of the option - 0, 0.25, 0.5, 0.75, 1
+      const weightImportance = weightImportanceOpt[identifier]; // multiplier of the option - 2, 1, 1, 1, 2
+      const allWeightsOption = weightCharacter * weightImportance; // 0, 0.25, 0.5, 0.75, 2
+      const weightsResultsFilteredOption = filteredAnswers.length * allWeightsOption;
+
+      // Score total for the question
+      averageGeneralEvaluation += weightsResultsFilteredOption;
+      scoreTotalOptionWithoutCharacterValue += filteredAnswers.length * weightImportance;
+
+      likertScaleChart.push({
+        label: MissionQuestionService.label(option, 'label', lang),
+        answers: filteredAnswers,
+        percentage: Math.round(filteredAnswers.length / answers.length) * 100,
+        count: filteredAnswers.length,
+        identifier: identifier
+      });
+
+    });
+
+    // Compute score of question
+    const scale: number = 0.44;
+
+    //This score is calculated according to the likert-scale methodology
+    // It returns a score with only the importance weights of the selected options per occurrence
+    averageGeneralEvaluation = averageGeneralEvaluation/ scoreTotalOptionWithoutCharacterValue;
+    averageGeneralEvaluation = (averageGeneralEvaluation - scale) / (1 - scale);
+
+    averageGeneralEvaluation = parseFloat(((averageGeneralEvaluation < 0) ? 0 : averageGeneralEvaluation * 20) .toFixed(2));
+
+
+    if (isNaN(averageGeneralEvaluation)) {
+      averageGeneralEvaluation = 0;
+    }
+
+    likertScaleChart.sort((a, b) => b.percentage - a.percentage);
+
+    return {likertScaleChart: likertScaleChart, averageGeneralEvaluation: averageGeneralEvaluation};
   }
+
 
   /**
    * Compute positions weights depending of number of options
@@ -384,12 +500,17 @@ export class ResponseService {
     const steps = 1 / (n - 1);
     for (let i = 0; i < multipliers.length / 2; i++) {
       multipliers[i] = 1 - steps * i;
-      multipliers[n - i - 1 ] = 1 - steps * i;
+      multipliers[n - i - 1] = 1 - steps * i;
     }
 
     return multipliers;
   }
 
+  /**
+   * @param {any} question
+   * @param answers : Array<Answers>
+   * @static
+   * */
   public static filterCommentAnswers(question: any = <any>{}, answers: Array<Answer> = []) {
     if (question && question.controlType && question.identifier && answers.length > 0) {
       const _id = question.identifier;
@@ -397,18 +518,18 @@ export class ResponseService {
       switch (question.controlType) {
 
         case 'checkbox':
-          return answers.filter(function(a) {
+          return answers.filter(function (a) {
             return !(a.answers[_id] && Object.keys(a.answers[_id]).some((k) => a.answers[_id][k]))
               && a.answers[_id + 'Comment'] && a.answers[_id + 'CommentQuality'] !== 0;
           });
 
         case 'radio':
-          return  answers.filter(function(a) {
+          return answers.filter(function (a) {
             return !a.answers[_id] && a.answers[_id + 'Comment'] && a.answers[_id + 'CommentQuality'] !== 0;
           });
 
         default:
-          return answers.filter(function(a) {
+          return answers.filter(function (a) {
             return a.answers[_id + 'Comment'] && a.answers[_id + 'CommentQuality'] !== 0;
           });
 
@@ -416,6 +537,7 @@ export class ResponseService {
     }
     return [];
   }
+
 
   public static sortComments(question: any = <any>{}, answer: Array<Answer> = []) {
     if (question.identifier && answer.length > 0) {
@@ -431,7 +553,6 @@ export class ResponseService {
     }
     return [];
   }
-
 
   /***
    *This function is the get the answers based on the question that we pass.
@@ -462,8 +583,18 @@ export class ResponseService {
 
         break;
 
-      case 'stars':
+      case 'likert-scale':
         /***
+         * here we are checking that at least one of the options of the answer is true.
+         * @type {Answer[]}
+         */
+         answersToShow = answersToShow.filter(
+         (a) => Object.keys(a.answers[questionID]).some((k) => a.answers[questionID][k])
+         );
+         break;
+
+         case 'stars':
+         /***
          * here we are checking that at least one of the options of the answer is noted > 0.
          * @type {Answer[]}
          */
@@ -533,6 +664,5 @@ export class ResponseService {
       ques.quesId === quesId);
     return abstract ? abstract.value : '';
   }
-
 
 }

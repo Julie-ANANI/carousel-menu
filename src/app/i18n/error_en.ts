@@ -106,8 +106,8 @@ export const ERROR = {
     NOTIFICATION_CANNOT_SAVE: 'There was a problem while saving the notification job',
   },
 
-  CSV_500:{
-    CSV_PARSE_FAILED: 'Sorry, we are having trouble to parse the csv file.'
+  CVS_500:{
+    CVS_PARSE_FAILED: 'Sorry, we are having trouble to parse the cvs file.'
   },
 
   BATCH_404:{

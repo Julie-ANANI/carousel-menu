@@ -14,7 +14,7 @@ import {ResponseService} from '../../modules/shared/components/shared-market-rep
 import {specialCharRegEx} from '../../utils/regex';
 import {MultilingPipe} from '../../pipe/pipes/multiling.pipe';
 import {Tag} from '../../models/tag';
-import {PieChart} from '../../models/pie-chart';
+import {PieChart} from '../../models/chart/pie-chart';
 import {ExecutiveReportService} from './executive-report.service';
 import {TranslateNotificationsService} from '../translate-notifications/translate-notifications.service';
 import {first} from 'rxjs/operators';
@@ -25,6 +25,7 @@ import {Answer} from '../../models/answer';
 import {LangEntryService} from '../lang-entry/lang-entry.service';
 
 @Injectable({ providedIn: 'root' })
+
 export class ExecutiveReportFrontService {
 
   constructor(private _multilingPipe: MultilingPipe,
@@ -206,32 +207,6 @@ export class ExecutiveReportFrontService {
   }
 
 
-
-  /***
-   * this returns the content of the LIKERT-SCALE section for tags.
-   * @param tagsData
-   * @param lang
-   */
-
-  public likertScaleTagsSection(tagsData: Array<Tag>, lang: string): SectionLikertScale {
-    if (tagsData && tagsData.length > 0) {
-      return {
-        color: '#BBC7D6',
-        legend:  tagsData[0].count + 'X',
-        name: this._multilingPipe.transform(tagsData[0].label, lang),
-        visibility: tagsData[0].count > 0
-      };
-    } else {
-      return {
-        color: '#BBC7D6',
-        legend: '',
-        name: 'UNCERTAIN',
-        visibility: false
-      };
-    }
-  }
-
-
   /***
    * this returns the content of the RANKING section.
    * @param rankingData
@@ -266,6 +241,31 @@ export class ExecutiveReportFrontService {
 
     return section;
 
+  }
+
+
+  /***
+   * this returns the content of the LIKERT-SCALE section for tags.
+   * @param tagsData
+   * @param lang
+   */
+  public likertScaleTagsSection(tagsData: Array<Tag>, lang: string): SectionLikertScale {
+
+    if (tagsData && tagsData.length > 0) {
+      return {
+        color: '#BBC7D6',
+        legend:  tagsData[0].count + 'X',
+        name: this._multilingPipe.transform(tagsData[0].label, lang),
+        visibility: tagsData[0].count > 0
+      };
+    } else {
+      return {
+        color: '#BBC7D6',
+        legend: '',
+        name: 'UNCERTAIN',
+        visibility: false
+      };
+    }
   }
 
 

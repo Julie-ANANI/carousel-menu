@@ -134,7 +134,7 @@
                 }
               ],
               "optimization": true,
-              "outputHashing": "media",
+              "outputHashing": "none",
               "sourceMap": true,
               "namedChunks": true
             },
@@ -147,7 +147,7 @@
               ],
               "optimization": true,
               "sourceMap": false,
-              "outputHashing": "all",
+              "outputHashing": "none",
               "namedChunks": false
             }
           }
@@ -362,7 +362,7 @@
               ],
               "optimization": true,
               "sourceMap": false,
-              "outputHashing": "all",
+              "outputHashing": "none",
               "namedChunks": false
             }
           }
@@ -473,7 +473,7 @@
           "options": {
             "outputPath": "dist/server",
             "main": "src/main.server.ts",
-            "tsConfig": "src/tsconfig.server.json"
+            "tsConfig": "tsconfig.server.json"
           },
           "configurations": {
             "local": {
@@ -494,7 +494,7 @@
               ],
               "optimization": true,
               "sourceMap": false,
-              "outputHashing": "all",
+              "outputHashing": "none",
               "namedChunks": false
             }
           }

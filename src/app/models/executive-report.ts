@@ -117,6 +117,7 @@ export interface SectionLikertScale {
   legend:string;
   visibility?:boolean;
   color:string;
+  percentage?:number;
 }
 
 export interface LikertScaleChart {

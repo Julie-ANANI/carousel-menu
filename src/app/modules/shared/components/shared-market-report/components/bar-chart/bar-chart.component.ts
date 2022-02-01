@@ -1,19 +1,22 @@
 import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {FilterService} from '../../services/filters.service';
+import {DataService} from '../../services/data.service';
+import {ResponseService} from '../../services/response.service';
+import {MissionFrontService} from '../../../../../../services/mission/mission-front.service';
+import {MissionQuestionService} from '../../../../../../services/mission/mission-question.service';
+import {Mission, MissionQuestion} from '../../../../../../models/mission';
+
 import {Answer} from '../../../../../../models/answer';
 import {Innovation} from '../../../../../../models/innovation';
 import {Question} from '../../../../../../models/question';
-import {ResponseService} from '../../services/response.service';
 import {BarData} from '../../models/bar-data';
-import {PieChart} from '../../../../../../models/pie-chart';
-import {DataService} from '../../services/data.service';
 import {AnswersStats} from '../../models/stats';
 import {Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
-import {Mission, MissionQuestion} from '../../../../../../models/mission';
-import {MissionFrontService} from '../../../../../../services/mission/mission-front.service';
-import {MissionQuestionService} from '../../../../../../services/mission/mission-question.service';
+
+import {PieChart} from '../../../../../../models/chart/pie-chart';
+
 
 @Component({
   selector: 'app-bar-chart',
@@ -32,24 +35,28 @@ export class BarChartComponent implements OnInit, OnDestroy {
   @Input() stats: AnswersStats = null;
 
   @Input() toggleAnswers = false;
+  @Input() reportingLang = this._translateService.currentLang;
 
   @Output() modalAnswerChange = new EventEmitter<any>();
-
   @Output() answerButtonClicked = new EventEmitter<boolean>();
-
   @Output() questionChanged = new EventEmitter<Question>();
 
   private _barsData: Array<BarData> = [];
-
   private _pieChart: PieChart = <PieChart>{};
-
   private _showAnswers: {[index: string]: boolean} = {};
-
   private _toggleFilterIcon: {[index: string]: boolean} = {};
-
-  @Input() reportingLang = this._translateService.currentLang;
-
   private _ngUnsubscribe: Subject<any> = new Subject<any>();
+
+  private _updateAnswersData() {
+    this._dataService.getAnswers(this.question).pipe(takeUntil(this._ngUnsubscribe))
+      .subscribe((answers: Array<Answer>) => {
+        this._barsData = ResponseService.barsData(this.question, answers);
+        if ( this.question.controlType === 'radio' ) {
+          this._pieChart = ResponseService.pieChartData(this._barsData, answers);
+        }
+      });
+  }
+
 
   constructor(private _translateService: TranslateService,
               private _dataService: DataService,
@@ -59,15 +66,6 @@ export class BarChartComponent implements OnInit, OnDestroy {
    this._updateAnswersData();
   }
 
-  private _updateAnswersData() {
-    this._dataService.getAnswers(this.question).pipe(takeUntil(this._ngUnsubscribe))
-      .subscribe((answers: Array<Answer>) => {
-        this._barsData = ResponseService.barsData(this.question, answers);
-        if (this.question.controlType === 'radio') {
-          this._pieChart = ResponseService.pieChartData(this._barsData, answers);
-        }
-      });
-  }
 
   public filterAnswer(data: BarData, event: Event) {
     event.preventDefault();
@@ -118,6 +116,7 @@ export class BarChartComponent implements OnInit, OnDestroy {
   public barDataLabel(barData: any) {
     return MissionQuestionService.label(barData, 'label', this.reportingLang);
   }
+
 
   get filter() {
     return this._filterService.filters[this.question.identifier];
