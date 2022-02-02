@@ -70,6 +70,7 @@ export class SharedProfessionalTargetingComponent implements OnInit, OnDestroy {
           // 1. prepare targetPros
           // 2. search if there is a keyword
           // 3. sort
+          console.log(result);
           if (!this._isPreview && !_.isEmpty(result.targetPros)) {
             this._targetedProsToUpdate = result.targetPros || <TargetPros>{};
             this.initialiseTargetedPros(result.targetPros);
@@ -144,7 +145,7 @@ export class SharedProfessionalTargetingComponent implements OnInit, OnDestroy {
    */
   initialiseTargetedPros(targetedPros: TargetPros) {
     Object.keys(targetedPros.jobsTypologies).forEach((_job) => {
-      targetedPros.jobsTypologies = LangEntryService.jobEntry(targetedPros.jobsTypologies[_job], 'name');
+      targetedPros.jobsTypologies[_job] = LangEntryService.jobEntry(targetedPros.jobsTypologies[_job], 'name');
       if (targetedPros.jobsTypologies[_job].jobs && targetedPros.jobsTypologies[_job].jobs.length) {
         targetedPros.jobsTypologies[_job].jobs.map((_jobConfig) => {
           return LangEntryService.jobEntry(_jobConfig, 'label');
