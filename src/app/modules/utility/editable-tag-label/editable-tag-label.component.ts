@@ -6,6 +6,7 @@ import { MultilingPipe } from '../../../pipe/pipes/multiling.pipe';
 import { TagsService } from '../../../services/tags/tags.service';
 import { AutocompleteService } from '../../../services/autocomplete/autocomplete.service';
 import { Tag } from '../../../models/tag';
+import {LangEntryService} from '../../../services/lang-entry/lang-entry.service';
 
 type TagType = 'tags';
 
@@ -45,8 +46,8 @@ export class EditableTagLabelComponent implements OnInit, AfterViewInit {
       this._originalTag = JSON.parse(JSON.stringify(value));
     } else {
       this._isEditable = true;
-      this._defaultTag = <Tag>{label: {en: '', fr: ''}};
-      this._originalTag = JSON.parse(JSON.stringify(<Tag>{label: {en: '', fr: ''}}));
+      this._defaultTag = <Tag>{entry: [{lang: 'en', label: ''}, {lang: 'fr', label: ''}]};
+      this._originalTag = JSON.parse(JSON.stringify(<Tag>{entry: [{lang: 'en', label: ''}, {lang: 'fr', label: ''}]}));
     }
   }
 
@@ -131,7 +132,11 @@ export class EditableTagLabelComponent implements OnInit, AfterViewInit {
       this.performAction.emit({action: 'add', value: this._defaultTag});
       this._isEditable = false;
     } else {
-      this._defaultTag.label[this.currentLang] = value;
+      // this._defaultTag.label[this.currentLang] = value;
+      const _index = LangEntryService.entryIndex(this._defaultTag.entry, 'lang', this.currentLang);
+      if (_index !== -1) {
+        this._defaultTag.entry[_index].label = value;
+      }
     }
   }
 

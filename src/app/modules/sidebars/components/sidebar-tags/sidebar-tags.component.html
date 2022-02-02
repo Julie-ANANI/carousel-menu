@@ -61,7 +61,7 @@
         <!-- name -->
         <div class="p-bottom-15">
           <p class="form-label m-no-bottom">Name</p>
-          <p class="text-md m-no-bottom">{{ tag.originalLabel | multiling:lang }}</p>
+          <p class="text-md m-no-bottom">{{ tag.entry | langEntry:'originalLabel':lang }}</p>
         </div>
         <!-- /name -->
 
@@ -116,10 +116,11 @@
         <div class="form-group">
           <label for="sidebar-tags-enLabel" class="form-label">English</label>
           <input
-            (ngModelChange)="saveButton(true)"
-            [(ngModel)]="tag.label.en"
+            #sideTagEntryLabelEn
+            (ngModelChange)="updateTagEntry(sideTagEntryLabelEn.value, 'label', 'en')"
             [disabled]="!isEditable"
             [ngModelOptions]="{ standalone: true }"
+            [ngModel]="tag.entry|langEntry:'label':'en'"
             [placeholder]="'Enter the label in English'"
             class="form-input is-shadowed"
             id="sidebar-tags-enLabel"
@@ -129,10 +130,11 @@
         <div class="form-group">
           <label for="sidebar-tags-frLabel" class="form-label">French</label>
           <input
-            (ngModelChange)="saveButton(true)"
-            [(ngModel)]="tag.label.fr"
+            #sideTagEntryLabelFr
+            (ngModelChange)="updateTagEntry(sideTagEntryLabelFr.value, 'label', 'fr')"
             [disabled]="!isEditable"
             [ngModelOptions]="{ standalone: true }"
+            [ngModel]="tag.entry|langEntry:'label':'fr'"
             [placeholder]="'Enter the label in French'"
             class="form-input is-shadowed"
             id="sidebar-tags-frLabel"
@@ -150,30 +152,32 @@
         <div class="form-group">
           <label for="sidebar-tags-enDesc" class="form-label">English</label>
           <textarea
-            (ngModelChange)="saveButton(true)"
-            [(ngModel)]="tag.description.en"
+            #sideTagEntryDescEn
+            (ngModelChange)="updateTagEntry(sideTagEntryDescEn.value, 'description', 'en')"
             [disabled]="!isEditable"
             [ngModelOptions]="{ standalone: true }"
+            [ngModel]="tag.entry|langEntry:'description':'en'"
             [placeholder]="'Write down the description in English'"
-            rows="3"
             class="form-input is-shadowed p-10"
-            type="text"
-            id="sidebar-tags-enDesc">
+            id="sidebar-tags-enDesc"
+            rows="3"
+            type="text">
           </textarea>
         </div>
 
         <div class="form-group">
           <label for="sidebar-tags-frDesc" class="form-label">French</label>
           <textarea
-            (ngModelChange)="saveButton(true)"
-            [(ngModel)]="tag.description.fr"
+            #sideTagEntryDescFr
+            (ngModelChange)="updateTagEntry(sideTagEntryDescFr.value, 'description', 'fr')"
             [disabled]="!isEditable"
             [ngModelOptions]="{ standalone: true }"
+            [ngModel]="tag.entry|langEntry:'description':'fr'"
             [placeholder]="'Write down the description in French'"
-            rows="3"
             class="form-input is-shadowed p-10"
-            type="text"
-            id="sidebar-tags-frDesc">
+            id="sidebar-tags-frDesc"
+            rows="3"
+            type="text">
           </textarea>
         </div>
 

@@ -187,7 +187,7 @@ export class ExecutiveReportFrontService {
         section.values.push({
           legend: tag.count + 'X',
           color: '#4F5D6B',
-          name: this._multilingPipe.transform(tag.label, lang),
+          name: this._langEntryService.tagEntry(tag, 'label', lang),
           visibility: tag.count > 0
         });
       });
@@ -250,12 +250,22 @@ export class ExecutiveReportFrontService {
    * @param lang
    */
   public likertScaleCustomSection(tagsData: Array<Tag>, lang: string): SectionLikertScale {
+
+    /* if (tagsData && tagsData.length > 0) {
       return {
-      color: '#BBC7D6',
-      legend: '',
-      name: 'UNCERTAIN',
-      visibility: false
-    }
+        color: '#BBC7D6',
+        legend:  tagsData[0].count + 'X',
+        name: this._langEntryService.tagEntry(tagsData[0], 'label', lang),
+        visibility: tagsData[0].count > 0
+      };
+    } else {*/
+      return {
+        color: '#BBC7D6',
+        legend: '',
+        name: 'UNCERTAIN',
+        visibility: false
+      };
+    // }
   }
 
 

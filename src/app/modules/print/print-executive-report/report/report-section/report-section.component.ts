@@ -356,7 +356,7 @@ export class ReportSectionComponent implements OnChanges {
   private _initLikertScaleContent(tagsData: Array<Tag>, title: UmiusMultilingInterface): SectionLikertScale {
     if (tagsData.length > 0) {
       return {
-        name: tagsData[0].label[this.report.lang] || '',
+        name: this._langEntryService.tagEntry(tagsData[0], 'label', this.report.lang) || '',
         visibility: true,
         legend: tagsData[0].count > 1 ? tagsData[0].count + 'X' : '',
         color: this._getLikertScaleColor(title)
