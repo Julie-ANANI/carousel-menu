@@ -170,10 +170,9 @@
         <label class="form-checkbox text-sm">
           <input
             (change)="onChangeTag($event, tag)"
-            [name]="tag.label | multiling:currentLang"
             type="checkbox">
           <i class="form-icon"></i>
-          <span class="text-ellipsis">{{ tag.label | multiling:currentLang | FormatText }}</span>
+          <span class="text-ellipsis">{{ tag.entry | langEntry:'label':currentLang:true | titlecase }}</span>
         </label>
       </div>
     </div>
