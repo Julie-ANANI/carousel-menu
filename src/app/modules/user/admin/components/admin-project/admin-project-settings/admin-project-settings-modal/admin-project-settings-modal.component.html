@@ -153,10 +153,7 @@
       <div
         *ngFor="let sector of community.sectors" [ngClass]="hasError(sector) ? 'is-danger': 'is-tag'"
         class="label is-rounded">
-        <ng-container *ngIf="sector.entry && sector.entry.length; else noSectorEntryLabel">
-          {{ sector.entry | langEntry:'label' }}
-        </ng-container>
-        <ng-template #noSectorEntryLabel>{{ sector | langEntry:'label' }}</ng-template>
+        {{ sector.entry | langEntry:'label' }}
         <div (click)="removeSector(sector)" class="close m-left-2 is-xs"></div>
       </div>
     </div>
