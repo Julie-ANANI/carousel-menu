@@ -1,4 +1,3 @@
-import { Multiling } from './multiling';
 import { TagAttachment } from './tag-attachment';
 
 /**
@@ -9,7 +8,7 @@ export type TagType = 'UNKNOWN' | 'SECTOR' | 'VALUE_CHAIN' | 'SOLUTION_TYPE' | '
 export type TagStatusType = 'DRAFT' | 'VALID';
 
 export interface TagEntry {
-  originalLabel: string;
+  originalLabel?: string;
   lang: string;
   label: string;
   description: string;
@@ -30,7 +29,7 @@ export interface Tag {
   /**
    * TODO remove these because will be replaced with entry
    */
-  readonly originalLabel?: Multiling;
-  readonly label: Multiling;
-  readonly description?: Multiling;
+  // readonly originalLabel?: Multiling;
+  // readonly label: Multiling;
+  // readonly description?: Multiling;
 }
