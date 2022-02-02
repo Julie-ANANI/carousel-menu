@@ -1,5 +1,4 @@
 import { TagAttachment } from './tag-attachment';
-import {UmiusMultilingInterface} from '@umius/umi-common-component';
 
 /**
  * Created by juandavidcruzgomez on 28/03/2018.
@@ -9,7 +8,7 @@ export type TagType = 'UNKNOWN' | 'SECTOR' | 'VALUE_CHAIN' | 'SOLUTION_TYPE' | '
 export type TagStatusType = 'DRAFT' | 'VALID';
 
 export interface TagEntry {
-  originalLabel: string;
+  originalLabel?: string;
   lang: string;
   label: string;
   description: string;
@@ -30,7 +29,7 @@ export interface Tag {
   /**
    * TODO remove these because will be replaced with entry
    */
-  readonly originalLabel?: UmiusMultilingInterface;
-  readonly label: UmiusMultilingInterface;
-  readonly description?: UmiusMultilingInterface;
+ // readonly originalLabel?: UmiusMultilingInterface;
+ // readonly label: UmiusMultilingInterface;
+ // readonly description?: UmiusMultilingInterface;
 }
