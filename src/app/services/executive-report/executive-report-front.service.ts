@@ -187,7 +187,7 @@ export class ExecutiveReportFrontService {
         section.values.push({
           legend: tag.count + 'X',
           color: '#4F5D6B',
-          name: this._multilingPipe.transform(tag.label, lang),
+          name: this._langEntryService.tagEntry(tag, 'label', lang),
           visibility: tag.count > 0
         });
       });
@@ -255,7 +255,7 @@ export class ExecutiveReportFrontService {
       return {
         color: '#BBC7D6',
         legend:  tagsData[0].count + 'X',
-        name: this._multilingPipe.transform(tagsData[0].label, lang),
+        name: this._langEntryService.tagEntry(tagsData[0], 'label', lang),
         visibility: tagsData[0].count > 0
       };
     } else {
