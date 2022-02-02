@@ -73,12 +73,13 @@ export class SharedTagsComponent implements OnInit {
     return this._domSanitizer.bypassSecurityTrustHtml(`<span>${text}</span>`);
   };
 
-  public autocompleValueFormatter = (data: any): string => {
-    if (!this.projectId || this.type) {
-      return this._langEntryService.transform(data, 'name', this._translateService.currentLang);
-    } else {
-      return this._langEntryService.transform(data, 'label', this._translateService.currentLang);
-    }
+  public autocompleValueFormatter = (data: Tag): string => {
+    return this._langEntryService.tagEntry(data, 'label', this._translateService.currentLang);
+    // if (!this.projectId || this.type) {
+    //   return this._langEntryService.transform(data, 'name', this._translateService.currentLang);
+    // } else {
+    //   return this._langEntryService.transform(data, 'label', this._translateService.currentLang);
+    // }
   };
 
   public onSubmit() {

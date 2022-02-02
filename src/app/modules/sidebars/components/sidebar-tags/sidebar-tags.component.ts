@@ -89,8 +89,8 @@ export class SidebarTagsComponent {
     return this._domSanitizer.bypassSecurityTrustHtml(`<span>${text}</span>`);
   };
 
-  public autocompleValueFormatter = (data: {name: any, _id: string}) : string => {
-    return this._langEntryService.transform(data, 'name', this._translateService.currentLang);
+  public autocompleValueFormatter = (data: Tag) : string => {
+    return this._langEntryService.tagEntry(data, 'label', this._translateService.currentLang);
     // return this._multiling.transform(data.name, this._translateService.currentLang);
   };
 
