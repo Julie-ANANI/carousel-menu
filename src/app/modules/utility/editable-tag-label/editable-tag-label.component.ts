@@ -125,6 +125,10 @@ export class EditableTagLabelComponent implements OnInit, AfterViewInit {
     this.performAction.emit({action: 'delete', value: this._defaultTag});
   }
 
+  get label(): string {
+    return this._langEntryService.transform(this.defaultTag.entry, 'label', this.currentLang, false);
+  }
+
   onEdit(event: Event) {
     event.preventDefault();
     this._isEditable = true;
