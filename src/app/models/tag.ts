@@ -1,4 +1,5 @@
 import { TagAttachment } from './tag-attachment';
+import {Multiling} from './multiling';
 
 /**
  * Created by juandavidcruzgomez on 28/03/2018.

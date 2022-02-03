@@ -35,7 +35,7 @@
   <!-- /input field -->
 
   <!-- displaying tags -->
-  <!--IT's for EDIT TAGS-->
+  <!--IT's for EDIT TAGS TODO remove multiling-->
   <div *ngIf="tags.length" style="margin: -4px" class="flex-wrap-wrap d-flex p-top-10">
     <ng-container *ngFor="let tag of tags">
       <ng-container *ngIf="tag.entry && tag.entry.length; else noTagsEntry">

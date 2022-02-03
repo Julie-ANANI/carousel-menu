@@ -203,12 +203,18 @@
                     </a>
 
                     <!-- tags -->
+                    <!--TODO remove multiling-->
                     <div *ngIf="innovation.tags.length > 0" class="d-flex flex-wrap-wrap p-top-2 justify-center">
                       <div *ngFor="let tag of innovation.tags" class="d-inline-flex">
                         <div *ngIf="tag.type === 'SECTOR'" class="label m-no label-tag text-xs text-meta">
                           <i class="fas fa-tag"></i>
                           <span class="label-text">
-                            {{ tag.entry | langEntry:'label':lang:true }}
+                            <ng-container *ngIf="tag.entry && tag.entry.length; else noTagEntryLabel">
+                              {{ tag.entry | langEntry:'label':lang:true }}
+                            </ng-container>
+                            <ng-template #noTagEntryLabel>
+                              {{ tag | langEntry:'label':lang:true }}
+                            </ng-template>
                           </span>
                         </div>
                       </div>

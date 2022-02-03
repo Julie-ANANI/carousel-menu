@@ -54,20 +54,33 @@
 
 
     <!-- highlight tags -->
+    <!--TODO remove multiling-->
     <div *ngIf="highLightTags.length > 0" [@tagAnimation]="tagsUpdated" class="sector-wrapper d-flex">
       <div
         *ngFor="let tag of highLightTags"
         class="label is-rounded c-hand animate-tag"
         [ngClass]="checkFilter(tag._id) ? 'is-primary' : 'is-draft'">
         <label class="c-hand">
-          <input
-            (change)="toggleFilter($event, tag)"
-            [checked]="checkFilter(tag._id)"
-            [id]="tag._id"
-            [name]="tag.entry | langEntry:'label':userLang:true"
-            [value]="tag.entry | langEntry:'label':userLang:true"
-            type="checkbox">
-          {{ tag.entry | langEntry:'label':userLang:true }}
+          <ng-container *ngIf="tag.entry && tag.entry.length; else noTagEntryLabel">
+            <input
+              (change)="toggleFilter($event, tag)"
+              [checked]="checkFilter(tag._id)"
+              [id]="tag._id"
+              [name]="tag.entry | langEntry:'label':userLang:true"
+              [value]="tag.entry | langEntry:'label':userLang:true"
+              type="checkbox">
+            {{ tag.entry | langEntry:'label':userLang:true }}
+          </ng-container>
+          <ng-template #noTagEntryLabel>
+            <input
+              (change)="toggleFilter($event, tag)"
+              [checked]="checkFilter(tag._id)"
+              [id]="tag._id"
+              [name]="tag | langEntry:'label':userLang:true"
+              [value]="tag | langEntry:'label':userLang:true"
+              type="checkbox">
+            {{ tag | langEntry:'label':userLang:true }}
+          </ng-template>
         </label>
       </div>
     </div>
@@ -83,20 +96,33 @@
 
     <h3 class="text-meta animate-appear">{{ 'DISCOVER.RELATED_SECTORS' | translate }}</h3>
 
+    <!--TODO remove multiling-->
     <div class="d-flex sector-wrapper">
       <div
         *ngFor="let tag of suggestedTags"
         [ngClass]="checkSimilarFilter(tag._id) ? 'is-primary' : 'is-draft'"
         class="label is-rounded c-hand animate-appear">
         <label class="c-hand">
-          <input
-            (change)="toggleSimilarFilter($event, tag)"
-            [checked]="checkSimilarFilter(tag._id)"
-            [id]="tag._id"
-            [name]="tag.entry | langEntry:'label':userLang:true"
-            [value]="tag.entry | langEntry:'label':userLang:true"
-            type="checkbox">
-          {{ tag.entry | langEntry:'label':userLang:true }}
+          <ng-container *ngIf="tag.entry && tag.entry.length; else noTagSuggestedEntryLabel">
+            <input
+              (change)="toggleSimilarFilter($event, tag)"
+              [checked]="checkSimilarFilter(tag._id)"
+              [id]="tag._id"
+              [name]="tag.entry | langEntry:'label':userLang:true"
+              [value]="tag.entry | langEntry:'label':userLang:true"
+              type="checkbox">
+            {{ tag.entry | langEntry:'label':userLang:true }}
+          </ng-container>
+          <ng-template #noTagSuggestedEntryLabel>
+            <input
+              (change)="toggleSimilarFilter($event, tag)"
+              [checked]="checkSimilarFilter(tag._id)"
+              [id]="tag._id"
+              [name]="tag | langEntry:'label':userLang:true"
+              [value]="tag | langEntry:'label':userLang:true"
+              type="checkbox">
+            {{ tag | langEntry:'label':userLang:true }}
+          </ng-template>
         </label>
       </div>
     </div>
@@ -109,6 +135,7 @@
 
 
 <!-- modal tags -->
+<!--TODO remove multiling-->
 <umius-modal [(showModal)]="modalTag" maxWidth="840px" title="DISCOVER.ALL_SECTORS">
   <section class="modal-body">
     <div class="modal-tag-wrapper">
@@ -118,14 +145,26 @@
           class="label is-rounded c-hand"
           [ngClass]=" checkFilter(tag._id) ? 'is-primary' : 'is-draft'">
           <label class="c-hand">
-            <input
-              (change)="toggleFilter($event, tag)"
-              [checked]="checkFilter(tag._id)"
-              [id]="tag._id"
-              [name]="tag.entry | langEntry:'label':userLang:true"
-              [value]="tag.entry | langEntry:'label':userLang:true"
-              type="checkbox">
-            {{ tag.entry | langEntry:'label':userLang:true }}
+            <ng-container *ngIf="tag.entry && tag.entry.length; else noAllTagsEntryLabel">
+              <input
+                (change)="toggleFilter($event, tag)"
+                [checked]="checkFilter(tag._id)"
+                [id]="tag._id"
+                [name]="tag.entry | langEntry:'label':userLang:true"
+                [value]="tag.entry | langEntry:'label':userLang:true"
+                type="checkbox">
+              {{ tag.entry | langEntry:'label':userLang:true }}
+            </ng-container>
+            <ng-template #noAllTagsEntryLabel>
+              <input
+                (change)="toggleFilter($event, tag)"
+                [checked]="checkFilter(tag._id)"
+                [id]="tag._id"
+                [name]="tag | langEntry:'label':userLang:true"
+                [value]="tag | langEntry:'label':userLang:true"
+                type="checkbox">
+              {{ tag | langEntry:'label':userLang:true }}
+            </ng-template>
           </label>
         </div>
       </div>
