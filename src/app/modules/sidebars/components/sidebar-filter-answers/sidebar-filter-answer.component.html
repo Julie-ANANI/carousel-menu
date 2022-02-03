@@ -255,17 +255,28 @@
         <i class="form-icon"></i> {{ 'COMMON.LABEL.SELECT_ALL' | translateIn: reportingLang }}
       </label>
 
+      <!--TODO remove multiling-->
       <div
         *ngFor="let tag of (seeMore.professionals ? professionalsTags : (professionalsTags | slice:0:6))"
         class="form-group">
         <label class="form-checkbox is-sm">
-          <input
-            (change)="checkTag($event, tag._id)"
-            [checked]="selectedTags[tag._id]"
-            [id]="tag.label | multiling:reportingLang"
-            [name]="tag.label | multiling:reportingLang"
-            type="checkbox">
-          <i class="form-icon"></i> {{ tag.label | multiling:reportingLang | FormatText }}
+          <ng-container *ngIf="tag.entry && tag.entry.length; else noSidebarFilterEntry">
+            <input
+              (change)="checkTag($event, tag._id)"
+              [checked]="selectedTags[tag._id]"
+              [id]="tag.entry | langEntry:'label':reportingLang:true"
+              type="checkbox">
+            <i class="form-icon"></i> {{ tag.entry | langEntry:'label':reportingLang:true | titlecase }}
+          </ng-container>
+          <ng-template #noSidebarFilterEntry>
+            <input
+              (change)="checkTag($event, tag._id)"
+              [checked]="selectedTags[tag._id]"
+              [id]="tag.label | multiling:reportingLang"
+              [name]="tag.label | multiling:reportingLang"
+              type="checkbox">
+            <i class="form-icon"></i> {{ tag.label | multiling:reportingLang | FormatText }}
+          </ng-template>
         </label>
       </div>
 
@@ -351,18 +362,30 @@
           <i class="form-icon"></i> {{ 'COMMON.LABEL.SELECT_ALL' | translateIn: reportingLang }}
         </label>
 
+        <!--TODO remove multiling-->
         <div
           *ngFor="let answerTag of (seeMore[question.identifier] ? answersTagsLists[question.identifier]
           : (answersTagsLists[question.identifier] | slice:0:4))"
           class="form-group">
           <label class="form-checkbox is-sm">
-            <input
-              (change)="checkAnswerTag($event, question.identifier)"
-              [checked]="selectedAnswersTags[question.identifier][answerTag._id]"
-              [id]="answerTag._id"
-              [name]="answerTag._id"
-              type="checkbox">
-            <i class="form-icon"></i> {{ answerTag.label | multiling:reportingLang | FormatText }}
+            <ng-container *ngIf="answerTag.entry && answerTag.entry.length; else noSidebarFilterAnswerTag">
+              <input
+                (change)="checkAnswerTag($event, question.identifier)"
+                [checked]="selectedAnswersTags[question.identifier][answerTag._id]"
+                [id]="answerTag._id"
+                [name]="answerTag._id"
+                type="checkbox">
+              <i class="form-icon"></i> {{ answerTag.entry | langEntry:'label':reportingLang:true }}
+            </ng-container>
+            <ng-template #noSidebarFilterAnswerTag>
+              <input
+                (change)="checkAnswerTag($event, question.identifier)"
+                [checked]="selectedAnswersTags[question.identifier][answerTag._id]"
+                [id]="answerTag._id"
+                [name]="answerTag._id"
+                type="checkbox">
+              <i class="form-icon"></i> {{ answerTag.label | multiling:reportingLang | FormatText }}
+            </ng-template>
           </label>
         </div>
 
