@@ -59,6 +59,7 @@ export class AdminProjectTagsPoolComponent implements OnInit {
     }
   }
 
+  // TODO multiling update
   private _initializeTable() {
     this._table = {
       _selector: 'admin-project-tags-pool-limit',
@@ -74,8 +75,8 @@ export class AdminProjectTagsPoolComponent implements OnInit {
       _isSelectable: this.canAccess(['delete']),
       _clickIndex: (this.canAccess(['view']) || this.canAccess(['edit'])) ? 1 : null,
       _columns: [
-        { _attrs: ['label'], _name: 'Label', _type: 'MULTILING' },
-        { _attrs: ['description'], _name: 'Description', _type: 'MULTILING' },
+        { _attrs: ['entry.label'], _name: 'Label', _type: 'MULTILING' },
+        { _attrs: ['entry.description'], _name: 'Description', _type: 'MULTILING' },
         { _attrs: ['type'], _name: 'Type', _type: 'TEXT' },
         { _attrs: ['state'], _name: 'State', _type: 'MULTI-CHOICES',
           _choices: [
