@@ -41,6 +41,7 @@ import {RankingChartModule} from './components/ranking-chart/ranking-chart.modul
 import {RanksModule} from './components/ranks/ranks.module';
 import {ModalEmptyModule} from '../../../utility/modals/modal-empty/modal-empty.module';
 import {LikertScaleChartModule} from './components/likert-scale-chart/likert-scale-chart.module';
+import {LangEntryPipeModule} from '../../../../pipe/lang-entry/langEntryPipe.module';
 
 @NgModule({
   imports: [
@@ -72,6 +73,7 @@ import {LikertScaleChartModule} from './components/likert-scale-chart/likert-sca
     RanksModule,
     ModalEmptyModule,
     LikertScaleChartModule,
+    LangEntryPipeModule,
   ],
   declarations: [
     SharedMarketReportComponent,

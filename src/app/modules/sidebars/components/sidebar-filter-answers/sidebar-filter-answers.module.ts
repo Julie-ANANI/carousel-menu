@@ -10,19 +10,21 @@ import {ModalModule} from "../../../utility/modals/modal/modal.module";
 import {SharedWorldListModule} from '../../../shared/components/shared-world-list/shared-world-list.module';
 import {InputListModule} from '../../../utility/input-list/input-list.module';
 import {AdminProjectDoneModule} from '../../../user/admin/components/admin-project-done-modal/admin-project-done.module';
+import {LangEntryPipeModule} from '../../../../pipe/lang-entry/langEntryPipe.module';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        TranslateModule.forChild(),
-        FormsModule,
-        PipeModule,
-        NgxPageScrollModule,
-        ModalModule,
-        SharedWorldListModule,
-        InputListModule,
-        AdminProjectDoneModule
-    ],
+  imports: [
+    CommonModule,
+    TranslateModule.forChild(),
+    FormsModule,
+    PipeModule,
+    NgxPageScrollModule,
+    ModalModule,
+    SharedWorldListModule,
+    InputListModule,
+    AdminProjectDoneModule,
+    LangEntryPipeModule
+  ],
   declarations: [
     SidebarFilterAnswersComponent
   ],
