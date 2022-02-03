@@ -54,9 +54,15 @@
         <!-- header section -->
         <div class="d-flex selected-tags-wrapper text-center">
 
+          <!--TODO remove multiling-->
           <div *ngFor="let tagStat of selectedTagsStats; let i = index;" class="tag text-notify">
             <span>
-              {{ (tagStat.tag.entry | langEntry:'label':currentLang:true) | titlecase }}
+              <ng-container *ngIf="tagStat.tag.entry; else noTagStatEntryLabel">
+                {{ (tagStat.tag.entry | langEntry:'label':currentLang:true) | titlecase }}
+              </ng-container>
+              <ng-template #noTagStatEntryLabel>
+                {{ (tagStat.tag | langEntry:'label':currentLang:true) | titlecase }}
+              </ng-template>
             </span>
             <ng-container *ngIf=" i !== selectedTagsStats.length - 1 "> / </ng-container>
           </div>
@@ -148,11 +154,17 @@
       translate>
     </h2>
 
+    <!--TODO remove multiling-->
     <ng-container *ngIf="selectedTagsStats.length">
       <div class="selected-wrapper">
         <div *ngFor="let selected of selectedTagsStats" class="label label-tag is-rounded">
           <span>
-            {{ (selected.tag.entry | langEntry:'label':currentLang:true) | titlecase }}
+            <ng-container *ngIf="selected.tag.entry; else noSelectedEntryLabel">
+                {{ (selected.tag.entry | langEntry:'label':currentLang:true) | titlecase }}
+              </ng-container>
+              <ng-template #noSelectedEntryLabel>
+                {{ (selected.tag | langEntry:'label':currentLang:true) | titlecase }}
+              </ng-template>
           </span>
         </div>
       </div>
@@ -160,15 +172,28 @@
 
     <hr class="hr">
 
+    <!--TODO remove multiling-->
     <div class="d-flex tags-wrapper flex-wrap">
       <div *ngFor="let tag of sectorTags" class="card is-responsive">
-        <label class="form-checkbox text-sm">
+        <label *ngIf="tag.entry && tag.entry.length; else notShowcaseTagEntry" class="form-checkbox text-sm">
           <input
             (change)="onChangeTag($event, tag)"
             type="checkbox">
           <i class="form-icon"></i>
-          <span class="text-ellipsis">{{ tag.entry | langEntry:'label':currentLang:true | titlecase }}</span>
+          <span class="text-ellipsis">
+            {{ tag.entry | langEntry:'label':currentLang:true | titlecase }}
+          </span>
         </label>
+        <ng-template #notShowcaseTagEntry>
+          <label class="form-checkbox text-sm">
+            <input
+              (change)="onChangeTag($event, tag)"
+              [name]="tag.label | multiling:currentLang"
+              type="checkbox">
+            <i class="form-icon"></i>
+            <span class="text-ellipsis">{{ tag.label | multiling:currentLang | FormatText }}</span>
+          </label>
+        </ng-template>
       </div>
     </div>
 

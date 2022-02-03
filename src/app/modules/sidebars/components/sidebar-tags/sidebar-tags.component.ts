@@ -2,9 +2,11 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
 import { TagsService } from '../../../../services/tags/tags.service';
+// import { Multiling } from '../../../../models/multiling';
 import { Tag } from '../../../../models/tag';
 import { AutocompleteService } from '../../../../services/autocomplete/autocomplete.service';
 import { TranslateNotificationsService } from '../../../../services/translate-notifications/translate-notifications.service';
+// import { MultilingPipe } from '../../../../pipe/pipes/multiling.pipe';
 import { Observable } from 'rxjs';
 import { first } from 'rxjs/operators';
 import { HttpErrorResponse } from "@angular/common/http";
@@ -72,6 +74,7 @@ export class SidebarTagsComponent {
   constructor(private _tagsService: TagsService,
               private _autocompleteService: AutocompleteService,
               private _langEntryService: LangEntryService,
+              // private _multiling: MultilingPipe,
               private _translateNotificationsService: TranslateNotificationsService,
               private _translateService: TranslateService,
               private _domSanitizer: DomSanitizer) { }
@@ -89,6 +92,7 @@ export class SidebarTagsComponent {
     return this._domSanitizer.bypassSecurityTrustHtml(`<span>${text}</span>`);
   };
 
+  // TODO remove multiling
   public autocompleValueFormatter = (data: Tag) : string => {
     return this._langEntryService.tagEntry(data, 'label', this._translateService.currentLang);
     // return this._multiling.transform(data.name, this._translateService.currentLang);

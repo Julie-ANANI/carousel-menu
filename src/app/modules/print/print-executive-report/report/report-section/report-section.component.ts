@@ -340,7 +340,7 @@ export class ReportSectionComponent implements OnChanges {
   }
 
 
-  /***
+  /*** TODO remove multiling
    * Returns the content of the SectionLikertScale
    * @private
    * @param tagsData : Array<Tag>
@@ -357,6 +357,7 @@ export class ReportSectionComponent implements OnChanges {
     if (tagsData.length > 0) {
       return {
         name: this._langEntryService.tagEntry(tagsData[0], 'label', this.report.lang) || '',
+        // name: tagsData[0].label[this.report.lang] || '',
         visibility: true,
         legend: tagsData[0].count > 1 ? tagsData[0].count + 'X' : '',
         color: this._getLikertScaleColor(title)

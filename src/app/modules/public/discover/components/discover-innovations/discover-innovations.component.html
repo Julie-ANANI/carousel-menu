@@ -91,12 +91,18 @@
                   <span>{{ 'DISCOVER.TRENDING' | translate }}</span>
                 </h2>
 
+                <!--TODO remove multiling-->
                 <div
                   *ngFor="let filter of selectedFilters"
                   class="c-hand c-filter-activate-wrapper m-left-1 m-right-2"
                   (click)="onClickRemove(filter._id)">
                   <span class="text-medium">
-                    {{ (filter.entry | langEntry:'label':userLang:true) | titlecase }}
+                    <ng-container *ngIf="filter.entry && filter.entry.length; else noFilterEntryLabel">
+                      {{ (filter.entry | langEntry:'label':userLang:true) | titlecase }}
+                    </ng-container>
+                    <ng-template #noFilterEntryLabel>
+                      {{ (filter | langEntry:'label':userLang:true) | titlecase }}
+                    </ng-template>
                     <i class="fas fa-times-circle text-notify"></i>
                   </span>
                 </div>

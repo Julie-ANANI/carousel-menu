@@ -2,7 +2,7 @@ import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output } from '@
 import { Observable } from 'rxjs';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
-import { MultilingPipe } from '../../../pipe/pipes/multiling.pipe';
+// import { MultilingPipe } from '../../../pipe/pipes/multiling.pipe';
 import { TagsService } from '../../../services/tags/tags.service';
 import { AutocompleteService } from '../../../services/autocomplete/autocomplete.service';
 import { Tag } from '../../../models/tag';
@@ -46,6 +46,8 @@ export class EditableTagLabelComponent implements OnInit, AfterViewInit {
       this._originalTag = JSON.parse(JSON.stringify(value));
     } else {
       this._isEditable = true;
+      // this._defaultTag = <Tag>{label: {en: '', fr: ''}};
+      // this._originalTag = JSON.parse(JSON.stringify(<Tag>{label: {en: '', fr: ''}}));
       this._defaultTag = <Tag>{entry: [{lang: 'en', label: ''}, {lang: 'fr', label: ''}]};
       this._originalTag = JSON.parse(JSON.stringify(<Tag>{entry: [{lang: 'en', label: ''}, {lang: 'fr', label: ''}]}));
     }
@@ -64,7 +66,8 @@ export class EditableTagLabelComponent implements OnInit, AfterViewInit {
   private _currentLang = this._translateService.currentLang;
 
   constructor(private _translateService: TranslateService,
-              private _multilingPipe: MultilingPipe,
+              private _langEntryService: LangEntryService,
+              // private _multilingPipe: MultilingPipe,
               private _domSanitizer: DomSanitizer,
               private _tagsService: TagsService,
               private _autocompleteService: AutocompleteService) {
@@ -97,11 +100,12 @@ export class EditableTagLabelComponent implements OnInit, AfterViewInit {
   }
 
   public autocompleteValueFormatter = (data: any): string => {
-    if (!this.projectId || this.type) {
+    return this._langEntryService.tagEntry(data, 'label', this._translateService.currentLang);
+    /*if (!this.projectId || this.type) {
       return this._multilingPipe.transform(data.name, this._translateService.currentLang);
     } else {
       return this._multilingPipe.transform(data.label, this._translateService.currentLang);
-    }
+    }*/
   }
 
   onSubmit(event: Event) {
