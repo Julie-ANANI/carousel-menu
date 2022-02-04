@@ -17,11 +17,11 @@ import { extname, join } from 'path';
 import { lookup } from 'mime-types';
 
 import { AppServerModule } from './src/main.server';
-import { APP_BASE_HREF } from '@angular/common';
+// import { APP_BASE_HREF } from '@angular/common';
 
 import { environment} from './src/environments/environment';
 import { enableProdMode } from '@angular/core';
-import { REQUEST, RESPONSE } from '@nguniversal/express-engine/tokens';
+// import { REQUEST, RESPONSE } from '@nguniversal/express-engine/tokens';
 
 if (environment.production) {
   enableProdMode();
@@ -72,7 +72,8 @@ export function app() {
 
   // All regular routes use the Universal engine
   server.get('*', (req, res) => {
-    res.render('index', {
+    res.sendFile(join(distFolder, '/index.html')); // TODO active the SSR mode
+    /*res.render('index', {
       req,
       res,
       providers: [
@@ -87,7 +88,7 @@ export function app() {
         res.send(`An error occured: ${err.message}`);
       }
       return res.send(html)
-    });
+    });*/
   });
 
   return server;
