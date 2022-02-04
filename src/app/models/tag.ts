@@ -31,6 +31,6 @@ export interface Tag {
    * TODO remove these because will be replaced with entry
    */
  // readonly originalLabel?: UmiusMultilingInterface;
- // readonly label: UmiusMultilingInterface;
- // readonly description?: UmiusMultilingInterface;
+ // label?: UmiusMultilingInterface;
+ // description?: UmiusMultilingInterface;
 }
