@@ -31,6 +31,6 @@ export interface Tag {
    * TODO remove these because will be replaced with entry
    */
   readonly originalLabel?: Multiling;
-  readonly label?: Multiling;
-  readonly description?: Multiling;
+  label?: Multiling;
+  description?: Multiling;
 }

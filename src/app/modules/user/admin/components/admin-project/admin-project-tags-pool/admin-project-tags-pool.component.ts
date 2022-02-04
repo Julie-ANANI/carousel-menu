@@ -13,6 +13,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorFrontService } from '../../../../../../services/error/error-front.service';
 import { InnovationFrontService } from '../../../../../../services/innovation/innovation-front.service';
 import { Subject } from 'rxjs';
+import {LangEntryService} from '../../../../../../services/lang-entry/lang-entry.service';
 
 @Component({
   templateUrl: 'admin-project-tags-pool.component.html',
@@ -83,8 +84,8 @@ export class AdminProjectTagsPoolComponent implements OnInit, OnDestroy {
       _isSelectable: this.canAccess(['delete']),
       _clickIndex: (this.canAccess(['view']) || this.canAccess(['edit'])) ? 1 : null,
       _columns: [
-        { _attrs: ['entry.label'], _name: 'Label', _type: 'MULTILING' },
-        { _attrs: ['entry.description'], _name: 'Description', _type: 'MULTILING' },
+        { _attrs: ['label'], _name: 'Label', _type: 'MULTILING' },
+        { _attrs: ['description'], _name: 'Description', _type: 'MULTILING' },
         { _attrs: ['type'], _name: 'Type', _type: 'TEXT' },
         { _attrs: ['state'], _name: 'State', _type: 'MULTI-CHOICES',
           _choices: [
@@ -109,6 +110,21 @@ export class AdminProjectTagsPoolComponent implements OnInit, OnDestroy {
       this._tags = tags;
       this._sortTags();
       this._total = this._tags.length;
+
+      // TODO remove this multiling
+      this._tags.forEach((_tag) => {
+        const enIndex = LangEntryService.entryIndex(_tag.entry, 'lang', 'en');
+        const frIndex = LangEntryService.entryIndex(_tag.entry, 'lang', 'fr');
+        _tag.label = {
+          en: enIndex !== -1 ? _tag.entry[enIndex].label : '',
+          fr: frIndex !== -1 ? _tag.entry[frIndex].label : '',
+        };
+        _tag.description = {
+          en: enIndex !== -1 ? _tag.entry[enIndex].description : '',
+          fr: frIndex !== -1 ? _tag.entry[frIndex].description : '',
+        };
+      })
+
       this._initializeTable();
     }, (err: HttpErrorResponse) => {
       this._fetchingError = true;
@@ -187,7 +203,9 @@ export class AdminProjectTagsPoolComponent implements OnInit, OnDestroy {
    * @param tag
    */
   public onUpdateTag(tag: Tag): void {
-    this._tagsService.updateTagInPool(this._innovation._id, tag).pipe(first()).subscribe(() => {
+    console.log(tag);
+    this._tagsService.updateTagInPool(this._innovation._id, tag).pipe(first()).subscribe((_) => {
+      console.log(_);
       this._getTagsFromPool();
       this._translateNotificationsService.success('Success' , 'The tag is updated.');
     }, (err: HttpErrorResponse) => {
