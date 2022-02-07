@@ -42,6 +42,7 @@ export class SidebarUserAnswerComponent implements OnInit {
   @Input() adminMode = false; // true to show the Edit toggle button and also shows the actions for the admin.
 
   @Input() set userAnswer(value: Answer) {
+    console.log(`Answer: ${JSON.stringify(value)}`);
     this._reinitializeVariables();
     this._userAnswer = value || <Answer>{};
     if (!this._userAnswer.company) {
