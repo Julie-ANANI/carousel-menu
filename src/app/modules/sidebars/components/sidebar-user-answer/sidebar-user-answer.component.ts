@@ -360,7 +360,7 @@ export class SidebarUserAnswerComponent implements OnInit {
       this._isReassigning = true;
       // this._newPro.country = this._userAnswer.country && this._userAnswer.country.flag;
       // this._newPro.company = this._userAnswer.company && this._userAnswer.company.name;
-
+      console.log(`This._userAnswer: ${JSON.stringify(this._userAnswer)}`);
       this._answerService
         .answerReassign(
           this._userAnswer.campaign._id,
