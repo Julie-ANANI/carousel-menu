@@ -9,7 +9,7 @@ RUN echo "!!!!!! Building front@${VERSION} with 'ng build ${APP_NAME} -c=${ENV_N
 RUN apt-get clean
 RUN apt-get update
 
-RUN npm install -g @angular/cli@8.3.29
+RUN npm install -g @angular/cli@9.1.15
 RUN npm install -g typings
 RUN npm install pm2 -g
 
