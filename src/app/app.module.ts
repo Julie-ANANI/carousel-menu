@@ -1,7 +1,7 @@
 // Modules externes
 import { NgModule, PLATFORM_ID, Inject, ErrorHandler } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
-import { BrowserModule, BrowserTransferStateModule } from '@angular/platform-browser';
+import {BrowserModule, BrowserTransferStateModule, Meta} from '@angular/platform-browser';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { CookieModule, CookieService } from 'ngx-cookie';
 import { SimpleNotificationsModule } from 'angular2-notifications';
@@ -48,7 +48,8 @@ import { SessionInterceptor } from './interceptors/session.interceptor';
     { provide: HTTP_INTERCEPTORS, useClass: ApiUrlInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: LoaderBrowserInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: SessionInterceptor, multi: true },
-    { provide: ErrorHandler, useClass: GlobalErrorHandler }
+    { provide: ErrorHandler, useClass: GlobalErrorHandler },
+    Meta
   ],
   bootstrap: [
     AppComponent

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { DomSanitizer } from '@angular/platform-browser';
+import {ActivatedRoute, Router} from '@angular/router';
+import {DomSanitizer, Meta} from '@angular/platform-browser';
 import { InnovCard } from '../../../../../models/innov-card';
 import { Innovation } from '../../../../../models/innovation';
 import { ShareService } from '../../../../../services/share/share.service';
@@ -13,6 +13,8 @@ import { TranslateTitleService } from '../../../../../services/title/title.servi
 import { ContactFrontService } from '../../../../../services/contact/contact-front.service';
 import {QuizService} from '../../../../../services/quiz/quiz.service';
 import {LangEntryService} from '../../../../../services/lang-entry/lang-entry.service';
+import {htmlTagsRegex} from '../../../../../utils/regex';
+import {environment} from '../../../../../../environments/environment';
 
 @Component({
   templateUrl: './discover-description.component.html',
@@ -67,7 +69,9 @@ export class DiscoverDescriptionComponent implements OnInit {
               private _langEntryService: LangEntryService,
               private _domSanitizer1: DomSanitizer,
               private _translateTitleService: TranslateTitleService,
-              private _innovationService: InnovationService) {
+              private _innovationService: InnovationService,
+              private _metaService: Meta,
+              private _router: Router) {
 
     this._setPageTitle();
 
@@ -84,6 +88,27 @@ export class DiscoverDescriptionComponent implements OnInit {
       this._innovation = this._activatedRoute.snapshot.data.innovation;
       this._innovationCard = InnovationFrontService.currentLangInnovationCard(this._innovation, this._lang, 'CARD');
       this._pageTitle = this._innovationCard.title;
+      console.log("Here!:" + this._router.url);
+      /**
+       * Remove old meta tags. This don't add anything for SEO
+       */
+      this._metaService.removeTag('name="title"');
+      this._metaService.removeTag('name="description"');
+      this._metaService.removeTag('name="description"'); // There are two descriptions??
+      this._metaService.removeTag('name="image"');
+      this._metaService.removeTag('name="url"');
+      this._metaService.removeTag('property="og:title"');
+      /**
+       * Add the following meta tags here...
+       */
+      const metaTags = [
+        {name:'title', content: this._innovationCard.title, property:'og:title'},
+        {name:'description', content: this._innovationCard.summary.replace(htmlTagsRegex, ''), property:'og:description'},
+        {name:'image', content: this._innovationCard.principalMedia.url, property:'og:image'},
+        {name:'image_alt', content: this._innovationCard.title, property:'og:image:alt'},
+        {name:'url', content: `${environment.clientUrl}${this._router.url}`, property:'og:url'}];
+      this._metaService.addTags(metaTags);
+
       this._setPageTitle();
       this._getAllTags();
       this._getRelatedInnovations();
