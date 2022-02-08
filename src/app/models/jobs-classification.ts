@@ -1,19 +1,19 @@
 import {EmailType} from "./seniority-classification";
 import {UmiusMultilingInterface} from '@umius/umi-common-component';
 
-export interface JobClassificationCategoryLabel {
+export interface JobClassificationCategoryEntry {
   lang: string;
-  value: string;
+  label: string;
 }
 
 export interface JobClassificationCategoryJob {
   count: number;
-  label: Array<JobClassificationCategoryLabel>;
+  entry: Array<JobClassificationCategoryEntry>;
 }
 
 export interface JobClassificationCategory {
   count: number;
-  label: Array<JobClassificationCategoryLabel>;
+  entry: Array<JobClassificationCategoryEntry>;
   jobs: Array<JobClassificationCategoryJob>;
 }
 
@@ -22,11 +22,12 @@ export interface JobsClassification {
   emailConfidence: EmailType;
   timestamp: Date;
   total: number;
+  categories: Array<JobClassificationCategory>;
 
   /**
-   * TODO replace this with JobClassificationCategory
+   * TODO delete the commented part after multilang migration
    */
-  categories: [
+  /*categories: [
     {
       label: UmiusMultilingInterface;
       count: number;
@@ -35,5 +36,5 @@ export interface JobsClassification {
         count: number;
       }];
     }
-  ];
+  ];*/
 }

@@ -43,14 +43,14 @@ export class AdminProfessionalsListComponent implements OnInit {
               private _rolesFrontService: RolesFrontService,
               private _translateNotificationsService: TranslateNotificationsService,
               private _translateTitleService: TranslateTitleService) {
-
     this._translateTitleService.setTitle('Professionals');
-
   }
 
   ngOnInit(): void {
     if (isPlatformBrowser(this._platformId)) {
       this._isLoading = false;
+      // TODO test
+      this._getProfessionals();
     }
   }
 
