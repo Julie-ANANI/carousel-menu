@@ -88,7 +88,6 @@ export class DiscoverDescriptionComponent implements OnInit {
       this._innovation = this._activatedRoute.snapshot.data.innovation;
       this._innovationCard = InnovationFrontService.currentLangInnovationCard(this._innovation, this._lang, 'CARD');
       this._pageTitle = this._innovationCard.title;
-      console.log("Here!:" + this._router.url);
       /**
        * Remove old meta tags. This don't add anything for SEO
        */
