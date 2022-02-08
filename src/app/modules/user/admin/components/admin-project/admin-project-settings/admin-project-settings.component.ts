@@ -171,9 +171,12 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
 
       this.getInnovation().then((innovation: Innovation) => {
         if (innovation) {
-          this._statsReferentsService
-            .get()
-            .subscribe((referents) => this._setStats(referents.innovations));
+
+          if(this.canAccess(['view', 'stats'])) {
+            this._statsReferentsService
+              .get()
+              .subscribe((referents) => this._setStats(referents.innovations));
+          }
           this._setQuizLink();
         }
       });
