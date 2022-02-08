@@ -44,38 +44,9 @@ export class AnswerService {
     return this._http.delete(`${this.baseUrl}/${answerId}/tag`, { params: params});
   }
 
-  public getInnovationValidAnswers(innovationId: string, anonymous?: boolean): Observable<{answers: Array<Answer>}> {
-    return this._http.get<{answers: Array<Answer>}>(`/innovation/${innovationId}/validAnswers${anonymous ? '?anonymous=' + !!anonymous : ''}`);
-  }
-
-  public innovationAnswers(innovationId: string, anonymous = false): Observable<{answers: Array<Answer>}> {
-    const _status = ['SUBMITTED', 'REJECTED', 'VALIDATED', 'VALIDATED_UMIBOT', 'REJECTED_UMIBOT', 'REJECTED_GMAIL'];
-    return this._http.get<{answers: Array<Answer>}>(
-      `/innovation/${innovationId}/validAnswers?anonymous=${anonymous}&answers=${_status.join(',')}`
-    );
-  }
-
   public exportAsCsvByCampaign(campaignId: string, client: Boolean): void {
     const url = environment.apiUrl + '/campaign/' + campaignId + '/exportAnswers' + (client ? '?client=true' : '');
     window.open(url);
-  }
-
-  public getExportUrl(innovationId: string, client: boolean, lang: string, anonymous?: boolean): string {
-    const query = [`lang=${lang}`];
-    if (client !== undefined) {
-      query.push(`client=${!!client}`);
-    }
-    if (anonymous) {
-      query.push(`anonymous=${!!anonymous}`);
-    }
-    const _query = query.join('&');
-    return environment.apiUrl + '/innovation/' + innovationId + '/exportAnswers' + (_query.length ? '?' + _query : '');
-  }
-
-  public importFromGmail(file: File): Observable<any> {
-    const formData = new FormData();
-    formData.append('file', file, file.name);
-    return this._http.post('/innovation/importAnswers', formData);
   }
 
   public importAsCsv(campaignId: string, file: File): Observable<any> {

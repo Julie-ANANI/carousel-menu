@@ -1,11 +1,11 @@
 import { Component, Input, OnChanges } from '@angular/core';
 import { Innovation, OldExecutiveReport } from '../../../../models/innovation';
 import { Answer } from '../../../../models/answer';
-import { AnswerService } from '../../../../services/answer/answer.service';
 import { ExecutiveReport} from '../../../../models/executive-report';
 import { HttpErrorResponse } from '@angular/common/http';
 import { first } from 'rxjs/operators';
 import { AnswerFrontService } from '../../../../services/answer/answer-front.service';
+import {InnovationService} from "../../../../services/innovation/innovation.service";
 
 @Component({
   selector: 'app-print-report',
@@ -33,7 +33,7 @@ export class ReportComponent implements OnChanges {
 
   private _anonymous = false;
 
-  constructor (private _answerService: AnswerService) { }
+  constructor (private _innovationService: InnovationService) { }
 
   ngOnChanges(): void {
     if (this.data && this.data['executiveReport'] && this.data['executiveReport']['totalSections']) {
@@ -72,7 +72,7 @@ export class ReportComponent implements OnChanges {
    */
   private _getAnswers(innovation: Innovation, anonymous = false) {
     if (innovation && innovation._id) {
-      this._answerService.getInnovationValidAnswers(innovation._id).pipe(first()).subscribe((response) => {
+      this._innovationService.getInnovationAnswers(innovation._id).pipe(first()).subscribe((response) => {
         this._answers = AnswerFrontService.qualitySort(response.answers);
 
         if(anonymous) {

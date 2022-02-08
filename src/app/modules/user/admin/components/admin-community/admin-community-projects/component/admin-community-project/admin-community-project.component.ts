@@ -4,8 +4,8 @@ import { SidebarInterface } from "../../../../../../../sidebars/interfaces/sideb
 import { Innovation } from '../../../../../../../../models/innovation';
 import { TranslateNotificationsService } from "../../../../../../../../services/translate-notifications/translate-notifications.service";
 import { TranslateTitleService } from '../../../../../../../../services/title/title.service';
-import { AnswerService } from '../../../../../../../../services/answer/answer.service';
 import {ContextInterface} from '../../../interfaces/context-interface';
+import {InnovationService} from "../../../../../../../../services/innovation/innovation.service";
 
 @Component({
   selector: 'admin-community-project',
@@ -38,9 +38,9 @@ export class AdminCommunityProjectComponent {
 
   private _fetchingError: boolean;
 
-  constructor(private _activatedRoute: ActivatedRoute,
+  constructor(private _innovationService: InnovationService,
+              private _activatedRoute: ActivatedRoute,
               private _translateTitleService: TranslateTitleService,
-              private _answerService: AnswerService,
               private _translateNotificationsService: TranslateNotificationsService) {
 
     if (typeof (this._activatedRoute.snapshot.data['innovation']) !== 'undefined') {
@@ -64,7 +64,7 @@ export class AdminCommunityProjectComponent {
 
 
   private _getTargetedCountries() {
-    this._answerService.getInnovationValidAnswers(this._innovation._id).subscribe((response) => {
+    this._innovationService.getInnovationAnswers(this._innovation._id).subscribe((response) => {
       if (response && response.answers) {
         this._targetCountries = response.answers.reduce((acc, answer) => {
           if (!!answer.country &&

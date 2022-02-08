@@ -2,7 +2,6 @@ import { Component, Inject, Input, OnInit, PLATFORM_ID } from '@angular/core';
 import { TranslateNotificationsService } from '../../../../services/translate-notifications/translate-notifications.service';
 import { Innovation } from '../../../../models/innovation';
 import { InnovationFrontService } from '../../../../services/innovation/innovation-front.service';
-import { AnswerService } from '../../../../services/answer/answer.service';
 import { Answer } from '../../../../models/answer';
 import {first} from 'rxjs/operators';
 import { isPlatformBrowser } from '@angular/common';
@@ -14,6 +13,7 @@ import { ErrorFrontService } from '../../../../services/error/error-front.servic
 import { RolesFrontService } from '../../../../services/roles/roles-front.service';
 import {MissionQuestion} from '../../../../models/mission';
 import {Question} from '../../../../models/question';
+import {InnovationService} from "../../../../services/innovation/innovation.service";
 
 /**
  * ADMIN: old version for the admin side
@@ -51,7 +51,7 @@ export class SharedFollowUpComponent implements OnInit {
   private _startContactProcess = false;
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
-              private _answerService: AnswerService,
+              private _innovationService: InnovationService,
               private _tagFiltersService: TagsFiltersService,
               private _rolesFrontService: RolesFrontService,
               private _translateNotificationsService: TranslateNotificationsService) {
@@ -75,7 +75,7 @@ export class SharedFollowUpComponent implements OnInit {
 
   public getAnswers() {
     if (isPlatformBrowser(this._platformId)) {
-      this._answerService.getInnovationValidAnswers(this._project._id)
+      this._innovationService.getInnovationAnswers(this._project._id)
         .pipe(first())
         .subscribe((response) => {
           this.answers = response && response.answers || [];

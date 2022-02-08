@@ -43,7 +43,6 @@ import { StatsReferentsService } from '../../../../../../services/stats-referent
 import { Community } from '../../../../../../models/community';
 import { ErrorFrontService } from '../../../../../../services/error/error-front.service';
 import { Blacklist, BlacklistDomain } from '../../../../../../models/blacklist';
-import { AnswerService } from '../../../../../../services/answer/answer.service';
 import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 
@@ -141,12 +140,11 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
 
   constructor(
     @Inject(PLATFORM_ID) protected _platformId: Object,
-    private _answerService: AnswerService,
+    private _innovationService: InnovationService,
     private _activatedRoute: ActivatedRoute,
     private _rolesFrontService: RolesFrontService,
     private _missionService: MissionService,
     private _dashboardService: DashboardService,
-    private _innovationService: InnovationService,
     private _userService: UserService,
     private _commonService: CommonService,
     private _translateService: TranslateService,
@@ -221,7 +219,7 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
       const innovation = this._activatedRoute.snapshot.parent.parent.data['innovation'];
 
       if (innovation && innovation._id) {
-        this._answerService.getInnovationValidAnswers(innovation._id).pipe(first()).subscribe((response) => {
+        this._innovationService.getInnovationAnswers(innovation._id).pipe(first()).subscribe((response) => {
           this._canDeactivateFollowUp = !(response && response.answers &&
             response.answers.filter((_answer) => !!(_answer.followUp && _answer.followUp.date)).length);
         }, (err: HttpErrorResponse) => {

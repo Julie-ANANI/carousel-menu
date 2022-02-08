@@ -11,7 +11,6 @@ import {
 } from '@angular/core';
 import { TranslateNotificationsService } from '../../../../services/translate-notifications/translate-notifications.service';
 import { TranslateService } from '@ngx-translate/core';
-import { AnswerService } from '../../../../services/answer/answer.service';
 import { FilterService } from './services/filters.service';
 import { InnovationService } from '../../../../services/innovation/innovation.service';
 import { Answer } from '../../../../models/answer';
@@ -153,7 +152,6 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy, OnChanges
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _translateService: TranslateService,
-              private _answerService: AnswerService,
               private _translateNotificationsService: TranslateNotificationsService,
               private _innovationService: InnovationService,
               private _notificationService: NotificationService,
@@ -286,8 +284,8 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy, OnChanges
    */
   private _getAnswers() {
     if (isPlatformBrowser(this._platformId)) {
-      this._answerService
-        .getInnovationValidAnswers(this._innovation._id, this._anonymousAnswers)
+      this._innovationService
+        .getInnovationAnswers(this._innovation._id, this._anonymousAnswers)
         .pipe(first())
         .subscribe(
           (response) => {

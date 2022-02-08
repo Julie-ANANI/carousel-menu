@@ -16,6 +16,7 @@ import {Community} from '../../models/community';
 import { FamilyEnterprises } from '../../modules/sidebars/components/sidebar-blacklist/sidebar-blacklist.component';
 import {Invitation} from '../../models/invitation';
 import {Response} from '../../models/response';
+import {Answer} from "../../models/answer";
 
 @Injectable({providedIn: 'root'})
 export class InnovationService {
@@ -242,4 +243,31 @@ export class InnovationService {
     return this._http.get<FamilyEnterprises>(`/innovation/${innovationId}/autoBlacklist`);
   }
 
+  // ANSWERS
+  // region
+  public getInnovationAnswers(innovationId: string, anonymous = false, onlyValid = true): Observable<{answers: Array<Answer>}> {
+    const _status = ['SUBMITTED', 'REJECTED', 'VALIDATED', 'VALIDATED_UMIBOT', 'REJECTED_UMIBOT', 'REJECTED_GMAIL'];
+    const params = (onlyValid)? 'VALIDATED':`&answers=${_status.join(',')}`;
+    return this._http.get<{answers: Array<Answer>}>(`/innovation/${innovationId}/validAnswers?anonymous=${anonymous}${params}`
+    );
+  }
+
+  public importAnswersFromGmail(file: File): Observable<any> {
+    const formData = new FormData();
+    formData.append('file', file, file.name);
+    return this._http.post('/innovation/importAnswers', formData);
+  }
+  // endregion
+
+  public getExportUrl(innovationId: string, client: boolean, lang: string, anonymous?: boolean): string {
+    const query = [`lang=${lang}`];
+    if (client !== undefined) {
+      query.push(`client=${!!client}`);
+    }
+    if (anonymous) {
+      query.push(`anonymous=${!!anonymous}`);
+    }
+    const _query = query.join('&');
+    return environment.apiUrl + '/innovation/' + innovationId + '/exportAnswers' + (_query.length ? '?' + _query : '');
+  }
 }

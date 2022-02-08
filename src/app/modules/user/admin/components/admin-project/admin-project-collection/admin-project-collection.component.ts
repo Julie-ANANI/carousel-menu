@@ -27,6 +27,7 @@ import { MissionQuestion } from '../../../../../../models/mission';
 import { ErrorFrontService } from '../../../../../../services/error/error-front.service';
 import { Table, Config } from '@umius/umi-common-component/models';
 import { CommonService } from "../../../../../../services/common/common.service";
+import {InnovationService} from "../../../../../../services/innovation/innovation.service";
 
 @Component({
   templateUrl: './admin-project-collection.component.html',
@@ -92,6 +93,7 @@ export class AdminProjectCollectionComponent implements OnInit, OnDestroy {
     private _configService: ConfigService,
     private _translateNotificationsService: TranslateNotificationsService,
     private _answerService: AnswerService,
+    private _innovationService: InnovationService,
     private _rolesFrontService: RolesFrontService,
     private _socketService: SocketService,
     private _innovationFrontService: InnovationFrontService
@@ -142,8 +144,8 @@ export class AdminProjectCollectionComponent implements OnInit, OnDestroy {
   }
 
   private _getAnswers() {
-    this._answerService
-      .innovationAnswers(this._innovation._id)
+    this._innovationService
+      .getInnovationAnswers(this._innovation._id, false, false)
       .pipe(first())
       .subscribe(
         (response) => {

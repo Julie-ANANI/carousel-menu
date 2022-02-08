@@ -12,10 +12,10 @@ import {
 import { Answer  } from '../../../../../models/answer';
 import { Question } from '../../../../../models/question';
 import { InnovationFrontService } from '../../../../../services/innovation/innovation-front.service';
-import { AnswerService } from '../../../../../services/answer/answer.service';
 import { TranslateNotificationsService } from '../../../../../services/translate-notifications/translate-notifications.service';
 import { ErrorFrontService } from '../../../../../services/error/error-front.service';
 import {MissionQuestion} from '../../../../../models/mission';
+import {InnovationService} from "../../../../../services/innovation/innovation.service";
 
 @Component({
   selector: 'app-admin-executive-report',
@@ -49,7 +49,7 @@ export class AdminExecutiveReportComponent implements OnInit, OnDestroy {
   private _anonymous = false;
 
   constructor (private _innovationFrontService: InnovationFrontService,
-               private _answerService: AnswerService,
+               private _innovationService: InnovationService,
                private _translateNotificationsService: TranslateNotificationsService) { }
 
   ngOnInit(): void {
@@ -65,7 +65,7 @@ export class AdminExecutiveReportComponent implements OnInit, OnDestroy {
 
   private _getAnswers(id: string) {
     if (id) {
-      this._answerService.getInnovationValidAnswers(id).pipe(first()).subscribe((response) => {
+      this._innovationService.getInnovationAnswers(id).pipe(first()).subscribe((response) => {
         this._answers = response.answers.sort((a, b) => {
           return b.profileQuality - a.profileQuality;
         });

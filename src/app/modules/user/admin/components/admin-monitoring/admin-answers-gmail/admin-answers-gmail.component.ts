@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { TranslateNotificationsService } from '../../../../../../services/translate-notifications/translate-notifications.service';
-import {AnswerService} from '../../../../../../services/answer/answer.service';
 import { ErrorFrontService } from "../../../../../../services/error/error-front.service";
 import { HttpErrorResponse } from "@angular/common/http";
+import {InnovationService} from "../../../../../../services/innovation/innovation.service";
 
 @Component({
   selector: 'app-admin-email-queue',
@@ -25,7 +25,7 @@ export class AdminAnswersGmailComponent implements OnInit {
     }
   };*/
 
-  constructor(private _answerService: AnswerService,
+  constructor(private _innovationService: InnovationService,
               private _translateNotificationsService: TranslateNotificationsService,
               private _notificationsService: TranslateNotificationsService) { }
 
@@ -35,7 +35,7 @@ export class AdminAnswersGmailComponent implements OnInit {
 
   public importAnswers(file: File, event: Event) {
     event.preventDefault();
-    this._answerService.importFromGmail(file)
+    this._innovationService.importAnswersFromGmail(file)
       .subscribe((res: any) => {
         const total = (res.regSuccess || []).length + (res.regErrors || []).length;
         this._notificationsService.success('ERROR.SUCCESS', `${(res.regSuccess|| []).length}/${total} answers has been created`);

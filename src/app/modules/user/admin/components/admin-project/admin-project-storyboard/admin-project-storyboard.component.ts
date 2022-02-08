@@ -10,7 +10,6 @@ import {first, takeUntil} from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Question } from '../../../../../../models/question';
 import { ResponseService } from '../../../../../shared/components/shared-market-report/services/response.service';
-import { AnswerService } from '../../../../../../services/answer/answer.service';
 import { Answer } from '../../../../../../models/answer';
 import { BarData } from '../../../../../shared/components/shared-market-report/models/bar-data';
 import { PieChart } from '../../../../../../models/chart/pie-chart';
@@ -90,7 +89,6 @@ export class AdminProjectStoryboardComponent implements OnInit, OnDestroy {
               private _translateService: TranslateService,
               private _executiveReportService: ExecutiveReportService,
               private _commonService: CommonService,
-              private _answerService: AnswerService,
               private _rolesFrontService: RolesFrontService,
               private _executiveReportFrontService: ExecutiveReportFrontService,
               private _innovationService: InnovationService,
@@ -223,7 +221,7 @@ export class AdminProjectStoryboardComponent implements OnInit, OnDestroy {
   }
 
   private _getAnswers() {
-    this._answerService.getInnovationValidAnswers(this._innovation._id)
+    this._innovationService.getInnovationAnswers(this._innovation._id)
       .pipe(first())
       .subscribe((response) => {
         const answers: Array<Answer> = response.answers.sort((a, b) => {

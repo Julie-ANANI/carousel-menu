@@ -6,9 +6,9 @@ import {Subject} from 'rxjs';
 import {Router} from '@angular/router';
 import {TranslateService} from '@ngx-translate/core';
 import {isPlatformBrowser} from '@angular/common';
-import {AnswerService} from '../../../../../../../services/answer/answer.service';
 import {HttpErrorResponse} from '@angular/common/http';
 import {Answer} from '../../../../../../../models/answer';
+import {InnovationService} from "../../../../../../../services/innovation/innovation.service";
 
 @Component({
   templateUrl: './contact.component.html',
@@ -31,7 +31,7 @@ export class ContactComponent implements OnInit, OnDestroy {
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _innovationFrontService: InnovationFrontService,
-              private _answerService: AnswerService,
+              private _innovationService: InnovationService,
               private _translateService: TranslateService,
               private _router: Router) { }
 
@@ -49,7 +49,7 @@ export class ContactComponent implements OnInit, OnDestroy {
 
   private _getValidAnswers() {
     if (isPlatformBrowser(this._platformId) && this._innovation._id && !this._showFollowUp) {
-      this._answerService.getInnovationValidAnswers(this._innovation._id).pipe(first()).subscribe((response) => {
+      this._innovationService.getInnovationAnswers(this._innovation._id).pipe(first()).subscribe((response) => {
         this._showFollowUp = !!(response && response.answers && response.answers.length);
         this._validAnswers = response && response.answers || [];
         this._isFetching = false;

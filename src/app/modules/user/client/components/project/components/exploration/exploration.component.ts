@@ -1,5 +1,4 @@
 import {Component, Inject, OnDestroy, OnInit, PLATFORM_ID} from '@angular/core';
-import { AnswerService } from '../../../../../../../services/answer/answer.service';
 import { TranslateNotificationsService } from '../../../../../../../services/translate-notifications/translate-notifications.service';
 import { Answer } from '../../../../../../../models/answer';
 import { Innovation } from '../../../../../../../models/innovation';
@@ -11,6 +10,7 @@ import {HttpErrorResponse} from '@angular/common/http';
 import {ErrorFrontService} from '../../../../../../../services/error/error-front.service';
 import { Config, Table } from '@umius/umi-common-component/models';
 import {isPlatformBrowser} from '@angular/common';
+import {InnovationService} from "../../../../../../../services/innovation/innovation.service";
 
 @Component({
   templateUrl: 'exploration.component.html',
@@ -63,7 +63,7 @@ export class ExplorationComponent implements OnInit, OnDestroy {
   }
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
-              private _answerService: AnswerService,
+              private _innovationService: InnovationService,
               private _innovationFrontService: InnovationFrontService,
               private _translateNotificationsService: TranslateNotificationsService) {
   }
@@ -81,7 +81,7 @@ export class ExplorationComponent implements OnInit, OnDestroy {
 
   private _getAnswers() {
     if (isPlatformBrowser(this._platformId) && this._innovation._id) {
-      this._answerService.getInnovationValidAnswers(this._innovation._id, this._anonymousAnswers)
+      this._innovationService.getInnovationAnswers(this._innovation._id, this._anonymousAnswers)
         .pipe(first()).subscribe((response) => {
           this._answers = response && response.answers.map((answer: Answer) => {
             if (!answer.job) {
