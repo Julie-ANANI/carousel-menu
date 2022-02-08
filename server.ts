@@ -70,7 +70,8 @@ export function app() {
   // cookies
   server.use(cookieparser());
 
-  server.get('discover/*', (req, res) => {
+  server.get('/discover/**', (req, res) => {
+    console.log("Rendering discover");
     res.render('index', {
       req,
       res,
@@ -90,6 +91,7 @@ export function app() {
   });
   // All regular routes use the Universal engine
   server.get('*', (req, res) => {
+    console.log("Rendering others");
     res.sendFile(join(distFolder, '/index.html')); // TODO active the SSR mode
     /*res.render('index', {
       req,

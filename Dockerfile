@@ -12,7 +12,7 @@ RUN npx browserslist --update-db
 
 # build client
 RUN echo build ${APP_NAME} -c=${ENV_NAME}
-RUN node --max-old-space-size=10240 ./node_modules/@angular/cli/bin/ng build --progress ${APP_NAME} -c=${ENV_NAME}
+RUN node --max-old-space-size=11266 ./node_modules/@angular/cli/bin/ng build --progress ${APP_NAME} -c=${ENV_NAME}
 
 # upload source-map to sentry
 RUN if [ $VERSION != "latest" && $ENV_NAME == 'production' ]; then npm install @sentry/cli; fi
