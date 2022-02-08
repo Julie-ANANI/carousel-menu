@@ -17,11 +17,11 @@ import { extname, join } from 'path';
 import { lookup } from 'mime-types';
 
 import { AppServerModule } from './src/main.server';
-// import { APP_BASE_HREF } from '@angular/common';
+import { APP_BASE_HREF } from '@angular/common';
 
 import { environment} from './src/environments/environment';
 import { enableProdMode } from '@angular/core';
-// import { REQUEST, RESPONSE } from '@nguniversal/express-engine/tokens';
+import { REQUEST, RESPONSE } from '@nguniversal/express-engine/tokens';
 
 if (environment.production) {
   enableProdMode();
@@ -72,8 +72,8 @@ export function app() {
 
   server.get('/discover/**', (req, res) => {
     console.log("Rendering discover");
-    res.status(404).send("No, not now");
-    /*res.render('index', {
+    //res.status(404).send("No, not now");
+    res.render('index', {
       req,
       res,
       providers: [
@@ -88,7 +88,7 @@ export function app() {
         res.send(`An error occurred: ${err.message}`);
       }
       return res.send(html)
-    });*/
+    });
   });
 
   server.get('/user/**', (req, res) => {
