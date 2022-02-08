@@ -257,15 +257,15 @@ export class SidebarUserAnswerComponent implements OnInit {
 
   public addTag(tag: Tag): void {
     this._answerService
-      .addTag(this._userAnswer._id, tag._id)
+      .addTag(this._userAnswer._id, tag)
       .pipe(first())
       .subscribe(
-        () => {
+        (tagResult) => {
           this._translateNotificationsService.success(
             'Success',
             'The tag is added to the answer.'
           );
-          this._userAnswer.tags.push(tag);
+          this._userAnswer.tags.push(tagResult);
           this.answerUpdated.emit(true);
         },
         (err: HttpErrorResponse) => {
@@ -280,7 +280,7 @@ export class SidebarUserAnswerComponent implements OnInit {
 
   public createTag(tag: Tag): void {
     this._answerService
-      .createTag(this._userAnswer._id, tag)
+      .addTag(this._userAnswer._id, tag)
       .pipe(first())
       .subscribe(
         (newTag) => {

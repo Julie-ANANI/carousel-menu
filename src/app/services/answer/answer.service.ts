@@ -8,48 +8,40 @@ import { Observable } from 'rxjs';
 @Injectable({providedIn: 'root'})
 export class AnswerService {
 
+  private baseUrl = '/answers'
+
   constructor(private _http: HttpClient) { }
 
-  public create(answerObj: Answer): Observable<any> {
-    return this._http.post('/answer', answerObj);
-  }
-
   public get(id: string): Observable<Answer> {
-    return this._http.get<Answer>('/answer/' + id);
+    return this._http.get<Answer>(`${this.baseUrl}/${id}`);
   }
 
   public getAll(config: {[header: string]: string | string[]}): Observable<{result: Array<Answer>, _metadata: any}> {
-    return this._http.get<{result: Array<Answer>, _metadata: any}>('/answer/', {params: config});
+    return this._http.get<{result: Array<Answer>, _metadata: any}>(`${this.baseUrl}`, {params: config});
   }
 
   public getSectorAnswer(tags: Array<string>): Observable<{result: Array<Answer>, _metadata: any}> {
-    return this._http.get<{result: Array<Answer>, _metadata: any}>('/answer/sectors', {params: {tags: tags}});
+    return this._http.get<{result: Array<Answer>, _metadata: any}>(`${this.baseUrl}/sectors`, {params: {tags: tags}});
   }
 
   public remove(answerId: string): Observable<any> {
-    return this._http.delete('/answer/' + answerId);
+    return this._http.delete(`${this.baseUrl}/${answerId}`);
   }
 
   public save(answerId: string, answerObj: any): Observable<any> {
-    return this._http.put('/answer/' + answerId, answerObj);
+    return this._http.put(`${this.baseUrl}/${answerId}`, answerObj);
   }
 
-  public addTag(answerId: string, tagId: string, questionId?: string): Observable<any> {
-    const params: {[param: string]: string | string[]} = {tag: tagId };
+  public addTag(answerId: string, tag: Tag, questionId?: string): Observable<any> {
+    const params: {tag: Tag} = {tag: tag };
     if (questionId) { params['questionId'] = questionId; }
-    return this._http.post('/answer/' + answerId + '/tag', { params: params});
-  }
-
-  public createTag(answerId: string, tag: Tag, questionId?: string): Observable<Tag> {
-    const params: any = { tag: tag };
-    if (questionId) { params['questionId'] = questionId; }
-    return this._http.post<Tag>('/answer/' + answerId + '/new-tag', { params: params});
+    return this._http.post(`${this.baseUrl}/${answerId}/tag`, { params: params});
   }
 
   public removeTag(answerId: string, tagId: string, questionId?: string): Observable<any> {
     const params: {[param: string]: string | string[]} = {tag: tagId };
     if (questionId) { params['questionId'] = questionId; }
-    return this._http.delete('/answer/' + answerId + '/tag', { params: params});
+    return this._http.delete(`${this.baseUrl}/${answerId}/tag`, { params: params});
   }
 
   public getInnovationValidAnswers(innovationId: string, anonymous?: boolean): Observable<{answers: Array<Answer>}> {
@@ -106,7 +98,7 @@ export class AnswerService {
   }
 
   public updateLinkingStatus(arrayAnswers: Array<string>, newStatus: string): Observable<any> {
-    return this._http.post('/answer/update/followUp', {status: newStatus, answers: arrayAnswers});
+    return this._http.post('/answer/followUp', {status: newStatus, answers: arrayAnswers});
   }
 
   public exportAsPDF(innovationId: string, lang: string) {
