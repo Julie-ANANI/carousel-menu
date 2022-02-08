@@ -17,11 +17,11 @@ import { extname, join } from 'path';
 import { lookup } from 'mime-types';
 
 import { AppServerModule } from './src/main.server';
-// import { APP_BASE_HREF } from '@angular/common';
+import { APP_BASE_HREF } from '@angular/common';
 
 import { environment} from './src/environments/environment';
 import { enableProdMode } from '@angular/core';
-// import { REQUEST, RESPONSE } from '@nguniversal/express-engine/tokens';
+import { REQUEST, RESPONSE } from '@nguniversal/express-engine/tokens';
 
 if (environment.production) {
   enableProdMode();
@@ -69,6 +69,25 @@ export function app() {
 
   // cookies
   server.use(cookieparser());
+
+  server.get('/discover/**', (req, res) => {
+    res.render('index', {
+      req,
+      res,
+      providers: [
+        {provide: APP_BASE_HREF, useValue: req.baseUrl},
+        {provide: REQUEST, useValue: req},
+        {provide: RESPONSE, useValue: res}
+      ]
+    }, (err, html) => {
+      if (err) {
+        // Here we catch the errors, and we send back a generic error message.
+        console.error(err.message);
+        res.send(`An error occurred: ${err.message}`);
+      }
+      return res.send(html)
+    });
+  });
 
   // All regular routes use the Universal engine
   server.get('*', (req, res) => {
