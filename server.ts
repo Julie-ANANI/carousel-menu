@@ -89,28 +89,8 @@ export function app() {
     });
   });
 
-  /*server.get('/user/**', (req, res) => {
-    /*res.render('index', {
-      req,
-      res,
-      providers: [
-        {provide: APP_BASE_HREF, useValue: req.baseUrl},
-        {provide: REQUEST, useValue: req},
-        {provide: RESPONSE, useValue: res}
-      ]
-    }, (err, html) => {
-      if (err) {
-        // Here we catch the errors, and we send back a generic error message.
-        console.error(err);
-        res.send(`An error occurred: ${err.message}`);
-      }
-      return res.send(html)
-    });
-  });*/
-
   // All regular routes use the Universal engine
   server.get('*', (req, res) => {
-    console.log("Rendering others");
     res.sendFile(join(distFolder, '/index.html')); // TODO active the SSR mode
     /*res.render('index', {
       req,
