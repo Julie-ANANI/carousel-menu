@@ -71,8 +71,6 @@ export function app() {
   server.use(cookieparser());
 
   server.get('/discover/**', (req, res) => {
-    console.log("Rendering discover");
-    //res.status(404).send("No, not now");
     res.render('index', {
       req,
       res,
@@ -84,16 +82,14 @@ export function app() {
     }, (err, html) => {
       if (err) {
         // Here we catch the errors, and we send back a generic error message.
-        console.error(err);
+        console.error(err.message);
         res.send(`An error occurred: ${err.message}`);
       }
       return res.send(html)
     });
   });
 
-  server.get('/user/**', (req, res) => {
-    console.log("Rendering user/");
-    res.status(404).send("This is the user space");
+  /*server.get('/user/**', (req, res) => {
     /*res.render('index', {
       req,
       res,
@@ -109,8 +105,8 @@ export function app() {
         res.send(`An error occurred: ${err.message}`);
       }
       return res.send(html)
-    });*/
-  });
+    });
+  });*/
 
   // All regular routes use the Universal engine
   server.get('*', (req, res) => {
