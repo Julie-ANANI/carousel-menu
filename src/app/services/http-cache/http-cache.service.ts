@@ -29,6 +29,7 @@ export class HttpCacheService {
    */
   public set(url: string, response: HttpResponse<any>): void {
     this._cache[url] = response;
+    console.log(this._cache.size);
   }
 
   /**
