@@ -7,6 +7,8 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, Subject} from 'rxjs';
 import {Innovation} from '../../models/innovation';
+import {Innovation, InnovationFollowUpEmailsTemplate} from '../../models/innovation';
+import {Media} from '../../models/media';
 import {CardComment, CardSectionTypes, InnovCard, InnovCardSection} from '../../models/innov-card';
 import {ScrapeHTMLTags} from '../../pipe/pipes/ScrapeHTMLTags';
 import {Question} from '../../models/question';
@@ -141,6 +143,17 @@ export class InnovationFrontService {
   public static quizLink(innovation: Innovation): string {
     if (!innovation || !innovation.quizId || !innovation.campaigns.length) return '';
     return `${environment.quizUrl}/quiz/${innovation.quizId}/${innovation.campaigns[0]._id}`
+  }
+
+  /**
+   * return the template from the project follow-up object.
+   * @param templates
+   * @param templateName
+   */
+  public static getFollowUpTemplate(templates: Array<InnovationFollowUpEmailsTemplate> = [], templateName: string)
+    : InnovationFollowUpEmailsTemplate {
+    if (!templates.length || !templateName) return <InnovationFollowUpEmailsTemplate>{};
+    return templates.find((_template) => _template.name === templateName);
   }
 
   /**
