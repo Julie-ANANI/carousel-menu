@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { DashboardService } from '../../../../../services/dashboard/dashboard.service';
 import { first } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -8,8 +8,8 @@ import { TranslateService } from '@ngx-translate/core';
 import { InnovCard } from '../../../../../models/innov-card';
 import { SidebarInterface } from '../../../../sidebars/interfaces/sidebar-interface';
 import { isPlatformBrowser } from '@angular/common';
-import {InnovationService} from '../../../../../services/innovation/innovation.service';
-import {InnovationFrontService} from '../../../../../services/innovation/innovation-front.service';
+import { InnovationService } from '../../../../../services/innovation/innovation.service';
+import { InnovationFrontService } from '../../../../../services/innovation/innovation-front.service';
 
 /***
  * this is to display the batches.
@@ -19,7 +19,8 @@ import {InnovationFrontService} from '../../../../../services/innovation/innovat
 @Component({
   selector: 'app-admin-batches-display',
   templateUrl: './admin-batches-display.component.html',
-  styleUrls: ['./admin-batches-display.component.scss']
+  styleUrls: ['./admin-batches-display.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class AdminBatchesDisplayComponent implements OnInit {
@@ -43,6 +44,7 @@ export class AdminBatchesDisplayComponent implements OnInit {
               private _dashboardService: DashboardService,
               private _translateService: TranslateService,
               private _innovationService: InnovationService,
+              private _changeDetectorRef: ChangeDetectorRef,
               private _translateNotificationsService: TranslateNotificationsService) { }
 
   ngOnInit() {
@@ -61,9 +63,12 @@ export class AdminBatchesDisplayComponent implements OnInit {
     this._dashboardService.getNextDateSend(this._dateNow.toString()).pipe(first()).subscribe((batches: Array<any>) => {
       this._weekBatches = batches;
       this._isLoading = false;
+      this._changeDetectorRef.markForCheck();
     }, (err: HttpErrorResponse) => {
       this._translateNotificationsService.error('Batch Error...', ErrorFrontService.getErrorKey(err.error));
       console.error(err);
+      this._isLoading = false;
+      this._changeDetectorRef.markForCheck();
     });
   }
 

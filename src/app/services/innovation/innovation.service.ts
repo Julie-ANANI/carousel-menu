@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import { Observable, of } from 'rxjs';
 import {environment} from '../../../environments/environment';
 import {Campaign} from '../../models/campaign';
 import {Innovation} from '../../models/innovation';
@@ -39,7 +39,8 @@ export class InnovationService {
   }
 
   public getMarketTests(params: {[header: string]: string | string[]}): Observable<{result: Array<Innovation>, _metadata: any}> {
-    return this._http.get<{result: Array<Innovation>, _metadata: any}>('/innovation/queryable', {params: params});
+    return of({result: [], _metadata: {}});
+    // return this._http.get<{result: Array<Innovation>, _metadata: any}>('/innovation/queryable', {params: params});
   }
 
   public createInnovationCard(innovationId: string, innovationCardObj: InnovCard): Observable<InnovCard> {

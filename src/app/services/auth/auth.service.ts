@@ -95,6 +95,7 @@ export class AuthService {
           this._setAdminTo(res.adminLevel);
           this._setConfirmedTo(res.isConfirmed);
           this._setIsOperatorTo(res.isOperator);
+          this._setJwToken(res.jwt);
           this._user = res;
           this._setEtherpadAccessesTo(res.etherpad);
           // this._setAdminAccess(this._user && this._user.access && this._user.access.adminSide);
@@ -116,6 +117,7 @@ export class AuthService {
           this._setAdminTo(res.adminLevel);
           this._setConfirmedTo(res.isConfirmed);
           this._setIsOperatorTo(res.isOperator);
+          this._setJwToken(res.jwt);
           this._user = res;
           this._setEtherpadAccessesTo(res.etherpad);
           // this._setAdminAccess(this._user && this._user.access && this._user.access.adminSide);
@@ -201,6 +203,12 @@ export class AuthService {
     this._authenticated = newValue;
     if (isPlatformBrowser(this._platformId)) {
       this._cookieService.put('hasBeenAuthenticated', newValue.toString(), this._cookieOptions);
+    }
+  }
+
+  private _setJwToken(jwt: string): void {
+    if (isPlatformBrowser(this._platformId)) {
+      this._cookieService.put('jwToken', jwt, this._cookieOptions);
     }
   }
 

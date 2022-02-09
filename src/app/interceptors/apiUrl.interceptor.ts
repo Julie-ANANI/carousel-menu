@@ -26,11 +26,20 @@ export class ApiUrlInterceptor implements HttpInterceptor {
    */
   private _setAppV3Url(req: HttpRequest<any>): HttpRequest<any> {
     const newParameters: any = {
-      url: environment.apiUrl + req.url,
+      url: environment.apiGatewayUrl + req.url,
       withCredentials: true,
     };
     this._setCookie(newParameters, req);
+    this._setJwtoken(newParameters, req);
     return req.clone(newParameters);
+  }
+
+  private _setJwtoken(newParameters: any, req: HttpRequest<any>){
+    const jwToken = this._cookieService.get('jwToken');
+    if (jwToken) {
+      newParameters.headers = req.headers
+        .append('Authorization', jwToken);
+    }
   }
 
   private _setCookie(newParameters: any, req: HttpRequest<any>) {
