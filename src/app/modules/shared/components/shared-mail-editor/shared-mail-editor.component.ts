@@ -15,7 +15,7 @@ interface Mapping {
   en: any;
   fr: any;
 }
-
+// TODO delete the follow-up code after multilang migration
 @Component({
   selector: 'app-shared-mail-editor',
   templateUrl: './shared-mail-editor.component.html',

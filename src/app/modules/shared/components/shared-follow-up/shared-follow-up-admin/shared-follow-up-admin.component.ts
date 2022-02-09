@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {MissionQuestion} from '../../../../../models/mission';
 import {Answer} from '../../../../../models/answer';
-import {Innovation} from '../../../../../models/innovation';
+import {Innovation, InnovationFollowUpEmailsTemplate} from '../../../../../models/innovation';
 import {RolesFrontService} from '../../../../../services/roles/roles-front.service';
 import {first, takeUntil} from 'rxjs/operators';
 import {HttpErrorResponse} from '@angular/common/http';
@@ -32,6 +32,14 @@ interface Custom {
   styleUrls: ['./shared-follow-up-admin.component.scss']
 })
 export class SharedFollowUpAdminComponent implements OnInit {
+
+  get emailTemplate(): InnovationFollowUpEmailsTemplate {
+    return this._emailTemplate;
+  }
+
+  set emailTemplate(value: InnovationFollowUpEmailsTemplate) {
+    this._emailTemplate = value;
+  }
 
   // ex: ['projects', 'project', 'followUp']
   @Input() accessPath: Array<string> = [];
@@ -89,6 +97,8 @@ export class SharedFollowUpAdminComponent implements OnInit {
   private _tableInfos: Table = <Table>{};
 
   private _subscribe: Subject<any> = new Subject<any>();
+
+  private _emailTemplate: InnovationFollowUpEmailsTemplate = <InnovationFollowUpEmailsTemplate>{};
 
   private static _isRowDisabled(answer: Answer): boolean {
     return !!(answer.followUp && answer.followUp.date);
@@ -210,7 +220,7 @@ export class SharedFollowUpAdminComponent implements OnInit {
 
   public openModal(event: Event) {
     event.preventDefault();
-    this.showSendModal = true;
+    this._showSendModal = true;
   }
 
   public closeModal(event: Event) {
@@ -223,6 +233,7 @@ export class SharedFollowUpAdminComponent implements OnInit {
     this._initializeMailCustomFields();
     this._reinitializeVariables();
     this._modalTemplateType = type;
+    this._emailTemplate = InnovationFrontService.getFollowUpTemplate(this._project?.followUpEmails?.templates, type.toUpperCase());
     this._showEmailsModal = true;
   }
 
@@ -516,7 +527,8 @@ export class SharedFollowUpAdminComponent implements OnInit {
     this._project.followUpEmails.ccEmail = value;
   }
 
-  set emailsObject(value: any) {
+  // TODO delete the commented part after multilang migration
+  /*set emailsObject(value: any) {
     this._project.followUpEmails[this._modalTemplateType] = value;
   }
 
@@ -525,7 +537,7 @@ export class SharedFollowUpAdminComponent implements OnInit {
       en: {content: '', subject: ''},
       fr: {content: '', subject: ''}
     };
-  }
+  }*/
 
   get project(): Innovation {
     return this._project;
