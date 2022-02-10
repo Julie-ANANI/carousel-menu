@@ -1,5 +1,4 @@
 import { Component, OnInit, PLATFORM_ID, Inject, HostListener, OnDestroy } from '@angular/core';
-import { isPlatformBrowser, isPlatformServer } from '@angular/common';
 import { NotificationAnimationType, Options } from 'angular2-notifications';
 import { initTranslation, TranslateService } from './i18n/i18n';
 import { environment } from '../environments/environment';
@@ -21,8 +20,8 @@ import {RouteFrontService} from './services/route/route-front.service';
 
 export class AppComponent implements OnInit, OnDestroy {
 
-  get isBrowser(): boolean {
-    return this._isBrowser;
+  get timeout(): any {
+    return this._timeout;
   }
 
   get spinnerState(): boolean {
@@ -45,8 +44,6 @@ export class AppComponent implements OnInit, OnDestroy {
 
   private _ngUnsubscribe: Subject<any> = new Subject<any>();
 
-  private _isBrowser = false
-
   private _spinnerState = true;
 
   private static _setFavicon() {
@@ -59,6 +56,8 @@ export class AppComponent implements OnInit, OnDestroy {
       document.head.appendChild(linkElement);
     }
   }
+
+  private _timeout: any = null;
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _router: Router,
@@ -73,21 +72,13 @@ export class AppComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     initTranslation(this._translateService);
+    AppComponent._setFavicon();
     this._routeFrontService.initSide();
     this._spinner();
-
-    if (isPlatformServer(this._platformId)) {
-      console.log('New connection has been made with the front.');
-    }
-
-    if (isPlatformBrowser(this._platformId)) {
-      AppComponent._setFavicon();
-      this._initializeSession();
-      this._isBrowser = true;
-      this._getCountries();
-      this._socketEvent();
-      this._mouseEvent();
-    }
+    this._initializeSession();
+    this._getCountries();
+    this._socketEvent();
+    this._mouseEvent();
   }
 
   private _getCountries(): void {
@@ -111,8 +102,10 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   private _stopSpinner() {
-    if (this._isBrowser && this._spinnerState && this._router.navigated) {
-      this._spinnerState = false;
+    if (this._spinnerState && this._router.navigated) {
+      this._timeout = setTimeout(() => {
+        this._spinnerState = false;
+      }, 1000);
     }
   }
 
@@ -163,6 +156,7 @@ export class AppComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this._ngUnsubscribe.next();
     this._ngUnsubscribe.complete();
+    clearTimeout(this._timeout);
   }
 
 }

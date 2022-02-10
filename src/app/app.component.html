@@ -1,5 +1,3 @@
-<div [hidden]="!isBrowser">
-  <router-outlet></router-outlet>
-</div>
+<div [hidden]="spinnerState"><router-outlet></router-outlet></div>
 <simple-notifications [options]="notificationsOptions"></simple-notifications>
 <app-utility-spinner-loader [spinnerState]="spinnerState"></app-utility-spinner-loader>
