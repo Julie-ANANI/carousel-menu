@@ -20,6 +20,7 @@ import {UmiusConfigInterface} from '@umius/umi-common-component';
   templateUrl: './admin-campaign-workflows.component.html',
 })
 export class AdminCampaignWorkflowsComponent implements OnInit {
+
   private _campaign: Campaign = <Campaign>{};
 
   private _selectedTemplate: EmailScenario = <EmailScenario>{};
