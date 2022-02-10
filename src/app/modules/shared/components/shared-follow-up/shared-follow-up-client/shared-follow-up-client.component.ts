@@ -93,10 +93,10 @@ export class SharedFollowUpClientComponent implements OnDestroy {
 
   private _steps: Array<string> = ['COMMON.LABEL.SELECTED', 'COMMON.LABEL.CONFIGURE', 'COMMON.LABEL.SEND'];
 
-  // private _emailsObject: EmailsObject = <EmailsObject>{};
+  // private _emailsObject: EmailObject = <EmailObject>{};
   private _emailsObject: InnovationFollowUpEmailsTemplate = <InnovationFollowUpEmailsTemplate>{};
 
-  // private _emailsObjectReplaced: EmailsObject = <EmailsObject>{};
+  // private _emailsObjectReplaced: EmailObject = <EmailObject>{};
   private _emailsObjectReplaced: InnovationFollowUpEmailsTemplate = <InnovationFollowUpEmailsTemplate>{};
 
   private _showModal = false;

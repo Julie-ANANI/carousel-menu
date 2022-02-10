@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { EmailScenario } from '../../../../../models/email-scenario';
 import { EmailTemplate } from '../../../../../models/email-template';
 import { EmailSignature } from '../../../../../models/email-signature';
+import {EmailObject} from '../../../../../models/email';
 import {Column, Table, UmiusConfigInterface, UmiusSidebarInterface} from '@umius/umi-common-component';
 
 @Component({
@@ -12,12 +13,8 @@ import {Column, Table, UmiusConfigInterface, UmiusSidebarInterface} from '@umius
 export class AdminEditWorkflowComponent {
 
   @Input() set innovationCardLanguages(value: string[]) {
-    if (value && value.length) {
-      this._innovationCardLanguages = value;
-      this._language = this._innovationCardLanguages[0];
-    } else {
-      this._innovationCardLanguages = ['fr', 'en'];
-    }
+    this._innovationCardLanguages = value && value.length ? value : ['fr', 'en'];
+    this._language = this._innovationCardLanguages[0];
   }
 
   @Input() isEditable = false;
@@ -217,7 +214,7 @@ export class AdminEditWorkflowComponent {
     return this._signatures;
   }
 
-  get emailToEdit(): any {
+  get emailToEdit(): EmailObject {
     return this._emailToEdit;
   }
 

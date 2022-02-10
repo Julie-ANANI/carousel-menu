@@ -1,18 +1,21 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { EmailSignature } from '../../../../models/email-signature';
+import {EmailObject} from '../../../../models/email';
 
 @Component({
   selector: 'app-sidebar-workflow',
   templateUrl: './sidebar-workflow.component.html',
 })
 
-// TODO update this if the emailsObject have not multiling functionality.
-// TODO see the example of AdminEmailsLibraryComponent
 export class SidebarWorkflowComponent {
+
+  get toBeSaved(): boolean {
+    return this._toBeSaved;
+  }
 
   @Input() isEditable = false;
 
-  @Input() emailsObject: any = {};
+  @Input() emailObject: EmailObject = <EmailObject>{};
 
   @Input() signatures: Array<EmailSignature> = [];
 
@@ -24,18 +27,22 @@ export class SidebarWorkflowComponent {
 
   @Output() emailChange: EventEmitter<any> = new EventEmitter<any>();
 
+  private _toBeSaved = false;
+
   constructor() {
   }
 
   public onClickSave() {
     if (this.isEditable) {
-      this.emailsObject[this.inputLanguage].modified = true;
-      this.emailChange.emit(this.emailsObject);
+      this.emailObject[this.inputLanguage].modified = true;
+      this.emailChange.emit(this.emailObject);
+      this._toBeSaved = false;
     }
   }
 
   public onChangeEmail(value: any) {
-    this.emailsObject = value;
+    this.emailObject = value;
+    this._toBeSaved = true
   }
 
 }
