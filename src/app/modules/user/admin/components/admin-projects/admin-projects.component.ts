@@ -665,6 +665,7 @@ export class AdminProjectsComponent implements OnInit {
 
   set config(value: Config) {
     this._config = value; // TODO how to change the config when searching things like the operator?
+    console.log(value);
     try {
       // Parse the config.search field to see if there's something
       this._getProjects();
