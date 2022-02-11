@@ -35,7 +35,7 @@
 
             <!-- innovation tags -->
             <div *ngIf="tags.length > 0" class="d-d-tags-wrapper">
-              <div *ngFor="let tag of tags" class="label label-tag text-notify m-no">
+              <div *ngFor="let tag of tags" class="label label-tag text-meta m-no">
                 <i class="fas fa-tag"></i>
                 <span class="label-text">{{ tag }}</span>
               </div>
@@ -205,7 +205,7 @@
                     <!-- tags -->
                     <div *ngIf="innovation.tags.length > 0" class="d-flex flex-wrap p-top-2 justify-center">
                       <div *ngFor="let tag of innovation.tags" class="d-inline-flex">
-                        <div *ngIf="tag.type === 'SECTOR'" class="label m-no label-tag text-xs text-notify">
+                        <div *ngIf="tag.type === 'SECTOR'" class="label m-no label-tag text-xs text-meta">
                           <i class="fas fa-tag"></i>
                           <span class="label-text">
                             <ng-container *ngIf="tag.entry && tag.entry.length; else noTagEntryLabel">

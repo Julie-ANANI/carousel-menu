@@ -3,7 +3,7 @@
 
     <div class="flex-between text-medium m-bottom-10">
       <span class="text-background">{{ noteLabel(note) }}</span>
-      <span class="text-notify text-md">{{ 'MARKET_REPORT.GRADE' | translateIn: reportingLang }}: {{ note.percentage }}</span>
+      <span class="text-meta text-md">{{ 'MARKET_REPORT.GRADE' | translateIn: reportingLang }}: {{ note.percentage }}</span>
     </div>
 
     <div *ngIf="note.sum; else noteText" style="height: 12px" class="bar">
@@ -15,7 +15,7 @@
     </div>
 
     <ng-template #noteText>
-      <div class="text-notify text-sm">{{ 'MARKET_REPORT.NO_GRADE' | translateIn: reportingLang }}</div>
+      <div class="text-meta text-sm">{{ 'MARKET_REPORT.NO_GRADE' | translateIn: reportingLang }}</div>
     </ng-template>
 
   </div>

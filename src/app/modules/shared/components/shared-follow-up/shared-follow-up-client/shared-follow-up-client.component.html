@@ -176,7 +176,7 @@
                         <a class="button dropdown-toggle is-info is-outlined flex-between" tabindex="0">
                           <span *ngIf="ccToAdd.email" class="text-ellipsis">
                             {{ ccToAdd.firstName | titlecase }} {{ ccToAdd.lastName | titlecase }}
-                            <span class="text-notify">- {{ ccToAdd.email }}</span>
+                            <span class="text-meta">- {{ ccToAdd.email }}</span>
                           </span>
                           <span *ngIf="!ccToAdd.email">{{ 'SHARED_FOLLOW_UP.SELECT_CC' | translate }}</span>
                           <i class="fas fa-caret-down"></i>
@@ -253,7 +253,7 @@
                   <div class="absolute lang_wrapper d-flex align-center">
                     <div
                       *ngFor="let lang of langs; let i = index"
-                      class="text-notify text-md text-medium">
+                      class="text-meta text-md text-medium">
                       <span
                         (click)="onChangeLang(lang)"
                         [ngClass]="{'text-community': lang === selectedLang}"

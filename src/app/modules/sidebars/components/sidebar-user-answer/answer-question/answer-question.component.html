@@ -5,7 +5,7 @@
   class="p-top-40 answer-question">
 
   <!-- label -->
-  <div class="text-15 text-bold text-notify p-bottom-15">{{ questionLabel }}</div>
+  <div class="text-15 text-bold text-meta p-bottom-15">{{ questionLabel }}</div>
   <!-- /label -->
 
   <!-- answers -->
@@ -334,7 +334,7 @@
             (click)="selectOption($event, option)"
             *ngFor="let option of question.options"
             [ngClass]="{'text-normal': editMode,
-            'text-notify': option.identifier !== fullAnswer.answers[question.identifier] && !editMode,
+            'text-meta': option.identifier !== fullAnswer.answers[question.identifier] && !editMode,
             'text-primary-dark': option.identifier !== fullAnswer.answers[question.identifier]}"
             class="c-hand">
             {{ optionLabel(option.identifier) }}

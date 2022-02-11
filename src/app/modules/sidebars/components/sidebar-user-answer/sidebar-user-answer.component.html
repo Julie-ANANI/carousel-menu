@@ -113,7 +113,7 @@
         </ng-container>
         <ng-template #profDef>{{ 'MARKET_REPORT.ANONYMOUS' | translate }}</ng-template>
 
-        <sup *ngIf="professional.language && !editMode" class="p-left-1 text-notify">
+        <sup *ngIf="professional.language && !editMode" class="p-left-1 text-meta">
           {{ userAnswer.professional.language }}
         </sup>
 
@@ -202,7 +202,7 @@
 
     <!-- job -->
     <div *ngIf="professional.jobTitle || userAnswer.job || editMode" class="m-bottom-10">
-      <i class="fas fa-address-card text-notify m-right-10"></i>
+      <i class="fas fa-address-card text-meta m-right-10"></i>
       {{ userAnswer.job || professional.jobTitle |  FormatText:true }}
       <span
         (click)="onClickEdit('JOB')"
@@ -230,7 +230,7 @@
     <div *ngIf="(userAnswer.company && userAnswer.company.name) || professional.company || editMode"
          class="m-bottom-10">
 
-      <i class="fas fa-building text-notify m-right-10"></i>
+      <i class="fas fa-building text-meta m-right-10"></i>
 
       <span [ngClass]="{'popover': excludedCompanies.length > 0, 'is-right': excludedCompanies.length > 0
       && companyLength <= 30}">
@@ -274,7 +274,7 @@
 
     <!-- email -->
     <div *ngIf="professional.email" class="m-bottom-10">
-      <i class="fas fa-envelope text-notify m-right-10"></i>
+      <i class="fas fa-envelope text-meta m-right-10"></i>
       <a [href]="'mailto:'+professional.email" target="_blank" class="text-link">
         {{ professional.email }}
       </a>
@@ -283,7 +283,7 @@
 
     <!-- second email -->
     <div *ngIf="adminMode" class="m-bottom-10">
-      <i class="fas fa-envelope text-notify m-right-10"></i>
+      <i class="fas fa-envelope text-meta m-right-10"></i>
       <ng-container *ngIf="professional.secondEmail; else emailText">
         <a [href]="'mailto:'+professional.secondEmail" target="_blank" class="text-link">
           {{ professional.secondEmail }}
@@ -318,7 +318,7 @@
   <!-- /user details not assignPro -->
 
   <!-- received date and time, and time spent -->
-  <div *ngIf="adminMode && (userAnswer.created || userAnswer.time_elapsed)" class="text-notify text-bold m-bottom-10">
+  <div *ngIf="adminMode && (userAnswer.created || userAnswer.time_elapsed)" class="text-meta text-bold m-bottom-10">
     <ng-container *ngIf="userAnswer.created">
       {{ 'SIDEBAR_USER_ANSWER.RECEIVED.A' | translate }}
       {{ createdDate(userAnswer.created) }}
@@ -334,7 +334,7 @@
   <!-- /received date and time, and time spent -->
 
   <!-- ip -->
-  <div *ngIf="userAnswer.ip && adminMode" class="text-notify text-bold m-bottom-10">
+  <div *ngIf="userAnswer.ip && adminMode" class="text-meta text-bold m-bottom-10">
     IP: {{ userAnswer.ip }}
   </div>
   <!-- /ip -->

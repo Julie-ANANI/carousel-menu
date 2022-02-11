@@ -11,7 +11,7 @@
 
     <!-- history icon -->
     <div class="shape is-circle bg-white history-wrapper c-hand absolute tooltip is-left" [attr.data-tooltip]="'COMMON.TOOLTIP.HISTORY' | translate" (click)="onClickHistoryIcon($event)">
-      <i class="fas fa-history text-notify"></i>
+      <i class="fas fa-history text-meta"></i>
     </div>
     <!-- /history icon -->
 
@@ -40,7 +40,7 @@
             {{ professionalCount }}
           </h2>
 
-          <h1 class="title-primary text-notify" [innerText]="'SEARCH_DEMO.PROFESSIONALS'" translate></h1>
+          <h1 class="title-primary text-meta" [innerText]="'SEARCH_DEMO.PROFESSIONALS'" translate></h1>
 
         </ng-container>
       </div>
@@ -81,7 +81,7 @@
         <div class="section-pad rm-pad-top" [ngClass]=" { 'animate-appear': searchStopped } ">
           <div class="stat">
             <div class="stat-container">
-              <h3 class="stat-heading text-notify">RESULT BY CONTINENT</h3>
+              <h3 class="stat-heading text-meta">RESULT BY CONTINENT</h3>
 
               <div class="stat-body">
                 <h4 class="stat-sub-heading">Africa</h4>
@@ -137,7 +137,7 @@
             </div>
 
             <div class="filter-wrapper c-hand text-md" (click)="resetCountry()">
-              <span class="text-background text-medium">{{ names[selectedCountry] }} <i class="fas text-notify fa-times-circle"></i></span>
+              <span class="text-background text-medium">{{ names[selectedCountry] }} <i class="fas text-meta fa-times-circle"></i></span>
             </div>
 
           </div>
@@ -150,7 +150,7 @@
           <div class="section-pad flex-centered no-result-wrapper">
             <img src="https://res.cloudinary.com/umi/image/upload/v1541075335/app/default-images/icons/no_result.png" class="img-responsive" alt=" ">
             <h3 class="text-normal" [innerText]="'SEARCH_DEMO.NO_RESULT_HEADING'" translate></h3>
-            <span class="text-notify text-medium" [innerText]="'SEARCH_DEMO.NO_RESULT_TEXT'" translate></span>
+            <span class="text-meta text-medium" [innerText]="'SEARCH_DEMO.NO_RESULT_TEXT'" translate></span>
           </div>
         </ng-container>
         <!-- /if no professionals found on filter activated -->

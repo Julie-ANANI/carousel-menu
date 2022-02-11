@@ -1,4 +1,4 @@
-@import "framework/src/variables";
+@import "~@umius/umi-style-framework/scss/umi";
 
 // This is the style that are related to the notification that we see in the bottom.
 .simple-notification-wrapper {
@@ -38,29 +38,29 @@
 }
 
 .simple-notification.success {
-  background: $bg-white-color !important;
-  color: #000000 !important;
+  background: $notification-bg-success-color !important;
+  color: $notification-text-success-color !important;
 
   .sn-title {
-    color: $text-success-color !important;
+    color: $notification-text-success-color !important;
   }
 
   .icon svg {
-    fill: $text-success-color !important;
+    fill: $notification-text-success-color !important;
   }
 
 }
 
 .simple-notification.error {
-  background: $bg-white-color !important;
-  color: #000000 !important;
+  background: $notification-bg-alert-color !important;
+  color: $notification-text-alert-color !important;
 
   .sn-title {
-    color: $text-alert-color !important;
+    color: $notification-text-alert-color !important;
   }
 
   .icon svg {
-    fill: $text-alert-color !important;
+    fill: $notification-text-alert-color !important;
   }
 
 }

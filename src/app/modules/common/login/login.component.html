@@ -18,12 +18,12 @@
 
       <!-- sign up -->
       <div class="flex-end">
-        <span class="text-13 text-notify m-right-20">{{ 'LOG_IN.DOES_NOT_HAVE_ACCOUNT' | translate }}</span>
+        <span class="text-13 text-meta m-right-20">{{ 'LOG_IN.DOES_NOT_HAVE_ACCOUNT' | translate }}</span>
         <a
           [href]="'/register'"
           [id]="'login-btn-signup'"
           [routerLink]="'/register'"
-          class="button is-primary text-xs is-sm is-rounded is-outlined"
+          class="button text-xs is-sm is-rounded is-outlined"
           type="button">
           {{ 'LOG_IN.SIGN_UP' | translate }}
         </a>
@@ -105,7 +105,7 @@
               <button
                 [disabled]="formData.invalid || displayLoading || displayLoadingLinkedIn || nbTentatives < 1"
                 [id]="'login-btn-submit'"
-                class="button is-primary text-sm w-full gtm-signin-email"
+                class="button is-fullwidth gtm-signin-email"
                 style="height: 50px"
                 type="submit">
                 <ng-container *ngIf="!displayLoading">{{ 'LOG_IN.LOG_IN_BTN' | translate }}</ng-container>
@@ -118,7 +118,7 @@
             <ng-container *ngIf="isDomainUMI">
 
               <div class="text-center p-top-25 p-bottom-30">
-                <span class="or-divider"> {{ 'COMMON.OR' | translate }} </span>
+                <div class="divider" [attr.data-content]="'COMMON.OR' | translate"></div>
               </div>
 
               <!-- linkedin -->
@@ -127,7 +127,7 @@
                   (click)="onClickLinkedIn()"
                   [disabled]="displayLoading || displayLoadingLinkedIn"
                   [id]="'login-btn-linkedin'"
-                  class="button is-secondary icon-left text-sm is-lg gtm-signin-linkedin">
+                  class="button icon-left text-sm is-lg gtm-signin-linkedin">
                   <span *ngIf="displayLoadingLinkedIn" class="loading is-white"></span>
                   <ng-container *ngIf="!displayLoadingLinkedIn">
                     <i class="fab fa-1x fa-linkedin-in"></i> {{ 'LOG_IN.LOG_IN_LINKEDIN' | translate }}
@@ -198,11 +198,11 @@
           <!-- /email form -->
 
           <!-- send+cancel buttons -->
-          <div class="d-flex m-top-10 m-bottom-4">
+          <div class="d-flex p-top-20">
             <div class="btn-cancel" style="margin-right: auto">
               <button
                 (click)="cancelMessage()"
-                class="button is-outlined is-md">
+                class="button is-info is-outlined is-md">
                 Cancel
               </button>
             </div>
@@ -210,7 +210,7 @@
             <div class="login-button" style="margin-left: auto">
               <button
                 id="message-submit"
-                class="button is-primary is-md"
+                class="button is-md"
                 type="submit"
                 [disabled]="helpMessageForm.invalid">
                 Send

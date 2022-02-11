@@ -1,9 +1,9 @@
-@import "../../../../style/framework/src/variables";
-@import "../../../../style/framework/src/mixins";
+@import "~@umius/umi-style-framework/scss/variables";
+@import "~@umius/umi-style-framework/scss/mixins";
 
 #spinner-loader {
-  @include flex-centered();
-  @include fixed-full-page();
+  @include flex-position(center);
+  @include full-page(fixed);
   background: $white-color;
   flex-direction: column;
   z-index: 9090;
@@ -14,7 +14,7 @@
 
     .circle {
       animation: grow 1.5s linear infinite;
-      background-color: $community-color;
+      background-color: #00B0FF;
       border-radius: 50%;
       display: inline-block;
       margin: -8px;
@@ -24,7 +24,7 @@
 
       &:nth-of-type(2) {
         animation-delay: .75s;
-        background-color: $primary-color;
+        background-color: #FFB300;
       }
 
     }

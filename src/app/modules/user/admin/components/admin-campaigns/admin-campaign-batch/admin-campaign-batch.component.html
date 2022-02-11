@@ -78,7 +78,7 @@
         <div class="d-flex align-center m-bottom-15 m-right-25">
 
           <div *ngIf="canAccess(['autoBatch'])" class="form-group m-right-30">
-            <label class="form-switch text-medium text-notify" for="result-auto-batch">
+            <label class="form-switch text-medium text-meta" for="result-auto-batch">
               <input
                 (change)="onSwitchAutoBatch($event)"
                 [ngModel]="campaign.autoBatch"

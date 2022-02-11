@@ -12,7 +12,7 @@
       <div class="flex-start action-wrapper">
 
         <div
-          class="filter-icon text-notify c-hand"
+          class="filter-icon text-meta c-hand"
           (click)="showAllTags()">
           <i class="fas fa-sliders-h"></i>
           <span class="text-medium" [innerText]="'DISCOVER.FILTER_TEXT'" translate></span>
@@ -93,7 +93,7 @@
   <!-- suggested tags -->
   <div *ngIf="suggestedTags.length > 0"  class="sector-suggested">
 
-    <h3 class="text-notify animate-appear">{{ 'DISCOVER.RELATED_SECTORS' | translate }}</h3>
+    <h3 class="text-meta animate-appear">{{ 'DISCOVER.RELATED_SECTORS' | translate }}</h3>
 
     <div class="d-flex sector-wrapper">
       <div

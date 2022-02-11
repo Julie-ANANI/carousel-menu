@@ -21,7 +21,7 @@
           </span>
         </div>
 
-        <div style="line-height: 1" class="text-notify text-medium text-13">
+        <div style="line-height: 1" class="text-meta text-medium text-13">
           <span>{{ prosInterview.length }} {{ 'SHARED_FOLLOW_UP.CONTACTS_ADDED' | translate }} | </span>
           <span>{{ prosInterviewSent.length }} {{ 'SHARED_FOLLOW_UP.EMAILS_SENT' | translate }} </span>
         </div>
@@ -45,7 +45,7 @@
           </span>
         </div>
 
-        <div style="line-height: 1" class="text-notify text-medium text-13">
+        <div style="line-height: 1" class="text-meta text-medium text-13">
           <span>{{ prosOpening.length }} {{ 'SHARED_FOLLOW_UP.CONTACTS_ADDED' | translate }} | </span>
           <span>{{ prosOpeningSent.length }} {{ 'SHARED_FOLLOW_UP.EMAILS_SENT' | translate }} </span>
         </div>
@@ -69,7 +69,7 @@
           </span>
         </div>
 
-        <div style="line-height: 1" class="text-notify text-medium text-13">
+        <div style="line-height: 1" class="text-meta text-medium text-13">
           <span>{{ prosNoFollow.length }} {{ 'SHARED_FOLLOW_UP.CONTACTS_ADDED' | translate }} | </span>
           <span>{{ prosNoFollowSent.length }} {{ 'SHARED_FOLLOW_UP.EMAILS_SENT' | translate }} </span>
         </div>
@@ -89,7 +89,7 @@
         {{ 'SHARED_FOLLOW_UP.BUTTON_DONE' | translate }}
       </button>
 
-      <p class="text-notify m-top-2 m-no-bottom text-sm">
+      <p class="text-meta m-top-2 m-no-bottom text-sm">
         {{ prosWithoutObjective.length }} {{ 'SHARED_FOLLOW_UP.CONTACT_WITHOUT_OBJECTIVE' | translate }}
       </p>
 
@@ -102,7 +102,7 @@
   <!-- table -->
   <div class="p-top-30">
 
-    <h6 class="text-sm text-notify m-bottom-10">
+    <h6 class="text-sm text-meta m-bottom-10">
       <span class="text-background">{{ tableInfos._total === -1 ? 0 : tableInfos._total }}</span> contacts /
       <span class="text-background">{{ prosWithoutObjective.length }}</span>
       {{ 'SHARED_FOLLOW_UP.WITHOUT_OBJECTIVE' | translate }}
@@ -165,7 +165,7 @@
 
       <!-- close button -->
       <div style="right: 15px; top: 21px" class="absolute">
-        <button (click)="closeModal($event)" class="close text-notify" type="button"></button>
+        <button (click)="closeModal($event)" class="close text-meta" type="button"></button>
       </div>
       <!-- /close button -->
 
@@ -242,7 +242,7 @@
 
       <!-- close button -->
       <div style="right: 15px; top: 21px" class="absolute">
-        <button (click)="closeModal($event)" class="close text-notify" type="button"></button>
+        <button (click)="closeModal($event)" class="close text-meta" type="button"></button>
       </div>
       <!-- /close button -->
 
@@ -272,7 +272,7 @@
                   {{ 'SHARED_FOLLOW_UP.INTERVIEW' | translate }}
                 </div>
 
-                <div style="line-height: 1" class="text-notify text-medium">
+                <div style="line-height: 1" class="text-meta text-medium">
                   {{ prosInterview.length }} {{ 'SHARED_FOLLOW_UP.CONTACTS_ADDED' | translate }}
                 </div>
 
@@ -288,7 +288,7 @@
                   {{ 'SHARED_FOLLOW_UP.OPENING' | translate }}
                 </div>
 
-                <div style="line-height: 1" class="text-notify text-medium">
+                <div style="line-height: 1" class="text-meta text-medium">
                   {{ prosOpening.length }} {{ 'SHARED_FOLLOW_UP.CONTACTS_ADDED' | translate }}
                 </div>
 
@@ -304,7 +304,7 @@
                   {{ 'SHARED_FOLLOW_UP.NOFOLLOW' | translate }}
                 </div>
 
-                <div style="line-height: 1" class="text-notify text-medium">
+                <div style="line-height: 1" class="text-meta text-medium">
                   {{ prosNoFollow.length }} {{ 'SHARED_FOLLOW_UP.CONTACTS_ADDED' | translate }}
                 </div>
 

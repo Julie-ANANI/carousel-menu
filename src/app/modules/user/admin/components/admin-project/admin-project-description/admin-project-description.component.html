@@ -57,7 +57,7 @@
                   (click)="padPreviewModeOnChange(i.toString())"
                   class="button tooltip is-circled is-action is-outlined text-no-underline is-info
                   m-right-15
-                  is-xxs text-sm op-text text-notify"
+                  is-xxs text-sm op-text text-meta"
                   type="button">
                   <i class="fas fa-pencil-alt"
                      *ngIf="getPadPreviewMode(i.toString())"></i>
@@ -260,7 +260,7 @@
                 *ngIf=" isEditable"
                 [attr.data-tooltip]="!(getPadPreviewMode('title'))? 'Preview':'Edit'"
                 (click)="padPreviewModeOnChange('title')"
-                class="button tooltip is-circled is-action is-outlined text-no-underline is-info is-xxs text-sm op-text text-notify m-left-20"
+                class="button tooltip is-circled is-action is-outlined text-no-underline is-info is-xxs text-sm op-text text-meta m-left-20"
                 type="button">
                 <i class="fas fa-pencil-alt"
                    *ngIf="getPadPreviewMode('title')"></i>
@@ -405,7 +405,7 @@
                 *ngIf="isEditable"
                 [attr.data-tooltip]="!(getPadPreviewMode('summary'))? 'Preview':'Edit'"
                 (click)="padPreviewModeOnChange('summary')"
-                class="button tooltip is-circled is-action is-outlined text-no-underline is-info is-xxs text-sm op-text text-notify m-left-15"
+                class="button tooltip is-circled is-action is-outlined text-no-underline is-info is-xxs text-sm op-text text-meta m-left-15"
                 type="button">
                 <i class="fas fa-pencil-alt"
                    *ngIf="getPadPreviewMode('summary')"></i>

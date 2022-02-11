@@ -60,7 +60,7 @@
               <div
                 (click)="onShowAnswers(i, (barData.answers && barData.answers.length))"
                 [ngClass]="{'c-hand': barData.answers && barData.answers.length}"
-                class="d-flex text-notify text-medium align-center text-md">
+                class="d-flex text-meta text-medium align-center text-md">
                 <span class="m-right-2">{{ barData.count }} {{ 'MARKET_REPORT.ANSWERS' | translateIn: reportingLang }}</span>
                 <i [ngClass]="showAnswers[i] ? 'icon-arrow-up' : 'icon-arrow-down'" aria-hidden="true" class="icon"></i>
               </div>

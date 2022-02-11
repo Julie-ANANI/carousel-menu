@@ -4,7 +4,7 @@
 
   <form novalidate autocomplete="off" class="d-flex" >
 
-    <span class="search-icon text-notify">
+    <span class="search-icon text-meta">
       <i class="fas fa-search"></i>
     </span>
 
@@ -17,7 +17,7 @@
 
   </form>
 
-  <div class="close-icon text-notify" [ngStyle]="{ 'visibility': searchActive ? 'visible' : 'hidden' }" (click)="onClickClose($event)">
+  <div class="close-icon text-meta" [ngStyle]="{ 'visibility': searchActive ? 'visible' : 'hidden' }" (click)="onClickClose($event)">
     <i class="fas fa-times"></i>
   </div>
 

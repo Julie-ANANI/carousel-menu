@@ -61,7 +61,7 @@
           *ngFor="let section of community.sections; let i = index;"
           class="form-group m-top-1 m-right-15 mxw-350 w-full">
 
-          <label class="form-label text-notify text-normal">
+          <label class="form-label text-meta text-normal">
             Community {{ section.type === 'ISSUE' ? 'issue' : section.type === 'SOLUTION' ? 'solution' : 'context' }}
           </label>
 
@@ -93,7 +93,7 @@
     <div class="m-bottom-20">
 
       <label class="form-label" for="admin-project-modal-owner">4. Publication medias*
-        <span class="text-notify">(Removing or modifying them won't change the actual medias of the market test.)</span>
+        <span class="text-meta">(Removing or modifying them won't change the actual medias of the market test.)</span>
       </label>
 
       <div
@@ -114,7 +114,7 @@
           </div>
 
           <ng-container *ngIf="!!media.url">
-            <p *ngIf="index === 0" class="text-notify text-13 m-bottom-1">Main media</p>
+            <p *ngIf="index === 0" class="text-meta text-13 m-bottom-1">Main media</p>
             <p *ngIf="index > 0" (click)="setMainMedia(index)" class="text-primary text-link text-13 m-bottom-1">
               Set as main media
             </p>
@@ -130,7 +130,7 @@
     <!-- owner -->
     <div class="form-group m-bottom-40 m-right-15">
       <label class="form-label" for="admin-project-modal-owner">5. Publication owner*
-        <span class="text-notify">(It won't change the actual owner of the market test.)</span>
+        <span class="text-meta">(It won't change the actual owner of the market test.)</span>
       </label>
       <select
         (ngModelChange)="onChangeOwner($event)"
@@ -148,7 +148,7 @@
     <!-- project tags -->
     <div class="form-group m-bottom-40">
       <label class="form-label">6. Publication sectors*
-        <span class="text-notify">(Removing or modifying them won't change the actual market test tags.)</span>
+        <span class="text-meta">(Removing or modifying them won't change the actual market test tags.)</span>
       </label>
       <div
         *ngFor="let sector of community.sectors" [ngClass]="hasError(sector) ? 'is-danger': 'is-tag'"
@@ -165,7 +165,7 @@
     <!-- hashtag -->
     <div class="form-group m-bottom-35 m-right-15">
       <label class="form-label">7. Publication hashtags
-        <span class="text-notify">(Do not include '#' keyword.)</span>
+        <span class="text-meta">(Do not include '#' keyword.)</span>
       </label>
       <app-utility-text-input
         (textEntered)="addHashtags($event)"

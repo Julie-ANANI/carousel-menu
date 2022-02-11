@@ -5,7 +5,7 @@
     <div class="shape is-circle bg-white history-wrapper c-hand absolute tooltip is-left history-icon"
          [attr.data-tooltip]="'COMMON.TOOLTIP.HISTORY' | translate"
          (click)="onClickHistoryIcon($event)">
-      <i class="fas fa-history text-notify"></i>
+      <i class="fas fa-history text-meta"></i>
     </div>
     <!-- /history icon -->
 
@@ -54,7 +54,7 @@
         <!-- header section -->
         <div class="d-flex selected-tags-wrapper text-center">
 
-          <div *ngFor="let tagStat of selectedTagsStats; let i = index;" class="tag text-notify">
+          <div *ngFor="let tagStat of selectedTagsStats; let i = index;" class="tag text-meta">
             <span>
               <ng-container *ngIf="tagStat.tag.entry; else noTagStatEntryLabel">
                 {{ (tagStat.tag.entry | langEntry:'label':currentLang:true) | titlecase }}
@@ -116,7 +116,7 @@
         <div class="flex-centered section-wrapper section-pad">
           <div class="map-wrapper">
 
-            <h2 class="text text-notify" [innerText]="'SHOWCASE.COUNTRIES_TITLE'" translate></h2>
+            <h2 class="text text-meta" [innerText]="'SHOWCASE.COUNTRIES_TITLE'" translate></h2>
 
             <h3 class="text-normal">
               {{ countriesCount }} <span [innerText]="'SHOWCASE.COUNTRIES'" translate></span>

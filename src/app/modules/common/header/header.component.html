@@ -1,10 +1,10 @@
 <header id="header">
   <div class="container fluid grid-2xl">
     <div class="column col-sm-12 col-11 col-mx-auto">
-      <nav class="navbar header-height">
+      <nav class="navbar header__height">
 
         <!-- brand -->
-        <div class="navbar-brand header-height">
+        <div class="navbar-brand header__height">
           <a routerLink="/" class="gtm-menu-logo navbar-item m-no">
             <img
               [alt]="company"
@@ -17,7 +17,7 @@
         <!-- /brand -->
 
         <!-- hamburger icon for mobile -->
-        <div class="navbar-burger header-height" (click)="toggleMenuState()">
+        <div class="navbar-burger header__height" (click)="toggleMenuState()">
           <i class="icon icon-menu"></i>
           <span class="m-left-2 text-medium">Menu</span>
         </div>
@@ -120,7 +120,7 @@
           <div class="navbar-item has-dropdown has-avatar dropdown-user is-right m-no-right">
 
             <!-- user unconfirmed -->
-            <figure  *ngIf="user && user.state === 'unconfirmed'" class="avatar dropdown-toggle is-lg text-notify">
+            <figure  *ngIf="user && user.state === 'unconfirmed'" class="avatar dropdown-toggle is-lg text-meta">
               <i class="fas fa-user"></i>
             </figure>
             <!-- user unconfirmed -->
