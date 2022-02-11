@@ -1,3 +1,19 @@
+// Global styles
+@import "~@umius/umi-style-framework/scss/umi";
+@import "~@umius/umi-style-framework/scss/variables";
+@import "../style/shared-editors";
+@import "../style/admin-executive-report";
+@import "../style/admin-campaign-stat";
+@import "../style/tinymce-style";
+@import "../style/shared-market-report";
+@import "../style/ng2autocomplete-style";
+@import "../style/upload-zone-photo-video";
+@import "../style/simple-notification-style";
+@import "../style/date-picker";
+
+// print style
+@import "../style/print";
+
 // this is for the help disk widget.
 // todo find better solution.
 #jsd-widget {
@@ -20,19 +36,6 @@
 .header-bg-color {
   background-color: #2E6188 !important;
 }
-
-@import "../style/shared-editors";
-@import "../style/admin-executive-report";
-@import "../style/admin-campaign-stat";
-@import "../style/tinymce-style";
-@import "../style/shared-market-report";
-@import "../style/ng2autocomplete-style";
-@import "../style/upload-zone-photo-video";
-@import "../style/simple-notification-style";
-@import "../style/date-picker";
-
-// print style
-@import "../style/print";
 
 
 
