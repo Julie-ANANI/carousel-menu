@@ -127,10 +127,10 @@
                   (click)="onClickLinkedIn()"
                   [disabled]="displayLoading || displayLoadingLinkedIn"
                   [id]="'login-btn-linkedin'"
-                  class="button icon-left text-sm is-lg gtm-signin-linkedin">
+                  class="button text-sm is-lg gtm-signin-linkedin">
                   <span *ngIf="displayLoadingLinkedIn" class="loading is-white"></span>
                   <ng-container *ngIf="!displayLoadingLinkedIn">
-                    <i class="fab fa-1x fa-linkedin-in"></i> {{ 'LOG_IN.LOG_IN_LINKEDIN' | translate }}
+                    <i class="fab fa-linkedin-in icon-left"></i> {{ 'LOG_IN.LOG_IN_LINKEDIN' | translate }}
                   </ng-container>
                 </button>
               </div>
