@@ -35,7 +35,7 @@ export class ApiUrlInterceptor implements HttpInterceptor {
   }
 
   private _setJwtoken(newParameters: any, req: HttpRequest<any>){
-    const jwToken = this._cookieService.get('jwToken');
+    const jwToken = this._cookieService.get('jwToken-application-front');
     if (jwToken) {
       newParameters.headers = req.headers
         .append('Authorization', jwToken);

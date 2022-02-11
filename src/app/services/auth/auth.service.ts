@@ -208,7 +208,7 @@ export class AuthService {
 
   private _setJwToken(jwt: string): void {
     if (isPlatformBrowser(this._platformId)) {
-      this._cookieService.put('jwToken', jwt, this._cookieOptions);
+      this._cookieService.put('jwToken-application-front', jwt, this._cookieOptions);
     }
   }
 
