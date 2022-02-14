@@ -4,7 +4,7 @@
 .avatar {
   @include inline-flex-centered();
   @include avatar-base();
-  @include avatar-variant(rgba($text-white-color, .85), $bg-border-color);
+  @include avatar-variant(rgba($white-color, .85), $bg-border-color);
   border-radius: 50%;
   font-weight: 300;
   line-height: 1.25;
@@ -21,7 +21,7 @@
   }
 
   .avatar-icon, .avatar-presence {
-    background: $bg-white-color;
+    background: $white-color;
     bottom: 14.64%;
     height: 50%;
     padding: $border-width-lg;
@@ -40,11 +40,11 @@
     width: .5em;
 
     &.is-online {
-      background: $bg-success-color;
+      background: $success-color;
     }
 
     &.is-busy {
-      background: $bg-alert-color;
+      background: $alert-color;
     }
 
     &.is-away {

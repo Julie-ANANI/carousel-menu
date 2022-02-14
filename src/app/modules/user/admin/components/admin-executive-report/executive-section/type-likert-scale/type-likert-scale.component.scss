@@ -14,7 +14,7 @@
   outline: none;
   padding: 14.5px;
   position: relative;
-  background: $bg-white-color none;
+  background: $white-color none;
   max-width: 100%;
   line-height: $line-height-sm;
   border: 2px solid #000000;
@@ -29,7 +29,7 @@
   margin-right: 0.3rem;
 }
 
-#type-likert-scale .card-likert div .shape.is-circle.is-sm {
+#type-likert-scale .card-likert div .shape.is-circled.is-sm {
   justify-content: center;
   align-items: center;
 }

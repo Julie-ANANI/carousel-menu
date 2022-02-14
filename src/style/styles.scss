@@ -1,7 +1,9 @@
 // Global styles
 @import "~@fortawesome/fontawesome-free/css/all.min.css";
 @import "~@umius/umi-style-framework/scss/umi";
-@import "~@umius/umi-style-framework/scss/variables";
+
+// Custom styles specific to Application
+@import "../style/container";
 @import "../style/simple-notification-style";
 @import "../style/shared-editors";
 @import "../style/admin-executive-report";
@@ -36,6 +38,10 @@
 
 .footer__height {
   min-height: 45px !important;
+}
+
+.main__bg-color {
+  background: #2E6188 !important;
 }
 
 .header__bg-color {

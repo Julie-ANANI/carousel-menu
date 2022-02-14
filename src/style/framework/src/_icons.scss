@@ -9,7 +9,7 @@
   position: relative;
   margin: 0;
   font-size: $font-icon;
-  color: $text-meta-color;
+  color: $meta-color;
   width: 35px;
   height: 35px;
 
@@ -129,7 +129,7 @@
   }
 
   &.is-secondary {
-    color: $secondary-color;
+    color: $primary-color;
   }
 
   &.is-info {

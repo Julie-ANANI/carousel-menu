@@ -4,7 +4,7 @@
   <ng-container *ngIf="textProps.length > 0">
     <div class="type-wrapper">
 
-      <span class="text-sm text-secondary-dark text-label text-normal">{{ 'COMMON.LABEL.SEARCH_BY' | translate }}:</span>
+      <span class="text-sm text-dark text-label text-normal">{{ 'COMMON.LABEL.SEARCH_BY' | translate }}:</span>
 
       <label>
         <select class="form-select" (change)="onChangeTextProp($event)">
@@ -55,7 +55,7 @@
   <ng-container *ngFor="let prop of otherProps">
     <div class="type-wrapper" *ngIf="isFiltrable(prop)">
 
-      <span class="text-sm text-secondary-dark text-label text-normal text-label">{{ getName(prop) | translate | FormatText }}:</span>
+      <span class="text-sm text-dark text-label text-normal text-label">{{ getName(prop) | translate | FormatText }}:</span>
 
       <ng-container [ngSwitch]="getType(prop)">
 

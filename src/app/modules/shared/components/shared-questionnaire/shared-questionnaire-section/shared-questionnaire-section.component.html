@@ -27,7 +27,7 @@
           </select>
         </label>
 
-        <div class="d-flex flew-wrap-wrap">
+        <div class="d-flex flex-wrap-wrap">
           <div
             *ngFor="let lang of questionnaireLangs"
             class="m-right-20 d-flex align-center tooltip"
@@ -332,7 +332,7 @@
         <div
           *ngFor="let value of questionToAdd.value"
           [attr.data-tooltip]="value.label"
-          class="label is-community is-rounded is-sm m-top-15 m-right-10 m-left-10 tooltip is-multiline">
+          class="label  is-rounded is-sm m-top-15 m-right-10 m-left-10 tooltip is-multiline">
           <span class="text-ellipsis w-120 m-right-2">{{ value.label }}</span>
           <span class="icon-container is-xs is-overlay text-white">
             <i (click)="onRemoveFromList(value['ques']['question']['_id'])" class="icon icon-cross"></i>
@@ -357,7 +357,7 @@
     <button
       (click)="onAddQuestion($event)"
       [disabled]="isDisabled"
-      class="button is-community"
+      class="button "
       type="button">
       Add
     </button>

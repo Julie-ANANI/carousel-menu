@@ -15,7 +15,7 @@
   white-space: nowrap;
   text-decoration: none;
   line-height: $line-height-sm;
-  background: $bg-white-color;
+  background: $white-color;
   border: $border-width solid $primary-color;
   font-size: $font-size-sm;
   height: 2.5rem;
@@ -138,7 +138,7 @@
   }
 
   &.btn-secondary {
-    @include button-default-variant($secondary-color);
+    @include button-default-variant($primary-color);
   }
 
   &.btn-edit {
@@ -158,7 +158,7 @@
   }
 
   &.ghost-secondary {
-    @include button-ghost-variant($secondary-color);
+    @include button-ghost-variant($primary-color);
   }
 
   &.ghost-delete {
@@ -188,7 +188,7 @@
     }
 
     &.btn-secondary {
-      @include button-round-variant($secondary-color);
+      @include button-round-variant($primary-color);
     }
 
     &.btn-edit {
@@ -246,13 +246,13 @@
 // Cancel button class that you have to add with button class
 .btn-cancel:not(:disabled), .btn-cancel:not(:disabled):focus, .btn-cancel:not(:disabled):active, .btn-cancel:not(:disabled).active {
   color: $meta-color;
-  background-color: $bg-white-color;
+  background-color: $white-color;
   border: none;
 }
 
 .btn-cancel:not(:disabled):hover {
   color: lighten($meta-color, 15%);
-  background-color: $bg-white-color;
+  background-color: $white-color;
   border: none;
 }
 
@@ -367,7 +367,7 @@
     @include button-default-variant($bg-primary-color);
 
     &.loading {
-      @include button-loading-variant($bg-white-color);
+      @include button-loading-variant($white-color);
     }
 
     &.is-shadowed {
@@ -400,7 +400,7 @@
     }
 
     &.loading {
-      @include button-loading-variant($bg-white-color);
+      @include button-loading-variant($white-color);
     }
 
     &.is-outlined {
@@ -433,7 +433,7 @@
     }
 
     &.loading {
-      @include button-loading-variant($bg-white-color);
+      @include button-loading-variant($white-color);
     }
 
     &.is-outlined {
@@ -447,100 +447,100 @@
   }
 
   &.is-danger {
-    @include button-default-variant($bg-alert-color);
+    @include button-default-variant($alert-color);
 
     &.is-link, &.is-outlined {
 
       &.loading {
-        @include button-loading-variant($bg-alert-color);
+        @include button-loading-variant($alert-color);
       }
 
     }
 
     &.is-link {
-      @include button-link-variant($bg-alert-color);
+      @include button-link-variant($alert-color);
     }
 
     &.is-action {
-      @include button-default-action-variant($bg-alert-color)
+      @include button-default-action-variant($alert-color)
     }
 
     &.loading {
-      @include button-loading-variant($bg-white-color);
+      @include button-loading-variant($white-color);
     }
 
     &.is-outlined {
-      @include button-outline-variant($bg-alert-color);
+      @include button-outline-variant($alert-color);
     }
 
     &.is-shadowed {
-      @include button-shadow-variant($bg-alert-color);
+      @include button-shadow-variant($alert-color);
     }
 
   }
 
   &.is-draft {
-    @include button-default-variant($bg-draft-color);
+    @include button-default-variant($draft-color);
 
     &.is-link, &.is-outlined {
 
       &.loading {
-        @include button-loading-variant($bg-draft-color);
+        @include button-loading-variant($draft-color);
       }
 
     }
 
     &.is-link {
-      @include button-link-variant($bg-draft-color);
+      @include button-link-variant($draft-color);
     }
 
     &.is-action {
-      @include button-default-action-variant($bg-draft-color)
+      @include button-default-action-variant($draft-color)
     }
 
     &.loading {
-      @include button-loading-variant($bg-white-color);
+      @include button-loading-variant($white-color);
     }
 
     &.is-outlined {
-      @include button-outline-variant($bg-draft-color);
+      @include button-outline-variant($draft-color);
     }
 
     &.is-shadowed {
-      @include button-shadow-variant($bg-draft-color);
+      @include button-shadow-variant($draft-color);
     }
 
   }
 
   &.is-success {
-    @include button-default-variant($bg-success-color);
+    @include button-default-variant($success-color);
 
     &.is-link, &.is-outlined {
 
       &.loading {
-        @include button-loading-variant($bg-success-color);
+        @include button-loading-variant($success-color);
       }
 
     }
 
     &.is-link {
-      @include button-link-variant($bg-success-color);
+      @include button-link-variant($success-color);
     }
 
     &.is-action {
-      @include button-default-action-variant($bg-success-color)
+      @include button-default-action-variant($success-color)
     }
 
     &.loading {
-      @include button-loading-variant($bg-white-color);
+      @include button-loading-variant($white-color);
     }
 
     &.is-outlined {
-      @include button-outline-variant($bg-success-color);
+      @include button-outline-variant($success-color);
     }
 
     &.is-shadowed {
-      @include button-shadow-variant($bg-success-color);
+      @include button-shadow-variant($success-color);
     }
 
   }
@@ -565,7 +565,7 @@
     }
 
     &.is-outlined {
-      @include button-outline-variant($bg-white-color);
+      @include button-outline-variant($white-color);
     }
 
   }

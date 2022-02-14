@@ -84,7 +84,7 @@
 
       <button
         (click)="openModal($event)"
-        class="button is-primary is-lg"
+        class="button is-lg"
         id="btn-send-mail">
         {{ 'SHARED_FOLLOW_UP.BUTTON_DONE' | translate }}
       </button>
@@ -190,7 +190,7 @@
           (click)="saveProject()"
 
           style="width: 141px"
-          class="button is-primary">
+          class="button">
           {{ 'COMMON.BUTTON.SAVE' | translate }}
         </button>
       </div>
@@ -219,7 +219,7 @@
       <button class="button modal-cancel">Cancel</button>
       <button
         (click)="updateManyObjectives(pendingAction.answersIds, pendingAction.objective)"
-        class="button is-primary">
+        class="button">
         Confirm
       </button>
     </footer>
@@ -324,7 +324,7 @@
         <button
           (click)="onClickConfirm($event)"
           [disabled]="loadingButton"
-          class="button is-lg is-primary">
+          class="button is-lg">
           {{ 'SHARED_FOLLOW_UP.BUTTON.INFORM_UMI' | translate }}
         </button>
       </div>

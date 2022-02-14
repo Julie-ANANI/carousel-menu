@@ -58,7 +58,7 @@
       }
 
       &.is-white {
-        background: $bg-white-color;
+        background: $white-color;
 
         .modal-title {
           color: $text-dark-color;
@@ -79,7 +79,7 @@
 
     .modal-body {
       display: block;
-      background-color: $bg-white-color;
+      background-color: $white-color;
       flex-grow: 1;
       flex-shrink: 1;
       padding: $unit-5;
@@ -95,7 +95,7 @@
       flex-shrink: 0;
       border-bottom-left-radius: 6px;
       border-bottom-right-radius: 6px;
-      background-color: $bg-white-color;
+      background-color: $white-color;
 
       .modal-cancel {
         @include button-outline-variant($bg-meta-color);

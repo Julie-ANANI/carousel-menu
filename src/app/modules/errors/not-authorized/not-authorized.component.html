@@ -33,7 +33,7 @@
       (click)="onClickReload()"
       [disabled]="isReloading"
       [id]="'notAuthorized-btn-homepage'"
-      class="button is-community is-xl"
+      class="button is-xl"
       type="button">
       <span *ngIf="!isReloading">{{ 'COMMON.BUTTON.RETURN_HOMEPAGE' | translate }}</span>
       <span *ngIf="isReloading" class="loading is-white"></span>

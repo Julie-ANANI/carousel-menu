@@ -50,7 +50,7 @@
     padding: $unit-2 $unit-3;
     width: 100%;
     max-width: 160px;
-    color: $text-white-color;
+    color: $white-color;
     font-size: $font-size-xs;
     border: $border-width solid $border-white-color;
     border-radius: 25px;
@@ -62,7 +62,7 @@
                 color 0.25s ease;
 
     &:hover {
-      background-color: $bg-white-color;
+      background-color: $white-color;
       color: $text-dark-color;
     }
 
@@ -143,7 +143,7 @@ video.video-responsive {
 .figure {
 
   .figure-caption {
-    color: $text-meta-color;
+    color: $meta-color;
     font-size: $font-size-sm;
     font-weight: $font-weight-medium;
     margin-top: $unit-2;

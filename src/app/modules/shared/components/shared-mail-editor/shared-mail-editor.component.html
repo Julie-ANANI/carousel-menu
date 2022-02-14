@@ -4,7 +4,7 @@
   <div *ngSwitchCase="'FOLLOW-UP'">
 
     <!-- insert field / test emails / test with contact -->
-    <div *ngIf="isEditableMode" class="flex-centered flew-wrap-wrap">
+    <div *ngIf="isEditableMode" class="flex-centered flex-wrap-wrap">
 
       <!-- insert field -->
       <div *ngIf="customField && customField.length" class="dropdown m-left-10 m-bottom-10 m-right-10">
@@ -75,7 +75,7 @@
 
             <div class="text-sm m-right-2">
               <span class="text-meta text-medium m-right-1">Subject:</span>
-              <span class="text-secondary-dark text-normal">Follow up -</span>
+              <span class="text-dark text-normal">Follow up -</span>
             </div>
 
             <label *ngIf="isEditableMode" style="flex: 1">
@@ -88,7 +88,7 @@
                 type="text">
             </label>
 
-            <div *ngIf="!isEditableMode" class="label is-tag" [innerText]="emailsObject['en'].subject"></div>
+            <div *ngIf="!isEditableMode" class="label is-draft" [innerText]="emailsObject['en'].subject"></div>
 
           </div>
           <!-- /subject -->
@@ -109,7 +109,7 @@
                 type="text">
             </label>
 
-            <div *ngIf="!isEditableMode" class="label is-tag" [innerText]="ccEmail"></div>
+            <div *ngIf="!isEditableMode" class="label is-draft" [innerText]="ccEmail"></div>
 
           </div>
           <!-- /cc -->
@@ -138,7 +138,7 @@
 
             <div class="text-sm m-right-2">
               <span class="text-meta text-medium m-right-1">Sujet :</span>
-              <span class="text-secondary-dark text-normal">Suivi - </span>
+              <span class="text-dark text-normal">Suivi - </span>
             </div>
 
             <label *ngIf="isEditableMode" style="flex: 1">
@@ -151,7 +151,7 @@
                 type="text">
             </label>
 
-            <div *ngIf="!isEditableMode" class="label is-tag" [innerText]="emailsObject['fr'].subject"></div>
+            <div *ngIf="!isEditableMode" class="label is-draft" [innerText]="emailsObject['fr'].subject"></div>
 
           </div>
           <!-- /subject -->
@@ -172,7 +172,7 @@
                 type="text">
             </label>
 
-            <div *ngIf="!isEditableMode" class="label is-tag" [innerText]="ccEmail"></div>
+            <div *ngIf="!isEditableMode" class="label is-draft" [innerText]="ccEmail"></div>
 
           </div>
           <!-- /cc -->

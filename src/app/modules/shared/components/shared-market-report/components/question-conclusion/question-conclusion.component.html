@@ -40,7 +40,7 @@
     </h4>
 
     <div *ngIf="tags && tags.length > 0" class="tags-wrapper">
-      <div *ngFor="let tag of tags" [title]="tag.description | multiling:reportingLang" class="label is-tag is-rounded">
+      <div *ngFor="let tag of tags" [title]="tag.description | multiling:reportingLang" class="label is-draft is-rounded">
         <i class="fas fa-tag icon-left"></i> {{ tag.label | multiling:reportingLang }}
         <ng-container *ngIf="tag.count > 1">(x{{ tag.count }})</ng-container>
       </div>

@@ -6,7 +6,7 @@
       (click)="onSave($event)"
       [disabled]="isSaving || !toBeSaved"
       style="min-width: 100px"
-      class="button is-sm is-community"
+      class="button is-sm"
       id="sidebarProjectPitch-btn-save">
       {{ (isSaving ? 'COMMON.BUTTON.SAVING_PROJECT' : 'COMMON.BUTTON.SAVE') | translate  }}
     </button>
@@ -84,7 +84,7 @@
   <section
     *ngIf="type && type === 'MEDIA' && cardContent.length > 0"
     [ngClass]="{ 'p-top-50': isEditable, 'p-top-10': !isEditable }"
-    class="d-flex flew-wrap-wrap justify-center p-bottom-50">
+    class="d-flex flex-wrap-wrap justify-center p-bottom-50">
     <div *ngFor="let media of cardContent" class="text-center media-wrapper animate-fade is-2">
 
       <!-- if type === 'PHOTO' -->

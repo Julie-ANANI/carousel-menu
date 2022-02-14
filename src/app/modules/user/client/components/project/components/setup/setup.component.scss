@@ -1,10 +1,8 @@
-@import "../../../../../../../../style/framework/src/variables";
-
 #setup {
 
   .header_sticky {
     transition: all 0.3s;
-    box-shadow: $box-shadow-6;
+    box-shadow: 0 12px 30px 0 rgba(0,0,0,.2);
     position: sticky;
     top: 0;
     z-index: 2;

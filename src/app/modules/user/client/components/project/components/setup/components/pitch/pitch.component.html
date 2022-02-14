@@ -23,7 +23,7 @@
             (click)="onRequestProofreading($event)"
             [disabled]="isRequesting || isSaving || isSubmitting"
             style="min-width: 226px; min-height: 46px"
-            class="button is-community is-sm is-outlined"
+            class="button is-sm is-outlined"
             id="btn-request">
             <ng-container *ngIf="!isRequesting; else defReqText">
               {{ 'COMMON.BUTTON.REQUEST_PROOFREADING' | translate }}
@@ -49,7 +49,7 @@
           (click)="onOpenModal($event)"
           [disabled]="isRequesting || isSaving || isSubmitting"
           style="min-width: 226px; min-height: 46px"
-          class="button is-community is-sm m-bottom-15"
+          class="button is-sm m-bottom-15"
           id="btn-submit">
           {{ 'COMMON.BUTTON.VALIDATE_DEFINITIVELY' | translate }}
           <img
@@ -109,7 +109,7 @@
           <div
             *ngIf="section.type === 'MEDIA'"
             style="margin-left: -10px; margin-right: -15px"
-            class="m-top-10 d-flex flew-wrap-wrap">
+            class="m-top-10 d-flex flex-wrap-wrap">
 
             <!-- principal media -->
             <div
@@ -195,7 +195,7 @@
               <div
                 *ngIf="!question['toggle'] && (question.controlType === 'checkbox' || question.controlType === 'radio'
                 || question.controlType === 'stars' || question.controlType === 'ranking' || question.controlType === 'likert-scale')"
-                class="m-left-30 d-flex flew-wrap-wrap">
+                class="m-left-30 d-flex flex-wrap-wrap">
                 <div *ngFor="let option of question.options" class="label">
                   {{ questionOptionName(option) }}
                 </div>
@@ -238,7 +238,7 @@
             <div
               *ngIf="!question.toggle && (question.controlType === 'checkbox' || question.controlType === 'radio'
             || question.controlType === 'stars'  || question.controlType === 'ranking')"
-              class="m-left-30 d-flex flew-wrap-wrap">
+              class="m-left-30 d-flex flex-wrap-wrap">
               <div *ngFor="let option of question.options" class="label">
                 {{ option.label[activeInnovCard.lang] }}
               </div>
@@ -272,7 +272,7 @@
           <button
             (click)="onSendMessage($event)"
             [disabled]="isSendingMessage || !newMessage || !innovation.questionnaireComment"
-            class="button is-sm is-community"
+            class="button is-sm is-primary"
             id="btn-send">
             <ng-container *ngIf="isSendingMessage; else defMsgText">
               {{ 'COMMON.BUTTON.SENDING_MESSAGE' | translate }}
@@ -332,7 +332,7 @@
     <button
       [disabled]="isSubmitting"
       (click)="onSubmitProject($event)"
-      class="button is-community"
+      class="button"
       id="btn-confirm">
       <ng-container *ngIf="isSubmitting; else defSubText">
         {{ 'COMMON.BUTTON.VALIDATING_DEFINITIVELY' | translate }}

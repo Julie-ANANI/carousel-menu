@@ -43,7 +43,7 @@
       }
 
       .title-secondary {
-        color: $text-meta-color;
+        color: $meta-color;
         font-size: 16px;
         margin-right: 10px;
       }
@@ -61,13 +61,13 @@
       }
 
       .title-secondary {
-        color: $text-meta-color;
+        color: $meta-color;
         font-size: 16px;
         margin-right: 10px;
       }
 
       .line {
-        color: $text-meta-color;
+        color: $meta-color;
       }
 
       .popover {
@@ -96,7 +96,7 @@
 
               }
 
-              .shape.is-circle {
+              .shape.is-circled {
                 margin-left: 5px;
                 margin-right: 11px;
               }
@@ -142,7 +142,7 @@
         display: flex;
         justify-content: space-between;
         font-size: 12px;
-        color: $text-meta-color;
+        color: $meta-color;
         font-weight: 600;
       }
 
@@ -208,7 +208,7 @@
           }
 
           .fa-plus-circle {
-            color: $text-meta-color;
+            color: $meta-color;
             font-size: 20px;
             vertical-align: middle;
 

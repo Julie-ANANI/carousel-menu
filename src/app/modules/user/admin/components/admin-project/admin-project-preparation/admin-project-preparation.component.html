@@ -142,7 +142,7 @@
               id="btn-save"
               type="button">
               {{ isSaving ? 'saving the project...' : 'Save' }}
-              <span *ngIf="!isSaving && (toBeSaved || toBeSavedComment)" class="shape is-circle">
+              <span *ngIf="!isSaving && (toBeSaved || toBeSavedComment)" class="shape is-circled">
                 <i class="fas fa-save"></i>
               </span>
             </button>
@@ -206,7 +206,7 @@
       (click)="onAskValidation($event)"
       *ngSwitchCase="'ASK_VALIDATION'"
       [disabled]="isSendingNotification"
-      class="button is-community"
+      class="button "
       id="btn-modal-confirm-ask-final-validation"
       type="button">
       Confirm
@@ -256,7 +256,7 @@
         (click)="addInnovationCard($event)"
         [disabled]="isAddingCard"
         [id]="'btn-confirm-card'"
-        class="button is-community">
+        class="button ">
         {{ isAddingCard ? 'adding the language...' : 'Confirm' }}
       </button>
 
@@ -278,7 +278,7 @@
         (click)="deleteInnovationCard($event)"
         [disabled]="isDeletingCard"
         [id]="'btn-confirm-card'"
-        class="button is-community">
+        class="button ">
         {{ isDeletingCard ? 'deleting the language...' : 'Confirm' }}
       </button>
 

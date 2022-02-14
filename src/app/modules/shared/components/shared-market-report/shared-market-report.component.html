@@ -30,7 +30,7 @@
               [reportingLang]="reportingLang"
               [templateType]="leftSidebarTemplateValue.type">
             </app-sidebar-filter-answers>
-            <div *ngIf="!displayFilters" class="m-top-30 loading is-lg"></div>
+            <div *ngIf="!displayFilters" class="m-top-30 loading is-lg is-primary"></div>
           </app-sidebar-in-page>
         </aside>
         <!-- /sidebar -->
@@ -38,7 +38,7 @@
         <!-- answers section -->
         <div class="content-wrapper">
 
-          <div *ngIf="areAnswersLoading" class="m-top-50 loading is-lg"></div>
+          <div *ngIf="areAnswersLoading" class="m-top-50 loading is-lg is-primary"></div>
 
           <!-- synthesis reporting lang -->
           <div *ngIf="!areAnswersLoading && adminSide"
@@ -108,7 +108,7 @@
             <div *ngIf="filteredAnswers.length" class="text-center p-top-25">
               <button
                 (click)="toggleProfessional = !toggleProfessional"
-                class="button is-community is-sm"
+                class="button  is-sm"
                 type="button">
                 {{ (toggleProfessional ? 'MARKET_REPORT.BTN_PROFESSIONAL_CLOSE'
                 : 'MARKET_REPORT.BTN_PROFESSIONAL_OPEN') | translateIn: reportingLang }}
@@ -218,7 +218,7 @@
       (click)="onNotifyDocuments($event)"
       *ngSwitchCase="'NOTIFY_DOCUMENTS'"
       [disabled]="isSendingNotification"
-      class="button is-community"
+      class="button "
       id="btn-modal-confirm-notify-documents"
       type="button">
       Confirm

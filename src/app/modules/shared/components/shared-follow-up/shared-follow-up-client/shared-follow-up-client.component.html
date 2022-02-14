@@ -5,7 +5,7 @@
       <div
         (click)="toggleStartContact(false)"
         [ngClass]="{'c-not-allowed': isSending}"
-        class="close is-background is-sm"></div>
+        class="close is-sm"></div>
     </div>
   </ng-container>
 
@@ -18,7 +18,7 @@
           <button
             (click)="toggleStartContact(true)"
             [disabled]="answers.length === 0"
-            class="button is-community is-lg"
+            class="button is-lg"
             id="sharedFollowUp-btn-contact-respondents">
             {{ 'SHARED_FOLLOW_UP.BUTTON.CONTACT' | translate }}
           </button>
@@ -81,10 +81,10 @@
 
             <!-- step intro -->
             <ng-container *ngSwitchCase="'STEP_INTRO'">
-              <div class="d-flex flew-wrap-wrap justify-center card_wrapper p-top-30">
-                <div *ngFor="let intro of introImages; let i = index;" class="card is-card-3">
+              <div class="card-3 justify-center card_wrapper p-top-30">
+                <div *ngFor="let intro of introImages; let i = index;" class="card">
                   <div class="card-header text-center">
-                    <div class="shape is-circle is-md bg-community m-left-auto m-right-auto text-20 m-bottom-10">
+                    <div class="shape is-circled text-white is-md bg-primary m-left-auto m-right-auto text-20 m-bottom-10">
                       {{ i + 1 }}
                     </div>
                     <h4 class="title text-lg m-bottom-15">
@@ -141,7 +141,7 @@
                     <span class="mail_label">{{ 'COMMON.LABEL.TO' | translate }}: </span>
                     <span class="text-13">{{ 'SHARED_FOLLOW_UP.RESPONDENTS_LIST' | translate }}</span>
                   </div>
-                  <div class="d-flex align-center flew-wrap-wrap">
+                  <div class="d-flex align-center flex-wrap-wrap">
                     <span class="mail_label m-right-1">CC:</span>
                     <span *ngFor="let cc of selectedCC; let i = index" class="text-13">
                       {{ cc.email }}
@@ -168,12 +168,12 @@
 
                   <div class="m-bottom-20">
                     <p class="m-bottom-15">
-                      <span class="shape is-circle is-xs bg-dark m-right-2"></span>
+                      <span class="shape is-circled is-xs bg-dark m-right-2"></span>
                       <span class="text-bold text-md">{{ 'SHARED_FOLLOW_UP.HEADINGS.PERSON_COPY' | translate }}</span>
                     </p>
                     <div class="d-flex p-bottom-2">
                       <div class="dropdown m-right-10">
-                        <a class="button dropdown-toggle is-info is-outlined flex-between" tabindex="0">
+                        <a class="button dropdown-toggle text-sm is-info is-outlined flex-between" tabindex="0">
                           <span *ngIf="ccToAdd.email" class="text-ellipsis">
                             {{ ccToAdd.firstName | titlecase }} {{ ccToAdd.lastName | titlecase }}
                             <span class="text-meta">- {{ ccToAdd.email }}</span>
@@ -192,7 +192,7 @@
                       <button
                         (click)="addCC(ccToAdd, true)"
                         [disabled]="!ccToAdd.email"
-                        class="button is-community is-sm btn_add"
+                        class="button is-sm btn_add"
                         type="button">
                         {{ 'COMMON.BUTTON.ADD' | translate }}
                       </button>
@@ -203,14 +203,14 @@
                     <div
                       (click)="openModal()"
                       [id]="'sharedFollowUpClient-btn-add-cc'"
-                      class="text-community text-sm text-hover-underline c-hand">
+                      class="text-primary text-sm text-hover-underline c-hand">
                       {{ 'SHARED_FOLLOW_UP.HEADINGS.ADD_MANUALLY' | translate }}
                     </div>
                   </div>
 
                   <div class="m-bottom-20">
                     <p class="m-bottom-1">
-                      <span class="shape is-circle is-xs bg-dark m-right-2"></span>
+                      <span class="shape is-circled is-xs bg-dark m-right-2"></span>
                       <span class="text-bold text-md">{{ 'SHARED_FOLLOW_UP.HEADINGS.CHOOSE_PHRASE' | translate }}</span>
                     </p>
                     <div class="form-group">
@@ -229,7 +229,7 @@
 
                   <div>
                     <p class="m-bottom-15">
-                      <span class="shape is-circle is-xs bg-dark m-right-2"></span>
+                      <span class="shape is-circled is-xs bg-dark m-right-2"></span>
                       <span class="text-bold text-md">{{ 'SHARED_FOLLOW_UP.HEADINGS.COMPANY_NAME' | translate }}</span>
                     </p>
                     <div class="form-group">
@@ -256,7 +256,7 @@
                       class="text-meta text-md text-medium">
                       <span
                         (click)="onChangeLang(lang)"
-                        [ngClass]="{'text-community': lang === selectedLang}"
+                        [ngClass]="{'text-primary': lang === selectedLang}"
                         class="c-hand">
                         {{ lang | uppercase }}
                       </span>
@@ -277,7 +277,7 @@
                     <span class="mail_label">{{ 'COMMON.LABEL.TO' | translate }}: </span>
                     <span class="text-13">{{ 'SHARED_FOLLOW_UP.RESPONDENTS_LIST' | translate }}</span>
                   </div>
-                  <div class="d-flex align-center flew-wrap-wrap">
+                  <div class="d-flex align-center flex-wrap-wrap">
                     <span class="mail_label">CC:</span>
                     <span
                       *ngFor="let cc of selectedCC; let i = index"
@@ -303,10 +303,10 @@
               <div class="flex-centered p-top-50 p-bottom-10 step_wrapper">
                 <div *ngFor="let step of steps; let i = index;" class="step_content text-center relative">
                   <div
-                    [ngClass]="{'bg-community': (i+1) === currentStep, 'bg-success': currentStep > (i+1) }"
-                    class="shape is-circle text-sm text-medium m-left-auto m-right-auto">
+                    [ngClass]="{'bg-primary text-white': (i+1) === currentStep, 'bg-success': currentStep > (i+1) }"
+                    class="shape is-circled text-sm text-medium m-left-auto m-right-auto">
                     <ng-container *ngIf="currentStep > (i+1); else number">
-                      <i class="icon icon-check"></i>
+                      <i class="icon icon-check text-white"></i>
                     </ng-container>
                     <ng-template #number>{{ i + 1 }}</ng-template>
                   </div>
@@ -336,7 +336,7 @@
                 (click)="goToNextStep($event)"
                 [disabled]="isNextStep || isDisabled || isSending"
                 [id]="'sharedFollowUp-btn-' + contactFields[currentStep].toLocaleLowerCase()"
-                class="button is-community is-lg m-top-20 m-left-20 m-right-20">
+                class="button  is-lg m-top-20 m-left-20 m-right-20">
                 <span *ngIf="isNextStep; else btnText" class="loading is-white"></span>
                 <ng-template #btnText>
                   <ng-container *ngIf="contactFields[currentStep] === 'STEP_INTRO'">
@@ -419,7 +419,7 @@
       (click)="onClickSend()"
       [disabled]="isSending"
       [id]="'sharedFollowUpClient-modal-btn-confirm-send'"
-      class="button is-community"
+      class="button "
       type="button">
       <span *ngIf="isSending; else sendText" class="loading is-white is-sm"></span>
       <ng-template #sendText>{{ 'COMMON.BUTTON.SEND_NOW' | translate }}</ng-template>
@@ -497,7 +497,7 @@
       (click)="onClickAdd()"
       [disabled]="formData.invalid"
       [id]="'sharedFollowUpClient-modal-btn-confirm'"
-      class="button is-community"
+      class="button "
       type="button">
       {{ 'COMMON.BUTTON.ADD' | translate }}
     </button>

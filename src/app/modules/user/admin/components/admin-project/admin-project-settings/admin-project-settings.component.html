@@ -366,7 +366,7 @@
                   <ul *ngIf="mission.milestoneDates && mission.milestoneDates.length" class="roadmap-wrapper w-full">
                     <li *ngIf="mission.milestoneDates.length > 1" class="active">
                         <span style="margin-top: 3px" class="d-flex flex-d-column align-center">
-                      <span class="shape is-circle"></span>
+                      <span class="shape is-circled"></span>
                       <span class="divider-vert active"></span>
                     </span>
                       <ng-container>
@@ -378,7 +378,7 @@
                           style="cursor:pointer"
                           [ngClass]="{ 'active': isMilestoneReached(milestone.dueDate) }">
                       <span style="margin-top: 3px" class="d-flex flex-d-column align-center">
-                        <span class="shape is-circle"></span>
+                        <span class="shape is-circled"></span>
                         <span
                           *ngIf="i < mission.milestoneDates.length - 1"
                           [ngClass]="{ 'active': isNextMilestoneReached(i+1) }"

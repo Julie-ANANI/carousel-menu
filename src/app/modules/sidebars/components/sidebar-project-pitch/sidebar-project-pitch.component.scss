@@ -1,11 +1,11 @@
-@import "../../../../../style/framework/src/variables";
+@import "~@umius/umi-style-framework/scss/variables";
 
 #sidebar-project-pitch {
 
   .icon {
 
     &.icon-arrow-down, &.icon-arrow-up {
-      color: $text-community-color;
+      color: $primary-color;
 
       &:before {
         width: 11px;
@@ -33,7 +33,7 @@
   }
 
   .box-shadow {
-    box-shadow: $box-shadow-5;
+    box-shadow: 0 2px 8px 2px rgba(20,23,28,.15);
   }
 
 }

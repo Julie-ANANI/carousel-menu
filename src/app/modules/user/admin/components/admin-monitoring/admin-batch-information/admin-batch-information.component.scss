@@ -1,8 +1,8 @@
-$secondary-color: #0B90C6;
+$primary-color: #0B90C6;
 $dark-background: #262831;
 
 .projects-stats {
-  background: $secondary-color;
+  background: $primary-color;
   display: flex;
   color: #CFE8F2;
   min-height: 82px;
@@ -30,7 +30,7 @@ $dark-background: #262831;
 
   span {
     font-size: 1.1rem;
-    color: $secondary-color;
+    color: $primary-color;
   }
 
   div {

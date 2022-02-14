@@ -5,8 +5,8 @@
   position: relative;
 
   &[data-content]::after {
-    background: $bg-white-color;
-    color: $text-meta-color;
+    background: $white-color;
+    color: $meta-color;
     content: attr(data-content);
     display: inline-block;
     font-size: $font-size-sm;

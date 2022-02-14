@@ -8,7 +8,7 @@
   }
 
   .header-btn-action-wrapper {
-    background: $bg-white-color;
+    background: $white-color;
     position: absolute;
     right: 7px;
     top: 7px;
@@ -17,11 +17,11 @@
   .button {
 
     &.is-saved {
-      border-color: $border-success-color;
+      border-color: $success-color;
       background-color: $success-color;
       position: relative;
 
-      .shape.is-circle {
+      .shape.is-circled {
         width: 30px;
         height: 30px;
         position: absolute;

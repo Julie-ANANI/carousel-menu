@@ -54,13 +54,13 @@
         }
 
         .fa-thumbs-up, .fa-thumbs-down {
-          color: $text-meta-color;
+          color: $meta-color;
         }
 
         .fa-thumbs-up {
 
           &.active {
-            color: $text-success-color;
+            color: $success-color;
           }
 
         }
@@ -68,7 +68,7 @@
         .fa-thumbs-down {
 
           &.active {
-            color: $text-alert-color;
+            color: $alert-color;
           }
 
         }

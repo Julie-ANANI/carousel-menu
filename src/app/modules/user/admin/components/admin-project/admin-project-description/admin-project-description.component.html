@@ -7,7 +7,7 @@
         <button
           (click)="openModal($event, 'NOTIFY_TEAM')"
           [disabled]="isSendingNotification"
-          class="button is-community is-outlined"
+          class="button  is-outlined"
           id="btn-notify-team">
           Notify project team
         </button>
@@ -28,9 +28,9 @@
           <div class="form-group">
 
             <!-- label / actions -->
-            <div [ngStyle]="{'margin-bottom': isEditable ? '10px' : '11px'}" class="d-flex align-center flew-wrap-wrap">
+            <div [ngStyle]="{'margin-bottom': isEditable ? '10px' : '11px'}" class="d-flex align-center flex-wrap-wrap">
 
-              <div class="d-flex align-center flew-wrap-wrap title-wrapper m-no-bottom" style="min-width: 100%">
+              <div class="d-flex align-center flex-wrap-wrap title-wrapper m-no-bottom" style="min-width: 100%">
 
                 <label
                   [id]="section.type.toUpperCase()+'-'+i + 1+'href'"
@@ -245,7 +245,7 @@
         <div class="section-content">
           <div class="form-group">
 
-            <div class="d-flex align-center flew-wrap-wrap title-wrapper" style="min-width: 100%">
+            <div class="d-flex align-center flex-wrap-wrap title-wrapper" style="min-width: 100%">
 
               <label
                 id="project-title-href"
@@ -390,7 +390,7 @@
         <div class="section-content">
           <div class="form-group">
 
-            <div class="d-flex align-center flew-wrap-wrap title-wrapper" style="min-width: 100%">
+            <div class="d-flex align-center flex-wrap-wrap title-wrapper" style="min-width: 100%">
 
               <label
                 id="project-summary-href"
@@ -573,7 +573,7 @@
       <div
         *ngIf="activeInnovCard.media.length"
         style="margin-left: -10px; margin-right: -20px"
-        class="d-flex flew-wrap-wrap">
+        class="d-flex flex-wrap-wrap">
 
         <!-- principal media -->
         <div *ngIf="activeInnovCard.principalMedia" class="text-center media-wrapper">
@@ -775,7 +775,7 @@
       (click)="onNotifyTeam($event)"
       *ngSwitchCase="'NOTIFY_TEAM'"
       [disabled]="isSendingNotification"
-      class="button is-community"
+      class="button "
       id="btn-modal-confirm-notify-team"
       type="button">
       Confirm
@@ -787,7 +787,7 @@
       *ngSwitchCase="'NEW_SECTION'"
       (click)="createNewSection($event)"
       [disabled]="!newSection.title"
-      class="button is-community"
+      class="button "
       type="button">
       Confirm
     </button>
@@ -797,7 +797,7 @@
     <button
       *ngSwitchCase="'DELETE_SECTION'"
       (click)="deleteSection($event)"
-      class="button is-community"
+      class="button "
       type="button">
       Confirm
     </button>

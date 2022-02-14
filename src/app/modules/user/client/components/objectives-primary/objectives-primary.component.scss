@@ -37,7 +37,7 @@
         }
 
         &.active {
-          border-color: $border-success-color;
+          border-color: $success-color;
         }
 
       }
@@ -50,8 +50,8 @@
           width: 30px;
           height: 30px;
           font-size: 16px;
-          background-color: $bg-success-color;
-          color: $text-white-color;
+          background-color: $success-color;
+          color: $white-color;
           visibility: hidden;
 
           &.active {

@@ -143,7 +143,7 @@ export class SetupComponent implements OnInit, OnDestroy, CanComponentDeactivate
 
   private _initBanner() {
     if (!this._isBannerViewed) {
-      this._banner.background = this._innovation.status === 'DONE' ? '#2ECC71' : '#F89424';
+      this._banner.background = this._innovation.status === 'DONE' ? 'bg-success text-white' : 'bg-warning text-white';
       this._banner.message = this._bannerMessage();
       if (this._banner.message !== '') {
         this._showBanner = true;

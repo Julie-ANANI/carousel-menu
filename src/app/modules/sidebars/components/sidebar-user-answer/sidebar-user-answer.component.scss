@@ -1,4 +1,4 @@
-@import "../../../../../style/framework/src/variables";
+@import "~@umius/umi-style-framework/scss/variables";
 
 #sidebar-user-answer {
 
@@ -34,8 +34,8 @@
       &.is-danger input {
 
         &:checked + .form-icon {
-          background: $bg-alert-color none;
-          border-color: $border-alert-color;
+          background: $alert-color none;
+          border-color: $alert-color;
         }
 
       }
@@ -43,8 +43,8 @@
       &.is-progress input {
 
         &:checked + .form-icon {
-          background: $bg-progress-color none;
-          border-color: $border-progress-color;
+          background: #F79323 none;
+          border-color: #F79323;
         }
 
       }

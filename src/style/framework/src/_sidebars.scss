@@ -29,7 +29,7 @@
   .sidebar-container {
     width: 100%;
     min-height: 100vh;
-    background: $bg-white-color;
+    background: $white-color;
   }
 
   .sidebar-header {
@@ -62,7 +62,7 @@
   position: fixed;
   width: 400px;
   bottom: 0;
-  background: $bg-white-color;
+  background: $white-color;
   box-shadow: -3px 0 8px 0 rgba(66,91,118,.21);
 
   &.inactive, &.active {

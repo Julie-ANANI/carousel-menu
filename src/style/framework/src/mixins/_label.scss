@@ -1,12 +1,12 @@
 @import "../variables";
 
 // Todo remove this
-@mixin label-variant($color: $text-white-color, $bg-color: $bg-primary-color) {
+@mixin label-variant($color: $white-color, $bg-color: $bg-primary-color) {
   background-color: $bg-color;
   color: $color;
 }
 
-@mixin label-color-variant($bg-color: $bg-primary-color, $color: $text-white-color) {
+@mixin label-color-variant($bg-color: $bg-primary-color, $color: $white-color) {
   color: $color;
   background-color: $bg-color;
 }

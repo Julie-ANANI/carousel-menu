@@ -64,7 +64,7 @@
   <ul *ngIf="pieChart" class="pie-data-wrapper animate-fade is-5">
     <li *ngFor="let label of (pieChart.labels | multiling:reportingLang); let i = index">
       <div class="popover" (mouseleave)="indexLegend = -1">
-        <span (click)="indexLegend = i" class="shape is-circle is-xs m-right-1 c-hand"
+        <span (click)="indexLegend = i" class="shape is-circled is-xs m-right-1 c-hand"
               [ngStyle]="{ 'background-color': colors[0].backgroundColor[i], 'border-color': colors[0].backgroundColor[i] }">
         </span>
         <div *ngIf="!readonly && indexLegend === i" class="absolute popover-container max-width-250">

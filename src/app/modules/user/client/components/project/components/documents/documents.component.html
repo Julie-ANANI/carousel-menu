@@ -90,7 +90,7 @@
                 <button
                   (click)="onClickReport($event)"
                   [disabled]="isGeneratingReport || !isOwner || !ownerConsent"
-                  class="button is-primary"
+                  class="button"
                   id="btn-document-report">
                   <ng-container *ngIf="!isGeneratingReport; else genCSV">
                     {{ 'COMMON.BUTTON.DOWNLOAD' | translate }}
@@ -107,8 +107,8 @@
                 <button
                   (click)="onClickShare($event)"
                   [disabled]="isGeneratingLink || !isOwner || !ownerConsent"
-                  [ngClass]="{ 'is-primary': isGeneratingLink || !isLinkCopied,
-                  'is-success is-outlined': isLinkCopied && !isGeneratingLink, 'c-not-allowed': isLinkCopied }"
+                  [ngClass]="{ 'is-success is-outlined': isLinkCopied && !isGeneratingLink,
+                  'c-not-allowed': isLinkCopied }"
                   class="button"
                   id="btn-document-share">
                   <ng-container *ngIf="!isLinkCopied; else copied">
@@ -131,7 +131,7 @@
                 <button
                   (click)="onClickXLSX($event)"
                   [disabled]="isGeneratingXLSX || !isOwner || !ownerConsent"
-                  class="button is-primary"
+                  class="button"
                   id="btn-document-xlsx">
                   <ng-container *ngIf="!isGeneratingXLSX; else genXLSX">
                     {{ 'COMMON.BUTTON.DOWNLOAD' | translate }}
@@ -148,7 +148,7 @@
                 <button
                   (click)="onClickPDF($event)"
                   [disabled]="isGeneratingPDF || !isOwner || !ownerConsent"
-                  class="button is-primary"
+                  class="button"
                   id="btn-document-pdf">
                   <ng-container *ngIf="!isGeneratingPDF; else genPDF">
                     {{ 'COMMON.BUTTON.DOWNLOAD' | translate }}
@@ -162,13 +162,13 @@
 
               <!-- case === 'VIDEO' -->
               <div *ngSwitchCase="'PROJECT_DOCUMENTS.NAME.VIDEO' | translate">
-                <div class="d-flex justify-center flew-wrap-wrap">
+                <div class="d-flex justify-center flex-wrap-wrap">
 
                   <!-- contact commercial -->
                   <button
                     (click)="onClickContact($event)"
                     [disabled]="!isOwner || !ownerConsent"
-                    class="button is-primary"
+                    class="button"
                     id="btn-document-contact-commercial">
                     {{ 'COMMON.BUTTON.CONTACT_COMMERCIAL' | translate }}
                   </button>

@@ -9,7 +9,7 @@
   text-decoration: none;
   background: transparent;
   border: 0;
-  color: $text-white-color;
+  color: $white-color;
   padding: 0;
   text-align: center;
   outline: none;
@@ -38,7 +38,7 @@
 
   &:hover {
     cursor: pointer;
-    color: $text-white-color;
+    color: $white-color;
 
     &::before {
       display: block;

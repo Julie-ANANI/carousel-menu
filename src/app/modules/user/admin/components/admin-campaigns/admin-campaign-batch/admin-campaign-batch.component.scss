@@ -26,8 +26,8 @@
     }
 
     .incomplete {
-      background-color: $bg-alert-color;
-      border-color: $border-alert-color;
+      background-color: $alert-color;
+      border-color: $alert-color;
 
       .fa-check {
         visibility: hidden;
@@ -36,12 +36,12 @@
     }
 
     .complete {
-      background-color: $bg-success-color;
-      border-color: $border-success-color;
+      background-color: $success-color;
+      border-color: $success-color;
 
       .fa-check {
         visibility: visible;
-        color: $text-white-color;
+        color: $white-color;
       }
 
     }
@@ -64,11 +64,11 @@
         text-align: center;
         align-items: center;
         font-size: $font-size-md;
-        color: $text-meta-color;
+        color: $meta-color;
       }
 
       .form-switch {
-        color: $text-meta-color;
+        color: $meta-color;
       }
 
     }

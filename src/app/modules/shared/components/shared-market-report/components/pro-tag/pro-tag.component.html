@@ -53,7 +53,7 @@
 
   <!-- tag -->
   <div *ngIf="tags.length > 0" class="tags-wrapper">
-    <div *ngFor="let tag of tags" [title]="tag.description | multiling:currentLang" class="label is-tag is-rounded">
+    <div *ngFor="let tag of tags" [title]="tag.description | multiling:currentLang" class="label is-draft is-rounded">
       <i class="fas fa-tag icon-left"></i>
       {{ tag.label | multiling:currentLang }}
     </div>

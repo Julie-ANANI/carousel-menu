@@ -8,7 +8,7 @@
   position: fixed;
   height: 100vh;
   z-index: $zindexSidebar-0;
-  background: $bg-white-color;
+  background: $white-color;
   box-shadow: 0 0 24px 0 rgba(0,0,0,0.32);
   border-right: 2px solid $border-primary-color;
 
@@ -27,7 +27,7 @@
     .button {
 
       &.is-primary {
-        background-color: $bg-white-color;
+        background-color: $white-color;
         color: $text-primary-color;
         border-width: 2px;
         transition: all 0.3s ease;
@@ -35,7 +35,7 @@
 
         &:hover {
           background-color: $bg-primary-color;
-          color: $text-white-color;
+          color: $white-color;
         }
 
       }

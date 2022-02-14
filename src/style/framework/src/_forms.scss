@@ -35,7 +35,7 @@ legend {
   outline: none;
   padding: 14.5px;
   position: relative;
-  background: $bg-white-color none;
+  background: $white-color none;
   max-width: 100%;
   line-height: $line-height-sm;
 
@@ -94,7 +94,7 @@ textarea {
   width: 100%;
   outline: none;
   position: relative;
-  background: $bg-white-color none;
+  background: $white-color none;
   max-width: 100%;
   align-items: center;
   line-height: $line-height;
@@ -185,7 +185,7 @@ textarea {
   padding-right: 0;
 
   .form-icon {
-    background: $bg-white-color none;
+    background: $white-color none;
     border-color: $border-default-color;
     background-clip: padding-box;
     border-radius: 16px;
@@ -217,8 +217,8 @@ textarea {
 
       &::before {
         left: 14px;
-        border-color: $border-success-color;
-        background: $bg-success-color none;
+        border-color: $success-color;
+        background: $success-color none;
       }
 
     }
@@ -235,7 +235,7 @@ textarea {
   }
 
   .form-icon {
-    background: $bg-white-color none;
+    background: $white-color none;
     height: $unit-4;
     left: 0;
     width: $unit-4;
@@ -244,8 +244,8 @@ textarea {
   input {
 
     &:checked  + .form-icon, &.active + .form-icon {
-      background: $bg-success-color none;
-      border-color: $border-success-color;
+      background: $success-color none;
+      border-color: $success-color;
     }
 
   }
@@ -263,7 +263,7 @@ textarea {
     &:checked + .form-icon, &.active + .form-icon {
 
       &::before {
-        background: $bg-white-color none;
+        background: $white-color none;
         border-radius: 50%;
         content: "";
         height: 4px;
@@ -311,7 +311,7 @@ textarea {
       border-color: $border-primary-color;
 
       &::before {
-        background: $bg-white-color;
+        background: $white-color;
         content: "";
         height: 2px;
         left: 50%;
@@ -420,11 +420,11 @@ textarea {
   margin: 0;
 
   .has-success &, .is-success + & {
-    color: $text-success-color;
+    color: $success-color;
   }
 
   .has-error &, .is-error + & {
-    color: $text-alert-color;
+    color: $alert-color;
   }
 
 }
@@ -434,7 +434,7 @@ textarea {
   .has-success &, &.is-success {
 
     &.form-input.ng-dirty.ng-touched.ng-valid, &.form-input.ng-dirty.ng-touched.ng-valid:focus, &.form-select {
-      border-color: $border-success-color;
+      border-color: $success-color;
     }
 
   }
@@ -443,7 +443,7 @@ textarea {
 
     &.form-input.ng-dirty.ng-touched.ng-invalid, &.form-input.ng-pristine.ng-touched.ng-invalid,
     &.form-input.ng-dirty.ng-touched.ng-invalid:focus, &.form-select {
-      border-color: $border-alert-color;
+      border-color: $alert-color;
     }
 
   }
@@ -455,14 +455,14 @@ textarea {
   .has-error &, &.is-error {
 
     .form-icon {
-      border-color: $border-alert-color;
+      border-color: $alert-color;
     }
 
     input {
 
       &:checked + .form-icon {
-        background: $bg-alert-color none;
-        border-color: $border-alert-color;
+        background: $alert-color none;
+        border-color: $alert-color;
       }
 
     }
@@ -478,8 +478,8 @@ textarea {
     input {
 
       &:indeterminate + .form-icon {
-        background: $bg-alert-color none;
-        border-color: $border-alert-color;
+        background: $alert-color none;
+        border-color: $alert-color;
       }
 
     }
@@ -493,12 +493,12 @@ textarea {
   .has-error &, &.is-error {
 
     .form-icon {
-      background: $bg-white-color none;
-      border-color: $border-alert-color;
+      background: $white-color none;
+      border-color: $alert-color;
 
       &::before {
-        border-color: $border-alert-color;
-        background: $bg-alert-color none;
+        border-color: $alert-color;
+        background: $alert-color none;
       }
 
     }
@@ -507,11 +507,11 @@ textarea {
 
       &:checked + .form-icon {
         background: #f5afaf none;
-        border-color: $border-alert-color;
+        border-color: $alert-color;
 
         &::before {
-          border-color: $border-alert-color;
-          background: $bg-alert-color none;
+          border-color: $alert-color;
+          background: $alert-color none;
         }
 
       }
@@ -528,10 +528,10 @@ textarea {
   &:not(:placeholder-shown) {
 
     &:invalid, &.ng-touched.ng-invalid {
-      border-color: $border-alert-color;
+      border-color: $alert-color;
 
       & + .form-input-hint {
-        color: $text-alert-color;
+        color: $alert-color;
       }
 
     }
@@ -622,7 +622,7 @@ input {
   margin-bottom: 0;
   list-style: none;
   z-index: 2;
-  background-color: $bg-white-color;
+  background-color: $white-color;
   border-radius: $border-radius;
   overflow: auto;
   max-height: 350px;
@@ -659,7 +659,7 @@ input {
 // Form element: Error Todo remove this
 .form-error {
   display: block;
-  color: $text-alert-color;
+  color: $alert-color;
   font-size: $font-size-xs;
   padding: $unit-1 0 $unit-2 0;
 }

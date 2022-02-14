@@ -13,7 +13,7 @@
 
   .bar-item {
     background: $bg-primary-color;
-    color: $text-white-color;
+    color: $white-color;
     display: block;
     font-size: $font-size-sm;
     flex-shrink: 0;
@@ -152,7 +152,7 @@
       position: absolute;
       bottom: 3rem;
       width: 1.5rem;
-      color: $text-white-color;
+      color: $white-color;
       text-align: center;
       font-weight: $font-weight-bold;
       font-size: $font-size-lg;

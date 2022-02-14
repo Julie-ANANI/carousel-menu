@@ -7,7 +7,7 @@
   <!-- /heading -->
 
   <!-- lang selection -->
-  <div [ngClass]="{'p-bottom-40': !!reportingLang}" class="flex-centered flew-wrap-wrap">
+  <div [ngClass]="{'p-bottom-40': !!reportingLang}" class="flex-centered flex-wrap-wrap">
     <a
       (click)="onChangeProjectLang($event, lang)"
       *ngFor="let lang of projectLangs"
@@ -116,7 +116,6 @@
           (textEntered)="addEmail($event)"
           (valueToRemove)="removeEmail($event)"
           [addedText]="collaborators"
-          [buttonColorClass]="'is-community'"
           [fieldType]="'email'"
           [inputMaxWidth]="'450px'"
           [isFieldCenter]="true"

@@ -1,7 +1,7 @@
 //core variables
 $primary-color: #FFB300 !default;
 $warning-color: #FFB300 !default;
-$secondary-color: #0B90C6 !default;
+$primary-color: #0B90C6 !default;
 $community-color: #00B0FF !default;
 $progress-color: #F79323 !default;
 $disabled-color: #DBDBDB !default;
@@ -43,28 +43,28 @@ $link-color: $primary-color !default;
 //border variables
 $border-default-color: #e0e0e0 !default;
 $border-dark-color: $dark-color !default;
-$border-success-color: $success-color !default;
-$border-alert-color: $alert-color !default;
+$success-color: $success-color !default;
+$alert-color: $alert-color !default;
 $border-white-color: $white-color !default;
 $border-meta-color: $meta-color !default;
 $border-primary-color: $primary-color !default;
 $border-warning-color: $warning-color !default;
-$border-draft-color: $draft-color !default;
+$draft-color: $draft-color !default;
 $border-light-color: #f1f1f1 !default;
 $border-community-color: $community-color !default;
-$border-progress-color: $progress-color !default;
+$progress-color: $progress-color !default;
 
 
 // text variables
 $text-primary-color: $primary-color !default;
 $text-dark-color: $dark-color !default;
 $text-secondary-dark-color: #484848 !default;
-$text-secondary-color: $secondary-color !default;
-$text-meta-color: $meta-color !default;
-$text-success-color: $success-color !default;
+$text-secondary-color: $primary-color !default;
+$meta-color: $meta-color !default;
+$success-color: $success-color !default;
 $text-warning-color: $primary-color !default;;
-$text-alert-color: $alert-color !default;
-$text-white-color: $white-color !default;
+$alert-color: $alert-color !default;
+$white-color: $white-color !default;
 $text-disabled-color: #A9A9A9 !default;
 $text-community-color: $community-color !default;
 $text-draft-color: $draft-color !default;
@@ -72,15 +72,15 @@ $text-draft-color: $draft-color !default;
 
 // background variables
 $bg-primary-color: $primary-color !default;
-$bg-progress-color: $progress-color !default;
-$bg-secondary-color: $secondary-color !default;
+$progress-color: #F79323 !default;
+$bg-secondary-color: $primary-color !default;
 $bg-community-color: $community-color !default;
 $bg-meta-color: $meta-color !default;
 $bg-pending-color: $pending-color !default;
-$bg-draft-color: $draft-color !default;
-$bg-success-color: $success-color !default;
-$bg-alert-color: $alert-color !default;
-$bg-white-color: $white-color !default;
+$draft-color: $draft-color !default;
+$success-color: $success-color !default;
+$alert-color: $alert-color !default;
+$white-color: $white-color !default;
 $bg-dark-color: $dark-color !default;
 $bg-page-color: $page-color !default;
 $bg-overlay-color: rgba(0,0,0,0.75) !default;

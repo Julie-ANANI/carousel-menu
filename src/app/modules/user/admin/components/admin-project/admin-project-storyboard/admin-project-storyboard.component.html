@@ -27,7 +27,7 @@
       <div class="column col-sm-12 col-11 col-mx-auto">
 
         <!-- header section -->
-        <section class="header-wrapper d-flex flew-wrap-wrap">
+        <section class="header-wrapper d-flex flex-wrap-wrap">
 
           <!-- lang -->
           <div class="content-wrapper p-right-10 p-bottom-30">
@@ -321,7 +321,7 @@
       <button
         [disabled]="isGeneratingVideo"
         (click)="generateVideo($event)"
-        class="button is-community"
+        class="button "
         id="btn-continue">
         <ng-container *ngIf="!isGeneratingVideo; else genVideo">
           {{ 'COMMON.BUTTON.GENERATE' | translate }}

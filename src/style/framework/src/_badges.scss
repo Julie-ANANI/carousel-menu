@@ -10,7 +10,7 @@
       background: $bg-primary-color;
       background-clip: padding-box;
       border-radius: .5rem;
-      color: $text-white-color;
+      color: $white-color;
       content: attr(data-badge);
       display: inline-block;
       transform: translate(-.1rem, -.5rem);
@@ -115,13 +115,13 @@
     }
 
     &.is-active {
-      border-color: $border-success-color;
-      background-color: $bg-white-color;
+      border-color: $success-color;
+      background-color: $white-color;
       color: $text-dark-color;
 
       i {
         display: inline-flex;
-        background: $bg-success-color;
+        background: $success-color;
       }
 
     }
@@ -153,7 +153,7 @@
       right: 0;
       margin: 0;
       background: $bg-meta-color;
-      color: $text-white-color;
+      color: $white-color;
       transform: translate(50%, -50%);
       box-shadow: 0 0 0 .1rem $border-white-color;
     }
@@ -167,14 +167,14 @@
     }
 
     &.active {
-      background-color: $bg-white-color;
-      border-color: $border-success-color;
+      background-color: $white-color;
+      border-color: $success-color;
       color: $text-dark-color;
       border-width: $border-width-lg;
 
       i {
         display: inline-flex;
-        background: $bg-success-color;
+        background: $success-color;
       }
 
       &:hover {

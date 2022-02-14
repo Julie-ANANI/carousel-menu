@@ -5,7 +5,7 @@
   @include control-transition();
   display: flex;
   flex-direction: column;
-  background-color: $bg-white-color;
+  background-color: $white-color;
   border-radius: $border-radius;
   border: $border-width solid $border-default-color;
   word-break: break-word;
@@ -68,7 +68,7 @@
 
     .card-subtitle {
       font-size: $font-size-md;
-      color: $text-meta-color;
+      color: $meta-color;
     }
 
   }

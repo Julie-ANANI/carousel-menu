@@ -9,18 +9,18 @@
 }
 
 .text-success {
-  color: $text-success-color !important;
+  color: $success-color !important;
 }
 
 .text-error, .text-alert {
-  color: $text-alert-color !important;
+  color: $alert-color !important;
 }
 
 .text-meta {
-  color: $text-meta-color !important;
+  color: $meta-color !important;
 }
 
-.text-secondary-dark {
+.text-dark {
   color: $text-secondary-dark-color !important;
 }
 
@@ -29,14 +29,14 @@
 }
 
 .text-white {
-  color: $text-white-color !important;
+  color: $white-color !important;
 }
 
 .text-secondary {
   color: $text-secondary-color !important;
 }
 
-.text-community {
+.text-primary {
   color: $text-community-color !important;
 }
 
@@ -45,48 +45,48 @@
 }
 
 .bg-primary {
-  color: $text-white-color !important;
+  color: $white-color !important;
   background: $bg-primary-color !important;
 }
 
 .bg-secondary {
-  color: $text-white-color !important;
+  color: $white-color !important;
   background: $bg-secondary-color !important;
 }
 
-.bg-community {
-  color: $text-white-color !important;
+.bg-primary {
+  color: $white-color !important;
   background: $community-color !important;
 }
 
 .bg-gray {
-  color: $text-white-color !important;
+  color: $white-color !important;
   background: $bg-meta-color !important;
 }
 
 .bg-dark {
-  color: $text-white-color !important;
+  color: $white-color !important;
   background: $bg-dark-color !important;
 }
 
 .bg-success {
-  color: $text-white-color !important;
-  background: $bg-success-color !important;
+  color: $white-color !important;
+  background: $success-color !important;
 }
 
 .bg-progress {
-  color: $text-white-color !important;
-  background: $bg-progress-color !important;
+  color: $white-color !important;
+  background: #F79323 !important;
 }
 
 .bg-alert {
-  color: $text-white-color !important;
-  background: $bg-alert-color !important;
+  color: $white-color !important;
+  background: $alert-color !important;
 }
 
 .bg-draft {
-  color: $text-white-color !important;
-  background: $bg-draft-color !important;
+  color: $white-color !important;
+  background: $draft-color !important;
 }
 
 .bg-light {
@@ -96,7 +96,7 @@
 
 .bg-white {
   color: $text-dark-color !important;
-  background: $bg-white-color !important;
+  background: $white-color !important;
 }
 
 .bg-page {
@@ -113,16 +113,16 @@
 
 .bg-gradient-primary {
   background: $primary-gradient-color;
-  color: $text-white-color;
+  color: $white-color;
 }
 
 .bg-green-light {
   background: $bg-green-light !important;
-  color: $text-white-color;
+  color: $white-color;
 }
 
 .bg-pending {
   background: $bg-pending-color !important;
-  color: $text-white-color;
+  color: $white-color;
 }
 

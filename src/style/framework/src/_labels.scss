@@ -34,7 +34,7 @@
   }
 
   &.is-progress {
-    @include label-color-variant($bg-progress-color);
+    @include label-color-variant($progress-color);
   }
 
   &.is-tag {
@@ -50,15 +50,15 @@
   }
 
   &.is-draft {
-    @include label-color-variant($bg-draft-color);
+    @include label-color-variant($draft-color);
   }
 
   &.is-success {
-    @include label-color-variant($bg-success-color);
+    @include label-color-variant($success-color);
   }
 
   &.is-danger {
-    @include label-color-variant($bg-alert-color);
+    @include label-color-variant($alert-color);
   }
 
   .icon-left {
@@ -78,7 +78,7 @@
   }
 
   &.is-tag {
-    @include label-variant($text-white-color, $bg-draft-color);
+    @include label-variant($white-color, $draft-color);
     padding: 6px 12px;
     font-size: 12px;
 

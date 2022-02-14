@@ -52,7 +52,7 @@
     <!-- reassign the answer to new pro -->
     <div *ngIf="userAnswer.localStatus !== 'draft' && assignNewPro && !editMode">
       <button
-        class="button is-community is-sm"
+        class="button  is-sm"
         (click)="onReassignAnswer($event)"
         [disabled]="!newPro.firstName || !newPro.lastName || !newPro.email || isReassigning"
         id="btn-confirm-assign"
@@ -68,7 +68,7 @@
       <button
         (click)="onImportAnswer($event)"
         [disabled]="isImporting"
-        class="button is-sm is-outlined is-community m-right-20"
+        class="button is-sm is-outlined  m-right-20"
         id="btn-import-answer"
         type="button">
         <ng-container *ngIf="!isImporting; else importText">Import</ng-container>
@@ -82,7 +82,7 @@
       (click)="onSaveAnswer($event)"
       *ngIf="!assignNewPro"
       [disabled]="isSaving || !toBeSaved"
-      class="button is-sm is-community"
+      class="button is-sm "
       id="btn-save"
       type="button">
       <ng-container *ngIf="!isSaving; else saveText">Save</ng-container>
@@ -343,7 +343,7 @@
   <div *ngIf="autoTags.length > 0" class="d-none m-top-20">
     <label class="form-label p-bottom-10">Auto Tags</label>
     <div class="tags-wrapper">
-      <div *ngFor="let tag of autoTags" class="label is-tag is-rounded">
+      <div *ngFor="let tag of autoTags" class="label is-draft is-rounded">
         <i class="fas fa-tag icon-left"></i>
         {{ tag }}
       </div>
