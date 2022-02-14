@@ -1,6 +1,6 @@
-<div class="d-flex align-center flex-d-column justify-center flex-wrap">
+<div class="d-flex align-center flex-d-column justify-center flew-wrap-wrap">
   <ng-content></ng-content>
-  <div class="d-flex align-center justify-center flex-wrap">
+  <div class="d-flex align-center justify-center flew-wrap-wrap">
     <div *ngFor="let color of colors; let i = index">
         <input (change)="changeColor($event)"
                [checked]="selectedColor === color.value"

@@ -1,5 +1,5 @@
-@import "framework/src/variables";
-@import "framework/src/mixins";
+@import "~@umius/umi-style-framework/scss/variables";
+@import "~@umius/umi-style-framework/scss/mixins";
 
 // styles that are related to the upload zone photo/video.
 
@@ -12,12 +12,12 @@
   padding: $unit-2;
 
   &:hover {
-    border-color: $border-primary-color;
+    border-color: $primary-color;
     background-color: #FFF9EB;
   }
 
   &.is-error {
-    border-color: $border-alert-color;
+    border-color: $alert-color;
   }
 
 }
@@ -55,5 +55,5 @@ file-drop.drop-container {
 
 .nv-file-over {
   @include control-transition();
-  border-color: $border-alert-color;
+  border-color: $alert-color;
 }

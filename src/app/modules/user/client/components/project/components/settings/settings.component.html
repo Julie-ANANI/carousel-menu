@@ -1,6 +1,6 @@
 <div class="container fluid grid-2xl p-bottom-20" id="project-settings">
   <div class="column col-sm-12 col-11 col-mx-auto">
-    <div class="d-flex flex-wrap settings-wrapper m-left-auto m-right-auto">
+    <div class="d-flex flew-wrap-wrap settings-wrapper m-left-auto m-right-auto">
 
       <!-- menu wrapper -->
       <aside *ngIf="isVisibleMenu" class="menu-wrapper">
@@ -168,7 +168,7 @@
 
               <!-- OWNER -->
               <div *ngSwitchCase="'OWNER'">
-                <div class="flex-wrap text-md flex-start">
+                <div class="flew-wrap-wrap text-md flex-start">
                   <span class="text-bold">{{ fullName(innovation.owner) }}</span>
                   <ng-container *ngIf="!!(innovation.owner.company && innovation.owner.company.name)">
                     <span>&nbsp;•&nbsp;</span>
@@ -229,7 +229,7 @@
               <div *ngSwitchCase="'OPERATOR'">
 
                 <ng-container *ngIf="!!fullName(innovation.operator)">
-                  <div class="flex-wrap text-md flex-start">
+                  <div class="flew-wrap-wrap text-md flex-start">
                     <span class="text-bold">{{ fullName(innovation.operator) }}</span>
                     <ng-container *ngIf="!!innovation.operator.phone">
                       <span>&nbsp;•&nbsp;</span>
@@ -253,7 +253,7 @@
               <div *ngSwitchCase="'COMMERCIAL'">
 
                 <ng-container *ngIf="!!fullName(clientProject.commercial)">
-                  <div class="flex-wrap text-md flex-start">
+                  <div class="flew-wrap-wrap text-md flex-start">
                     <span class="text-bold">{{ fullName(clientProject.commercial) }}</span>
                     <ng-container *ngIf="!!clientProject.commercial.phone">
                       <span>&nbsp;•&nbsp;</span>

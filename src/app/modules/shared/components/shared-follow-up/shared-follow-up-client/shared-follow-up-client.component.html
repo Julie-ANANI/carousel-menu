@@ -81,7 +81,7 @@
 
             <!-- step intro -->
             <ng-container *ngSwitchCase="'STEP_INTRO'">
-              <div class="d-flex flex-wrap justify-center card_wrapper p-top-30">
+              <div class="d-flex flew-wrap-wrap justify-center card_wrapper p-top-30">
                 <div *ngFor="let intro of introImages; let i = index;" class="card is-card-3">
                   <div class="card-header text-center">
                     <div class="shape is-circle is-md bg-community m-left-auto m-right-auto text-20 m-bottom-10">
@@ -141,7 +141,7 @@
                     <span class="mail_label">{{ 'COMMON.LABEL.TO' | translate }}: </span>
                     <span class="text-13">{{ 'SHARED_FOLLOW_UP.RESPONDENTS_LIST' | translate }}</span>
                   </div>
-                  <div class="d-flex align-center flex-wrap">
+                  <div class="d-flex align-center flew-wrap-wrap">
                     <span class="mail_label m-right-1">CC:</span>
                     <span *ngFor="let cc of selectedCC; let i = index" class="text-13">
                       {{ cc.email }}
@@ -277,7 +277,7 @@
                     <span class="mail_label">{{ 'COMMON.LABEL.TO' | translate }}: </span>
                     <span class="text-13">{{ 'SHARED_FOLLOW_UP.RESPONDENTS_LIST' | translate }}</span>
                   </div>
-                  <div class="d-flex align-center flex-wrap">
+                  <div class="d-flex align-center flew-wrap-wrap">
                     <span class="mail_label">CC:</span>
                     <span
                       *ngFor="let cc of selectedCC; let i = index"

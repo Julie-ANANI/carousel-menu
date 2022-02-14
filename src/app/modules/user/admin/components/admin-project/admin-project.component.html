@@ -34,12 +34,12 @@
         <div class="column col-sm-12 col-11 col-mx-auto">
 
           <!-- heading / actions button -->
-          <div class="flex-between flex-wrap m-bottom-10">
+          <div class="flex-between flew-wrap-wrap m-bottom-10">
 
             <!-- heading / view like client / objective / activity -->
             <div class="m-right-15 m-bottom-15">
               <h1 class="title is-4 text-white m-bottom-1" *ngIf="project.name">{{ project.name }}</h1>
-              <div class="d-flex align-center flex-wrap m-bottom-1">
+              <div class="d-flex align-center flew-wrap-wrap m-bottom-1">
                 <h2 class="title is-6 text-white m-bottom-1" *ngIf="innovTitle">{{ title }}</h2>
                 <a *ngIf="quizLink" class="button is-link text-white is-xs" (click)="openQuiz($event)">
                   Open quiz
@@ -61,7 +61,7 @@
               </div>
 
               <!-- mission objective / activity -->
-              <div class="flex-start flex-wrap">
+              <div class="flex-start flew-wrap-wrap">
 
                 <!-- use cases on 1st June, 2021 -->
                 <ng-container *ngIf="hasMissionTemplate; else oldObjective">

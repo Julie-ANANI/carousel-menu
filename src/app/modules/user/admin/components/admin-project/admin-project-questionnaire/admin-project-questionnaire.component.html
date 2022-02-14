@@ -6,10 +6,10 @@
       *ngIf="canAccess(['import']) || canAccess(['quiz', 'generate'])
       || quizLink && canAccess(['quiz', 'view'])"
       [ngClass]="quizLink && canAccess(['quiz', 'view']) ? 'flex-between' : 'flex-end'"
-      class="flex-wrap">
+      class="flew-wrap-wrap">
 
       <!-- quiz link -->
-      <div *ngIf="quizLink && canAccess(['quiz', 'view'])" class="p-bottom-30 m-right-15 d-flex flex-wrap">
+      <div *ngIf="quizLink && canAccess(['quiz', 'view'])" class="p-bottom-30 m-right-15 d-flex flew-wrap-wrap">
         <p class="text-secondary-dark m-right-2 text-sm m-no-bottom">Quiz URL:</p>
         <a [href]="quizLink" class="text-link text-secondary text-sm text-break" target="_blank">{{ quizLink }}</a>
       </div>

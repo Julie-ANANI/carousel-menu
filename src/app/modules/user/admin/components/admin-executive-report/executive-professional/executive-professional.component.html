@@ -49,7 +49,7 @@
 
 
     <!-- select pro -->
-    <div class="p-top-40 d-flex justify-space flex-wrap">
+    <div class="p-top-40 d-flex justify-space flew-wrap-wrap">
       <div *ngFor="let top of ['', '', '', '']; let i = index;" class="select-wrapper">
         <label>
           <select (change)="selectAnswer($event, i)" class="form-select">
@@ -77,7 +77,7 @@
     <h4 class="text-center">{{ 'ADMIN_EXECUTIVE_REPORT.PROFESSIONAL.SOME_PROFILES' | translate }}</h4>
 
     <!-- pro display -->
-    <div class="d-flex flex-wrap justify-space">
+    <div class="d-flex flew-wrap-wrap justify-space">
       <div *ngFor="let answer of top4Answers; let i = index;" class="pro-wrapper relative text-center text-sm">
         <ng-container *ngIf="answer">
           <!-- flag -->

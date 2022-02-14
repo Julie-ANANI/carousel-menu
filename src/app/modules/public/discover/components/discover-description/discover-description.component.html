@@ -51,7 +51,7 @@
 
 
           <!-- images -->
-          <section *ngIf="innovationCard.media && innovationCard.media.length > 0" class="d-flex justify-center flex-wrap">
+          <section *ngIf="innovationCard.media && innovationCard.media.length > 0" class="d-flex justify-center flew-wrap-wrap">
             <div *ngFor="let media of innovationCard.media" class="d-inline-flex d-d-media-wrapper">
 
               <!-- if image -->
@@ -203,7 +203,7 @@
                     </a>
 
                     <!-- tags -->
-                    <div *ngIf="innovation.tags.length > 0" class="d-flex flex-wrap p-top-2 justify-center">
+                    <div *ngIf="innovation.tags.length > 0" class="d-flex flew-wrap-wrap p-top-2 justify-center">
                       <div *ngFor="let tag of innovation.tags" class="d-inline-flex">
                         <div *ngIf="tag.type === 'SECTOR'" class="label m-no label-tag text-xs text-meta">
                           <i class="fas fa-tag"></i>

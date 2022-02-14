@@ -50,7 +50,7 @@
     <!-- now showing the answers, this contains both the answers to show and comments  -->
     <div [ngClass]="toggleAnswers ? 'is-expand' : 'is-collapse'" class="answers-wrapper">
       <ng-container *ngIf="toggleAnswers">
-        <div class="d-flex justify-between clearbit-list-wrapper flex-wrap">
+        <div class="d-flex justify-between clearbit-list-wrapper flew-wrap-wrap">
 
           <div *ngIf="answersWithComment.length > 0" class="flex-full m-right-20 p-top-25 card-wrapper">
             <div *ngFor="let answer of answersWithComment" class="card">

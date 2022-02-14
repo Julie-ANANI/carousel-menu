@@ -1,5 +1,5 @@
-@import "framework/src/variables";
-@import "framework/src/mixins";
+@import "~@umius/umi-style-framework/scss/variables";
+@import "~@umius/umi-style-framework/scss/mixins";
 
 .admin-executive-wrapper {
   display: flex;
@@ -41,7 +41,7 @@
     .insert-snippet {
       display: flex;
       justify-content: space-between;
-      color: $text-dark-color;
+      color: $dark-color;
       font-size: 13px;
 
       .c-hand:hover {
@@ -51,7 +51,7 @@
     }
 
     .popover {
-      @include flex-centered();
+      @include flex-position(center);
       width: 54.45px;
       border: 2px solid #000000;
       border-radius: $border-radius;
@@ -128,7 +128,7 @@
       .form-icon {
         height: 28px;
         width: 27px;
-        border-color: $border-dark-color;
+        border-color: $dark-color;
 
         &:before {
           margin-top: -10px;
@@ -151,7 +151,7 @@
       border: 2px solid $border-default-color;
       border-radius: 8px;
       box-shadow: 0 2px 4px 0 rgba(30,55,90,.1);
-      background-color: $bg-white-color;
+      background-color: $white-color;
 
       .text-wrapper {
         border-radius: 4px;
@@ -174,7 +174,7 @@
       .label {
         width: 272px;
         font-size: $font-size-sm;
-        color: $text-white-color;
+        color: $white-color;
       }
 
       &.is-justify {

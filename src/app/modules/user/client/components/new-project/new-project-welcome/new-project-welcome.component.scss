@@ -1,4 +1,4 @@
-@import "../../../../../../../style/framework/src/variables";
+@import "~@umius/umi-style-framework/scss/variables";
 
 #new-project-welcome {
 
@@ -40,6 +40,17 @@
     transition: all 0.5s;
   }
 
+}
+
+@keyframes slideInLeft {
+  from {
+    transform: translate3d(-20%, 0, 0);
+    visibility: visible;
+  }
+
+  to {
+    transform: translate3d(0, 0, 0);
+  }
 }
 
 @media screen and (max-width: $size-lg) {
