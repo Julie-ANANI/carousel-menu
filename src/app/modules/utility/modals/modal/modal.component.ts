@@ -73,7 +73,7 @@ export class ModalComponent implements OnInit, OnDestroy {
   }
 
   public toggleState(event: Event) {
-    const _classesToCheck: Array<string> = ['modal-overlay', 'modal-close is-sm', 'button modal-cancel', 'close'];
+    const _classesToCheck: Array<string> = ['modal-overlay', 'modal-close is-sm', 'button modal-cancel', 'close', 'modal-close'];
     const { className } = (event.target as any);
     if (_classesToCheck.indexOf(className) !== -1) {
       this.showModalChange.emit(false);

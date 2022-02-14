@@ -1,4 +1,4 @@
-@import "../../../../../style/framework/src/variables";
+@import "~@umius/umi-style-framework/scss/variables";
 
 #pagination-2-wrapper {
 
@@ -23,12 +23,12 @@
   }
 
   .ghost-background-hover.active {
-    background-color: $text-background-50-color;
+    background-color: lighten($draft-color, 50%);
     border-color: $draft-color;
   }
 
   .ghost-background-hover:hover {
-    background-color: $text-background-55-color;
+    background-color: lighten($draft-color, 55%);
   }
 
   .pagination-navigation-previous-control, .pagination-navigation-next-control {
@@ -71,7 +71,7 @@
 
           &:hover {
             cursor: pointer;
-            background-color: $text-background-55-color;
+            background-color: lighten($draft-color, 55%);
           }
 
         }
