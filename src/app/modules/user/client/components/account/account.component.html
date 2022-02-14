@@ -1,4 +1,4 @@
-<section class="section-pad" id="account-component">
+<section class="p-top-50 p-bottom-50" id="account-component">
   <div class="column col-xs-12 col-11 col-mx-auto">
     <div class="profile-wrapper">
 
@@ -228,9 +228,10 @@
 
           <!-- save button -->
           <div class="save-wrapper text-center">
-            <button class="button is-primary badge is-icon" type="submit"
-                    [ngClass]="{'is-active': toSave}"
-                    [disabled]="formData.invalid || !toSave">
+            <button
+              class="button badge badge-icon" type="submit"
+              [ngClass]="{'badge-active': toSave}"
+              [disabled]="formData.invalid || !toSave">
               <i class="fas fa-save" *ngIf="toSave"></i>
               {{ 'COMMON.BUTTON.SAVE' | translate }}
             </button>
