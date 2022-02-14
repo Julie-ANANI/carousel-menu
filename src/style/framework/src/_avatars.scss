@@ -54,7 +54,7 @@
   }
 
   &[data-initial]::before {
-    color: $text-draft-color;
+    color: $draft-color;
     content: attr(data-initial);
     left: 50%;
     position: absolute;

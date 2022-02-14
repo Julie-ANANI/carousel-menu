@@ -18,7 +18,7 @@
   .form-checkbox {
     font-size: 14px;
     font-weight: 600;
-    color: $text-draft-color;
+    color: $draft-color;
     padding-right: 0;
   }
 
@@ -35,7 +35,7 @@
 
   .divider {
     margin: $unit-5 0;
-    border-color: $border-meta-color;
+    border-color: $meta-color;
     height: 2px;
   }
 

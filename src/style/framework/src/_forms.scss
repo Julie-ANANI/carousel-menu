@@ -204,7 +204,7 @@ textarea {
       left: -4px;
       top: -5px;
       width: $unit-5;
-      border-color: $border-meta-color;
+      border-color: $meta-color;
     }
 
   }
@@ -340,7 +340,7 @@ textarea {
      border-color: $border-primary-color;
 
      ~.icon {
-       color: $text-draft-color;
+       color: $draft-color;
      }
 
    }

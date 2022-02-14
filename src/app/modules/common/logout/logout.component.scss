@@ -1,9 +1,9 @@
-@import "../../../../style/framework/src/variables";
-@import "../../../../style/framework/src/mixins";
+@import "~@umius/umi-style-framework/scss/variables";
+@import "~@umius/umi-style-framework/scss/mixins";
 
 #logout {
-  @include flex-centered();
-  @include fixed-full-page();
+  @include flex-position(center);
+  @include full-page(fixed);
   background: $white-color;
   flex-direction: column;
   z-index: 9090;

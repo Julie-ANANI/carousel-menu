@@ -105,7 +105,7 @@
       display: flex;
       background-color: transparent;
       font-size: $font-size-sm;
-      color: $text-draft-color;
+      color: $draft-color;
       font-weight: $font-weight-medium;
       line-height: $line-height;
       position: relative;
@@ -211,7 +211,7 @@
 
             &:hover, &.active, &:active {
               background-color: $bg-menu-item-color;
-              color: $text-draft-color;
+              color: $draft-color;
             }
 
           }
