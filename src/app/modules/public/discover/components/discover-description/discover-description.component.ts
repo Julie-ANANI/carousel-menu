@@ -120,6 +120,7 @@ export class DiscoverDescriptionComponent implements OnInit {
 
     } else {
       this._fetchingError = true;
+      this._router.navigate(['/discover']);
     }
 
   }
