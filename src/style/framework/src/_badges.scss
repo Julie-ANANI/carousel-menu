@@ -7,7 +7,7 @@
   &[data-badge], &:not([data-badge]) {
 
     &::after {
-      background: $bg-primary-color;
+      background: $primary-color;
       background-clip: padding-box;
       border-radius: .5rem;
       color: $white-color;
@@ -152,7 +152,7 @@
       top: 0;
       right: 0;
       margin: 0;
-      background: $bg-meta-color;
+      background: $meta-color;
       color: $white-color;
       transform: translate(50%, -50%);
       box-shadow: 0 0 0 .1rem $border-white-color;

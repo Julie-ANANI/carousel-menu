@@ -21,7 +21,7 @@
 }
 
 .text-dark {
-  color: $text-secondary-dark-color !important;
+  color: $dark-color !important;
 }
 
 .text-draft {
@@ -46,7 +46,7 @@
 
 .bg-primary {
   color: $white-color !important;
-  background: $bg-primary-color !important;
+  background: $primary-color !important;
 }
 
 .bg-secondary {
@@ -61,7 +61,7 @@
 
 .bg-gray {
   color: $white-color !important;
-  background: $bg-meta-color !important;
+  background: $meta-color !important;
 }
 
 .bg-dark {

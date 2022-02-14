@@ -346,38 +346,38 @@
   }
 
   &.is-link {
-    @include button-link-variant($bg-primary-color);
+    @include button-link-variant($primary-color);
 
     &.loading {
-      @include button-loading-variant($bg-primary-color);
+      @include button-loading-variant($primary-color);
     }
 
   }
 
   &.is-action {
-    @include button-default-action-variant($bg-primary-color);
+    @include button-default-action-variant($primary-color);
 
     &.is-shadowed {
-      @include button-shadow-variant($bg-primary-color);
+      @include button-shadow-variant($primary-color);
     }
 
   }
 
   &.is-primary {
-    @include button-default-variant($bg-primary-color);
+    @include button-default-variant($primary-color);
 
     &.loading {
       @include button-loading-variant($white-color);
     }
 
     &.is-shadowed {
-      @include button-shadow-variant($bg-primary-color);
+      @include button-shadow-variant($primary-color);
     }
 
   }
 
   &.is-outlined {
-    @include button-outline-variant($bg-primary-color);
+    @include button-outline-variant($primary-color);
   }
 
   &.is-secondary {
@@ -414,22 +414,22 @@
   }
 
   &.is-info {
-    @include button-default-variant($bg-meta-color);
+    @include button-default-variant($meta-color);
 
     &.is-link, &.is-outlined {
 
       &.loading {
-        @include button-loading-variant($bg-meta-color);
+        @include button-loading-variant($meta-color);
       }
 
     }
 
     &.is-link {
-      @include button-link-variant($bg-meta-color);
+      @include button-link-variant($meta-color);
     }
 
     &.is-action {
-      @include button-default-action-variant($bg-meta-color)
+      @include button-default-action-variant($meta-color)
     }
 
     &.loading {
@@ -437,11 +437,11 @@
     }
 
     &.is-outlined {
-      @include button-outline-variant($bg-meta-color);
+      @include button-outline-variant($meta-color);
     }
 
     &.is-shadowed {
-      @include button-shadow-variant($bg-meta-color);
+      @include button-shadow-variant($meta-color);
     }
 
   }

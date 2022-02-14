@@ -1,6 +1,6 @@
 @import "../variables";
 
-@mixin button-default-variant($color: $bg-primary-color) {
+@mixin button-default-variant($color: $primary-color) {
   color: $white-color;
   background-color: $color;
   border-color: $color;
@@ -26,7 +26,7 @@
 
 }
 
-@mixin button-outline-variant($color: $bg-primary-color) {
+@mixin button-outline-variant($color: $primary-color) {
   color: $color;
   border-color: $color;
   border-width: 2px;
@@ -39,7 +39,7 @@
 
   &:hover, &:focus, &.active, &:active {
 
-    @if $color == $bg-primary-color {
+    @if $color == $primary-color {
       background-color: $hover-background-color;
     }
 
@@ -55,7 +55,7 @@
       background-color: lighten($color, 46%);
     }
 
-    @if $color == $bg-meta-color {
+    @if $color == $meta-color {
       background-color: lighten($color, 30%);
     }
 
@@ -83,7 +83,7 @@
 
 }
 
-@mixin button-link-variant($color: $bg-primary-color) {
+@mixin button-link-variant($color: $primary-color) {
   color: $color;
   border: none;
   background-color: transparent;
@@ -111,7 +111,7 @@
 
 }
 
-@mixin button-default-action-variant($color: $bg-primary-color) {
+@mixin button-default-action-variant($color: $primary-color) {
   color: $white-color;
   background-color: $color;
   border-color: $color;
@@ -149,7 +149,7 @@
 
 }
 
-@mixin button-shadow-variant($color: $bg-primary-color) {
+@mixin button-shadow-variant($color: $primary-color) {
   color: $white-color;
   background-color: $color;
   border-color: $color;

@@ -1,4 +1,4 @@
-@import "../../../../../../style/framework/src/variables";
+@import "~@umius/umi-style-framework/scss/variables";
 
 .shared-preset-section {
 
@@ -45,7 +45,7 @@
       color: $white-color;
 
       &::before {
-        background-color: $bg-primary-color;
+        background-color: $primary-color;
       }
 
     }

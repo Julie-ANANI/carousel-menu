@@ -98,7 +98,7 @@
       background-color: $white-color;
 
       .modal-cancel {
-        @include button-outline-variant($bg-meta-color);
+        @include button-outline-variant($meta-color);
       }
 
       .button:not(:last-child) {

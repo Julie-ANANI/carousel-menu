@@ -195,7 +195,7 @@ textarea {
 
     &::before {
       @include control-transition();
-      background: $bg-meta-color none;
+      background: $meta-color none;
       border-radius: 50%;
       content: "";
       display: block;
@@ -307,7 +307,7 @@ textarea {
     }
 
     &:indeterminate + .form-icon {
-      background: $bg-primary-color;
+      background: $primary-color;
       border-color: $border-primary-color;
 
       &::before {

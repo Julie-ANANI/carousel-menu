@@ -12,7 +12,7 @@
   width: 100%;
 
   .bar-item {
-    background: $bg-primary-color;
+    background: $primary-color;
     color: $white-color;
     display: block;
     font-size: $font-size-sm;
@@ -65,7 +65,7 @@
   }
 
   .bar-slider-button {
-    background: $bg-primary-color;
+    background: $primary-color;
     border: 0;
     border-radius: 50%;
     height: $unit-3;

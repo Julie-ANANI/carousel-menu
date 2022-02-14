@@ -22,7 +22,7 @@
   }
 
   &.is-primary {
-    @include label-color-variant($bg-primary-color);
+    @include label-color-variant($primary-color);
   }
 
   &.is-secondary {
@@ -46,7 +46,7 @@
   }
 
   &.is-info {
-    @include label-color-variant($bg-meta-color);
+    @include label-color-variant($meta-color);
   }
 
   &.is-draft {

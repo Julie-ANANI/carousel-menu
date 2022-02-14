@@ -1,5 +1,5 @@
-@import "../../../../../style/framework/src/variables";
-@import "../../../../../style/framework/src/mixins";
+@import "~@umius/umi-style-framework/scss/variables";
+@import "~@umius/umi-style-framework/scss/mixins";
 
 #shared-worldmap {
 
@@ -48,7 +48,7 @@
     align-items: center;
     margin: 0.5rem;
     font-size: 0.65rem;
-    color: $text-secondary-dark-color;
+    color: $dark-color;
     font-weight: $font-weight-medium;
 
     .circle-1 {

@@ -58,7 +58,7 @@ $progress-color: $progress-color !default;
 // text variables
 $primary-color: $primary-color !default;
 $text-dark-color: $dark-color !default;
-$text-secondary-dark-color: #484848 !default;
+$dark-color: #484848 !default;
 $text-secondary-color: $primary-color !default;
 $meta-color: $meta-color !default;
 $success-color: $success-color !default;
@@ -71,11 +71,11 @@ $text-draft-color: $draft-color !default;
 
 
 // background variables
-$bg-primary-color: $primary-color !default;
+$primary-color: $primary-color !default;
 $progress-color: #F79323 !default;
 $bg-secondary-color: $primary-color !default;
 $bg-community-color: $community-color !default;
-$bg-meta-color: $meta-color !default;
+$meta-color: $meta-color !default;
 $bg-pending-color: $pending-color !default;
 $draft-color: $draft-color !default;
 $success-color: $success-color !default;
