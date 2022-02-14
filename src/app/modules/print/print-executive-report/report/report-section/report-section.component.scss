@@ -1,4 +1,4 @@
-@import "../../../../../../style/framework/src/variables";
+@import "~@umius/umi-style-framework/scss/variables";
 
 #report-section {
   display: flex;
@@ -29,7 +29,7 @@
     #kpi-content {
 
       h4 {
-        color: $text-primary-color;
+        color: $primary-color;
         margin-bottom: 0;
         font-size: 85px;
         font-weight: normal;

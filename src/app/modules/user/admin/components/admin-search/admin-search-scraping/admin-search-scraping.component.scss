@@ -64,7 +64,7 @@
         margin-bottom: 15px;
 
         .text-help {
-          color: $text-primary-color;
+          color: $primary-color;
           font-size: 14px;
           cursor: default;
         }
@@ -118,7 +118,7 @@
           position: absolute;
           right: 10px;
           bottom: 4px;
-          color: $text-primary-color;
+          color: $primary-color;
 
           &:hover {
             cursor: pointer;
@@ -147,7 +147,7 @@
   .loader-wrapper {
 
     .loading::after {
-      border-color: $text-primary-color;
+      border-color: $primary-color;
       border-right-color: transparent;
       border-top-color: transparent;
     }
@@ -248,7 +248,7 @@
           margin-bottom: 15px;
 
           .text-title:hover {
-            color: $text-primary-color;
+            color: $primary-color;
             cursor: pointer;
           }
 

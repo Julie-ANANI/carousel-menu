@@ -65,9 +65,9 @@
 <app-utility-modal [(showModal)]="modalShow" [maxWidth]="'960px'" [enableCloseButton]="true">
 
  <section class="modal-body">
-   <div class="card-wrapper d-flex">
+   <div class="card-wrapper card-responsive d-flex">
      <ng-container *ngFor="let answer of answers">
-       <div class="card is-responsive badge badge-save" [ngClass]="{ 'active': activeAnswer(answer) && isAdmin }">
+       <div class="card is-responsive badge badge-icon" [ngClass]="{ 'badge-active': activeAnswer(answer) && isAdmin }">
 
          <i class="fas fa-check-circle"></i>
 
