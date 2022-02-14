@@ -169,7 +169,7 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
   }
 
   public loadStats() {
-    this._campaignService.getBatchesStats(this._campaign._id).subscribe((result) => {
+    this._campaignService.getStats(this._campaign._id, 'batches').subscribe((result) => {
       this._campaign.stats = result
       this._statsConfig = this.setBatchesStatsConfig(result);
     }, (err: HttpErrorResponse) =>{

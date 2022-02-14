@@ -69,7 +69,7 @@ export class AdminCampaignHistoryComponent implements OnInit {
   }
 
   public loadStats() {
-    this._campaignService.getUpdatedHistoryStats(this.campaign._id).pipe(first()).subscribe((result: CampaignStats) => {
+    this._campaignService.getStats(this.campaign._id, 'search').pipe(first()).subscribe((result: CampaignStats) => {
       if (result) {
         this._campaign.stats = result
         this._stats = result.search;

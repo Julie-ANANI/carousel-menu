@@ -395,6 +395,8 @@ export class SharedProfessionalTargetingComponent implements OnInit, OnDestroy {
     // return jobs;
     if (jobs && jobs.length) {
       return _.sortBy(jobs, ['label.en']);
+    } else {
+      return [];
     }
   }
 

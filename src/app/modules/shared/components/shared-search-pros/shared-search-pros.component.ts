@@ -29,6 +29,7 @@ export class SharedSearchProsComponent implements OnInit, OnDestroy {
   @Input() set campaign(value: Campaign) {
     this._campaign = value;
     this._initParams();
+    this._subscribeTargetingPros();
   }
 
   private _suggestions: Array<{
@@ -94,6 +95,8 @@ export class SharedSearchProsComponent implements OnInit, OnDestroy {
 
   private _errorMessageLaunch = '';
 
+  private _targetProsSubInitialized = false;
+
   // isEqual({ foo: 'bar' }, { foo: 'bar' });
   private _isEqual = (...objects: any[]) => objects.every(obj => JSON.stringify(obj) === JSON.stringify(objects[0]));
 
@@ -113,35 +116,7 @@ export class SharedSearchProsComponent implements OnInit, OnDestroy {
     if (isPlatformBrowser(this._platformId)) {
       this._getCountries();
       this._initParams();
-
-      this.getTargetedProsFromService().then(_ => {
-        /**
-         * subscribe: get recent targetPros, not saved, current one
-         * */
-        this._jobFrontService
-          .targetedProsToUpdate()
-          .pipe(takeUntil(this._ngUnsubscribe))
-          .subscribe((result: { targetPros: TargetPros, isToggle?: boolean, identifier?: string, toSave?: boolean }) => {
-            this._toSave = result.toSave;
-            this._targetedProsToUpdate = result.targetPros || <TargetPros>{};
-            this._checkProsTargetingValid();
-          });
-      });
     }
-  }
-
-  getTargetedProsFromService() {
-    return new Promise((resolve, reject) => {
-      this._campaignService.getTargetedPros(this._campaign._id).pipe(first())
-        .subscribe(res => {
-          this._jobFrontService.setTargetedProsToUpdate({targetPros: res, isToggle: false, identifier: ''});
-          this._initialTargetedPro = JSON.parse(JSON.stringify(res));
-          resolve(true);
-        }, error => {
-          console.error(error);
-          reject(error);
-        });
-    });
   }
 
   private _getCountries() {
@@ -202,6 +177,8 @@ export class SharedSearchProsComponent implements OnInit, OnDestroy {
       this._params.count = 100;
       this._params.campaign = this.campaign._id;
       this._params.innovation = this.campaign.innovation._id;
+      this._jobFrontService.setTargetedProsToUpdate({targetPros: this._campaign.targetPros, isToggle: false, identifier: ''});
+      this._initialTargetedPro = JSON.parse(JSON.stringify(this._campaign.targetPros));
       if (
         this.campaign.innovation &&
         this.campaign.innovation.settings &&
@@ -220,6 +197,23 @@ export class SharedSearchProsComponent implements OnInit, OnDestroy {
     this._catResult = {duplicate_status: 'ok'};
     this.estimateNumberOfGoogleRequests();
     this._suggestions = [];
+  }
+
+  private _subscribeTargetingPros() {
+    if(this._campaign._id && !this._targetProsSubInitialized) {
+      /**
+       * subscribe: get recent targetPros, not saved, current one
+       * */
+      this._jobFrontService
+        .targetedProsToUpdate()
+        .pipe(takeUntil(this._ngUnsubscribe))
+        .subscribe((result: { targetPros: TargetPros, isToggle?: boolean, identifier?: string, toSave?: boolean }) => {
+          this._targetProsSubInitialized = true;
+          this._toSave = result.toSave;
+          this._targetedProsToUpdate = result.targetPros || <TargetPros>{};
+          this._checkProsTargetingValid();
+        });
+    }
   }
 
   private _getGoogleQuota() {
@@ -527,19 +521,11 @@ export class SharedSearchProsComponent implements OnInit, OnDestroy {
    * confirm: restore target pros
    */
   restoreTargetedPros() {
-    this._campaignService.getTargetedPros(this._campaign._id).pipe(first())
-      .subscribe(res => {
-        this._jobFrontService.setTargetedProsToUpdate({targetPros: res, isToggle: false, identifier: ''});
-        this._initialTargetedPro = JSON.parse(JSON.stringify(res));
-        this._isReset = false;
-        this._toSave = false;
-        this._translateNotificationsService.success('Success', 'The saved professional targeting has been applied.');
-      }, (err: HttpErrorResponse) => {
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
-        this._toSave = true;
-        this._isReset = false;
-        console.error(err);
-      });
+    this._jobFrontService.setTargetedProsToUpdate({targetPros: this._initialTargetedPro, isToggle: false, identifier: ''});
+    this._initialTargetedPro = JSON.parse(JSON.stringify(this._initialTargetedPro));
+    this._isReset = false;
+    this._toSave = false;
+    this._translateNotificationsService.success('Success', 'The saved professional targeting has been applied.');
   }
 
   confirmSaveReset() {
@@ -566,11 +552,6 @@ export class SharedSearchProsComponent implements OnInit, OnDestroy {
     this._isShowModal = true;
   }
 
-  getUpdatedTargetedPros(targetPros: TargetPros) {
-    this._targetedProsToUpdate = targetPros;
-    this._toSave = true;
-  }
-
   cancelSaveReset() {
     this._isShowModal = false;
   }
@@ -589,12 +570,15 @@ export class SharedSearchProsComponent implements OnInit, OnDestroy {
    * confirm: save targeted pros in the campaign
    */
   saveTargetedPros() {
-    this._campaignService.saveTargetedPros(this._campaign._id, this._targetedProsToUpdate).pipe(first())
-      .subscribe(() => {
+    const beforeSave = this._campaign.targetPros;
+    this._campaign.targetPros = this._targetedProsToUpdate
+    this._campaignService.put(this._campaign).pipe(first())
+      .subscribe((campaign : Campaign) => {
         this._toSave = false;
-        this._initialTargetedPro = JSON.parse(JSON.stringify(this._targetedProsToUpdate));
+        this._initialTargetedPro = JSON.parse(JSON.stringify(campaign.targetPros));
         this._translateNotificationsService.success('Success', 'The saved professional targeting has been saved.');
       }, (err: HttpErrorResponse) => {
+        this._campaign.targetPros = beforeSave;
         this._translateNotificationsService.error('Error', 'An error occurred');
         this._toSave = false;
         this._initialTargetedPro = JSON.parse(JSON.stringify(this._targetedProsToUpdate));

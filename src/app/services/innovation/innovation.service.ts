@@ -268,6 +268,6 @@ export class InnovationService {
       query.push(`anonymous=${!!anonymous}`);
     }
     const _query = query.join('&');
-    return environment.apiUrl + '/innovation/' + innovationId + '/exportAnswers' + (_query.length ? '?' + _query : '');
+    return environment.apiUrl + '/innovation/' + innovationId + '/answers/export' + (_query.length ? '?' + _query : '');
   }
 }

@@ -45,18 +45,18 @@ export class AnswerService {
   }
 
   public exportAsCsvByCampaign(campaignId: string, client: Boolean): void {
-    const url = environment.apiUrl + '/campaign/' + campaignId + '/exportAnswers' + (client ? '?client=true' : '');
+    const url = environment.apiUrl + '/campaign/' + campaignId + '/answers/export' + (client ? '?client=true' : '');
     window.open(url);
   }
 
   public importAsCsv(campaignId: string, file: File): Observable<any> {
     const formData = new FormData();
     formData.append('file', file, file.name);
-    return this._http.post('/campaign/' + campaignId + '/importAnswers', formData);
+    return this._http.post('/campaign/' + campaignId + '/answers/import', formData);
   }
 
   public importFromQuiz(answer: any): Observable<any> {
-    return this._http.post(`/campaign/${answer.campaignId}/answer`, answer);
+    return this._http.post(`/campaign/${answer.campaignId}/answers`, answer);
   }
 
   public answerReassign(campaignId: string, quizAnswerId: string, answerId: string, newPro: any): Observable<any> {
@@ -65,7 +65,7 @@ export class AnswerService {
       answerUmiAppId: answerId,
       user: newPro
     };
-    return this._http.post(`/campaign/${campaignId}/answerReassign`, body);
+    return this._http.post(`/answer/${answerId}/reassign`, body);
   }
 
   public updateLinkingStatus(arrayAnswers: Array<string>, newStatus: string): Observable<any> {

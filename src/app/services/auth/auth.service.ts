@@ -36,7 +36,8 @@ export class AuthService {
 
   private _cookieOptions: CookieOptions = {
     expires: new Date(Date.now() + environment.cookieTime ),
-    secure: environment.secureCookie
+    secure: environment.secureCookie,
+    path: '/'
   };
 
   private _cookieObserver: any = null;

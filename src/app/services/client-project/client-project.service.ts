@@ -24,7 +24,7 @@ export class ClientProjectService {
       missionObj: missionObj,
       innovationObj: innovationObj
     };
-    return this._http.post<CreateResponse>('/clientProject/create', _data);
+    return this._http.post<CreateResponse>('/clientProject', _data);
   }
 
   public get(clientProjectId: string, config?: Config): Observable<ClientProject> {

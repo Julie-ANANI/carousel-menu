@@ -9,7 +9,7 @@ import { FormGroup } from '@angular/forms';
 import { CampaignService } from '../../../../../../services/campaign/campaign.service';
 import { TranslateNotificationsService } from '../../../../../../services/translate-notifications/translate-notifications.service';
 import { environment } from '../../../../../../../environments/environment';
-import { Campaign } from '../../../../../../models/campaign';
+import {Campaign, CampaignStats} from '../../../../../../models/campaign';
 import { Innovation } from '../../../../../../models/innovation';
 import { InnovationService } from '../../../../../../services/innovation/innovation.service';
 import {
@@ -272,8 +272,8 @@ export class AdminProjectCampaignsComponent implements OnInit, OnDestroy {
       .updateStats(campaign._id)
       .pipe(first())
       .subscribe(
-        (updatedCampaign: Campaign) => {
-          this._campaigns[index] = updatedCampaign;
+        (updatesStats: CampaignStats) => {
+          this._campaigns[index].stats = updatesStats;
           this._translateNotificationsService.success(
             'Success',
             'The campaign stats is updated.'

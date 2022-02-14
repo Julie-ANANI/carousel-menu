@@ -119,7 +119,7 @@ export class AdminCampaignProsComponent implements OnInit {
   }
 
   loadStats() {
-    this._campaignService.getProsStats(this._campaign._id).subscribe((result) => {
+    this._campaignService.getStats(this._campaign._id, 'pros').subscribe((result) => {
       this._campaign.stats = result
       this._prosStatsConfig = this.setProsStatsConfig(result.pros ||{});
     }, (err: HttpErrorResponse) =>{

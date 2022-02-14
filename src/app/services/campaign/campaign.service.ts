@@ -5,7 +5,6 @@ import {Answer} from '../../models/answer';
 import {Batch} from '../../models/batch';
 import {Campaign} from '../../models/campaign';
 import {Professional} from '../../models/professional';
-import {TargetPros} from '../../models/target-pros';
 
 @Injectable({providedIn: 'root'})
 export class CampaignService {
@@ -36,17 +35,7 @@ export class CampaignService {
   }
 
   public getAnswers(campaignId: string): Observable<{ answers: { draftAnswers: Array<Answer>, localAnswers: Array<Answer> } }> {
-    return this._http
-      .get<{ answers: { draftAnswers: Array<Answer>, localAnswers: Array<Answer> } }>
-      ('/campaign/' + campaignId + '/answer');
-  }
-
-  public getTargetedPros(campaignId: string): Observable<TargetPros> {
-    return this._http.get<TargetPros>('/campaign/' + campaignId + '/targetedPros');
-  }
-
-  public saveTargetedPros(campaignId: string, targetedPros: TargetPros): Observable<TargetPros> {
-    return this._http.post<TargetPros>('/campaign/' + campaignId + '/targetedPros', targetedPros);
+    return this._http.get<{ answers: { draftAnswers: Array<Answer>, localAnswers: Array<Answer> } }>(`/campaign/${campaignId}/answers`);
   }
 
   public remove(campaignId: string) {
@@ -57,16 +46,8 @@ export class CampaignService {
     return this._http.put(`/campaign/${campaignId}/stats`, {});
   }
 
-  public getUpdatedHistoryStats(campaignId: string): Observable<any> {
-    return this._http.get(`/campaign/${campaignId}/historyStats`);
-  }
-
-  public getProsStats(campaignId: string): Observable<any> {
-    return this._http.get(`/campaign/${campaignId}/prosStats`);
-  }
-
-  public getBatchesStats(campaignId: string): Observable<any> {
-    return this._http.get(`/campaign/${campaignId}/batchesStats`);
+  public getStats(campaignId: string, type: 'pros' | 'search' | 'batches'): Observable<any> {
+    return this._http.get(`/campaign/${campaignId}/stats?type=${type}`);
   }
 
   public getBatches(campaignId: string): Observable<Array<Batch>> {
@@ -74,16 +55,11 @@ export class CampaignService {
   }
 
   public createNewBatch(campaignId: string, batch: Batch): Observable<any> {
-    return this._http.post(`/campaign/${campaignId}/createNewBatch`, batch);
+    return this._http.post(`/campaign/${campaignId}/batches`, batch);
   }
 
   public AutoBatch(campaignId: string): Observable<any> {
-    return this._http.post(`/campaign/${campaignId}/AutoBatch`, {});
-  }
-
-  // DEBUG AUTOBATCH => Creation de pro a la volée
-  public creerpro(campaignId: string): Observable<any> {
-    return this._http.post(`/campaign/${campaignId}/creerPro`, {});
+    return this._http.post(`/campaign/${campaignId}/autoBatch`, {});
   }
 
   public startABtesting(campaignId: string,
@@ -116,7 +92,7 @@ export class CampaignService {
   }
 
   public sendTestEmails(campaignId: string, batchStatus: number, userInfo: any): Observable<any> {
-    return this._http.post(`/campaign/${campaignId}/sendTestEmailsNew`, {
+    return this._http.post(`/campaign/${campaignId}/sendTestEmails`, {
       batchStatus: batchStatus,
       user: userInfo
     });
