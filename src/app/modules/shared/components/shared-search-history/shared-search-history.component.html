@@ -4,7 +4,7 @@
   <section class="text-md text-medium p-bottom-30">
     <div *ngIf="canAccess(['launch', 'googleRequests'])" class="icon-container m-right-1 is-overlay is-sm">
       <span [attr.data-tooltip]="'Relaunch google request'" class="tooltip">
-        <i (click)="relaunchRequests()" class="c-hand fa fa-bolt text-primary-dark"></i>
+        <i (click)="relaunchRequests()" class="c-hand fa fa-bolt text-dark"></i>
       </span>
     </div>
     <span *ngIf="paused" class="text-error">Module is paused.</span>

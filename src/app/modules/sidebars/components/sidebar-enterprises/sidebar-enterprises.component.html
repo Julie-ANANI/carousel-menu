@@ -255,7 +255,7 @@
       <li *ngFor="let answer of context.answerList; let i = index">
 
         <!-- text -->
-        <div class="answer-wrapper text-sm text-primary-dark m-right-2">
+        <div class="answer-wrapper text-sm text-dark m-right-2">
         <span
           *ngIf="!context.isString">{{answer.text || answer.name || answer.label || answer.expression}}</span>
           <span *ngIf="context.isString">{{answer}}</span>

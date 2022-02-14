@@ -1,8 +1,6 @@
-@import "../../../../../../style/framework/src/variables";
-
 #share-synthesis-complete {
   .box-shadow {
-    box-shadow: $box-shadow;
+    box-shadow: 1px 2px 4px 0 rgba(0, 0, 0, 0.37);
     border-radius: 6px;
   }
 }

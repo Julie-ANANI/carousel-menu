@@ -124,14 +124,14 @@
       <div *ngIf="editMode" class="m-right-25 m-bottom-20">
         <span
           (click)="onClickLanguage('fr')"
-          [ngClass]="professional.language === 'fr' ? 'text-primary' : 'text-primary-dark'"
+          [ngClass]="professional.language === 'fr' ? 'text-primary' : 'text-dark'"
           class="text-link p-right-10 text-normal tooltip"
           data-tooltip="Set pro lang French">
           fr
         </span>
         <span
           (click)="onClickLanguage('en')"
-          [ngClass]="professional.language === 'en' ? 'text-primary' : 'text-primary-dark'"
+          [ngClass]="professional.language === 'en' ? 'text-primary' : 'text-dark'"
           class="text-link text-normal tooltip"
           data-tooltip="Set pro lang English">
           en

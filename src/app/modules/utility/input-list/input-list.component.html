@@ -32,7 +32,7 @@
       <li *ngFor="let answer of answerList; let i = index">
 
         <!-- text -->
-        <div class="answer-wrapper text-sm text-primary-dark m-right-2">
+        <div class="answer-wrapper text-sm text-dark m-right-2">
           <span (click)="clickItem.emit(answer)"
                 *ngIf="!isClickable && !(enableUpdate && i === indexNumber)">{{ answer.text || answer.name || answer.label || answer.expression}}</span>
           <a class="c-hand" *ngIf="isClickable && !(enableUpdate && i === indexNumber)"

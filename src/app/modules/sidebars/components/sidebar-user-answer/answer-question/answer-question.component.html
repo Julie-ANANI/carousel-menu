@@ -20,7 +20,7 @@
           <div
             (click)="selectOption($event, option)"
             *ngFor="let option of question.options"
-            [ngClass]="{ 'text-primary-dark': option.identifier !== fullAnswer.answers[question.identifier] }"
+            [ngClass]="{ 'text-dark': option.identifier !== fullAnswer.answers[question.identifier] }"
             class="c-hand">
             {{ optionLabel(option.identifier) }}
           </div>
@@ -225,13 +225,13 @@
       <!-- /textarea case -->
 
       <!-- scale case -->
-      <div *ngSwitchCase="'scale'" class="text-primary-dark">
+      <div *ngSwitchCase="'scale'" class="text-dark">
         {{ fullAnswer.answers[question.identifier ] }}
       </div>
       <!-- /scale case -->
 
       <!-- star case -->
-      <div *ngSwitchCase="'stars'" class="text-primary-dark">
+      <div *ngSwitchCase="'stars'" class="text-dark">
 
         <!-- not edit mode -->
         <div *ngIf="fullAnswer.answers[question.identifier] && !editMode">
@@ -271,7 +271,7 @@
       <!-- /star case -->
 
       <!-- ranking case -->
-      <div *ngSwitchCase="'ranking'" class="text-primary-dark">
+      <div *ngSwitchCase="'ranking'" class="text-dark">
         <!-- not edit mode -->
         <div *ngIf="fullAnswer.answers[question.identifier] && !editMode">
           <div
@@ -335,7 +335,7 @@
             *ngFor="let option of question.options"
             [ngClass]="{'text-normal': editMode,
             'text-meta': option.identifier !== fullAnswer.answers[question.identifier] && !editMode,
-            'text-primary-dark': option.identifier !== fullAnswer.answers[question.identifier]}"
+            'text-dark': option.identifier !== fullAnswer.answers[question.identifier]}"
             class="c-hand">
             {{ optionLabel(option.identifier) }}
           </div>
@@ -366,7 +366,7 @@
       </app-shared-tags>
     </div>
 
-    <div *ngIf="!showCommentTranslation" class="p-top-10 text-primary-dark">
+    <div *ngIf="!showCommentTranslation" class="p-top-10 text-dark">
       {{ fullAnswer.answers[question.identifier + 'Comment'] }}
       <button
         (click)="showCommentTranslation = true"
@@ -376,7 +376,7 @@
       </button>
     </div>
 
-    <div *ngIf="showCommentTranslation" class="p-top-10 text-primary-dark">
+    <div *ngIf="showCommentTranslation" class="p-top-10 text-dark">
       {{ fullAnswer.answers_translations[question.identifier + 'Comment'][platformLang] }}
       <button
         (click)="showCommentTranslation = false"
