@@ -1,4 +1,4 @@
-<div class="column col-xs-12 col-11 col-mx-auto p-top-30 p-bottom-30" id="sidebar-signup-form">
+<div class="column col-sm-12 col-11 col-mx-auto p-top-30 p-bottom-30" id="sidebar-signup-form">
   <form novalidate [formGroup]="signupForm" (ngSubmit)="onContinue()" autocomplete="off">
 
     <!-- First name -->
@@ -148,7 +148,7 @@
       <div class="p-top-20 text-sm p-left-15 p-right-15 text-meta text-center">
         {{ 'COMMON.TERMS.A' | translate }} {{ companyName }}'s
         <a [href]="getTermsLink()" target="_blank" rel="noopener">
-          <span class="text-link">{{ 'COMMON.TERMS.B' | translate }}</span>
+          <span class="text-link text-medium">{{ 'COMMON.TERMS.B' | translate }}</span>
         </a>
       </div>
     </ng-container>
@@ -156,7 +156,7 @@
     <!-- Submit button -->
     <div class="p-top-30 text-center">
       <button
-        class="button is-primary is-lg gtm-signup-email-validated"
+        class="button is-lg gtm-signup-email-validated"
         [disabled]="signupForm.invalid || isCreating"
         id="btn-submit"
         type="submit">
