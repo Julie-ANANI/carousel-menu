@@ -1,5 +1,5 @@
-@import "../../../../../style/framework/src/variables";
-@import "../../../../../style/framework/src/mixins";
+@import "~@umius/umi-style-framework/scss/variables";
+@import "~@umius/umi-style-framework/scss/mixins";
 
 #search-tool-component {
 
@@ -20,7 +20,7 @@
     }
 
     &:hover {
-      box-shadow: $box-shadow-4;
+      box-shadow: 0 0 25px 0 rgba(0,0,0,0.15);
     }
 
   }
@@ -178,7 +178,7 @@
           font-size: $font-size-sm;
 
           .text-link {
-            color: $text-dark-color;
+            color: $dark-color;
           }
 
         }

@@ -636,7 +636,7 @@ input {
     padding: $layout-spacing;
     font-size: $font-size-sm;
     margin-top: $unit-1;
-    color: $text-dark-color;
+    color: $dark-color;
 
     &:hover, &.is-focused {
       background:  $bg-menu-item-color;

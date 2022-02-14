@@ -2,7 +2,7 @@
 
 // Title mixin
 @mixin title-variant($size: 1.6rem) {
-  color: $text-dark-color;
+  color: $dark-color;
   font-size: $size;
   font-weight: $font-weight-medium;
   margin-top: 0;
@@ -13,7 +13,7 @@
 
 // Subtitle mixin
 @mixin subtitle-variant($size: 1.6rem) {
-  color: $text-dark-color;
+  color: $dark-color;
   font-size: $size;
   font-weight: $font-weight-normal;
   margin-top: 0;

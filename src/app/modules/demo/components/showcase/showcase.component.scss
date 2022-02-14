@@ -1,9 +1,10 @@
-@import "../../../../../style/framework/src/variables";
-@import "../../../../../style/framework/src/mixins";
+@import "~@umius/umi-style-framework/scss/variables";
+@import "~@umius/umi-style-framework/scss/mixins";
 
 #showcase {
   min-height: 100vh;
-  background-color: $bg-page-color;
+  background-color: $page-light-color
+;
 
   .history-icon {
     top: 10px;
@@ -48,7 +49,7 @@
       background-color: $white-color;
       border-radius: $border-radius;
       padding: 2.5rem;
-      box-shadow: $box-shadow-4;
+      box-shadow: 0 0 25px 0 rgba(0,0,0,0.15);
     }
 
     .answer-wrapper {

@@ -29,7 +29,7 @@
             <h4 [innerText]="'SHOWCASE.CREATE_SHOWCASE'" class="text-draft" translate></h4>
 
             <div class="m-top-25">
-              <button (click)="modifyTag()" class="btn btn-primary rounded shadow" type="button">
+              <button (click)="modifyTag()" class="button is-rounded is-shadowed" type="button">
                 <i class="fas fa-pencil-alt m-no-left"></i>
                 {{ 'COMMON.BUTTON.CREATE' | translate }}
               </button>
@@ -45,7 +45,7 @@
 
     <!-- section stat -->
     <ng-container *ngIf="selectedTagsStats.length > 0 && !fetchingError">
-      <div class="section-pad">
+      <div class="p-top-50 p-bottom-50">
 
         <!-- heading -->
         <h1 class="text-center title-primary text-normal" [innerText]="'SHOWCASE.MAIN_TITLE'" translate></h1>
@@ -82,7 +82,7 @@
         <!-- /horizontal line -->
 
         <!-- section answer and innovations -->
-        <div class="flex-centered section-wrapper section-pad">
+        <div class="flex-centered section-wrapper p-top-50 p-bottom-50">
 
           <!-- answers wrapper -->
           <div class="answer-wrapper">
@@ -113,7 +113,7 @@
         <!-- /section answer and innovations -->
 
         <!-- section map -->
-        <div class="flex-centered section-wrapper section-pad">
+        <div class="flex-centered section-wrapper p-top-50 p-bottom-50">
           <div class="map-wrapper">
 
             <h2 class="text text-meta" [innerText]="'SHOWCASE.COUNTRIES_TITLE'" translate></h2>

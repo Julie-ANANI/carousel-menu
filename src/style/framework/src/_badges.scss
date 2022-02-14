@@ -117,7 +117,7 @@
     &.is-active {
       border-color: $success-color;
       background-color: $white-color;
-      color: $text-dark-color;
+      color: $dark-color;
 
       i {
         display: inline-flex;
@@ -169,7 +169,7 @@
     &.active {
       background-color: $white-color;
       border-color: $success-color;
-      color: $text-dark-color;
+      color: $dark-color;
       border-width: $border-width-lg;
 
       i {

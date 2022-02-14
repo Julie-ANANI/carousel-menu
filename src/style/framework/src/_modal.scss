@@ -61,12 +61,12 @@
         background: $white-color;
 
         .modal-title {
-          color: $text-dark-color;
+          color: $dark-color;
           font-weight: 400;
         }
 
         .close {
-          color: $text-dark-color !important;
+          color: $dark-color !important;
         }
 
       }
@@ -123,7 +123,7 @@
     }
 
     &.is-dark {
-      color: $text-dark-color;
+      color: $dark-color;
 
       &:hover {
 
