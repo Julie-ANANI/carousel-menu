@@ -26,7 +26,7 @@
 
           <div class="text-center">
 
-            <h4 [innerText]="'SHOWCASE.CREATE_SHOWCASE'" class="text-background" translate></h4>
+            <h4 [innerText]="'SHOWCASE.CREATE_SHOWCASE'" class="text-draft" translate></h4>
 
             <div class="m-top-25">
               <button (click)="modifyTag()" class="btn btn-primary rounded shadow" type="button">
@@ -147,7 +147,7 @@
 
   <section class="modal-body">
 
-    <h2 class="text text-background m-no-bottom title-secondary p-right-1 text-medium p-bottom-1" [innerText]="'SHOWCASE.SECTORS_MODAL.TITLE'" translate></h2>
+    <h2 class="text text-draft m-no-bottom title-secondary p-right-1 text-medium p-bottom-1" [innerText]="'SHOWCASE.SECTORS_MODAL.TITLE'" translate></h2>
 
     <ng-container *ngIf="selectedTagsStats.length">
       <div class="selected-wrapper">

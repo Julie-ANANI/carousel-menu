@@ -98,7 +98,7 @@
                         alt="image"
                         class="img-responsive m-left-auto m-right-auto">
                     </div>
-                    <p class="text-background text-sm text-medium mxw-150 m-left-auto m-right-auto">
+                    <p class="text-draft text-sm text-medium mxw-150 m-left-auto m-right-auto">
                       {{ 'SHARED_FOLLOW_UP.STEP_INTRO.DESC.' + i | translate }}
                     </p>
                   </div>
@@ -281,7 +281,7 @@
                     <span class="mail_label">CC:</span>
                     <span
                       *ngFor="let cc of selectedCC; let i = index"
-                      class="label is-sm text-xs is-rounded text-background">
+                      class="label is-sm text-xs is-rounded text-draft">
                       {{ cc.email }}
                       <span (click)="removeCc(i)" class="close is-background is-xs m-left-1"></span>
                     </span>
@@ -310,7 +310,7 @@
                     </ng-container>
                     <ng-template #number>{{ i + 1 }}</ng-template>
                   </div>
-                  <p class="text-sm text-background text-medium">{{ step | translate }}</p>
+                  <p class="text-sm text-draft text-medium">{{ step | translate }}</p>
                   <div *ngIf="i < 2" class="line"></div>
                 </div>
               </div>

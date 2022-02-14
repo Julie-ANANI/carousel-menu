@@ -7,7 +7,7 @@
 
   <!-- uploading -->
   <div *ngIf="isUploading">
-    <p class="text-sm text-medium text-background">{{ 'COMMON.MEDIA.UPLOADING' | translate }}</p>
+    <p class="text-sm text-medium text-draft">{{ 'COMMON.MEDIA.UPLOADING' | translate }}</p>
     <div class="loading is-lg"></div>
   </div>
   <!-- /uploading -->
@@ -19,7 +19,7 @@
 
     <ng-container *ngIf="!isWrongFormat && !isWrongSize">
       <i style="font-size: 70px" class="fas text-primary fa-cloud-upload-alt"></i>
-      <p class="text-13 text-background m-top-1 m-no-bottom">{{ 'COMMON.PLACEHOLDER.MEDIA_SLIDE' | translate }}</p>
+      <p class="text-13 text-draft m-top-1 m-no-bottom">{{ 'COMMON.PLACEHOLDER.MEDIA_SLIDE' | translate }}</p>
     </ng-container>
 
     <ng-container *ngIf="isWrongFormat || isWrongSize">

@@ -85,7 +85,7 @@
           <section *ngIf="innovationCard.advantages && innovationCard.advantages.length > 0" class="p-bottom-20">
             <h2 class="d-d-title-secondary" [innerText]="'DISCOVERDESCRIPTION.BENEFITS'" translate></h2>
             <ul style="font-size: 0.75rem" class="m-top-3 m-no-bottom">
-              <li *ngFor="let advantage of innovationCard.advantages" class="text-background">
+              <li *ngFor="let advantage of innovationCard.advantages" class="text-draft">
                 {{ advantage.text | FormatText }}
               </li>
             </ul>
@@ -139,7 +139,7 @@
             <!-- share buttons -->
             <div class="m-top-15 d-d-share-buttons-wrapper">
 
-              <h3 class="d-d-title-secondary text-sm text-background" [innerText]="'DISCOVERDESCRIPTION.SHARE_TITLE'" translate></h3>
+              <h3 class="d-d-title-secondary text-sm text-draft" [innerText]="'DISCOVERDESCRIPTION.SHARE_TITLE'" translate></h3>
 
               <a
                 [href]="linkedInUrl"
@@ -173,7 +173,7 @@
 
             <div class="text-sm p-bottom-15 align-center d-d-text d-flex">
               <i class="fas fa-angle-right m-right-1 text-warning"></i>
-              <span class="text-background" [innerText]="'DISCOVERDESCRIPTION.RELATED'" translate></span>
+              <span class="text-draft" [innerText]="'DISCOVERDESCRIPTION.RELATED'" translate></span>
             </div>
 
             <!-- cards -->

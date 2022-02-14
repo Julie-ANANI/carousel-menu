@@ -60,6 +60,10 @@ interface Header {
 
 export class HeaderComponent implements OnInit, OnDestroy {
 
+  get isMobileView(): boolean {
+    return this._isMobileView;
+  }
+
   private _backOfficeValue = false; // if true, then display back office menu options.
 
   private _flag = this.currentLang === 'fr' ? 'FR' : 'US';
@@ -107,6 +111,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   private _isLoading = true;
 
+  private _isMobileView = false;
+
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _authService: AuthService,
               private _routeFrontService: RouteFrontService,
@@ -117,6 +123,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     if (isPlatformBrowser(this._platformId)) {
+      this._checkMobileView();
       this._routeFrontService.isAdminSide().pipe(takeUntil(this._ngUnsubscribe)).subscribe((value) => {
         this._backOfficeValue = value;
       });
@@ -126,9 +133,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   @HostListener('window:resize', ['$event'])
   onResize(_event: Event) {
+    this._checkMobileView();
     if (window.innerWidth > 960) {
       this._sidebarValues = { animate_state: 'inactive' };
     }
+  }
+
+  private _checkMobileView() {
+    this._isMobileView = window.innerWidth < 960;
   }
 
   /***

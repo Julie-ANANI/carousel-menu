@@ -397,14 +397,14 @@ export class SharedFollowUpClientComponent implements OnDestroy {
   private _highlightFields(lang: string, card: InnovCard, cc: string) {
     this._emailsObject[lang]['subject'] = this._emailsObject[lang]['subject']
       .replace(/\*\|TITLE\|\*/g,
-        `<span class="label is-mail width-120 is-sm m-h text-xs text-background m-no-right">${card.title}</span>`
+        `<span class="label is-mail width-120 is-sm m-h text-xs text-draft m-no-right">${card.title}</span>`
       );
 
     this._emailsObject[lang]['content'] = this._emailsObject[lang]['content']
       .replace(/\*\|COMPANY_NAME\|\*/g, `<span class="label is-mail width-120 is-sm text-xs
-       text-background m-h m-no-right">${new ScrapeHTMLTags().transform(this.companyName.trim())}</span>`)
-      .replace(/\*\|CLIENT_NAME\|\*/g, `<span class="label is-mail width-120 is-sm text-xs text-background m-h m-no-right">${cc}</span>`)
-      .replace(/\*\|TITLE\|\*/g, `<span class="label is-mail width-120 is-sm text-xs text-background m-h m-no-right">${card.title}</span>`);
+       text-draft m-h m-no-right">${new ScrapeHTMLTags().transform(this.companyName.trim())}</span>`)
+      .replace(/\*\|CLIENT_NAME\|\*/g, `<span class="label is-mail width-120 is-sm text-xs text-draft m-h m-no-right">${cc}</span>`)
+      .replace(/\*\|TITLE\|\*/g, `<span class="label is-mail width-120 is-sm text-xs text-draft m-h m-no-right">${card.title}</span>`);
   }
 
   private _replaceVariables(lang: string, card: InnovCard, cc: string) {

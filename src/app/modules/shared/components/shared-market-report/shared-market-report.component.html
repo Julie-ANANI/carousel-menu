@@ -43,7 +43,7 @@
           <!-- synthesis reporting lang -->
           <div *ngIf="!areAnswersLoading && adminSide"
                class="d-flex flex-d-row align-center justify-end dropdown w-full m-top-15 is-right">
-            <span class="text-sm text-background m-right-4">{{ 'MARKET_REPORT.RESTITUTION_LANG' | translateIn: reportingLang }}</span>
+            <span class="text-sm text-draft m-right-4">{{ 'MARKET_REPORT.RESTITUTION_LANG' | translateIn: reportingLang }}</span>
             <a class="button dropdown-toggle is-info is-sm is-outlined" tabindex="0">
               {{ 'COMMON.LANG.' + reportingLang | uppercase | translateIn: reportingLang }} <i class="icon icon-caret"></i>
             </a>

@@ -33,7 +33,7 @@
           <section *ngIf="!filterActivated && recommendedInnovationId">
             <div class="p-top-25">
 
-              <h2 class="d-title-secondary text-background" [ngClass]="{ 'loading-content': !stopLoading }">
+              <h2 class="d-title-secondary text-draft" [ngClass]="{ 'loading-content': !stopLoading }">
                 <span>{{ 'DISCOVER.RECOMMENDATION' | translate }}</span>
               </h2>
 
@@ -53,7 +53,7 @@
           <section *ngIf="!filterActivated">
             <div class="p-top-25">
 
-              <h2 class="d-title-secondary text-background" [ngClass]="{ 'loading-content': !stopLoading }">
+              <h2 class="d-title-secondary text-draft" [ngClass]="{ 'loading-content': !stopLoading }">
                 <span>{{ 'DISCOVER.LATEST' | translate }}</span>
               </h2>
 
@@ -74,7 +74,7 @@
 
               <!-- filter applied -->
               <div
-                class="text-background text-normal d-flex m-bottom-10 flex-wrap text-md c-filter-wrapper"
+                class="text-draft text-normal d-flex m-bottom-10 flex-wrap text-md c-filter-wrapper"
                 [ngClass]="{ 'loading-content': !stopLoading }">
 
                 <div  style="margin-bottom: 0.25rem" *ngIf="filterActivated">
@@ -87,7 +87,7 @@
                   </span>
                 </div>
 
-                <h2 class="d-title-secondary text-background" [ngClass]="{ 'loading-content': !stopLoading }" *ngIf="!filterActivated">
+                <h2 class="d-title-secondary text-draft" [ngClass]="{ 'loading-content': !stopLoading }" *ngIf="!filterActivated">
                   <span>{{ 'DISCOVER.TRENDING' | translate }}</span>
                 </h2>
 

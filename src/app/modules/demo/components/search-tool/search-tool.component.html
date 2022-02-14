@@ -34,7 +34,7 @@
       <div class="text-center professional-count-wrapper">
         <ng-container *ngIf="professionalCount">
 
-          <h2 class="title-secondary text-background">
+          <h2 class="title-secondary text-draft">
             <ng-container *ngIf="professionalCount < 100">< </ng-container>
             <ng-container *ngIf="professionalCount === 20000">+ </ng-container>
             {{ professionalCount }}
@@ -125,19 +125,19 @@
 
 
         <!-- if filter not activated -->
-        <h3 *ngIf="!selectedCountry" class="title-pro text-background" [innerText]="'SEARCH_DEMO.SOME_PROS'" translate></h3>
+        <h3 *ngIf="!selectedCountry" class="title-pro text-draft" [innerText]="'SEARCH_DEMO.SOME_PROS'" translate></h3>
 
 
         <!-- if filter activated -->
         <ng-container *ngIf="selectedCountry">
           <div class="flex-start" style="margin-bottom: 1rem">
 
-            <div class="text-background text-md">
+            <div class="text-draft text-md">
               <span>{{ slicedPros.length }} {{ 'SEARCH_DEMO.RESULTS_FOR' | translate }}</span>
             </div>
 
             <div class="filter-wrapper c-hand text-md" (click)="resetCountry()">
-              <span class="text-background text-medium">{{ names[selectedCountry] }} <i class="fas text-meta fa-times-circle"></i></span>
+              <span class="text-draft text-medium">{{ names[selectedCountry] }} <i class="fas text-meta fa-times-circle"></i></span>
             </div>
 
           </div>
@@ -200,13 +200,13 @@
                   <ng-container *ngIf="professional && professional.email">
                     <p class="relative tooltip" data-tooltip="E-mail">
                       <span class="text-email">{{ professional.email }}</span>
-                      <span class="absolute email-icon text-background"><i class="fas fa-envelope"></i></span>
+                      <span class="absolute email-icon text-draft"><i class="fas fa-envelope"></i></span>
                     </p>
                   </ng-container>
 
                   <!-- job -->
                   <ng-container *ngIf="professional && (professional.job || professional.jobTitle)">
-                    <p class="text-job text-background">
+                    <p class="text-job text-draft">
                       {{ professional.job || professional.jobTitle }}
                     </p>
                   </ng-container>

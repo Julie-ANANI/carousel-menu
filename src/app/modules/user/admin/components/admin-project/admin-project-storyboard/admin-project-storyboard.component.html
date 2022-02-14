@@ -215,7 +215,7 @@
 
     <section [ngClass]="executiveReport.lang ? 'p-top-30 p-bottom-10' : 'p-top-40'" class="modal-body">
 
-      <div *ngIf="executiveReport.lang" class="m-bottom-15 text-background">
+      <div *ngIf="executiveReport.lang" class="m-bottom-15 text-draft">
         {{ 'ADMIN_STORYBOARD.MODAL.CURRENT_LANG' | translate }}
         <span *ngIf="executiveReport.lang === 'en'" class="text-medium text-primary-dark">
         {{ 'COMMON.LANG.EN' | translate }}

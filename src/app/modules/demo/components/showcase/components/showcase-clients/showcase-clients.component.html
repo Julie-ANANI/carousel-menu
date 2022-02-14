@@ -28,7 +28,7 @@
         </ng-container>
 
         <ng-container *ngIf="!client.logo">
-          <div class="text-background text-medium">
+          <div class="text-draft text-medium">
             <span class="text-name">{{ client.name }}</span>
           </div>
         </ng-container>
@@ -53,7 +53,7 @@
             <div *ngIf="client.logo" class="card-img tooltip" [attr.data-tooltip]="client.name">
               <img [src]="client.logo" height="50" [alt]="client.name"/>
             </div>
-            <div *ngIf="!client.logo" class="card-title text-background"><span>{{ client.name }}</span></div>
+            <div *ngIf="!client.logo" class="card-title text-draft"><span>{{ client.name }}</span></div>
           </div>
 
         </div>

@@ -17,7 +17,7 @@
 
           <div class="text-center">
 
-            <h4 [innerText]="'COMMON.SIGNATURES.NO_SIGNATURES_ADMIN'" class="text-background" translate></h4>
+            <h4 [innerText]="'COMMON.SIGNATURES.NO_SIGNATURES_ADMIN'" class="text-draft" translate></h4>
 
             <div class="m-top-25">
               <button (click)="onClickAdd()" class="button is-primary is-sm" type="button">
@@ -98,7 +98,7 @@
 
     <!-- isDelete -->
     <ng-container *ngIf="isModalDelete">
-      <div class="text-background text-medium">{{ 'COMMON.SIGNATURES.DELETE_SIGNATURES' | translate }}</div>
+      <div class="text-draft text-medium">{{ 'COMMON.SIGNATURES.DELETE_SIGNATURES' | translate }}</div>
 
       <ul class="d-flex flex-wrap text-xs text-meta text-medium m-top-3">
         <li *ngFor="let signature of signaturesToRemove" class="m-right-3 m-top-1">

@@ -52,7 +52,7 @@
           [color]="pieChart.colors[indexSection]"
           [nbColors]="pieChart.colors.length"
           (colorChanged)="chartColorChanged($event, indexSection)">
-          <label class="form-checkbox text-background">
+          <label class="form-checkbox text-draft">
             <input type="checkbox" [(ngModel)]="positiveSections[indexSection]" (change)="chartPositiveSectionChanged(indexSection)">
             <i class="form-icon"></i> {{ 'MARKET_REPORT.POSITIVE_ANSWER' | translateIn: reportingLang }}
           </label>
@@ -71,7 +71,7 @@
           <div class="card p-10">
             <span>{{(pieChart.labels | multiling:reportingLang)[indexLegend]}}</span>
             <div class="divider"></div>
-            <label class="form-checkbox text-background">
+            <label class="form-checkbox text-draft">
               <input type="checkbox" [(ngModel)]="positiveSections[indexLegend]" (change)="chartPositiveSectionChanged(indexLegend)">
               <i class="form-icon"></i> {{ 'MARKET_REPORT.POSITIVE_ANSWER' | translateIn: reportingLang }}
             </label>

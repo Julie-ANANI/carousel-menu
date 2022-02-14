@@ -8,7 +8,7 @@
 
       <div [attr.data-tooltip]="item.value" [ngClass]="{ 'tooltip': item.logo }">
         <img *ngIf="item.logo" [src]="item.logo" width="50px" height="50px" alt=" " class="img-responsive">
-        <span *ngIf="!item.logo" class="text-background">{{ item.value }}</span>
+        <span *ngIf="!item.logo" class="text-draft">{{ item.value }}</span>
       </div>
 
       <div class="popup-wrapper">
