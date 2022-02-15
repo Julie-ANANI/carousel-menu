@@ -108,16 +108,16 @@
             <div *ngIf="filteredAnswers.length" class="text-center p-top-25">
               <button
                 (click)="toggleProfessional = !toggleProfessional"
-                class="button  is-sm"
+                class="button is-sm"
                 type="button">
                 {{ (toggleProfessional ? 'MARKET_REPORT.BTN_PROFESSIONAL_CLOSE'
                 : 'MARKET_REPORT.BTN_PROFESSIONAL_OPEN') | translateIn: reportingLang }}
-                <i class="icon" [ngClass]="toggleProfessional ? 'icon-arrow-down' : 'icon-arrow-up'"></i>
+                <i class="icon icon-right" [ngClass]="toggleProfessional ? 'icon-arrow-down' : 'icon-arrow-up'"></i>
               </button>
             </div>
 
             <div class="professional-wrapper" [ngClass]=" toggleProfessional ? 'is-expand' : 'is-collapse' ">
-              <div class="card-wrapper">
+              <div class="card-wrapper card-3">
                 <div *ngFor="let answer of filteredAnswers" class="card is-card-3 relative">
                   <div (click)="filterPro(answer, $event)" class="icon-container text-alert absolute">
                     <span class="tooltip" [attr.data-tooltip]="'MARKET_REPORT.TOOLTIP_HIDE_PROFESSIONAL' | translateIn: reportingLang">

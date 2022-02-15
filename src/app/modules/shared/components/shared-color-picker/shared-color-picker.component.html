@@ -20,7 +20,7 @@
   </div>
 
   <!-- Custom color picker -->
-  <div *ngIf="nbColors > 10" class="d-flex justify-between">
+  <div *ngIf="nbColors > 10" class="d-flex justify-space">
     <ng-container *ngIf="customColor">
       <input (change)="changeColor($event)" type="radio" name="color" [id]="customColor"
              [checked]="selectedColor == customColor"

@@ -6,7 +6,7 @@
   .country-tooltip {
     background-color: $white-color;
     box-shadow: $box-shadow-menu;
-    padding: 0.75rem 1rem;
+    padding: 15px 20px;
     width: fit-content;
     min-width: max-content;
     border-radius: 6px;
@@ -46,10 +46,14 @@
   .swm-legend-wrapper {
     display: inline-flex;
     align-items: center;
-    margin: 0.5rem;
-    font-size: 0.65rem;
+    margin: 10px;
+    font-size: 14px;
     color: $dark-color;
     font-weight: $font-weight-medium;
+
+    .shape.is-circled {
+      margin: 0 8px;
+    }
 
     .circle-1 {
       border-color: #94E9B8;
