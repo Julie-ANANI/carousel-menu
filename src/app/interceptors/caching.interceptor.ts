@@ -45,7 +45,7 @@ export class CachingInterceptor implements HttpInterceptor {
     /**
      * returned the cached response
      */
-    if (cachedResponse) {
+    if (!!cachedResponse) {
       return of(cachedResponse.clone());
     }
 
@@ -54,10 +54,11 @@ export class CachingInterceptor implements HttpInterceptor {
      * and cache the response
      */
     return next.handle(request).pipe(
-      tap( (event) => {
+      tap((event) => {
         if (event instanceof HttpResponse) {
           this._httpCacheService.set(request.urlWithParams, event.clone());
         }
+        return event;
       })
     );
 
