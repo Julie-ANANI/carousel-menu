@@ -17,10 +17,16 @@
   </div>
 
   <!-- firstName | lastName -->
+<!--  <fieldset required>-->
   <div class="input-group m-bottom-20">
 
     <div class="form-group">
-      <label class="form-label" for="reassign-answer-firstName">First Name</label>
+      <label class="form-label" for="reassign-answer-firstName">First Name *</label>
+      <span
+        *ngIf="formData.get('firstName').hasError('required')"
+        class="form-input-hint">
+                {{ 'COMMON.REQUIRED.EMAIL' | translate }}
+      </span>
       <input
         (change)="emitPro()"
         [(ngModel)]="newPro.firstName"
@@ -32,7 +38,7 @@
     </div>
 
     <div class="form-group">
-      <label class="form-label" for="reassign-answer-lastName">Last Name</label>
+      <label class="form-label" for="reassign-answer-lastName">Last Name *</label>
       <input
         (change)="emitPro()"
         [(ngModel)]="newPro.lastName"
@@ -50,7 +56,7 @@
   <div class="input-group m-bottom-20">
 
     <div class="form-group">
-      <label class="form-label" for="reassign-answer-email">Email Address</label>
+      <label class="form-label" for="reassign-answer-email">Email Address *</label>
       <input
         (change)="emitPro('EMAIL')"
         [(ngModel)]="newPro.email"
@@ -62,7 +68,7 @@
     </div>
 
     <div class="form-group">
-      <label class="form-label" for="reassign-answer-job">Job Title</label>
+      <label class="form-label" for="reassign-answer-job">Job Title *</label>
       <input
         (change)="emitPro()"
         [(ngModel)]="newPro.jobTitle"
@@ -80,7 +86,7 @@
   <div class="input-group m-bottom-20">
 
     <div class="form-group">
-      <label [for]="'reassign-answer-company'" class="form-label">Company</label>
+      <label [for]="'reassign-answer-company'" class="form-label">Company *</label>
       <app-auto-complete-company
         (companyChange)="onCompanySelect($event)"
         [company]="company"
@@ -92,7 +98,7 @@
     </div>
 
     <div class="form-group">
-      <label [for]="'reassign-answer-country'" class="form-label">Country</label>
+      <label [for]="'reassign-answer-country'" class="form-label">Country *</label>
       <app-auto-complete-country
         (countryChange)="onCountrySelect($event)"
         [country]="country"
@@ -104,6 +110,7 @@
     </div>
 
   </div>
+<!--  </fieldset>-->
   <!-- /company | country -->
 
 </div>

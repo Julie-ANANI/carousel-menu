@@ -8,6 +8,8 @@ import { Config } from '@umius/umi-common-component/models';
 import {Company} from '../../../../../models/company';
 import {Country} from '../../../../../models/country';
 import {countries} from '../../../../../models/static-data/country';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {emailRegEx} from '../../../../../utils/regex';
 
 export interface NewPro {
   firstName: string;
@@ -47,7 +49,18 @@ export class ReassignAnswerComponent {
 
   private _company: Company = <Company>{};
 
-  constructor(private _professionalService: ProfessionalsService,
+  private _formBuilder: FormBuilder;
+
+  private _formData: FormGroup = this._formBuilder.group({
+    firstName: ['', [Validators.required ]],
+    lastName: ['', [Validators.required]],
+    email: ['', [Validators.required, Validators.pattern(emailRegEx)]],
+    jobTitle: ['', [Validators.required]],
+    company: ['', [Validators.required]],
+    country: ['', [Validators.required]],
+  });
+
+constructor(private _professionalService: ProfessionalsService,
               private _translateNotificationsService: TranslateNotificationsService) { }
 
   public emitPro(type = '') {
@@ -132,5 +145,8 @@ export class ReassignAnswerComponent {
     return this._proConfig;
   }
 
+  get formData(): FormGroup {
+    return this._formData;
+  }
 
 }
