@@ -1,9 +1,9 @@
-@import "../../../../../../style/framework/src/variables";
+@import "~@umius/umi-style-framework/scss/variables";
 
 .stat {
 
   .stat-container:first-child {
-    background-color: $bg-secondary-color;
+    background-color: #0B90C6;
   }
 
   .stat-container:nth-child(2) {

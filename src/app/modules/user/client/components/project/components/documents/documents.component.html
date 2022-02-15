@@ -180,7 +180,7 @@
 
               <!-- popover container -->
               <div *ngIf="!isOwner || !ownerConsent" class="popover-container is-sm">
-                <div class="p-15">
+                <div class="p-15 card">
                   <ng-container *ngIf="!ownerConsent && !isOwner; else specific">
                     {{ 'PROJECT_DOCUMENTS.POPOVER.NOT_BOTH' | translate }}
                   </ng-container>

@@ -1,5 +1,5 @@
-@import "../../../../../../../../style/framework/src/variables";
-@import "../../../../../../../../style/framework/src/mixins";
+@import "~@umius/umi-style-framework/scss/variables";
+@import "~@umius/umi-style-framework/scss/mixins";
 
 .tooltip-info {
   font-size: 12px;
@@ -54,7 +54,7 @@
 
   li {
     @include control-transition();
-    @include flex-between();
+    @include flex-position(space-between);
     margin-top: 4px;
     border-radius: $border-radius;
     background-color: #F8F4F4;
@@ -156,7 +156,7 @@
   line-height: $line-height-sm;
 
   &:focus {
-    border-color: $form-primary-color;
+    border-color: $primary-color;
   }
 
   &::placeholder {
