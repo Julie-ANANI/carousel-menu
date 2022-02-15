@@ -193,7 +193,7 @@
           border-radius: $border-radius;
           min-width: $control-width-xs;
           transform: translateY($unit-1);
-          z-index: $zindex-3;
+          z-index: $z-index-3;
           box-shadow: $box-shadow-menu;
           animation: menu-slide-down .2s ease 1;
           max-height: 500px;
@@ -266,7 +266,7 @@
         box-shadow: 0 8px 16px rgba(10,10,10,.1);
         padding: 10px 0;
         position: absolute;
-        z-index: $zindex-1;
+        z-index: $z-index-1;
         left: 0;
         right: 0;
 

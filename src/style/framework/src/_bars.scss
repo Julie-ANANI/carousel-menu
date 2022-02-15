@@ -59,7 +59,7 @@
 
     &:not(:last-child):first-child {
       background: #D8D8D8;
-      z-index: $zindex-0;
+      z-index: $z-index-0;
     }
 
   }

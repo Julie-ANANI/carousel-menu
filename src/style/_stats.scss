@@ -1,5 +1,5 @@
-@import "variables";
-@import "mixins";
+@import "~@umius/umi-style-framework/scss/variables";
+@import "~@umius/umi-style-framework/scss/mixins";
 
 .stat {
   display: flex;
@@ -25,7 +25,7 @@
     }
 
     .stat-body {
-      @include inline-flex-centered();
+      @include inline-flex-position(center);
       flex-direction: column;
       margin: 0 10px 10px 10px;
 
