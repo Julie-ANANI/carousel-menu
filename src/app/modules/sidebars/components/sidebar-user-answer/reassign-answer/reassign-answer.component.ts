@@ -9,7 +9,7 @@ import {Company} from '../../../../../models/company';
 import {Country} from '../../../../../models/country';
 import {countries} from '../../../../../models/static-data/country';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {emailRegEx} from '../../../../../utils/regex';
+/*import {emailRegEx} from '../../../../../utils/regex';*/
 
 export interface NewPro {
   firstName: string;
@@ -49,19 +49,20 @@ export class ReassignAnswerComponent {
 
   private _company: Company = <Company>{};
 
-  private _formBuilder: FormBuilder;
+  //private _formBuilder: FormBuilder;
 
-  private _formData: FormGroup = this._formBuilder.group({
+  private _formData = this._formBuilder.group({
     firstName: ['', [Validators.required ]],
     lastName: ['', [Validators.required]],
-    email: ['', [Validators.required, Validators.pattern(emailRegEx)]],
+    /*email: ['', [Validators.required, Validators.pattern(emailRegEx)]],*/
     jobTitle: ['', [Validators.required]],
     company: ['', [Validators.required]],
     country: ['', [Validators.required]],
   });
 
 constructor(private _professionalService: ProfessionalsService,
-              private _translateNotificationsService: TranslateNotificationsService) { }
+            private _translateNotificationsService: TranslateNotificationsService,
+            private _formBuilder: FormBuilder) { }
 
   public emitPro(type = '') {
     if (type === 'EMAIL' && !!this._newPro.email) {
@@ -117,6 +118,22 @@ constructor(private _professionalService: ProfessionalsService,
     this.emitPro();
   }
 
+/*
+  public onClickContinue() {
+    if (this._formData.valid) {
+      this._newPro.firstName = this._formData.value;
+      this._newPro.lastName = this._formData.value;
+  /!*    this._newPro.email = this._formData.value;
+      this._newPro.jobTitle = this._formData.value;
+      this._newPro.country = this._formData.value;*!/
+    } else {
+      if (this._formData.untouched && this._formData.pristine) {
+        this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.INVALID_FORM_DATA');
+      }
+    }
+  }
+*/
+
   get newPro(): NewPro {
     return this._newPro;
   }
@@ -148,5 +165,4 @@ constructor(private _professionalService: ProfessionalsService,
   get formData(): FormGroup {
     return this._formData;
   }
-
 }

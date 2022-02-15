@@ -54,8 +54,8 @@
       <button
         class="button is-community is-sm"
         (click)="onReassignAnswer($event)"
-        [disabled]="!newPro.firstName || !newPro.lastName || !newPro.email || isReassigning"
-        id="btn-confirm-assign"
+
+        id="btn-cancel-assign"
         type="button">
         <ng-container *ngIf="!isReassigning; else assignText">Confirm</ng-container>
         <ng-template #assignText>reassigning the answer...</ng-template>

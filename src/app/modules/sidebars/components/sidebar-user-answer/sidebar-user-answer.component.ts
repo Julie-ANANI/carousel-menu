@@ -355,7 +355,9 @@ export class SidebarUserAnswerComponent implements OnInit {
 
   public onReassignAnswer(event: Event): void {
     event.preventDefault();
+   // console.log(event);
     if (!this._isReassigning) {
+       console.log(event);
       this._isReassigning = true;
       // this._newPro.country = this._userAnswer.country && this._userAnswer.country.flag;
       // this._newPro.company = this._userAnswer.company && this._userAnswer.company.name;
@@ -380,10 +382,12 @@ export class SidebarUserAnswerComponent implements OnInit {
             this._newPro = <NewPro>{};
           },
           (err: HttpErrorResponse) => {
-            this._translateNotificationsService.error(
+            console.log(event);
+        /*    this._translateNotificationsService.error(
               'ERROR.ERROR',
               ErrorFrontService.getErrorKey(err.error)
-            );
+            );*/
+            this._translateNotificationsService.error('ERROR.ERROR', 'ANSWER.UNREASSIGNED');
             this._isReassigning = false;
             console.error(err);
           }

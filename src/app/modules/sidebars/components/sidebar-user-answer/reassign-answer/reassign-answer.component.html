@@ -17,16 +17,11 @@
   </div>
 
   <!-- firstName | lastName -->
-<!--  <fieldset required>-->
-  <div class="input-group m-bottom-20">
 
+  <div class="input-group m-bottom-20">
+  <!--  <form novalidate [formGroup]="formData" (submit)="onClickContinue()">-->
     <div class="form-group">
       <label class="form-label" for="reassign-answer-firstName">First Name *</label>
-      <span
-        *ngIf="formData.get('firstName').hasError('required')"
-        class="form-input-hint">
-                {{ 'COMMON.REQUIRED.EMAIL' | translate }}
-      </span>
       <input
         (change)="emitPro()"
         [(ngModel)]="newPro.firstName"
@@ -35,6 +30,11 @@
         id="reassign-answer-firstName"
         placeholder="Enter the first name"
         type="text">
+      <div *ngIf="formData.get('firstName').touched" class="form-input-hint">
+        <ng-container *ngIf="formData.get('firstName').hasError('required')">
+          {{ 'COMMON.USER_400.MISSING_BODY_FIRSTNAME' | translate }}
+        </ng-container>
+      </div>
     </div>
 
     <div class="form-group">
@@ -47,6 +47,11 @@
         id="reassign-answer-lastName"
         placeholder="Enter the last name"
         type="text">
+    <!--  <div *ngIf="formData.get('lastName').touched" class="form-input-hint">
+        <ng-container *ngIf="formData.get('lastName').hasError('required')">
+          {{ 'COMMON.USER_400.MISSING_BODY_FIRSTNAME' | translate }}
+        </ng-container>
+      </div>-->
     </div>
 
   </div>
@@ -110,7 +115,5 @@
     </div>
 
   </div>
-<!--  </fieldset>-->
   <!-- /company | country -->
-
 </div>

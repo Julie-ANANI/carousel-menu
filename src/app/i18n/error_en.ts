@@ -285,6 +285,7 @@ export const ERROR = {
     'UPDATED': 'The answer has been updated successfully.',
     'IMPORTED': 'The answers have been imported successfully.',
     'REASSIGNED': 'The answer has been reassigned successfully.',
+    'UNREASSIGNED': 'Not all fields are completed.',
     'STATUS_UPDATE': 'The status has been updated successfully.'
   },
 
