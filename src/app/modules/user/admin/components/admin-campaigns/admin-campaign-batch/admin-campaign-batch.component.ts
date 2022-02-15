@@ -20,6 +20,7 @@ import { InnovationFrontService } from '../../../../../../services/innovation/in
 import { MissionService } from '../../../../../../services/mission/mission.service';
 import { Mission } from '../../../../../../models/mission';
 import {StatsInterface} from "../../../../../../models/stats";
+import {BatchService} from "../../../../../../services/batch/batch.service";
 
 @Component({
   templateUrl: './admin-campaign-batch.component.html',
@@ -91,6 +92,7 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
               private _activatedRoute: ActivatedRoute,
               private _campaignFrontService: CampaignFrontService,
               private _campaignService: CampaignService,
+              private _batchService: BatchService,
               private _missionService: MissionService,
               private _rolesFrontService: RolesFrontService,
               private _innovationFrontService: InnovationFrontService,
@@ -562,8 +564,8 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
     event.preventDefault();
     if (!this._isDeletingBatch) {
       this._isDeletingBatch = true;
-      this._campaignService
-        .deleteBatch(this._selectedBatchToBeDeleted._id)
+      this._batchService
+        .delete(this._selectedBatchToBeDeleted._id)
         .pipe(first())
         .subscribe(
           () => {
@@ -590,7 +592,7 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
 
   public OnSwitchFreeze(event: Event, batch: Batch) {
     event.preventDefault();
-    this._campaignService
+    this._batchService
       .freezeStatus(batch)
       .pipe(first())
       .subscribe(
@@ -705,8 +707,8 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
 
 
   private updateBatch(batchToUpdate: Batch, needToUpdateTable = true) {
-    this._campaignService
-      .updateBatch(batchToUpdate)
+    this._batchService
+      .update(batchToUpdate)
       .pipe(first())
       .subscribe(
         (batch) => {

@@ -70,25 +70,9 @@ export class CampaignService {
     return this._http.post(`/campaign/${campaignId}/startAB`, {nameA, nameB, sizeA, sizeB});
   }
 
-  public freezeStatus(batch: Batch): Observable<any> {
-    return this._http.get(`/batch/${batch._id}/freezeStatus`);
-  }
-
   // Update A/B test stats. (MailService / No NLP)
   public updateBatchesStats(campaign: string): Observable<any> {
     return this._http.post(`/campaign/${campaign}/updateBatchesStats`, {});
-  }
-
-  public updateBatch(batch: Batch): Observable<Batch> {
-    return this._http.put<Batch>(`/batch/${batch._id}`, batch);
-  }
-
-  public updateBatchStatus(batchId: string, status: number): Observable<any> {
-    return this._http.get(`/batch/${batchId}/updateStatus?status=${status}`);
-  }
-
-  public deleteBatch(batchId: string): Observable<any> {
-    return this._http.delete(`/batch/${batchId}`);
   }
 
   public sendTestEmails(campaignId: string, batchStatus: number, userInfo: any): Observable<any> {
@@ -105,10 +89,4 @@ export class CampaignService {
   public addNuggets(campaignId: string, batchId: string): Observable<any> {
     return this._http.get(`/campaign/${campaignId}/addNuggets/${batchId}`);
   }
-
-  /*
-  public getPredictionsBatch(batchId: string):  Observable<any> {
-    return this._http.post(`/batch/${batchId}/getPredictions`, {ID: batchId});
-  }
-  */
 }

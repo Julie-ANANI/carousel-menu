@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
-import { DashboardService } from '../../../../../services/dashboard/dashboard.service';
 import { first } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
 import { TranslateNotificationsService } from '../../../../../services/translate-notifications/translate-notifications.service';
@@ -10,6 +9,7 @@ import { SidebarInterface } from '../../../../sidebars/interfaces/sidebar-interf
 import { isPlatformBrowser } from '@angular/common';
 import { InnovationService } from '../../../../../services/innovation/innovation.service';
 import { InnovationFrontService } from '../../../../../services/innovation/innovation-front.service';
+import {BatchService} from '../../../../../services/batch/batch.service';
 
 /***
  * this is to display the batches.
@@ -41,7 +41,7 @@ export class AdminBatchesDisplayComponent implements OnInit {
   private _isLoading = true;
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
-              private _dashboardService: DashboardService,
+              private _batchService: BatchService,
               private _translateService: TranslateService,
               private _innovationService: InnovationService,
               private _changeDetectorRef: ChangeDetectorRef,
@@ -60,7 +60,7 @@ export class AdminBatchesDisplayComponent implements OnInit {
   }
 
   private _getNextData() {
-    this._dashboardService.getNextDateSend(this._dateNow.toString()).pipe(first()).subscribe((batches: Array<any>) => {
+    this._batchService.getNextDateSend(this._dateNow.toString()).pipe(first()).subscribe((batches: Array<any>) => {
       this._weekBatches = batches;
       this._isLoading = false;
       this._changeDetectorRef.markForCheck();

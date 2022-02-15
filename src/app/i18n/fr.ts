@@ -4,7 +4,6 @@ import { ADMIN_USERS } from '../modules/user/admin/components/admin-users/i18n/f
 import {CONTINENTS} from '../modules/shared/components/shared-worldmap/i18n/fr';
 import { MY_ACCOUNT } from '../modules/user/client/components/account/i18n/fr';
 import { MARKET_REPORT } from '../modules/shared/components/shared-market-report/i18n/fr';
-import { DASHBOARD } from '../modules/user/admin/components/admin-dashboard/i18n/fr';
 import { PRESETS } from '../modules/user/admin/components/admin-libraries/admin-presets/i18n/fr';
 import { CAMPAIGNS } from '../modules/user/admin/components/admin-campaigns/i18n/fr';
 import { SEARCH } from '../modules/user/admin/components/admin-search/i18n/fr';
@@ -64,7 +63,6 @@ export const fr = {
   'HEADER': HEADER,
   'PAGINATION': PAGINATION,
   'PROJECT': PROJECT,
-  'DASHBOARD': DASHBOARD,
   'PRESETS': PRESETS,
   'CAMPAIGNS': CAMPAIGNS,
   'SEARCH': SEARCH,

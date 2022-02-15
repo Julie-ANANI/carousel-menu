@@ -1,11 +1,11 @@
 import { Component, EventEmitter, Inject, Input, LOCALE_ID, OnChanges, Output } from '@angular/core';
 import 'rxjs/add/operator/filter';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { CampaignService } from '../../../../services/campaign/campaign.service';
 import { DatePipe } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { TranslateNotificationsService } from '../../../../services/translate-notifications/translate-notifications.service';
 import { ErrorFrontService } from '../../../../services/error/error-front.service';
+import {BatchService} from "../../../../services/batch/batch.service";
 
 type Template = 'NEW_BATCH' | 'EDIT_BATCH' | '';
 
@@ -48,7 +48,7 @@ export class SidebarBatchComponent implements OnChanges {
   constructor(@Inject(LOCALE_ID) private _locale: string,
               private _formBuilder: FormBuilder,
               private _translateNotificationsService: TranslateNotificationsService,
-              private _campaignService: CampaignService) {
+              private _batchService: BatchService) {
   }
 
   ngOnChanges(): void {
@@ -107,7 +107,7 @@ export class SidebarBatchComponent implements OnChanges {
 
   public updateBatchStatus(event: Event) {
     const _status = (event.target as HTMLInputElement).valueAsNumber;
-    this._campaignService.updateBatchStatus(this.content._id, _status).subscribe(() => {
+    this._batchService.updateStatus(this.content._id, _status).subscribe(() => {
       this._translateNotificationsService.success('Success', 'The batch status has been modified.');
     }, (err: HttpErrorResponse) => {
       this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));

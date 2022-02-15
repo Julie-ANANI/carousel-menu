@@ -24,7 +24,6 @@ import { User } from '../../../../../../models/user.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MissionService } from '../../../../../../services/mission/mission.service';
 import { TranslateNotificationsService } from '../../../../../../services/translate-notifications/translate-notifications.service';
-import { DashboardService } from '../../../../../../services/dashboard/dashboard.service';
 import { UserFrontService } from '../../../../../../services/user/user-front.service';
 import { InnovationService } from '../../../../../../services/innovation/innovation.service';
 import { ClientProject } from '../../../../../../models/client-project';
@@ -144,7 +143,6 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
     private _activatedRoute: ActivatedRoute,
     private _rolesFrontService: RolesFrontService,
     private _missionService: MissionService,
-    private _dashboardService: DashboardService,
     private _userService: UserService,
     private _commonService: CommonService,
     private _translateService: TranslateService,
@@ -246,7 +244,7 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
   }
 
   private _getOperators() {
-    this._dashboardService
+    this._userService
       .getOperators()
       .pipe(first())
       .subscribe(

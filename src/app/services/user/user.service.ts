@@ -89,6 +89,17 @@ export class UserService {
     return this._http.get<Array<User>>('/user', { params: _config });
   }
 
+  public getOperators(): Observable<{result: Array<User>}> {
+    return this._http.get<{result: Array<User>}>('/user', {
+      params: {
+        $or: JSON.stringify([{roles: 'market-test-manager-umi'}, {roles: 'oper-supervisor'},]),
+        fields: 'firstName,lastName,email,domain',
+        sort: '{"firstName": 1}',
+        limit: '-1'
+      }
+    });
+  }
+
   public resetPassword(email?: string): Observable<any> {
     return this._http.post('/user/resetPassword', {
       email: email,
