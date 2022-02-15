@@ -73,7 +73,7 @@
   }
 
   .card-body.is-cover {
-    @include flex-centered();
+    @include flex-position(center);
     flex-direction: column;
     flex: 1 0 auto;
     text-align: center;

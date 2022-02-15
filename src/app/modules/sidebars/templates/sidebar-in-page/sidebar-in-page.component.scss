@@ -1,11 +1,11 @@
-@import "../../../../../style/framework/src/variables";
+@import "~@umius/umi-style-framework/scss/variables";
 
 #sidebar-in-page {
   display: flex;
   background: $white-color;
   position: relative;
   height: 100%;
-  border-right: 2px solid $community-color;
+  border-right: 2px solid $primary-color;
 
   &.is-sticky {
     position: sticky;
@@ -27,15 +27,15 @@
     .button {
 
       &.is-primary {
-        background-color: $community-color;
+        background-color: $primary-color;
         color: $white-color;
         border-width: 2px;
         transition: all 0.3s ease;
-        border-color: $community-color;
+        border-color: $primary-color;
 
         &:hover {
           background-color: $white-color;
-          color: $community-color;
+          color: $primary-color;
         }
 
       }
