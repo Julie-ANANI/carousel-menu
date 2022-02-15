@@ -118,6 +118,20 @@
 
     }
 
+    &.is-dark {
+      color: $dark-color;
+
+      &:hover {
+        color: $dark-color;
+
+        &::before {
+          background-color: rgba(10,10,10,.15);
+        }
+
+      }
+
+    }
+
   }
 
 }

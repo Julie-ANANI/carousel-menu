@@ -2,3 +2,4 @@
 .npmrc
 .gitignore
 *.css.map
+/css

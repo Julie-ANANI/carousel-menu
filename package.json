@@ -1,9 +1,10 @@
 {
   "name": "@umius/umi-style-framework",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "Contains the applications styles.",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "watch": "sass --watch scss/umi.scss:css/umi.css",
+    "publish": "npm run publish"
   },
   "repository": {
     "type": "git",

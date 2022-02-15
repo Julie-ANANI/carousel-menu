@@ -38,7 +38,6 @@ a {
 
   &:not(.button):focus, &:not(.button):hover, &:not(.button):active, &:not(.button).active {
     color: $link-color;
-    text-decoration: underline;
   }
 
 }

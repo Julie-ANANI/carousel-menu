@@ -26,6 +26,7 @@ yarn-error.log
 testem.log
 /typings
 *.css.map
+/css
 
 # System Files
 .DS_Store

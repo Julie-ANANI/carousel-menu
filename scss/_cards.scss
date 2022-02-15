@@ -9,6 +9,7 @@
   .card {
     margin-right: $unit-5;
     margin-bottom: $unit-5;
+    flex: 1 0 300px;
     max-width: calc(25% - 20px);
   }
 
@@ -22,6 +23,7 @@
   .card {
     margin-right: $unit-5;
     margin-bottom: $unit-5;
+    flex: 1 0 420px;
     max-width: calc(33% - 20px);
   }
 
@@ -156,6 +158,14 @@
       margin: auto 20px 20px;
     }
 
+  }
+
+}
+
+@media screen and (max-width: $size-xs) {
+
+  .card-3 .card, .card-responsive .card {
+    flex: 100% !important;
   }
 
 }
