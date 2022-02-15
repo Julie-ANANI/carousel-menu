@@ -199,6 +199,10 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
           if (!!innovation.clientProject) {
             this._clientProject = <ClientProject>innovation.clientProject;
           }
+
+          this._statsReferentsService.get()
+            .subscribe((referents) => this._setStats(referents.innovations));
+
           resolve(innovation);
         }, error => {
           console.error(error);
