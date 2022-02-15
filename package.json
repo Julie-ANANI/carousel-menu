@@ -4,7 +4,7 @@
   "description": "Contains the applications styles.",
   "scripts": {
     "watch": "sass --watch scss/umi.scss:css/umi.css",
-    "publish": "npm run publish"
+    "publish": "npm publish"
   },
   "repository": {
     "type": "git",
