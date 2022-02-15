@@ -2,7 +2,7 @@
 
 
   <ng-container *ngIf="fetchingError">
-    <div class="section-pad">
+    <div class="p-bottom-50 p-top-50">
       <div class="column col-xs-12 col-11 col-mx-auto">
         <app-utility-error-template-1 [errorMessage]="'ERROR.FETCHING_ERROR'"></app-utility-error-template-1>
       </div>
@@ -11,10 +11,10 @@
 
 
   <ng-container *ngIf="!fetchingError && professional">
-    <div class="section-light-pad rm-pad-top">
+    <div class="p-bottom-25">
 
       <!-- section header -->
-      <div class="section-header section-light-pad rm-pad-bottom">
+      <div class="section-header p-top-25">
         <div class="column col-xs-12 col-11 col-mx-auto">
 
           <!-- name -->
@@ -224,13 +224,14 @@
 
 
       <!-- section details -->
-      <div class="section-details section-light-pad rm-pad-bottom">
+      <div class="section-details p-top-25">
         <div class="column col-xs-12 col-11 col-mx-auto">
 
 
           <!-- save button -->
           <div class="text-right">
-            <button type="button" class="badge badge-save btn btn-primary btn-sm" [ngClass]="{ 'active': saveChanges }" (click)="onClickSave()">
+            <button type="button" class="badge badge-icon is-sm button" [ngClass]="{ 'badge-active': saveChanges }"
+                    (click)="onClickSave()">
               <span [innerText]="'COMMON.BUTTON.SAVE'" translate></span><i class="fas fa-save"></i>
             </button>
           </div>
@@ -499,14 +500,14 @@
 
 
           <!-- emails -->
-          <div *ngIf="emailTableInfo._total !== 0" class="section-pad rm-pad-bottom">
+          <div *ngIf="emailTableInfo._total !== 0" class="p-top-50">
             <umius-table [config]="configEmail" [data]="emailTableInfo" (editRow)="onClickEmailShow($event)"></umius-table>
           </div>
           <!-- emails -->
 
 
           <!-- participated in projects -->
-          <div *ngIf="projectTableInfo._total !== 0" class="section-pad rm-pad-bottom">
+          <div *ngIf="projectTableInfo._total !== 0" class="p-top-50">
             <umius-table [config]="configProject" [data]="projectTableInfo" (editRow)="onClickProjectShow($event)"></umius-table>
           </div>
           <!-- participated in projects -->
@@ -514,7 +515,7 @@
 
           <!-- project suggested -->
           <ng-container *ngIf="innovationsSuggested.length > 0">
-            <div class="suggested-wrapper section-pad rm-pad-bottom">
+            <div class="suggested-wrapper p-top-50">
 
               <!-- heading -->
               <h5 class="title-secondary text-meta text-normal">Projects suggested</h5>
@@ -530,7 +531,7 @@
                       <img [src]="getImageSrc(innovation)" alt=" " width="209" height="130" class="img-responsive img-fit-cover">
                     </figure>
 
-                    <button type="button" class="btn btn-primary btn-xs absolute" (click)="onClickPush(innovation)">Push it</button>
+                    <button type="button" class="is-xs button absolute" (click)="onClickPush(innovation)">Push it</button>
 
                   </div>
 

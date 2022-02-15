@@ -34,7 +34,7 @@
           <a
             [queryParams]="{ 'tag': getSelectedTagsIds() }"
             [routerLink]="['/demo', 'showcase']"
-            class="ghost-edit btn btn-sm rounded m-right-20"
+            class="button is-sm is-info is-rounded m-right-20"
             target="_blank">
             <span [innerText]="'DISCOVER.BUTTON_SHOWCASE'" translate></span>
           </a>
@@ -42,7 +42,7 @@
 
         <button
           (click)="onClickShare()"
-          class="btn btn-sm rounded btn-secondary"
+          class="button is-rounded is-sm"
           type="button">
           <i class="fas fa-share"></i>{{ 'DISCOVER.BUTTON_SHARE' | translate }}
         </button>
@@ -181,7 +181,7 @@
       <div *ngIf="!urlCopied">
         <button
           (click)="onClickCopy($event)"
-          class="btn btn-sm ghost-edit"
+          class="button is-info is-sm"
           type="button">
           {{ 'DISCOVER.TOOLTIP_TEXT' | translate }}
         </button>
@@ -189,7 +189,7 @@
 
       <div *ngIf="urlCopied">
         <button
-          class="btn btn-sm ghost-success c-not-allowed"
+          class="button is-outlined is-success is-sm c-not-allowed"
           type="button">
           {{ 'DISCOVER.TOOLTIP_TEXT_COPIED' | translate }}
         </button>

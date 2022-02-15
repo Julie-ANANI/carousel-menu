@@ -20,7 +20,7 @@
         <section *ngIf="!fetchingError" class="d-content-wrapper">
 
           <!-- filters -->
-          <div class="section-light-pad">
+          <div class="p-bottom-25 p-top-25">
             <app-filters
               [tags]="sectorTags"
               (appliedFilters)="onSelectFilters($event)"
@@ -156,7 +156,7 @@
             <a
               [href]="getCommunityUrl()"
               [innerText]="'DISCOVER.BUTTON_COMMUNITY'"
-              class="btn btn-primary rounded"
+              class="button is-rounded"
               rel="noopener"
               target="_blank"
               translate>

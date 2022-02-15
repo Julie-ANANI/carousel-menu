@@ -1,6 +1,6 @@
 <!-- when error -->
 <ng-container *ngIf="fetchingError">
-  <div class="section-pad">
+  <div class="p-bottom-50 p-top-50">
     <div class="column col-xs-12 col-11 col-mx-auto">
       <app-utility-error-template-1 [errorMessage]="'ERROR.FETCHING_ERROR'">
         <p [innerText]="'ERROR.ERRORS.PROJECT_ERROR'" translate></p>
@@ -13,11 +13,11 @@
 
 <!-- when not error -->
 <ng-container *ngIf="!fetchingError && innovation">
-  <section id="admin-community-project-component" class="section-light-pad rm-pad-top">
+  <section id="admin-community-project-component" class="p-bottom-25">
 
 
     <!-- section header -->
-    <div class="section-header section-light-pad rm-pad-bottom">
+    <div class="section-header p-top-25">
       <div class="column col-xs-12 col-11 col-mx-auto">
 
         <!-- project name -->
@@ -79,17 +79,18 @@
 
 
     <!-- section details -->
-    <div class="section-details section-light-pad rm-pad-bottom">
+    <div class="section-details p-top-25">
       <div class="column col-xs-12 col-11 col-mx-auto">
 
         <!-- buttons -->
         <div class="text-right">
-          <button type="button" class="btn ghost-primary btn-sm" (click)="onClickAddManually($event)">Add manually</button>
-          <button type="button" class="btn btn-primary btn-sm" [disabled]="true" (click)="onClickSuggestion($event)">See suggestions</button>
+          <button type="button" class="is-sm is-outlined button" (click)="onClickAddManually($event)">Add manually</button>
+          <button type="button" class="is-sm button" [disabled]="true" (click)="onClickSuggestion($event)">See
+            suggestions</button>
         </div>
 
         <!-- section table -->
-        <div class="section-light-pad rm-pad-bottom">
+        <div class="p-top-25">
           <app-shared-ambassadors-list [listType]="'default'" [config]="config" [context]="context"></app-shared-ambassadors-list>
         </div>
 

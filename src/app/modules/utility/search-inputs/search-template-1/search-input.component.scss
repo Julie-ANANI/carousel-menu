@@ -45,7 +45,7 @@
       color: $dark-color;
     }
 
-    .btn-round {
+    .button.is-circled {
       position: absolute;
       transition: all .35s ease-in-out;
 
@@ -65,7 +65,7 @@
         width: 100%;
       }
 
-      .btn-round {
+      .button.is-circled {
         background-color: $meta-color;
         border-color: $meta-color;
       }

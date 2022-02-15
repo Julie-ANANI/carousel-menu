@@ -3,7 +3,7 @@
 
 
     <!-- section search bar -->
-    <section class="section-search section-pad rm-pad-bottom">
+    <section class="section-search p-top-50">
       <app-utility-search-input-3 [searchFieldValue]="searchFieldValue" (searchFieldOutput)="onClickSearch($event)"></app-utility-search-input-3>
     </section>
     <!-- /section search bar -->
@@ -18,7 +18,7 @@
 
     <!-- section showing video when no search -->
     <ng-container *ngIf="!searchStarted && !searchStopped">
-      <section class="section-pad rm-pad-bottom" [ngClass]="{ 'animate-disappear': searchStarted }">
+      <section class="p-top-50" [ngClass]="{ 'animate-disappear': searchStarted }">
         <video class="video-responsive" autoplay loop>
           <source src="https://res.cloudinary.com/umi/video/upload/v1554473766/app/videos/search-tool/demo.mp4" type="video/mp4">
         </video>
@@ -56,7 +56,7 @@
 
       <!-- when searching for professionals done -->
       <ng-container *ngIf="searchStopped">
-        <div class="flex-centered section-light-pad" [ngClass]=" { 'animate-appear': searchStopped } ">
+        <div class="flex-centered p-bottom-25 p-top-25" [ngClass]=" { 'animate-appear': searchStopped } ">
 
           <!-- display map -->
           <div class="map-wrapper">
@@ -147,7 +147,7 @@
 
         <!-- if no professionals found on filter activated -->
         <ng-container *ngIf="slicedPros.length === 0">
-          <div class="section-pad flex-centered no-result-wrapper">
+          <div class="p-bottom-50 p-top-50 flex-centered no-result-wrapper">
             <img src="https://res.cloudinary.com/umi/image/upload/v1541075335/app/default-images/icons/no_result.png" class="img-responsive" alt=" ">
             <h3 class="text-normal" [innerText]="'SEARCH_DEMO.NO_RESULT_HEADING'" translate></h3>
             <span class="text-meta text-medium" [innerText]="'SEARCH_DEMO.NO_RESULT_TEXT'" translate></span>
@@ -259,8 +259,9 @@
 
       <!-- button to show more pros -->
       <ng-container *ngIf="searchStopped && slicedPros.length !== searchResult.pros.length && !selectedCountry">
-        <div class="text-center section-pad rm-pad-top">
-          <button class="btn btn-primary rounded shadow " (click)="onClickSeeMore()" [innerText]="'COMMON.BUTTON.SEE_MORE'" translate></button>
+        <div class="text-center p-bottom-50">
+          <button class="button is-rounded shadow " (click)="onClickSeeMore()" [innerText]="'COMMON.BUTTON.SEE_MORE'"
+                  translate></button>
         </div>
       </ng-container>
       <!-- /button to show more pros -->

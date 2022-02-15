@@ -67,7 +67,7 @@
 
     .d-d-action-buttons-wrapper {
 
-      .btn {
+      .button {
         margin: 0.5rem;
       }
 
@@ -75,10 +75,10 @@
 
     .d-d-share-buttons-wrapper {
 
-      .btn-round {
+      .button.is-circled {
         margin: 0.5rem $unit-1;
 
-        &.btn-round-md {
+        &.is-sm {
 
           i {
             font-size: 16px;

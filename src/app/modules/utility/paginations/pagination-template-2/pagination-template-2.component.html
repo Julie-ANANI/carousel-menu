@@ -9,7 +9,7 @@
         <button
           [disabled]="currentPage === 1"
           (click)="navigatePage(currentPage - 1)"
-          class="btn ghost-draft ghost-background-hover"
+          class="button is-outlined is-draft"
           type="button">
           <i class="fas fa-angle-left m-no-left m-right-3"></i>
           <span>{{ 'PAGINATION.PREVIOUS' | translate }}</span>
@@ -23,7 +23,7 @@
           (click)="navigatePage(page)"
           [ngClass]="{ 'active': currentPage === page }"
           type="button"
-          class="btn ghost-draft ghost-background-hover light-hover m-left-1 m-right-1">
+          class="btn button is-draft is-outlined ghost-draft ghost-background-hover light-hover m-left-1 m-right-1">
           <span>{{ page }}</span>
         </button>
       </span>
@@ -33,7 +33,7 @@
         <button
           [disabled]="currentPage === pagination.totalPage"
           (click)="navigatePage(currentPage + 1)"
-          class="btn ghost-draft ghost-background-hover"
+          class="btn ghost-draft button is-draft is-outlined ghost-background-hover"
           type="button">
           <span>{{ 'PAGINATION.NEXT' | translate }}</span>
           <i class="fas fa-angle-right m-no-right m-left-3"></i>

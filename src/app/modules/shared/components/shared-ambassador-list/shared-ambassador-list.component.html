@@ -1,6 +1,6 @@
 <!-- section fetching error -->
 <ng-container *ngIf="fetchingError">
-  <div class="section-pad">
+  <div class="p-bottom-50 p-top-50">
     <app-utility-error-template-1 [errorMessage]="'ERROR.FETCHING_ERROR'"></app-utility-error-template-1>
   </div>
 </ng-container>
@@ -9,7 +9,7 @@
 
 <!-- section no result -->
 <ng-container *ngIf="!fetchingError && total === 0">
-  <div class="section-pad">
+  <div class="p-bottom-50 p-top-50">
     <app-message-template [widthMax]="'342px'">
       <span>Do not have any ambassadors to show.</span>
     </app-message-template>

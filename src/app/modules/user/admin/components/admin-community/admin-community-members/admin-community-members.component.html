@@ -5,19 +5,20 @@
     <div class="text-right">
 
       <!-- import -->
-      <label class="btn ghost-primary btn-sm m-right-1rem">
+      <label class="is-sm button is-outlined m-right-1rem">
         <input #fileupload type="file" [hidden]="true" (change)="importAmbassadors(fileupload.files[0])">
         {{ 'COMMON.BUTTON.IMPORT' | translate }}
       </label>
 
       <!-- add -->
-      <button type="button" class="btn btn-primary btn-sm" (click)="addAmbassador($event)" [innerText]="'COMMON.BUTTON.ADD'" translate></button>
+      <button type="button" class="is-sm button" (click)="addAmbassador($event)" [innerText]="'COMMON.BUTTON.ADD'"
+              translate></button>
 
     </div>
     <!-- /section buttons -->
 
     <!-- section members table -->
-    <div class="section-light-pad rm-pad-bottom">
+    <div class="p-top-25">
       <app-shared-ambassadors-list [listType]="'default'" [(config)]="config"></app-shared-ambassadors-list>
     </div>
     <!-- /section members table -->
