@@ -19,6 +19,7 @@
   .answers-wrapper {
     margin: 20px 0 0 0;
     list-style: none;
+    padding: 0;
 
     li {
       @include control-transition();

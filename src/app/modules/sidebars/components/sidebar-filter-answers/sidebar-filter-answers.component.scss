@@ -68,6 +68,7 @@
       display: flex;
       align-items: center;
       cursor: pointer;
+      color: $dark-color;
 
       i {
         font-size: 12px;
@@ -79,6 +80,10 @@
         &:hover {
           color: $primary-color;
         }
+      }
+
+      &:hover {
+        color: $primary-color;
       }
 
     }
@@ -108,6 +113,12 @@
     .text-link {
       font-size: $font-size-xs;
       font-weight: normal;
+      color: $dark-color;
+
+      &:hover {
+        color: $primary-color;
+      }
+
     }
 
   }

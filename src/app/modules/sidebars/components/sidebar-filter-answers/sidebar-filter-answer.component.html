@@ -143,7 +143,7 @@
 
   <!-- select/unselect all type === 'FOLLOW_UP' -->
   <div *ngIf="templateType === 'FOLLOW_UP'" class="m-bottom-20">
-    <label class="form-checkbox">
+    <label class="form-checkbox is-sm">
       <input
         type="checkbox"
         id="select-all"
@@ -234,7 +234,7 @@
 
     <div [hidden]="!showSection.professionals" class="filter-wrapper animate-fade is-3">
 
-      <label class="form-checkbox">
+      <label class="form-checkbox is-sm">
         <input
           type="checkbox"
           id="select-all-professionals"
@@ -246,7 +246,7 @@
       <div
         *ngFor="let tag of (seeMore.professionals ? professionalsTags : (professionalsTags | slice:0:6))"
         class="form-group">
-        <label class="form-checkbox">
+        <label class="form-checkbox is-sm">
           <input
             (change)="checkTag($event, tag._id)"
             [checked]="selectedTags[tag._id]"
@@ -330,7 +330,7 @@
         *ngIf="(answersTagsLists[question.identifier] && answersTagsLists[question.identifier].length)"
         [hidden]="!showSection[question.identifier]" class="filter-wrapper animate-fade is-3">
 
-        <label class="form-checkbox">
+        <label class="form-checkbox is-sm">
           <input
             type="checkbox"
             [id]="'select-all'+(questionTitle(question))"
@@ -343,7 +343,7 @@
           *ngFor="let answerTag of (seeMore[question.identifier] ? answersTagsLists[question.identifier]
           : (answersTagsLists[question.identifier] | slice:0:4))"
           class="form-group">
-          <label class="form-checkbox">
+          <label class="form-checkbox is-sm">
             <input
               (change)="checkAnswerTag($event, question.identifier)"
               [checked]="selectedAnswersTags[question.identifier][answerTag._id]"
@@ -402,7 +402,7 @@
 
       <div [hidden]="!showSection[question.identifier]" class="filter-wrapper animate-fade is-3">
 
-        <label class="form-checkbox">
+        <label class="form-checkbox is-sm">
           <input
             type="checkbox"
             [id]="'select-all'+(question.title | multiling:reportingLang)"
@@ -413,7 +413,7 @@
 
         <div *ngFor="let option of (seeMore[question.identifier] ? question.options
         : (question.options | slice:0:4))" class="form-group">
-          <label class="form-checkbox">
+          <label class="form-checkbox is-sm">
             <input
               (change)="checkOption($event, question)"
               [checked]="filters[question.identifier] ? filters[question.identifier].value[option.identifier] : true"
