@@ -5,8 +5,6 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CookieServerInterceptor } from './interceptors/cookie-server.interceptor';
 import { ErrorService } from './services/error/error.service';
 import { ErrorBackendService } from './services/error/errorBackend.service';
-import { LocalStorageBackendService } from './services/localStorage/localStorageBackend.service';
-import { LocalStorageService } from '@umius/umi-common-component/services/localStorage';
 import { SocketService } from './services/socket/socket.service';
 import { SocketSsrService } from './services/socket/socket-ssr.service';
 
@@ -15,6 +13,7 @@ import { AppComponent } from './app.component';
 import {EtherpadSocketService} from './services/socket/etherpad.socket.service';
 import {EtherpadSocketSsrService} from './services/socket/etherpad.socket-ssr.service';
 import { CookieBackendModule } from 'ngx-cookie-backend';
+import {UmiusLocalStorageBackendService, UmiusLocalStorageService} from '@umius/umi-common-component';
 
 @NgModule({
   imports: [
@@ -28,7 +27,7 @@ import { CookieBackendModule } from 'ngx-cookie-backend';
   providers: [
     // Add universal-only providers here
     { provide: HTTP_INTERCEPTORS, useClass: CookieServerInterceptor, multi: true },
-    { provide: LocalStorageService, useClass: LocalStorageBackendService },
+    { provide: UmiusLocalStorageService, useClass: UmiusLocalStorageBackendService },
     { provide: SocketService, useClass: SocketSsrService },
     { provide: EtherpadSocketService, useClass: EtherpadSocketSsrService },
     { provide: ErrorService, useClass: ErrorBackendService }
