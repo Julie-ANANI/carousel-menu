@@ -12,6 +12,10 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {emailRegEx} from '../../../../../utils/regex';
 
 export interface NewPro {
+  readonly completion?: {
+    rate: number,
+    missingFields: Array<string>
+  };
   firstName: string;
   lastName: string;
   email: string;
@@ -49,8 +53,6 @@ export class ReassignAnswerComponent {
 
   private _company: Company = <Company>{};
 
-  //private _formBuilder: FormBuilder;
-
   private _formData = this._formBuilder.group({
  /*   firstName: ['', [Validators.required ]],
     lastName: ['', [Validators.required]],*/
@@ -59,6 +61,7 @@ export class ReassignAnswerComponent {
     company: ['', [Validators.required]],
     country: ['', [Validators.required]],*/
   });
+  /*private _proCompletion: { rate: number; missingFields: number;};*/
 
 constructor(private _professionalService: ProfessionalsService,
             private _translateNotificationsService: TranslateNotificationsService,
@@ -81,6 +84,11 @@ constructor(private _professionalService: ProfessionalsService,
             flag: _pro.country,
             domain: ''
           };
+
+          /*this._proCompletion = {
+            rate: 0,
+            missingFields: 0,
+          };*/
 
           this._newPro = {
             firstName: _pro.firstName,

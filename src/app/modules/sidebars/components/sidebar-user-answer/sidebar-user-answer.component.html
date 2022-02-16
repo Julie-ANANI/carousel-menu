@@ -54,12 +54,31 @@
       <button
         class="button is-community is-sm"
         (click)="onReassignAnswer($event)"
-        [disabled]="!newPro.firstName || !newPro.lastName || !newPro.email || isReassigning"
+        [disabled]="!newPro.firstName || !newPro.lastName || !newPro.email || !newPro.jobTitle || !newPro.company || !newPro.country|| isReassigning"
         id="btn-confirm-assign"
         type="button">
         <ng-container *ngIf="!isReassigning; else assignText">Confirm</ng-container>
         <ng-template #assignText>reassigning the answer...</ng-template>
       </button>
+      <div class="popover text-error text-sm"
+           *ngIf="!newPro.firstName || !newPro.lastName || !newPro.email || !newPro.jobTitle || !newPro.company || !newPro.country">
+        <i class="fas fa-exclamation-triangle"></i>
+        {{ 'ERROR.ANSWER.UNREASSIGNED' | translate }}
+        <div class="popover-container">
+          <div class="card">
+            <span *ngIf="!newPro.firstName || !newPro.lastName || !newPro.email || !newPro.jobTitle
+                 && !newPro.company && !newPro.country">
+                 {{ 'ERROR.ANSWER.UNREASSIGNED' | translate }}
+            </span>
+         <!--   <span *ngIf="!newPro.firstName">
+                      {{ 'ADMIN_STORYBOARD.MISSING_FIELDS.MEDIA' | translate }}
+                     </span>
+            <span *ngFor="let field of executiveReport.completion.missingFields">
+                      {{ 'ADMIN_STORYBOARD.MISSING_FIELDS.' + field.toUpperCase() | translate }}
+                    </span>-->
+          </div>
+        </div>
+      </div>
     </div>
     <!-- /reassign the answer to new pro -->
 
