@@ -9,8 +9,9 @@ import { InnovationFrontService } from '../../../../../../../services/innovation
 import { Subject } from 'rxjs';
 import {HttpErrorResponse} from '@angular/common/http';
 import {ErrorFrontService} from '../../../../../../../services/error/error-front.service';
-import { Config, Table } from '@umius/umi-common-component/models';
 import {isPlatformBrowser} from '@angular/common';
+import {Table} from '@umius/umi-common-component';
+import {Config} from '../../../../../../../models/config';
 
 @Component({
   templateUrl: 'exploration.component.html',

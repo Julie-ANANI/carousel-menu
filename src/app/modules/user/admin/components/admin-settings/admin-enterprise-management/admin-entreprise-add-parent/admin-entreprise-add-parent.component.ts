@@ -6,9 +6,10 @@ import { first } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Enterprise } from '../../../../../../../models/enterprise';
 import { NotificationsService } from 'angular2-notifications';
-import { Table, Config, Column } from '@umius/umi-common-component/models';
+import { Table, Column } from '@umius/umi-common-component';
 import { TranslateNotificationsService } from "../../../../../../../services/translate-notifications/translate-notifications.service";
 import { ErrorFrontService } from "../../../../../../../services/error/error-front.service";
+import {Config} from '../../../../../../../models/config';
 
 
 @Component({
