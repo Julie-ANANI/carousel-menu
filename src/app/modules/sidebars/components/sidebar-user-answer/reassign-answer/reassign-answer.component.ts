@@ -9,7 +9,7 @@ import {Company} from '../../../../../models/company';
 import {Country} from '../../../../../models/country';
 import {countries} from '../../../../../models/static-data/country';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-/*import {emailRegEx} from '../../../../../utils/regex';*/
+import {emailRegEx} from '../../../../../utils/regex';
 
 export interface NewPro {
   firstName: string;
@@ -54,7 +54,7 @@ export class ReassignAnswerComponent {
   private _formData = this._formBuilder.group({
     firstName: ['', [Validators.required ]],
     lastName: ['', [Validators.required]],
-    /*email: ['', [Validators.required, Validators.pattern(emailRegEx)]],*/
+    email: ['', [Validators.required, Validators.pattern(emailRegEx)]],
     jobTitle: ['', [Validators.required]],
     company: ['', [Validators.required]],
     country: ['', [Validators.required]],

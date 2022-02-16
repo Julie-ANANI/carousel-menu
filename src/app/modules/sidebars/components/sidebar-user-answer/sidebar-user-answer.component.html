@@ -50,12 +50,14 @@
     <!-- /reassign answer | edit answer -->
 
     <!-- reassign the answer to new pro -->
-    <div *ngIf="userAnswer.localStatus !== 'draft' && assignNewPro && !editMode">
+    <div *ngIf="userAnswer.localStatus !== 'draft' && assignNewPro && !editMode"
+         (click)="onReassignAnswer($event)"
+    >
       <button
         class="button is-community is-sm"
         (click)="onReassignAnswer($event)"
-
-        id="btn-cancel-assign"
+        [disabled]="!newPro.firstName || !newPro.lastName || !newPro.email || isReassigning"
+        id="btn-confirm-assign"
         type="button">
         <ng-container *ngIf="!isReassigning; else assignText">Confirm</ng-container>
         <ng-template #assignText>reassigning the answer...</ng-template>

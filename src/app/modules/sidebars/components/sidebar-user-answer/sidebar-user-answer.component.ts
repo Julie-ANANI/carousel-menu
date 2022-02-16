@@ -355,7 +355,7 @@ export class SidebarUserAnswerComponent implements OnInit {
 
   public onReassignAnswer(event: Event): void {
     event.preventDefault();
-   // console.log(event);
+    console.log(event);
     if (!this._isReassigning) {
        console.log(event);
       this._isReassigning = true;
