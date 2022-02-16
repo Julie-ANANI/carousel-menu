@@ -1,5 +1,3 @@
-// TODo remove multiling
+import {UmiusMultilingInterface} from '@umius/umi-common-component';
 
-export interface Multiling {
-  [lang: string]: string;
-}
+export interface Multiling extends UmiusMultilingInterface {}
