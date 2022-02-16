@@ -10,52 +10,21 @@ import {Tag} from '../../models/tag';
 import {TransactionalEmail} from '../../models/transactional-email';
 import {JobConfig, JobsTypologies} from '../../models/target-pros';
 import {TranslateService} from '@ngx-translate/core';
+import {UmiusLangEntryService} from '@umius/umi-common-component';
+
+/**
+ * UmiusLangEntryService functions:
+ *
+ * 1. transform(value: any, requested: string, lang: string = 'en', returnDefault: boolean = false): any;
+ */
 
 @Injectable({
   providedIn: 'root'
 })
-export class LangEntryService {
+export class LangEntryService extends UmiusLangEntryService {
 
-  constructor(private _translateService: TranslateService) {
-  }
-
-  /**
-   * from the list of the entry or type of Entry it will return the requested based on the 'lang' param.
-   *
-   * This function is also extended by the pipe 'LangEntryPipe' to use in the component.html file so
-   * if you make changes in the param take care there also.
-   *
-   * @param value - actual entry it can be of type or Array<any> but in that case it should have the lang property.
-   * @param requested - the label or value you want
-   * @param lang - requested lang
-   * @param returnDefault = true means if not find the entry in the given lang then return the entry at index 0
-   */
-  transform(value: any, requested: string, lang: string = 'en',  returnDefault: boolean = false): any {
-    if (!value || !requested) return '';
-
-    if (Array.isArray(value) && !!value.length) {
-      // TODO remove console
-      console.log('New Multi-language system.');
-      const entry = value.find((_value) => _value.lang === lang);
-      return !!entry ? requested === 'FULL_ENTRY' ? entry : entry[requested] : returnDefault ? value[0][requested] : '';
-    }
-
-    if (value[requested] && value[requested][lang]) {
-      // TODO remove console
-      console.log('Old Multi-language system.');
-      return value[requested] && value[requested][lang];
-    }
-
-    if (returnDefault) {
-      if (lang !== this._translateService.defaultLang && value[requested][this._translateService.defaultLang]) {
-        return value[requested][this._translateService.defaultLang];
-      } else {
-        for (const a in value[requested]) {
-          if(value[requested][a]) return value[requested][a];
-        }
-        return '';
-      }
-    }
+  constructor(protected _translateService: TranslateService) {
+    super(_translateService);
   }
 
   /**

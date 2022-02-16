@@ -1,16 +1,14 @@
 import { Injectable } from '@angular/core';
-import { LocalStorageService } from '@umius/umi-common-component/services/localStorage';
+import {UmiusLocalStorageBackendService} from '@umius/umi-common-component';
+
+/**
+ * UmiusLocalStorageBackendService functions:
+ *
+ * 1. setItem(_k: string, _v: string): void;
+ * 2. getItem(_k: string): string | null;
+ */
 
 @Injectable()
-export class LocalStorageBackendService extends LocalStorageService {
-
-
-  public setItem (_k: string, _v: string): void {
-    // do nothing here
-  }
-
-  public getItem (_k: string): string | null {
-    return null;
-  }
+export class LocalStorageBackendService extends UmiusLocalStorageBackendService {
 
 }
