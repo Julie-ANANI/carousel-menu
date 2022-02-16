@@ -60,6 +60,12 @@
         <ng-container *ngIf="!isReassigning; else assignText">Confirm</ng-container>
         <ng-template #assignText>reassigning the answer...</ng-template>
       </button>
+      <app-utility-banner
+        [(showBanner)]="showBannerUpdate" [position]="'relative'"
+        *ngIf="!newPro.firstName || !newPro.lastName || !newPro.email || !newPro.jobTitle || !newPro.company || !newPro.country">
+        This project has been updated by {{ showBannerUpdate }} at {{ updateTime | date: 'H:mm' }}
+      </app-utility-banner>
+
       <div class="popover text-error text-sm"
            *ngIf="!newPro.firstName || !newPro.lastName || !newPro.email || !newPro.jobTitle || !newPro.company || !newPro.country">
         <i class="fas fa-exclamation-triangle"></i>
