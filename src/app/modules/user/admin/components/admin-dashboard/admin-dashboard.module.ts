@@ -5,7 +5,6 @@ import { TranslateModule } from '@ngx-translate/core';
 import { PipeModule } from '../../../../../pipe/pipe.module';
 import { AdminDashboardComponent } from './admin-dashboard.component';
 import { AdminMissionsListModule } from '../admin-missions-list/admin-missions-list.module';
-import { SharedLoaderModule } from '../../../../shared/components/shared-loader/shared-loader.module';
 
 @NgModule({
   imports: [
@@ -14,8 +13,7 @@ import { SharedLoaderModule } from '../../../../shared/components/shared-loader/
     TranslateModule.forChild(),
     PipeModule,
     AdminMissionsListModule,
-    FormsModule,
-    SharedLoaderModule
+    FormsModule
   ],
   declarations: [
     AdminDashboardComponent
