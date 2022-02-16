@@ -52,12 +52,12 @@ export class ReassignAnswerComponent {
   //private _formBuilder: FormBuilder;
 
   private _formData = this._formBuilder.group({
-    firstName: ['', [Validators.required ]],
-    lastName: ['', [Validators.required]],
+ /*   firstName: ['', [Validators.required ]],
+    lastName: ['', [Validators.required]],*/
     email: ['', [Validators.required, Validators.pattern(emailRegEx)]],
-    jobTitle: ['', [Validators.required]],
+   /* jobTitle: ['', [Validators.required]],
     company: ['', [Validators.required]],
-    country: ['', [Validators.required]],
+    country: ['', [Validators.required]],*/
   });
 
 constructor(private _professionalService: ProfessionalsService,
@@ -118,21 +118,19 @@ constructor(private _professionalService: ProfessionalsService,
     this.emitPro();
   }
 
-/*
-  public onClickContinue() {
+ /* public onClickContinue() {
     if (this._formData.valid) {
       this._newPro.firstName = this._formData.value;
       this._newPro.lastName = this._formData.value;
-  /!*    this._newPro.email = this._formData.value;
-      this._newPro.jobTitle = this._formData.value;
-      this._newPro.country = this._formData.value;*!/
+      this._newPro.email = this._formData.value;
+/!*      this._newPro.jobTitle = this._formData.value;
+      this._newPro.country = this._formData.value;*!/!*!/
     } else {
       if (this._formData.untouched && this._formData.pristine) {
         this._translateNotificationsService.error('ERROR.ERROR', 'ERROR.INVALID_FORM_DATA');
       }
     }
-  }
-*/
+  }*/
 
   get newPro(): NewPro {
     return this._newPro;

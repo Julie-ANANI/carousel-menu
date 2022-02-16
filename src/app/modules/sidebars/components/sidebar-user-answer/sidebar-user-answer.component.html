@@ -50,9 +50,7 @@
     <!-- /reassign answer | edit answer -->
 
     <!-- reassign the answer to new pro -->
-    <div *ngIf="userAnswer.localStatus !== 'draft' && assignNewPro && !editMode"
-         (click)="onReassignAnswer($event)"
-    >
+    <div *ngIf="userAnswer.localStatus !== 'draft' && assignNewPro && !editMode">
       <button
         class="button is-community is-sm"
         (click)="onReassignAnswer($event)"
