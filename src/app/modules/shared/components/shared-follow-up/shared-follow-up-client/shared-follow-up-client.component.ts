@@ -1,9 +1,7 @@
 import {Component, EventEmitter, Input, OnDestroy, Output} from '@angular/core';
 import {Answer} from '../../../../../models/answer';
-import {Table, Config} from '@umius/umi-common-component/models';
 import {Innovation, InnovationFollowUpEmails, InnovationFollowUpEmailsCc} from '../../../../../models/innovation';
 import {MissionQuestion} from '../../../../../models/mission';
-import {SidebarInterface} from '../../../../sidebars/interfaces/sidebar-interface';
 import {EmailsObject} from '../../../../../models/email';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {TranslateNotificationsService} from '../../../../../services/translate-notifications/translate-notifications.service';
@@ -21,6 +19,8 @@ import {ScrapeHTMLTags} from '../../../../../pipe/pipes/ScrapeHTMLTags';
 import {TranslateService} from '@ngx-translate/core';
 import {UserFrontService} from '../../../../../services/user/user-front.service';
 import {LangEntryService} from '../../../../../services/lang-entry/lang-entry.service';
+import {Table, UmiusSidebarInterface} from '@umius/umi-common-component';
+import {Config} from '../../../../../models/config';
 
 @Component({
   selector: 'app-shared-follow-up-client',
@@ -82,9 +82,9 @@ export class SharedFollowUpClientComponent implements OnDestroy {
 
   private _modalAnswer: Answer = null;
 
-  private _sidebarAnswer: SidebarInterface = <SidebarInterface>{};
+  private _sidebarAnswer: UmiusSidebarInterface = <UmiusSidebarInterface>{};
 
-  private _sidebarTemplate: SidebarInterface = {
+  private _sidebarTemplate: UmiusSidebarInterface = {
     animate_state: 'inactive',
     type: 'FOLLOW_UP'
   };
@@ -542,11 +542,11 @@ export class SharedFollowUpClientComponent implements OnDestroy {
     this._finalConfig = value;
   }
 
-  set sidebarAnswer(value: SidebarInterface) {
+  set sidebarAnswer(value: UmiusSidebarInterface) {
     this._sidebarAnswer = value;
   }
 
-  set sidebarTemplate(value: SidebarInterface) {
+  set sidebarTemplate(value: UmiusSidebarInterface) {
     this._sidebarTemplate = value;
   }
 
@@ -590,11 +590,11 @@ export class SharedFollowUpClientComponent implements OnDestroy {
     return this._modalAnswer;
   }
 
-  get sidebarAnswer(): SidebarInterface {
+  get sidebarAnswer(): UmiusSidebarInterface {
     return this._sidebarAnswer;
   }
 
-  get sidebarTemplate(): SidebarInterface {
+  get sidebarTemplate(): UmiusSidebarInterface {
     return this._sidebarTemplate;
   }
 
