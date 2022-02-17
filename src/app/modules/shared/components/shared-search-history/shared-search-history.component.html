@@ -48,16 +48,16 @@
 
 
 <!-- sidebar to request details -->
-<app-sidebar *ngIf="canAccess(['view'])" [(template)]="sidebarValue">
+<umius-sidebar-full *ngIf="canAccess(['view'])" [(template)]="sidebarValue">
   <app-sidebar-search-history
     [accessPath]="accessPath"
     [request]="selectedRequest">
   </app-sidebar-search-history>
-</app-sidebar>
+</umius-sidebar-full>
 <!-- /sidebar to advanced search -->
 
 <!-- MODAL : Ajout de pros à une campagne -->
-<app-utility-modal
+<umius-modal
   *ngIf="canAccess(['add', 'toCampaign'])"
   [(showModal)]="addToCampaignModal"
   [title]="'Add to a campaign'">
@@ -117,4 +117,4 @@
     </button>
   </footer>
 
-</app-utility-modal>
+</umius-modal>
