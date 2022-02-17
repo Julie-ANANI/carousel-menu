@@ -92,11 +92,11 @@
 </div>
 
 <!-- sign up sidebar -->
-<app-sidebar [(template)]="sidebarValue">
+<umius-sidebar-full [(template)]="sidebarValue">
   <app-sidebar-signup-form
     (finalOutput)="createUser($event)"
     [isCreating]="isCreatingAccount"
     [sidebarState]="sidebarValue.animate_state">
   </app-sidebar-signup-form>
-</app-sidebar>
+</umius-sidebar-full>
 <!-- /sign up sidebar -->
