@@ -3,7 +3,6 @@ import { Professional } from '../../../../models/professional';
 import { ProfessionalsService } from '../../../../services/professionals/professionals.service';
 import { first } from 'rxjs/operators';
 import { TranslateNotificationsService } from '../../../../services/translate-notifications/translate-notifications.service';
-import { SidebarInterface } from '../../../sidebars/interfaces/sidebar-interface';
 import { Campaign } from '../../../../models/campaign';
 import { Router } from '@angular/router';
 import { Tag } from '../../../../models/tag';
@@ -11,7 +10,8 @@ import { RolesFrontService } from '../../../../services/roles/roles-front.servic
 import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorFrontService } from '../../../../services/error/error-front.service';
 import { GeographySettings } from '../../../../models/innov-settings';
-import { Table, Config, Column } from '@umius/umi-common-component/models';
+import {Config} from '../../../../models/config';
+import {Column, Table, UmiusSidebarInterface} from '@umius/umi-common-component';
 
 export interface SelectedProfessional extends Professional {
   isSelected: boolean;
@@ -61,7 +61,7 @@ export class SharedProfessionalsListComponent {
    */
   private _isShowModal = false;
 
-  private _sidebarValue: SidebarInterface = {
+  private _sidebarValue: UmiusSidebarInterface = {
     animate_state: 'inactive',
   };
 
@@ -124,7 +124,7 @@ export class SharedProfessionalsListComponent {
       _isSearchable: !!this.canAccess(['searchBy']),
       _isTitle: true,
       _isPaginable: true,
-      _filterButtons: this.tableSelector === 'admin-campaign-pros-limit' ? [
+      _buttons: this.tableSelector === 'admin-campaign-pros-limit' ? [
         {
           _label: 'Filter by country',
           _action: 'filter by country'
@@ -134,7 +134,7 @@ export class SharedProfessionalsListComponent {
       _isNoMinHeight: this.total < 11,
       _isDeletable: this.canAccess(['user', 'delete']),
       _isSelectable: this._isSelectable(),
-      _buttons: [
+      _actions: [
         {
           _label: 'Remove',
           _icon: 'icon icon-delete',
@@ -464,7 +464,7 @@ export class SharedProfessionalsListComponent {
   }
 
   private hideButtonsWhenSelectAll() {
-    this._table._buttons.map((button) => {
+    this._table._actions.map((button) => {
       if (button._label !== 'Remove') {
         button._isHidden = this._isSelectAll;
       }
@@ -680,11 +680,11 @@ export class SharedProfessionalsListComponent {
     return this._localConfig;
   }
 
-  set sidebarValue(value: SidebarInterface) {
+  set sidebarValue(value: UmiusSidebarInterface) {
     this._sidebarValue = value;
   }
 
-  get sidebarValue(): SidebarInterface {
+  get sidebarValue(): UmiusSidebarInterface {
     return this._sidebarValue;
   }
 
