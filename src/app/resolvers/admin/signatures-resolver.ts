@@ -4,10 +4,10 @@ import { makeStateKey, TransferState } from '@angular/platform-browser';
 import { EMPTY, Observable } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { isPlatformServer } from '@angular/common';
-import { Config } from '@umius/umi-common-component/models';
-import {ConfigService} from '@umius/umi-common-component/services/config';
 import { Response } from '../../models/response';
 import { TemplatesService } from '../../services/templates/templates.service';
+import {Config} from '../../models/config';
+import {UmiusConfigService} from '@umius/umi-common-component';
 
 const SIGNATURES_KEY = makeStateKey('signatures');
 
@@ -25,7 +25,7 @@ export class SignaturesResolver implements Resolve<Response> {
   constructor(@Inject(PLATFORM_ID) private _platformId: Object,
               private _transferState: TransferState,
               private _templatesService: TemplatesService,
-              private _configService: ConfigService) { }
+              private _configService: UmiusConfigService) { }
 
   resolve(activatedRouteSnapshot: ActivatedRouteSnapshot, routerStateSnapshot: RouterStateSnapshot): Observable<Response> {
 

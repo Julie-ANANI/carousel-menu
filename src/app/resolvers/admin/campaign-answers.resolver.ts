@@ -4,10 +4,10 @@ import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/r
 import { TransferState, makeStateKey } from '@angular/platform-browser';
 import { EMPTY, Observable } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
-import { Config } from '@umius/umi-common-component/models';
 import { CampaignService } from '../../services/campaign/campaign.service';
-import {ConfigService} from '@umius/umi-common-component/services/config';
 import { Response } from '../../models/response';
+import {Config} from '../../models/config';
+import {UmiusConfigService} from '@umius/umi-common-component';
 
 const CAMPAIGN_ANSWERS_KEY = makeStateKey('campaign_answers');
 
@@ -24,7 +24,7 @@ export class CampaignAnswersResolver implements Resolve<Response> {
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object,
               private _campaignService: CampaignService,
-              private _configService: ConfigService,
+              private _configService: UmiusConfigService,
               private _transferState: TransferState) { }
 
   resolve(activatedRouteSnapshot: ActivatedRouteSnapshot, routerStateSnapshot: RouterStateSnapshot): Observable<Response> {

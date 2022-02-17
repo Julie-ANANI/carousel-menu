@@ -4,10 +4,10 @@ import { makeStateKey, TransferState } from '@angular/platform-browser';
 import { EMPTY, Observable } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { isPlatformServer } from '@angular/common';
-import { Config } from '@umius/umi-common-component/models';
-import {ConfigService} from '@umius/umi-common-component/services/config';
 import { Response } from '../../models/response';
 import { ProfessionalsService } from '../../services/professionals/professionals.service';
+import {Config} from '../../models/config';
+import {UmiusConfigService} from '@umius/umi-common-component';
 
 const CAMPAIGN_PROFESSIONALS_KEY = makeStateKey('campaign_professionals');
 
@@ -25,7 +25,7 @@ export class CampaignProfessionalsResolver implements Resolve<Response> {
   constructor(@Inject(PLATFORM_ID) private _platformId: Object,
               private _transferState: TransferState,
               private _professionalService: ProfessionalsService,
-              private _configService: ConfigService) { }
+              private _configService: UmiusConfigService) { }
 
   resolve(activatedRouteSnapshot: ActivatedRouteSnapshot, routerStateSnapshot: RouterStateSnapshot): Observable<Response> {
 
