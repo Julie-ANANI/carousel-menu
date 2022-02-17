@@ -333,9 +333,10 @@
           <div
             (click)="selectOption($event, option)"
             *ngFor="let option of question.options"
-            [ngClass]="{'text-normal': editMode,
+            [ngClass]="{
+            'text-normal': editMode,
             'text-meta': option.identifier !== fullAnswer.answers[question.identifier] && !editMode,
-            'text-dark': option.identifier !== fullAnswer.answers[question.identifier]}"
+            'text-dark': option.identifier !== fullAnswer.answers[question.identifier] && !selectOption}"
             class="c-hand">
             {{ optionLabel(option.identifier) }}
           </div>

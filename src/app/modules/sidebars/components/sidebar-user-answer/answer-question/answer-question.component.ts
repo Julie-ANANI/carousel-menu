@@ -86,10 +86,29 @@ export class AnswerQuestionComponent {
   }
 
   public selectOption(event: Event, option: any) {
+
     event.preventDefault();
-    this.fullAnswer.answers[this.question.identifier] = option.identifier;
+    //SI option.identifier
+    //SI l'option.identifier est différent de null ALORS renvoit option.identifier = null ou undefined
+   // let optionClick = this.fullAnswer.answers[this.question.identifier] = option.identifier;
+    let optionClick2 = this.fullAnswer.answers[this.question.identifier] = option.identifier = null;
+    console.log(optionClick2);
+   // console.log(optionClick);
+    console.log(option);
+   /* if (optionClick !== null) {
+        optionClick = null;
+    } else {
+      optionClick = optionClick
+    }*/
     this.emitChanges();
+
   }
+
+
+
+
+
+
 
   public setAnswer(event: any) {
     this.fullAnswer.answers[this.question.identifier] = event.value;

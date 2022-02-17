@@ -59,10 +59,18 @@
       <!-- name -->
       <div class="m-right-10">
         <label>
-          <div class="falsePlaceholder"
+          <!--<div class="falsePlaceholder"
                (change)="emitChanges()">
             {{('ADMIN_EXECUTIVE_REPORT.LIKERT-SCALE_SECTION.' + content.name) | uppercase| translate | titlecase }}
-          </div>
+          </div>-->
+          <input
+            (change)="emitChanges()"
+            (keyup)="textColor('name')"
+            [(ngModel)]="content.name"
+            [attr.placeholder]="'ADMIN_EXECUTIVE_REPORT.LIKERT-SCALE_SECTION.' + (content.name) | uppercase | translate"
+            maxlength="13"
+            class="form-input"
+            type="text">
         </label>
       </div>
       <!-- /name -->
@@ -89,8 +97,7 @@
 
       <!-- color -->
       <div class="popover">
-        <div
-          [ngStyle]="{ 'background-color': content.color }" class="shape is-circled is-sm"></div>
+        <div [ngStyle]="{ 'background-color': content.color }" class="shape is-circled is-sm"></div>
         <div class="popover-container">
           <div class="card-likert"
                (change)="emitChanges()">
@@ -126,7 +133,7 @@
       <div style="min-height: 30px">
         <div
           [ngStyle]="{ 'background-color': content.color }" class="label is-rounded">
-          {{('ADMIN_EXECUTIVE_REPORT.LIKERT-SCALE_SECTION.' + content.name) | uppercase| translate}}
+          {{'ADMIN_EXECUTIVE_REPORT.LIKERT-SCALE_SECTION' + (content.name) | uppercase | translate}}
         </div>
       </div>
 

@@ -64,7 +64,7 @@
               (change)="emitChanges()"
               (keyup)="textColor('name' , (i + 1)); checkVisibility(i)"
               [(ngModel)]="tag.name"
-              [attr.placeholder]="'ADMIN_EXECUTIVE_REPORT.RANKING_SECTION.ELEMENT_' + (i + 1) | translate"
+              [attr.placeholder]="'ADMIN_EXECUTIVE_REPORT.RANKING_SECTION.ELEMENT_1' + (i + 1) | translate"
               maxlength="20"
               class="form-input"
               type="text">
@@ -86,7 +86,6 @@
               (keyup)="textColor('legend' , (i + 1))"
               [(ngModel)]="tag.legend"
               [attr.placeholder]="'ADMIN_EXECUTIVE_REPORT.RANKING_SECTION.LEGEND_' + (i + 1) | translate"
-              maxlength="13"
               class="form-input"
               type="text">
 

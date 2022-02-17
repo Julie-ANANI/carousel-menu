@@ -78,6 +78,10 @@ export class TypeLikertScaleComponent {
     this.emitChanges();
   }
 
+  /*public checkVisibility(index: number) {
+    this._content.name[index].visibility = this._content.name[index].name !== '';
+  }*/
+
   get section(): ExecutiveSection {
     return this._section;
   }
