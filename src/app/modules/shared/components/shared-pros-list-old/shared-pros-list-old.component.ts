@@ -3,8 +3,8 @@ import { SearchService } from '../../../../services/search/search.service';
 import { Campaign } from '../../../../models/campaign';
 import { Professional } from '../../../../models/professional';
 import { first } from 'rxjs/operators';
-import {Pagination} from '../../../utility/paginations/interfaces/pagination';
-import { Config } from '@umius/umi-common-component/models';
+import {Config} from '../../../../models/config';
+import {UmiusPaginationInterface} from '@umius/umi-common-component';
 
 export interface SelectedProfessional extends Professional {
   isSelected: boolean;
@@ -19,7 +19,7 @@ export class SharedProsListOldComponent {
 
   private _config: Config;
   private _keywordsModal: boolean = false;
-  private _paginationConfig: Pagination = {};
+  private _paginationConfig: UmiusPaginationInterface = {};
   public smartSelect: any = null;
   public editUser: {[propString: string]: boolean} = {};
 
@@ -107,7 +107,7 @@ export class SharedProsListOldComponent {
   get keywordsModal(): boolean { return this._keywordsModal; }
   set keywordsModal(value: boolean) { this._keywordsModal = value; }
   get config(): Config { return this._config; }
-  get paginationConfig(): Pagination { return this._paginationConfig; }
+  get paginationConfig(): UmiusPaginationInterface { return this._paginationConfig; }
 
   get sortConfig(): string {
     return this._config.sort;

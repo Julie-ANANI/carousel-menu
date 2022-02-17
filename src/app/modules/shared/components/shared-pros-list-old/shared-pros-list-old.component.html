@@ -4,12 +4,12 @@
   <thead>
     <tr>
       <th></th>
-      <th><app-shared-sort [(sortConfig)]="sortConfig" [property]="'country'" label="COMMON.LABEL.COUNTRY"></app-shared-sort></th>
-      <th><app-shared-sort [(sortConfig)]="sortConfig" [property]="'firstName'" label="COMMON.LABEL.NAME"></app-shared-sort></th>
-      <th><app-shared-sort [(sortConfig)]="sortConfig" [property]="'jobTitle'" label="COMMON.LABEL.JOBTITLE"></app-shared-sort></th>
-      <th><app-shared-sort [(sortConfig)]="sortConfig" [property]="'company.name'" label="COMMON.LABEL.COMPANY"></app-shared-sort></th>
-      <th><app-shared-sort [(sortConfig)]="sortConfig" [property]="'email'" label="COMMON.LABEL.EMAIL"></app-shared-sort></th>
-      <th><app-shared-sort [(sortConfig)]="sortConfig" [property]="'emailConfidence'" label="CAMPAIGNS.EMAIL_CONFIDENCE"></app-shared-sort></th>
+      <th><umius-sort [(sortConfig)]="sortConfig" [property]="'country'" label="COMMON.LABEL.COUNTRY"></umius-sort></th>
+      <th><umius-sort [(sortConfig)]="sortConfig" [property]="'firstName'" label="COMMON.LABEL.NAME"></umius-sort></th>
+      <th><umius-sort [(sortConfig)]="sortConfig" [property]="'jobTitle'" label="COMMON.LABEL.JOBTITLE"></umius-sort></th>
+      <th><umius-sort [(sortConfig)]="sortConfig" [property]="'company.name'" label="COMMON.LABEL.COMPANY"></umius-sort></th>
+      <th><umius-sort [(sortConfig)]="sortConfig" [property]="'email'" label="COMMON.LABEL.EMAIL"></umius-sort></th>
+      <th><umius-sort [(sortConfig)]="sortConfig" [property]="'emailConfidence'" label="CAMPAIGNS.EMAIL_CONFIDENCE"></umius-sort></th>
     </tr>
     <tr>
       <th></th>
@@ -45,16 +45,15 @@
   <tfoot>
   <tr>
     <td colspan="12">
-      <app-pagination [configValue]="paginationConfig"
-                      (configChange)="changePaginationConfig($event)"
-                      [total]="total"
-                      [propertyName]="'shared-pros'"></app-pagination>
+      <umius-pagination-template1 [pagination]="paginationConfig"
+                      (paginationChange)="changePaginationConfig($event)"
+                      [totalCount]="total"></umius-pagination-template1>
     </td>
   </tr>
   </tfoot>
 </table>
 
-<app-utility-modal [(showModal)]="keywordsModal" [title]="'Keywords'">
+<umius-modal [(showModal)]="keywordsModal" [title]="'Keywords'">
 
   <section class="modal-body">
     <small><strong>{{nbSelected}}</strong> {{ 'SEARCH.PRO' | translate }}s {{ 'SEARCH.SELECTED' | translate }}s</small>
@@ -68,5 +67,5 @@
     <button class="button modal-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
   </footer>
 
-</app-utility-modal>
+</umius-modal>
 
