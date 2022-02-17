@@ -335,7 +335,7 @@
 </div>
 
 <!-- MODAL : preview saved targetedPro -->
-<app-utility-modal
+<umius-modal
   [(showModal)]="isPreview"
   [maxWidth]="'90%'"
   [title]="'Preview - Professional targeting'">
@@ -351,11 +351,11 @@
     <button class="button modal-cancel" (close)="closePreview()">Close</button>
   </footer>
 
-</app-utility-modal>
+</umius-modal>
 <!-- /MODAL : preview saved targetedPro -->
 
 <!-- MODAL : save/apply -->
-<app-utility-modal
+<umius-modal
   [(showModal)]="isShowModal">
   <header class="p-top-20 text-center text-dark text-bold bg-white">
     {{saveApplyModalTitle}}
@@ -370,7 +370,7 @@
     <button class="button  p-10" (click)="confirmSaveReset()">Confirm</button>
   </footer>
 
-</app-utility-modal>
+</umius-modal>
 <!-- MODAL : save/apply -->
 
 
