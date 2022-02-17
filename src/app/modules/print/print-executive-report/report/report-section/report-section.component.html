@@ -61,7 +61,11 @@
           <ng-container *ngFor="let value of content.values">
             <ng-container *ngIf="value.visibility">
               <h2>{{ value.name }}</h2>
-              <app-utility-progress-bar [width]="value.percentage + '%'" [height]="'8px'" [backgroundColor]="'#FFB300'"></app-utility-progress-bar>
+              <umius-progress-bar
+                [width]="value.percentage + '%'"
+                [height]="'8px'"
+                [backgroundColor]="'#FFB300'">
+              </umius-progress-bar>
               <div *ngIf="content.showExamples && value.legend" class="text-ellipsis bar-example">{{ value.legend }}</div>
             </ng-container>
           </ng-container>
