@@ -20,7 +20,6 @@ import { Question } from '../../../../models/question';
 import { Tag } from '../../../../models/tag';
 import { Innovation } from '../../../../models/innovation';
 import { environment } from '../../../../../environments/environment';
-import { SidebarInterface } from '../../../sidebars/interfaces/sidebar-interface';
 import { Clearbit } from '../../../../models/clearbit';
 import { AuthService } from '../../../../services/auth/auth.service';
 import { ResponseService } from './services/response.service';
@@ -44,6 +43,7 @@ import {MissionQuestionService} from '../../../../services/mission/mission-quest
 import {NotificationTrigger} from '../../../../models/notification';
 import {NotificationService} from '../../../../services/notification/notification.service';
 import {ExecutiveReport} from '../../../../models/executive-report';
+import {UmiusSidebarInterface} from '@umius/umi-common-component';
 
 type ModalType = 'NOTIFY_DOCUMENTS' | '';
 
@@ -118,12 +118,12 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy, OnChanges
 
   private _modalAnswer: Answer = <Answer>{};
 
-  private _leftSidebarTemplateValue: SidebarInterface = {
+  private _leftSidebarTemplateValue: UmiusSidebarInterface = {
     animate_state: 'active',
     type: 'MARKET_REPORT',
   };
 
-  private _sidebarTemplateValue: SidebarInterface = <SidebarInterface>{};
+  private _sidebarTemplateValue: UmiusSidebarInterface = <UmiusSidebarInterface>{};
 
   private _companies: Array<Clearbit> = [];
 
@@ -669,19 +669,19 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy, OnChanges
     this._modalAnswer = modalAnswer;
   }
 
-  get leftSidebarTemplateValue(): SidebarInterface {
+  get leftSidebarTemplateValue(): UmiusSidebarInterface {
     return this._leftSidebarTemplateValue;
   }
 
-  set leftSidebarTemplateValue(value: SidebarInterface) {
+  set leftSidebarTemplateValue(value: UmiusSidebarInterface) {
     this._leftSidebarTemplateValue = value;
   }
 
-  get sidebarTemplateValue(): SidebarInterface {
+  get sidebarTemplateValue(): UmiusSidebarInterface {
     return this._sidebarTemplateValue;
   }
 
-  set sidebarTemplateValue(value: SidebarInterface) {
+  set sidebarTemplateValue(value: UmiusSidebarInterface) {
     this._sidebarTemplateValue = value;
   }
 

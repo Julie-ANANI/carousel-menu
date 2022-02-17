@@ -18,7 +18,7 @@
 
         <!-- sidebar -->
         <aside style="max-width: 297px" class="sidebar-wrapper">
-          <app-sidebar-in-page [(sidebarTemplate)]="leftSidebarTemplateValue">
+          <umius-sidebar-inline [(template)]="leftSidebarTemplateValue">
             <app-sidebar-filter-answers
               *ngIf="displayFilters"
               [answers]="answers"
@@ -31,7 +31,7 @@
               [templateType]="leftSidebarTemplateValue.type">
             </app-sidebar-filter-answers>
             <div *ngIf="!displayFilters" class="m-top-30 loading is-lg is-primary"></div>
-          </app-sidebar-in-page>
+          </umius-sidebar-inline>
         </aside>
         <!-- /sidebar -->
 
@@ -183,7 +183,7 @@
 </div>
 
 <!-- modal -->
-<app-utility-modal-empty [(showModal)]="showModal">
+<umius-modal [(showModal)]="showModal">
 
   <section class="modal-body">
 
@@ -227,7 +227,7 @@
 
   </footer>
 
-</app-utility-modal-empty>
+</umius-modal>
 <!-- /modal -->
 
 <!-- save button -->
@@ -242,7 +242,7 @@
 <!-- /save button -->
 
 <!-- sidebar insight preview -->
-<app-sidebar *ngIf="innovation && innovation._id" [(template)]="sidebarTemplateValue">
+<umius-sidebar-full *ngIf="innovation && innovation._id" [(template)]="sidebarTemplateValue">
   <app-sidebar-user-answer
     *ngIf="modalAnswer._id"
     [adminMode]="canAccess(['edit', 'respondentProfile'])"
@@ -253,5 +253,5 @@
     [sidebarState]="sidebarTemplateValue.animate_state"
     [userAnswer]="modalAnswer">
   </app-sidebar-user-answer>
-</app-sidebar>
+</umius-sidebar-full>
 <!-- /sidebar insight preview-->

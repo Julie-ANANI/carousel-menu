@@ -8,12 +8,8 @@ import { NgxPageScrollModule } from 'ngx-page-scroll';
 import { SharedEditorTinymceModule } from '../shared-editor-tinymce/shared-editor-tinymce.module';
 import { SharedWorldmapModule } from '../shared-worldmap/shared-worldmap.module';
 import { PipeModule } from '../../../../pipe/pipe.module';
-import { SidebarModule } from '../../../sidebars/templates/sidebar/sidebar.module';
-import { SharedLoaderModule } from '../shared-loader/shared-loader.module';
 import { SidebarUserAnswerModule } from '../../../sidebars/components/sidebar-user-answer/sidebar-user-answer.module';
-import { CountryFlagModule } from '@umius/umi-common-component/country-flag';
 import { MessageTemplateModule } from '../../../utility/messages/message-template/message-template.module';
-import { ModalModule } from '../../../utility/modals/modal/modal.module';
 import { PieChartModule } from '../../../utility/canvas/piechart/pie-chart.module';
 
 import { BarChartComponent } from './components/bar-chart/bar-chart.component';
@@ -30,8 +26,6 @@ import { SharedMarketReportPopoverComponent } from './components/shared-market-r
 import { StarsComponent } from './components/stars/stars.component';
 import { SharedMarketComment2Component } from './components/professional-comment-2/professional-comment-2.component';
 
-import { SidebarLeftModule } from '../../../sidebars/templates/sidebar-left/sidebar-left.module';
-import { SidebarInPageModule } from '../../../sidebars/templates/sidebar-in-page/sidebar-in-page.module';
 import { SidebarFilterAnswersModule } from '../../../sidebars/components/sidebar-filter-answers/sidebar-filter-answers.module';
 import {SharedEditorsModule} from '../shared-editors/shared-editors.module';
 import {SharedToggleListModule} from '../shared-toggle-list/shared-toggle-list.module';
@@ -39,8 +33,8 @@ import {SpinnerLoaderModule} from '../../../utility/spinner-loader/spinner-loade
 import {SharedColorPickerModule} from '../shared-color-picker/shared-color-picker.module';
 import {RankingChartModule} from './components/ranking-chart/ranking-chart.module';
 import {RanksModule} from './components/ranks/ranks.module';
-import {ModalEmptyModule} from '../../../utility/modals/modal-empty/modal-empty.module';
 import {LikertScaleChartModule} from './components/likert-scale-chart/likert-scale-chart.module';
+import {CountryFlagModule, ModalModule, SidebarFullModule, SidebarInlineModule} from '@umius/umi-common-component';
 
 @NgModule({
   imports: [
@@ -50,19 +44,13 @@ import {LikertScaleChartModule} from './components/likert-scale-chart/likert-sca
     SharedWorldmapModule,
     TranslateModule.forChild(),
     NgxPageScrollModule,
-    SidebarModule,
-    SidebarLeftModule,
     RouterModule,
-    SharedLoaderModule,
     FormsModule,
     ReactiveFormsModule,
     SidebarUserAnswerModule,
-    CountryFlagModule,
     MessageTemplateModule,
-    ModalModule,
     SharedTagsModule,
     PieChartModule,
-    SidebarInPageModule,
     SidebarFilterAnswersModule,
     SharedEditorsModule,
     SharedToggleListModule,
@@ -70,8 +58,11 @@ import {LikertScaleChartModule} from './components/likert-scale-chart/likert-sca
     SharedColorPickerModule,
     RankingChartModule,
     RanksModule,
-    ModalEmptyModule,
     LikertScaleChartModule,
+    SidebarInlineModule,
+    ModalModule,
+    SidebarFullModule,
+    CountryFlagModule,
   ],
   declarations: [
     SharedMarketReportComponent,
