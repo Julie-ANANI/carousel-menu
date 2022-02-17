@@ -81,26 +81,24 @@
 
     <div class="form-group">
       <label [for]="'reassign-answer-company'" class="form-label">Company</label>
-      <app-auto-complete-company
+      <umius-auto-complete-company
         (companyChange)="onCompanySelect($event)"
+        [formInputClass]="'is-sm is-shadowed'"
         [company]="company"
-        [hasShadowed]="true"
         [inputId]="'reassign-answer-company'"
-        [isDisabled]="isSearchingPro"
-        [isSmall]="true">
-      </app-auto-complete-company>
+        [isDisabled]="isSearchingPro">
+      </umius-auto-complete-company>
     </div>
 
     <div class="form-group">
       <label [for]="'reassign-answer-country'" class="form-label">Country</label>
-      <app-auto-complete-country
+      <umius-auto-complete-country
         (countryChange)="onCountrySelect($event)"
         [country]="country"
-        [hasShadowed]="true"
+        [formInputClass]="'is-sm is-shadowed'"
         [inputId]="'reassign-answer-country'"
-        [isDisabled]="isSearchingPro"
-        [isSmall]="true">
-      </app-auto-complete-country>
+        [isDisabled]="isSearchingPro">
+      </umius-auto-complete-country>
     </div>
 
   </div>

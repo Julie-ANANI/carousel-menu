@@ -6,7 +6,7 @@ import { RolesFrontService } from '../../../../services/roles/roles-front.servic
 import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorFrontService } from '../../../../services/error/error-front.service';
 import { JobConfig } from '../../../../models/target-pros';
-import { Table, Config } from '@umius/umi-common-component/models';
+import {Table, UmiusConfigInterface} from '@umius/umi-common-component';
 
 @Component({
   selector: 'app-sidebar-search-history',
@@ -59,7 +59,7 @@ export class SidebarSearchHistoryComponent {
   private _mixedJobCate: Array<any> = [];
 
 
-  private _config: Config = {
+  private _config: UmiusConfigInterface = {
     fields: 'created country status countries flag totalResults results',
     limit: '10',
     offset: '0',
@@ -126,7 +126,7 @@ export class SidebarSearchHistoryComponent {
       _isTitle: true,
       _isLocal: true,
       _isNoMinHeight: this._total < 11,
-      _buttons: [
+      _actions: [
         {
           _icon: 'fas fa-times',
           _label: 'Stop the requests',
@@ -394,11 +394,11 @@ export class SidebarSearchHistoryComponent {
     return this._tableInfos;
   }
 
-  get config(): Config {
+  get config(): UmiusConfigInterface {
     return this._config;
   }
 
-  set config(value: Config) {
+  set config(value: UmiusConfigInterface) {
     this._config = value;
   }
 

@@ -6,7 +6,7 @@ import { Clearbit } from '../../../../models/clearbit';
 import { Innovation } from '../../../../models/innovation';
 import { Showcase } from '../../../../models/showcase';
 import { TagStats } from '../../../../models/tag-stats';
-import { Table, Config } from '@umius/umi-common-component/models';
+import {Table, UmiusConfigInterface} from '@umius/umi-common-component';
 
 @Component({
   selector: 'app-sidebar-showcase-history[tagsStats]',
@@ -26,7 +26,7 @@ export class ShowcaseHistoryComponent implements OnInit {
 
   @Output() displayShowcase: EventEmitter<Showcase> = new EventEmitter<Showcase>();
 
-  private _config: Config = {
+  private _config: UmiusConfigInterface = {
     fields: 'name owner clients created',
     limit: '10',
     offset: '0',
@@ -42,7 +42,6 @@ export class ShowcaseHistoryComponent implements OnInit {
     _isSearchable: true,
     _isSelectable: true,
     _clickIndex: 1,
-    _editButtonLabel: 'Load',
     _isPaginable: true,
     _columns: [
       {_attrs: ['name'], _name: 'TABLE.HEADING.NAME', _type: 'TEXT', _isSortable: true, _isSearchable: true},
@@ -108,11 +107,11 @@ export class ShowcaseHistoryComponent implements OnInit {
     });
   }
 
-  get config(): Config {
+  get config(): UmiusConfigInterface {
     return this._config;
   }
 
-  set config(value: Config) {
+  set config(value: UmiusConfigInterface) {
     this._config = value;
     this.loadShowcases();
   }

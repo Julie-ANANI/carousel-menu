@@ -4,7 +4,6 @@ import { TranslateModule } from '@ngx-translate/core';
 
 import { SidebarInnovCardPreviewComponent } from './sidebar-innov-card-preview.component';
 
-import { SidebarModule } from '../../templates/sidebar/sidebar.module';
 import { MessageTemplateModule } from '../../../utility/messages/message-template/message-template.module';
 import { PipeModule } from '../../../../pipe/pipe.module';
 
@@ -12,7 +11,6 @@ import { PipeModule } from '../../../../pipe/pipe.module';
   imports: [
     CommonModule,
     TranslateModule.forChild(),
-    SidebarModule,
     MessageTemplateModule,
     PipeModule
   ],

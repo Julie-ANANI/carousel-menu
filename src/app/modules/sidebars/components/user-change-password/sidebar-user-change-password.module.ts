@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
-import { SidebarModule } from '../../templates/sidebar/sidebar.module';
 
 import { UserChangePasswordComponent } from './user-change-password.component';
 
@@ -11,8 +10,7 @@ import { UserChangePasswordComponent } from './user-change-password.component';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    TranslateModule.forChild(),
-    SidebarModule
+    TranslateModule.forChild()
   ],
   declarations: [
     UserChangePasswordComponent

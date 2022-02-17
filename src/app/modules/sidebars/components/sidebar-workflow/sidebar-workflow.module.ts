@@ -5,7 +5,6 @@ import { TranslateModule } from '@ngx-translate/core';
 
 import { SidebarWorkflowComponent } from './sidebar-workflow.component';
 
-import { SidebarModule } from '../../templates/sidebar/sidebar.module';
 import { SidebarSignatureModule } from '../sidebar-signature/sidebar-signature.module';
 import { SharedMailEditorModule } from '../../../shared/components/shared-mail-editor/shared-mail-editor.module';
 
@@ -16,7 +15,6 @@ import { SharedMailEditorModule } from '../../../shared/components/shared-mail-e
     FormsModule,
     ReactiveFormsModule,
     TranslateModule.forChild(),
-    SidebarModule,
     SidebarSignatureModule,
     SharedMailEditorModule
   ],

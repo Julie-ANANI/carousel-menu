@@ -5,7 +5,6 @@ import { TranslateModule } from '@ngx-translate/core';
 
 import { SidebarTagsComponent } from './sidebar-tags.component';
 
-import { SidebarModule } from '../../templates/sidebar/sidebar.module';
 import { SharedTagsModule } from '../../../shared/components/shared-tags/shared-tags.module';
 import { AutoCompleteInputModule } from '../../../utility/auto-complete-input/auto-complete-input.module';
 import { PipeModule } from '../../../../pipe/pipe.module';
@@ -17,7 +16,6 @@ import { NguiAutoCompleteModule } from '../../../utility/auto-complete/auto-comp
     FormsModule,
     ReactiveFormsModule,
     TranslateModule.forChild(),
-    SidebarModule,
     SharedTagsModule,
     AutoCompleteInputModule,
     PipeModule,
