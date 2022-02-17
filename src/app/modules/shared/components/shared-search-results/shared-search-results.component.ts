@@ -6,7 +6,7 @@ import { AuthService } from '../../../../services/auth/auth.service';
 import { DownloadService } from '../../../../services/download/download.service';
 import { ProfessionalsService } from '../../../../services/professionals/professionals.service';
 import { TranslateNotificationsService } from '../../../../services/translate-notifications/translate-notifications.service';
-import { Config } from '@umius/umi-common-component/models';
+import {Config} from '../../../../models/config';
 
 @Component({
   selector: 'app-shared-search-results',
