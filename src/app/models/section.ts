@@ -3,7 +3,7 @@
  */
 
 import { Question } from './question';
-import { Multiling } from './multiling';
+import {UmiusMultilingInterface} from '@umius/umi-common-component';
 
 export interface SectionEntry {
   lang: string;
@@ -19,5 +19,5 @@ export interface Section {
   /**
    * TODO replace this with Array<SectionLabel>
    */
-  readonly label: Multiling;
+  readonly label: UmiusMultilingInterface;
 }

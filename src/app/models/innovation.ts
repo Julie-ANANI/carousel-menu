@@ -1,7 +1,6 @@
 import { InnovationSettings } from './innov-settings';
 import { InnovCard } from './innov-card';
 import { QuestionReport } from './market-report';
-import { Media } from './media';
 import { Tag } from './tag';
 import { User } from './user.model';
 import { Mission } from './mission';
@@ -11,6 +10,7 @@ import {Community} from './community';
 import {Consent} from './consent';
 import {NotificationTrigger} from './notification';
 import {Campaign} from './campaign';
+import {UmiusMediaInterface} from '@umius/umi-common-component';
 
 export type InnovationStatus = 'EDITING' | 'SUBMITTED' | 'EVALUATING' | 'DONE';
 export type InnovationStatusLogsType = 'SUBMIT' | 'REJECT' | 'VALIDATE' | 'FINISH';
@@ -191,7 +191,7 @@ export interface Innovation {
 
   readonly _id?: string;
   readonly campaigns?: Array<Campaign>;
-  readonly principalMedia?: Media;
+  readonly principalMedia?: UmiusMediaInterface;
   readonly quizId?: string;
   readonly stats?: InnovationStats;
   readonly reviewing?: any;

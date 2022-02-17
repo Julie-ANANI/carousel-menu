@@ -1,8 +1,8 @@
+import {UmiusMultilingInterface} from '@umius/umi-common-component';
+
 /**
  * Not use anymore. Only there to work with the old presets.
  */
-
-import { Multiling } from './multiling';
 
 export type QuestionType = 'checkbox' | 'clearbit' | 'list' | 'radio' | 'scale' | 'stars' | 'textarea' | 'toggle'
   | 'ranking'| 'likert-scale';
@@ -33,7 +33,7 @@ export interface Option {
   /**
    * TODO remove this
    */
-  label: Multiling;
+  label: UmiusMultilingInterface;
 }
 
 // TODO remove multiling
@@ -68,13 +68,13 @@ export interface Question {
   maxOptionsSelect?: number;
 
   // TODO remove this
-  label: Multiling;
-  title: Multiling;
-  subtitle: Multiling;
-  positivesAnswersLabel?: Multiling;
+  label: UmiusMultilingInterface;
+  title: UmiusMultilingInterface;
+  subtitle: UmiusMultilingInterface;
+  positivesAnswersLabel?: UmiusMultilingInterface;
 
   /**
    *  it's a text used in the quiz front for help or an instruction based on the questionType.
    */
-  instruction?: Multiling;
+  instruction?: UmiusMultilingInterface;
 }

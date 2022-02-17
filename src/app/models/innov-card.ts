@@ -1,7 +1,7 @@
-import {Media} from './media';
 import {Model} from './model';
 import {User} from './user.model';
 import {CollaborativeComment} from './collaborative-comment';
+import {UmiusMediaInterface} from '@umius/umi-common-component';
 
 export type CardSectionTypes = 'TITLE' | 'SUMMARY' | 'ISSUE' | 'SOLUTION' | 'MEDIA' | 'OTHER' | 'CONTEXT' | '';
 
@@ -16,7 +16,7 @@ export interface InnovCardSection {
   readonly _id?: string;
   type: CardSectionTypes;
   title: string;
-  content: string | Array<Media>;
+  content: string | Array<UmiusMediaInterface>;
   visibility: boolean;
   comments?: CollaborativeComment[];
   etherpadElementId?: string;
@@ -40,8 +40,8 @@ export class InnovCard extends Model {
   readonly lang: string;
 
   title?: string;
-  media?: Array<Media>;
-  principalMedia?: Media;
+  media?: Array<UmiusMediaInterface>;
+  principalMedia?: UmiusMediaInterface;
   summary?: string;
   advantages?: Array<{ text: string }>;
   operatorComment?: InnovCardComment;
