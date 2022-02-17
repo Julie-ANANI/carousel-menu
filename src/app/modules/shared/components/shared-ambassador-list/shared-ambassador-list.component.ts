@@ -1,6 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Professional } from '../../../../models/professional';
-import { SidebarInterface } from '../../../sidebars/interfaces/sidebar-interface';
 import { first } from 'rxjs/operators';
 import { AdvSearchService } from '../../../../services/advsearch/advsearch.service';
 import { Router } from '@angular/router';
@@ -9,9 +8,10 @@ import { InnovationService } from '../../../../services/innovation/innovation.se
 import { TranslateNotificationsService } from '../../../../services/translate-notifications/translate-notifications.service';
 import { ProfessionalsService } from '../../../../services/professionals/professionals.service';
 import { ContextInterface } from '../../../user/admin/components/admin-community/interfaces/context-interface';
-import { Config } from '@umius/umi-common-component/models';
 import { HttpErrorResponse } from "@angular/common/http";
 import { ErrorFrontService } from "../../../../services/error/error-front.service";
+import {Config} from '../../../../models/config';
+import {UmiusSidebarInterface} from '@umius/umi-common-component';
 
 export interface SelectedProfessional extends Professional {
   isSelected: boolean;
@@ -35,7 +35,7 @@ export class SharedAmbassadorListComponent {
 
       case('suggestions'):
         this._tableInfos = ListConfigurations.getProfessionalSuggestionConfig();
-        this._tableInfos._button = [{_label: 'Add', _icon: 'fas fa-plus'}];
+        this._tableInfos._actions = [{_label: 'Add', _icon: 'fas fa-plus'}];
         break;
 
       case('default'):
@@ -72,7 +72,7 @@ export class SharedAmbassadorListComponent {
 
   private _pros: Array<SelectedProfessional>;
 
-  private _sidebarValue: SidebarInterface = {};
+  private _sidebarValue: UmiusSidebarInterface = <UmiusSidebarInterface>{};
 
   private _currentPro: Professional = null;
 
@@ -326,11 +326,11 @@ export class SharedAmbassadorListComponent {
     return this._tableInfos;
   }
 
-  set sidebarValue(value: SidebarInterface) {
+  set sidebarValue(value: UmiusSidebarInterface) {
     this._sidebarValue = value;
   }
 
-  get sidebarValue(): SidebarInterface {
+  get sidebarValue(): UmiusSidebarInterface {
     return this._sidebarValue;
   }
 

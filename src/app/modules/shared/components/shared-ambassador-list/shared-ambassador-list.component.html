@@ -33,7 +33,7 @@
 
 
 <!-- modal to ask the operator to confirm to delete the ambassador -->
-<app-utility-modal [(showModal)]="modalDelete" [title]="'COMMON.MODAL.TITLE_DELETE'">
+<umius-modal [(showModal)]="modalDelete" [title]="'COMMON.MODAL.TITLE_DELETE'">
 
   <section class="modal-body">
     <ng-container *ngIf="context && context.deleteType === 'Campaign'">
@@ -67,4 +67,4 @@
     <button (click)="deleteAmbassador($event)" class="button is-primary">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
   </footer>
 
-</app-utility-modal>
+</umius-modal>
