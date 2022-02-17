@@ -23,7 +23,7 @@
 </div>
 
 <!-- MODAL : Ajout de pros à une campagne -->
-<app-utility-modal [(showModal)]="addToCampaignModal" [title]="'SEARCH.CAMPAIGN.TITLE'">
+<umius-modal [(showModal)]="addToCampaignModal" [title]="'SEARCH.CAMPAIGN.TITLE'">
 
   <section class="modal-body">
     <small><strong>{{totalSelected}}</strong> {{ 'SEARCH.PRO' | translate }}s {{ 'SEARCH.SELECTED' | translate }}s</small>
@@ -45,4 +45,4 @@
     </button>
   </footer>
 
-</app-utility-modal>
+</umius-modal>
