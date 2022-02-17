@@ -20,11 +20,9 @@
   </div>
 </div>
 
-<app-utility-modal
+<umius-modal
   [(showModal)]="showModal"
-  [headerBottomBorder]="true"
-  [isHeaderBgWhite]="true"
-  [maxWidth]="'320px'"
+  maxWidth="320px"
   [title]="'Activity dashboard'">
   <section class="modal-body activity">
     <div [ngClass]="{inactive: isExpired(session)}" *ngFor="let session of usersSessions" class="flex-start m-bottom-10">
@@ -36,4 +34,4 @@
       </span>
     </div>
   </section>
-</app-utility-modal>
+</umius-modal>
