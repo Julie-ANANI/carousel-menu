@@ -1,8 +1,8 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {Country} from '../../../../models/country';
 import {WorldmapService} from '../../../../services/worldmap/worldmap.service';
 import {Filter} from '../shared-market-report/models/filter';
 import {TranslateService} from '@ngx-translate/core';
+import {UmiusCountryInterface} from '@umius/umi-common-component';
 
 @Component({
   selector: 'app-shared-world-list',
@@ -28,7 +28,7 @@ export class SharedWorldListComponent {
   @Output() checkCountry: EventEmitter<Event> = new EventEmitter();
   private _answersCountries: string[] = [];
 
-  private _continentCountries: { [continent: string]: Array<Country> } = {};
+  private _continentCountries: { [continent: string]: Array<UmiusCountryInterface> } = {};
 
   constructor(private _worldmapService: WorldmapService,
               private _translateService: TranslateService) {
@@ -70,12 +70,12 @@ export class SharedWorldListComponent {
   }
 
   private _fetchAllCountries() {
-    this._worldmapService.getCountriesByContinent(this._answersCountries).then((countries: { [continent: string]: Array<Country> }) => {
+    this._worldmapService.getCountriesByContinent(this._answersCountries).then((countries: { [continent: string]: Array<UmiusCountryInterface> }) => {
       this._continentCountries = countries;
     });
   }
 
-  get continentCountries(): { [continent: string]: Array<Country> } {
+  get continentCountries(): { [continent: string]: Array<UmiusCountryInterface> } {
     return this._continentCountries;
   }
 
