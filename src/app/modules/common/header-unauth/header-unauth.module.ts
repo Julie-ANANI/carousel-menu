@@ -3,12 +3,9 @@ import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
 import { HeaderUnauthComponent } from './header-unauth.component';
-
-import { SidebarModule}  from '../../sidebars/templates/sidebar/sidebar.module';
 import { SidebarSignupFormModule } from '../../sidebars/components/sidebar-signup-form/sidebar-signup-form.module';
-import { ModalEmptyModule } from '../../utility/modals/modal-empty/modal-empty.module';
+import {ModalModule, SidebarFullModule} from '@umius/umi-common-component';
 
 @NgModule({
   imports: [
@@ -17,9 +14,9 @@ import { ModalEmptyModule } from '../../utility/modals/modal-empty/modal-empty.m
     RouterModule,
     FormsModule,
     ReactiveFormsModule,
-    SidebarModule,
+    SidebarFullModule,
     SidebarSignupFormModule,
-    ModalEmptyModule
+    ModalModule
   ],
   declarations: [
     HeaderUnauthComponent

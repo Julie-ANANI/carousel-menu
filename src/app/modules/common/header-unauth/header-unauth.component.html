@@ -90,18 +90,18 @@
 
 
 <!-- sign up sidebar -->
-<app-sidebar [(template)]="sidebarValue">
+<umius-sidebar-full [(template)]="sidebarValue">
   <app-sidebar-signup-form
     (finalOutput)="createUser($event)"
     [isCreating]="isCreatingAccount"
     [sidebarState]="sidebarValue.animate_state">
   </app-sidebar-signup-form>
-</app-sidebar>
+</umius-sidebar-full>
 <!-- /sign up sidebar -->
 
 
 <!-- login modal -->
-<app-utility-modal-empty [(showModal)]="modalSignIn" [maxWidth]="'420px'">
+<umius-modal maxWidth="420px" [(showModal)]="modalSignIn">
   <section class="modal-body">
 
     <!-- heading -->
@@ -170,5 +170,5 @@
     <!-- /form -->
 
   </section>
-</app-utility-modal-empty>
+</umius-modal>
 <!-- /login modal -->

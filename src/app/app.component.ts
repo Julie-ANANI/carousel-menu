@@ -105,7 +105,7 @@ export class AppComponent implements OnInit, OnDestroy {
     if (this._spinnerState && this._router.navigated) {
       this._timeout = setTimeout(() => {
         this._spinnerState = false;
-      }, 1000);
+      }, 1500);
     }
   }
 
