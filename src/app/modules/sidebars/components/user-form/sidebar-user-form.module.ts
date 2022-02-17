@@ -6,7 +6,6 @@ import { UserFormComponent } from './user-form.component';
 import { AutoCompleteInputModule } from '../../../utility/auto-complete-input/auto-complete-input.module';
 import { NguiAutoCompleteModule } from '../../../utility/auto-complete/auto-complete.module';
 import { SharedTagsModule } from '../../../shared/components/shared-tags/shared-tags.module';
-import { SidebarModule } from '../../templates/sidebar/sidebar.module';
 
 @NgModule({
   imports: [
@@ -16,8 +15,7 @@ import { SidebarModule } from '../../templates/sidebar/sidebar.module';
     TranslateModule.forChild(),
     AutoCompleteInputModule,
     NguiAutoCompleteModule,
-    SharedTagsModule,
-    SidebarModule
+    SharedTagsModule
   ],
   declarations: [
     UserFormComponent

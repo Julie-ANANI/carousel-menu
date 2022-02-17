@@ -6,14 +6,12 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import { Enterprise, Industry, Pattern } from '../../../../models/enterprise';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable, Subject } from 'rxjs';
 import {first, takeUntil} from 'rxjs/operators';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { AutocompleteService } from '../../../../services/autocomplete/autocomplete.service';
 import { Clearbit } from '../../../../models/clearbit';
-import { AutoSuggestionConfig } from '../../../utility/auto-suggestion/interface/auto-suggestion-config';
 import {
   EnterpriseSizeList,
   EnterpriseTypes,
@@ -21,6 +19,12 @@ import {
   Industries,
 } from '../../../../models/static-data/enterprise';
 import {EnterpriseService} from '../../../../services/enterprise/enterprise.service';
+import {
+  UmiusAutoSuggestionInterface,
+  UmiusEnterpriseInterface,
+  UmiusIndustryInterface,
+  UmiusPatternInterface
+} from '@umius/umi-common-component';
 
 type Template = 'CREATE' | 'EDIT';
 
@@ -47,7 +51,7 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
           console.error(err);
         });
     } else {
-      this._enterprise = <Enterprise>{};
+      this._enterprise = <UmiusEnterpriseInterface>{};
     }
   }
 
@@ -76,12 +80,12 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
   @Input() isSaving = false;
 
   @Output() finalOutput: EventEmitter<{
-    enterprise: Enterprise;
+    enterprise: UmiusEnterpriseInterface;
     opType: string;
-    enterpriseBeforeUpdate?: Enterprise
-  }> = new EventEmitter<{ enterprise: Enterprise; opType: string, enterpriseBeforeUpdate?: Enterprise }>();
+    enterpriseBeforeUpdate?: UmiusEnterpriseInterface
+  }> = new EventEmitter<{ enterprise: UmiusEnterpriseInterface; opType: string, enterpriseBeforeUpdate?: UmiusEnterpriseInterface }>();
 
-  private _enterprise: Enterprise = <Enterprise>{};
+  private _enterprise: UmiusEnterpriseInterface = <UmiusEnterpriseInterface>{};
 
   private _form: FormGroup;
 
@@ -96,7 +100,7 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
 
   private _showModal = false;
 
-  private _parentEnterprise: Enterprise = <Enterprise>{};
+  private _parentEnterprise: UmiusEnterpriseInterface = <UmiusEnterpriseInterface>{};
 
   private _newBrands: Array<any> = [];
 
@@ -110,9 +114,9 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
 
   private _inputGeoZone: Array<any> = [];
 
-  private _newPatterns: Array<Pattern> = [];
+  private _newPatterns: Array<UmiusPatternInterface> = [];
 
-  private _newIndustry: Array<Industry> = [];
+  private _newIndustry: Array<UmiusIndustryInterface> = [];
 
   private _newEnterpriseType: Array<any> = [];
 
@@ -120,20 +124,20 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
 
   private _isLoading = false;
 
-  private _industrySelectConfig: AutoSuggestionConfig = <
-    AutoSuggestionConfig
+  private _industrySelectConfig: UmiusAutoSuggestionInterface = <
+    UmiusAutoSuggestionInterface
     >{};
 
-  private _valueChainSelectConfig: AutoSuggestionConfig = <
-    AutoSuggestionConfig
+  private _valueChainSelectConfig: UmiusAutoSuggestionInterface = <
+    UmiusAutoSuggestionInterface
     >{};
 
-  private _enterpriseSizeSelectConfig: AutoSuggestionConfig = <
-    AutoSuggestionConfig
+  private _enterpriseSizeSelectConfig: UmiusAutoSuggestionInterface = <
+    UmiusAutoSuggestionInterface
     >{};
 
-  private _enterpriseTypeSelectConfig: AutoSuggestionConfig = <
-    AutoSuggestionConfig
+  private _enterpriseTypeSelectConfig: UmiusAutoSuggestionInterface = <
+    UmiusAutoSuggestionInterface
     >{};
 
   private initAutoSuggestionConfig() {
@@ -294,7 +298,7 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
     } // If typeof c === string, leave the thing alone.
   }
 
-  public selectEnterprise(type: string, c: string | Enterprise | any) {
+  public selectEnterprise(type: string, c: string | UmiusEnterpriseInterface | any) {
     if (typeof c === 'object' && this.isEditable) {
       switch (type) {
         case 'subsidiary':
@@ -330,7 +334,7 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
     if (this.isEditable && this._form.valid) {
       this.isSaving = false;
 
-      const _newEnterprise: Enterprise = {
+      const _newEnterprise: UmiusEnterpriseInterface = {
         name: this._form.get('name').value,
         topLevelDomain: this._form.get('topLevelDomain').value,
         patterns: this.newPatterns,
@@ -509,7 +513,7 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
 
   checkParentInput(value: any) {
     if (!value && this._parentEnterprise.name) {
-      this._parentEnterprise = <Enterprise>{};
+      this._parentEnterprise = <UmiusEnterpriseInterface>{};
       this._enterprise.parentEnterpriseObject = [];
       this._form
         .get('parentEnterprise')
@@ -546,7 +550,7 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
     return this._isShowSyntax;
   }
 
-  get newEnterpriseType(): Array<Industry> {
+  get newEnterpriseType(): Array<UmiusIndustryInterface> {
     return this._newEnterpriseType;
   }
 
@@ -558,7 +562,7 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
     return this._isSizeInfo;
   }
 
-  get enterpriseTypeSelectConfig(): AutoSuggestionConfig {
+  get enterpriseTypeSelectConfig(): UmiusAutoSuggestionInterface {
     return this._enterpriseTypeSelectConfig;
   }
 
@@ -566,11 +570,11 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
     return this._industrySelectConfig;
   }
 
-  get enterpriseSizeSelectConfig(): AutoSuggestionConfig {
+  get enterpriseSizeSelectConfig(): UmiusAutoSuggestionInterface {
     return this._enterpriseSizeSelectConfig;
   }
 
-  get valueChainSelectConfig(): AutoSuggestionConfig {
+  get valueChainSelectConfig(): UmiusAutoSuggestionInterface {
     return this._valueChainSelectConfig;
   }
 
@@ -615,11 +619,11 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
     this._showModal = value;
   }
 
-  get parentEnterprise(): Enterprise {
+  get parentEnterprise(): UmiusEnterpriseInterface {
     return this._parentEnterprise;
   }
 
-  get newPatterns(): Array<Pattern> {
+  get newPatterns(): Array<UmiusPatternInterface> {
     return this._newPatterns;
   }
 

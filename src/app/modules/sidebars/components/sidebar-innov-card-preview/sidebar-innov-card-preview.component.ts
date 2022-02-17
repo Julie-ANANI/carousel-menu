@@ -2,10 +2,10 @@ import { Component, Input } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
 import { InnovCard } from '../../../../models/innov-card';
-import { Media } from '../../../../models/media';
 import { InnovationFrontService } from '../../../../services/innovation/innovation-front.service';
 import {CommonService} from '../../../../services/common/common.service';
 import {MediaFrontService} from '../../../../services/media/media-front.service';
+import {UmiusMediaInterface} from '@umius/umi-common-component';
 
 @Component({
   selector: 'app-sidebar-innov-card-preview',
@@ -48,7 +48,7 @@ export class SidebarInnovCardPreviewComponent {
   constructor(private _domSanitizer1: DomSanitizer,
               private _translateService: TranslateService) { }
 
-  public imageSrc(media: Media): string {
+  public imageSrc(media: UmiusMediaInterface): string {
     return MediaFrontService.imageSrc(media, '180', '119');
   }
 

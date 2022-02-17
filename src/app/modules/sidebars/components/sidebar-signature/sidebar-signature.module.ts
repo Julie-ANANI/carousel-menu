@@ -5,17 +5,12 @@ import { TranslateModule } from '@ngx-translate/core';
 
 import { SidebarSignatureComponent } from './sidebar-signature.component';
 
-import { SidebarModule } from '../../templates/sidebar/sidebar.module';
-
-
-
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    TranslateModule.forChild(),
-    SidebarModule,
+    TranslateModule.forChild()
   ],
   declarations: [
     SidebarSignatureComponent

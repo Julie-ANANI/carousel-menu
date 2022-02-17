@@ -5,7 +5,6 @@ import { AnswerService } from '../../../../services/answer/answer.service';
 import { TranslateNotificationsService } from '../../../../services/translate-notifications/translate-notifications.service';
 import { Tag } from '../../../../models/tag';
 import { ProfessionalsService } from '../../../../services/professionals/professionals.service';
-import { Company } from '../../../../models/company';
 import * as momentTimeZone from 'moment-timezone';
 import { first } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -16,6 +15,7 @@ import { Professional } from '../../../../models/professional';
 import { TranslateService } from '@ngx-translate/core';
 import { MissionQuestion } from '../../../../models/mission';
 import {InnovCard} from '../../../../models/innov-card';
+import {UmiusCompanyInterface} from '@umius/umi-common-component/models/company';
 
 @Component({
   selector: 'app-sidebar-user-answer',
@@ -37,7 +37,7 @@ export class SidebarUserAnswerComponent implements OnInit {
 
   @Input() questions: Array<Question | MissionQuestion> = [];
 
-  @Input() excludedCompanies: Array<Company> = []; // companies to show in the popover when hover over Company.
+  @Input() excludedCompanies: Array<UmiusCompanyInterface> = []; // companies to show in the popover when hover over Company.
 
   @Input() adminMode = false; // true to show the Edit toggle button and also shows the actions for the admin.
 

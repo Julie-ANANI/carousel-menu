@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { SearchService } from '../../../../services/search/search.service';
 import { TranslateNotificationsService } from '../../../../services/translate-notifications/translate-notifications.service';
-import { Table, Config } from '@umius/umi-common-component/models';
+import {Table, UmiusConfigInterface} from '@umius/umi-common-component';
 
 @Component({
   selector: 'app-sidebar-search-tool',
@@ -29,7 +29,7 @@ export class SidebarSearchToolComponent {
 
   @Output() onLoadRequest = new EventEmitter <any>();
 
-  private _config: Config = {
+  private _config: UmiusConfigInterface = {
     fields: "keywords user created expireAt metadata",
     limit: '10',
     offset: '0',
@@ -49,7 +49,7 @@ export class SidebarSearchToolComponent {
               private _translateNotificationsService: TranslateNotificationsService) { }
 
 
-  public loadHistory(config: Config) {
+  public loadHistory(config: UmiusConfigInterface) {
     this._config = config;
 
     this._searchService.getMetadataRequests(this._config).subscribe((result: any) => {
@@ -71,7 +71,6 @@ export class SidebarSearchToolComponent {
         _isSearchable: true,
         _isTitle: true,
         _clickIndex: 1,
-        _editButtonLabel: 'Load',
         _isPaginable: true,
         _columns: [
           {_attrs: ['keywords'], _name: 'Keywords', _type: 'TEXT', _isSortable: true, _isSearchable: true},
@@ -116,11 +115,11 @@ export class SidebarSearchToolComponent {
     return this._requests;
   }
 
-  get config(): Config {
+  get config(): UmiusConfigInterface {
     return this._config;
   }
 
-  set config(value: Config) {
+  set config(value: UmiusConfigInterface) {
     this._config = value;
     this.loadHistory(this._config);
   }

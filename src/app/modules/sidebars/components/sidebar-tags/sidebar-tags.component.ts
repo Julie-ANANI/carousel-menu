@@ -2,7 +2,6 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
 import { TagsService } from '../../../../services/tags/tags.service';
-import { Multiling } from '../../../../models/multiling';
 import { Tag } from '../../../../models/tag';
 import { AutocompleteService } from '../../../../services/autocomplete/autocomplete.service';
 import { TranslateNotificationsService } from '../../../../services/translate-notifications/translate-notifications.service';
@@ -11,6 +10,7 @@ import { Observable } from 'rxjs';
 import { first } from 'rxjs/operators';
 import { HttpErrorResponse } from "@angular/common/http";
 import { ErrorFrontService } from "../../../../services/error/error-front.service";
+import {UmiusMultilingInterface} from '@umius/umi-common-component';
 
 type Template = 'ADD_TAGS' | 'EDIT_TAG' | '';
 type TagType = 'tags' | '';
@@ -85,12 +85,12 @@ export class SidebarTagsComponent {
     return this._autocompleteService.get(queryConf);
   }
 
-  public autocompleListFormatter = (data: {name: Multiling, _id: string}) : SafeHtml => {
+  public autocompleListFormatter = (data: {name: UmiusMultilingInterface, _id: string}) : SafeHtml => {
     const text = this.autocompleValueFormatter(data);
     return this._domSanitizer.bypassSecurityTrustHtml(`<span>${text}</span>`);
   };
 
-  public autocompleValueFormatter = (data: {name: Multiling, _id: string}) : string => {
+  public autocompleValueFormatter = (data: {name: UmiusMultilingInterface, _id: string}) : string => {
     return this._multiling.transform(data.name, this._translateService.currentLang);
   };
 

@@ -468,7 +468,7 @@
 </div>
 
 <!-- Modal to ask the operator to confirm for the preview of the synthesis at the side of the client -->
-<app-utility-modal *ngIf="isAdminSide" [title]="'Confirmation Board'" [(showModal)]="isModalPreview">
+<umius-modal *ngIf="isAdminSide" [title]="'Confirmation Board'" [(showModal)]="isModalPreview">
 
   <section class="modal-body">
     <div>
@@ -488,7 +488,7 @@
   </footer>
   <!-- /footer -->
 
-</app-utility-modal>
+</umius-modal>
 <!-- /Modal to ask the admin to confirm for the preview of the synthesis at the side of the client -->
 
 <!-- Modal to ask the operator to sure about ending the project -->

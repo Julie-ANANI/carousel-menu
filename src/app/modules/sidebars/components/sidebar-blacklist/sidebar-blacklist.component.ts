@@ -5,17 +5,16 @@ import { first } from 'rxjs/operators';
 import { InnovationService } from '../../../../services/innovation/innovation.service';
 import { ErrorFrontService } from '../../../../services/error/error-front.service';
 import { TranslateNotificationsService } from '../../../../services/translate-notifications/translate-notifications.service';
-import { Enterprise } from '../../../../models/enterprise';
 import { Blacklist } from '../../../../models/blacklist';
 import { emailRegEx } from '../../../../utils/regex';
-import { Table, Config } from '@umius/umi-common-component/models';
+import {Table, UmiusConfigInterface, UmiusEnterpriseInterface} from '@umius/umi-common-component';
 
 type Template = 'EXCLUDE_EMAILS_DOMAINS' | 'EDIT_EMAILS' | 'EXCLUDE_COUNTRY' | 'EDIT_COUNTRY' | 'SHOW_CAMPAIGN_INFOS' | '';
 
 export interface FamilyEnterprises {
-  mySubsidiaries?: Array<Enterprise>;
-  parent?: Enterprise;
-  subsidiariesOfParent?: Array<Enterprise>;
+  mySubsidiaries?: Array<UmiusEnterpriseInterface>;
+  parent?: UmiusEnterpriseInterface;
+  subsidiariesOfParent?: Array<UmiusEnterpriseInterface>;
   myDomain?: string;
 }
 
@@ -73,7 +72,7 @@ export class SidebarBlacklistComponent implements OnInit {
 
   @Output() editCountry = new EventEmitter<any>(); // edit the country.
 
-  private _config: Config = {
+  private _config: UmiusConfigInterface = {
     fields: '',
     limit: '10',
     offset: '0',
@@ -316,7 +315,7 @@ export class SidebarBlacklistComponent implements OnInit {
    * @param isAdd: true - add enterprises
    */
   blacklistOnChange(isAdd: boolean) {
-    let enterprises: Array<Enterprise> = [];
+    let enterprises: Array<UmiusEnterpriseInterface> = [];
     this._messageForEmptyFamilyEnterprises.clear();
     enterprises = enterprises.concat(
       this.addParenEnterpriseMessage(),
@@ -366,7 +365,7 @@ export class SidebarBlacklistComponent implements OnInit {
    * add enterprises' domains
    * @param enterprisesToAdd
    */
-  addEnterpriseDomainIntoBlacklist(enterprisesToAdd: Array<Enterprise>) {
+  addEnterpriseDomainIntoBlacklist(enterprisesToAdd: Array<UmiusEnterpriseInterface>) {
     const myDomain = this.addMyDomainMessage();
     if (myDomain && !this._initialDomains.find(d => d.name === '*@' + myDomain)) {
       this._initialDomains.push({name: '*@' + myDomain});
@@ -402,7 +401,7 @@ export class SidebarBlacklistComponent implements OnInit {
     return this._formData;
   }
 
-  get config(): Config {
+  get config(): UmiusConfigInterface {
     return this._config;
   }
 

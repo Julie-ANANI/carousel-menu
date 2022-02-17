@@ -5,7 +5,6 @@ import { TranslateModule } from '@ngx-translate/core';
 
 import { MissionFormComponent } from './mission-form.component';
 
-import { SidebarModule } from '../../templates/sidebar/sidebar.module';
 
 @NgModule({
   imports: [
@@ -13,7 +12,6 @@ import { SidebarModule } from '../../templates/sidebar/sidebar.module';
     FormsModule,
     ReactiveFormsModule,
     TranslateModule.forChild(),
-    SidebarModule,
   ],
   declarations: [
     MissionFormComponent

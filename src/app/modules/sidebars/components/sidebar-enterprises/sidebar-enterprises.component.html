@@ -152,11 +152,11 @@
       <div class="form-group">
         <label class="form-label">Type
         </label>
-        <app-utility-auto-suggestion
+        <umius-auto-suggestion
           [config]="enterpriseTypeSelectConfig"
           (valueAdded)="getValueSelected($event)"
           (valueSelected)="getValueSelected($event)">
-        </app-utility-auto-suggestion>
+        </umius-auto-suggestion>
         <ng-container
           *ngTemplateOutlet="answerArea; context: {$implicit: getContext('enterpriseType', newEnterpriseType, true)}">
         </ng-container>
@@ -166,11 +166,11 @@
       <!-- industry -->
       <div class="form-group">
         <label class="form-label">Industry</label>
-        <app-utility-auto-suggestion
+        <umius-auto-suggestion
           [config]="industrySelectConfig"
           (valueAdded)="getValueSelected($event)"
           (valueSelected)="getValueSelected($event)">
-        </app-utility-auto-suggestion>
+        </umius-auto-suggestion>
         <ng-container
           *ngTemplateOutlet="answerArea; context: {$implicit: getContext('industry', newIndustry, false)}">
         </ng-container>
@@ -212,22 +212,22 @@
           <span>GE : >5000 employés</span>
         </span>
         </label>
-        <app-utility-auto-suggestion
+        <umius-auto-suggestion
           [config]="enterpriseSizeSelectConfig"
           (valueAdded)="getValueSelected($event)"
           (valueSelected)="getValueSelected($event)">
-        </app-utility-auto-suggestion>
+        </umius-auto-suggestion>
       </div>
       <!-- /company size -->
 
       <!-- value chain -->
       <div class="form-group">
         <label class="form-label">Value chain</label>
-        <app-utility-auto-suggestion
+        <umius-auto-suggestion
           [config]="valueChainSelectConfig"
           (valueAdded)="getValueSelected($event)"
           (valueSelected)="getValueSelected($event)">
-        </app-utility-auto-suggestion>
+        </umius-auto-suggestion>
         <ng-container
           *ngTemplateOutlet="answerArea; context: {$implicit: getContext('valueChain', newValueChains, true)}">
         </ng-container>
@@ -239,14 +239,14 @@
 
 
   <!-- to upload logo -->
-  <app-utility-modal [(showModal)]="showModal" [enableCloseButton]="true">
+  <umius-modal [(showModal)]="showModal">
     <section class="modal-body">
       <app-shared-upload-zone-photo
         [uri]="'/media/companyLogo'"
         (cbFn)="uploadImage($event)">
       </app-shared-upload-zone-photo>
     </section>
-  </app-utility-modal>
+  </umius-modal>
   <!-- /to upload logo -->
 
 

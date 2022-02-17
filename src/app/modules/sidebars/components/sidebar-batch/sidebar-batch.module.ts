@@ -5,7 +5,6 @@ import { TranslateModule } from '@ngx-translate/core';
 
 import { SidebarBatchComponent } from './sidebar-batch.component';
 
-import { SidebarModule } from '../../templates/sidebar/sidebar.module';
 import { SharedEditorTinymceModule } from '../../../shared/components/shared-editor-tinymce/shared-editor-tinymce.module';
 
 @NgModule({
@@ -14,7 +13,6 @@ import { SharedEditorTinymceModule } from '../../../shared/components/shared-edi
     FormsModule,
     ReactiveFormsModule,
     TranslateModule.forChild(),
-    SidebarModule,
     SharedEditorTinymceModule
   ],
   declarations: [

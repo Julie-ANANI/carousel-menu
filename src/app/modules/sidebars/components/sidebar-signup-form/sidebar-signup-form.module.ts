@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { NguiAutoCompleteModule } from '../../../utility/auto-complete/auto-complete.module';
-import { SidebarModule } from '../../templates/sidebar/sidebar.module';
 import { SidebarSignupFormComponent } from './sidebar-signup-form.component';
 
 @NgModule({
@@ -12,8 +11,7 @@ import { SidebarSignupFormComponent } from './sidebar-signup-form.component';
     FormsModule,
     ReactiveFormsModule,
     TranslateModule.forChild(),
-    NguiAutoCompleteModule,
-    SidebarModule,
+    NguiAutoCompleteModule
   ],
   declarations: [
     SidebarSignupFormComponent
