@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Enterprise } from '../../models/enterprise';
-import { Config } from '@umius/umi-common-component/models';
+import {Config} from '../../models/config';
 
 @Injectable({providedIn: 'root'})
 export class EnterpriseService {
