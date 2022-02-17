@@ -6,14 +6,14 @@ import {TranslateTitleService} from '../../../../../services/title/title.service
 import {TranslateService} from '@ngx-translate/core';
 import {InnovationService} from '../../../../../services/innovation/innovation.service';
 import {DiscoverService} from '../../../../../services/discover/discover.service';
-import { Config } from '@umius/umi-common-component/models';
 import {isPlatformBrowser} from '@angular/common';
 import {first} from 'rxjs/operators';
 import {Response} from '../../../../../models/response';
-import { LocalStorageService } from '@umius/umi-common-component/services/localStorage';
 import { HttpErrorResponse } from "@angular/common/http";
 import { TranslateNotificationsService } from "../../../../../services/translate-notifications/translate-notifications.service";
 import { ErrorFrontService } from "../../../../../services/error/error-front.service";
+import {Config} from '../../../../../models/config';
+import {UmiusLocalStorageService} from '@umius/umi-common-component';
 
 @Component({
   templateUrl: './discover-innovations.component.html',
@@ -62,7 +62,7 @@ export class DiscoverInnovationsComponent implements OnInit {
               private _translateService: TranslateService,
               private _activatedRoute: ActivatedRoute,
               private _innovationService: InnovationService,
-              private _localStorage: LocalStorageService,
+              private _localStorage: UmiusLocalStorageService,
               private _translateNotificationsService: TranslateNotificationsService,
               private _filterService: DiscoverService) {
 
@@ -106,7 +106,7 @@ export class DiscoverInnovationsComponent implements OnInit {
   }
 
   /***
-   * this function is to get the recommend innovations for the
+   * this function is to get to recommend innovations for the
    * logged user.
    * @private
    */

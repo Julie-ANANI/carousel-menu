@@ -19,10 +19,10 @@
         </div>
 
         <div class="search-wrapper">
-          <app-utility-search-input-2
+          <umius-search-input
             [searchPlaceholder]="'DISCOVER.SEARCH_INPUT_PLACEHOLDER'"
             (searchFieldOutput)="onInputField($event)">
-          </app-utility-search-input-2>
+          </umius-search-input>
         </div>
 
       </div>
@@ -133,7 +133,7 @@
 
 
 <!-- modal tags -->
-<app-utility-modal [(showModal)]="modalTag" [maxWidth]="'840px'" [title]="'DISCOVER.ALL_SECTORS'">
+<umius-modal [(showModal)]="modalTag" maxWidth="840px" title="DISCOVER.ALL_SECTORS">
   <section class="modal-body">
     <div class="modal-tag-wrapper">
       <div class="d-flex sector-wrapper">
@@ -167,12 +167,12 @@
       </div>
     </div>
   </section>
-</app-utility-modal>
+</umius-modal>
 <!-- /modal tags -->
 
 
 <!-- modal share -->
-<app-utility-modal [(showModal)]="modalShare" [enableCloseButton]="true">
+<umius-modal [(showModal)]="modalShare">
   <section class="modal-body">
     <div class="modal-share-wrapper text-center">
 
@@ -197,5 +197,5 @@
 
     </div>
   </section>
-</app-utility-modal>
+</umius-modal>
 <!-- /modal share -->

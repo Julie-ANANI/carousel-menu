@@ -15,6 +15,7 @@ import {QuizService} from '../../../../../services/quiz/quiz.service';
 import {LangEntryService} from '../../../../../services/lang-entry/lang-entry.service';
 import {htmlTagsRegex} from '../../../../../utils/regex';
 import {environment} from '../../../../../../environments/environment';
+import {UmiusModalMedia} from '@umius/umi-common-component';
 
 @Component({
   templateUrl: './discover-description.component.html',
@@ -47,7 +48,7 @@ export class DiscoverDescriptionComponent implements OnInit {
 
   private _quizButtonDisplay: string;
 
-  private _selectedMedia: string;
+  private _selectedMedia: UmiusModalMedia = <UmiusModalMedia>{};
 
   private _lang: string;
 
@@ -177,7 +178,10 @@ export class DiscoverDescriptionComponent implements OnInit {
 
   public mediaToShow(src: string) {
     this._modalMedia = true;
-    this._selectedMedia = src;
+    this._selectedMedia = {
+      src: src,
+      active: true
+    }
   }
 
   public getRelatedSrc(innovCard: InnovCard): string {
@@ -208,7 +212,7 @@ export class DiscoverDescriptionComponent implements OnInit {
     return this._domSanitizer1;
   }
 
-  get selectedMedia(): string {
+  get selectedMedia(): UmiusModalMedia {
     return this._selectedMedia;
   }
 
