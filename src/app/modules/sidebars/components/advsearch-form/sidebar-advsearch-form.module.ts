@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
-import { SidebarModule } from '../../templates/sidebar/sidebar.module';
 import { AdvsearchFormComponent } from './advsearch-form.component';
 
 @NgModule({
@@ -10,8 +9,7 @@ import { AdvsearchFormComponent } from './advsearch-form.component';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    TranslateModule.forChild(),
-    SidebarModule,
+    TranslateModule.forChild()
   ],
   declarations: [
     AdvsearchFormComponent
