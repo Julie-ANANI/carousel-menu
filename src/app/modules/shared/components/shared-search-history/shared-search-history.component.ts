@@ -16,8 +16,7 @@ import { RolesFrontService } from '../../../../services/roles/roles-front.servic
 import { ErrorFrontService } from '../../../../services/error/error-front.service';
 import { JobConfig, TargetPros } from '../../../../models/target-pros';
 import * as _ from 'lodash';
-import {Table, UmiusConfigService, UmiusSidebarInterface} from '@umius/umi-common-component';
-import {Config} from '../../../../models/config';
+import {Table, UmiusConfigInterface, UmiusConfigService, UmiusSidebarInterface} from '@umius/umi-common-component';
 
 @Component({
   selector: 'app-shared-search-history',
@@ -64,7 +63,7 @@ export class SharedSearchHistoryComponent implements OnInit {
   private _waitingTime = '0'; // in minutes
 
 
-  private _config: Config = {
+  private _config: UmiusConfigInterface = {
     fields: 'entity region keywords created country elapsedTime status countries cost flag campaign ' +
       'innovation motherRequest totalResults metadata results targetPros',
     limit: this._configService.configLimit('admin-search-history-limit'),
@@ -74,7 +73,7 @@ export class SharedSearchHistoryComponent implements OnInit {
     recycled: 'false'
   };
 
-  private _configQueue: Config = {
+  private _configQueue: UmiusConfigInterface = {
     fields: 'keywords innovation',
     search: '{}',
     status: '{"$in": ["QUEUED", "PROCESSING"]}',
@@ -591,11 +590,11 @@ export class SharedSearchHistoryComponent implements OnInit {
     return this._googleQuota;
   }
 
-  get config(): Config {
+  get config(): UmiusConfigInterface {
     return this._config;
   }
 
-  set config(value: Config) {
+  set config(value: UmiusConfigInterface) {
     this._config = value;
     const tmp = JSON.parse(value.search);
     this._loadHistory();

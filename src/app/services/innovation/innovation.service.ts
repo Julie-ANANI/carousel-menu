@@ -7,7 +7,6 @@ import {Innovation} from '../../models/innovation';
 import {InnovCard, InnovCardComment} from '../../models/innov-card';
 import {Professional} from '../../models/professional';
 import {User} from '../../models/user.model';
-import {Video} from '../../models/media';
 import {Collaborator} from '../../models/collaborator';
 import {Job, JobType} from '../../models/job';
 import {SharedFilter} from '../../modules/shared/components/shared-market-report/models/shared-filter';
@@ -15,7 +14,7 @@ import {Community} from '../../models/community';
 import { FamilyEnterprises } from '../../modules/sidebars/components/sidebar-blacklist/sidebar-blacklist.component';
 import {Invitation} from '../../models/invitation';
 import {Response} from '../../models/response';
-import {Config} from '../../models/config';
+import {UmiusConfigInterface, UmiusVideoInterface} from '@umius/umi-common-component';
 
 @Injectable({providedIn: 'root'})
 export class InnovationService {
@@ -30,7 +29,7 @@ export class InnovationService {
     return this._http.post('/innovation', innovationObj);
   }
 
-  public get(id: string, config?: Config): Observable<Innovation> {
+  public get(id: string, config?: UmiusConfigInterface): Observable<Innovation> {
     return this._http.get<Innovation>('/innovation/' + id, {params: config});
   }
 
@@ -54,7 +53,7 @@ export class InnovationService {
     return this._http.get<{result: Array<Campaign>}>('/innovation/' + innovationId + '/campaigns?limit=50');
   }
 
-  public addNewMediaVideoToInnovationCard(innovationId: string, innovationCardId: string, videoInfos: Video): Observable<any> {
+  public addNewMediaVideoToInnovationCard(innovationId: string, innovationCardId: string, videoInfos: UmiusVideoInterface): Observable<any> {
     return this._http.post('/innovation/' + innovationId + '/innovationCard/' + innovationCardId + '/media/video', videoInfos);
   }
 
@@ -141,7 +140,7 @@ export class InnovationService {
   }
 
   public getPendingCollaborators(innovationId: string): Observable<Response> {
-    const config: Config = {
+    const config: UmiusConfigInterface = {
       limit: '-1',
       offset: '0',
       search: '{}',

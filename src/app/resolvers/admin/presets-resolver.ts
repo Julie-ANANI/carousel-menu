@@ -6,15 +6,14 @@ import { catchError, tap } from 'rxjs/operators';
 import { isPlatformServer } from '@angular/common';
 import { Response } from '../../models/response';
 import { PresetService } from '../../services/preset/preset.service';
-import {UmiusConfigService} from '@umius/umi-common-component';
-import {Config} from '../../models/config';
+import {UmiusConfigInterface, UmiusConfigService} from '@umius/umi-common-component';
 
 const PRESETS_KEY = makeStateKey('presets');
 
 @Injectable({providedIn: 'root'})
 export class PresetsResolver implements Resolve<Response> {
 
-  private _config: Config = {
+  private _config: UmiusConfigInterface = {
     fields: '',
     limit: '10',
     offset: '0',
@@ -57,7 +56,7 @@ export class PresetsResolver implements Resolve<Response> {
 
   }
 
-  get config(): Config {
+  get config(): UmiusConfigInterface {
     return this._config;
   }
 

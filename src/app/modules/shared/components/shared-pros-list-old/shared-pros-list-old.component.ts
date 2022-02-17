@@ -3,8 +3,7 @@ import { SearchService } from '../../../../services/search/search.service';
 import { Campaign } from '../../../../models/campaign';
 import { Professional } from '../../../../models/professional';
 import { first } from 'rxjs/operators';
-import {Config} from '../../../../models/config';
-import {UmiusPaginationInterface} from '@umius/umi-common-component';
+import {UmiusConfigInterface, UmiusPaginationInterface} from '@umius/umi-common-component';
 
 export interface SelectedProfessional extends Professional {
   isSelected: boolean;
@@ -17,7 +16,7 @@ export interface SelectedProfessional extends Professional {
 })
 export class SharedProsListOldComponent {
 
-  private _config: Config;
+  private _config: UmiusConfigInterface;
   private _keywordsModal: boolean = false;
   private _paginationConfig: UmiusPaginationInterface = {};
   public smartSelect: any = null;
@@ -25,7 +24,7 @@ export class SharedProsListOldComponent {
 
   @Input() public requestId: string;
   @Input() public campaign: Campaign;
-  @Input() set config(value: Config) {
+  @Input() set config(value: UmiusConfigInterface) {
     this.loadPaginationConfig(value);
     this.loadPros(value);
   }
@@ -37,14 +36,14 @@ export class SharedProsListOldComponent {
 
   constructor(private _searchService: SearchService) { }
 
-  loadPaginationConfig(config: Config) {
+  loadPaginationConfig(config: UmiusConfigInterface) {
     this._paginationConfig = {
       limit: Number(config.limit) || 10,
       offset: Number(config.offset) || 0
     };
   }
 
-  loadPros(config: Config): void {
+  loadPros(config: UmiusConfigInterface): void {
     this._config = config;
     this._searchService.getPros(this._config, this.requestId).pipe(first()).subscribe((pros: any) => {
       this._pros = pros.persons;
@@ -76,7 +75,7 @@ export class SharedProsListOldComponent {
 
   updateSelection(event: any) {
     this.smartSelect = event;
-    const config: Config = this._config;
+    const config: UmiusConfigInterface = this._config;
     config.offset = this.smartSelect.offset;
     config.limit = this.smartSelect.limit;
     this.selectedProsChange.emit({
@@ -106,7 +105,7 @@ export class SharedProsListOldComponent {
   get proKeywords(): Array<string> { return this._proKeywords; }
   get keywordsModal(): boolean { return this._keywordsModal; }
   set keywordsModal(value: boolean) { this._keywordsModal = value; }
-  get config(): Config { return this._config; }
+  get config(): UmiusConfigInterface { return this._config; }
   get paginationConfig(): UmiusPaginationInterface { return this._paginationConfig; }
 
   get sortConfig(): string {

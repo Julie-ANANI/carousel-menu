@@ -12,8 +12,7 @@ import {Response} from '../../../../../models/response';
 import { HttpErrorResponse } from "@angular/common/http";
 import { TranslateNotificationsService } from "../../../../../services/translate-notifications/translate-notifications.service";
 import { ErrorFrontService } from "../../../../../services/error/error-front.service";
-import {Config} from '../../../../../models/config';
-import {UmiusLocalStorageService} from '@umius/umi-common-component';
+import {UmiusConfigInterface, UmiusLocalStorageService} from '@umius/umi-common-component';
 
 @Component({
   templateUrl: './discover-innovations.component.html',
@@ -22,7 +21,7 @@ import {UmiusLocalStorageService} from '@umius/umi-common-component';
 
 export class DiscoverInnovationsComponent implements OnInit {
 
-  private _config: Config = {
+  private _config: UmiusConfigInterface = {
     fields: 'created principalMedia innovationCards tags status projectStatus',
     limit: this._localStorage.getItem('discover-limit') || '25',
     offset: '0',
@@ -200,7 +199,7 @@ export class DiscoverInnovationsComponent implements OnInit {
     return this.userLang === 'fr' ? 'https://www.umi.us/fr/communaute/' : 'https://www.umi.us/community/';
   }
 
-  get config(): Config {
+  get config(): UmiusConfigInterface {
     return this._config;
   }
 

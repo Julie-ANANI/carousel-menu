@@ -11,8 +11,8 @@ import {HttpErrorResponse} from '@angular/common/http';
 import {ErrorFrontService} from '../../../../../../services/error/error-front.service';
 import {UserFrontService} from '../../../../../../services/user/user-front.service';
 import {TranslationService} from '../../../../../../services/translation/translation.service';
-import {Multiling} from '../../../../../../models/multiling';
 import {MissionQuestion} from '../../../../../../models/mission';
+import {UmiusMultilingInterface} from '@umius/umi-common-component';
 
 @Component({
   selector: 'app-market-comment-2',
@@ -34,7 +34,7 @@ export class SharedMarketComment2Component {
 
   private _currentLang = this._translateService.currentLang;
 
-  private _translation: Multiling = {};
+  private _translation: UmiusMultilingInterface = {};
 
   private _showTranslation = false;
 
@@ -123,11 +123,11 @@ export class SharedMarketComment2Component {
     return this.question.controlType === 'textarea' ? this.question.identifier : this.question.identifier + 'Comment';
   }
 
-  get translation(): Multiling {
+  get translation(): UmiusMultilingInterface {
     return this._translation;
   }
 
-  set translation(value: Multiling) {
+  set translation(value: UmiusMultilingInterface) {
     this._translation = value;
   }
 

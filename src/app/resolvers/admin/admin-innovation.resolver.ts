@@ -9,10 +9,10 @@ import {InnovationService} from '../../services/innovation/innovation.service';
 import {makeStateKey, TransferState} from '@angular/platform-browser';
 import {TranslateNotificationsService} from '../../services/translate-notifications/translate-notifications.service';
 import {ErrorFrontService} from '../../services/error/error-front.service';
-import {Config} from '../../models/config';
+import {UmiusConfigInterface} from '@umius/umi-common-component';
 
 const INNOVATION_KEY = makeStateKey('innovation');
-const config: Config = {
+const config: UmiusConfigInterface = {
   fields: '',
   limit: '1',
   offset: '0',

@@ -7,7 +7,6 @@ import { ShareService } from '../../../../../services/share/share.service';
 import { Tag } from '../../../../../models/tag';
 import { InnovationService } from '../../../../../services/innovation/innovation.service';
 import { first } from 'rxjs/operators';
-import { Media } from '../../../../../models/media';
 import { InnovationFrontService } from '../../../../../services/innovation/innovation-front.service';
 import { TranslateTitleService } from '../../../../../services/title/title.service';
 import { ContactFrontService } from '../../../../../services/contact/contact-front.service';
@@ -15,7 +14,7 @@ import {QuizService} from '../../../../../services/quiz/quiz.service';
 import {LangEntryService} from '../../../../../services/lang-entry/lang-entry.service';
 import {htmlTagsRegex} from '../../../../../utils/regex';
 import {environment} from '../../../../../../environments/environment';
-import {UmiusModalMedia} from '@umius/umi-common-component';
+import {UmiusMediaInterface, UmiusModalMedia} from '@umius/umi-common-component';
 
 @Component({
   templateUrl: './discover-description.component.html',
@@ -172,7 +171,7 @@ export class DiscoverDescriptionComponent implements OnInit {
 
   }
 
-  public getSrc(media: Media): string {
+  public getSrc(media: UmiusMediaInterface): string {
     return InnovationFrontService.getMediaSrc(media, 'mediaSrc', '280', '177');
   }
 

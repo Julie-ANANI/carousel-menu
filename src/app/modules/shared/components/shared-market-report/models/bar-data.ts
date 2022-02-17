@@ -1,8 +1,8 @@
-import { Multiling } from '../../../../../models/multiling';
 import { Answer } from '../../../../../models/answer';
+import {UmiusMultilingInterface} from '@umius/umi-common-component';
 
 export interface BarData {
-  label?: Multiling;
+  label?: UmiusMultilingInterface;
   answers?: Array<Answer>;
   absolutePercentage?: string;
   relativePercentage?: string;

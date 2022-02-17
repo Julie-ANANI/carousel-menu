@@ -3,9 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { Mission, MissionQuestion, MissionTemplate } from '../../models/mission';
 import { Observable } from 'rxjs';
 import { Innovation } from '../../models/innovation';
-import { Multiling } from '../../models/multiling';
 import { Response } from '../../models/response';
-import {Config} from '../../models/config';
+import {UmiusConfigInterface, UmiusMultilingInterface} from '@umius/umi-common-component';
 
 @Injectable({providedIn: 'root'})
 export class MissionService {
@@ -17,7 +16,7 @@ export class MissionService {
    * will return the list of all the questions.
    * @param config
    */
-  public getAllQuestions(config?: Config): Observable<Response> {
+  public getAllQuestions(config?: UmiusConfigInterface): Observable<Response> {
     return this._http.get<Response>('/mission/questions/all', {params: config});
   }
 
@@ -102,7 +101,7 @@ export class MissionService {
    * will return all the use cases templates we have defined for a mission.
    * @param config
    */
-  public getAllTemplates(config?: Config): Observable<Response> {
+  public getAllTemplates(config?: UmiusConfigInterface): Observable<Response> {
     return this._http.get<Response>('/mission/templates/all', {params: config});
   }
 
@@ -128,7 +127,7 @@ export class MissionService {
 
   public updateMainObjective(
     missionId: string,
-    objective: { principal: Multiling; secondary: Array<Multiling>; comment: string }): Observable<Innovation> {
+    objective: { principal: UmiusMultilingInterface; secondary: Array<UmiusMultilingInterface>; comment: string }): Observable<Innovation> {
     return this._http.put<Innovation>(`/mission/${missionId}/updateMainObjective`, {objective: objective});
   }
 

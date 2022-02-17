@@ -6,15 +6,14 @@ import { catchError, tap } from 'rxjs/operators';
 import { isPlatformServer } from '@angular/common';
 import { InnovationService } from '../../services/innovation/innovation.service';
 import { Response } from '../../models/response';
-import {Config} from '../../models/config';
-import {UmiusConfigService} from '@umius/umi-common-component';
+import {UmiusConfigInterface, UmiusConfigService} from '@umius/umi-common-component';
 
 const INNOVATIONS_KEY = makeStateKey('projects');
 
 @Injectable({providedIn: 'root'})
 export class ProjectsResolver implements Resolve<Response> {
 
-  private _config: Config = {
+  private _config: UmiusConfigInterface = {
     fields: '',
     limit: '10',
     offset: '0',
@@ -58,7 +57,7 @@ export class ProjectsResolver implements Resolve<Response> {
   }
 
 
-  get config(): Config {
+  get config(): UmiusConfigInterface {
     return this._config;
   }
 

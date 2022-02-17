@@ -12,10 +12,10 @@ import {catchError, first, tap} from 'rxjs/operators';
 import {HttpErrorResponse} from '@angular/common/http';
 import { TranslateNotificationsService } from "../services/translate-notifications/translate-notifications.service";
 import { ErrorFrontService } from "../services/error/error-front.service";
-import {Config} from '../models/config';
+import {UmiusConfigInterface} from '@umius/umi-common-component';
 
 const INNOVATION_KEY = makeStateKey('innovation');
-const config: Config = {
+const config: UmiusConfigInterface = {
   fields: '',
   limit: '10',
   offset: '0',

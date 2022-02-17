@@ -7,7 +7,6 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, Subject} from 'rxjs';
 import {Innovation} from '../../models/innovation';
-import {Media} from '../../models/media';
 import {CardComment, CardSectionTypes, InnovCard, InnovCardSection} from '../../models/innov-card';
 import {ScrapeHTMLTags} from '../../pipe/pipes/ScrapeHTMLTags';
 import {Question} from '../../models/question';
@@ -17,6 +16,7 @@ import {PublicationType} from '../../models/community';
 import {MediaFrontService} from '../media/media-front.service';
 import {Mission, MissionQuestion, MissionTemplate} from '../../models/mission';
 import {MissionFrontService} from '../mission/mission-front.service';
+import {UmiusMediaInterface} from '@umius/umi-common-component';
 
 export interface Values {
   settingPercentage?: number;
@@ -106,7 +106,7 @@ export class InnovationFrontService {
             && source.principalMedia.cloudinary.public_id) {
             src = prefix + source.principalMedia.cloudinary.public_id + suffix;
           } else if (source.media.length > 0) {
-            const index = source.media.findIndex((media: Media) => media.type === 'PHOTO');
+            const index = source.media.findIndex((media: UmiusMediaInterface) => media.type === 'PHOTO');
             if (index !== -1 && source.media[index].cloudinary && source.media[index].cloudinary.public_id) {
               src = prefix + source.media[index].cloudinary.public_id + suffix;
             }
@@ -386,8 +386,8 @@ export class InnovationFrontService {
     if (innovCard && innovCard.principalMedia) {
       return MediaFrontService.getMedia(innovCard.principalMedia, width, height);
     } else if (innovCard && innovCard.media && innovCard.media.length > 0) {
-      const _imageIndex = innovCard.media.findIndex((media: Media) => media.type === 'PHOTO');
-      const _media: Media = _imageIndex !== -1 ? innovCard.media[_imageIndex] : innovCard.media[0];
+      const _imageIndex = innovCard.media.findIndex((media: UmiusMediaInterface) => media.type === 'PHOTO');
+      const _media: UmiusMediaInterface = _imageIndex !== -1 ? innovCard.media[_imageIndex] : innovCard.media[0];
       return MediaFrontService.getMedia(_media, width, height);
     } else {
       return MediaFrontService.defaultMedia(width, height);
@@ -519,7 +519,7 @@ export class InnovationFrontService {
 
   }
 
-  public videoSrc(media: Media): any {
+  public videoSrc(media: UmiusMediaInterface): any {
     return media && media.video && media.video.embeddableUrl
       ? this._domSanitizer.bypassSecurityTrustResourceUrl(media.video.embeddableUrl) : '';
   }

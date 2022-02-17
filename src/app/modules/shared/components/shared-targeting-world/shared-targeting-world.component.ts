@@ -1,9 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Country } from '../../../../models/country';
 import { TranslateNotificationsService } from '../../../../services/translate-notifications/translate-notifications.service';
 import { TranslateService } from '@ngx-translate/core';
 import { WorldmapService } from '../../../../services/worldmap/worldmap.service';
 import { GeographySettings } from '../../../../models/innov-settings';
+import {UmiusCountryInterface} from '@umius/umi-common-component';
 
 @Component({
   selector: 'app-shared-targeting-world',
@@ -26,15 +26,15 @@ export class SharedTargetingWorldComponent implements OnInit {
 
   private _geography: GeographySettings;
 
-  private _allCountries: Array<Country> = [];
+  private _allCountries: Array<UmiusCountryInterface> = [];
 
-  private _continentCountries: { [continent: string]: Array<Country> } = {};
+  private _continentCountries: { [continent: string]: Array<UmiusCountryInterface> } = {};
 
   private _showToggleList = false;
 
   private _searchCountryString = '';
 
-  private _searchCountries: Array<Country> = [];
+  private _searchCountries: Array<UmiusCountryInterface> = [];
 
   constructor(
     private _translateService: TranslateService,
@@ -130,7 +130,7 @@ export class SharedTargetingWorldComponent implements OnInit {
     continentsIncluded.forEach((continent) => {
       const countries = this.getCountriesByContinent(continent);
       if (Array.isArray(countries)) {
-        countries.forEach((country: Country) => {
+        countries.forEach((country: UmiusCountryInterface) => {
           const index = this._geography.include.findIndex(
             (value) => value.code === country.code
           );
@@ -142,7 +142,7 @@ export class SharedTargetingWorldComponent implements OnInit {
     });
   }
 
-  public getCountriesByContinent(continent_name: string): Array<Country> {
+  public getCountriesByContinent(continent_name: string): Array<UmiusCountryInterface> {
     return this._continentCountries[continent_name];
   }
 
@@ -217,7 +217,7 @@ export class SharedTargetingWorldComponent implements OnInit {
     });
   }
 
-  private _filterExcludedCountries(country: Country) {
+  private _filterExcludedCountries(country: UmiusCountryInterface) {
     this._geography.exclude = this._geography.exclude.filter(
       (value) => value.code !== country.code
     );
@@ -228,7 +228,7 @@ export class SharedTargetingWorldComponent implements OnInit {
    * list.
    * @param event
    */
-  public removeIncludedCountry(event: { value: Country }) {
+  public removeIncludedCountry(event: { value: UmiusCountryInterface }) {
     this._countryToExclude(event.value);
     this._emitChanges();
   }
@@ -242,7 +242,7 @@ export class SharedTargetingWorldComponent implements OnInit {
    * @param value
    * @private
    */
-  private _countryToExclude(value: Country) {
+  private _countryToExclude(value: UmiusCountryInterface) {
     const index = this._allCountries.findIndex(
       (existCountry) => existCountry.code === value.code
     );
@@ -278,17 +278,17 @@ export class SharedTargetingWorldComponent implements OnInit {
     }
   }
 
-  private _filterIncludedCountries(country: Country) {
+  private _filterIncludedCountries(country: UmiusCountryInterface) {
     this._geography.include = this._geography.include.filter(
       (value) => value.code !== country.code
     );
   }
 
-  public checkCountry(country: Country): boolean {
+  public checkCountry(country: UmiusCountryInterface): boolean {
     return this._geography.include.some((value) => value.code === country.code);
   }
 
-  public onChangeCountry(event: Event, country: Country) {
+  public onChangeCountry(event: Event, country: UmiusCountryInterface) {
     if (this.isEditable || this.isAdmin) {
       if ((event.target as HTMLInputElement).checked) {
         this._geography.include = [...this._geography.include, country];
@@ -355,7 +355,7 @@ export class SharedTargetingWorldComponent implements OnInit {
     return this._showToggleList;
   }
 
-  get searchCountries(): Array<Country> {
+  get searchCountries(): Array<UmiusCountryInterface> {
     return this._searchCountries;
   }
 

@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Innovation } from '../../../../../models/innovation';
 import { Showcase } from '../../../../../models/showcase';
-import {Config} from '../../../../../models/config';
+import {UmiusConfigInterface} from '@umius/umi-common-component';
 
 @Injectable()
 export class ShowcaseService {
@@ -15,7 +15,7 @@ export class ShowcaseService {
     return this._http.post('/showcase', showcaseObj);
   }
 
-  public getAll(params: Config): Observable<{result: Array<Innovation>, _metadata: any}> {
+  public getAll(params: UmiusConfigInterface): Observable<{result: Array<Innovation>, _metadata: any}> {
     return this._http.get<{result: Array<Innovation>, _metadata: any}>('/showcase/', {params: params});
   }
 

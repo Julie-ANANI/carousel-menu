@@ -1,7 +1,7 @@
 import {Injectable, ViewContainerRef} from '@angular/core';
-import {Country} from '../../models/country';
 import {IndexService} from '../index/index.service';
 import {first} from 'rxjs/operators';
+import {UmiusCountryInterface} from '@umius/umi-common-component';
 
 @Injectable({providedIn: 'root'})
 export class WorldmapService {
@@ -11,7 +11,7 @@ export class WorldmapService {
   private static _continentsList = ['africa', 'americaNord', 'americaSud', 'asia', 'europe', 'oceania'];
 
   private _countries: {[country: string]: string} = {}; // a mapping of countries -> continent
-  private _countriesList: Array<Country> = [];
+  private _countriesList: Array<UmiusCountryInterface> = [];
 
   public static areAllContinentChecked(selectedContinents: {[c: string]: boolean}): boolean {
     return WorldmapService._continentsList.every((c) => selectedContinents[c] === true);
@@ -65,7 +65,7 @@ export class WorldmapService {
     }, {} as { [continent: string]: { count: number, countries: { [country: string]: {count: number, names: any} } } });
   }
 
-  public async getCountriesByContinent(countryCodesToInclude: string[]= []): Promise<{ [continent: string]: Array<Country> }> {
+  public async getCountriesByContinent(countryCodesToInclude: string[]= []): Promise<{ [continent: string]: Array<UmiusCountryInterface> }> {
     const countriesList = await this.getCountriesList();
     return countriesList.reduce((acc, country) => {
       const continent = this._countries[country.code];
@@ -77,10 +77,10 @@ export class WorldmapService {
         }
       }
       return acc;
-    }, {} as { [continent: string]: Array<Country> });
+    }, {} as { [continent: string]: Array<UmiusCountryInterface> });
   }
 
-  public async getCountriesList(): Promise<Array<Country>> {
+  public async getCountriesList(): Promise<Array<UmiusCountryInterface>> {
     // TODO might call 6 getWholeSet api - to be optimised
     return new Promise(resolve => {
       if (this._countriesList.length === 0) {

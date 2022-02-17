@@ -6,7 +6,7 @@ import { AuthService } from '../../../../services/auth/auth.service';
 import { DownloadService } from '../../../../services/download/download.service';
 import { ProfessionalsService } from '../../../../services/professionals/professionals.service';
 import { TranslateNotificationsService } from '../../../../services/translate-notifications/translate-notifications.service';
-import {Config} from '../../../../models/config';
+import {UmiusConfigInterface} from '@umius/umi-common-component';
 
 @Component({
   selector: 'app-shared-search-results',
@@ -21,7 +21,7 @@ export class SharedSearchResultsComponent implements OnInit {
   private _selection: any;
   private _chosenCampaign: Array<any>;
   private _addToCampaignModal = false;
-  public config: Config = {
+  public config: UmiusConfigInterface = {
     fields: '',
     limit: '10',
     offset: '0',
