@@ -33,7 +33,7 @@ export class ListConfigurations {
       _activeMinHeight: true,
       _isLocal: true,
       _isPaginable: true,
-      _buttons: [{_label: 'Add', _icon: 'fas fa-plus'}],
+      _actions: [{_label: 'Add', _icon: 'fas fa-plus'}],
       _columns: [
         {_attrs: ['firstName', 'lastName'], _name: 'TABLE.HEADING.NAME', _type: 'TEXT'},
         {_attrs: ['tags'], _name: 'TABLE.HEADING.SECTORS', _type: 'TAG-LIST'},
