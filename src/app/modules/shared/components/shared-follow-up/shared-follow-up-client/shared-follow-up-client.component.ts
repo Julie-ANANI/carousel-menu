@@ -19,8 +19,7 @@ import {ScrapeHTMLTags} from '../../../../../pipe/pipes/ScrapeHTMLTags';
 import {TranslateService} from '@ngx-translate/core';
 import {UserFrontService} from '../../../../../services/user/user-front.service';
 import {LangEntryService} from '../../../../../services/lang-entry/lang-entry.service';
-import {Table, UmiusSidebarInterface} from '@umius/umi-common-component';
-import {Config} from '../../../../../models/config';
+import {Table, UmiusConfigInterface, UmiusSidebarInterface} from '@umius/umi-common-component';
 
 @Component({
   selector: 'app-shared-follow-up-client',
@@ -115,7 +114,7 @@ export class SharedFollowUpClientComponent implements OnDestroy {
 
   private _finalTableInfos: Table = <Table>{};
 
-  private _finalConfig: Config = {
+  private _finalConfig: UmiusConfigInterface = {
     fields: '',
     limit: '10',
     offset: '0',
@@ -133,7 +132,7 @@ export class SharedFollowUpClientComponent implements OnDestroy {
 
   private _tableInfos: Table = <Table>{};
 
-  private _config: Config = {
+  private _config: UmiusConfigInterface = {
     fields: '',
     limit: '10',
     offset: '0',
@@ -514,11 +513,11 @@ export class SharedFollowUpClientComponent implements OnDestroy {
     return this._finalAnswers;
   }
 
-  get config(): Config {
+  get config(): UmiusConfigInterface {
     return this._config;
   }
 
-  set config(value: Config) {
+  set config(value: UmiusConfigInterface) {
     this._config = value;
   }
 
@@ -538,7 +537,7 @@ export class SharedFollowUpClientComponent implements OnDestroy {
     this._companyName = value;
   }
 
-  set finalConfig(value: Config) {
+  set finalConfig(value: UmiusConfigInterface) {
     this._finalConfig = value;
   }
 
@@ -642,7 +641,7 @@ export class SharedFollowUpClientComponent implements OnDestroy {
     return this._finalTableInfos;
   }
 
-  get finalConfig(): Config {
+  get finalConfig(): UmiusConfigInterface {
     return this._finalConfig;
   }
 

@@ -10,8 +10,7 @@ import { ProfessionalsService } from '../../../../services/professionals/profess
 import { ContextInterface } from '../../../user/admin/components/admin-community/interfaces/context-interface';
 import { HttpErrorResponse } from "@angular/common/http";
 import { ErrorFrontService } from "../../../../services/error/error-front.service";
-import {Config} from '../../../../models/config';
-import {UmiusSidebarInterface} from '@umius/umi-common-component';
+import {UmiusConfigInterface, UmiusSidebarInterface} from '@umius/umi-common-component';
 
 export interface SelectedProfessional extends Professional {
   isSelected: boolean;
@@ -25,7 +24,7 @@ export interface SelectedProfessional extends Professional {
 
 export class SharedAmbassadorListComponent {
 
-  @Input() set config(value: Config) {
+  @Input() set config(value: UmiusConfigInterface) {
     this.loadPros(value);
   }
 
@@ -101,7 +100,7 @@ export class SharedAmbassadorListComponent {
    * allow the table to show data
    * @param config
    */
-  public loadPros(config: Config): void {
+  public loadPros(config: UmiusConfigInterface): void {
 
     this._config = config;
 
@@ -314,7 +313,7 @@ export class SharedAmbassadorListComponent {
     return this._pros;
   }
 
-  get config(): Config {
+  get config(): UmiusConfigInterface {
     return this._config;
   }
 

@@ -10,8 +10,7 @@ import { RolesFrontService } from '../../../../services/roles/roles-front.servic
 import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorFrontService } from '../../../../services/error/error-front.service';
 import { GeographySettings } from '../../../../models/innov-settings';
-import {Config} from '../../../../models/config';
-import {Column, Table, UmiusSidebarInterface} from '@umius/umi-common-component';
+import {Column, Table, UmiusConfigInterface, UmiusSidebarInterface} from '@umius/umi-common-component';
 
 export interface SelectedProfessional extends Professional {
   isSelected: boolean;
@@ -26,7 +25,7 @@ export class SharedProfessionalsListComponent {
 
   private _isFiltersSidebar = false;
 
-  @Input() set config(value: Config) {
+  @Input() set config(value: UmiusConfigInterface) {
     this._localConfig = value;
   }
 
@@ -42,7 +41,7 @@ export class SharedProfessionalsListComponent {
     this._initializeTable();
   }
 
-  @Output() configChange: EventEmitter<Config> = new EventEmitter<Config>();
+  @Output() configChange: EventEmitter<UmiusConfigInterface> = new EventEmitter<UmiusConfigInterface>();
 
   @Output() selectedProfessionalChange: EventEmitter<{
     total: number;
@@ -53,7 +52,7 @@ export class SharedProfessionalsListComponent {
 
   private _table: Table = <Table>{};
 
-  private _localConfig: Config = <Config>{};
+  private _localConfig: UmiusConfigInterface = <UmiusConfigInterface>{};
 
   /**
    * deletion confirmation modal
@@ -283,7 +282,7 @@ export class SharedProfessionalsListComponent {
     );
   }
 
-  public onConfigChange(value: Config) {
+  public onConfigChange(value: UmiusConfigInterface) {
     this.configChange.emit(value);
   }
 
@@ -676,7 +675,7 @@ export class SharedProfessionalsListComponent {
     return this._table;
   }
 
-  get localConfig(): Config {
+  get localConfig(): UmiusConfigInterface {
     return this._localConfig;
   }
 

@@ -5,13 +5,13 @@ import {Option, Question} from '../../../../../models/question';
 import { Section } from '../../../../../models/section';
 import { Innovation } from '../../../../../models/innovation';
 import { Tag } from '../../../../../models/tag';
-import { Multiling } from '../../../../../models/multiling';
 import { BarData } from '../models/bar-data';
 import { PieChart } from '../../../../../models/chart/pie-chart';
 import { Professional } from '../../../../../models/professional';
 import { MissionQuestion, MissionQuestionOption } from '../../../../../models/mission';
 import { MissionQuestionService } from '../../../../../services/mission/mission-question.service';
 import {LikertScaleChart} from '../../../../../models/executive-report';
+import {UmiusMultilingInterface} from '@umius/umi-common-component';
 
 @Injectable({ providedIn: 'root' })
 
@@ -95,7 +95,7 @@ export class ResponseService {
    */
   public static getStarsAnswers(question: any, answers: Array<Answer>) {
 
-    let notesData: Array<{ label: Multiling, sum: number, percentage: string, entry: [] }> = [];
+    let notesData: Array<{ label: UmiusMultilingInterface, sum: number, percentage: string, entry: [] }> = [];
 
     if (question && answers) {
 
@@ -142,7 +142,7 @@ export class ResponseService {
    */
   public static getRanksAnswers(question: Question | MissionQuestion, answers: Array<Answer>, lang: string) {
 
-    let ranksData: Array<{ label: Multiling, sum: number, identifier: string, percentage: string }> = [];
+    let ranksData: Array<{ label: UmiusMultilingInterface, sum: number, identifier: string, percentage: string }> = [];
 
     if (question && answers) {
       const ranking = this.rankingChartData(answers, question, lang);

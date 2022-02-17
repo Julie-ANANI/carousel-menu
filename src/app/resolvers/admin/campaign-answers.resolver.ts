@@ -6,15 +6,14 @@ import { EMPTY, Observable } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { CampaignService } from '../../services/campaign/campaign.service';
 import { Response } from '../../models/response';
-import {Config} from '../../models/config';
-import {UmiusConfigService} from '@umius/umi-common-component';
+import {UmiusConfigInterface, UmiusConfigService} from '@umius/umi-common-component';
 
 const CAMPAIGN_ANSWERS_KEY = makeStateKey('campaign_answers');
 
 @Injectable({providedIn: 'root'})
 export class CampaignAnswersResolver implements Resolve<Response> {
 
-  private _config: Config = {
+  private _config: UmiusConfigInterface = {
     fields: '',
     limit: '10',
     offset: '0',
@@ -53,7 +52,7 @@ export class CampaignAnswersResolver implements Resolve<Response> {
     }
   }
 
-  get config(): Config {
+  get config(): UmiusConfigInterface {
     return this._config;
   }
 

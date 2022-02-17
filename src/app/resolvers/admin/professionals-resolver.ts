@@ -6,15 +6,14 @@ import { catchError, tap } from 'rxjs/operators';
 import { isPlatformServer } from '@angular/common';
 import { Response } from '../../models/response';
 import { ProfessionalsService } from '../../services/professionals/professionals.service';
-import {Config} from '../../models/config';
-import {UmiusConfigService} from '@umius/umi-common-component';
+import {UmiusConfigInterface, UmiusConfigService} from '@umius/umi-common-component';
 
 const PROFESSIONALS_KEY = makeStateKey('professionals');
 
 @Injectable({providedIn: 'root'})
 export class ProfessionalsResolver implements Resolve<Response> {
 
-  private _config: Config = {
+  private _config: UmiusConfigInterface = {
     fields: 'language firstName lastName company country jobTitle campaigns tags messages ambassador.is',
     limit: '10',
     offset: '0',
@@ -57,7 +56,7 @@ export class ProfessionalsResolver implements Resolve<Response> {
 
   }
 
-  get config(): Config {
+  get config(): UmiusConfigInterface {
     return this._config;
   }
 

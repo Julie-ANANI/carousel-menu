@@ -6,15 +6,14 @@ import { catchError, tap } from 'rxjs/operators';
 import { isPlatformServer } from '@angular/common';
 import { Response } from '../../models/response';
 import { TemplatesService } from '../../services/templates/templates.service';
-import {Config} from '../../models/config';
-import {UmiusConfigService} from '@umius/umi-common-component';
+import {UmiusConfigInterface, UmiusConfigService} from '@umius/umi-common-component';
 
 const SIGNATURES_KEY = makeStateKey('signatures');
 
 @Injectable({providedIn: 'root'})
 export class SignaturesResolver implements Resolve<Response> {
 
-  private _config: Config = {
+  private _config: UmiusConfigInterface = {
     fields: '',
     limit: '10',
     offset: '0',
@@ -57,7 +56,7 @@ export class SignaturesResolver implements Resolve<Response> {
 
   }
 
-  get config(): Config {
+  get config(): UmiusConfigInterface {
     return this._config;
   }
 

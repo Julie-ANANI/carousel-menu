@@ -15,8 +15,8 @@ import {
 } from '../../../../../models/executive-report';
 import { ExecutivePieChart, PieChart } from '../../../../../models/chart/pie-chart';
 import { BarData } from '../../../../shared/components/shared-market-report/models/bar-data';
-import { Multiling } from '../../../../../models/multiling';
 import {LangEntryService} from '../../../../../services/lang-entry/lang-entry.service';
+import {UmiusMultilingInterface} from '@umius/umi-common-component';
 
 @Component({
   selector: 'app-print-report-section',
@@ -195,7 +195,7 @@ export class ReportSectionComponent implements OnChanges {
    * @param notesData
    * @private
    */
-  private _initStarContent(notesData: Array<{label: Multiling, sum: number, percentage: string}>): SectionBar {
+  private _initStarContent(notesData: Array<{label: UmiusMultilingInterface, sum: number, percentage: string}>): SectionBar {
     const _content = <SectionBar>{};
     _content.showExamples = false;
     _content.values = [];
@@ -247,7 +247,7 @@ export class ReportSectionComponent implements OnChanges {
    * @param title
    * @private
    */
-  private _initRankingContent(tagsData: Array<Tag>, title: Multiling): SectionRanking {
+  private _initRankingContent(tagsData: Array<Tag>, title: UmiusMultilingInterface): SectionRanking {
     const _content = <SectionRanking>{};
     _content.values = [];
     if (tagsData.length > 0) {
@@ -269,7 +269,7 @@ export class ReportSectionComponent implements OnChanges {
    * @param title
    * @private
    */
-  private _getRankingColor(title: Multiling): string {
+  private _getRankingColor(title: UmiusMultilingInterface): string {
     if (title) {
       if (title['en'].toLowerCase().indexOf('objections') !== -1) {
         return '#EA5858';
@@ -301,7 +301,7 @@ export class ReportSectionComponent implements OnChanges {
    * @param title
    * @private
    */
-  private _getLikertScaleColor(title: Multiling): string {
+  private _getLikertScaleColor(title: UmiusMultilingInterface): string {
     if (title) {
       if (title['en'].toLowerCase().indexOf('objections') !== -1) {
         return '#EA5858';
@@ -353,7 +353,7 @@ export class ReportSectionComponent implements OnChanges {
       visibility: false
     };
    */
-  private _initLikertScaleContent(tagsData: Array<Tag>, title: Multiling): SectionLikertScale {
+  private _initLikertScaleContent(tagsData: Array<Tag>, title: UmiusMultilingInterface): SectionLikertScale {
     if (tagsData.length > 0) {
       return {
         name: tagsData[0].label[this.report.lang] || '',

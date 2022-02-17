@@ -13,8 +13,7 @@ import {AnswerService} from '../../../../../services/answer/answer.service';
 import {Professional} from '../../../../../models/professional';
 import {FilterService} from '../../shared-market-report/services/filters.service';
 import {Subject} from 'rxjs';
-import {Table, UmiusSidebarInterface} from '@umius/umi-common-component';
-import {Config} from '../../../../../models/config';
+import {Table, UmiusConfigInterface, UmiusSidebarInterface} from '@umius/umi-common-component';
 
 interface Pending {
   answersIds?: Array<string>;
@@ -79,7 +78,7 @@ export class SharedFollowUpAdminComponent implements OnInit {
 
   private _showSendModal = false;
 
-  private _config: Config = {
+  private _config: UmiusConfigInterface = {
     fields: '',
     limit: '10',
     offset: '0',
@@ -398,11 +397,11 @@ export class SharedFollowUpAdminComponent implements OnInit {
     return this._tableInfos;
   }
 
-  get config(): Config {
+  get config(): UmiusConfigInterface {
     return this._config;
   }
 
-  set config(value: Config) {
+  set config(value: UmiusConfigInterface) {
     this._config = value;
   }
 

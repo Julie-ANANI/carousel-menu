@@ -6,15 +6,14 @@ import { catchError, tap } from 'rxjs/operators';
 import { isPlatformServer } from '@angular/common';
 import { Response } from '../../models/response';
 import { UserService } from '../../services/user/user.service';
-import {Config} from '../../models/config';
-import {UmiusConfigService} from '@umius/umi-common-component';
+import {UmiusConfigInterface, UmiusConfigService} from '@umius/umi-common-component';
 
 const USERS_KEY = makeStateKey('users');
 
 @Injectable({providedIn: 'root'})
 export class UsersResolver implements Resolve<Response> {
 
-  private _config: Config = {
+  private _config: UmiusConfigInterface = {
     fields: 'id company jobTitle created domain location firstName lastName',
     limit: '10',
     offset: '0',
@@ -57,7 +56,7 @@ export class UsersResolver implements Resolve<Response> {
 
   }
 
-  get config(): Config {
+  get config(): UmiusConfigInterface {
     return this._config;
   }
 
