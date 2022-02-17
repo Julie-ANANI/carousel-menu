@@ -11,8 +11,8 @@ import {
   PLATFORM_ID
 } from '@angular/core';
 import { WorldmapService } from '../../../../services/worldmap/worldmap.service';
-import { Country } from '../../../../models/country';
 import {isPlatformBrowser} from '@angular/common';
+import {UmiusCountryInterface} from '@umius/umi-common-component';
 
 export interface Tooltip {
   flag?: string;
@@ -110,7 +110,7 @@ export class SharedWorldmapComponent implements OnInit {
 
   private _tooltipInfo: Tooltip = null; // it has country code, name and value of it.
 
-  private _allCountries: Array<Country> = [];
+  private _allCountries: Array<UmiusCountryInterface> = [];
 
   private _countriesData: any;
 
