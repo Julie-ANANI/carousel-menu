@@ -4,10 +4,10 @@ import { SearchService } from '../../../../services/search/search.service';
 import { TranslateNotificationsService } from '../../../../services/translate-notifications/translate-notifications.service';
 import { SearchTool } from '../../../../models/demo/search-tool';
 import { result_sample } from "../../../../models/static-data/result_sample";
-import { SidebarInterface } from "../../../sidebars/interfaces/sidebar-interface";
 import { AuthService } from "../../../../services/auth/auth.service";
 import { DownloadService } from "../../../../services/download/download.service";
 import { countries } from "../../../../models/static-data/country";
+import {UmiusSidebarInterface} from '@umius/umi-common-component';
 
 @Component({
   selector: 'app-search-tool',
@@ -29,7 +29,7 @@ export class SearchToolComponent {
 
   private _professionalCount: number = 0;
 
-  private _sidebarValue: SidebarInterface = {};
+  private _sidebarValue: UmiusSidebarInterface = <UmiusSidebarInterface>{};
 
   private _requestId: string = null;
 
@@ -306,11 +306,11 @@ export class SearchToolComponent {
     return this._selectedCountry;
   }
 
-  get sidebarValue(): SidebarInterface {
+  get sidebarValue(): UmiusSidebarInterface {
     return this._sidebarValue;
   }
 
-  set sidebarValue(value: SidebarInterface) {
+  set sidebarValue(value: UmiusSidebarInterface) {
     this._sidebarValue = value;
   }
 

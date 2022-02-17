@@ -62,32 +62,31 @@
 
 
 <!-- modal to select the answers -->
-<app-utility-modal [(showModal)]="modalShow" [maxWidth]="'960px'" [enableCloseButton]="true">
+<umius-modal [(showModal)]="modalShow" maxWidth="960px">
+  <section class="modal-body">
+    <div class="card-wrapper card-responsive d-flex">
+      <ng-container *ngFor="let answer of answers">
+        <div class="card is-responsive badge badge-icon" [ngClass]="{ 'badge-active': activeAnswer(answer) && isAdmin }">
 
- <section class="modal-body">
-   <div class="card-wrapper card-responsive d-flex">
-     <ng-container *ngFor="let answer of answers">
-       <div class="card is-responsive badge badge-icon" [ngClass]="{ 'badge-active': activeAnswer(answer) && isAdmin }">
+          <i class="fas fa-check-circle"></i>
 
-         <i class="fas fa-check-circle"></i>
+          <ng-container *ngIf="isAdmin">
+            <label class="absolute c-hand">
+              <input type="checkbox" (change)="onChangeAnswer($event, answer)" [checked]="activeAnswer(answer)">
+            </label>
+          </ng-container>
 
-         <ng-container *ngIf="isAdmin">
-           <label class="absolute c-hand">
-             <input type="checkbox" (change)="onChangeAnswer($event, answer)" [checked]="activeAnswer(answer)">
-           </label>
-         </ng-container>
+          <h4 class="text-draft text-medium text-xs">{{ answer.job }}</h4>
 
-         <h4 class="text-draft text-medium text-xs">{{ answer.job }}</h4>
+          <div class="flex-start">
+            <umius-country-flag [country]="answer.country?.flag" [width]="30" [height]="20"></umius-country-flag>
+            <p class="text-meta text-medium text-xs">{{ answer.company?.name }}</p>
+          </div>
 
-         <div class="flex-start">
-           <umius-country-flag [country]="answer.country?.flag" [width]="30" [height]="20"></umius-country-flag>
-           <p class="text-meta text-medium text-xs">{{ answer.company?.name }}</p>
-         </div>
-
-       </div>
-     </ng-container>
-   </div>
- </section>
+        </div>
+      </ng-container>
+    </div>
+  </section>
 
   <ng-container *ngIf="isAdmin">
     <footer class="modal-footer">
@@ -95,6 +94,5 @@
       <button (click)="onClickApply($event)" class="button is-primary">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
     </footer>
   </ng-container>
-
-</app-utility-modal>
+</umius-modal>
 <!-- /modal to select the answers -->
