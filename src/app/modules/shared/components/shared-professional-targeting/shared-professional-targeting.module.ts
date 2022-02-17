@@ -4,7 +4,7 @@ import { SharedProfessionalTargetingComponent } from './shared-professional-targ
 import { MessageTemplateModule } from '../../../utility/messages/message-template/message-template.module';
 import { SharedSearchConfigProModule } from '../shared-search-config-pro/shared-search-config-pro.module';
 import {SearchInput3Module} from '../../../utility/search-inputs/search-template-3/search-input-3.module';
-import {SearchInput2Module} from '../../../utility/search-inputs/search-template-2/search-input-2.module';
+import {SearchInputModule} from '@umius/umi-common-component';
 
 @NgModule({
   imports: [
@@ -12,7 +12,7 @@ import {SearchInput2Module} from '../../../utility/search-inputs/search-template
     MessageTemplateModule,
     SharedSearchConfigProModule,
     SearchInput3Module,
-    SearchInput2Module,
+    SearchInputModule
   ],
   declarations: [
     SharedProfessionalTargetingComponent
