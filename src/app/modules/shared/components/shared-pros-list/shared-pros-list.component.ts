@@ -4,11 +4,10 @@ import { TranslateNotificationsService } from '../../../../services/translate-no
 import { SearchService } from '../../../../services/search/search.service';
 import { Campaign } from '../../../../models/campaign';
 import { Professional } from '../../../../models/professional';
-import { SidebarInterface } from '../../../sidebars/interfaces/sidebar-interface';
 import { first } from 'rxjs/operators';
 import { Tag } from '../../../../models/tag';
 import { Router } from '@angular/router';
-import { Table } from '@umius/umi-common-component/models';
+import {Table, UmiusSidebarInterface} from '@umius/umi-common-component';
 
 
 export interface SelectedProfessional extends Professional {
@@ -46,7 +45,7 @@ export class SharedProsListComponent {
 
   private _prosToTag: Professional[] = [];
 
-  private _sidebarValue: SidebarInterface = {};
+  private _sidebarValue: UmiusSidebarInterface = {};
 
   private _currentPro: Professional = null;
 
@@ -79,8 +78,7 @@ export class SharedProsListComponent {
           _isPaginable: true,
           _isDeletable: true,
           _isSelectable: true,
-          _isEditable: true,
-          _buttons: [{_label: 'Convert to ambassador', _icon: 'fas fa-user-graduate'}, {_label: 'COMMON.TAG.ADD_TAGS', _icon: 'fas fa-plus'}],
+          _actions: [{_label: 'Convert to ambassador', _icon: 'fas fa-user-graduate'}, {_label: 'COMMON.TAG.ADD_TAGS', _icon: 'fas fa-plus'}],
           _clickIndex: 2,
           _columns: [
             {_attrs: ['ambassador.is'], _name: 'Member', _type: 'MULTI-IMAGE-CHOICES', _isSortable: true, _isSearchable: true,
@@ -118,8 +116,7 @@ export class SharedProsListComponent {
           _isPaginable: true,
           _isDeletable: true,
           _isSelectable: true,
-          _isEditable: true,
-          _buttons: [{_label: 'Convert to ambassador', _icon: 'fas fa-user-graduate'}, {_label: 'COMMON.TAG.ADD_TAGS', _icon: 'fas fa-plus'}],
+          _actions: [{_label: 'Convert to ambassador', _icon: 'fas fa-user-graduate'}, {_label: 'COMMON.TAG.ADD_TAGS', _icon: 'fas fa-plus'}],
           _clickIndex: 2,
           _columns: [
             {_attrs: ['ambassador.is'], _name: 'Member', _type: 'MULTI-IMAGE-CHOICES', _isSortable: true, _isSearchable: true,
@@ -311,11 +308,11 @@ export class SharedProsListComponent {
     return this._tableInfos;
   }
 
-  set sidebarValue(value: SidebarInterface) {
+  set sidebarValue(value: UmiusSidebarInterface) {
     this._sidebarValue = value;
   }
 
-  get sidebarValue(): SidebarInterface {
+  get sidebarValue(): UmiusSidebarInterface {
     return this._sidebarValue;
   }
 
