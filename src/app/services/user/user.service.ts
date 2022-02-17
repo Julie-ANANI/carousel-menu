@@ -3,8 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { User } from '../../models/user.model';
 import { Tag } from '../../models/tag';
-import { Config } from '@umius/umi-common-component/models';
 import { environment } from '../../../environments/environment';
+import {Config} from '../../models/config';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {

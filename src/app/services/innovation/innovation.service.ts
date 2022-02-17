@@ -8,7 +8,6 @@ import {InnovCard, InnovCardComment} from '../../models/innov-card';
 import {Professional} from '../../models/professional';
 import {User} from '../../models/user.model';
 import {Video} from '../../models/media';
-import { Config } from '@umius/umi-common-component/models';
 import {Collaborator} from '../../models/collaborator';
 import {Job, JobType} from '../../models/job';
 import {SharedFilter} from '../../modules/shared/components/shared-market-report/models/shared-filter';
@@ -16,6 +15,7 @@ import {Community} from '../../models/community';
 import { FamilyEnterprises } from '../../modules/sidebars/components/sidebar-blacklist/sidebar-blacklist.component';
 import {Invitation} from '../../models/invitation';
 import {Response} from '../../models/response';
+import {Config} from '../../models/config';
 
 @Injectable({providedIn: 'root'})
 export class InnovationService {
