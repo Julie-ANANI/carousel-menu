@@ -125,7 +125,7 @@
 
 <!-- answer sidebar -->
 <ng-container *ngIf="!!canAccess(['view', 'answer']) || !!canAccess(['edit', 'answer'])">
-  <app-sidebar [(template)]="sidebarAnswer">
+  <umius-sidebar-full [(template)]="sidebarAnswer">
     <app-sidebar-user-answer
       [adminMode]="canAccess(['edit', 'answer'])"
       [userAnswer]="modalAnswer"
@@ -133,13 +133,13 @@
       [innovationCards]="project.innovationCards"
       [questions]="questions">
     </app-sidebar-user-answer>
-  </app-sidebar>
+  </umius-sidebar-full>
 </ng-container>
 <!-- /answer sidebar -->
 
 <!-- filter sidebar -->
 <ng-container *ngIf="!!canAccess()">
-  <sidebar-left [(sidebarTemplate)]="sidebarTemplate">
+  <umius-sidebar-inline [(template)]="sidebarTemplate">
     <app-sidebar-filter-answers
       [answers]="answers"
       [innovation]="project"
@@ -148,13 +148,13 @@
       (selectedAnswers)="updateAnswers($event)"
       [templateType]="sidebarTemplate.type">
     </app-sidebar-filter-answers>
-  </sidebar-left>
+  </umius-sidebar-inline>
 </ng-container>
 <!-- /filter sidebar -->
 
 <!-- modal for mails -->
 <ng-container *ngIf="!!(emailsObject && showEmailsModal && canAccess(['workflow']))">
-  <app-utility-modal [(showModal)]="showEmailsModal" [maxWidth]="'1080px'">
+  <umius-modal [(showModal)]="showEmailsModal" [maxWidth]="'1080px'">
     <section class="modal-body p-top-30 p-bottom-30 p-left-50 p-right-50">
 
       <!-- heading -->
@@ -197,13 +197,13 @@
       <!-- /save button -->
 
     </section>
-  </app-utility-modal>
+  </umius-modal>
 </ng-container>
 <!-- /modal for mails -->
 
 <!-- modal for warning : objective already assigned -->
 <ng-container *ngIf="!!canAccess(['edit', 'objective'])">
-  <app-utility-modal [(showModal)]="showWarningModal" [title]="'Objective Board'">
+  <umius-modal [(showModal)]="showWarningModal" [title]="'Objective Board'">
 
     <section class="modal-body">
       <p>{{ 'SHARED_FOLLOW_UP.MODAL.WARNING_1' | translate }}</p>
@@ -224,13 +224,13 @@
       </button>
     </footer>
 
-  </app-utility-modal>
+  </umius-modal>
 </ng-container>
 <!-- /modal for warning : objective already assigned -->
 
 <!-- modal for sending emails : are you sure ? -->
 <ng-container *ngIf="!!(showSendModal && canAccess(['workflow', 'send']))">
-  <app-utility-modal [(showModal)]="showSendModal">
+  <umius-modal [(showModal)]="showSendModal">
     <section class="modal-body p-top-30 p-bottom-30 p-left-50 p-right-50">
 
       <!-- heading -->
@@ -331,6 +331,6 @@
       <!-- /button -->
 
     </section>
-  </app-utility-modal>
+  </umius-modal>
 </ng-container>
 <!-- /modal for sending emails : are you sure ? -->
