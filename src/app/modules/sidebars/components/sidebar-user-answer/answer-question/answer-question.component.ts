@@ -87,20 +87,21 @@ export class AnswerQuestionComponent {
 
   public selectOption(event: Event, option: any) {
 
+    //TODO ENLEVR LE EDITMOD SUR L'APERÇU
+
     event.preventDefault();
-    //SI option.identifier
-    //SI l'option.identifier est différent de null ALORS renvoit option.identifier = null ou undefined
-   // let optionClick = this.fullAnswer.answers[this.question.identifier] = option.identifier;
-    let optionClick2 = this.fullAnswer.answers[this.question.identifier] = option.identifier = null;
-    console.log(optionClick2);
-   // console.log(optionClick);
-    console.log(option);
-   /* if (optionClick !== null) {
-        optionClick = null;
-    } else {
-      optionClick = optionClick
-    }*/
     this.emitChanges();
+
+    if (option.identifier === this.fullAnswer.answers[this.question.identifier]) {
+      console.table(this.fullAnswer.answers[this.question.identifier]);
+      console.table(option.identifier);
+      this.fullAnswer.answers[this.question.identifier] = true;
+
+    } else if (option.identifier !== this.fullAnswer.answers[this.question.identifier]){
+      console.table(this.fullAnswer.answers[this.question.identifier]);
+      console.table(option.identifier);
+      this.fullAnswer.answers[this.question.identifier] = option.identifier;
+    }
 
   }
 
