@@ -55,10 +55,10 @@
 
       <!-- /search bar -->
       <div *ngIf="isShowSearch">
-        <app-utility-search-input-2
+        <umius-search-input
           [searchPlaceholder]="'Search'"
           (searchFieldOutput)="onChangeCountrySearch($event)">
-        </app-utility-search-input-2>
+        </umius-search-input>
       </div>
       <!-- /search bar -->
 
