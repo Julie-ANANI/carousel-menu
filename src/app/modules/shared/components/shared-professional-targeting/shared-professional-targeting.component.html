@@ -79,11 +79,11 @@
         <div class="card-body">
           <!-- search jobs -->
           <section class="section-search" *ngIf="!isPreview">
-            <app-utility-search-input-2
-              [inputWidth]="{width: '100%'}"
+            <umius-search-input
+              [inputWidth]="'100%'"
               [searchPlaceholder]="'Type to search'"
               (searchFieldOutput)="onClickSearchJobs($event)">
-            </app-utility-search-input-2>
+            </umius-search-input>
           </section>
           <!-- /search jobs -->
 
