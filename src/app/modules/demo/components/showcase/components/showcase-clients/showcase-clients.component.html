@@ -40,8 +40,7 @@
 </section>
 
 <!-- modal to select clients -->
-<app-utility-modal [(showModal)]="modalShow" [maxWidth]="'840px'" [enableCloseButton]="true">
-
+<umius-modal maxWidth="840px" [(showModal)]="modalShow">
   <section class="modal-body">
     <div class="section-card columns text-center">
       <ng-container *ngFor="let client of totalClients">
@@ -65,6 +64,5 @@
     <button class="button modal-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
     <button (click)="onClickApply($event)" class="button is-primary">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
   </footer>
-
-</app-utility-modal>
+</umius-modal>
 <!-- /modal to select innovations -->

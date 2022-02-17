@@ -30,7 +30,7 @@
 
             <div class="m-top-25">
               <button (click)="modifyTag()" class="button is-rounded is-shadowed" type="button">
-                <i class="fas fa-pencil-alt m-no-left"></i>
+                <i class="fas fa-pencil-alt icon-left"></i>
                 {{ 'COMMON.BUTTON.CREATE' | translate }}
               </button>
             </div>
@@ -143,8 +143,7 @@
 
 
 <!-- modal to modify the tags -->
-<app-utility-modal [(showModal)]="modalShow" [maxWidth]="'840px'" [enableCloseButton]="true">
-
+<umius-modal maxWidth="840px" [(showModal)]="modalShow">
   <section class="modal-body">
 
     <h2 class="text text-draft m-no-bottom title-secondary p-right-1 text-medium p-bottom-1" [innerText]="'SHOWCASE.SECTORS_MODAL.TITLE'" translate></h2>
@@ -185,12 +184,11 @@
     <button class="button modal-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
     <button (click)="onClickApply($event)" class="button is-primary">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
   </footer>
-
-</app-utility-modal>
+</umius-modal>
 <!-- /modal to modify the tags -->
 
 <!-- sidebar for history -->
-<app-sidebar [(template)]="sidebarValue">
+<umius-sidebar-full [(template)]="sidebarValue">
   <app-sidebar-showcase-history
     [selectedAnswers]="selectedAnswers"
     [selectedClients]="selectedClients"
@@ -198,5 +196,5 @@
     [tagsStats]="selectedTagsStats"
     (displayShowcase)="displayCustomShowcase($event)">
   </app-sidebar-showcase-history>
-</app-sidebar>
+</umius-sidebar-full>
 <!-- /sidebar for history -->

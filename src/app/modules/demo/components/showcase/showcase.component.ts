@@ -8,11 +8,11 @@ import { Answer } from '../../../../models/answer';
 import { Clearbit } from '../../../../models/clearbit';
 import { Innovation } from '../../../../models/innovation';
 import { Showcase } from '../../../../models/showcase';
-import { SidebarInterface } from '../../../sidebars/interfaces/sidebar-interface';
 import { Tag } from '../../../../models/tag';
 import { TagStats } from '../../../../models/tag-stats';
 import { forkJoin } from 'rxjs';
 import {CommonService} from '../../../../services/common/common.service';
+import {UmiusSidebarInterface} from '@umius/umi-common-component';
 
 @Component({
   selector: 'app-showcase',
@@ -34,7 +34,7 @@ export class ShowcaseComponent implements OnInit {
 
   private _selectedTags: {[tagId: string]: boolean} = {};
 
-  private _sidebarValue: SidebarInterface = {
+  private _sidebarValue: UmiusSidebarInterface = {
     animate_state: 'inactive',
     title: 'SIDEBAR.TITLE.SHOWCASE_HISTORY',
     size: '726px'
@@ -236,11 +236,11 @@ export class ShowcaseComponent implements OnInit {
     return this._selectedTagsStats;
   }
 
-  get sidebarValue(): SidebarInterface {
+  get sidebarValue(): UmiusSidebarInterface {
     return this._sidebarValue;
   }
 
-  set sidebarValue(value: SidebarInterface) {
+  set sidebarValue(value: UmiusSidebarInterface) {
     this._sidebarValue = value;
   }
 

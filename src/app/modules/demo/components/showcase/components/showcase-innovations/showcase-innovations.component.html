@@ -57,8 +57,7 @@
 
 
 <!-- modal to select innovations -->
-<app-utility-modal [(showModal)]="modalShow" [maxWidth]="'960px'" [enableCloseButton]="true">
-
+<umius-modal maxWidth="960px" [(showModal)]="modalShow">
   <section class="modal-body">
     <div class="modal-card-wrapper d-flex text-center">
       <ng-container *ngFor="let innovationCard of cards">
@@ -84,11 +83,9 @@
     </div>
   </section>
 
-
   <footer class="modal-footer">
     <button class="button modal-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
     <button (click)="onClickApply($event)" class="button is-primary">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
   </footer>
-
-</app-utility-modal>
+</umius-modal>
 <!-- /modal to select innovations -->

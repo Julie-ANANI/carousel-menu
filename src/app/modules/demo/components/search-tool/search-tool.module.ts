@@ -7,11 +7,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { SearchToolComponent } from './search-tool.component';
 
-import { SidebarModule } from "../../../sidebars/templates/sidebar/sidebar.module";
 import { SidebarSearchToolModule } from "../../../sidebars/components/sidebar-search-tool/sidebar-search-tool.module";
 import { SearchInput3Module } from '../../../utility/search-inputs/search-template-3/search-input-3.module';
 import { SharedWorldmapModule } from '../../../shared/components/shared-worldmap/shared-worldmap.module';
-import { CountryFlagModule } from '@umius/umi-common-component/country-flag';
+import {CountryFlagModule, SidebarFullModule} from '@umius/umi-common-component';
 
 @NgModule({
   imports: [
@@ -21,11 +20,11 @@ import { CountryFlagModule } from '@umius/umi-common-component/country-flag';
     SearchToolRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    CountryFlagModule,
-    SidebarModule,
     SidebarSearchToolModule,
     SearchInput3Module,
-    SharedWorldmapModule
+    SharedWorldmapModule,
+    CountryFlagModule,
+    SidebarFullModule
   ],
   declarations: [
     SearchToolComponent
