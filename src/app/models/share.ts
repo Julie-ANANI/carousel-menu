@@ -1,5 +1,5 @@
 import { User } from './user.model';
-import { Media } from './media';
+import {UmiusMediaInterface} from '@umius/umi-common-component';
 
 export interface Share {
   shareKey?: string;
@@ -11,6 +11,6 @@ export interface Share {
   link: string;
   owner: User;
   sharedObjectId?: string;
-  media: Media;
+  media: UmiusMediaInterface;
   date: Date;
 }

@@ -2,8 +2,8 @@
  * not use anymore. Only for Old innovation with not mission templates value.
  */
 
-import { Multiling } from './multiling';
 import { Question } from './question';
+import {UmiusMultilingInterface} from '@umius/umi-common-component';
 
 export interface PresetSectionEntry {
   lang: string;
@@ -23,7 +23,7 @@ export interface PresetSection {
   /**
    * TODO remove this
    */
-  readonly label: Multiling;
+  readonly label: UmiusMultilingInterface;
 }
 
 export interface PresetRequirement {
