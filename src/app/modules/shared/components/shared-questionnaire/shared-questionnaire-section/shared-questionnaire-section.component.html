@@ -219,7 +219,7 @@
 </div>
 
 
-<app-utility-modal-empty *ngIf="isLibraryView && showModal" [(showModal)]="showModal" [maxWidth]="'840px'">
+<umius-modal *ngIf="isLibraryView && showModal" [(showModal)]="showModal" [maxWidth]="'840px'">
 
   <section class="modal-body">
 
@@ -323,11 +323,11 @@
     <ng-container *ngIf="questionToAdd.from === 'LIBRARY'">
       <div [ngStyle]="{'min-height': '180px'}" class="m-top-10 m-bottom-30">
         <div class="mxw-450 m-left-auto m-right-auto">
-          <app-utility-auto-suggestion
+          <umius-auto-suggestion
             (valueSelected)="questionSelected($event)"
             [config]="searchConfig"
             [isSmallInput]="true">
-          </app-utility-auto-suggestion>
+          </umius-auto-suggestion>
         </div>
         <div
           *ngFor="let value of questionToAdd.value"
@@ -364,4 +364,4 @@
 
   </footer>
 
-</app-utility-modal-empty>
+</umius-modal>
