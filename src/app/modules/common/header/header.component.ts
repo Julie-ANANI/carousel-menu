@@ -6,12 +6,12 @@ import { User } from '../../../models/user.model';
 import { TranslateService} from '../../../i18n/i18n';
 import { CookieService } from 'ngx-cookie';
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { SidebarInterface } from '../../sidebars/interfaces/sidebar-interface';
 import { UserFrontService } from '../../../services/user/user-front.service';
 import { Subject } from 'rxjs';
 import { RolesFrontService } from '../../../services/roles/roles-front.service';
 import { RouteFrontService } from '../../../services/route/route-front.service';
 import {takeUntil} from 'rxjs/operators';
+import {UmiusSidebarInterface} from '@umius/umi-common-component';
 
 interface Header {
   pageName: string;
@@ -68,7 +68,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   private _flag = this.currentLang === 'fr' ? 'FR' : 'US';
 
-  private _sidebarValues: SidebarInterface = {
+  private _sidebarValues: UmiusSidebarInterface = {
     animate_state: 'inactive'
   };
 
@@ -241,7 +241,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     return this._flag;
   }
 
-  get sidebarValues(): SidebarInterface {
+  get sidebarValues(): UmiusSidebarInterface {
     return this._sidebarValues;
   }
 
