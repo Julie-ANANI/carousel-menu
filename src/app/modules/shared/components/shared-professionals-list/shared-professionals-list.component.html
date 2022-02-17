@@ -13,7 +13,7 @@
 
 
 <!-- sidebar -->
-<app-sidebar [(template)]="sidebarValue">
+<umius-sidebar-full [(template)]="sidebarValue">
 
   <!-- professional -->
   <ng-container *ngIf="isProfessionalSidebar">
@@ -48,12 +48,12 @@
     </app-shared-targeting-world>
   </div>
 
-</app-sidebar>
+</umius-sidebar-full>
 <!-- /sidebar -->
 
 
 <!-- modal deletion-->
-<app-utility-modal
+<umius-modal
   *ngIf="canAccess(['user', 'delete'])"
   [(showModal)]="modalDelete"
   [title]="'Delete Board'">
@@ -83,11 +83,11 @@
     </button>
   </footer>
 
-</app-utility-modal>
+</umius-modal>
 <!-- /modal deletion-->
 
 <!-- modal-remove pro from campaign -->
-<app-utility-modal
+<umius-modal
   *ngIf="canAccess(['user', 'edit'])"
   [(showModal)]="isShowModal"
   [title]="'Remove Professional'">
@@ -108,5 +108,5 @@
     </button>
   </footer>
 
-</app-utility-modal>
+</umius-modal>
 <!-- /modal-remove pro from campaign  -->
