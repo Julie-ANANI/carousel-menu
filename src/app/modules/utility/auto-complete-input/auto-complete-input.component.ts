@@ -9,7 +9,7 @@ import {AutoCompleteInputConfigInterface} from './interfaces/auto-complete-input
 import {AnswerList} from './interfaces/auto-complete-input-answerlist-interface';
 import {AutoCompleteInputSuggestionInterface} from './interfaces/auto-complete-input-suggestion-interface';
 import {TranslateNotificationsService} from '../../../services/translate-notifications/translate-notifications.service';
-import {Enterprise} from '../../../models/enterprise';
+import {UmiusEnterpriseInterface} from '@umius/umi-common-component';
 
 @Component({
   moduleId: module.id,
@@ -227,7 +227,7 @@ export class AutoCompleteInputComponent implements OnInit {
     return `${answer[this.identifier]} ${!!this._domain && !!answer.domain ? '(' + answer.domain + ')' : ''}`;
   };
 
-  selectedCompany(c: string | Enterprise | any) {
+  selectedCompany(c: string | UmiusEnterpriseInterface | any) {
     if (typeof c === 'object' && this.isEditable) {
       if (this.onlyOne) {
         this._answerList = [c];
