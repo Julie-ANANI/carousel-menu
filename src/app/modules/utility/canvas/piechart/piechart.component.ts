@@ -3,9 +3,9 @@ import {isPlatformBrowser} from '@angular/common';
 import {TranslateService} from '@ngx-translate/core';
 import {PieChart} from '../../../../models/chart/pie-chart';
 import {BaseChartDirective} from 'ng2-charts';
-import {Multiling} from '../../../../models/multiling';
 import {Picto, picto} from '../../../../models/static-data/picto';
 import {oldColorsToNewMapping} from '../../../../utils/chartColors';
+import {UmiusMultilingInterface} from '@umius/umi-common-component';
 
 @Component({
   selector: 'app-utility-piechart',
@@ -24,7 +24,7 @@ export class PiechartComponent {
     this._loadData();
   }
 
-  @Input() favorableAnswersLabel: Multiling;
+  @Input() favorableAnswersLabel: UmiusMultilingInterface;
 
   @Input() positiveSections: boolean[];
 
@@ -36,7 +36,7 @@ export class PiechartComponent {
 
   @Output() chartSectionPositiveChanged = new EventEmitter<{index: number, positive: boolean}>();
 
-  @Output() positiveLabelChanged = new EventEmitter<Multiling>();
+  @Output() positiveLabelChanged = new EventEmitter<UmiusMultilingInterface>();
 
   private _pieChart: PieChart = <PieChart>{};
 
