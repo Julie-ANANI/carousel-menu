@@ -58,20 +58,28 @@
 
       <!-- name -->
       <div class="m-right-10">
+        <!--default mode -->
         <label>
-          <!--<div class="falsePlaceholder"
+          <div class="falsePlaceholder"
                (change)="emitChanges()">
             {{('ADMIN_EXECUTIVE_REPORT.LIKERT-SCALE_SECTION.' + content.name) | uppercase| translate | titlecase }}
-          </div>-->
+          </div>
+        </label>
+        <!--end default mode -->
+
+        <!--edit custom mode -->
+        <label>
           <input
             (change)="emitChanges()"
-            (keyup)="textColor('name')"
+            (keyup)="textColor('name');"
             [(ngModel)]="content.name"
-            [attr.placeholder]="'ADMIN_EXECUTIVE_REPORT.LIKERT-SCALE_SECTION.' + (content.name) | uppercase | translate"
-            maxlength="13"
+            [attr.placeholder]="('ADMIN_EXECUTIVE_REPORT.LIKERT-SCALE_SECTION.' + content.name + '_ELEMENT') | uppercase| translate | titlecase"
+            maxlength="20"
             class="form-input"
             type="text">
         </label>
+        <!--end custom mode-->
+
       </div>
       <!-- /name -->
 
@@ -97,7 +105,8 @@
 
       <!-- color -->
       <div class="popover">
-        <div [ngStyle]="{ 'background-color': content.color }" class="shape is-circled is-sm"></div>
+        <div
+          [ngStyle]="{ 'background-color': content.color }" class="shape is-circled is-sm"></div>
         <div class="popover-container">
           <div class="card-likert"
                (change)="emitChanges()">
@@ -130,12 +139,27 @@
         <ng-container *ngIf="content.legend">{{ content.legend }}</ng-container>
       </p>
 
+      <!--mode default-->
       <div style="min-height: 30px">
         <div
           [ngStyle]="{ 'background-color': content.color }" class="label is-rounded">
-          {{'ADMIN_EXECUTIVE_REPORT.LIKERT-SCALE_SECTION' + (content.name) | uppercase | translate}}
+          {{('ADMIN_EXECUTIVE_REPORT.LIKERT-SCALE_SECTION.' + content.name) | uppercase| translate}}
         </div>
       </div>
+      <!--end mode default -->
+
+      <!--mode custom -->
+      <div style="min-height: 30px">
+        <div
+          [ngStyle]="{ 'background-color': content.color }" class="label is-rounded">
+          {{('ADMIN_EXECUTIVE_REPORT.LIKERT-SCALE_SECTION.' + content.name + '_ELEMENT') | uppercase| translate | titlecase}}
+        </div>
+      </div>
+      <!--end mode custom -->
+
+
+
+
 
     </div>
 

@@ -9,7 +9,7 @@ import {Subject} from 'rxjs';
 import _ from 'lodash';
 import {MissionQuestionService} from '../../../../../../services/mission/mission-question.service';
 import {SectionLikertScale} from '../../../../../../models/executive-report';
-import colorsAndNamesAndPercentage from '../../../../../../../../assets/json/likert-scale_executive-report.json';
+import colorsAndNames from '../../../../../../../../assets/json/likert-scale_executive-report.json';
 
 
 @Component({
@@ -27,9 +27,10 @@ export class LikertScaleChartComponent implements OnInit, OnDestroy {
   @Input() question: Question = <Question>{};
   @Input() reportingLang = this._translateService.currentLang;
 
+
   private _ngUnsubscribe: Subject<any> = new Subject<any>();
   private _label: any = 'VALIDATED'
-  private _colorsAndNames = colorsAndNamesAndPercentage;
+  private _colorsAndNames = colorsAndNames;
   private _scorePercentage: number = 0;
 
   //Retrieves unmodifiable names and colours in a JSON file
