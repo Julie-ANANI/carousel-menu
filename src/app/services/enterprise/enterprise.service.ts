@@ -38,7 +38,7 @@ export class EnterpriseService {
   }
 
   public updateLogo(enterpriseId: string, logo: any): Observable<Enterprise> {
-    return this._http.post<Enterprise>(`/enterprise/${enterpriseId}/updateLogo`, {logo: logo});
+    return this._http.post<Enterprise>(`/enterprise/${enterpriseId}/logo`, {logo: logo});
   }
 
   public remove(enterpriseId: string): Observable<any> {

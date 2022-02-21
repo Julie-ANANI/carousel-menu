@@ -145,10 +145,6 @@ export class ProfessionalsService {
     return this._http.post('/professional/ambassador/upload', formData);
   }
 
-  public cleanPros(): Observable<any> {
-    return this._http.get(`/professional/update/database`);
-  }
-
   public isShielded(id: string): Observable<any> {
     return this._http.get(`/shield/?professional=${id}&fields=email`);
   }
