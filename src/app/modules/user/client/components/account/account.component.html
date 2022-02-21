@@ -248,14 +248,14 @@
 
 
 <!-- change password sidebar -->
-<app-sidebar [(template)]="sidebarValue">
+<umius-sidebar-full [(template)]="sidebarValue">
   <app-user-change-password [sidebarState]="sidebarValue.animate_state" (passwordUpdate)="updatePassword($event)"></app-user-change-password>
-</app-sidebar>
+</umius-sidebar-full>
 <!-- /change password sidebar -->
 
 
 <!-- modal to delete account -->
-<app-utility-modal [(showModal)]="modalDelete" [title]="'COMMON.MODAL.TITLE_DELETE'">
+<umius-modal [(showModal)]="modalDelete" [title]="'COMMON.MODAL.TITLE_DELETE'">
   {{ 'MY_ACCOUNT.DELETE_MODAL.TITLE' | translate }}
   <br><br>
   {{ 'MY_ACCOUNT.DELETE_MODAL.CONTENT' | translate }}
@@ -263,7 +263,7 @@
     <button class="button is-sm modal-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
     <button class="button is-sm" (click)="onClickSubmit($event)">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
   </div>
-</app-utility-modal>
+</umius-modal>
 <!-- /modal to delete account -->
 
 

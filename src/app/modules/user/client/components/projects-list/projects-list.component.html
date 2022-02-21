@@ -76,11 +76,11 @@
 
       <!-- pagination if projects -->
       <section *ngIf="total > 10" class="flex-centered p-top-30">
-        <app-pagination-2
+        <umius-pagination-template1
           [(pagination)]="pagination"
           [totalCount]="total"
           class="w-full">
-        </app-pagination-2>
+        </umius-pagination-template1>
       </section>
       <!-- /pagination if projects -->
 
@@ -89,7 +89,7 @@
 </div>
 
 <!-- delete project confirmation modal -->
-<app-utility-modal [(showModal)]="deleteModal" [title]="'COMMON.MODAL.TITLE_DELETE'">
+<umius-modal [(showModal)]="deleteModal" [title]="'COMMON.MODAL.TITLE_DELETE'">
 
   <section class="modal-body">
     {{ 'PROJECT_MODULE.PROJECTS_LIST.DELETE_PROJECT_MODAL.CONTENT' | translate }}
@@ -104,5 +104,5 @@
     </button>
   </footer>
 
-</app-utility-modal>
+</umius-modal>
 <!-- /delete project confirmation modal -->

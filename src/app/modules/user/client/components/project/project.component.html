@@ -102,13 +102,13 @@
 
 <!-- modal methodology -->
 <ng-container *ngIf="!fetchingError && !!mission.template">
-  <app-utility-modal-empty [maxWidth]="'1024px'" [(showModal)]="openModal">
+  <umius-modal [maxWidth]="'1024px'" [(showModal)]="openModal">
     <section class="modal-body p-no br-6">
       <app-market-test-methodology
         [methodology]="mission.template.methodology"
         [title]="objectiveName">
       </app-market-test-methodology>
     </section>
-  </app-utility-modal-empty>
+  </umius-modal>
 </ng-container>
 <!-- /modal methodology -->

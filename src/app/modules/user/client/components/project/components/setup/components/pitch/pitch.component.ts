@@ -12,12 +12,10 @@ import {
 } from '../../../../../../../../../models/mission';
 import {Subject} from 'rxjs';
 import {CardComment, CardSectionTypes, InnovCard, InnovCardSection} from '../../../../../../../../../models/innov-card';
-import {SidebarInterface} from '../../../../../../../../sidebars/interfaces/sidebar-interface';
 import {InnovationService} from '../../../../../../../../../services/innovation/innovation.service';
 import {HttpErrorResponse} from '@angular/common/http';
 import {TranslateNotificationsService} from '../../../../../../../../../services/translate-notifications/translate-notifications.service';
 import {ErrorFrontService} from '../../../../../../../../../services/error/error-front.service';
-import {Media, Video} from '../../../../../../../../../models/media';
 import {Preset} from '../../../../../../../../../models/preset';
 import {MissionService} from '../../../../../../../../../services/mission/mission.service';
 import {CollaborativeComment} from '../../../../../../../../../models/collaborative-comment';
@@ -27,6 +25,7 @@ import {EtherpadService} from '../../../../../../../../../services/etherpad/ethe
 import {MediaFrontService} from '../../../../../../../../../services/media/media-front.service';
 import {MissionQuestionService} from '../../../../../../../../../services/mission/mission-question.service';
 import {TranslateService} from '@ngx-translate/core';
+import {UmiusMediaInterface, UmiusSidebarInterface, UmiusVideoInterface} from '@umius/umi-common-component';
 
 @Component({
   templateUrl: './pitch.component.html',
@@ -42,7 +41,7 @@ export class PitchComponent implements OnInit, OnDestroy {
   private _isUploadingVideo = false;
   private _innovation: Innovation = <Innovation>{};
   private _activeSectionIndex = 0;
-  private _sidebarValue: SidebarInterface = {
+  private _sidebarValue: UmiusSidebarInterface = {
     animate_state: 'inactive'
   };
   private _isSaving = false;
@@ -186,7 +185,7 @@ export class PitchComponent implements OnInit, OnDestroy {
       });
   }
 
-  public mediaSrc(media: Media) {
+  public mediaSrc(media: UmiusMediaInterface) {
     return MediaFrontService.getMedia(media);
   }
 
@@ -468,7 +467,7 @@ export class PitchComponent implements OnInit, OnDestroy {
     this._isSendingMessage = false;
   }
 
-  private _uploadVideo(video: Video) {
+  private _uploadVideo(video: UmiusVideoInterface) {
     this._isUploadingVideo = true;
     this._innovationService.addNewMediaVideoToInnovationCard(this._innovation._id, this.activeInnovCard._id, video)
       .pipe(first())
@@ -494,7 +493,7 @@ export class PitchComponent implements OnInit, OnDestroy {
       });
   }
 
-  private _setMainMedia(media: Media) {
+  private _setMainMedia(media: UmiusMediaInterface) {
     this._innovationService.setPrincipalMediaOfInnovationCard(this._innovation._id, this.activeInnovCard._id, media._id)
       .pipe(first()).subscribe(() => {
       this.activeInnovCard.principalMedia = media;
@@ -507,7 +506,7 @@ export class PitchComponent implements OnInit, OnDestroy {
     });
   }
 
-  private _deleteMedia(media: Media) {
+  private _deleteMedia(media: UmiusMediaInterface) {
     this._innovationService.deleteMediaOfInnovationCard(this._innovation._id, this.activeInnovCard._id, media._id)
       .pipe(first())
       .subscribe(() => {
@@ -528,7 +527,7 @@ export class PitchComponent implements OnInit, OnDestroy {
    * available then set principal media null
    * @private
    */
-  private _verifyPrincipal(deleteMedia: Media) {
+  private _verifyPrincipal(deleteMedia: UmiusMediaInterface) {
     if (this.activeInnovCard.media.length === 0 && this.activeInnovCard.principalMedia && this.activeInnovCard.principalMedia._id) {
       this._innovation.innovationCards[this._activeCardIndex].principalMedia = null;
       this._innovationFrontService.setInnovation(this._innovation);
@@ -616,11 +615,11 @@ export class PitchComponent implements OnInit, OnDestroy {
     return this._innovation;
   }
 
-  get sidebarValue(): SidebarInterface {
+  get sidebarValue(): UmiusSidebarInterface {
     return this._sidebarValue;
   }
 
-  set sidebarValue(value: SidebarInterface) {
+  set sidebarValue(value: UmiusSidebarInterface) {
     if (!this._toBeSaved) {
       this._sidebarValue = value;
       if (this._sidebarValue.animate_state === 'inactive') {

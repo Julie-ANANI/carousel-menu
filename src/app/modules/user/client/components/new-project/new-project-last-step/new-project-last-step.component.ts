@@ -5,6 +5,7 @@ import {Consent} from '../../../../../../models/consent';
 import {DOCUMENT} from '@angular/common';
 import {PageScrollService} from 'ngx-page-scroll-core';
 import * as moment from 'moment';
+import {UmiusTextInputPlaceholder} from '@umius/umi-common-component';
 
 @Component({
   selector: 'app-new-project-last-step',
@@ -12,6 +13,9 @@ import * as moment from 'moment';
   styleUrls: ['./new-project-last-step.component.scss']
 })
 export class NewProjectLastStepComponent {
+  get textInputPlaceholder(): UmiusTextInputPlaceholder {
+    return this._textInputPlaceholder;
+  }
 
   /**
    * @param value
@@ -93,6 +97,10 @@ export class NewProjectLastStepComponent {
   private _disabledDate = moment().add(-1, 'days').format('YYYY-MM-DD');
 
   private _isRestitutionDateSelected = false;
+
+  private _textInputPlaceholder: UmiusTextInputPlaceholder = {
+    input: 'jhon@catco.com'
+  }
 
   constructor(@Inject(DOCUMENT) private _document: Document,
               private _translateService: TranslateService,
