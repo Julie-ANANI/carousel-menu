@@ -5,23 +5,20 @@ import { RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { AdminMissionsListComponent } from './admin-missions-list.component';
 import { MissionService } from '../../../../../services/mission/mission.service';
-import { ModalModule } from '../../../../utility/modals/modal/modal.module';
-import { SidebarModule } from '../../../../sidebars/templates/sidebar/sidebar.module';
 import { MissionFormModule } from '../../../../sidebars/components/mission-form/mission-form.module';
-import { TableComponentsModule } from '@umius/umi-common-component/table';
+import {ModalModule, SidebarFullModule, TableModule} from '@umius/umi-common-component';
 @NgModule({
-    imports: [
-        CommonModule,
-        ReactiveFormsModule,
-        FormsModule,
-        RouterModule,
-
-        TranslateModule.forChild(),
-        ModalModule,
-        SidebarModule,
-        MissionFormModule,
-        TableComponentsModule
-    ],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    FormsModule,
+    RouterModule,
+    TranslateModule.forChild(),
+    MissionFormModule,
+    TableModule,
+    ModalModule,
+    SidebarFullModule,
+  ],
   declarations: [
     AdminMissionsListComponent
   ],

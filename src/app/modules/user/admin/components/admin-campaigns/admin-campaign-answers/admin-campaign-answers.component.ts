@@ -5,19 +5,18 @@ import { CampaignService } from '../../../../../../services/campaign/campaign.se
 import { TranslateNotificationsService } from '../../../../../../services/translate-notifications/translate-notifications.service';
 import { Answer, AnswerStatus } from '../../../../../../models/answer';
 import { Campaign } from '../../../../../../models/campaign';
-import { SidebarInterface } from '../../../../../sidebars/interfaces/sidebar-interface';
 import { CampaignFrontService } from '../../../../../../services/campaign/campaign-front.service';
-import { Config, Table } from '@umius/umi-common-component/models';
 import { Response } from '../../../../../../models/response';
 import { isPlatformBrowser } from '@angular/common';
 import { first } from 'rxjs/operators';
-import {ConfigService} from '@umius/umi-common-component/services/config';import { Company } from '../../../../../../models/company';
 import { ErrorFrontService } from '../../../../../../services/error/error-front.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { QuizService } from '../../../../../../services/quiz/quiz.service';
 import { RolesFrontService } from '../../../../../../services/roles/roles-front.service';
 import { StatsInterface } from '../../../../../../models/stats';
 import {InnovationFrontService} from '../../../../../../services/innovation/innovation-front.service';
+import {Table, UmiusConfigInterface, UmiusConfigService, UmiusSidebarInterface} from '@umius/umi-common-component';
+import {UmiusCompanyInterface} from '@umius/umi-common-component/models/company';
 
 @Component({
   templateUrl: './admin-campaign-answers.component.html',
@@ -25,7 +24,7 @@ import {InnovationFrontService} from '../../../../../../services/innovation/inno
 
 export class AdminCampaignAnswersComponent implements OnInit {
 
-  private _localConfig: Config = {
+  private _localConfig: UmiusConfigInterface = {
     fields: '',
     limit: this._configService.configLimit('admin-campaign-answers-limit'),
     offset: '0',
@@ -43,13 +42,13 @@ export class AdminCampaignAnswersComponent implements OnInit {
 
   private _adminMode = false;
 
-  private _sidebarValue: SidebarInterface = <SidebarInterface>{};
+  private _sidebarValue: UmiusSidebarInterface = <UmiusSidebarInterface>{};
 
   private _modalAnswer: Answer = <Answer>{};
 
   private _questions: Array<any> = [];
 
-  private _excludedCompanies: Array<Company> = [];
+  private _excludedCompanies: Array<UmiusCompanyInterface> = [];
 
   private _isImportingAnswers = false;
 
@@ -61,7 +60,7 @@ export class AdminCampaignAnswersComponent implements OnInit {
               private _answerService: AnswerService,
               private _rolesFrontService: RolesFrontService,
               private _translateNotificationsService: TranslateNotificationsService,
-              private _configService: ConfigService) { }
+              private _configService: UmiusConfigService) { }
 
   ngOnInit() {
     if (this._activatedRoute.snapshot.parent.data['campaign']
@@ -151,7 +150,7 @@ export class AdminCampaignAnswersComponent implements OnInit {
       _isTitle: true,
       _isLocal: true,
       _isNoMinHeight: this._totalAnswers < 11,
-      _buttons: [
+      _actions: [
         {_label: 'Validate', _icon: 'fas fa-check', _isHidden: !this.canAccess(['validate'])},
         {_label: 'Reject', _icon: 'fas fa-times', _isHidden: !this.canAccess(['reject'])}
         ],
@@ -284,11 +283,11 @@ export class AdminCampaignAnswersComponent implements OnInit {
       ];
   }
 
-  get localConfig(): Config {
+  get localConfig(): UmiusConfigInterface {
     return this._localConfig;
   }
 
-  set localConfig(value: Config) {
+  set localConfig(value: UmiusConfigInterface) {
     this._localConfig = value;
     this._getAnswers();
   }
@@ -313,11 +312,11 @@ export class AdminCampaignAnswersComponent implements OnInit {
     return this._totalAnswers;
   }
 
-  get sidebarValue(): SidebarInterface {
+  get sidebarValue(): UmiusSidebarInterface {
     return this._sidebarValue;
   }
 
-  set sidebarValue(value: SidebarInterface) {
+  set sidebarValue(value: UmiusSidebarInterface) {
     this._sidebarValue = value;
   }
 
@@ -333,7 +332,7 @@ export class AdminCampaignAnswersComponent implements OnInit {
     return this._questions;
   }
 
-  get excludedCompanies(): Array<Company> {
+  get excludedCompanies(): Array<UmiusCompanyInterface> {
     return this._excludedCompanies;
   }
 

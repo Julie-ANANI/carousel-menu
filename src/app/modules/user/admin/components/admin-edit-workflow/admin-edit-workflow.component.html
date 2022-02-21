@@ -76,7 +76,7 @@
 
 
 <!-- modal to delete the scenario -->
-<app-utility-modal *ngIf="isDeletable" [(showModal)]="modalDelete" [title]="'Delete Board'">
+<umius-modal *ngIf="isDeletable" [(showModal)]="modalDelete" [title]="'Delete Board'">
 
   <section class="modal-body">
     Do you really want to delete this workflow? This action is irreversible.
@@ -92,12 +92,12 @@
     </button>
   </footer>
 
-</app-utility-modal>
+</umius-modal>
 <!-- /modal to delete the scenario -->
 
 
 <!-- sidebar to edit / view workflow -->
-<app-sidebar [(template)]="sidebar">
+<umius-sidebar-full [(template)]="sidebar">
   <app-sidebar-workflow
     (emailChange)="updateEmail($event)"
     [emailsObject]="emailToEdit"
@@ -106,5 +106,5 @@
     [innovationCardLanguages]="innovationCardLanguages"
     [isEditable]="isEditable">
   </app-sidebar-workflow>
-</app-sidebar>
+</umius-sidebar-full>
 <!-- /sidebar to edit / view workflow -->

@@ -4,18 +4,17 @@ import {Campaign, ProsStats} from '../../../../../../models/campaign';
 import { ProfessionalsService } from '../../../../../../services/professionals/professionals.service';
 import { TranslateNotificationsService } from '../../../../../../services/translate-notifications/translate-notifications.service';
 import { first } from 'rxjs/operators';
-import { SidebarInterface } from '../../../../../sidebars/interfaces/sidebar-interface';
 import { isPlatformBrowser } from '@angular/common';
 import { Professional } from '../../../../../../models/professional';
-import { Config } from '@umius/umi-common-component/models';
 import { Response } from '../../../../../../models/response';
-import {ConfigService} from '@umius/umi-common-component/services/config';import { RolesFrontService } from '../../../../../../services/roles/roles-front.service';
+import { RolesFrontService } from '../../../../../../services/roles/roles-front.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorFrontService } from '../../../../../../services/error/error-front.service';
 import { StatsInterface } from '../../../../../../models/stats';
 import { CampaignFrontService } from '../../../../../../services/campaign/campaign-front.service';
 import { Bytes2Human } from '../../../../../../utils/bytes2human';
 import {CampaignService} from "../../../../../../services/campaign/campaign.service";
+import {UmiusConfigInterface, UmiusConfigService, UmiusSidebarInterface} from '@umius/umi-common-component';
 
 export interface SelectedProfessional extends Professional {
   isSelected: boolean;
@@ -29,9 +28,8 @@ const SIZE_LIMIT = 10 * 1024 * 1024; // 10 mb
   styleUrls: ['./admin-campaign-pros.component.scss'],
 })
 export class AdminCampaignProsComponent implements OnInit {
-  private _config: Config = {
-    fields:
-      'language firstName lastName companyOriginalName email emailConfidence country jobTitle personId messages campaigns',
+  private _config: UmiusConfigInterface = {
+    fields: 'language firstName lastName companyOriginalName email emailConfidence country jobTitle personId messages campaigns',
     limit: this._configService.configLimit('admin-campaign-pros-limit'),
     offset: '0',
     search: '{}',
@@ -58,7 +56,7 @@ export class AdminCampaignProsComponent implements OnInit {
 
   private _originCampaign: Array<Campaign> = [];
 
-  private _sidebarValue: SidebarInterface = <SidebarInterface>{};
+  private _sidebarValue: UmiusSidebarInterface = <UmiusSidebarInterface>{};
 
   private _newPro: Professional = {
     firstName: '',
@@ -101,7 +99,7 @@ export class AdminCampaignProsComponent implements OnInit {
     private _campaignService: CampaignService,
     private _translateNotificationsService: TranslateNotificationsService,
     private _professionalsService: ProfessionalsService,
-    private _configService: ConfigService
+    private _configService: UmiusConfigService
   ) {}
 
   ngOnInit() {
@@ -471,11 +469,11 @@ export class AdminCampaignProsComponent implements OnInit {
     this._contextSelectedPros = value.pros;
   }
 
-  get config(): Config {
+  get config(): UmiusConfigInterface {
     return this._config;
   }
 
-  set config(value: Config) {
+  set config(value: UmiusConfigInterface) {
     this._config = value;
     this._getProfessionals();
   }
@@ -536,11 +534,11 @@ export class AdminCampaignProsComponent implements OnInit {
     return this._originCampaign;
   }
 
-  get sidebarValue(): SidebarInterface {
+  get sidebarValue(): UmiusSidebarInterface {
     return this._sidebarValue;
   }
 
-  set sidebarValue(value: SidebarInterface) {
+  set sidebarValue(value: UmiusSidebarInterface) {
     this._sidebarValue = value;
   }
 

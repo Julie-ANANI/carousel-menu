@@ -1,9 +1,8 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { EmailScenario } from '../../../../../models/email-scenario';
 import { EmailTemplate } from '../../../../../models/email-template';
-import { SidebarInterface } from '../../../../sidebars/interfaces/sidebar-interface';
 import { EmailSignature } from '../../../../../models/email-signature';
-import { Config, Column, Table } from '@umius/umi-common-component/models';
+import {Column, Table, UmiusConfigInterface, UmiusSidebarInterface} from '@umius/umi-common-component';
 
 @Component({
   selector: 'app-admin-edit-workflow',
@@ -68,13 +67,13 @@ export class AdminEditWorkflowComponent {
 
   private _emailToEdit: any;
 
-  private _sidebar: SidebarInterface = <SidebarInterface>{};
+  private _sidebar: UmiusSidebarInterface = <UmiusSidebarInterface>{};
 
   private _tableInfos: Table = <Table>{};
 
   private _campaignScenario: EmailScenario = <EmailScenario>{};
 
-  private _localConfig: Config = {
+  private _localConfig: UmiusConfigInterface = {
     fields: '',
     limit: '10',
     offset: '0',
@@ -217,11 +216,11 @@ export class AdminEditWorkflowComponent {
     return this._emailToEdit;
   }
 
-  set sidebar(value: SidebarInterface) {
+  set sidebar(value: UmiusSidebarInterface) {
     this._sidebar = value;
   }
 
-  get sidebar(): SidebarInterface {
+  get sidebar(): UmiusSidebarInterface {
     return this._sidebar;
   }
 
@@ -253,11 +252,11 @@ export class AdminEditWorkflowComponent {
     return this._campaignScenario;
   }
 
-  get localConfig(): Config {
+  get localConfig(): UmiusConfigInterface {
     return this._localConfig;
   }
 
-  set localConfig(value: Config) {
+  set localConfig(value: UmiusConfigInterface) {
     this._localConfig = value;
   }
 

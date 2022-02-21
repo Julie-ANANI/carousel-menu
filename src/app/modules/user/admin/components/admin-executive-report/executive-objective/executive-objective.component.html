@@ -211,12 +211,12 @@
 </div>
 
 <!-- to upload logo -->
-<app-utility-modal [(showModal)]="showUploadModal">
+<umius-modal [(showModal)]="showUploadModal">
   <section class="modal-body">
     <app-shared-upload-zone-photo
       [uri]="'/media/companyLogo'"
       (cbFn)="uploadImage($event)">
     </app-shared-upload-zone-photo>
   </section>
-</app-utility-modal>
+</umius-modal>
 <!-- /to upload logo -->

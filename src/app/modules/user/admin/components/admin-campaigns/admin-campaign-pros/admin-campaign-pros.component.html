@@ -93,19 +93,19 @@
 
 
 <!-- sidebar -->
-<app-sidebar *ngIf="canAccess(['user', 'add'])" [(template)]="sidebarValue">
+<umius-sidebar-full *ngIf="canAccess(['user', 'add'])" [(template)]="sidebarValue">
   <app-user-form
     (finalProfessionalData)="onClickSave($event)"
     [isEditable]="true"
     [sidebarState]="sidebarValue.animate_state"
     [type]="sidebarValue.type">
   </app-user-form>
-</app-sidebar>
+</umius-sidebar-full>
 <!-- /sidebar -->
 
 
 <!-- modal to export -->
-<app-utility-modal *ngIf="canAccess(['export'])" [(showModal)]="modalExport" [title]="'Export Board'">
+<umius-modal *ngIf="canAccess(['export'])" [(showModal)]="modalExport" [title]="'Export Board'">
 
   <section class="modal-body">
 
@@ -142,12 +142,12 @@
     </button>
   </footer>
 
-</app-utility-modal>
+</umius-modal>
 <!-- /modal to export -->
 
 
 <!-- modal to import -->
-<app-utility-modal *ngIf="canAccess(['import'])" [(showModal)]="modalImport" [title]="'Import Board'">
+<umius-modal *ngIf="canAccess(['import'])" [(showModal)]="modalImport" [title]="'Import Board'">
 
   <section class="modal-body">
 
@@ -203,12 +203,12 @@
     </div>
   </footer>
 
-</app-utility-modal>
+</umius-modal>
 <!-- /modal to import -->
 
 
 <!-- modal to update email confidence -->
-<app-utility-modal *ngIf="canAccess(['updateConfidence'])" [(showModal)]="modalUpdate" [title]="'Update Email Confidence'">
+<umius-modal *ngIf="canAccess(['updateConfidence'])" [(showModal)]="modalUpdate" [title]="'Update Email Confidence'">
 
   <section class="modal-body">
 
@@ -259,7 +259,7 @@
     </div>
   </footer>
 
-</app-utility-modal>
+</umius-modal>
 <!-- /modal to import -->
 
 

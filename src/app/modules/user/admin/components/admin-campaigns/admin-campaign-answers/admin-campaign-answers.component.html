@@ -103,7 +103,7 @@
 
 
 <!-- sidebar insight preview -->
-<app-sidebar
+<umius-sidebar-full
   *ngIf="answers.length > 0 && (canAccess(['view']) || canAccess(['edit']))"
   [(template)]="sidebarValue">
   <app-sidebar-user-answer
@@ -115,5 +115,5 @@
     [innovationCards]="campaign.innovation.innovationCards"
     [userAnswer]="modalAnswer">
   </app-sidebar-user-answer>
-</app-sidebar>
+</umius-sidebar-full>
 <!-- /sidebar insight preview -->
