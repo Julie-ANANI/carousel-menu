@@ -179,14 +179,7 @@ export class SearchService {
     };
     return this._http.get('/search/get', {params: query});
   }
-/*
-  public updateDatabase() {
-    const query = {
-      path: `/request/update/database`,
-    };
-    return this._http.get('/search/get', {params: query});
-  }
-  */
+
   public loadRequestIndex(): Observable<any> {
     const query = {
       path: '/index/create'
