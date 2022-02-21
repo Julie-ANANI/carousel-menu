@@ -33,7 +33,6 @@ import { Response } from '../../../../../../models/response';
 import { ClientProjectService } from '../../../../../../services/client-project/client-project.service';
 import { environment } from '../../../../../../../environments/environment';
 import { CommonService } from '../../../../../../services/common/common.service';
-import { SidebarInterface } from '../../../../../sidebars/interfaces/sidebar-interface';
 import { Tag } from '../../../../../../models/tag';
 import { TranslateService } from '@ngx-translate/core';
 import { domainRegEx, emailRegEx } from '../../../../../../utils/regex';
@@ -46,6 +45,7 @@ import { Blacklist, BlacklistDomain } from '../../../../../../models/blacklist';
 import { AnswerService } from '../../../../../../services/answer/answer.service';
 import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import {UmiusSidebarInterface} from '@umius/umi-common-component';
 
 export interface UserSuggestion {
   name: string;
@@ -95,7 +95,7 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
 
   private _quizUrlCopied = false;
 
-  private _sidebarValue: SidebarInterface = <SidebarInterface>{};
+  private _sidebarValue: UmiusSidebarInterface = <UmiusSidebarInterface>{};
 
   private _dateFormat = this.currentLang === 'en' ? 'y/MM/dd' : 'dd/MM/y';
 
@@ -1020,11 +1020,11 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
     return this._quizUrlCopied;
   }
 
-  get sidebarValue(): SidebarInterface {
+  get sidebarValue(): UmiusSidebarInterface {
     return this._sidebarValue;
   }
 
-  set sidebarValue(value: SidebarInterface) {
+  set sidebarValue(value: UmiusSidebarInterface) {
     this._sidebarValue = value;
   }
 

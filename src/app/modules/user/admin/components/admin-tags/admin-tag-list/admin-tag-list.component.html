@@ -4,15 +4,15 @@
     <app-admin-tag-new></app-admin-tag-new>
 </div>
 
-<table class="table pros" wt-responsive-table>
+<table class="table pros">
     <thead>
     <tr>
         <th></th>
-        <th><app-shared-sort [(sortConfig)]="sortConfig" [property]="'label'">Label</app-shared-sort></th>
-        <th><app-shared-sort [(sortConfig)]="sortConfig" [property]="'description'">Description</app-shared-sort></th>
-        <th><app-shared-sort [(sortConfig)]="sortConfig" [property]="'type'">Type</app-shared-sort></th>
-        <th><app-shared-sort [(sortConfig)]="sortConfig" [property]="'attachments'" >Attachments</app-shared-sort></th>
-        <th><app-shared-sort [(sortConfig)]="sortConfig" [property]="'created'" >Created</app-shared-sort></th>
+        <th><umius-sort [(sortConfig)]="sortConfig" [property]="'label'">Label</umius-sort></th>
+        <th><umius-sort [(sortConfig)]="sortConfig" [property]="'description'">Description</umius-sort></th>
+        <th><umius-sort [(sortConfig)]="sortConfig" [property]="'type'">Type</umius-sort></th>
+        <th><umius-sort [(sortConfig)]="sortConfig" [property]="'attachments'" >Attachments</umius-sort></th>
+        <th><umius-sort [(sortConfig)]="sortConfig" [property]="'created'" >Created</umius-sort></th>
         <th>{{ 'CAMPAIGNS.ACTIONS' | translate }}</th>
     </tr>
     </thead>
@@ -74,12 +74,11 @@
     <tfoot>
     <tr>
         <td colspan="12">
-            <app-pagination
-              [configValue]="paginationConfig"
-              (configChange)="configChange($event)"
-              [total]="total"
-              [propertyName]="'admin-tags'">
-            </app-pagination>
+            <umius-pagination-template1
+              [totalCount]="total"
+              [pagination]="paginationConfig"
+              (paginationChange)="configChange($event)">
+            </umius-pagination-template1>
         </td>
     </tr>
     </tfoot>

@@ -11,22 +11,20 @@ import { isPlatformBrowser } from '@angular/common';
 import { first, takeUntil } from 'rxjs/operators';
 import { InnovationFrontService } from '../../../../../../services/innovation/innovation-front.service';
 import { StatsInterface } from '../../../../../../models/stats';
-import { ConfigService } from '@umius/umi-common-component/services/config';
 import { RolesFrontService } from '../../../../../../services/roles/roles-front.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { TranslateNotificationsService } from '../../../../../../services/translate-notifications/translate-notifications.service';
 import { AnswerService } from '../../../../../../services/answer/answer.service';
 import { CampaignFrontService } from '../../../../../../services/campaign/campaign-front.service';
 import { Answer, AnswerStatus } from '../../../../../../models/answer';
-import { SidebarInterface } from '../../../../../sidebars/interfaces/sidebar-interface';
 import { Question } from '../../../../../../models/question';
-import { Company } from '../../../../../../models/company';
 import { SocketService } from '../../../../../../services/socket/socket.service';
 import { Professional } from '../../../../../../models/professional';
 import { MissionQuestion } from '../../../../../../models/mission';
 import { ErrorFrontService } from '../../../../../../services/error/error-front.service';
-import { Table, Config } from '@umius/umi-common-component/models';
 import { CommonService } from "../../../../../../services/common/common.service";
+import {Table, UmiusConfigInterface, UmiusConfigService, UmiusSidebarInterface} from '@umius/umi-common-component';
+import {UmiusCompanyInterface} from '@umius/umi-common-component/models/company';
 
 @Component({
   templateUrl: './admin-project-collection.component.html',
@@ -39,7 +37,7 @@ export class AdminProjectCollectionComponent implements OnInit, OnDestroy {
 
   private _statsConfig: Array<StatsInterface> = [];
 
-  private _localConfig: Config = {
+  private _localConfig: UmiusConfigInterface = {
     fields: '',
     limit: this._configService.configLimit('admin-project-collection'),
     offset: '0',
@@ -63,11 +61,11 @@ export class AdminProjectCollectionComponent implements OnInit, OnDestroy {
 
   private _sidebarAnswer: Answer = <Answer>{};
 
-  private _sidebarValue: SidebarInterface = <SidebarInterface>{};
+  private _sidebarValue: UmiusSidebarInterface = <UmiusSidebarInterface>{};
 
   private _questions: Array<Question | MissionQuestion> = [];
 
-  private _excludedCompanies: Array<Company> = [];
+  private _excludedCompanies: Array<UmiusCompanyInterface> = [];
 
   private _campaignList: Array<{ _name: ''; _alias: '' }> = [];
 
@@ -89,7 +87,7 @@ export class AdminProjectCollectionComponent implements OnInit, OnDestroy {
 
   constructor(
     @Inject(PLATFORM_ID) protected _platformId: Object,
-    private _configService: ConfigService,
+    private _configService: UmiusConfigService,
     private _translateNotificationsService: TranslateNotificationsService,
     private _answerService: AnswerService,
     private _rolesFrontService: RolesFrontService,
@@ -316,7 +314,7 @@ export class AdminProjectCollectionComponent implements OnInit, OnDestroy {
       _isSearchable:
         !!this.canAccess(['searchBy']) || !!this.canAccess(['filterBy']),
       _isSelectable: this.canAccess(['validate']) || this.canAccess(['reject']),
-      _buttons: [
+      _actions: [
         {
           _label: 'Validate',
           _icon: 'fas fa-check',
@@ -541,11 +539,11 @@ export class AdminProjectCollectionComponent implements OnInit, OnDestroy {
     this._slicedErrors = null;
   }
 
-  get localConfig(): Config {
+  get localConfig(): UmiusConfigInterface {
     return this._localConfig;
   }
 
-  set localConfig(value: Config) {
+  set localConfig(value: UmiusConfigInterface) {
     this._localConfig = value;
   }
 
@@ -557,11 +555,11 @@ export class AdminProjectCollectionComponent implements OnInit, OnDestroy {
     this._sidebarAnswer = value;
   }
 
-  get sidebarValue(): SidebarInterface {
+  get sidebarValue(): UmiusSidebarInterface {
     return this._sidebarValue;
   }
 
-  set sidebarValue(value: SidebarInterface) {
+  set sidebarValue(value: UmiusSidebarInterface) {
     this._sidebarValue = value;
   }
 
@@ -597,7 +595,7 @@ export class AdminProjectCollectionComponent implements OnInit, OnDestroy {
     return this._questions;
   }
 
-  get excludedCompanies(): Array<Company> {
+  get excludedCompanies(): Array<UmiusCompanyInterface> {
     return this._excludedCompanies;
   }
 

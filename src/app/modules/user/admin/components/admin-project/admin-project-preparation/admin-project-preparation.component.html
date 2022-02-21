@@ -171,7 +171,7 @@
 </div>
 
 <!-- modal -->
-<app-utility-modal-empty [(showModal)]="showModal">
+<umius-modal [(showModal)]="showModal">
 
   <section class="modal-body">
 
@@ -215,11 +215,11 @@
 
   </footer>
 
-</app-utility-modal-empty>
+</umius-modal>
 <!-- /modal -->
 
 <!-- modal to innovation card add / delete lang -->
-<app-utility-modal-empty *ngIf="canEditDescription" [(showModal)]="showCardModal">
+<umius-modal *ngIf="canEditDescription" [(showModal)]="showCardModal">
 
   <!-- body -->
   <section class="modal-body p-bottom-40">
@@ -288,5 +288,5 @@
   </footer>
   <!-- /footer -->
 
-</app-utility-modal-empty>
+</umius-modal>
 <!-- modal to innovation card add / delete lang -->

@@ -21,7 +21,6 @@ import {
   transition,
   trigger,
 } from '@angular/animations';
-import { SidebarInterface } from '../../../../../sidebars/interfaces/sidebar-interface';
 import { isPlatformBrowser } from '@angular/common';
 import { Response } from '../../../../../../models/response';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -34,6 +33,7 @@ import { CampaignFrontService } from '../../../../../../services/campaign/campai
 import { SocketService } from '../../../../../../services/socket/socket.service';
 import { QuizService } from '../../../../../../services/quiz/quiz.service';
 import { CommonService } from '../../../../../../services/common/common.service';
+import {UmiusSidebarInterface} from '@umius/umi-common-component';
 
 @Component({
   templateUrl: 'admin-project-campaigns.component.html',
@@ -68,7 +68,7 @@ export class AdminProjectCampaignsComponent implements OnInit, OnDestroy {
 
   private _selectCampaign: Campaign = <Campaign>{};
 
-  private _sidebarValue: SidebarInterface = <SidebarInterface>{};
+  private _sidebarValue: UmiusSidebarInterface = <UmiusSidebarInterface>{};
 
   private _isLoading = true;
 
@@ -365,11 +365,11 @@ export class AdminProjectCampaignsComponent implements OnInit, OnDestroy {
     return this._activateModal;
   }
 
-  set sidebarValue(value: SidebarInterface) {
+  set sidebarValue(value: UmiusSidebarInterface) {
     this._sidebarValue = value;
   }
 
-  get sidebarValue(): SidebarInterface {
+  get sidebarValue(): UmiusSidebarInterface {
     return this._sidebarValue;
   }
 

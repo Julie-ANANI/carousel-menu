@@ -1,4 +1,4 @@
-<app-utility-modal
+<umius-modal
   [(showModal)]="showModal"
   [maxWidth]="'960px'"
   [title]="'Community Publish Settings'">
@@ -167,7 +167,7 @@
       <label class="form-label">7. Publication hashtags
         <span class="text-meta">(Do not include '#' keyword.)</span>
       </label>
-      <app-utility-text-input
+      <umius-text-input
         (textEntered)="addHashtags($event)"
         (valueToRemove)="removeHashtags($event)"
         [addedText]="community.tags || []"
@@ -175,7 +175,7 @@
         [isFormSmall]="true"
         [btnAddTopValue]="'7px'"
         [placeholder]="'Enter the hashtag here...'">
-      </app-utility-text-input>
+      </umius-text-input>
     </div>
     <!-- /hashtag -->
 
@@ -211,4 +211,4 @@
   </div>
   <!-- /footer -->
 
-</app-utility-modal>
+</umius-modal>

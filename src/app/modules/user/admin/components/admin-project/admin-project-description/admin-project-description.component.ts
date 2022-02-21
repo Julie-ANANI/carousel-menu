@@ -4,7 +4,6 @@ import { Innovation } from '../../../../../../models/innovation';
 import { Subject } from 'rxjs';
 import { first, takeUntil } from 'rxjs/operators';
 import { CardSectionTypes, InnovCard, InnovCardSection } from '../../../../../../models/innov-card';
-import { Media, Video } from '../../../../../../models/media';
 import { InnovationService } from '../../../../../../services/innovation/innovation.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { TranslateNotificationsService } from '../../../../../../services/translate-notifications/translate-notifications.service';
@@ -16,7 +15,7 @@ import { MediaFrontService } from '../../../../../../services/media/media-front.
 import {NotificationService} from '../../../../../../services/notification/notification.service';
 import {NotificationJob} from '../../../../../../models/notification';
 import {isPlatformBrowser} from '@angular/common';
-import {Config} from '../../../../../../models/config';
+import {UmiusConfigInterface, UmiusMediaInterface, UmiusModalMedia, UmiusVideoInterface} from '@umius/umi-common-component';
 
 type modalType = 'NEW_SECTION' | 'DELETE_SECTION' | 'NOTIFY_TEAM' | '';
 
@@ -94,7 +93,7 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
 
   private _modalMedia = false;
 
-  private _selectedMedia: string;
+  private _selectedMedia: UmiusModalMedia = <UmiusModalMedia>{};
 
   private _isSendingNotification = false;
 
@@ -135,7 +134,7 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
     if (isPlatformBrowser(this._platformId) && !this._notificationJobs.length && this._isFetchingJobs && this._innovation._id) {
       this._isFetchingJobs = false;
 
-      const config: Config = {
+      const config: UmiusConfigInterface = {
         fields: 'updated',
         limit: '',
         offset: '0',
@@ -402,7 +401,7 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
     this.updateComment();
   }
 
-  public uploadImage(media: Media): void {
+  public uploadImage(media: UmiusMediaInterface): void {
     this.activeInnovCard.media.push(media);
     if (!this._innovation.innovationCards[this._activeCardIndex].principalMedia) {
       this._innovation.innovationCards[this._activeCardIndex].principalMedia = media;
@@ -411,7 +410,7 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
     this._setInnovation();
   }
 
-  public uploadVideo(video: Video): void {
+  public uploadVideo(video: UmiusVideoInterface): void {
     this._isUploadingVideo = true;
     this._innovationService.addNewMediaVideoToInnovationCard(this._innovation._id,
       this._innovation.innovationCards[this._activeCardIndex]._id, video)
@@ -432,7 +431,7 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
       });
   }
 
-  public onSetPrincipal(media: Media) {
+  public onSetPrincipal(media: UmiusMediaInterface) {
     if (!this._isSavingMedia) {
       this._isSavingMedia = true;
       this._innovationService.setPrincipalMediaOfInnovationCard(this._innovation._id, this.activeInnovCard._id, media._id)
@@ -455,7 +454,7 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
     this._innovationFrontService.setInnovation(this._innovation);
   }
 
-  public onDeleteMedia(media: Media) {
+  public onDeleteMedia(media: UmiusMediaInterface) {
     if (!this._isSavingMedia) {
       this._isSavingMedia = true;
       this._innovationService.deleteMediaOfInnovationCard(this._innovation._id, this.activeInnovCard._id, media._id)
@@ -480,7 +479,7 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
    * available then set principal media null
    * @private
    */
-  private _verifyPrincipal(deleteMedia: Media) {
+  private _verifyPrincipal(deleteMedia: UmiusMediaInterface) {
     if (this.activeInnovCard.media.length === 0 && this.activeInnovCard.principalMedia && this.activeInnovCard.principalMedia._id) {
       this._innovation.innovationCards[this._activeCardIndex].principalMedia = null;
       this._setInnovation();
@@ -490,7 +489,7 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
     }
   }
 
-  public mediaSrc(media: Media, type: 'IMAGE' | 'VIDEO') {
+  public mediaSrc(media: UmiusMediaInterface, type: 'IMAGE' | 'VIDEO') {
     if (media && type === 'IMAGE') {
       return MediaFrontService.imageSrc(media);
     } else if (media && type === 'VIDEO') {
@@ -515,7 +514,10 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
 
   mediaToShow(mediaSrc: any) {
     this._modalMedia = true;
-    this._selectedMedia = mediaSrc;
+    this._selectedMedia = {
+      active: true,
+      src: mediaSrc
+    };
   }
 
   get activeInnovCard(): InnovCard {
@@ -580,7 +582,7 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
   }
 
 
-  get selectedMedia(): string {
+  get selectedMedia(): UmiusModalMedia {
     return this._selectedMedia;
   }
 

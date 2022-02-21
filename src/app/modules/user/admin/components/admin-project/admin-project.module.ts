@@ -8,13 +8,13 @@ import {AdminProjectComponent} from './admin-project.component';
 
 import {MessageErrorModule} from '../../../../utility/messages/message-error/message-error.module';
 import {BannerModule} from '../../../../utility/banner/banner.module';
-import {ModalModule} from '../../../../utility/modals/modal/modal.module';
 import {AdminProjectFollowUpModule} from './admin-project-follow-up/admin-project-follow-up.module';
 import {AdminProjectPreparationModule} from './admin-project-preparation/admin-project-preparation.module';
 import {AdminProjectAnalysisModule} from './admin-project-analysis/admin-project-analysis.module';
 import {AdminProjectSettingsModule} from './admin-project-settings/admin-project-settings.module';
 import {AdminProjectCollectionModule} from './admin-project-collection/admin-project-collection.module';
 import {SharedActivityModalModule} from '../../../../shared/components/shared-activity-modal/shared-activity-modal.module';
+import {ModalModule} from '@umius/umi-common-component';
 
 @NgModule({
   imports: [
@@ -23,7 +23,6 @@ import {SharedActivityModalModule} from '../../../../shared/components/shared-ac
     RouterModule,
     MessageErrorModule,
     BannerModule,
-    ModalModule,
     AdminProjectFollowUpModule,
     AdminProjectPreparationModule,
     AdminProjectAnalysisModule,
@@ -31,6 +30,7 @@ import {SharedActivityModalModule} from '../../../../shared/components/shared-ac
     AdminProjectCollectionModule,
     AdminProjectRoutingModule,
     SharedActivityModalModule,
+    ModalModule,
   ],
   declarations: [
     AdminProjectComponent

@@ -1,5 +1,4 @@
 import {Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
-import { Config } from '@umius/umi-common-component/models';
 import {Professional} from '../../../../../../models/professional';
 import {TranslateNotificationsService} from '../../../../../../services/translate-notifications/translate-notifications.service';
 import {TranslateTitleService} from '../../../../../../services/title/title.service';
@@ -7,10 +6,10 @@ import {ProfessionalsService} from '../../../../../../services/professionals/pro
 import {first} from 'rxjs/operators';
 import {Response} from '../../../../../../models/response';
 import {isPlatformBrowser} from '@angular/common';
-import {ConfigService} from '@umius/umi-common-component/services/config';
 import {RolesFrontService} from '../../../../../../services/roles/roles-front.service';
 import {HttpErrorResponse} from '@angular/common/http';
 import {ErrorFrontService} from '../../../../../../services/error/error-front.service';
+import {UmiusConfigInterface, UmiusConfigService} from '@umius/umi-common-component';
 
 export interface SelectedProfessional extends Professional {
   isSelected: boolean;
@@ -26,7 +25,7 @@ export class AdminProfessionalsListComponent implements OnInit {
 
   private _total = 0;
 
-  private _config: Config = {
+  private _config: UmiusConfigInterface = {
     fields: 'language firstName lastName companyOriginalName country emailConfidence jobTitle campaigns tags messages ambassador.is',
     limit: this._configService.configLimit('admin-pros-limit'),
     offset: '0',
@@ -39,7 +38,7 @@ export class AdminProfessionalsListComponent implements OnInit {
   private _isLoading = true;
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
-              private _configService: ConfigService,
+              private _configService: UmiusConfigService,
               private _professionalsService: ProfessionalsService,
               private _rolesFrontService: RolesFrontService,
               private _translateNotificationsService: TranslateNotificationsService,
@@ -79,11 +78,11 @@ export class AdminProfessionalsListComponent implements OnInit {
     return this._total;
   }
 
-  get config(): Config {
+  get config(): UmiusConfigInterface {
     return this._config;
   }
 
-  set config(value: Config) {
+  set config(value: UmiusConfigInterface) {
     this._config = value;
     this._getProfessionals();
   }

@@ -11,6 +11,9 @@ import {Table, UmiusSidebarInterface} from '@umius/umi-common-component';
   templateUrl: 'admin-emails-queue.component.html',
 })
 export class AdminEmailQueueComponent implements OnInit {
+  set more(value: UmiusSidebarInterface) {
+    this._more = value;
+  }
 
   private _queueList: { mailqueues: Array<EmailQueueModel>, _metadata: any } = {
     mailqueues: [],

@@ -37,12 +37,11 @@
     <tfoot>
     <tr>
         <td colspan="12">
-            <app-pagination
-              [configValue]="config"
-              (configChange)="configChange($event)"
-              [total]="total"
-              [propertyName]="'admin-attachment-tags'">
-            </app-pagination>
+            <umius-pagination-template1
+              [pagination]="config"
+              (paginationChange)="configChange($event)"
+              [totalCount]="total">
+            </umius-pagination-template1>
         </td>
     </tr>
     </tfoot>

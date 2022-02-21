@@ -207,7 +207,7 @@
 
 
 <!-- modal to select/change language -->
-<app-utility-modal
+<umius-modal
   *ngIf="canAccess(['changeLang']) || canAccess(['create'])"
   [(showModal)]="isModalLang"
   [title]="modalTitle | translate">
@@ -266,12 +266,12 @@
     </footer>
 
   </ng-container>
-</app-utility-modal>
+</umius-modal>
 <!-- /modal to select/change language -->
 
 
 <!-- modal to select type of video -->
-<app-utility-modal-empty *ngIf="canAccess(['generateVideo'])" [(showModal)]="isModalVideo">
+<umius-modal *ngIf="canAccess(['generateVideo'])" [(showModal)]="isModalVideo">
   <ng-container *ngIf="isModalVideo && !isLoading">
 
     <!-- body -->
@@ -335,5 +335,5 @@
     <!-- /footer -->
 
   </ng-container>
-</app-utility-modal-empty>
+</umius-modal>
 <!-- /modal to select type of video -->

@@ -2,9 +2,8 @@
   <umius-table [data]="tableInfos" [(config)]="config" (editRow)="showCampaignInfos($event)"></umius-table>
 </div>
 
-<app-sidebar
-  [template]="more" (closeSidebar)="closeSidebar($event)">
+<umius-sidebar-full [(template)]="more">
   <app-sidebar-blacklist
     [type]="more.type" [campaignInfos]="currentQueue">
   </app-sidebar-blacklist>
-</app-sidebar>
+</umius-sidebar-full>

@@ -5,22 +5,19 @@ import {TranslateModule} from '@ngx-translate/core';
 
 import {AdminProjectCampaignsComponent} from './admin-project-campaigns.component';
 
-import {ModalEmptyModule} from '../../../../../utility/modals/modal-empty/modal-empty.module';
 import {MessageErrorModule} from '../../../../../utility/messages/message-error/message-error.module';
-import {ModalModule} from '../../../../../utility/modals/modal/modal.module';
-import {SidebarModule} from '../../../../../sidebars/templates/sidebar/sidebar.module';
 import {SidebarCampaignModule} from '../../../../../sidebars/components/sidebar-campaign/sidebar-campaign.module';
+import {ModalModule, SidebarFullModule} from '@umius/umi-common-component';
 
 @NgModule({
   imports: [
     CommonModule,
     TranslateModule.forChild(),
     RouterModule,
-    ModalEmptyModule,
     MessageErrorModule,
-    ModalModule,
-    SidebarModule,
     SidebarCampaignModule,
+    ModalModule,
+    SidebarFullModule,
   ],
   declarations: [
     AdminProjectCampaignsComponent
