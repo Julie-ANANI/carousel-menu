@@ -116,7 +116,7 @@
 
 
 <!-- modal -->
-<app-utility-modal [(showModal)]="isModalDelete" [title]="'COMMON.MODAL.TITLE_DELETE'">
+<umius-modal [(showModal)]="isModalDelete" [title]="'COMMON.MODAL.TITLE_DELETE'">
 
   <section class="modal-body">
     <div class="text-draft text-medium">{{ 'COMMON.MODAL.ARE_YOU_SURE' | translate }}</div>
@@ -127,5 +127,5 @@
     <button (click)="removeProposition()" class="button is-primary">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
   </footer>
 
-</app-utility-modal>
+</umius-modal>
 <!-- /modal -->
