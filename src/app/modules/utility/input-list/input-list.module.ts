@@ -7,20 +7,20 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InputListComponent } from './input-list.component';
 
 import { PipeModule } from '../../../pipe/pipe.module';
-import {ModalModule} from '../modals/modal/modal.module';
 import {NguiAutoCompleteModule} from '../auto-complete/auto-complete.module';
+import {ModalModule} from '@umius/umi-common-component';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        TranslateModule.forChild(),
-        ReactiveFormsModule,
-        FormsModule,
-        RouterModule,
-        PipeModule,
-        ModalModule,
-        NguiAutoCompleteModule
-    ],
+  imports: [
+    CommonModule,
+    TranslateModule.forChild(),
+    ReactiveFormsModule,
+    FormsModule,
+    RouterModule,
+    PipeModule,
+    NguiAutoCompleteModule,
+    ModalModule
+  ],
   declarations: [
     InputListComponent
   ],
