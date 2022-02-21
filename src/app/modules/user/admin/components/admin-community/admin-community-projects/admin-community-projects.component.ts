@@ -1,10 +1,10 @@
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { TranslateTitleService } from '../../../../../../services/title/title.service';
-import { Table, Config } from '@umius/umi-common-component/models';
 import { isPlatformBrowser } from '@angular/common';
 import { first} from 'rxjs/operators';
 import { AdvSearchService } from '../../../../../../services/advsearch/advsearch.service';
 import { Router } from '@angular/router';
+import {Table, UmiusConfigInterface} from '@umius/umi-common-component';
 
 @Component({
   selector: 'app-admin-community-projects',
@@ -14,7 +14,7 @@ import { Router } from '@angular/router';
 
 export class AdminCommunityProjectsComponent implements OnInit {
 
-  private _config: Config = {
+  private _config: UmiusConfigInterface = {
     fields: '',
     limit: '',
     offset: '0',
@@ -97,7 +97,7 @@ export class AdminCommunityProjectsComponent implements OnInit {
     this._router.navigate(['/user/admin/community/projects/' + project.innovation._id]);
   }
 
-  get config(): Config {
+  get config(): UmiusConfigInterface {
     return this._config;
   }
 

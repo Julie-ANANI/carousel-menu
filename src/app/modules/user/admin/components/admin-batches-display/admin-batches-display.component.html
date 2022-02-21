@@ -126,10 +126,10 @@
 
 
 <!-- innovation preview sidebar-->
-<app-sidebar *ngIf="weekBatches.length" [(template)]="sidebarTemplate">
+<umius-sidebar-full *ngIf="weekBatches.length" [(template)]="sidebarTemplate">
   <app-sidebar-innov-card-preview
     [batchInfo]="{ batchSelected: selectedBatch, date: dateNow }"
     [innovCard]="selectedInnovCard">
   </app-sidebar-innov-card-preview>
-</app-sidebar>
+</umius-sidebar-full>
 <!-- /innovation preview sidebar-->

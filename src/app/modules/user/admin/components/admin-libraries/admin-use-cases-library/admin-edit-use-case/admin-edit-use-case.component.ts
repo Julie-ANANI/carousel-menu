@@ -12,7 +12,7 @@ import { MissionFrontService } from '../../../../../../../services/mission/missi
 import { TranslateService } from '@ngx-translate/core';
 import { TranslateTitleService } from '../../../../../../../services/title/title.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { LocalStorageService } from "@umius/umi-common-component/services/localStorage";
+import {UmiusLocalStorageService} from '@umius/umi-common-component';
 
 interface ConfirmUpdate {
   tool: boolean;
@@ -61,7 +61,7 @@ export class AdminEditUseCaseComponent implements OnInit {
               private _translateTitleService: TranslateTitleService,
               private _translateNotificationsService: TranslateNotificationsService,
               private _missionQuestionService: MissionQuestionService,
-              private _localStorageService: LocalStorageService) {
+              private _localStorageService: UmiusLocalStorageService) {
   }
 
   ngOnInit() {

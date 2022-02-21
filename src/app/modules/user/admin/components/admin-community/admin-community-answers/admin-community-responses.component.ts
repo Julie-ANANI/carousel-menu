@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {UmiusConfigInterface} from '@umius/umi-common-component';
 
 @Component({
   selector: 'app-admin-community-members',
@@ -8,7 +9,7 @@ import { Component } from '@angular/core';
 
 export class AdminCommunityResponsesComponent {
 
-  private _config: any = {
+  private _config: UmiusConfigInterface = {
     fields: '',
     limit: '10',
     offset: '0',
@@ -16,7 +17,7 @@ export class AdminCommunityResponsesComponent {
     sort: '{"created":-1}'
   };
 
-  get config() {
+  get config(): UmiusConfigInterface {
     return this._config;
   }
 

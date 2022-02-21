@@ -173,7 +173,7 @@
 
 
 <!-- modal to delete batch -->
-<app-utility-modal
+<umius-modal
   *ngIf="canAccess(['delete'])"
   [(showModal)]="modalDelete"
   [title]="'Delete Board'">
@@ -203,12 +203,12 @@
     </footer>
 
   </ng-container>
-</app-utility-modal>
+</umius-modal>
 <!-- /modal to delete batch -->
 
 
 <!-- sidebars to perform batch operations -->
-<app-sidebar *ngIf="canAccess()" [(template)]="sidebarValue">
+<umius-sidebar-full *ngIf="canAccess()" [(template)]="sidebarValue">
   <app-sidebar-batch
     (batchOutput)="onSidebarOutput($event)"
     [isEditable]="isEditable"
@@ -219,6 +219,6 @@
     [templateType]="sidebarValue.type"
     [workflow]="currentBatch?.workflow || (campaign.settings && campaign.settings.defaultWorkflow)">
   </app-sidebar-batch>
-</app-sidebar>
+</umius-sidebar-full>
 <!-- /sidebars to perform batch operations  -->
 

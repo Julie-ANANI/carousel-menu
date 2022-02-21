@@ -4,8 +4,6 @@ import { Campaign, CampaignStats } from '../../../../../../models/campaign';
 import { CampaignService } from '../../../../../../services/campaign/campaign.service';
 import { TranslateNotificationsService } from '../../../../../../services/translate-notifications/translate-notifications.service';
 import { Batch } from '../../../../../../models/batch';
-import { Table } from '@umius/umi-common-component/models';
-import { SidebarInterface } from '../../../../../sidebars/interfaces/sidebar-interface';
 import { CampaignFrontService } from '../../../../../../services/campaign/campaign-front.service';
 import { FormGroup } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
@@ -20,6 +18,7 @@ import { InnovationFrontService } from '../../../../../../services/innovation/in
 import { MissionService } from '../../../../../../services/mission/mission.service';
 import { Mission } from '../../../../../../models/mission';
 import {StatsInterface} from "../../../../../../models/stats";
+import {Table, UmiusSidebarInterface} from '@umius/umi-common-component';
 
 @Component({
   templateUrl: './admin-campaign-batch.component.html',
@@ -49,7 +48,7 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
 
   private _modalDelete = false;
 
-  private _sidebarValue: SidebarInterface = <SidebarInterface>{};
+  private _sidebarValue: UmiusSidebarInterface = <UmiusSidebarInterface>{};
 
   private _campaignWorkflows: Array<string> = [];
 
@@ -864,11 +863,11 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
     this._modalDelete = value;
   }
 
-  get sidebarValue(): SidebarInterface {
+  get sidebarValue(): UmiusSidebarInterface {
     return this._sidebarValue;
   }
 
-  set sidebarValue(value: SidebarInterface) {
+  set sidebarValue(value: UmiusSidebarInterface) {
     this._sidebarValue = value;
   }
 

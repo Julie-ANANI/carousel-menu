@@ -7,7 +7,6 @@ import { Campaign } from '../../../../../../models/campaign';
 import { EmailScenario } from '../../../../../../models/email-scenario';
 import { EmailSignature } from '../../../../../../models/email-signature';
 import { first } from 'rxjs/operators';
-import { Config } from '@umius/umi-common-component/models';
 import { isPlatformBrowser } from '@angular/common';
 import { Response } from '../../../../../../models/response';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -15,6 +14,7 @@ import { ErrorFrontService } from '../../../../../../services/error/error-front.
 import { RolesFrontService } from '../../../../../../services/roles/roles-front.service';
 import { CampaignFrontService } from '../../../../../../services/campaign/campaign-front.service';
 import { AuthService } from '../../../../../../services/auth/auth.service';
+import {UmiusConfigInterface} from '@umius/umi-common-component';
 
 @Component({
   templateUrl: './admin-campaign-workflows.component.html',
@@ -36,7 +36,7 @@ export class AdminCampaignWorkflowsComponent implements OnInit {
 
   private _modalContent = '';
 
-  private _config: Config = {
+  private _config: UmiusConfigInterface = {
     fields: '',
     limit: '0',
     offset: '0',

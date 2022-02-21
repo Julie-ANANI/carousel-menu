@@ -104,7 +104,7 @@
 
 
 <!-- modal to ask for the confirmation if importing the same template -->
-<app-utility-modal *ngIf="canAccess(['import'])" [(showModal)]="modalImport" [title]="'Import Board'">
+<umius-modal *ngIf="canAccess(['import'])" [(showModal)]="modalImport" [title]="'Import Board'">
 
   <section class="modal-body">{{ modalContent | translate }}</section>
 
@@ -124,5 +124,5 @@
     </button>
   </footer>
 
-</app-utility-modal>
+</umius-modal>
 <!-- /modal to ask for the confirmation if importing the same template -->
