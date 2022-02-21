@@ -86,7 +86,7 @@
 
 
 <!-- modal -->
-<app-utility-modal
+<umius-modal
   *ngIf="canAccess(['import']) && !hasMissionTemplate"
   [(showModal)]="showPresetModal"
   [title]="'Import Board'">
@@ -116,5 +116,5 @@
     </button>
   </footer>
 
-</app-utility-modal>
+</umius-modal>
 <!-- /modal -->

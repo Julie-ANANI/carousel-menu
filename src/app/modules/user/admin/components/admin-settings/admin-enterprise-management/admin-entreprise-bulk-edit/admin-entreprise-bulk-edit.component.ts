@@ -1,13 +1,12 @@
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { Router } from '@angular/router';
-import { Table, Config, Column } from '@umius/umi-common-component/models';
 import { RolesFrontService } from '../../../../../../../services/roles/roles-front.service';
 import { EnterpriseService } from '../../../../../../../services/enterprise/enterprise.service';
 import { first } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
 import { NotificationsService } from 'angular2-notifications';
-import { AutoSuggestionConfig } from '../../../../../../utility/auto-suggestion/interface/auto-suggestion-config';
 import { EnterpriseSizeList, EnterpriseTypes, EnterpriseValueChains, Industries } from '../../../../../../../models/static-data/enterprise';
+import {Column, Table, UmiusAutoSuggestionInterface, UmiusConfigInterface} from '@umius/umi-common-component';
 
 @Component({
   templateUrl: './admin-entreprise-bulk-edit.component.html',
@@ -15,7 +14,7 @@ import { EnterpriseSizeList, EnterpriseTypes, EnterpriseValueChains, Industries 
 })
 
 export class AdminEntrepriseBulkEditComponent implements OnInit {
-  private _industrySelectConfig: AutoSuggestionConfig = {
+  private _industrySelectConfig: UmiusAutoSuggestionInterface = {
     minChars: 1,
     placeholder: 'Enter the industry',
     type: 'industry',
@@ -25,7 +24,7 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
     requestType: 'local'
   };
 
-  private _valueChainSelectConfig: AutoSuggestionConfig = {
+  private _valueChainSelectConfig: UmiusAutoSuggestionInterface = {
     minChars: 1,
     placeholder: 'Enter the value chain',
     type: 'valueChain',
@@ -35,7 +34,7 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
     requestType: 'local'
   };
 
-  private _enterpriseSizeSelectConfig: AutoSuggestionConfig = {
+  private _enterpriseSizeSelectConfig: UmiusAutoSuggestionInterface = {
     minChars: 0,
     placeholder: 'Enter the size',
     type: 'enterpriseSize',
@@ -46,7 +45,7 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
     showSuggestionFirst: true,
   };
 
-  private _enterpriseTypeSelectConfig: AutoSuggestionConfig = {
+  private _enterpriseTypeSelectConfig: UmiusAutoSuggestionInterface = {
     minChars: 0,
     placeholder: 'Enter the type',
     type: 'enterpriseType',
@@ -61,7 +60,7 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
   private _companiesTable: Table = <Table>{};
   private _companiesOriginalTable: Table = <Table>{};
   private _companiesTableToSwap: Table = <Table>{};
-  private _config: Config = {
+  private _config: UmiusConfigInterface = {
     fields: '',
     limit: '10',
     offset: '0',
@@ -286,13 +285,14 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
 
   /**
    * initialize table states after updated
+   * TODO check with @WEI
    */
   removeFillTemplate() {
-    this.companiesTable._columns.map(c => {
+    /*this.companiesTable._columns.map(c => {
       c._color = '';
       c._isFilled = undefined;
       c._isReplaceable = undefined;
-    });
+    });*/
     this._companiesOriginalTable = JSON.parse(JSON.stringify(this._companiesTable));
   }
 
@@ -369,15 +369,15 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
   }
 
   removeStyleToColumn(c: Column) {
-    c._color = '';
+    /*c._color = '';
     c._isFilled = undefined;
-    c._isReplaceable = undefined;
+    c._isReplaceable = undefined;*/
   }
 
   addStyleToColumn(c: Column) {
-    c._color = '#EA5858';
+    /*c._color = '#EA5858';
     c._isFilled = true;
-    c._isReplaceable = false;
+    c._isReplaceable = false;*/
   }
 
   geoZoneUpdate($event: any) {
@@ -541,19 +541,19 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
   }
 
 
-  get industrySelectConfig(): AutoSuggestionConfig {
+  get industrySelectConfig(): UmiusAutoSuggestionInterface {
     return this._industrySelectConfig;
   }
 
-  get valueChainSelectConfig(): AutoSuggestionConfig {
+  get valueChainSelectConfig(): UmiusAutoSuggestionInterface {
     return this._valueChainSelectConfig;
   }
 
-  get enterpriseSizeSelectConfig(): AutoSuggestionConfig {
+  get enterpriseSizeSelectConfig(): UmiusAutoSuggestionInterface {
     return this._enterpriseSizeSelectConfig;
   }
 
-  get enterpriseTypeSelectConfig(): AutoSuggestionConfig {
+  get enterpriseTypeSelectConfig(): UmiusAutoSuggestionInterface {
     return this._enterpriseTypeSelectConfig;
   }
 
@@ -613,11 +613,11 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
     this._failed = value;
   }
 
-  set config(value: Config) {
+  set config(value: UmiusConfigInterface) {
     this._config = value;
   }
 
-  get config(): Config {
+  get config(): UmiusConfigInterface {
     return this._config;
   }
 

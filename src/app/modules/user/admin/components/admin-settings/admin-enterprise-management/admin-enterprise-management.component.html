@@ -33,7 +33,7 @@
 </div>
 
 <!-- sidebar -->
-<app-sidebar [(template)]="sidebarValue">
+<umius-sidebar-full [(template)]="sidebarValue">
   <app-sidebar-enterprises
     (finalOutput)="updateEnterprise($event)"
     [enterprise]="selectedEnterprise._id"
@@ -42,7 +42,7 @@
     [sidebarState]="sidebarValue.animate_state"
     [type]="sidebarValue.type">
   </app-sidebar-enterprises>
-</app-sidebar>
+</umius-sidebar-full>
 <!-- /sidebar -->
 
 

@@ -19,7 +19,7 @@ import { ObjectivesPrincipal } from '../../../../../models/static-data/missionOb
 import { MissionTemplate } from '../../../../../models/mission';
 import { MissionService } from '../../../../../services/mission/mission.service';
 import { MissionFrontService } from '../../../../../services/mission/mission-front.service';
-import { Column, Config, Table } from '@umius/umi-common-component/models';
+import {Column, Table, UmiusConfigInterface, UmiusConfigService, UmiusLocalStorageService} from '@umius/umi-common-component';
 
 @Component({
   templateUrl: './admin-projects.component.html',
@@ -50,7 +50,7 @@ export class AdminProjectsComponent implements OnInit {
 
   private _table: Table = <Table>{};
 
-  private _config: Config = {
+  private _config: UmiusConfigInterface = {
     fields: '',
     limit: this._configService.configLimit('admin-projects-limit'),
     offset: '0',
@@ -84,7 +84,7 @@ export class AdminProjectsComponent implements OnInit {
   private _canImport = false;
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
-              private _configService: ConfigService,
+              private _configService: UmiusConfigService,
               private _innovationService: InnovationService,
               private _translateService: TranslateService,
               private _translateNotificationsService: TranslateNotificationsService,
@@ -93,7 +93,7 @@ export class AdminProjectsComponent implements OnInit {
               private _translateTitleService: TranslateTitleService,
               private _missionService: MissionService,
               private _changeDetectorRef: ChangeDetectorRef,
-              private _localStorageService: LocalStorageService,
+              private _localStorageService: UmiusLocalStorageService,
               private _userService: UserService) {
     this._translateTitleService.setTitle('Market Tests');
   }
@@ -661,7 +661,7 @@ export class AdminProjectsComponent implements OnInit {
     }
   }
 
-  set config(value: Config) {
+  set config(value: UmiusConfigInterface) {
     this._config = value; // TODO how to change the config when searching things like the operator?
     try {
       // Parse the config.search field to see if there's something
@@ -708,7 +708,7 @@ export class AdminProjectsComponent implements OnInit {
    */
   private _getOperators() {
     return new Promise((resolve, reject) => {
-      const operatorConfig = <Config>{
+      const operatorConfig = <UmiusConfigInterface>{
         fields: 'firstName,lastName',
         limit: '0',
         offset: '0',
@@ -896,7 +896,7 @@ export class AdminProjectsComponent implements OnInit {
     }
   }
 
-  get config(): Config {
+  get config(): UmiusConfigInterface {
     return this._config;
   }
 

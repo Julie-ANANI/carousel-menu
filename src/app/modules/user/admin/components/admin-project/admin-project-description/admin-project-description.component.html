@@ -689,7 +689,7 @@
 </div>
 
 <!-- modal to add New section | Delete section -->
-<app-utility-modal-empty *ngIf="isEditable" [(showModal)]="showModal">
+<umius-modal *ngIf="isEditable" [(showModal)]="showModal">
 
   <section class="modal-body">
 
@@ -805,9 +805,9 @@
 
   </footer>
 
-</app-utility-modal-empty>
+</umius-modal>
 <!-- /modal to add New section | Delete section -->
 
 <!-- modal to view image -->
-<app-utility-modal-media [(showModal)]="modalMedia" [mediaSrc]="selectedMedia"></app-utility-modal-media>
+<umius-modal [(showModal)]="modalMedia" [medias]="[selectedMedia]"></umius-modal>
 <!-- /modal to view image-->

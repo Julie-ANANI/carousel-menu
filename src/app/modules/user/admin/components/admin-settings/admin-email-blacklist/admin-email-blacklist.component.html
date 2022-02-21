@@ -39,7 +39,7 @@
 
 
 <!-- sidebar to add/edit blacklist -->
-<app-sidebar *ngIf="canAccess()" [(template)]="sidebarValue">
+<umius-sidebar-full *ngIf="canAccess()" [(template)]="sidebarValue">
   <app-sidebar-blacklist
     (editBlacklist)="blacklistEditionFinish($event)"
     (toBlacklists)="toBlacklists($event)"
@@ -47,6 +47,6 @@
     [isEditable]="isEditable"
     [type]="sidebarValue.type">
   </app-sidebar-blacklist>
-</app-sidebar>
+</umius-sidebar-full>
 <!-- /sidebar to add/edit blacklist -->
 

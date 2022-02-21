@@ -12,16 +12,19 @@ import { AdminProfessionalShieldComponent } from './admin-professional-shield/ad
 import { PipeModule } from '../../../../../pipe/pipe.module';
 import { AdminBatchInformationComponent } from './admin-batch-information/admin-batch-information.component';
 import { SidebarBlacklistModule } from '../../../../sidebars/components/sidebar-blacklist/sidebar-blacklist.module';
+import {SidebarFullModule, TableModule} from '@umius/umi-common-component';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        TranslateModule.forChild(),
-        PipeModule,
-        RouterModule,
-        SidebarBlacklistModule,
-        AdminMonitoringRoutingModule,
-    ],
+  imports: [
+    CommonModule,
+    TranslateModule.forChild(),
+    PipeModule,
+    RouterModule,
+    SidebarBlacklistModule,
+    AdminMonitoringRoutingModule,
+    SidebarFullModule,
+    TableModule,
+  ],
   declarations: [
     AdminMonitoringComponent,
     AdminEmailQueueComponent,

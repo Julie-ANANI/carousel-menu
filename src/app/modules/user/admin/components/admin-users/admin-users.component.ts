@@ -3,15 +3,13 @@ import { UserService } from '../../../../../services/user/user.service';
 import { TranslateTitleService } from '../../../../../services/title/title.service';
 import { User } from '../../../../../models/user.model';
 import { TranslateNotificationsService } from '../../../../../services/translate-notifications/translate-notifications.service';
-import { SidebarInterface } from '../../../../sidebars/interfaces/sidebar-interface';
 import { first } from 'rxjs/operators';
-import { Config, Table} from '@umius/umi-common-component/models';
 import { Response } from '../../../../../models/response';
-import {ConfigService} from '@umius/umi-common-component/services/config';
 import { isPlatformBrowser } from '@angular/common';
 import { RolesFrontService } from '../../../../../services/roles/roles-front.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorFrontService } from '../../../../../services/error/error-front.service';
+import {Table, UmiusConfigInterface, UmiusConfigService, UmiusSidebarInterface} from '@umius/umi-common-component';
 
 @Component({
   templateUrl: './admin-users.component.html',
@@ -19,7 +17,7 @@ import { ErrorFrontService } from '../../../../../services/error/error-front.ser
 
 export class AdminUsersComponent implements OnInit {
 
-  private _config: Config = {
+  private _config: UmiusConfigInterface = {
     fields: 'id company jobTitle created domain location firstName lastName attempts emailVerified isOperator phone' +
       ' language roles state name country email',
     limit: this._configService.configLimit('admin-users-limit'),
@@ -33,7 +31,7 @@ export class AdminUsersComponent implements OnInit {
 
   private _usersToRemove: Array<User> = [];
 
-  private _sidebarValue: SidebarInterface = <SidebarInterface>{};
+  private _sidebarValue: UmiusSidebarInterface = <UmiusSidebarInterface>{};
 
   private _table: Table = <Table>{};
 
@@ -50,7 +48,7 @@ export class AdminUsersComponent implements OnInit {
   private _isLoading = true;
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
-              private _configService: ConfigService,
+              private _configService: UmiusConfigService,
               private _translateTitleService: TranslateTitleService,
               private _userService: UserService,
               private _rolesFrontService: RolesFrontService,
@@ -227,12 +225,12 @@ export class AdminUsersComponent implements OnInit {
     event.preventDefault();
   }
 
-  set config(value: Config) {
+  set config(value: UmiusConfigInterface) {
     this._config = value;
     this._getUsers();
   }
 
-  get config(): Config {
+  get config(): UmiusConfigInterface {
     return this._config;
   }
 
@@ -248,11 +246,11 @@ export class AdminUsersComponent implements OnInit {
     return this._users;
   }
 
-  set sidebarValue(value: SidebarInterface) {
+  set sidebarValue(value: UmiusSidebarInterface) {
     this._sidebarValue = value;
   }
 
-  get sidebarValue(): SidebarInterface {
+  get sidebarValue(): UmiusSidebarInterface {
     return this._sidebarValue;
   }
 

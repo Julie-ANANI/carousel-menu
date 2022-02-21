@@ -40,7 +40,7 @@
 
 
 <!-- sidebar -->
-<app-sidebar *ngIf="canAccess()" [(template)]="sidebarValue">
+<umius-sidebar-full *ngIf="canAccess()" [(template)]="sidebarValue">
   <app-sidebar-blacklist
     (countryToFilter)="addCountry($event)"
     (editCountry)="countryEditionFinish($event)"
@@ -48,12 +48,12 @@
     [isEditable]="canAccess(['edit'])"
     [type]="sidebarValue.type">
   </app-sidebar-blacklist>
-</app-sidebar>
+</umius-sidebar-full>
 <!-- /sidebar -->
 
 
 <!-- modal to delete -->
-<app-utility-modal *ngIf="canAccess(['delete'])" [(showModal)]="showDeleteModal" [title]="'Delete Board'">
+<umius-modal *ngIf="canAccess(['delete'])" [(showModal)]="showDeleteModal" [title]="'Delete Board'">
 
   <section class="modal-body">
     Do you really want to delete the selected countries(s)?
@@ -69,5 +69,5 @@
     <button (click)="removeCountries()" class="button is-primary">Confirm</button>
   </footer>
 
-</app-utility-modal>
+</umius-modal>
 <!-- /modal to delete -->

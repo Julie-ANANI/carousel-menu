@@ -4,12 +4,10 @@ import { RolesFrontService } from '../../../../../../../services/roles/roles-fro
 import { EnterpriseService } from '../../../../../../../services/enterprise/enterprise.service';
 import { first } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Enterprise } from '../../../../../../../models/enterprise';
 import { NotificationsService } from 'angular2-notifications';
-import { Table, Column } from '@umius/umi-common-component';
+import {Table, Column, UmiusConfigInterface, UmiusEnterpriseInterface} from '@umius/umi-common-component';
 import { TranslateNotificationsService } from "../../../../../../../services/translate-notifications/translate-notifications.service";
 import { ErrorFrontService } from "../../../../../../../services/error/error-front.service";
-import {Config} from '../../../../../../../models/config';
 
 
 @Component({
@@ -17,11 +15,11 @@ import {Config} from '../../../../../../../models/config';
 })
 export class AdminEntrepriseAddParentComponent implements OnInit {
   private _companiesToAddParent: Array<any> = [];
-  private _parentCompany: Enterprise = <Enterprise>{};
+  private _parentCompany: UmiusEnterpriseInterface = <UmiusEnterpriseInterface>{};
   private _companiesTable: Table = <Table>{};
   private _companiesOriginalTable: Table = <Table>{};
   private _companiesToSwapTable: Table = <Table>{};
-  private _config: Config = {
+  private _config: UmiusConfigInterface = {
     fields: '',
     limit: '10',
     offset: '0',
@@ -196,7 +194,7 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
     }
   }
 
-  get parentCompany(): Enterprise {
+  get parentCompany(): UmiusEnterpriseInterface {
     return this._parentCompany;
   }
 
@@ -432,21 +430,21 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
   }
 
   addReplaceStyle(c: Column) {
-    c._color = '#00B0FF';
+    /*c._color = '#00B0FF';
     c._isReplaceable = true;
-    c._isFilled = false;
+    c._isFilled = false;*/
   }
 
   addFilledStyle(c: Column) {
-    c._isFilled = true;
+    /*c._isFilled = true;
     c._isReplaceable = true;
-    c._color = '#EA5858';
+    c._color = '#EA5858';*/
   }
 
   removeStyle(c: Column) {
-    c._color = '';
+    /*c._color = '';
     c._isReplaceable = undefined;
-    c._isFilled = undefined;
+    c._isFilled = undefined;*/
   }
 
   returnTo(event: Event) {
@@ -472,11 +470,11 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
     return this._companiesTable;
   }
 
-  get config(): Config {
+  get config(): UmiusConfigInterface {
     return this._config;
   }
 
-  set config(value: Config) {
+  set config(value: UmiusConfigInterface) {
     this._config = value;
   }
 }
