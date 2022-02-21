@@ -1,9 +1,9 @@
 <div id="check-box-wrapper" class="p-10">
   <div>
-    <app-utility-search-input-2
+    <umius-search-input
     [searchPlaceholder]="'Search: France-Japan'"
     (searchFieldOutput)="displayResults($event)">
-    </app-utility-search-input-2>
+    </umius-search-input>
   </div>
   <div *ngIf="displaySources.length === 0">
     <ng-container>
