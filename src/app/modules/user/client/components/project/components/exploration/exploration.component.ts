@@ -3,15 +3,13 @@ import { AnswerService } from '../../../../../../../services/answer/answer.servi
 import { TranslateNotificationsService } from '../../../../../../../services/translate-notifications/translate-notifications.service';
 import { Answer } from '../../../../../../../models/answer';
 import { Innovation } from '../../../../../../../models/innovation';
-import { SidebarInterface } from '../../../../../../sidebars/interfaces/sidebar-interface';
 import { first, takeUntil } from 'rxjs/operators';
 import { InnovationFrontService } from '../../../../../../../services/innovation/innovation-front.service';
 import { Subject } from 'rxjs';
 import {HttpErrorResponse} from '@angular/common/http';
 import {ErrorFrontService} from '../../../../../../../services/error/error-front.service';
 import {isPlatformBrowser} from '@angular/common';
-import {Table} from '@umius/umi-common-component';
-import {Config} from '../../../../../../../models/config';
+import {Table, UmiusConfigInterface, UmiusSidebarInterface} from '@umius/umi-common-component';
 
 @Component({
   templateUrl: 'exploration.component.html',
@@ -32,7 +30,7 @@ export class ExplorationComponent implements OnInit, OnDestroy {
 
   private _modalAnswer: Answer = <Answer>{};
 
-  private _sidebarValue: SidebarInterface = {
+  private _sidebarValue: UmiusSidebarInterface = {
     animate_state: 'inactive'
   };
 
@@ -40,7 +38,7 @@ export class ExplorationComponent implements OnInit, OnDestroy {
 
   private _anonymousAnswers = false;
 
-  private _config: Config = {
+  private _config: UmiusConfigInterface = {
     fields: '',
     limit: '10',
     offset: '0',
@@ -179,11 +177,11 @@ export class ExplorationComponent implements OnInit, OnDestroy {
     return this._tableInfos;
   }
 
-  get config(): Config {
+  get config(): UmiusConfigInterface {
     return this._config;
   }
 
-  set config(value: Config) {
+  set config(value: UmiusConfigInterface) {
     this._config = value;
   }
 
@@ -191,11 +189,11 @@ export class ExplorationComponent implements OnInit, OnDestroy {
     return this._innovation;
   }
 
-  get sidebarValue(): SidebarInterface {
+  get sidebarValue(): UmiusSidebarInterface {
     return this._sidebarValue;
   }
 
-  set sidebarValue(value: SidebarInterface) {
+  set sidebarValue(value: UmiusSidebarInterface) {
     this._sidebarValue = value;
   }
 
