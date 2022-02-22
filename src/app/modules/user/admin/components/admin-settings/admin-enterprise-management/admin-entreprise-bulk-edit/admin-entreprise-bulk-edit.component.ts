@@ -386,7 +386,7 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
     c._textColorConfig = {
       color: '#EA5858',
       condition: 'fill',
-      icon: 'fa-solid fa-arrows-rotate'
+      icon: 'fas fa-redo'
     }
   }
 

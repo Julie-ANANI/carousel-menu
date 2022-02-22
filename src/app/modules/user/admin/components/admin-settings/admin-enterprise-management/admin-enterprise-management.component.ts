@@ -12,7 +12,12 @@ import { TranslateNotificationsService } from '../../../../../../services/transl
 import { ErrorFrontService } from '../../../../../../services/error/error-front.service';
 import { Router } from '@angular/router';
 import { EnterpriseValueChains, Industries } from '../../../../../../models/static-data/enterprise';
-import {Table, UmiusConfigInterface, UmiusEnterpriseInterface, UmiusSidebarInterface} from '@umius/umi-common-component';
+import {
+  Table,
+  UmiusConfigInterface,
+  UmiusEnterpriseInterface,
+  UmiusSidebarInterface
+} from '@umius/umi-common-component';
 
 @Component({
   templateUrl: './admin-enterprise-management.component.html',
@@ -110,7 +115,7 @@ export class AdminEnterpriseManagementComponent implements OnInit {
     this._isSearching = true;
     this._resultTableConfiguration._total = -1;
     this._enterpriseService
-      .get(null)
+      .all(config)
       .pipe(first())
       .subscribe(
         (enterprises: any) => {
