@@ -1,13 +1,12 @@
 import { Component } from '@angular/core';
 import { TemplatesService } from '../../../../../../services/templates/templates.service';
 import { EmailSignature } from '../../../../../../models/email-signature';
-import { Table, Config } from '@umius/umi-common-component/models';
 import { TranslateNotificationsService } from '../../../../../../services/translate-notifications/translate-notifications.service';
-import { SidebarInterface } from '../../../../../sidebars/interfaces/sidebar-interface';
 import { first } from 'rxjs/operators';
 import { TranslateTitleService } from '../../../../../../services/title/title.service';
 import { ActivatedRoute } from '@angular/router';
 import { Response } from '../../../../../../models/response';
+import {UmiusConfigInterface, UmiusSidebarInterface, Table} from '@umius/umi-common-component';
 
 @Component({
   selector: 'app-admin-signatures-library',
@@ -17,7 +16,7 @@ import { Response } from '../../../../../../models/response';
 
 export class AdminSignaturesLibraryComponent {
 
-  private _config: Config = {
+  private _config: UmiusConfigInterface = {
     fields: '',
     limit: '10',
     offset: '0',
@@ -33,7 +32,7 @@ export class AdminSignaturesLibraryComponent {
 
   private _newSignatureName: string = null;
 
-  private _sidebarValue: SidebarInterface = {};
+  private _sidebarValue: UmiusSidebarInterface = {};
 
   private _total: number;
 
@@ -77,7 +76,6 @@ export class AdminSignaturesLibraryComponent {
       _isDeletable: true,
       _isSelectable: true,
       _isPaginable: true,
-      _isEditable: true,
       _isTitle: true,
       _clickIndex: 1,
       _isNoMinHeight: true,
@@ -204,11 +202,11 @@ export class AdminSignaturesLibraryComponent {
     return this._fetchingError;
   }
 
-  get config(): Config {
+  get config(): UmiusConfigInterface {
     return this._config;
   }
 
-  set config(value: Config) {
+  set config(value: UmiusConfigInterface) {
     this._config = value;
     this._getSignatures();
   }
@@ -237,11 +235,11 @@ export class AdminSignaturesLibraryComponent {
     this._signatureToEdit = value;
   }
 
-  get sidebarValue(): SidebarInterface {
+  get sidebarValue(): UmiusSidebarInterface {
     return this._sidebarValue;
   }
 
-  set sidebarValue(value: SidebarInterface) {
+  set sidebarValue(value: UmiusSidebarInterface) {
     this._sidebarValue = value;
   }
 

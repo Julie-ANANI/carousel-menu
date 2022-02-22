@@ -292,7 +292,7 @@
 
 
 <!-- modal to confirm the submission -->
-<app-utility-modal-empty [(showModal)]="showModal" [maxWidth]="'780px'">
+<umius-modal [(showModal)]="showModal" [maxWidth]="'780px'">
 
   <!-- body -->
   <section class="modal-body">
@@ -343,12 +343,12 @@
   </footer>
   <!-- /footer -->
 
-</app-utility-modal-empty>
+</umius-modal>
 <!-- /modal to confirm the submission -->
 
 
 <!-- sidebar to edit innovation card field -->
-<app-sidebar *ngIf="activeSection.etherpadElementId" [(template)]="sidebarValue">
+<umius-sidebar-full *ngIf="activeSection.etherpadElementId" [(template)]="sidebarValue">
   <app-sidebar-project-pitch
     (saveProject)="onSaveProject($event)"
     (tobeSavedChanges)="onChangesToBeSaved($event)"
@@ -365,9 +365,9 @@
     [sectionId]="activeSection.etherpadElementId"
     [type]="sidebarValue.type">
   </app-sidebar-project-pitch>
-</app-sidebar>
+</umius-sidebar-full>
 <!-- /sidebar to edit innovation card field -->
 
 <!-- modal to view image -->
-<app-utility-modal-media [(showModal)]="modalMedia" [mediaSrc]="selectedMedia"></app-utility-modal-media>
+<umius-modal [(showModal)]="modalMedia" [medias]="[selectedMedia]"></umius-modal>
 <!-- /modal to view image-->

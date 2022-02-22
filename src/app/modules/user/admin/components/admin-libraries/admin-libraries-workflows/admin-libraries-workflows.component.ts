@@ -9,9 +9,8 @@ import { RolesFrontService } from "../../../../../../services/roles/roles-front.
 import { HttpErrorResponse } from "@angular/common/http";
 import { ErrorFrontService } from "../../../../../../services/error/error-front.service";
 import { isPlatformBrowser } from "@angular/common";
-import { Config } from "@umius/umi-common-component/models/config";
 import { Response } from "../../../../../../models/response";
-import { LocalStorageService } from "@umius/umi-common-component/services/localStorage";
+import {UmiusConfigInterface, UmiusLocalStorageService} from '@umius/umi-common-component';
 
 @Component({
   templateUrl: 'admin-libraries-workflows.component.html',
@@ -33,7 +32,7 @@ export class AdminLibrariesWorkflowsComponent implements OnInit {
 
   private _fetchingError = false;
 
-  private _config: Config = {
+  private _config: UmiusConfigInterface = {
     fields: '',
     limit: '0',
     sort: '{"id":-1}',
@@ -47,7 +46,7 @@ export class AdminLibrariesWorkflowsComponent implements OnInit {
               private _templatesService: TemplatesService,
               private _rolesFrontService: RolesFrontService,
               private _translateNotificationsService: TranslateNotificationsService,
-              private _localStorageService: LocalStorageService) {
+              private _localStorageService: UmiusLocalStorageService) {
   }
 
   ngOnInit() {
@@ -215,7 +214,7 @@ export class AdminLibrariesWorkflowsComponent implements OnInit {
     return this._fetchingError;
   }
 
-  get config(): Config {
+  get config(): UmiusConfigInterface {
     return this._config;
   }
 

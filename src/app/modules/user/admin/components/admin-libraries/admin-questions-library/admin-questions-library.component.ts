@@ -1,5 +1,4 @@
 import {Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
-import {Table, Config} from '@umius/umi-common-component/models';
 import {RolesFrontService} from '../../../../../../services/roles/roles-front.service';
 import {TranslateService} from '@ngx-translate/core';
 import {TranslateNotificationsService} from '../../../../../../services/translate-notifications/translate-notifications.service';
@@ -10,8 +9,8 @@ import {Router} from '@angular/router';
 import {isPlatformBrowser} from '@angular/common';
 import {first} from 'rxjs/operators';
 import {ErrorFrontService} from '../../../../../../services/error/error-front.service';
-import {ConfigService} from '@umius/umi-common-component/services/config';
 import {HttpErrorResponse} from '@angular/common/http';
+import {Table, UmiusConfigInterface, UmiusConfigService} from '@umius/umi-common-component';
 
 interface NewQuestion {
   controlType: any;
@@ -32,7 +31,7 @@ export class AdminQuestionsLibraryComponent implements OnInit {
 
   private _total = -1;
 
-  private _config: Config = {
+  private _config: UmiusConfigInterface = {
     fields: '',
     limit: this._configService.configLimit('admin-questions-limit'),
     offset: '0',
@@ -70,7 +69,7 @@ export class AdminQuestionsLibraryComponent implements OnInit {
               private _rolesFrontService: RolesFrontService,
               private _translateService: TranslateService,
               private _router: Router,
-              private _configService: ConfigService,
+              private _configService: UmiusConfigService,
               private _missionQuestionService: MissionQuestionService,
               private _translateNotificationsService: TranslateNotificationsService,
               private _missionService: MissionService) { }
@@ -105,7 +104,6 @@ export class AdminQuestionsLibraryComponent implements OnInit {
       _title: 'question(s)',
       _content: this._questions,
       _total: this._total,
-      _isEditable: this.canAccess(['edit']),
       _isTitle: true,
       _clickIndex: 1,
       _isPaginable: true,
@@ -277,7 +275,7 @@ export class AdminQuestionsLibraryComponent implements OnInit {
     return this._questions;
   }
 
-  set config(value: Config) {
+  set config(value: UmiusConfigInterface) {
     this._config = value;
     this._getAllQuestions();
   }
@@ -286,7 +284,7 @@ export class AdminQuestionsLibraryComponent implements OnInit {
     return this._fetchingError;
   }
 
-  get config(): Config {
+  get config(): UmiusConfigInterface {
     return this._config;
   }
 

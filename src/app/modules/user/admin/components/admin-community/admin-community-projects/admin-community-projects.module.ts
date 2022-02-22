@@ -13,7 +13,7 @@ import { SharedWorldmapModule } from '../../../../../shared/components/shared-wo
 import { SidebarCommunityFormModule } from '../../../../../sidebars/components/community-form/sidebar-community-form.module';
 import { ErrorTemplate1Module } from '../../../../../utility/errors/error-template-1/error-template-1.module';
 import { MessageTemplate2Module } from '../../../../../utility/messages/message-template-2/message-template-2.module';
-import {TableModule} from '@umius/umi-common-component';
+import {SidebarFullModule, TableModule} from '@umius/umi-common-component';
 
 
 @NgModule({
@@ -29,6 +29,7 @@ import {TableModule} from '@umius/umi-common-component';
     ErrorTemplate1Module,
     MessageTemplate2Module,
     TableModule,
+    SidebarFullModule,
   ],
   declarations: [
     AdminCommunityProjectsComponent,

@@ -4,7 +4,7 @@
 
 import { Pipe } from '@angular/core';
 import {LangEntryService} from '../../services/lang-entry/lang-entry.service';
-import {UmiusLangEntryPipe} from '@umius/umi-common-component/pipe/lang-entry/lang-entry.pipe';
+import { UmiusLangEntryPipe } from '@umius/umi-common-component';
 
 /**
  * UmiusLangEntryPipe:

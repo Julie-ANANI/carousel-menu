@@ -27,7 +27,7 @@
 
 
 <!-- sidebar to edit email -->
-<app-sidebar [(template)]="sidebarValue">
+<umius-sidebar-full [(template)]="sidebarValue">
   <app-sidebar-workflow
     [id]="getId()"
     [emailsObject]="emailToEdit"
@@ -35,11 +35,11 @@
     [signatures]="signatures"
     [inputLanguage]="language">
   </app-sidebar-workflow>
-</app-sidebar>
+</umius-sidebar-full>
 <!-- /sidebar to edit email -->
 
 <!-- modal to add the new email -->
-<app-utility-modal [(showModal)]="modalAdd" [title]="'COMMON.MODAL.TITLE_CREATE'">
+<umius-modal [(showModal)]="modalAdd" [title]="'COMMON.MODAL.TITLE_CREATE'">
 
   <div class="form-group">
     <label class="form-label" for="add-email">Email Name</label>
@@ -58,5 +58,5 @@
             [disabled]="!newEmailName">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
   </div>
 
-</app-utility-modal>
+</umius-modal>
 <!-- /modal to add the new email -->

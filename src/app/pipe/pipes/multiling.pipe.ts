@@ -1,6 +1,6 @@
 import { Injectable, Pipe } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import {UmiusMultilingPipe} from '@umius/umi-common-component/pipe/multiling/multiling.pipe';
+import { UmiusMultilingPipe } from '@umius/umi-common-component';
 
 /**
  * UmiusMultilingPipe:

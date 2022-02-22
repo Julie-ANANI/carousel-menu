@@ -4,24 +4,21 @@ import { TranslateModule } from '@ngx-translate/core';
 import { FormsModule } from '@angular/forms';
 
 import { AdminEmailsLibraryComponent } from './admin-emails-library.component';
-
-import { SidebarModule } from '../../../../../sidebars/templates/sidebar/sidebar.module';
 import { SidebarWorkflowModule } from '../../../../../sidebars/components/sidebar-workflow/sidebar-workflow.module';
-import { ModalModule } from '../../../../../utility/modals/modal/modal.module';
 import { MessageTemplateModule } from '../../../../../utility/messages/message-template/message-template.module';
-import { TableComponentsModule } from '@umius/umi-common-component/table';
-@NgModule({
-    imports: [
-        CommonModule,
-        TranslateModule.forChild(),
-        FormsModule,
-        SidebarModule,
+import {ModalModule, SidebarFullModule, TableModule} from '@umius/umi-common-component';
 
-        SidebarWorkflowModule,
-        ModalModule,
-        MessageTemplateModule,
-        TableComponentsModule
-    ],
+@NgModule({
+  imports: [
+    CommonModule,
+    TranslateModule.forChild(),
+    FormsModule,
+    SidebarWorkflowModule,
+    MessageTemplateModule,
+    TableModule,
+    SidebarFullModule,
+    ModalModule,
+  ],
   declarations: [
     AdminEmailsLibraryComponent
   ],

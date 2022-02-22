@@ -5,9 +5,9 @@ import { FormsModule } from "@angular/forms";
 
 import { AdminLibrariesWorkflowsComponent } from "./admin-libraries-workflows.component";
 import { AdminEditWorkflowModule } from "../../admin-edit-workflow/admin-edit-workflow.module";
-import { ModalModule } from '../../../../../utility/modals/modal/modal.module';
 import { MessageErrorModule } from "../../../../../utility/messages/message-error/message-error.module";
 import { MessageTemplateModule } from "../../../../../utility/messages/message-template/message-template.module";
+import {ModalModule} from '@umius/umi-common-component';
 
 @NgModule({
   imports: [
@@ -15,9 +15,9 @@ import { MessageTemplateModule } from "../../../../../utility/messages/message-t
     TranslateModule.forChild(),
     AdminEditWorkflowModule,
     FormsModule,
-    ModalModule,
     MessageErrorModule,
-    MessageTemplateModule
+    MessageTemplateModule,
+    ModalModule
   ],
   declarations: [
     AdminLibrariesWorkflowsComponent

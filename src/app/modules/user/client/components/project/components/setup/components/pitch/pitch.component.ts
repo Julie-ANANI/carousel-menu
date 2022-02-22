@@ -25,7 +25,7 @@ import {EtherpadService} from '../../../../../../../../../services/etherpad/ethe
 import {MediaFrontService} from '../../../../../../../../../services/media/media-front.service';
 import {MissionQuestionService} from '../../../../../../../../../services/mission/mission-question.service';
 import {TranslateService} from '@ngx-translate/core';
-import {UmiusMediaInterface, UmiusSidebarInterface, UmiusVideoInterface} from '@umius/umi-common-component';
+import {UmiusMediaInterface, UmiusModalMedia, UmiusSidebarInterface, UmiusVideoInterface} from '@umius/umi-common-component';
 
 @Component({
   templateUrl: './pitch.component.html',
@@ -62,7 +62,7 @@ export class PitchComponent implements OnInit, OnDestroy {
 
   private _modalMedia = false;
 
-  private _selectedMedia: string;
+  private _selectedMedia: UmiusModalMedia = <UmiusModalMedia>{};
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _etherpadService: EtherpadService,
@@ -405,7 +405,10 @@ export class PitchComponent implements OnInit, OnDestroy {
 
   public mediaToShow(src: string) {
     this._modalMedia = true;
-    this._selectedMedia = src;
+    this._selectedMedia = {
+      active: true,
+      src: src
+    };
   }
 
   private _changesToSave() {
@@ -559,7 +562,7 @@ export class PitchComponent implements OnInit, OnDestroy {
   }
 
 
-  get selectedMedia(): string {
+  get selectedMedia(): UmiusModalMedia {
     return this._selectedMedia;
   }
 
