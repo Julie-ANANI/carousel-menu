@@ -58,27 +58,41 @@
 
       <!-- name -->
       <div class="m-right-10">
-        <!--default mode -->
-        <label>
-          <div class="falsePlaceholder"
-               (change)="emitChanges()">
-            {{('ADMIN_EXECUTIVE_REPORT.LIKERT-SCALE_SECTION.' + content.name) | uppercase| translate | titlecase }}
-          </div>
-        </label>
-        <!--end default mode -->
 
-        <!--edit custom mode -->
         <label>
           <input
-            (change)="emitChanges()"
+            (change)="onChangeName(contentName.value)"
             (keyup)="textColor('name');"
-            [(ngModel)]="content.name"
-            [attr.placeholder]="('ADMIN_EXECUTIVE_REPORT.LIKERT-SCALE_SECTION.' + content.name + '_ELEMENT') | uppercase| translate | titlecase"
+            [ngModel]="content.name"
+            #contentName
+            [attr.value]="('ADMIN_EXECUTIVE_REPORT.LIKERT-SCALE_SECTION.' + content.name) | uppercase| translate | titlecase"
             maxlength="20"
             class="form-input"
             type="text">
         </label>
-        <!--end custom mode-->
+<!--
+        Toujours afficher content.name tant que ce n'est pas modifié
+        afficher le nouveau content.name tant que ce n'est pas modifié
+
+         Select for score type of likert scale
+            <label class="m-right-20">
+              <select class="form-select is-sm"
+                      name="storyboard"
+                      [(ngModel)]="content.name"
+                      #contentName>
+                <option *ngFor="let type of colorsAndNames[name]| keyvalue;"
+                        [ngValue]="type.key">{{'ADMIN_EXECUTIVE_REPORT.LIKERT-SCALE_SECTION.' + type | uppercase | translate}}
+                </option>
+                <option>{{ 'ADMIN_EXECUTIVE_REPORT.LIKERT-SCALE_SECTION.TOTALLY_INVALIDATED'  | uppercase | translate }}</option>
+                <option>{{ 'ADMIN_EXECUTIVE_REPORT.LIKERT-SCALE_SECTION.INVALIDED' | uppercase | translate }}</option>
+                <option>{{ 'ADMIN_EXECUTIVE_REPORT.LIKERT-SCALE_SECTION.UNCERTAIN' | uppercase | translate }}</option>
+                <option>{{ 'ADMIN_EXECUTIVE_REPORT.LIKERT-SCALE_SECTION.VALIDATED' | uppercase | translate }}</option>
+                <option>{{ 'ADMIN_EXECUTIVE_REPORT.LIKERT-SCALE_SECTION.TOTALLY_VALIDATED' | uppercase | translate }}</option>
+              </select>
+            </label>
+         end select for score type of likert scale
+
+        Faire un select box-->
 
       </div>
       <!-- /name -->
@@ -140,26 +154,25 @@
       </p>
 
       <!--mode default-->
-      <div style="min-height: 30px">
-        <div
-          [ngStyle]="{ 'background-color': content.color }" class="label is-rounded">
+     <!-- <div style="min-height: 30px">
+        <div [ngStyle]="{ 'background-color': content.color }" class="label is-rounded">
           {{('ADMIN_EXECUTIVE_REPORT.LIKERT-SCALE_SECTION.' + content.name) | uppercase| translate}}
         </div>
+      </div>-->
+
+      <div style="min-height: 30px">
+        <ng-container *ngIf="!onChangeName"><div [ngStyle]="{ 'background-color': content.color }" class="label is-rounded">
+          {{('ADMIN_EXECUTIVE_REPORT.LIKERT-SCALE_SECTION.' + content.name) | uppercase| translate}}
+        </div></ng-container>
       </div>
       <!--end mode default -->
 
-      <!--mode custom -->
-      <div style="min-height: 30px">
-        <div
-          [ngStyle]="{ 'background-color': content.color }" class="label is-rounded">
-          {{('ADMIN_EXECUTIVE_REPORT.LIKERT-SCALE_SECTION.' + content.name + '_ELEMENT') | uppercase| translate | titlecase}}
-        </div>
+      <!-- mode custom-->
+      <div [ngStyle]="{ 'background-color': content.color }" class="label is-rounded"
+           style="min-height: 30px">
+        <ng-container *ngIf="content.name && onChangeName">{{ content.name | uppercase }}</ng-container>
       </div>
       <!--end mode custom -->
-
-
-
-
 
     </div>
 

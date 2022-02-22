@@ -64,7 +64,7 @@
             <ng-container *ngIf="question.controlType === 'likert-scale'">
               <div class="d-flex">
                 <label class="m-right-20">
-                  <select name="test"
+                  <select
                           (change)="notifyChanges()"
                           (ngModelChange)="onChangeTypeLikertScale($event)"
                           [(ngModel)]="question.attitudeMeasure"

@@ -65,6 +65,11 @@ export class TypeLikertScaleComponent {
     }
   }
 
+  public onChangeName(value: string) {
+    this._content.name = value;
+    this.emitChanges();
+  }
+
 
   public onClickPlay(event: Event) {
     event.preventDefault();
@@ -77,10 +82,6 @@ export class TypeLikertScaleComponent {
     this._content.name = this._colorsAndNames[index].name;
     this.emitChanges();
   }
-
-  /*public checkVisibility(index: number) {
-    this._content.name[index].visibility = this._content.name[index].name !== '';
-  }*/
 
   get section(): ExecutiveSection {
     return this._section;
