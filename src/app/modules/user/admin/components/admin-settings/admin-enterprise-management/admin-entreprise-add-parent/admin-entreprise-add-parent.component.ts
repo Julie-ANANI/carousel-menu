@@ -430,21 +430,23 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
   }
 
   addReplaceStyle(c: Column) {
-    /*c._color = '#00B0FF';
-    c._isReplaceable = true;
-    c._isFilled = false;*/
+    c._textColorConfig = {
+      color: '#00B0FF',
+      condition: 'replace',
+      icon: 'fa-regular fa-right-left'
+    }
   }
 
   addFilledStyle(c: Column) {
-    /*c._isFilled = true;
-    c._isReplaceable = true;
-    c._color = '#EA5858';*/
+    c._textColorConfig = {
+      color: '#EA5858',
+      condition: 'fill',
+      icon: 'fa-solid fa-arrows-rotate'
+    }
   }
 
   removeStyle(c: Column) {
-    /*c._color = '';
-    c._isReplaceable = undefined;
-    c._isFilled = undefined;*/
+    delete c._textColorConfig;
   }
 
   returnTo(event: Event) {

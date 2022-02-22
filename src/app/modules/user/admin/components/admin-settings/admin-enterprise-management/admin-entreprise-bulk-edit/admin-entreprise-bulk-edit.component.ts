@@ -1,16 +1,22 @@
-import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { Router } from '@angular/router';
 import { RolesFrontService } from '../../../../../../../services/roles/roles-front.service';
 import { EnterpriseService } from '../../../../../../../services/enterprise/enterprise.service';
 import { first } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
 import { NotificationsService } from 'angular2-notifications';
-import { EnterpriseSizeList, EnterpriseTypes, EnterpriseValueChains, Industries } from '../../../../../../../models/static-data/enterprise';
-import {Column, Table, UmiusAutoSuggestionInterface, UmiusConfigInterface} from '@umius/umi-common-component';
+import {
+  EnterpriseSizeList,
+  EnterpriseTypes,
+  EnterpriseValueChains,
+  Industries
+} from '../../../../../../../models/static-data/enterprise';
+import { Column, Table, UmiusAutoSuggestionInterface, UmiusConfigInterface } from '@umius/umi-common-component';
 
 @Component({
   templateUrl: './admin-entreprise-bulk-edit.component.html',
-  styleUrls: ['./admin-entreprise-bulk-edit.component.scss']
+  styleUrls: ['./admin-entreprise-bulk-edit.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class AdminEntrepriseBulkEditComponent implements OnInit {
@@ -89,6 +95,7 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _rolesFrontService: RolesFrontService,
               private _router: Router,
+              private _changeDetectorRef: ChangeDetectorRef,
               private _notificationService: NotificationsService,
               private _enterpriseService: EnterpriseService) {
   }
@@ -346,6 +353,7 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
       });
       const columnToUpdate = this._companiesTable._columns.find(c => c._name === name);
       this.addStyleToColumn(columnToUpdate);
+      this._changeDetectorRef.markForCheck();
     }
   }
 
@@ -362,6 +370,7 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
       }
       const columnToUpdate = this._companiesTable._columns.find(c => c._name === name);
       this.removeStyleToColumn(columnToUpdate);
+      this._changeDetectorRef.markForCheck();
     } else {
       this._companiesTable._content.map(item => {
         item[attr] = value;
@@ -370,11 +379,7 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
   }
 
   removeStyleToColumn(c: Column) {
-    c._textColorConfig = {
-      color: '',
-      condition: '',
-      icon: ''
-    }
+    delete c._textColorConfig
   }
 
   addStyleToColumn(c: Column) {
