@@ -39,6 +39,10 @@ RUN rm -rf e2e/
 RUN rm -rf doc/
 RUN rm CHANGELOG.md
 RUN rm README.md
+RUN rm -rf node_modules/
+RUN rm tsconfig.app.json
+RUN rm tsconfig.server.json
+RUN rm tsconfig.skipTests.json
 
 
 EXPOSE  3080
