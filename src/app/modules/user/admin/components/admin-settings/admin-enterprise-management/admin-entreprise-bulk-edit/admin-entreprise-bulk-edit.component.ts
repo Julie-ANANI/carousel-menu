@@ -285,14 +285,15 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
 
   /**
    * initialize table states after updated
-   * TODO check with @WEI
    */
   removeFillTemplate() {
-    /*this.companiesTable._columns.map(c => {
-      c._color = '';
-      c._isFilled = undefined;
-      c._isReplaceable = undefined;
-    });*/
+    this.companiesTable._columns.map(c => {
+      c._textColorConfig = {
+        color: '',
+        condition: '',
+        icon: ''
+      }
+    });
     this._companiesOriginalTable = JSON.parse(JSON.stringify(this._companiesTable));
   }
 
@@ -369,15 +370,19 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
   }
 
   removeStyleToColumn(c: Column) {
-    /*c._color = '';
-    c._isFilled = undefined;
-    c._isReplaceable = undefined;*/
+    c._textColorConfig = {
+      color: '',
+      condition: '',
+      icon: ''
+    }
   }
 
   addStyleToColumn(c: Column) {
-    /*c._color = '#EA5858';
-    c._isFilled = true;
-    c._isReplaceable = false;*/
+    c._textColorConfig = {
+      color: '#EA5858',
+      condition: 'fill',
+      icon: 'fa-solid fa-arrows-rotate'
+    }
   }
 
   geoZoneUpdate($event: any) {
