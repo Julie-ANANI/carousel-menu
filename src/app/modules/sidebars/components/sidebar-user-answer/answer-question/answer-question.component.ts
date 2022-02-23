@@ -87,19 +87,13 @@ export class AnswerQuestionComponent {
 
   public selectOption(event: Event, option: any) {
 
-    //TODO ENLEVR LE EDITMOD SUR L'APERÇU
-
     event.preventDefault();
     this.emitChanges();
 
     if (option.identifier === this.fullAnswer.answers[this.question.identifier]) {
-      console.table(this.fullAnswer.answers[this.question.identifier]);
-      console.table(option.identifier);
       this.fullAnswer.answers[this.question.identifier] = true;
 
     } else if (option.identifier !== this.fullAnswer.answers[this.question.identifier]){
-      console.table(this.fullAnswer.answers[this.question.identifier]);
-      console.table(option.identifier);
       this.fullAnswer.answers[this.question.identifier] = option.identifier;
     }
 
