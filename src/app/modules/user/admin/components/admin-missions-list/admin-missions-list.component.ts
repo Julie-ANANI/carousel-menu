@@ -59,6 +59,7 @@ export class AdminMissionsListComponent implements OnInit {
         _isSelectable: true,
         _isSearchable: true,
         _isPaginable: true,
+        _paginationTemplate: 'TEMPLATE_1',
         _isTitle: true,
         _columns: [
           {_attrs: ['name'], _name: 'COMMON.MISSIONS', _type: 'TEXT', _isSearchable: true, _isSortable: true},

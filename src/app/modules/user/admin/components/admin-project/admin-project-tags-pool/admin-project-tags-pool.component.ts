@@ -75,6 +75,7 @@ export class AdminProjectTagsPoolComponent implements OnInit, OnDestroy {
       _total: this._total,
       _isLocal: true,
       _isPaginable: true,
+      _paginationTemplate: 'TEMPLATE_1',
       _isNoMinHeight: this._total < 11,
       _isDeletable: this.canAccess(['delete']),
       _isSelectable: this.canAccess(['delete']),

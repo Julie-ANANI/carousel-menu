@@ -72,6 +72,7 @@ export class SidebarSearchToolComponent {
         _isTitle: true,
         _clickIndex: 1,
         _isPaginable: true,
+        _paginationTemplate: 'TEMPLATE_1',
         _columns: [
           {_attrs: ['keywords'], _name: 'Keywords', _type: 'TEXT', _isSortable: true, _isSearchable: true},
           {_attrs: ['user'], _name: 'TABLE.HEADING.OWNER', _type: 'TEXT', _isSearchable: true, _isSortable: true},

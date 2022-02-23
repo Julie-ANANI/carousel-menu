@@ -151,6 +151,7 @@ export class AdminEnterpriseManagementComponent implements OnInit {
       _isSearchable: !!this.canAccess(['searchBy']),
       _isSelectable: true,
       _isPaginable: total > 10,
+      _paginationTemplate: 'TEMPLATE_1',
       _actions: this._customButtons,
       _isDeletable: this.canAccess(['delete']),
       _isNoMinHeight: total < 11,

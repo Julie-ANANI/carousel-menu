@@ -184,6 +184,7 @@ export class SidebarBlacklistComponent implements OnInit {
         _content: this._campaignInfosToShow.payload.recipients,
         _total: this._campaignInfosToShow.payload.recipients.length,
         _isLocal: true,
+        _paginationTemplate: 'TEMPLATE_1',
         _isPaginable: this._campaignInfosToShow.payload.recipients.length > 10,
         _columns: [
           {_attrs: ['firstName', 'lastName'], _name: 'Name', _type: 'TEXT'},

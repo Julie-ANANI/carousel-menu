@@ -43,6 +43,7 @@ export class ShowcaseHistoryComponent implements OnInit {
     _isSelectable: true,
     _clickIndex: 1,
     _isPaginable: true,
+    _paginationTemplate: 'TEMPLATE_1',
     _columns: [
       {_attrs: ['name'], _name: 'TABLE.HEADING.NAME', _type: 'TEXT', _isSortable: true, _isSearchable: true},
       {

@@ -761,6 +761,7 @@ export class AdminProjectsComponent implements OnInit {
       _isTitle: true,
       _clickIndex: this.canAccess(['project', 'tabs']) ? 1 : null,
       _isPaginable: true,
+      _paginationTemplate: 'TEMPLATE_1',
       _isNoMinHeight: true,
       _columns: this._setColumnOrderForUser()
     };

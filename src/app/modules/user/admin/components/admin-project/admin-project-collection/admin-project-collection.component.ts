@@ -305,12 +305,12 @@ export class AdminProjectCollectionComponent implements OnInit, OnDestroy {
       _content: answers,
       _total: totalAnswers,
       _isPaginable: true,
+      _paginationTemplate: 'TEMPLATE_1',
       _isTitle: true,
       _isLocal: true,
       _hasCustomFilters: true,
       _isNoMinHeight: totalAnswers < 11,
-      _clickIndex:
-        this.canAccess(['view']) || this.canAccess(['edit']) ? 1 : null,
+      _clickIndex: 1,
       _isSearchable:
         !!this.canAccess(['searchBy']) || !!this.canAccess(['filterBy']),
       _isSelectable: this.canAccess(['validate']) || this.canAccess(['reject']),

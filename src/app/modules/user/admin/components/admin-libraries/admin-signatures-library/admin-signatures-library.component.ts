@@ -76,6 +76,7 @@ export class AdminSignaturesLibraryComponent {
       _isDeletable: true,
       _isSelectable: true,
       _isPaginable: true,
+      _paginationTemplate: 'TEMPLATE_1',
       _isTitle: true,
       _clickIndex: 1,
       _isNoMinHeight: true,

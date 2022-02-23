@@ -100,6 +100,7 @@ export class AdminPresetsListComponent implements OnInit {
       _isDeletable: this.canAccess(['delete']),
       _isSelectable: this.canAccess(['delete']) || this.canAccess(['clone']),
       _isPaginable: true,
+      _paginationTemplate: 'TEMPLATE_1',
       _isTitle: true,
       _clickIndex: this.canAccess(['edit']) || this.canAccess(['view']) ? 1 : null,
       _isNoMinHeight: this._total < 11,

@@ -65,6 +65,7 @@ export class AdminCommunityProjectsComponent implements OnInit {
       _clickIndex: 1,
       _isLocal: true,
       _isPaginable: true,
+      _paginationTemplate: 'TEMPLATE_1',
       _columns: [
         {_attrs: ['innovation.name'], _name: 'TABLE.HEADING.PROJECTS', _type: 'TEXT'},
         {_attrs: ['nbAmbassadors', 'nbRecAmbassadors'], _name: 'Ambassador count / Suggested', _type: 'MULTI-LABEL',

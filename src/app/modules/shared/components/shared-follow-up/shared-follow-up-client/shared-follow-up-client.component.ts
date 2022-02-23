@@ -176,6 +176,7 @@ export class SharedFollowUpClientComponent implements OnDestroy {
       _clickIndex: 1,
       _isSelectable: this._startContactProcess,
       _isPaginable: true,
+      _paginationTemplate: 'TEMPLATE_1',
       _isLocal: true,
       _isNoMinHeight: answers.length < 11,
       _isRowDisabled: (answer: Answer) => SharedFollowUpClientComponent._isRowDisabled(answer),

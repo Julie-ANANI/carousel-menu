@@ -123,6 +123,7 @@ export class SharedProfessionalsListComponent {
       _isSearchable: !!this.canAccess(['searchBy']),
       _isTitle: true,
       _isPaginable: true,
+      _paginationTemplate: 'TEMPLATE_1',
       _buttons: this.tableSelector === 'admin-campaign-pros-limit' ? [
         {
           _label: 'Filter by country',

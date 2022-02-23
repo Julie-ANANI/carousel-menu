@@ -100,6 +100,7 @@ export class AdminUsersComponent implements OnInit {
       _isSelectable: this.canAccess(['user', 'delete']),
       _isTitle: true,
       _isPaginable: true,
+      _paginationTemplate: 'TEMPLATE_1',
       _clickIndex: this.canAccess(['user', 'view']) || this.canAccess(['user', 'edit']) ? 1 : null,
       _columns: [
         {

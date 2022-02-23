@@ -102,6 +102,7 @@ export class AdminUseCasesLibraryComponent implements OnInit {
       _clickIndex: 1,
       _isNoMinHeight: true,
       _isPaginable: true,
+      _paginationTemplate: 'TEMPLATE_1',
       _columns: [
         {
           _attrs: ['name'],

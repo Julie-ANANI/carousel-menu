@@ -117,6 +117,7 @@ export class ExplorationComponent implements OnInit, OnDestroy {
         _clickIndex: 1,
         _isLocal: true,
         _isPaginable: true,
+        _paginationTemplate: 'TEMPLATE_1',
         _columns: [
           {_attrs: ['job'], _name: 'TABLE.HEADING.JOB_TITLE', _type: 'TEXT'}
         ]
@@ -129,6 +130,7 @@ export class ExplorationComponent implements OnInit, OnDestroy {
         _clickIndex: 1,
         _isLocal: true,
         _isPaginable: true,
+        _paginationTemplate: 'TEMPLATE_1',
         _columns: [
           {_attrs: ['professional.firstName', 'professional.lastName'], _name: 'TABLE.HEADING.NAME', _type: 'TEXT'},
           {_attrs: ['job'], _name: 'TABLE.HEADING.JOB_TITLE', _type: 'TEXT'},

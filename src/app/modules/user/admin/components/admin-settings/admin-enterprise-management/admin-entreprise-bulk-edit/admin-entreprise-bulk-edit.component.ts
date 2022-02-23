@@ -114,6 +114,7 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
       _isTitle: true,
       _isPaginable: this.companiesToEdit.length > 10,
       _isNoMinHeight: this.companiesToEdit.length < 11,
+      _paginationTemplate: 'TEMPLATE_1',
       _columns:
         [
           {

@@ -68,6 +68,7 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
       _isTitle: true,
       _isLegend: true,
       _isPaginable: this.companiesToAddParent.length > 10,
+      _paginationTemplate: 'TEMPLATE_1',
       _isNoMinHeight: this.companiesToAddParent.length < 11,
       _columns: [
         {
