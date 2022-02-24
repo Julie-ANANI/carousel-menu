@@ -444,7 +444,7 @@
                   <!--                  </div>-->
                 </div>
 
-                <div class="m-top-15">
+                <div class="m-top-15 m-left-10">
                   <ng-container *ngIf="!isAddMilestone; else addMileStone">
                     <div>
                       <button
@@ -469,10 +469,18 @@
                       class="form-input is-xs"
                       type="date">
                   </div>
-                  <button class="button is-primary is-circled m-left-auto is-xxs"
+                  <button class="button is-primary is-circled m-left-auto"
+                          style="width: 20px;
+                                 height: 20px;
+                                 margin-bottom: 8px;
+                                 padding: 2px;"
                           type="submit"
                           [disabled]="milestoneForm.invalid"><i class="fas fa-check"></i></button>
-                  <button class="button is-danger is-circled m-left-auto is-xxs"
+                  <button class="button is-danger is-circled m-left-auto"
+                          style="width: 20px;
+                                 height: 20px;
+                                 margin-bottom: 8px;
+                                 padding: 2px;"
                           type="button"
                           (click)="cancelAddMileStone($event)"><i
                     class="fas fa-times"></i></button>

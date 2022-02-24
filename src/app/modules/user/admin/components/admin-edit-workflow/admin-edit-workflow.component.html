@@ -24,13 +24,12 @@
     </div>
 
     <div
+      class="text-link"
       *ngIf="innovationCardLanguages && innovationCardLanguages.indexOf('en') !== -1"
       (click)="changeLanguage('en')"
-      [ngClass]="{ 'active': language === 'en' }"
-      class="text-link">
+      [ngClass]="{ 'active': language === 'en' }">
       English
     </div>
-
 
     &nbsp;&nbsp;<span *ngIf="innovationCardLanguages && innovationCardLanguages.length===2">|</span>
 
