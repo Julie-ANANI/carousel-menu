@@ -54,7 +54,6 @@ export class AdminUsersComponent implements OnInit {
               private _rolesFrontService: RolesFrontService,
               private _translateNotificationsService: TranslateNotificationsService) {
     this._translateTitleService.setTitle('Users');
-
   }
 
   ngOnInit(): void {
