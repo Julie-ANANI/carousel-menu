@@ -57,7 +57,8 @@
           <li (click)="selectQuestionType('KPI')" [ngClass]="{ 'inactive': !section.questionIdentifier }">
             KPI
           </li>
-          <li (click)="selectQuestionType('LIKERT-SCALE')" [ngClass]="{ 'inactive': !enableVisualLikertScale }">
+      <!--    <li (click)="selectQuestionType('LIKERT-SCALE')" [ngClass]="{ 'inactive': !enableVisualLikertScale }">-->
+          <li (click)="selectQuestionType('LIKERT-SCALE')" [ngClass]="{ 'inactive': !section.questionIdentifier }">
             Likert scale
           </li>
         </ul>
@@ -140,7 +141,8 @@
           (playSection)="onClickPlay(section)"
           (sectionChange)="onSectionUpdate($event)"
           [isEditable]="isEditable"
-          [section]="section">
+          [section]="section"
+          [questions]="questions">
         </app-admin-section-type-likert-scale>
       </div>
       <!-- /type LIKERT-SCALE -->

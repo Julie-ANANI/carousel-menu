@@ -9,7 +9,6 @@ import { PieChart } from '../../../../../../models/chart/pie-chart';
 import { ExecutiveReportFrontService } from '../../../../../../services/executive-report/executive-report-front.service';
 import {MissionQuestion} from '../../../../../../models/mission';
 import {MissionQuestionService} from '../../../../../../services/mission/mission-question.service';
-import {Tag} from '../../../../../../models/tag';
 
 @Component({
   selector: 'app-admin-executive-section',
@@ -24,6 +23,10 @@ export class ExecutiveSectionComponent {
   @Input() answers: Array<Answer> = [];
   @Input() reportLang: 'en';
   @Input() sectionIndex = 0;
+
+ /* get questions(): Array<Question | MissionQuestion> {
+    return this._questions;
+  }*/
 
   @Input() set section(value: ExecutiveSection) {
     this._section = {
@@ -43,6 +46,21 @@ export class ExecutiveSectionComponent {
   private _enableVisualRanking = false;
   private _enableVisualPie = false;
   private _enableVisualLikertScale = false;
+  //private _question: Question | MissionQuestion = <Question>{};
+  //private _question: Question | MissionQuestion = <MissionQuestion | Question>{};
+
+
+/*
+
+  @Input() set question(value: Question | MissionQuestion) {
+    this._question = value;
+  }
+
+  @Output() questionChanged = new EventEmitter<Question>();
+
+
+*/
+
 
   private _resetVisuals() {
     this._enableVisualBar = false;
@@ -145,8 +163,8 @@ export class ExecutiveSectionComponent {
         case 'LIKERT-SCALE':
           if (this._enableVisualLikertScale) {
             this._section.questionType = type;
-            this._initializeSection();
-            // this.emitChanges();
+             this._initializeSection();
+             this.emitChanges();
           }
           break;
 
@@ -290,20 +308,26 @@ export class ExecutiveSectionComponent {
       const question: Question | MissionQuestion = this._getQuestion(this._section.questionIdentifier);
       const answers: Array<Answer> = this._responseService.answersToShow(this.answers, question);
       this._section.title = MissionQuestionService.label(question, 'title', this.reportLang);
-      let data: Array<Tag> = [];
+      let data;
+      //let data: Array<Tag> = [];
 
-      if (question.controlType !== 'likert-scale') {
+      //version ahbi
+     /* if (question.controlType !== 'likert-scale') {
         data = ResponseService.tagsList(answers, question);
       }
-
       this._section.content = this._executiveReportFrontService.likertScaleSection(data, this.reportLang);
-
+*/
+      //ancienne version
       if (question.controlType === 'likert-scale') {
         data = ResponseService.likertScaleChartData(answers, question, this.reportLang);
-
-      } else {
+        this._section.content = this._executiveReportFrontService.likertScaleSection(data, this.reportLang);
+      /*} else {
 
         this._section.content = this._executiveReportFrontService.likertScaleSection(data, this.reportLang);
+*/
+      } else {
+        data = ResponseService.tagsList(answers, question);
+        this._section.content = this._executiveReportFrontService.likertScaleTagsSection(data, this.reportLang);
       }
     }
   }
@@ -358,6 +382,10 @@ export class ExecutiveSectionComponent {
   get enableVisualLikertScale(): boolean {
     return this._enableVisualLikertScale;
   }
+
+  /*get question(): Question | MissionQuestion {
+    return this._question;
+  }*/
 
 }
 

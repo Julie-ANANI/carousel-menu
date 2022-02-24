@@ -6,14 +6,9 @@ import {
 import {CommonService} from '../../../../../../../services/common/common.service';
 import colorsAndNames from '../../../../../../../../../assets/json/likert-scale_executive-report.json';
 import {Subject} from 'rxjs';
-import {takeUntil} from 'rxjs/operators';
-import {Answer} from '../../../../../../../models/answer';
-import {ResponseService} from '../../../../../../shared/components/shared-market-report/services/response.service';
-import {DataService} from '../../../../../../shared/components/shared-market-report/services/data.service';
 import {Question} from '../../../../../../../models/question';
-import _ from 'lodash';
-import {MissionQuestionService} from '../../../../../../../services/mission/mission-question.service';
 import {TranslateService} from '@ngx-translate/core';
+import {MissionQuestion} from '../../../../../../../models/mission';
 
 
 @Component({
@@ -24,12 +19,25 @@ import {TranslateService} from '@ngx-translate/core';
 
 export class TypeLikertScaleComponent implements OnInit, OnDestroy {
 
-  ngOnInit(): void {
-    this._liker = this.getLikertText(this._label);
-    this._createChart();
-  }
+  /* Le problème c'est que je lui passe une question alors qu'il ne le récupère pas */
 
-  @Input() question: Question = <Question>{};
+  //@Input() question: any;
+  /*@Input() set question( value: Question | MissionQuestion ) {
+    this._question = value;
+  }*/
+
+  @Input() questions: Array<Question | MissionQuestion> = [];
+
+  /*get questions(): Array<Question | MissionQuestion> {
+    return this._questions;
+  }
+*/
+
+ // private _questions: Array<Question | MissionQuestion> = [];
+
+
+
+
   @Input() reportingLang = this._translateService.currentLang;
   @Input() isEditable = false;
 
@@ -46,6 +54,9 @@ export class TypeLikertScaleComponent implements OnInit, OnDestroy {
   @Output() sectionChange: EventEmitter<ExecutiveSection> = new EventEmitter<ExecutiveSection>();
   @Output() playSection: EventEmitter<void> = new EventEmitter<void>();
 
+  //@Output() question = new EventEmitter<Question>();
+
+  //private _question: Question | MissionQuestion = <MissionQuestion | Question>{};
 
   private _ngUnsubscribe: Subject<any> = new Subject<any>();
   private _colorsAndNames = colorsAndNames;
@@ -53,7 +64,9 @@ export class TypeLikertScaleComponent implements OnInit, OnDestroy {
   private _titleColor = '';
   private _abstractColor = '';
   private _legendColor = '';
-  private _liker = '';
+  private _nameColor = '';
+
+  //private _liker = '';
   private _label: any = 'VALIDATED'
 
   private _content: SectionLikertScale = {
@@ -62,34 +75,44 @@ export class TypeLikertScaleComponent implements OnInit, OnDestroy {
     color: this._colorsAndNames[2].color
   };
 
-  private _stackedChart: {
+ /* private _stackedChart: {
     likertScaleChart: object[],
     averageGeneralEvaluation?: number
   };
+*/
+  private _scorePercentage: number = 0;
 
-  constructor ( private _dataService: DataService,
-                private _translateService: TranslateService ) {
+  constructor ( //private _dataService: DataService,
+                private _translateService: TranslateService ) {}
+
+  ngOnInit(): void {
+    this._label = this.getLikertText(this._content.name);
+   // this._createChart();
+
+   // setTimeout(() => { console.log('question is:',this._question) });
+
   }
 
+/*  private _createChart() {
+   console.log(this.questions);
+    this._dataService.getAnswers(this.question).pipe(takeUntil(this._ngUnsubscribe)).subscribe((answers: Array<Answer>) => {
+      this._stackedChart = ResponseService.likertScaleChartData(answers, this.question, this.reportingLang);
+      const averageGeneralEvaluation = this._stackedChart.averageGeneralEvaluation || 0;
 
-  private _createChart() {
-    this._dataService.getAnswers(this.question).pipe(takeUntil(this._ngUnsubscribe))
+      // Choose which score label to display
+      const index = (averageGeneralEvaluation - averageGeneralEvaluation % 4) / 4; // will give 0,1,2,3,4
+      const scorePercentage = (averageGeneralEvaluation * 98) / 20; // will give margin percentage for the pointer of marker
 
-      .subscribe((answers: Array<Answer>) => {
-        this._stackedChart = ResponseService.likertScaleChartData(answers, this.question, this.reportingLang);
-        const averageGeneralEvaluation = this._stackedChart.averageGeneralEvaluation || 0;
+      this._scorePercentage = scorePercentage;
+      this._content.name = this._colorsAndNames[index].name;
+      this._content.color = this._colorsAndNames[index].color;
+    });
+  }*/
 
-        // Choose which score label to display
-        const index = (averageGeneralEvaluation - averageGeneralEvaluation % 4) / 4; // will give 0,1,2,3,4
-        this._label = this._colorsAndNames[index].name;
-        this._content.color = this._colorsAndNames[index].color;
-      });
-  }
-
-  public optionLabel(identifier: string) {
+ /* public optionLabel(identifier: string) {
     const option = _.find(this.question.options, (option: any) => option.identifier === identifier);
     return MissionQuestionService.label(option, 'label', this.reportingLang);
-  }
+  }*/
 
   public emitChanges() {
     if (this.isEditable) {
@@ -113,12 +136,14 @@ export class TypeLikertScaleComponent implements OnInit, OnDestroy {
       case 'legend':
           this._legendColor = CommonService.getLimitColor(this._content && this._content.legend, 13);
         break;
+      case 'name':
+        this._nameColor = CommonService.getLimitColor(this._content && this._content.name, 20);
     }
   }
 
   public changeValueLabel (event: string) {
-    // this._label = event;
-    // this._liker = this.getLikertText(event);
+    this._content.name = event;
+    this._label= this.getLikertText(event);
   }
 
   public getLikertText(name: string) {
@@ -128,7 +153,8 @@ export class TypeLikertScaleComponent implements OnInit, OnDestroy {
     {
       return name;
     }else{
-      const translate = 'ADMIN_EXECUTIVE_REPORT.LIKERT-SCALE_SECTION.'
+      //const translate = 'ADMIN_EXECUTIVE_REPORT.LIKERT-SCALE_SECTION.'
+      const translate = 'MARKET_REPORT.LIKERT-SCALE_SECTION.'
       return translate + name.toUpperCase();
     }
   }
@@ -140,7 +166,8 @@ export class TypeLikertScaleComponent implements OnInit, OnDestroy {
 
   public chooseColor(index: number) {
     this._content.color = this._colorsAndNames[index].color;
-    this._content.name = this._colorsAndNames[index].name;
+   // this._label = this._colorsAndNames[index].name;
+    this.content.name = this._colorsAndNames[index].name;
     this.emitChanges();
   }
 
@@ -172,9 +199,21 @@ export class TypeLikertScaleComponent implements OnInit, OnDestroy {
     return this._label;
   }
 
-  get liker(): string {
+  /*get liker(): string {
     return this._liker;
+  }*/
+
+  get nameColor():string {
+    return this._nameColor;
   }
+
+  get scorePercentage(): number {
+    return this._scorePercentage;
+  }
+
+  /*get question(): Question | MissionQuestion {
+    return this._question;
+  }*/
 
   ngOnDestroy(): void {
     this._ngUnsubscribe.next();

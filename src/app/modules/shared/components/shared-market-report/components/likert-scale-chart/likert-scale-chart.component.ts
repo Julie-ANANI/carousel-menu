@@ -56,9 +56,7 @@ export class LikertScaleChartComponent implements OnInit, OnDestroy {
 
 
   private _createChart() {
-    this._dataService.getAnswers(this.question).pipe(takeUntil(this._ngUnsubscribe))
-
-      .subscribe((answers: Array<Answer>) => {
+    this._dataService.getAnswers(this.question).pipe(takeUntil(this._ngUnsubscribe)).subscribe((answers: Array<Answer>) => {
         this._stackedChart = ResponseService.likertScaleChartData(answers, this.question, this.reportingLang);
         const averageGeneralEvaluation = this._stackedChart.averageGeneralEvaluation || 0;
 
@@ -67,7 +65,7 @@ export class LikertScaleChartComponent implements OnInit, OnDestroy {
         const scorePercentage = (averageGeneralEvaluation * 98) / 20; // will give margin percentage for the pointer of marker
 
         this._scorePercentage = scorePercentage;
-        this._label = this._colorsAndNames[index].name;
+        this._content.name = this._colorsAndNames[index].name;
         this._content.color = this._colorsAndNames[index].color;
       });
   }
@@ -96,6 +94,7 @@ export class LikertScaleChartComponent implements OnInit, OnDestroy {
   get scorePercentage(): number {
     return this._scorePercentage;
   }
+
 
   ngOnDestroy(): void {
     this._ngUnsubscribe.next();

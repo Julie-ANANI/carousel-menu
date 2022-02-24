@@ -271,20 +271,11 @@ export class ExecutiveReportFrontService {
 
   /***
    * this returns the content of the Section LIKERT-SCALE
-   * @param tagsData
+   * @param likertScaleData
    * @param lang
    * @type SectionLikertScale
    */
-  public likertScaleSection(tagsData?: Array<Tag>, lang?: string): SectionLikertScale {
-
-    if (tagsData && tagsData.length) {
-      return {
-        color: '#BBC7D6',
-        legend:  tagsData[0].count + 'X',
-        name: this._multilingPipe.transform(tagsData[0].label, lang),
-        visibility: tagsData[0].count > 0
-      };
-    }
+  public likertScaleSection(likertScaleData: LikertScaleChart, lang: string): SectionLikertScale {
 
     return {
       color: '#BBC7D6',
@@ -292,6 +283,7 @@ export class ExecutiveReportFrontService {
       name: 'UNCERTAIN',
       visibility: false
     };
+
   }
 
   /***
