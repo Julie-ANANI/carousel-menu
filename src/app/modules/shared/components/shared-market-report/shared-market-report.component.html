@@ -1,12 +1,14 @@
 <div class="shared-market-report" id="shared-market-report">
 
   <!-- project status not submitted admin side -->
-  <section *ngIf="innovation.status === 'EDITING' && adminSide" class="p-top-50 p-bottom-30 p-left-15 p-right-15">
-    <app-message-template [widthMax]="'337px'">
-      The client hasn't submitted the project yet. You will be able to edit the market report after
-      he submits his project.
-    </app-message-template>
-  </section>
+  <ng-container *ngIf="innovation.status === 'EDITING' && adminSide">
+    <div class="p-top-50 p-bottom-30 p-left-15 p-right-15">
+      <app-message-template widthMax="337px">
+        The client hasn't submitted the project yet. You will be able to edit the market report after
+        he submits his project.
+      </app-message-template>
+    </div>
+  </ng-container>
   <!-- /project status not submitted admin side -->
 
   <!-- project status done or preview mode or not editing -->
@@ -19,18 +21,21 @@
         <!-- sidebar -->
         <aside style="max-width: 297px" class="sidebar-wrapper">
           <umius-sidebar-inline [(template)]="leftSidebarTemplateValue">
-            <app-sidebar-filter-answers
-              *ngIf="displayFilters"
-              [answers]="answers"
-              [innovation]="innovation"
-              [isAdminSide]="adminSide"
-              [isOwner]="isOwner"
-              [isViewsEditable]="canAccess(['edit', 'views']) || !adminSide"
-              [questions]="questions"
-              [reportingLang]="reportingLang"
-              [templateType]="leftSidebarTemplateValue.type">
-            </app-sidebar-filter-answers>
-            <div *ngIf="!displayFilters" class="m-top-30 loading is-lg is-primary"></div>
+            <ng-container *ngIf="displayFilters; else displayLoader">
+              <app-sidebar-filter-answers
+                [answers]="answers"
+                [innovation]="innovation"
+                [isAdminSide]="adminSide"
+                [isOwner]="isOwner"
+                [isViewsEditable]="canAccess(['edit', 'views']) || !adminSide"
+                [questions]="questions"
+                [reportingLang]="reportingLang"
+                [templateType]="leftSidebarTemplateValue.type">
+              </app-sidebar-filter-answers>
+            </ng-container>
+            <ng-template #displayLoader>
+              <div class="m-top-30 loading is-lg is-primary"></div>
+            </ng-template>
           </umius-sidebar-inline>
         </aside>
         <!-- /sidebar -->
@@ -38,31 +43,38 @@
         <!-- answers section -->
         <div class="content-wrapper">
 
-          <div *ngIf="areAnswersLoading" class="m-top-50 loading is-lg is-primary"></div>
+          <!-- loading data -->
+          <ng-container *ngIf="areAnswersLoading">
+            <div class="m-top-50 loading is-lg is-primary"></div>
+          </ng-container>
+          <!-- /loading data -->
 
           <!-- synthesis reporting lang -->
-          <div *ngIf="!areAnswersLoading && adminSide"
-               class="d-flex flex-d-row align-center justify-end dropdown w-full m-top-15 is-right">
-            <span class="text-sm text-draft m-right-4">{{ 'MARKET_REPORT.RESTITUTION_LANG' | translateIn: reportingLang }}</span>
-            <a class="button dropdown-toggle is-info is-sm is-outlined" tabindex="0">
-              {{ 'COMMON.LANG.' + reportingLang | uppercase | translateIn: reportingLang }} <i class="icon icon-caret"></i>
-            </a>
-            <ul class="menu">
-              <li (click)="setNewSelectedLang('fr')" *ngIf="reportingLang === 'en'" class="menu-item">
-                {{ 'COMMON.LANG.FR' | translateIn: reportingLang }}
-              </li>
-              <li (click)="setNewSelectedLang('en')" *ngIf="reportingLang === 'fr'" class="menu-item">
-                {{ 'COMMON.LANG.EN' | translateIn: reportingLang }}
-              </li>
-            </ul>
-          </div>
+          <ng-container *ngIf="!areAnswersLoading && adminSide">
+            <div class="d-flex flex-d-row align-center justify-end dropdown w-full m-top-15 is-right">
+              <span class="text-13 m-right-4">
+                {{ 'MARKET_REPORT.RESTITUTION_LANG' | translateIn: reportingLang }}
+              </span>
+              <a class="button dropdown-toggle has-no-min-width is-info is-xs is-outlined" tabindex="0">
+                {{ 'COMMON.LANG.' + reportingLang | uppercase | translateIn: reportingLang }}
+                <i class="icon icon-caret"></i>
+              </a>
+              <ul class="menu">
+                <li (click)="setNewSelectedLang('fr')" *ngIf="reportingLang === 'en'" class="menu-item">
+                  {{ 'COMMON.LANG.FR' | translateIn: reportingLang }}
+                </li>
+                <li (click)="setNewSelectedLang('en')" *ngIf="reportingLang === 'fr'" class="menu-item">
+                  {{ 'COMMON.LANG.EN' | translateIn: reportingLang }}
+                </li>
+              </ul>
+            </div>
+          </ng-container>
           <!-- /synthesis reporting lang -->
 
           <!-- key learning section  -->
-          <ng-container *ngIf="showSection(innovation.marketReport?.keyLearning?.conclusion)">
-            <section
-              [ngClass]="{ 'p-top-50': !reportShared }"
-              id="key-learnings">
+          <ng-container *ngIf="!(innovation.mission | mission:'hasMissionTemplate') &&
+          showSection(innovation.marketReport?.keyLearning?.conclusion)">
+            <section [ngClass]="{ 'p-top-50': !reportShared }" id="key-learnings">
               <app-question-section
                 [reportingLang]="reportingLang"
                 (questionChanged)="saveQuestion($event)"

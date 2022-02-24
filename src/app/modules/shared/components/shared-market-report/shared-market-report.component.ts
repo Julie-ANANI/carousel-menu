@@ -88,6 +88,7 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy, OnChanges
         this._authService.userId ===
           (this._innovation.owner && this._innovation.owner.id) ||
         this._authService.adminLevel > 3;
+      console.log(value);
     }
   }
 
