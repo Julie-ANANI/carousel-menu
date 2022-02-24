@@ -53,7 +53,6 @@ export class AdminUsersComponent implements OnInit {
               private _userService: UserService,
               private _rolesFrontService: RolesFrontService,
               private _translateNotificationsService: TranslateNotificationsService) {
-
     this._translateTitleService.setTitle('Users');
 
   }
