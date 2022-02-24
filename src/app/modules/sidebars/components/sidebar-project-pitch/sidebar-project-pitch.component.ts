@@ -127,6 +127,16 @@ export class SidebarProjectPitchComponent implements OnInit, OnChanges, OnDestro
 
   ngOnInit(): void {
     // Listen on save from another user
+
+    // If there is comment or suggestion, we hide help/example section by default
+    // If there is no comment and no suggestion, we display help/example section by default;
+    this._showHelp = !((this.collaborativesComments && this.collaborativesComments.length > 0)
+      || (this.comment && this.comment.comment)
+      || this.comment && this.comment.suggestion);
+
+    this._showExample = !((this.collaborativesComments && this.collaborativesComments.length > 0)
+      || (this.comment && this.comment.comment)
+      || this.comment && this.comment.suggestion);
     this._socketService.getProjectFieldUpdates(this.innovationId, 'innovationCards')
       .pipe(takeUntil(this._ngUnsubscribe))
       .subscribe(() => {
