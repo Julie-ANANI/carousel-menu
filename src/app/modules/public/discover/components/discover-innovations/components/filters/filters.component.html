@@ -44,7 +44,7 @@
           (click)="onClickShare()"
           class="button is-rounded is-sm"
           type="button">
-          <i class="fas fa-share"></i>{{ 'DISCOVER.BUTTON_SHARE' | translate }}
+          <i class="fas fa-share icon-left"></i>{{ 'DISCOVER.BUTTON_SHARE' | translate }}
         </button>
 
       </div>
@@ -140,7 +140,7 @@
         <div
           *ngFor="let tag of allTags"
           class="label is-rounded c-hand"
-          [ngClass]=" checkFilter(tag._id) ? 'is-primary' : 'is-draft' ">
+          [ngClass]=" checkFilter(tag._id) ? 'is-primary' : 'is-draft'">
           <label class="c-hand">
             <ng-container *ngIf="tag.entry && tag.entry.length; else noAllTagsEntryLabel">
               <input

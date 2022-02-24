@@ -40,8 +40,8 @@
               <div class="p-top-10">
                 <app-cards
                   [allInnovations]="recommendedInnovations"
-                  [stopLoading]="stopLoading">
-                  (offsetLimit)="onChangePage($event)"
+                  [stopLoading]="stopLoading"
+                  (offsetLimit)="onChangePage($event)">
                 </app-cards>
               </div>
 
@@ -68,7 +68,7 @@
           </section>
           <!-- /section latest innovations -->
 
-          <!-- section whith all innovations -->
+          <!-- section with all innovations -->
           <section>
             <div class="p-top-25">
 
@@ -77,7 +77,7 @@
                 class="text-draft text-normal d-flex m-bottom-10 flex-wrap-wrap text-md c-filter-wrapper"
                 [ngClass]="{ 'loading-content': !stopLoading }">
 
-                <div  style="margin-bottom: 0.25rem" *ngIf="filterActivated">
+                <div style="margin-bottom: 0.25rem" *ngIf="filterActivated">
                   <span>
                     {{ totalFilteredInnovations }} {{ 'DISCOVER.RESULT' | translate }} {{ 'DISCOVER.FOR' | translate }}
                     <ng-container *ngIf="searchKey">
@@ -156,7 +156,7 @@
             <a
               [href]="getCommunityUrl()"
               [innerText]="'DISCOVER.BUTTON_COMMUNITY'"
-              class="button is-rounded"
+              class="button btn__community is-rounded"
               rel="noopener"
               target="_blank"
               translate>

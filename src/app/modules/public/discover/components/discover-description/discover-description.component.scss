@@ -9,14 +9,14 @@
   .d-d-title, .d-d-title-secondary {
     color: #3E5164;
     font-weight: $font-weight-normal;
-    font-size: 2rem;
-    margin-top: 0.5rem;
+    font-size: 40px;
+    margin-top: 10px;
     font-family: $font-family-oswald;
     margin-bottom: $unit-h;
   }
 
   .fa-angle-left, .fa-angle-right {
-    font-size: 1.3rem;
+    font-size: 26px;
   }
 
   .label.label-tag {
@@ -32,10 +32,10 @@
   .d-d-back-link {
 
     .text-link {
-      color: #777777;
+      color: #777777 !important;
 
       &:hover {
-        color: $primary-color;
+        color: $primary-color !important;
       }
 
     }
@@ -45,7 +45,7 @@
   .d-d-tags-wrapper {
 
     .label.label-tag {
-      font-size: 0.65rem;
+      font-size: 13px;
     }
 
   }
@@ -53,12 +53,12 @@
   .d-d-summary-wrapper, .d-d-issue-wrapper, .d-d-solution-wrapper {
     padding-top: $unit-5;
     color: $draft-color;
-    font-size: 0.75rem;
+    font-size: 15px;
     font-weight: $font-weight-normal;
   }
 
   .d-d-media-wrapper {
-    margin: 0.5rem 0.5rem 1.5rem;
+    margin: 10px 10px 30px;
   }
 
   .d-d-share-wrapper {
@@ -68,7 +68,7 @@
     .d-d-action-buttons-wrapper {
 
       .button {
-        margin: 0.5rem;
+        margin: 10px;
       }
 
     }
@@ -76,7 +76,7 @@
     .d-d-share-buttons-wrapper {
 
       .button.is-circled {
-        margin: 0.5rem $unit-1;
+        margin: 10px $unit-1;
 
         &.is-sm {
 

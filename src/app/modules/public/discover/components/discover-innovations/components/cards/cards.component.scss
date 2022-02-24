@@ -4,7 +4,7 @@
 
   .c-cards-wrapper {
     margin-right: -$unit-5;
-    margin-bottom: -0.75rem;
+    margin-bottom: -15px;
 
     .card {
       border: none;
@@ -17,7 +17,7 @@
       }
 
       .card-header .card-title {
-        font-size: 0.75rem;
+        font-size: 15px;
 
         &.loading-content {
           min-height: 30px;
@@ -26,7 +26,7 @@
       }
 
       &.c-effect:hover {
-        box-shadow: 0 0.25rem 1rem rgba(48,55,66,.15);
+        box-shadow: 0 5px 20px rgba(48,55,66,.15);
         cursor: pointer;
       }
 
