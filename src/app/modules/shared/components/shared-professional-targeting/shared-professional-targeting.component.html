@@ -30,11 +30,11 @@
                 All
 
                 <!-- nb of included/excluded jobs-->
-                <div class="d-flex flex-end flex-grow">
+                <div class="d-flex flex-end flex-grow m-left-2">
                   <span *ngIf="nbAllSeniorityLevelSelected"
-                        class="shape bg-success is-circle is-md text-13"> {{nbAllSeniorityLevelSelected}} </span>
+                        class="shape bg-success is-circled is-md text-13 text-white"> {{nbAllSeniorityLevelSelected}} </span>
                   <span *ngIf="nbAllSeniorityLevelExcluded"
-                        class="shape bg-alert is-circle is-md text-13"> {{nbAllSeniorityLevelExcluded}} </span>
+                        class="shape bg-alert is-circled is-md text-13 text-white"> {{nbAllSeniorityLevelExcluded}} </span>
                 </div>
                 <!-- /nb of included/excluded jobs-->
 
@@ -56,14 +56,14 @@
 
     <!-- Search operator -->
     <div class="d-flex flex-d-column align-center" style="width: 10%; margin-top: 10%">
-      <button class="button m-top-10 text-bold text-20"
+      <button class="button is-info is-outlined m-top-10 text-bold text-20"
               [disabled]="isPreview"
               [ngStyle]="{color: searchOperator==='OR'? '#EA5858' : '#333333'}"
               (click)="searchOperatorOnChange('OR')">
         OR
       </button>
 
-      <button class="button m-top-10 text-bold text-20"
+      <button class="button is-info is-outlined m-top-10 text-bold text-20"
               [disabled]="isPreview"
               [ngStyle]="{color: searchOperator==='AND'? '#EA5858' : '#333333'}"
               (click)="searchOperatorOnChange('AND')">
@@ -115,11 +115,11 @@
                 All
 
                 <!-- nb of included/excluded jobs-->
-                <div class="d-flex flex-end flex-grow">
+                <div class="d-flex flex-end flex-grow m-left-2">
                   <span *ngIf="nbAllJobSelected"
-                        class="shape bg-success is-circle is-md text-13"> {{nbAllJobSelected}} </span>
+                        class="shape bg-success is-circled is-md text-13 text-white"> {{nbAllJobSelected}} </span>
                   <span *ngIf="nbAllJobExcluded"
-                        class="shape bg-alert is-circle is-md text-13"> {{nbAllJobExcluded}} </span>
+                        class="shape bg-alert is-circled is-md text-13 text-white"> {{nbAllJobExcluded}} </span>
 
                 </div>
                 <!-- /nb of included/excluded jobs-->
