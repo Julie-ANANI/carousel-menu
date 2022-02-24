@@ -22,7 +22,7 @@ import {TranslateService} from '@ngx-translate/core';
   styleUrls: ['./type-likert-scale.component.scss']
 })
 
-export class TypeLikertScaleComponent implements OnInit, OnDestroy{
+export class TypeLikertScaleComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this._liker = this.getLikertText(this._label);
@@ -67,8 +67,8 @@ export class TypeLikertScaleComponent implements OnInit, OnDestroy{
     averageGeneralEvaluation?: number
   };
 
-  constructor(private _dataService: DataService,
-              private _translateService: TranslateService) {
+  constructor ( private _dataService: DataService,
+                private _translateService: TranslateService ) {
   }
 
 
@@ -117,13 +117,14 @@ export class TypeLikertScaleComponent implements OnInit, OnDestroy{
   }
 
   public changeValueLabel (event: string) {
-    this._label = event;
-    this._liker = this.getLikertText(event);
+    // this._label = event;
+    // this._liker = this.getLikertText(event);
   }
 
   public getLikertText(name: string) {
-    const score = ['TOTALLY_INVALIDATED', 'INVALIDED','UNCERTAIN','VALIDATED','TOTALLY_VALIDATED'];
-    if (score.indexOf(name.toUpperCase()) === -1)
+    const nameScore = ['TOTALLY_INVALIDATED', 'INVALIDED','UNCERTAIN','VALIDATED','TOTALLY_VALIDATED'];
+
+    if (nameScore.indexOf(name.toUpperCase()) === -1)
     {
       return name;
     }else{
@@ -174,7 +175,6 @@ export class TypeLikertScaleComponent implements OnInit, OnDestroy{
   get liker(): string {
     return this._liker;
   }
-
 
   ngOnDestroy(): void {
     this._ngUnsubscribe.next();

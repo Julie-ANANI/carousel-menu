@@ -61,7 +61,7 @@
         <label>
           <input
             (keyup)="textColor('name')"
-            [ngModel] = "getLikertText(label) | uppercase| translate"
+            [ngModel] = "getLikertText(label) | uppercase | translate"
             (ngModelChange)="changeValueLabel($event)"
             maxlength="20"
             class="form-input"
@@ -98,11 +98,11 @@
         <div class="popover-container">
           <div class="card-likert"
                (change)="emitChanges()">
-            <div (click)="chooseColor(0);" class="shape is-circled bg-alert is-sm"></div>
-            <div (click)="chooseColor(1);" class="shape is-circled bg-pending is-sm"></div>
-            <div (click)="chooseColor(2);" class="shape is-circled bg-gray is-sm"></div>
-            <div (click)="chooseColor(3);" class="shape is-circled bg-green-light is-sm"></div>
-            <div (click)="chooseColor(4);" class="shape is-circled bg-success is-sm"></div>
+            <div (click)="chooseColor(0);" [ngStyle]="{ 'background-color': '#EA5858'}"  class="shape is-circled is-sm bg-alert"></div>
+            <div (click)="chooseColor(1);" [ngStyle]="{ 'background-color': '#F89424'}" class="shape is-circled is-sm"></div>
+            <div (click)="chooseColor(2);" [ngStyle]="{ 'background-color': '#BBC7D6'}" class="shape is-circled is-sm"></div>
+            <div (click)="chooseColor(3);" [ngStyle]="{ 'background-color': '#99E04B'}" class="shape is-circled is-sm"></div>
+            <div (click)="chooseColor(4);" [ngStyle]="{ 'background-color': '#2ECC71'}"class="shape is-circled is-sm bg-success"></div>
           </div>
         </div>
       </div>

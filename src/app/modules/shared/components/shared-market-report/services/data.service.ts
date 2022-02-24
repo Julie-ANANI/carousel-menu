@@ -12,6 +12,7 @@ export class DataService {
   public answersTagsLists: {[questionId: string]: Array<Tag>} = {};
 
   public getAnswers(question: any): Observable<Array<Answer>> {
+    console.log(this.answersToShow);
     return this.answersToShow[question.identifier].asObservable();
   }
 

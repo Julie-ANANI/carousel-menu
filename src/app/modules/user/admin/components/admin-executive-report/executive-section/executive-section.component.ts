@@ -9,6 +9,7 @@ import { PieChart } from '../../../../../../models/chart/pie-chart';
 import { ExecutiveReportFrontService } from '../../../../../../services/executive-report/executive-report-front.service';
 import {MissionQuestion} from '../../../../../../models/mission';
 import {MissionQuestionService} from '../../../../../../services/mission/mission-question.service';
+import {Tag} from '../../../../../../models/tag';
 
 @Component({
   selector: 'app-admin-executive-section',
@@ -145,7 +146,7 @@ export class ExecutiveSectionComponent {
           if (this._enableVisualLikertScale) {
             this._section.questionType = type;
             this._initializeSection();
-            this.emitChanges();
+            // this.emitChanges();
           }
           break;
 
@@ -285,20 +286,24 @@ export class ExecutiveSectionComponent {
     if (this._section.questionIdentifier === `quesCustom_${this.sectionIndex}`) {
       this._section.title = 'Custom likert scale';
       this._section.content = this._executiveReportFrontService.likertScaleTagsSection([], this.reportLang);
-
     } else {
       const question: Question | MissionQuestion = this._getQuestion(this._section.questionIdentifier);
       const answers: Array<Answer> = this._responseService.answersToShow(this.answers, question);
       this._section.title = MissionQuestionService.label(question, 'title', this.reportLang);
-      let data;
+      let data: Array<Tag> = [];
+
+      if (question.controlType !== 'likert-scale') {
+        data = ResponseService.tagsList(answers, question);
+      }
+
+      this._section.content = this._executiveReportFrontService.likertScaleSection(data, this.reportLang);
 
       if (question.controlType === 'likert-scale') {
         data = ResponseService.likertScaleChartData(answers, question, this.reportLang);
-        this._section.content = this._executiveReportFrontService.likertScaleSection(data, this.reportLang);
 
       } else {
-        data = ResponseService.tagsList(answers, question);
-        this._section.content = this._executiveReportFrontService.likertScaleTagsSection(data, this.reportLang);
+
+        this._section.content = this._executiveReportFrontService.likertScaleSection(data, this.reportLang);
       }
     }
   }
