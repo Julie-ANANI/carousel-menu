@@ -24,7 +24,7 @@
     </div>
 
     <div
-      class="text-link"
+      class="text-link m-left-1"
       *ngIf="innovationCardLanguages && innovationCardLanguages.indexOf('en') !== -1"
       (click)="changeLanguage('en')"
       [ngClass]="{ 'active': language === 'en' }">
@@ -45,7 +45,7 @@
       *ngIf="innovationCardLanguages && innovationCardLanguages.indexOf('fr') !== -1"
       (click)="changeLanguage('fr')"
       [ngClass]="{ 'active': language === 'fr' }"
-      class="text-link">
+      class="text-link m-left-1">
       French
     </div>
 

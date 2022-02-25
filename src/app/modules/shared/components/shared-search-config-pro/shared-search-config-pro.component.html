@@ -56,9 +56,9 @@
       <!-- Job category expand item-->
       <div class="d-flex m-left-auto text-white m-right-3" *ngIf="isJobTypo" (click)="onClickToggle()">
         <!-- nb of included/excluded jobs-->
-        <div class="d-flex flex-end flex-grow" style="width: 60%" [ngClass]="{'prevent-event': isPreview}" (mouseenter)="showNextState($event)" (mouseleave)="closeHoverState()">
-          <span class="shape bg-success is-circled is-sm text-13 text-white" *ngIf="nbIncluded"> {{nbIncluded}} </span>
-          <span class="shape bg-alert is-circled is-sm text-13 text-white" *ngIf="nbExcluded"> {{nbExcluded}} </span>
+        <div class="d-flex flex-end flex-grow" style="width: 80%" [ngClass]="{'prevent-event': isPreview}" (mouseenter)="showNextState($event)" (mouseleave)="closeHoverState()">
+          <span class="shape bg-success is-circled is-sm text-13 text-white m-right-1" *ngIf="nbIncluded"> {{nbIncluded}} </span>
+          <span class="shape bg-alert is-circled is-sm text-13 text-white m-right-1" *ngIf="nbExcluded"> {{nbExcluded}} </span>
         </div>
         <!-- /nb of included/excluded jobs-->
         <i class="text-link icon" style="color: #00B0FF"

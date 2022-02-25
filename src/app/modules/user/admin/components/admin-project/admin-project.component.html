@@ -43,12 +43,12 @@
                 <h2 class="title is-6 text-white m-bottom-1" *ngIf="innovTitle">{{ title }}</h2>
                 <a *ngIf="quizLink" class="button is-link text-white is-xs" (click)="openQuiz($event)">
                   Open quiz
-                  <i class="fas fa-external-link-alt"></i>
+                  <i class="fas fa-external-link-alt m-left-2"></i>
                 </a>
 
                 <a *ngIf="quizLink" class="button is-link text-white is-xs" (click)="onCopyQuizLink($event)">
                   Copy quiz link
-                  <i class="far fa-copy"></i>
+                  <i class="far fa-copy m-left-2"></i>
                 </a>
 
                 <a
@@ -56,7 +56,7 @@
                   class="button is-link text-white is-xs"
                   target="_blank">
                   View like client
-                  <i class="far fa-eye"></i>
+                  <i class="far fa-eye m-left-2"></i>
                 </a>
               </div>
 
@@ -164,7 +164,7 @@
 
 <!-- modals for different actions -->
 <ng-container *ngIf="canImport">
-  <umius-modal [(showModal)]="showModal" [enableCloseButton]="true">
+  <umius-modal [(showModal)]="showModal" [closeBtnClass]="'d-none'">
     <section class="modal-body">
 
       <!-- project modal -->
