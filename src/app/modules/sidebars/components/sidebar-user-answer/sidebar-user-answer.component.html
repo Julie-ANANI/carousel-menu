@@ -121,18 +121,18 @@
       <!-- /name -->
 
       <!-- language -->
-      <div *ngIf="editMode" class="m-right-25 m-bottom-20">
+      <div *ngIf="editMode" class="m-right-25 m-bottom-20 text-dark">
         <span
           (click)="onClickLanguage('fr')"
           [ngClass]="professional.language === 'fr' ? 'text-primary' : 'text-dark'"
-          class="text-link p-right-10 text-normal tooltip"
+          class="p-right-10 text-normal tooltip"
           data-tooltip="Set pro lang French">
           fr
         </span>
         <span
           (click)="onClickLanguage('en')"
           [ngClass]="professional.language === 'en' ? 'text-primary' : 'text-dark'"
-          class="text-link text-normal tooltip"
+          class="text-normal tooltip"
           data-tooltip="Set pro lang English">
           en
         </span>
@@ -374,6 +374,8 @@
       <div [ngClass]="status.class" class="label m-bottom-10">
         {{ 'SIDEBAR_USER_ANSWER.STATUS.' + status.name | translate }}
       </div>
+<!--      [ngClass]="status.class"-->
+
       <label [ngClass]="status.class" class="form-radio p-no-left p-right-15">
         <input
           (change)="updateStatus($event, status.name)"

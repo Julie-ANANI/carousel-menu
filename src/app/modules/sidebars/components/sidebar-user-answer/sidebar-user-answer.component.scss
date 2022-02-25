@@ -34,8 +34,11 @@
       &.is-danger input {
 
         &:checked + .form-icon {
+          border: 2px solid $alert-color;
+        }
+
+        &:checked + .form-icon::before {
           background: $alert-color none;
-          border-color: $alert-color;
         }
 
       }
@@ -43,10 +46,12 @@
       &.is-progress input {
 
         &:checked + .form-icon {
-          background: #F79323 none;
-          border-color: #F79323;
+          border: 2px solid #F79323;
         }
 
+        &:checked + .form-icon::before {
+          background: #F79323 none;
+        }
       }
 
     }
