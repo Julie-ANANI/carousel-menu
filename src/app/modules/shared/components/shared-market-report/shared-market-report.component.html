@@ -55,7 +55,7 @@
               <span class="text-13 m-right-4">
                 {{ 'MARKET_REPORT.RESTITUTION_LANG' | translateIn: reportingLang }}
               </span>
-              <a class="button dropdown-toggle has-no-min-width is-info is-xs is-outlined" tabindex="0">
+              <a class="button dropdown-toggle has-no-min-width is-info is-outlined" tabindex="0">
                 {{ 'COMMON.LANG.' + reportingLang | uppercase | translateIn: reportingLang }}
                 <i class="icon icon-caret"></i>
               </a>
@@ -73,7 +73,7 @@
 
           <!-- key learning section  -->
           <ng-container *ngIf="!(innovation.mission | mission:'hasMissionTemplate') &&
-          showSection(innovation.marketReport?.keyLearning?.conclusion)">
+          !!innovation?.marketReport?.keyLearning?.conclusion">
             <section [ngClass]="{ 'p-top-50': !reportShared }" id="key-learnings">
               <app-question-section
                 [reportingLang]="reportingLang"

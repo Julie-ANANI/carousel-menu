@@ -155,7 +155,7 @@
   <!-- /select/unselect all type === 'FOLLOW_UP' -->
 
   <!-- key-learning type === 'MARKET_REPORT' -->
-  <div *ngIf="templateType === 'MARKET_REPORT' && (isKeyLearning || isAdminSide)" class="scroll-wrapper">
+  <div *ngIf="templateType === 'MARKET_REPORT' && isKeyLearning" class="scroll-wrapper">
     <a [href]="'#key-learnings'" pageScroll>
       <i class="icon icon-arrow-right"></i> {{ 'MARKET_REPORT.KEY_LEARNING' | translateIn: reportingLang }}
     </a>
