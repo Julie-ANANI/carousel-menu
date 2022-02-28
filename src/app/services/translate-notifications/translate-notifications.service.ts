@@ -9,12 +9,13 @@ import { TranslateService } from '@ngx-translate/core';
 export class TranslateNotificationsService {
 
   constructor(private _translateService: TranslateService,
-              private _notificationsService: NotificationsService) { }
+              private _notificationsService: NotificationsService) {
+  }
 
   public error(title: string, message: string, config?: any): Notification {
     return this._notificationsService.error(
       title ? this._translateService.instant(title) : '',
-      message ? this._translateService.instant(message) : '',
+      message ? this.formatErrorMessage(message) : '',
       config
     );
   }
@@ -27,6 +28,19 @@ export class TranslateNotificationsService {
     );
   }
 
+  /**
+   * if the error is not in Error system, display default error
+   * @param message
+   * @private
+   */
+  private formatErrorMessage(message: string) {
+    message = this._translateService.instant(message);
+    if (message.indexOf('ERROR.') !== -1) {
+      message = this._translateService.instant('ERROR.OPERATION_ERROR');
+    }
+    return message;
+
+  }
 
 
 }
