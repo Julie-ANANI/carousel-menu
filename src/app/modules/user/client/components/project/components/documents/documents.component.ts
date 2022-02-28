@@ -164,7 +164,8 @@ export class DocumentsComponent implements OnInit, OnDestroy {
     event.preventDefault();
     if (this.isOwner) {
       this._innovation.ownerConsent.value = !!(event.target as HTMLInputElement).checked;
-      this._innovationService.saveConsent(this._innovation._id, Date.now()).pipe(first()).subscribe(() => {
+      this._innovation.ownerConsent.date = new Date();
+      this._innovationService.save(this._innovation._id, this._innovation).pipe(first()).subscribe(() => {
       }, (err: HttpErrorResponse) => {
         this._innovation.ownerConsent.value = !this._innovation.ownerConsent.value;
         this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));

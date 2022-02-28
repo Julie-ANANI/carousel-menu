@@ -27,10 +27,6 @@ export class InnovationService {
 
   constructor(private _http: HttpClient) { }
 
-  public create(innovationObj: Innovation): Observable<any> {
-    return this._http.post('/innovation', innovationObj);
-  }
-
   public get(id: string, config?: Config): Observable<Innovation> {
     return this._http.get<Innovation>('/innovation/' + id, {params: config});
   }
@@ -39,14 +35,19 @@ export class InnovationService {
     return this._http.get<{result: Array<Innovation>, _metadata: any}>('/innovation/', {params: params});
   }
 
+  /**
+   * Get all innovations preformatted and optimized for table view on market test page
+   * @param params
+   * @param cache
+   */
   public getMarketTests(params: {[header: string]: string | string[]}, cache: 'clear' | '' = 'clear'):
     Observable<{result: Array<Innovation>, _metadata: any}> {
     return this._http.get<{result: Array<Innovation>, _metadata: any}>('/innovation/queryable',
       {params: params, headers: new HttpHeaders().set('cache', cache)});
   }
 
-  public createInnovationCard(innovationId: string, innovationCardObj: InnovCard): Observable<InnovCard> {
-    return this._http.post<InnovCard>('/innovation/' + innovationId + '/innovationCard', innovationCardObj);
+  public remove(innovationId: string): Observable<any> {
+    return this._http.delete('/innovation/' + innovationId);
   }
 
   public campaigns(innovationId: string): Observable<{result: Array<Campaign>}> {
@@ -56,43 +57,27 @@ export class InnovationService {
   }
 
   public addNewMediaVideoToInnovationCard(innovationId: string, innovationCardId: string, videoInfos: Video): Observable<any> {
-    return this._http.post('/innovation/' + innovationId + '/innovationCard/' + innovationCardId + '/media/video', videoInfos);
+    return this._http.post('/innovation/' + innovationId + '/cards/' + innovationCardId + '/media/video', videoInfos);
   }
 
   public deleteMediaOfInnovationCard(innovationId: string, innovationCardId: string, mediaId: string): Observable<any> {
-    return this._http.delete('/innovation/' + innovationId + '/innovationCard/' + innovationCardId + '/media/' + mediaId);
+    return this._http.delete('/innovation/' + innovationId + '/cards/' + innovationCardId + '/media/' + mediaId);
   }
 
   public setPrincipalMediaOfInnovationCard(innovationId: string, innovationCardId: string, mediaId: string): Observable<any> {
-    return this._http.put('/innovation/' + innovationId + '/innovationCard/' + innovationCardId + '/media/' + mediaId + '/principal', {});
+    return this._http.put('/innovation/' + innovationId + '/cards/' + innovationCardId + '/media/' + mediaId + '/principal', {});
+  }
+
+  public createInnovationCard(innovationId: string, innovationCardObj: InnovCard): Observable<InnovCard> {
+    return this._http.post<InnovCard>('/innovation/' + innovationId + '/cards', innovationCardObj);
   }
 
   public removeInnovationCard(innovationId: string, innovationCardId: string): Observable<any> {
-    return this._http.delete('/innovation/' + innovationId + '/innovationCard/' + innovationCardId);
+    return this._http.delete('/innovation/' + innovationId + '/cards/' + innovationCardId);
   }
 
-  /**
-   *
-   * @param innovationCardId - get the card form the route '/innovation/card/:innovationCardId'
-   */
-  public getInnovationCard(innovationCardId: string): Observable<InnovCard> {
-    return this._http.get<InnovCard>('/innovation/card/' + innovationCardId);
-  }
-
-  /**
-   * getting the innovation cards by the innovation reference.
-   *
-   * @param innovationId
-   */
-  public getInnovCardsByReference(innovationId: string): Observable<Array<InnovCard>> {
-    const params = {
-      innovationId: innovationId
-    };
-    return this._http.get<Array<InnovCard>>('/innovation/innovationCard/', {params: params});
-  }
-
-  public remove(innovationId: string): Observable<any> {
-    return this._http.delete('/innovation/' + innovationId);
+  public getAllInnovationCards(innovationId: string): Observable<Array<InnovCard>> {
+    return this._http.get<Array<InnovCard>>(`/innovation/${innovationId}/cards`);
   }
 
   public save(innovationId: string, innovationObj: { [P in keyof Innovation]?: Innovation[P]; }): Observable<Innovation> {
@@ -104,11 +89,7 @@ export class InnovationService {
   }
 
   public saveInnovationCardComment(innovationId: string, innovationCardId: string, commentObj: InnovCardComment): Observable<any> {
-    return this._http.post(`/innovation/${innovationId}/card/${innovationCardId}/comment`, commentObj);
-  }
-
-  public saveConsent(innovationId: string, date: number) { /* FIXME */
-    return this._http.put(`/innovation/${innovationId}/ownerConsent`, {ownerConsent: {date: date, value: true}});
+    return this._http.post(`/innovation/${innovationId}/cards/${innovationCardId}/comment`, commentObj);
   }
 
   public saveFilter(innovationId: string, data: { name: string, answers: Array<string>}): Observable<any> {
@@ -136,7 +117,7 @@ export class InnovationService {
   }
 
   public inviteCollaborators(innovationId: string, collaboratorsEmails: string): Observable<Collaborator> {
-    return this._http.post<Collaborator>('/innovation/' + innovationId + '/invite', {
+    return this._http.post<Collaborator>('/innovation/' + innovationId + '/collaborators', {
       collaborators: collaboratorsEmails
     });
   }
@@ -166,14 +147,6 @@ export class InnovationService {
     return this._http.post('/innovation/' + innovationId + '/quiz', {});
   }
 
-  /**
-   * URL sent to people when we invite them to sign in to UMI
-   * When we want to add them as Collaborator
-   */
-  public getInvitationUrl (): string {
-    return encodeURIComponent(`${environment.clientUrl}/register?invitation=true`);
-  }
-
   public getSharedSynthesis(id: string, sharedKey: string): Observable<Innovation> {
     return this._http.get<Innovation>(`/sharing/synthesis/${id}/${sharedKey}?fields=innovationCards,principalMedia,tags,mission,
     owner, operator,clientProject`); // TODO I don't like hardcoded things
@@ -184,7 +157,7 @@ export class InnovationService {
   }
 
   public addProsFromCommunity(professionalArray: Array<Professional>, innovationId: string): Observable<any> {
-    return this._http.post(`/innovation/${innovationId}/addAmbassador`, {
+    return this._http.post(`/innovation/${innovationId}/ambassadors`, {
       selectedProfessionals: professionalArray
     });
   }
@@ -203,12 +176,14 @@ export class InnovationService {
     return this._http.post<{community: Community, published: Date}>('/innovation/' + innovationId + '/communityPublish', data);
   }
 
-  public updateFollowUpEmails(innovationId: string): Observable<any> {
-    return this._http.get('/innovation/' + innovationId + '/updateFollowUpEmails');
-  }
 
+  // TODO candidate for removal
   public finishLinking(innovationId: string): Observable<any> {
     return this._http.get('/innovation/' + innovationId + '/linking');
+  }
+
+  public updateFollowUpEmails(innovationId: string): Observable<any> {
+    return this._http.get('/innovation/' + innovationId + '/updateFollowUpEmails');
   }
 
   public sendFollowUpEmails(innovationId: string, objective?: string): Observable<any> {
@@ -219,7 +194,7 @@ export class InnovationService {
   public executiveReportPDF(innovationId: string): Observable<any> {
     let headers = new HttpHeaders();
     headers = headers.set('Accept', 'application/pdf');
-    return this._http.get(`/innovation/${innovationId}/executiveReportExport`, {headers: headers, responseType: 'blob'});
+    return this._http.get(`/innovation/${innovationId}/exereport/export`, {headers: headers, responseType: 'blob'});
   }
 
   public getDeliverableJob(innovationId: string, type?: JobType): Observable<Array<Job>> {
@@ -236,7 +211,7 @@ export class InnovationService {
   }
 
   public repartition(innovationId: string, config: any): Observable<any> {
-    return this._http.get(`/innovation/${innovationId}/prosRepartition`, {params: config});
+    return this._http.get(`/innovation/${innovationId}/pros/repartition`, {params: config});
   }
 
   public autoBlacklist(innovationId: string): Observable<FamilyEnterprises> {
@@ -252,11 +227,6 @@ export class InnovationService {
     );
   }
 
-  public importAnswersFromGmail(file: File): Observable<any> {
-    const formData = new FormData();
-    formData.append('file', file, file.name);
-    return this._http.post('/innovation/importAnswers', formData);
-  }
   // endregion
 
   public getExportUrl(innovationId: string, client: boolean, lang: string, anonymous?: boolean): string {

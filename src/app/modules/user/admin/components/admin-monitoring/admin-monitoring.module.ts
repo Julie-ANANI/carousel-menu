@@ -6,7 +6,6 @@ import { AdminMonitoringRoutingModule } from './admin-monitoring-routing.module'
 
 import { AdminMonitoringComponent } from './admin-monitoring.component';
 import { AdminEmailQueueComponent } from './admin-emails-queue/admin-emails-queue.component';
-import { AdminAnswersGmailComponent } from './admin-answers-gmail/admin-answers-gmail.component';
 import { AdminProfessionalShieldComponent } from './admin-professional-shield/admin-professional-shield.component';
 
 import { PipeModule } from '../../../../../pipe/pipe.module';
@@ -29,7 +28,6 @@ import { TableComponentsModule } from '@umius/umi-common-component/table';
   declarations: [
     AdminMonitoringComponent,
     AdminEmailQueueComponent,
-    AdminAnswersGmailComponent,
     AdminBatchInformationComponent,
     AdminProfessionalShieldComponent
   ],

@@ -147,7 +147,7 @@ export class AdminBatchesDisplayComponent implements OnInit {
 
     if (innovationId) {
       if (lastInnovationId !== innovationId) {
-        this._innovationService.getInnovCardsByReference(innovationId)
+        this._innovationService.getAllInnovationCards(innovationId)
           .pipe(first())
           .subscribe((cards) => {
             this._selectedInnovCard = InnovationFrontService.currentLangCard(cards, this._currentLang);
