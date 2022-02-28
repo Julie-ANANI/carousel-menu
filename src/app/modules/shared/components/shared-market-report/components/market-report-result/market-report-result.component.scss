@@ -1,0 +1,49 @@
+@import "~@umius/umi-style-framework/scss/variables";
+@import "~@umius/umi-style-framework/scss/mixins";
+
+#market-report-result {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+
+  .mrr__top-bar {
+    @include flex-position(space-between);
+    background: #D9E1E9;
+    padding: 15px 50px;
+    font-size: 12px;
+    min-height: 58px;
+
+    .top-bar__path {
+      height: 3px;
+      background-image: linear-gradient(to right, #B6C0CA, transparent 80%);
+      background-size: 25px 5px;
+      background-repeat: repeat-x;
+    }
+
+    .top-bar__img-boat {
+      left: -70px;
+      top: -25px;
+      right: 0;
+
+      img {
+        width: 52px;
+      }
+
+    }
+
+  }
+
+  .mrr__content-box {
+
+    #btn-see-more {
+      text-decoration: none !important;
+
+      &:hover span {
+        text-decoration: underline !important;
+      }
+
+    }
+
+
+  }
+
+}

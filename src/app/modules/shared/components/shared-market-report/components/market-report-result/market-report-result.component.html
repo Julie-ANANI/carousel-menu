@@ -1,0 +1,94 @@
+<div id="market-report-result" class="bg-white box-style">
+
+  <!-- top bar -->
+  <div class="mrr__top-bar">
+    <div class="d-flex align-center text-medium m-right-10">
+      <img
+        alt="Compass active"
+        class="img-responsive m-right-10"
+        src="https://res.cloudinary.com/umi/image/upload/app/default-images/configurator/compass-active.svg">
+      {{ mission | mission:'objectiveName':reportingLang }}
+    </div>
+    <div class="relative flex-full">
+      <div class="top-bar__path"></div>
+      <div class="top-bar__img-boat absolute">
+        <img
+          alt="Boat"
+          class="img-responsive m-auto"
+          src="https://res.cloudinary.com/umi/image/upload/app/default-images/configurator/boat.svg">
+      </div>
+    </div>
+    <img
+      alt="Compass inactive"
+      class="img-responsive"
+      src="https://res.cloudinary.com/umi/image/upload/app/default-images/configurator/compass-inactive.svg">
+  </div>
+  <!-- /top bar -->
+
+  <!-- content -->
+  <div class="mrr__content-box p-top-25 p-left-50 p-right-50 p-bottom-40">
+
+    <!-- heading -->
+    <h2 class="title is-main m-bottom-25">{{ 'COMMON.LABEL.RESULT' | translate }}</h2>
+    <!-- /heading -->
+
+    <!-- view -->
+    <ng-container [ngSwitch]="mission?.template?.methodology">
+
+      <!-- case DETECTING_MARKET -->
+      <ng-container *ngSwitchCase="'DETECTING_MARKET'">
+        <div class="content-box__view">
+
+        </div>
+      </ng-container>
+      <!-- /case DETECTING_MARKET -->
+
+      <!-- case SOURCING_SOLUTIONS -->
+      <ng-container *ngSwitchCase="'SOURCING_SOLUTIONS'">
+        <div class="content-box__view">
+
+        </div>
+      </ng-container>
+      <!-- /case SOURCING_SOLUTIONS -->
+
+      <!-- case IDENTIFYING_RECEPTIVE -->
+      <ng-container *ngSwitchCase="'IDENTIFYING_RECEPTIVE'">
+        <div class="content-box__view">
+
+        </div>
+      </ng-container>
+      <!-- /case IDENTIFYING_RECEPTIVE -->
+
+      <!-- case VALIDATING_INTEREST -->
+      <ng-container *ngSwitchCase="'VALIDATING_INTEREST'">
+        <div class="content-box__view">
+
+        </div>
+      </ng-container>
+      <!-- /case VALIDATING_INTEREST -->
+
+    </ng-container>
+    <!-- /view -->
+
+    <!-- see more -->
+    <ng-container *ngIf="mission?.template?.methodology !== 'OPTIMIZING_VALUE'">
+      <div class="m-top-20 m-bottom-20 flex-centered">
+        <button
+          [id]="'btn-see-more'"
+          class="button is-link text-no-underline">
+          <span>{{ 'COMMON.BUTTON.SEE_MORE' | translate }}</span>
+          <i class="fas fa-arrow-circle-right icon-right" style="font-size: 22px;"></i>
+        </button>
+      </div>
+    </ng-container>
+    <!-- /see more -->
+
+    <!-- abstract -->
+    <div class="text-sm p-left-30 p-right-30 p-top-15 p-bottom-15" style="background-color: #F4F6F7;">
+    </div>
+    <!-- /abstract -->
+
+  </div>
+  <!-- /content -->
+
+</div>

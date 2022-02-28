@@ -88,6 +88,14 @@
           </ng-container>
           <!-- /key learning section -->
 
+          <!-- dynamic result -->
+          <ng-container *ngIf="(innovation.mission | mission:'hasMissionTemplate')">
+            <div class="m-top-50">
+              <app-market-report-result [innovation]="innovation" [reportingLang]="reportingLang"></app-market-report-result>
+            </div>
+          </ng-container>
+          <!-- /dynamic result -->
+
           <!-- origin comment and professional responses -->
           <ng-container *ngIf="!areAnswersLoading && answersOrigins">
             <section

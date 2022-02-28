@@ -18,12 +18,12 @@ export type MissionMethodologyType = 'DETECTING_MARKET' | 'VALIDATING_MARKET' | 
 export interface MissionResult {
   abstract: string;
   score?: string;
-  lists?: Array<MissionResultList>;
+  items?: Array<MissionResultList>;
 }
 
 export interface MissionResultList {
   title: string;
-  comment: string;
+  content: string;
 }
 
 export interface MissionCardTitle {

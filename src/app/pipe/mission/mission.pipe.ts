@@ -14,12 +14,14 @@ export class MissionPipe implements PipeTransform {
   constructor() {
   }
 
-  transform(value: Mission = <Mission>{}, requested: 'hasMissionTemplate'): any {
+  transform(value: Mission = <Mission>{}, requested: 'hasMissionTemplate' | 'objectiveName', lang = 'en'): any {
     if (!value._id && !requested) return '';
 
     switch (requested) {
       case 'hasMissionTemplate':
         return MissionFrontService.hasMissionTemplate(value);
+      case 'objectiveName':
+        return MissionFrontService.objectiveName(value.template, lang)
     }
   }
 
