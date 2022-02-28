@@ -1,6 +1,11 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Innovation} from '../../../../../../models/innovation';
 import {Mission} from '../../../../../../models/mission';
+import {InnovationFrontService} from '../../../../../../services/innovation/innovation-front.service';
+
+interface Toggle {
+  abstract: boolean
+}
 
 @Component({
   selector: 'app-market-report-result',
@@ -8,6 +13,10 @@ import {Mission} from '../../../../../../models/mission';
   styleUrls: ['./market-report-result.component.scss']
 })
 export class MarketReportResultComponent implements OnInit {
+
+  get toggleEdit(): Toggle {
+    return this._toggleEdit;
+  }
 
   get mission(): Mission {
     return this._mission;
@@ -28,13 +37,26 @@ export class MarketReportResultComponent implements OnInit {
 
   @Input() isEditable = false;
 
+  private _toggleEdit: Toggle = <Toggle>{}
+
   private _innovation: Innovation = <Innovation>{}
 
   private _mission: Mission = <Mission>{};
 
-  constructor() { }
+  constructor(private _innovationFrontService: InnovationFrontService) { }
 
   ngOnInit(): void {
+  }
+
+  public toggleBtn(event: Event, btn: 'abstract') {
+    event.preventDefault();
+    this._toggleEdit[btn] = !this._toggleEdit[btn];
+  }
+
+  public keyupHandlerFunction(event: {content: string}) {
+    this._mission.result.abstract = event['content'];
+    this._innovationFrontService.setNotifyChanges({key: 'marketReport', state: true});
+    console.log(this._mission);
   }
 
 }

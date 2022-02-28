@@ -5,6 +5,12 @@
   border-top-left-radius: 0;
   border-top-right-radius: 0;
 
+  .mrr_edit-wrapper {
+    position: absolute;
+    top: -12px;
+    right: -12px;
+  }
+
   .mrr__top-bar {
     @include flex-position(space-between);
     background: #D9E1E9;
@@ -43,6 +49,12 @@
 
     }
 
+    .context-box__abstract {
+      font-size: 14px;
+      padding: 15px 30px;
+      background-color: #F4F6F7;
+      border-radius: 6px;
+    }
 
   }
 

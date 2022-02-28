@@ -84,7 +84,44 @@
     <!-- /see more -->
 
     <!-- abstract -->
-    <div class="text-sm p-left-30 p-right-30 p-top-15 p-bottom-15" style="background-color: #F4F6F7;">
+    <div class="context-box__abstract relative">
+
+      <!-- edit button -->
+      <ng-container *ngIf="isEditable">
+        <div class="mrr_edit-wrapper">
+          <button
+            (click)="toggleBtn($event, 'abstract')"
+            [attr.data-tooltip]="toggleEdit.abstract ? 'Stop editing' : 'Edit'"
+            [id]="'btn-edit-abstract'"
+            class="button is-circled is-xs tooltip">
+            <i class="fas fa-pencil-alt"></i>
+          </button>
+        </div>
+      </ng-container>
+      <!-- /edit button -->
+
+      <!-- view mode -->
+      <ng-container *ngIf="!toggleEdit.abstract">
+        <div [innerHTML]="mission?.result?.abstract" style="margin-bottom: -8px;"></div>
+      </ng-container>
+      <!-- /view mode -->
+
+      <!-- edit mode -->
+      <ng-container *ngIf="toggleEdit.abstract">
+        <app-shared-editors
+          (textChange)="keyupHandlerFunction($event)"
+          elementId="result"
+          type="synthesis"
+          [text]="mission?.result?.abstract || ''"
+          [innovationId]="innovation._id"
+          [isEditable]="true">
+        </app-shared-editors>
+        <p class="text-right text-meta text-sm text-medium p-top-15">
+          {{ 1000 - mission?.result?.abstract.length }} characters remaining
+        </p>
+      </ng-container>
+      <!-- /edit mode -->
+
     </div>
     <!-- /abstract -->
 
