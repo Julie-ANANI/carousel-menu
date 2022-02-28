@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { UserService } from '../../../../../services/user/user.service';
 import { TranslateTitleService } from '../../../../../services/title/title.service';
 import { User } from '../../../../../models/user.model';
@@ -9,17 +9,18 @@ import { isPlatformBrowser } from '@angular/common';
 import { RolesFrontService } from '../../../../../services/roles/roles-front.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorFrontService } from '../../../../../services/error/error-front.service';
-import {Table, UmiusConfigInterface, UmiusConfigService, UmiusSidebarInterface} from '@umius/umi-common-component';
+import { Table, UmiusConfigInterface, UmiusConfigService, UmiusSidebarInterface } from '@umius/umi-common-component';
 
 @Component({
   templateUrl: './admin-users.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class AdminUsersComponent implements OnInit {
 
   private _config: UmiusConfigInterface = {
-    fields: 'id company jobTitle created domain location firstName lastName attempts emailVerified isOperator phone' +
-      ' language roles state name country email',
+    fields: 'id company jobTitle created domain location firstName attempts emailVerified isOperator phone' +
+      ' language roles state name country email lastName',
     limit: this._configService.configLimit('admin-users-limit'),
     offset: '0',
     search: '{}',
@@ -52,14 +53,16 @@ export class AdminUsersComponent implements OnInit {
               private _translateTitleService: TranslateTitleService,
               private _userService: UserService,
               private _rolesFrontService: RolesFrontService,
+              private _changeDetectorRef: ChangeDetectorRef,
               private _translateNotificationsService: TranslateNotificationsService) {
     this._translateTitleService.setTitle('Users');
   }
 
   ngOnInit(): void {
-    this._initializeTable();
+    this._initializeTable([]);
+    this._changeDetectorRef.markForCheck();
     if (isPlatformBrowser(this._platformId)) {
-      this._isLoading = false;
+      this._isLoading = true;
       this._getUsers();
     }
   }
@@ -68,8 +71,12 @@ export class AdminUsersComponent implements OnInit {
     this._userService.getAll(this._config).pipe(first()).subscribe((response: Response) => {
       this._users = response && response.result || [];
       this._total = response && response._metadata && response._metadata.totalCount || 0;
+      this._users.map(user => {
+        user['fullName'] = user.firstName + ' ' + user.lastName
+      });
       this._checkJuan();
-      this._initializeTable();
+      this._initializeTable(this._users);
+      this._isLoading = false;
     }, (err: HttpErrorResponse) => {
       console.log(err);
       this._translateNotificationsService.error('Error', ErrorFrontService.getErrorKey(err.error));
@@ -87,11 +94,11 @@ export class AdminUsersComponent implements OnInit {
     });
   }
 
-  private _initializeTable() {
+  private _initializeTable(content: Array<any>) {
     this._table = {
       _selector: 'admin-users-limit',
       _title: 'users',
-      _content: this._users,
+      _content: content,
       _total: this._total,
       _isSearchable: !!this.canAccess(['searchBy']),
       _isDeletable: this.canAccess(['user', 'delete']),
@@ -102,13 +109,13 @@ export class AdminUsersComponent implements OnInit {
       _clickIndex: this.canAccess(['user', 'view']) || this.canAccess(['user', 'edit']) ? 1 : null,
       _columns: [
         {
-          _attrs: ['firstName', 'lastName'],
-          _name: 'Name',
+          _attrs: ['fullName'],
           _type: 'TEXT',
           _isSearchable: this.canAccess(['searchBy', 'name']),
           _isHidden: !this.canAccess(['tableColumns', 'name']),
           _isSortable: true,
-          _searchTooltip: 'Utilisez \"prénom,nom\" pour faire des recherches de personnes'
+          _searchTooltip: 'Utilisez \"prénom,nom\" pour faire des recherches de personnes',
+          _name: 'Name',
         },
         {
           _attrs: ['email'],
@@ -153,6 +160,7 @@ export class AdminUsersComponent implements OnInit {
         }
       ]
     };
+    this._changeDetectorRef.markForCheck();
   }
 
   public canAccess(path?: Array<string>) {
