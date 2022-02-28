@@ -51,6 +51,7 @@ export class AdminProfessionalsListComponent implements OnInit {
   ngOnInit(): void {
     if (isPlatformBrowser(this._platformId)) {
       this._isLoading = false;
+      this._getProfessionals();
     }
   }
 
