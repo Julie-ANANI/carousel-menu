@@ -328,7 +328,7 @@ export class AdminProjectCollectionComponent implements OnInit, OnDestroy {
       ],
       _columns: [
         {
-          _attrs: ['professional.firstName', 'professional.lastName'],
+          _attrs: ['professional.displayName'],
           _name: 'Name',
           _type: 'TEXT',
           _isSearchable: this.canAccess(['searchBy', 'name']),
