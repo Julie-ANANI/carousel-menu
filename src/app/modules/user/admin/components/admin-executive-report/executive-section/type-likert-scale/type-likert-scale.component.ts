@@ -8,8 +8,13 @@ import colorsAndNames from '../../../../../../../../../assets/json/likert-scale_
 import {Subject} from 'rxjs';
 import {Question} from '../../../../../../../models/question';
 import {TranslateService} from '@ngx-translate/core';
+import {ResponseService} from '../../../../../../shared/components/shared-market-report/services/response.service';
+import {MissionQuestionService} from '../../../../../../../services/mission/mission-question.service';
+import {DataService} from '../../../../../../shared/components/shared-market-report/services/data.service';
+import {takeUntil} from 'rxjs/operators';
+import {Answer} from '../../../../../../../models/answer';
+import _ from 'lodash';
 import {MissionQuestion} from '../../../../../../../models/mission';
-
 
 @Component({
   selector: 'app-admin-section-type-likert-scale',
@@ -21,27 +26,16 @@ export class TypeLikertScaleComponent implements OnInit, OnDestroy {
 
   /* Le problème c'est que je lui passe une question alors qu'il ne le récupère pas */
 
-  //@Input() question: any;
-  /*@Input() set question( value: Question | MissionQuestion ) {
-    this._question = value;
-  }*/
+ // @Input() question: Array<Question | MissionQuestion> = [];
 
-  @Input() questions: Array<Question | MissionQuestion> = [];
-
-  /*get questions(): Array<Question | MissionQuestion> {
-    return this._questions;
-  }
-*/
-
- // private _questions: Array<Question | MissionQuestion> = [];
-
-
-
+  //@Input() question: Array<Question> = [];
+  @Input() question: Question | MissionQuestion = <Question | MissionQuestion >{};
 
   @Input() reportingLang = this._translateService.currentLang;
   @Input() isEditable = false;
 
   @Input() set section(value: ExecutiveSection) {
+    console.log(value)
     this._section = value;
     this._content = <SectionLikertScale>this._section.content;
     this.textColor('title');
@@ -53,10 +47,6 @@ export class TypeLikertScaleComponent implements OnInit, OnDestroy {
 
   @Output() sectionChange: EventEmitter<ExecutiveSection> = new EventEmitter<ExecutiveSection>();
   @Output() playSection: EventEmitter<void> = new EventEmitter<void>();
-
-  //@Output() question = new EventEmitter<Question>();
-
-  //private _question: Question | MissionQuestion = <MissionQuestion | Question>{};
 
   private _ngUnsubscribe: Subject<any> = new Subject<any>();
   private _colorsAndNames = colorsAndNames;
@@ -75,44 +65,26 @@ export class TypeLikertScaleComponent implements OnInit, OnDestroy {
     color: this._colorsAndNames[2].color
   };
 
- /* private _stackedChart: {
+  private _stackedChart: {
     likertScaleChart: object[],
     averageGeneralEvaluation?: number
   };
-*/
+
   private _scorePercentage: number = 0;
 
-  constructor ( //private _dataService: DataService,
+  constructor ( private _dataService: DataService,
                 private _translateService: TranslateService ) {}
 
   ngOnInit(): void {
     this._label = this.getLikertText(this._content.name);
-   // this._createChart();
-
-   // setTimeout(() => { console.log('question is:',this._question) });
+   setTimeout(() => { console.log('question is:',this.question) });
 
   }
 
-/*  private _createChart() {
-   console.log(this.questions);
-    this._dataService.getAnswers(this.question).pipe(takeUntil(this._ngUnsubscribe)).subscribe((answers: Array<Answer>) => {
-      this._stackedChart = ResponseService.likertScaleChartData(answers, this.question, this.reportingLang);
-      const averageGeneralEvaluation = this._stackedChart.averageGeneralEvaluation || 0;
-
-      // Choose which score label to display
-      const index = (averageGeneralEvaluation - averageGeneralEvaluation % 4) / 4; // will give 0,1,2,3,4
-      const scorePercentage = (averageGeneralEvaluation * 98) / 20; // will give margin percentage for the pointer of marker
-
-      this._scorePercentage = scorePercentage;
-      this._content.name = this._colorsAndNames[index].name;
-      this._content.color = this._colorsAndNames[index].color;
-    });
-  }*/
-
- /* public optionLabel(identifier: string) {
+  public optionLabel(identifier: string) {
     const option = _.find(this.question.options, (option: any) => option.identifier === identifier);
     return MissionQuestionService.label(option, 'label', this.reportingLang);
-  }*/
+  }
 
   public emitChanges() {
     if (this.isEditable) {

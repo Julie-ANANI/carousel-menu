@@ -277,6 +277,7 @@ export class ExecutiveReportFrontService {
    */
   public likertScaleSection(likertScaleData: LikertScaleChart, lang: string): SectionLikertScale {
 
+    // TODO logic getWhatToDisplay(likertScaleData.averageGeneralEvaluation)
     return {
       color: '#BBC7D6',
       legend: '',

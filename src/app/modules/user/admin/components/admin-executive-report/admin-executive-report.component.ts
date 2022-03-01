@@ -224,6 +224,7 @@ export class AdminExecutiveReportComponent implements OnInit, OnDestroy {
   }
 
   get questions(): Array<Question | MissionQuestion> {
+   // console.log(this._questions);
     return this._questions;
   }
 

@@ -28,7 +28,9 @@ export class ExecutiveSectionComponent {
     return this._questions;
   }*/
 
+
   @Input() set section(value: ExecutiveSection) {
+    //console.log(this.questions);
     this._section = {
       questionId: value.questionId || '',
       questionType: value.questionType,
@@ -308,27 +310,8 @@ export class ExecutiveSectionComponent {
       const question: Question | MissionQuestion = this._getQuestion(this._section.questionIdentifier);
       const answers: Array<Answer> = this._responseService.answersToShow(this.answers, question);
       this._section.title = MissionQuestionService.label(question, 'title', this.reportLang);
-      let data;
-      //let data: Array<Tag> = [];
-
-      //version ahbi
-     /* if (question.controlType !== 'likert-scale') {
-        data = ResponseService.tagsList(answers, question);
-      }
+      let data = ResponseService.likertScaleChartData(answers, question, this.reportLang);
       this._section.content = this._executiveReportFrontService.likertScaleSection(data, this.reportLang);
-*/
-      //ancienne version
-      if (question.controlType === 'likert-scale') {
-        data = ResponseService.likertScaleChartData(answers, question, this.reportLang);
-        this._section.content = this._executiveReportFrontService.likertScaleSection(data, this.reportLang);
-      /*} else {
-
-        this._section.content = this._executiveReportFrontService.likertScaleSection(data, this.reportLang);
-*/
-      } else {
-        data = ResponseService.tagsList(answers, question);
-        this._section.content = this._executiveReportFrontService.likertScaleTagsSection(data, this.reportLang);
-      }
     }
   }
 

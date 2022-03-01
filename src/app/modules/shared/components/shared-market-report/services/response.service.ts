@@ -665,4 +665,25 @@ export class ResponseService {
     return abstract ? abstract.value : '';
   }
 
-}
+  getLikertScaleGraphicScore(// 1- answers <> = [],
+    answer: Array<answer> = [],
+    //2- question : Question |MissionQuestion
+    question: Question | MissionQuestion = <Question | MissionQuestion>{},
+    //3- lang
+    lang: string
+    // 4- averageGeneralEvaluation
+    ) :  LikertScaleChart {
+
+    // 1  récupère [] colorsAndNames  (JSON file)
+
+    //2 récupère tous les answers of likertScaleChartData (
+
+    //3 récupère averageGeneralEvaluation || 0
+
+    //4 récupère   index option
+
+    // 5 récupère const scorePercentage
+
+    // 6 - return objet with scorePercentage, name, color
+
+  }
