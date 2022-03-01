@@ -32,10 +32,10 @@
       <li *ngFor="let answer of answerList; let i = index">
 
         <!-- text -->
-        <div class="answer-wrapper text-sm text-primary-dark m-right-2">
+        <div class="answer-wrapper text-sm text-dark m-right-2">
           <span (click)="clickItem.emit(answer)"
                 *ngIf="!isClickable && !(enableUpdate && i === indexNumber)">{{ answer.text || answer.name || answer.label || answer.expression}}</span>
-          <a class="c-hand" *ngIf="isClickable && !(enableUpdate && i === indexNumber)"
+          <a class="c-hand text-dark" *ngIf="isClickable && !(enableUpdate && i === indexNumber)"
              (click)="clickItem.emit(answer)">{{ answer.text || answer.name || answer.label || answer.expression}}</a>
           <label *ngIf="enableUpdate && i === indexNumber">
             <input
@@ -63,7 +63,7 @@
               [attr.data-tooltip]="(!(enableUpdate && i === indexNumber)
               ? 'COMMON.TOOLTIP.EDIT' : 'COMMON.TOOLTIP.READONLY') | translate"
               class="tooltip">
-              <i class="fas fa-pencil-alt text-notify"></i>
+              <i class="fas fa-pencil-alt text-meta"></i>
             </span>
           </div>
           <!-- /edit icon -->
@@ -116,10 +116,10 @@
 
 
 <!-- modal -->
-<app-utility-modal [(showModal)]="isModalDelete" [title]="'COMMON.MODAL.TITLE_DELETE'">
+<umius-modal [(showModal)]="isModalDelete" [title]="'COMMON.MODAL.TITLE_DELETE'">
 
   <section class="modal-body">
-    <div class="text-background text-medium">{{ 'COMMON.MODAL.ARE_YOU_SURE' | translate }}</div>
+    <div class="text-draft text-medium">{{ 'COMMON.MODAL.ARE_YOU_SURE' | translate }}</div>
   </section>
 
   <footer class="modal-footer">
@@ -127,5 +127,5 @@
     <button (click)="removeProposition()" class="button is-primary">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
   </footer>
 
-</app-utility-modal>
+</umius-modal>
 <!-- /modal -->

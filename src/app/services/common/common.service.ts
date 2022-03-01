@@ -1,5 +1,4 @@
 import {Inject, Injectable, PLATFORM_ID} from '@angular/core';
-import {isPlatformBrowser} from '@angular/common';
 import * as moment from 'moment';
 import {TranslateNotificationsService} from '../translate-notifications/translate-notifications.service';
 import {Etherpad} from '../../models/etherpad';
@@ -7,15 +6,28 @@ import {environment} from '../../../environments/environment';
 import {TranslateService} from '@ngx-translate/core';
 import {Tag} from '../../models/tag';
 import {LangEntryService} from '../lang-entry/lang-entry.service';
+import {UmiusCommonService} from '@umius/umi-common-component';
+import {DomSanitizer} from '@angular/platform-browser';
+
+/**
+ * UmiusCommonService functions:
+ *
+ * 1. sortBy(value: Array<{[k: string]: any}>, property: string): Array<{[k: string]: any}>;
+ * 2. ellipsisText(value: string, limit: number, dots = true): string;
+ * 3. copyToClipboard(url: string);
+ * 4. byPassSecurity(value: any, type: 'HTML' | 'STYLE' | 'SCRIPT' | 'URL' | 'RESOURCE_URL'):
+ *     SafeHtml | SafeStyle | SafeScript | SafeUrl | SafeResourceUrl;
+ */
 
 @Injectable({ providedIn: 'root' })
-export class CommonService {
+export class CommonService extends UmiusCommonService {
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
-              private _translateService: TranslateService,
+              protected _translateService: TranslateService,
               private _langEntryService: LangEntryService,
+              protected _domSanitize: DomSanitizer,
               private _translateNotificationsService: TranslateNotificationsService) {
-
+    super(_platformId, _domSanitize)
   }
 
   public static getRate(value1: number, value2: number, decimals?: number): string {
@@ -153,29 +165,6 @@ export class CommonService {
       }
     });
     return config;
-  }
-
-  /***
-   * this function is to copy the url/link/text to the
-   * clipboard.
-   * @param url
-   */
-  public copyToClipboard(url: string) {
-    if (url) {
-      if (isPlatformBrowser(this._platformId)) {
-        const textbox = document.createElement('textarea');
-        textbox.style.position = 'fixed';
-        textbox.style.left = '0';
-        textbox.style.top = '0';
-        textbox.style.opacity = '0';
-        textbox.value = url;
-        document.body.appendChild(textbox);
-        textbox.focus();
-        textbox.select();
-        document.execCommand('copy');
-        document.body.removeChild(textbox);
-      }
-    }
   }
 
   /**

@@ -1,10 +1,10 @@
-<header id="header">
+<header id="header" class="header__bg-color">
   <div class="container fluid grid-2xl">
     <div class="column col-sm-12 col-11 col-mx-auto">
-      <nav class="navbar header-height">
+      <nav class="navbar header__height">
 
         <!-- brand -->
-        <div class="navbar-brand header-height">
+        <div class="navbar-brand header__height">
           <a routerLink="/" class="gtm-menu-logo navbar-item m-no">
             <img
               [alt]="company"
@@ -17,14 +17,16 @@
         <!-- /brand -->
 
         <!-- hamburger icon for mobile -->
-        <div class="navbar-burger header-height" (click)="toggleMenuState()">
-          <i class="icon icon-menu"></i>
-          <span class="m-left-2 text-medium">Menu</span>
-        </div>
+        <ng-container *ngIf="isMobileView">
+          <div class="navbar-burger animate-fade is-3" (click)="toggleMenuState()">
+            <i class="icon icon-menu"></i>
+            <span class="m-left-2 text-medium">Menu</span>
+          </div>
+        </ng-container>
         <!-- /hamburger icon for mobile -->
 
         <!-- navigation -->
-        <div class="navbar-menu">
+        <div *ngIf="!isMobileView" class="navbar-menu">
 
           <!-- client my projects -->
           <a
@@ -93,14 +95,14 @@
           <!-- language select dropdown -->
           <div class="navbar-item has-dropdown dropdown-lang">
 
-          <span>
-            <a class="dropdown-toggle">
-              <img
-                [src]="'https://res.cloudinary.com/umi/image/upload/c_fill,h_11,w_16/app/flags/'+flag+'.png'"
-                [alt]="currentLang.toUpperCase()">
-                <i style="font-size: 10px" class="icon icon-arrow-down"></i>
-            </a>
-          </span>
+              <span style="opacity: 1">
+                <a class="dropdown-toggle">
+                  <img
+                    [src]="'https://res.cloudinary.com/umi/image/upload/c_fill,h_11,w_16/app/flags/'+flag+'.png'"
+                    [alt]="currentLang.toUpperCase()">
+                    <i style="font-size: 10px; margin-left: 5px" class="icon icon-arrow-down"></i>
+                </a>
+              </span>
 
             <!-- options -->
             <ul class="navbar-dropdown p-no">
@@ -120,7 +122,7 @@
           <div class="navbar-item has-dropdown has-avatar dropdown-user is-right m-no-right">
 
             <!-- user unconfirmed -->
-            <figure  *ngIf="user && user.state === 'unconfirmed'" class="avatar dropdown-toggle is-lg text-notify">
+            <figure  *ngIf="user && user.state === 'unconfirmed'" class="avatar dropdown-toggle is-lg text-meta">
               <i class="fas fa-user"></i>
             </figure>
             <!-- user unconfirmed -->
@@ -141,7 +143,7 @@
                 *ngIf="user && user.state === 'confirmed'"
                 (click)="onClickLink()"
                 [routerLink]="'/user/account'"
-                class="gtm-menu-my-account navbar-item user-info-wrapper">
+                class="gtm-menu-my-account navbar-item user-info-wrapper text-draft">
 
                 <figure class="avatar is-lg m-right-2" [attr.data-initial]="!hasProfilePic() ? userInitial : ''">
                   <img *ngIf="hasProfilePic()" [src]="profilePicture" class="img-responsive" alt=" ">
@@ -232,7 +234,7 @@
           (click)="onClickLink()"
           *ngIf="user && user.state === 'confirmed'"
           [routerLink]="'/user/account'"
-          class="gtm-menu-my-account navbar-item user-info-wrapper text-background">
+          class="gtm-menu-my-account navbar-item user-info-wrapper text-draft">
           <figure class="avatar is-lg c-hand m-right-2" [attr.data-initial]="!hasProfilePic() ? userInitial : ''">
             <img *ngIf="hasProfilePic()" [src]="profilePicture" class="img-responsive" alt=" ">
           </figure>

@@ -19,15 +19,15 @@
           <div class="card">
             <div class="card-body">
               <div class="d-flex align-center">
-                <div class="shape is-circle is-xs bg-success"></div>
+                <div class="shape is-circled is-xs bg-success"></div>
                 <span>Relevant</span>
               </div>
               <div class="d-flex align-center">
-                <div class="shape is-circle is-xs bg-progress"></div>
+                <div class="shape is-circled is-xs bg-progress"></div>
                 <span>Average</span>
               </div>
               <div class="d-flex align-center">
-                <div class="shape is-circle is-xs bg-alert"></div>
+                <div class="shape is-circled is-xs bg-alert"></div>
                 <span>Overused</span>
               </div>
               <div class="d-flex align-center">
@@ -79,7 +79,7 @@
 
       <div class="remaining-wrapper">
         <div class="d-flex align-center">
-          <span [ngClass]="getCatCircleClass()" class="shape is-circle is-xs"></span>
+          <span [ngClass]="getCatCircleClass()" class="shape is-circled is-xs"></span>
           <span>Search Requests</span>
         </div>
         <div>Remaining for today: {{ catQuota }}</div>
@@ -90,7 +90,7 @@
 
     <!-- loader -->
     <div *ngIf="displayLoader" class="loader-wrapper">
-      <div class="loading is-lg"></div>
+      <div class="loading is-primary is-lg"></div>
     </div>
     <!-- /loader -->
 
@@ -212,7 +212,7 @@
 
       <div class="remaining-wrapper">
         <div class="d-flex align-center">
-          <span [ngClass]="getCircleClass()" class="shape is-circle is-xs"></span>
+          <span [ngClass]="getCircleClass()" class="shape is-circled is-xs"></span>
           <span>Remaining requests: {{ googleQuota }}</span>
         </div>
       </div>
@@ -267,20 +267,16 @@
       <div class="button-group d-flex justify-center align-center m-auto m-top-4">
 
         <!-- Saved targetedPro  -->
-        <button class="button br-6 is-primary is-sm is-outlined badge is-icon m-10 tooltip is-multiline is-right"
-                [attr.data-tooltip] = "'Allow to save the state of all tags and the choice of the logical operator in order to keep this professional targeting for next requests.'"
-                *ngIf="!toSave">
-          <i class="fas fa-save"></i>
-          Save
-        </button>
-
-        <button class="button br-6 is-primary is-sm is-outlined badge is-icon is-active m-10 tooltip is-multiline is-right"
-                [attr.data-tooltip] = "'Allow to save the state of all tags and the choice of the logical operator in order to keep this professional targeting for next requests.'"
-                (click)="saveProTargeting()"
-                *ngIf="toSave">
-          <i class="fas fa-save"></i>
-          Save
-        </button>
+        <div class="text-center">
+          <button
+            class="button is-outlined is-sm br-6 m-10 badge badge-icon tooltip is-multiline is-bottom" type="button"
+            [attr.data-tooltip] = "'Allow to save the state of all tags and the choice of the logical operator in order to keep this professional targeting for next requests.'"
+            (click)="saveProTargeting()"
+            [ngClass]="{'badge-active': toSave}">
+            <i class="fas fa-save" *ngIf="toSave"></i>
+            Save
+          </button>
+        </div>
         <!-- /Saved targetedPro  -->
 
         <!-- Preview saved targetedPro  -->
@@ -299,7 +295,7 @@
         </button>
         <!-- /Reset targetedPro  -->
 
-        <button class="button how-it-works text-underline tooltip is-multiline is-left"
+        <button class="button is-link how-it-works text-underline tooltip is-multiline is-left"
                 [attr.data-tooltip]="'1. A SL tag has 2 different states : include and exclude.\n' +
     ' - Click on a tag to change its state by the other state\n' +
     '2. A TJ tag has 3 different states : include, exclude and neutral\n' +
@@ -335,7 +331,7 @@
 </div>
 
 <!-- MODAL : preview saved targetedPro -->
-<app-utility-modal
+<umius-modal
   [(showModal)]="isPreview"
   [maxWidth]="'90%'"
   [title]="'Preview - Professional targeting'">
@@ -351,13 +347,13 @@
     <button class="button modal-cancel" (close)="closePreview()">Close</button>
   </footer>
 
-</app-utility-modal>
+</umius-modal>
 <!-- /MODAL : preview saved targetedPro -->
 
 <!-- MODAL : save/apply -->
-<app-utility-modal
+<umius-modal
   [(showModal)]="isShowModal">
-  <header class="p-top-20 text-center text-primary-dark text-bold bg-white">
+  <header class="p-top-20 text-center text-dark text-bold bg-white">
     {{saveApplyModalTitle}}
   </header>
 
@@ -367,10 +363,10 @@
 
   <footer class="modal-footer d-flex justify-center">
     <button class="button modal-cancel p-10" (click)="cancelSaveReset()">Cancel</button>
-    <button class="button is-community p-10" (click)="confirmSaveReset()">Confirm</button>
+    <button class="button  p-10" (click)="confirmSaveReset()">Confirm</button>
   </footer>
 
-</app-utility-modal>
+</umius-modal>
 <!-- MODAL : save/apply -->
 
 

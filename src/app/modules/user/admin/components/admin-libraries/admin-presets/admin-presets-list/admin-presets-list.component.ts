@@ -4,12 +4,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Preset } from '../../../../../../../models/preset';
 import { first } from 'rxjs/operators';
 import { TranslateNotificationsService } from '../../../../../../../services/translate-notifications/translate-notifications.service';
-import { Table, Config } from '@umius/umi-common-component/models';
 import { Response } from '../../../../../../../models/response';
 import { isPlatformBrowser } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorFrontService } from '../../../../../../../services/error/error-front.service';
 import { RolesFrontService } from '../../../../../../../services/roles/roles-front.service';
+import {Table, UmiusConfigInterface} from '@umius/umi-common-component';
 
 @Component({
   templateUrl: './admin-presets-list.component.html',
@@ -17,7 +17,7 @@ import { RolesFrontService } from '../../../../../../../services/roles/roles-fro
 
 export class AdminPresetsListComponent implements OnInit {
 
-  private _config: Config = {
+  private _config: UmiusConfigInterface = {
     fields: '',
     limit: '10',
     offset: '0',
@@ -100,10 +100,11 @@ export class AdminPresetsListComponent implements OnInit {
       _isDeletable: this.canAccess(['delete']),
       _isSelectable: this.canAccess(['delete']) || this.canAccess(['clone']),
       _isPaginable: true,
+      _paginationTemplate: 'TEMPLATE_1',
       _isTitle: true,
       _clickIndex: this.canAccess(['edit']) || this.canAccess(['view']) ? 1 : null,
       _isNoMinHeight: this._total < 11,
-      _buttons: [{ _icon: 'fas fa-clone', _label: 'Clone', _isHidden: !this.canAccess(['clone']) }],
+      _actions: [{ _icon: 'fas fa-clone', _label: 'Clone', _isHidden: !this.canAccess(['clone']) }],
       _columns: [
         {
           _attrs: ['name'],
@@ -238,11 +239,11 @@ export class AdminPresetsListComponent implements OnInit {
     this._createPreset(this._presetToClone, false, 'The preset is cloned.');
   }
 
-  get config(): Config {
+  get config(): UmiusConfigInterface {
     return this._config;
   }
 
-  set config(value: Config) {
+  set config(value: UmiusConfigInterface) {
     this._config = value;
     this._getPresets();
   }

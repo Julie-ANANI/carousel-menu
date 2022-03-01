@@ -1,6 +1,6 @@
 <article id="discover-description">
   <div class="restrict-width">
-    <div class="section-pad">
+    <div class="p-bottom-50 p-top-50">
       <div class="column col-xs-12 col-11 col-mx-auto">
 
 
@@ -25,7 +25,7 @@
             <!-- back to innovations -->
             <div class="d-d-back-link">
               <a routerLink="/discover" class="text-sm d-inline-flex align-center">
-                <i class="fas fa-angle-left m-right-1 text-warning"></i>
+                <i class="fas fa-angle-left m-right-1 text-primary"></i>
                 <span class="text-link text-normal" [innerText]="'DISCOVERDESCRIPTION.BACK'" translate></span>
               </a>
             </div>
@@ -35,7 +35,7 @@
 
             <!-- innovation tags -->
             <div *ngIf="tags.length > 0" class="d-d-tags-wrapper">
-              <div *ngFor="let tag of tags" class="label label-tag text-notify m-no">
+              <div *ngFor="let tag of tags" class="label label-tag text-meta m-no">
                 <i class="fas fa-tag"></i>
                 <span class="label-text">{{ tag }}</span>
               </div>
@@ -51,7 +51,7 @@
 
 
           <!-- images -->
-          <section *ngIf="innovationCard.media && innovationCard.media.length > 0" class="d-flex justify-center flex-wrap">
+          <section *ngIf="innovationCard.media && innovationCard.media.length > 0" class="d-flex justify-center flex-wrap-wrap">
             <div *ngFor="let media of innovationCard.media" class="d-inline-flex d-d-media-wrapper">
 
               <!-- if image -->
@@ -85,7 +85,7 @@
           <section *ngIf="innovationCard.advantages && innovationCard.advantages.length > 0" class="p-bottom-20">
             <h2 class="d-d-title-secondary" [innerText]="'DISCOVERDESCRIPTION.BENEFITS'" translate></h2>
             <ul style="font-size: 0.75rem" class="m-top-3 m-no-bottom">
-              <li *ngFor="let advantage of innovationCard.advantages" class="text-background">
+              <li *ngFor="let advantage of innovationCard.advantages" class="text-draft">
                 {{ advantage.text | FormatText }}
               </li>
             </ul>
@@ -121,7 +121,7 @@
 
               <a
                 [href]="contactUsUrl"
-                class="btn btn-primary rounded"
+                class="button is-rounded"
                 target="_blank">
                 {{ 'DISCOVERDESCRIPTION.CONTACT_US' | translate }}
               </a>
@@ -129,7 +129,7 @@
               <a
                 [href]="quizUrl"
                 [ngStyle]="{ 'display': quizButtonDisplay }"
-                class="btn ghost-edit rounded"
+                class="button is-outlined is-info is-rounded"
                 target="_blank">
                 {{ 'DISCOVERDESCRIPTION.OPINION' | translate }}
               </a>
@@ -139,25 +139,25 @@
             <!-- share buttons -->
             <div class="m-top-15 d-d-share-buttons-wrapper">
 
-              <h3 class="d-d-title-secondary text-sm text-background" [innerText]="'DISCOVERDESCRIPTION.SHARE_TITLE'" translate></h3>
+              <h3 class="d-d-title-secondary text-sm text-draft" [innerText]="'DISCOVERDESCRIPTION.SHARE_TITLE'" translate></h3>
 
               <a
                 [href]="linkedInUrl"
-                class="btn btn-round-md btn-round btn-linkedin"
+                class="button is-circled is-sm btn-linkedin"
                 target="_blank">
                 <i class="fab fa-linkedin-in"></i>
               </a>
 
               <a
                 [href]="twitterUrl"
-                class="btn btn-round btn-round-md btn-twitter"
+                class="button is-circled is-sm btn-twitter"
                 target="_blank">
                 <i class="fab fa-twitter"></i>
               </a>
 
               <a
                 [href]="mailUrl"
-                class="btn btn-round btn-round-md btn-mail"
+                class="button is-circled is-sm btn-mail"
                 target="_blank">
                 <i class="fas fa-envelope"></i>
               </a>
@@ -173,7 +173,7 @@
 
             <div class="text-sm p-bottom-15 align-center d-d-text d-flex">
               <i class="fas fa-angle-right m-right-1 text-warning"></i>
-              <span class="text-background" [innerText]="'DISCOVERDESCRIPTION.RELATED'" translate></span>
+              <span class="text-draft" [innerText]="'DISCOVERDESCRIPTION.RELATED'" translate></span>
             </div>
 
             <!-- cards -->
@@ -203,9 +203,9 @@
                     </a>
 
                     <!-- tags -->
-                    <div *ngIf="innovation.tags.length > 0" class="d-flex flex-wrap p-top-2 justify-center">
+                    <div *ngIf="innovation.tags.length > 0" class="d-flex flex-wrap-wrap p-top-2 justify-center">
                       <div *ngFor="let tag of innovation.tags" class="d-inline-flex">
-                        <div *ngIf="tag.type === 'SECTOR'" class="label m-no label-tag text-xs text-notify">
+                        <div *ngIf="tag.type === 'SECTOR'" class="label m-no label-tag text-xs text-meta">
                           <i class="fas fa-tag"></i>
                           <span class="label-text">
                             <ng-container *ngIf="tag.entry && tag.entry.length; else noTagEntryLabel">
@@ -240,5 +240,5 @@
 
 
 <!-- modal to view image -->
-<app-utility-modal-media [(showModal)]="modalMedia" [mediaSrc]="selectedMedia"></app-utility-modal-media>
+<umius-modal [(showModal)]="modalMedia" [medias]="[selectedMedia]"></umius-modal>
 <!-- /modal to view image-->

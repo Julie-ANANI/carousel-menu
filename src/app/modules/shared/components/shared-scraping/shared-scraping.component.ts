@@ -1,8 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {RolesFrontService} from '../../../../services/roles/roles-front.service';
 import {ScrapingService} from '../../../../services/scraping/scraping.service';
-import {SidebarInterface} from '../../../sidebars/interfaces/sidebar-interface';
 import {TranslateNotificationsService} from '../../../../services/translate-notifications/translate-notifications.service';
+import {UmiusSidebarInterface} from '@umius/umi-common-component';
 
 @Component({
   selector: 'app-shared-scraping',
@@ -23,7 +23,7 @@ export class SharedScrapingComponent implements OnInit {
 
   private _attributes: Array<string> = [];
 
-  private _sidebarValue: SidebarInterface = <SidebarInterface>{};
+  private _sidebarValue: UmiusSidebarInterface = <UmiusSidebarInterface>{};
 
   private _keepInformed = 'Starting a crawling';
 
@@ -293,11 +293,11 @@ export class SharedScrapingComponent implements OnInit {
     return this._keepInformed;
   }
 
-  set sidebarValue(value: SidebarInterface) {
+  set sidebarValue(value: UmiusSidebarInterface) {
     this._sidebarValue = value;
   }
 
-  get sidebarValue(): SidebarInterface {
+  get sidebarValue(): UmiusSidebarInterface {
     return this._sidebarValue;
   }
 

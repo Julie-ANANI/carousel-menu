@@ -86,7 +86,7 @@
     class="text-md p-top-20">
     <h2 class="title is-5 m-no-bottom">Links:</h2>
     <ul>
-      <li *ngIf="canAccess(['view', 'results'])" class="text-link text-primary-dark text-sm text-normal">
+      <li *ngIf="canAccess(['view', 'results'])" class="text-link text-dark text-sm text-normal">
         <a
           [href]="'/user/admin/search/results/' + request['_id']"
           target="_blank">
@@ -95,7 +95,7 @@
       </li>
       <li
         *ngIf="request['campaign'] && request['innovation'] && canAccess(['view', 'campaign'])"
-        class="text-link text-primary-dark text-sm text-normal m-top-1">
+        class="text-link text-dark text-sm text-normal m-top-1">
         <a
           [href]="campaignLink"
           target="_blank">
@@ -104,7 +104,7 @@
       </li>
       <li
         *ngIf="request['innovation'] && canAccess(['view', 'project'])"
-        class="text-link text-primary-dark text-sm text-normal m-top-1">
+        class="text-link text-dark text-sm text-normal m-top-1">
         <a
           [href]="'/user/admin/projects/project/' + request['innovation']"
           target="_blank">

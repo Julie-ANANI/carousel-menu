@@ -3,7 +3,7 @@
 
     <!-- fetching -->
     <ng-container *ngIf="isFetching; else stopFetching">
-      <div class="loading is-md"></div>
+      <div class="loading is-md is-primary"></div>
     </ng-container>
     <!-- /fetching -->
 
@@ -52,12 +52,12 @@
 </div>
 
 <!-- sidebar to view user answer -->
-<app-sidebar *ngIf="!isFetching" [(template)]="sidebarValue">
+<umius-sidebar-full *ngIf="!isFetching" [(template)]="sidebarValue">
   <app-sidebar-user-answer
     [(userAnswer)]="modalAnswer"
     [innovationCards]="innovation.innovationCards"
     [projectId]="innovation._id"
     [questions]="questions">
   </app-sidebar-user-answer>
-</app-sidebar>
+</umius-sidebar-full>
 <!-- /sidebar to view user answer -->

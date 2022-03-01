@@ -1,4 +1,4 @@
-@import "../../../../../../style/framework/src/variables";
+@import "~@umius/umi-style-framework/scss/variables";
 
 #admin-edit-workflow {
 
@@ -10,14 +10,14 @@
     font-size: 16px;
     color: $meta-color;
 
-    .shape.is-circle {
+    .shape.is-circled {
       width: 16px;
       height: 16px;
     }
 
     .incomplete {
-      background-color: $bg-alert-color;
-      border-color: $border-alert-color;
+      background-color: $alert-color;
+      border-color: $alert-color;
 
       .fa-check {
         visibility: hidden;
@@ -26,31 +26,31 @@
     }
 
     .complete {
-      background-color: $bg-success-color;
-      border-color: $border-success-color;
+      background-color: $success-color;
+      border-color: $success-color;
 
       .fa-check {
-        color: $text-white-color;
+        color: $white-color;
         visibility: visible;
       }
 
     }
 
     .text-link {
-      color: $text-meta-color;
+      color: $meta-color;
       font-size: 15px;
 
       &.active {
-        color: $text-primary-color;
-        text-decoration: none;
+        color: $primary-color;
+        text-decoration: underline;
         cursor: default;
       }
 
     }
 
     .text-link:hover {
-      color: $text-primary-color;
-      text-decoration: none;
+      color: $primary-color;
+      text-decoration: underline;
     }
 
   }

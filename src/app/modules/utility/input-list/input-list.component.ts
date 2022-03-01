@@ -4,7 +4,7 @@ import { domainRegEx, emailRegEx } from '../../../utils/regex';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { Observable } from 'rxjs';
 import { AutocompleteService } from '../../../services/autocomplete/autocomplete.service';
-import { Enterprise } from '../../../models/enterprise';
+import {UmiusEnterpriseInterface} from '@umius/umi-common-component';
 
 interface InputListConfig {
   placeholder: string;
@@ -221,7 +221,7 @@ export class InputListComponent {
     });
   };
 
-  public selectEnterprise(c: string | Enterprise | any) {
+  public selectEnterprise(c: string | UmiusEnterpriseInterface | any) {
     if (typeof c === 'object' && this.isEditable) {
       this._answerList.push(c);
       this._answer = c.name;

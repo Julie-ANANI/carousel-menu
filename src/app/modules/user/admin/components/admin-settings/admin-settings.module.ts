@@ -11,44 +11,41 @@ import { AdminCountryManagementComponent } from './admin-country-management/admi
 import { AdminEmailBlacklistComponent } from './admin-email-blacklist/admin-email-blacklist.component';
 
 import { SidebarBlacklistModule } from '../../../../sidebars/components/sidebar-blacklist/sidebar-blacklist.module';
-import { SidebarModule } from '../../../../sidebars/templates/sidebar/sidebar.module';
 import { MessageErrorModule } from '../../../../utility/messages/message-error/message-error.module';
 import { MessageTemplateModule } from '../../../../utility/messages/message-template/message-template.module';
 import { SidebarEnterprisesModule } from '../../../../sidebars/components/sidebar-enterprises/sidebar-enterprises.module';
-import { ModalModule } from '../../../../utility/modals/modal/modal.module';
 import { AdminEntrepriseBulkEditComponent } from './admin-enterprise-management/admin-entreprise-bulk-edit/admin-entreprise-bulk-edit.component';
 import { PipeModule } from '../../../../../pipe/pipe.module';
 import { AdminEntrepriseAddParentComponent } from './admin-enterprise-management/admin-entreprise-add-parent/admin-entreprise-add-parent.component';
 import { AutoCompleteInputModule } from '../../../../utility/auto-complete-input/auto-complete-input.module';
 import { InputListModule } from '../../../../utility/input-list/input-list.module';
-import { AutoSuggestionModule } from '../../../../utility/auto-suggestion/auto-suggestion.module';
 import { AdminProductTrackingComponent } from './admin-product-management/admin-product-tracking.component';
 import { AdminProductSubscriptionTrackingComponent } from './admin-product-management/admin-product-shared-tracking-table/admin-product-subscription-tracking.component';
 import { UseSuperToolsComponent } from './admin-product-management/admin-product-shared-tracking-table/use-super-tools.component';
 import { HelpCommunityGrowComponent } from './admin-product-management/admin-product-shared-tracking-table/help-community-grow.component';
 import { AdminProductSharedTrackingTableComponent } from './admin-product-management/admin-product-shared-tracking-table/admin-product-shared-tracking-table.component';
 import { SharedDateSelectorModule } from '../../../../shared/components/shared-date-selector/shared-date-selector.module';
-import { TableComponentsModule } from '@umius/umi-common-component/table';
+import {AutoSuggestionModule, ModalModule, SidebarFullModule, TableModule} from '@umius/umi-common-component';
 @NgModule({
   imports: [
     CommonModule,
     TranslateModule.forChild(),
     SidebarBlacklistModule,
     RouterModule,
-    SidebarModule,
     MessageErrorModule,
     MessageTemplateModule,
     SidebarEnterprisesModule,
     ReactiveFormsModule,
-    ModalModule,
     AdminSettingsRoutingModule,
     PipeModule,
     FormsModule,
     AutoCompleteInputModule,
     InputListModule,
-    AutoSuggestionModule,
     SharedDateSelectorModule,
-    TableComponentsModule,
+    TableModule,
+    SidebarFullModule,
+    ModalModule,
+    AutoSuggestionModule,
   ],
   declarations: [
     AdminSettingsComponent,

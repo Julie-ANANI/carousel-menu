@@ -1,5 +1,5 @@
 <div [id]="'admin-project-done-modal'">
-  <app-utility-modal-empty [(showModal)]="showModal">
+  <umius-modal [(showModal)]="showModal">
 
     <section class="modal-body">
 
@@ -31,12 +31,12 @@
       <button
         (click)="onConfirm($event)"
         [disabled]="isSaving"
-        class="button is-community"
+        class="button "
         id="btn-modal-confirm-project-done"
         type="button">
         Confirm
       </button>
     </footer>
 
-  </app-utility-modal-empty>
+  </umius-modal>
 </div>

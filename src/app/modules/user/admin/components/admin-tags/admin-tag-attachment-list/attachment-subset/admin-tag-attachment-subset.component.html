@@ -17,7 +17,7 @@
             <th><input [(ngModel)]="filter.text"/></th>
             <th><input [(ngModel)]="filter.notation"/></th>
             <th><button (click)="createTagFromCodes()"
-                        class="btn btn-primary centered"
+                        class="button centered"
                         title="Create a tag with the selection"
                         [disabled]="selected.length == 0">Create a tag from the selection
                 <i class="fas fa-plus"></i></button></th>
@@ -37,12 +37,11 @@
     <tfoot>
     <tr>
         <td colspan="12">
-            <app-pagination
-              [configValue]="config"
-              (configChange)="configChange($event)"
-              [total]="total"
-              [propertyName]="'admin-attachment-tags'">
-            </app-pagination>
+            <umius-pagination-template1
+              [pagination]="config"
+              (paginationChange)="configChange($event)"
+              [totalCount]="total">
+            </umius-pagination-template1>
         </td>
     </tr>
     </tfoot>

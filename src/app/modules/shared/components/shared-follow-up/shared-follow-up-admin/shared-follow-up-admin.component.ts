@@ -2,7 +2,6 @@ import {Component, Input, OnInit} from '@angular/core';
 import {MissionQuestion} from '../../../../../models/mission';
 import {Answer} from '../../../../../models/answer';
 import {Innovation} from '../../../../../models/innovation';
-import {SidebarInterface} from '../../../../sidebars/interfaces/sidebar-interface';
 import {RolesFrontService} from '../../../../../services/roles/roles-front.service';
 import {first, takeUntil} from 'rxjs/operators';
 import {HttpErrorResponse} from '@angular/common/http';
@@ -14,7 +13,7 @@ import {AnswerService} from '../../../../../services/answer/answer.service';
 import {Professional} from '../../../../../models/professional';
 import {FilterService} from '../../shared-market-report/services/filters.service';
 import {Subject} from 'rxjs';
-import { Config, Table } from '@umius/umi-common-component/models';
+import {Table, UmiusConfigInterface, UmiusSidebarInterface} from '@umius/umi-common-component';
 
 interface Pending {
   answersIds?: Array<string>;
@@ -62,12 +61,12 @@ export class SharedFollowUpAdminComponent implements OnInit {
     fr: []
   };
 
-  private _sidebarTemplate: SidebarInterface = {
+  private _sidebarTemplate: UmiusSidebarInterface = {
     animate_state: 'inactive',
     type: 'FOLLOW_UP'
   };
 
-  private _sidebarAnswer: SidebarInterface = <SidebarInterface>{};
+  private _sidebarAnswer: UmiusSidebarInterface = <UmiusSidebarInterface>{};
 
   private _modalTemplateType = '';
 
@@ -79,7 +78,7 @@ export class SharedFollowUpAdminComponent implements OnInit {
 
   private _showSendModal = false;
 
-  private _config: Config = {
+  private _config: UmiusConfigInterface = {
     fields: '',
     limit: '10',
     offset: '0',
@@ -123,9 +122,10 @@ export class SharedFollowUpAdminComponent implements OnInit {
       _isRowDisabled: (answer: Answer) => SharedFollowUpAdminComponent._isRowDisabled(answer),
       _clickIndex: this.canAccess(['view', 'answer']) || this.canAccess(['edit', 'answer']) ? 1 : null,
       _isPaginable: true,
+      _paginationTemplate: 'TEMPLATE_1',
       _isLocal: true,
       _isNoMinHeight: answers.length < 11,
-      _buttons: [
+      _actions: [
         {_label: 'SHARED_FOLLOW_UP.BUTTON.INTERVIEW'},
         {_label: 'SHARED_FOLLOW_UP.BUTTON.OPENING'},
         {_label: 'SHARED_FOLLOW_UP.BUTTON.NO_FOLLOW'},
@@ -352,7 +352,7 @@ export class SharedFollowUpAdminComponent implements OnInit {
     const objective = action._action === 'WITHOUT_OBJECTIVE' ? '' : action._action.split('.').slice(-1)[0];
     const answersIds = action._rows.map((answer: any) => answer._id);
 
-    // First we check if some of the selected users already have an objective
+    // First we check if some selected users already have an objective
     const assignedAnswers = action._rows
       .filter((answer: any) => answer.followUp.objective && answer.followUp.objective !== objective)
       .map((answer: any) => {
@@ -398,11 +398,11 @@ export class SharedFollowUpAdminComponent implements OnInit {
     return this._tableInfos;
   }
 
-  get config(): Config {
+  get config(): UmiusConfigInterface {
     return this._config;
   }
 
-  set config(value: Config) {
+  set config(value: UmiusConfigInterface) {
     this._config = value;
   }
 
@@ -410,11 +410,11 @@ export class SharedFollowUpAdminComponent implements OnInit {
     return this._customFields;
   }
 
-  get sidebarTemplate(): SidebarInterface {
+  get sidebarTemplate(): UmiusSidebarInterface {
     return this._sidebarTemplate;
   }
 
-  set sidebarTemplate(value: SidebarInterface) {
+  set sidebarTemplate(value: UmiusSidebarInterface) {
     this._sidebarTemplate = value;
   }
 
@@ -500,11 +500,11 @@ export class SharedFollowUpAdminComponent implements OnInit {
     this._modalAnswer = modalAnswer;
   }
 
-  get sidebarAnswer(): SidebarInterface {
+  get sidebarAnswer(): UmiusSidebarInterface {
     return this._sidebarAnswer;
   }
 
-  set sidebarAnswer(value: SidebarInterface) {
+  set sidebarAnswer(value: UmiusSidebarInterface) {
     this._sidebarAnswer = value;
   }
 

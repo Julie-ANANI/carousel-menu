@@ -1,9 +1,9 @@
-@import "../../../../../../style/framework/src/variables";
+@import "~@umius/umi-style-framework/scss/variables";
 
 #admin-community {
 
   .a-c-header {
-    background: $bg-white-color;
+    background: $white-color;
 
     h1 {
       font-size: 1.15rem;

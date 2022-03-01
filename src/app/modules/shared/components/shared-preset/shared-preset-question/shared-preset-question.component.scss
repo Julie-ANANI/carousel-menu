@@ -1,14 +1,14 @@
-@import "../../../../../../style/framework/src/variables";
+@import "~@umius/umi-style-framework/scss/variables";
 
 .shared-preset-question {
 
   .header-wrapper {
-    background-color: $bg-meta-color;
+    background-color: $meta-color;
     border-radius: 6px;
     padding: 10px 25px 10px 20px;
     font-size: 14px;
     font-weight: 600;
-    color: $text-white-color;
+    color: $white-color;
     position: relative;
 
     &.is-edit-mode {
@@ -26,7 +26,7 @@
 
     .buttons-wrapper {
       position: absolute;
-      background-color: $bg-meta-color;
+      background-color: $meta-color;
       padding: 10px 14px 10px 20px;
       right: 12px;
     }
@@ -43,7 +43,7 @@
       cursor: pointer;
 
       &:hover {
-        color: $text-primary-color;
+        color: $primary-color;
       }
 
       &.disabled {
@@ -61,7 +61,7 @@
   }
 
   .question-body {
-    background-color: $bg-white-color;
+    background-color: $white-color;
     padding: 20px 50px 10px 50px;
     border-bottom-right-radius: 6px;
     border-bottom-left-radius: 6px;

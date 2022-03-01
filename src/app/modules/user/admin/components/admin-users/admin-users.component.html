@@ -28,10 +28,10 @@
       <!-- table -->
       <section>
         <umius-table
-          (editRow)="onClickEdit($event)"
-          (removeRows)="onClickDelete($event)"
           [(config)]="config"
-          [data]="table">
+          [data]="table"
+          (editRow)="onClickEdit($event)"
+          (removeRows)="onClickDelete($event)">
         </umius-table>
       </section>
       <!-- /table -->
@@ -44,7 +44,7 @@
 
 
 <!-- sidebar -->
-<app-sidebar
+<umius-sidebar-full
   *ngIf="canAccess(['user', 'view']) || canAccess(['user', 'edit'])"
   [(template)]="sidebarValue">
   <app-user-form
@@ -56,19 +56,19 @@
     [type]="sidebarValue.type"
     [user]="selectedUser">
   </app-user-form>
-</app-sidebar>
+</umius-sidebar-full>
 <!-- /sidebar -->
 
 
 <!-- modal to delete user -->
-<app-utility-modal
+<umius-modal
   *ngIf="canAccess() && canAccess(['user', 'delete'])"
   [(showModal)]="modalDelete"
   [title]="'Delete Board'">
 
   <section class="modal-body">
     Do you really want to delete the selected user(s)?
-    <ul class="d-flex flex-wrap text-xs text-notify text-medium m-top-3">
+    <ul class="d-flex flex-wrap-wrap text-xs text-meta text-medium m-top-3">
       <li *ngFor="let user of usersToRemove" class="m-right-3 m-top-1">
         {{ user?.firstName }} {{ user?.lastName }}
       </li>
@@ -80,5 +80,5 @@
     <button (click)="onClickConfirm()" class="button is-primary">Confirm</button>
   </footer>
 
-</app-utility-modal>
+</umius-modal>
 <!-- /modal to delete user -->

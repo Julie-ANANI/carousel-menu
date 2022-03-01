@@ -1,6 +1,6 @@
 <div id="not-authorized">
 
-  <header class="header-height header-bg-color">
+  <header class="header__height header__bg-color">
     <div class="container fluid grid-2xl">
       <div class="column col-sm-12 col-11 col-mx-auto">
         <nav class="navbar border-no">
@@ -33,7 +33,7 @@
       (click)="onClickReload()"
       [disabled]="isReloading"
       [id]="'notAuthorized-btn-homepage'"
-      class="button is-community is-xl"
+      class="button is-xl"
       type="button">
       <span *ngIf="!isReloading">{{ 'COMMON.BUTTON.RETURN_HOMEPAGE' | translate }}</span>
       <span *ngIf="isReloading" class="loading is-white"></span>

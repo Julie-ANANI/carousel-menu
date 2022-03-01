@@ -1,11 +1,11 @@
-@import "framework/src/variables";
+@import "~@umius/umi-style-framework/scss/variables";
 
 .stat {
 
   &.is-admin-campaign {
 
     .stat-container:first-child {
-      background-color: $bg-secondary-color !important;
+      background-color: #0B90C6 !important;
     }
 
     .stat-container:nth-child(2) {
@@ -21,12 +21,12 @@
     }
 
     .stat-heading, .stat-value {
-      color: $text-white-color !important;
+      color: $white-color !important;
     }
 
     .stat-sub-heading {
       opacity: 0.7 !important;
-      color: $text-white-color !important;
+      color: $white-color !important;
     }
 
   }

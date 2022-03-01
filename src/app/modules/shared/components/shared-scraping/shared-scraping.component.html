@@ -91,7 +91,7 @@
 
     <!-- loading -->
     <div *ngIf="isScraping" [ngClass]="isScraping ? 'd-block' : 'd-none'" class="m-top-25">
-      <div class="loading"></div>
+      <div class="loading is-primary"></div>
     </div>
     <!-- /loading -->
 
@@ -130,10 +130,10 @@
 
 
 <!-- sidebars to set settings -->
-<app-sidebar [(template)]="sidebarValue">
+<umius-sidebar-full [(template)]="sidebarValue">
   <app-sidebar-scraping
     [params]="params">
   </app-sidebar-scraping>
-</app-sidebar>
+</umius-sidebar-full>
 <!-- /sidebars to set settings  -->
 

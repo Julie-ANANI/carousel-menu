@@ -6,23 +6,22 @@ import { TranslateModule } from '@ngx-translate/core';
 
 import {SharedQuestionnaireComponent} from './shared-questionnaire.component';
 import { SharedQuestionnaireSectionComponent } from './shared-questionnaire-section/shared-questionnaire-section.component';
-import {ModalEmptyModule} from '../../../utility/modals/modal-empty/modal-empty.module';
 import {SharedQuestionnaireQuestionComponent} from './shared-questionnaire-question/shared-questionnaire-question.component';
-import {AutoSuggestionModule} from '../../../utility/auto-suggestion/auto-suggestion.module';
 import {PipeModule} from '../../../../pipe/pipe.module';
 import {TextareaAutoResizeModule} from '../../../../directives/textareaAutoResize/textarea-auto-resize.module';
+import {AutoSuggestionModule, ModalModule} from '@umius/umi-common-component';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        TranslateModule.forChild(),
-        RouterModule,
-        FormsModule,
-        ModalEmptyModule,
-        AutoSuggestionModule,
-        TextareaAutoResizeModule,
-        PipeModule
-    ],
+  imports: [
+    CommonModule,
+    TranslateModule.forChild(),
+    RouterModule,
+    FormsModule,
+    TextareaAutoResizeModule,
+    PipeModule,
+    ModalModule,
+    AutoSuggestionModule
+  ],
   declarations: [
     SharedQuestionnaireComponent,
     SharedQuestionnaireSectionComponent,

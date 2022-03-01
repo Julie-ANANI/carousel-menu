@@ -4,23 +4,19 @@ import { TranslateModule } from '@ngx-translate/core';
 import { RouterModule } from '@angular/router';
 
 import { AdminEditWorkflowComponent } from './admin-edit-workflow.component';
-
-import { SidebarModule } from '../../../../sidebars/templates/sidebar/sidebar.module';
 import { SidebarWorkflowModule } from '../../../../sidebars/components/sidebar-workflow/sidebar-workflow.module';
-import { ModalModule } from '../../../../utility/modals/modal/modal.module';
-import { TableComponentsModule } from '@umius/umi-common-component/table';
+import {ModalModule, SidebarFullModule, TableModule} from '@umius/umi-common-component';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        TranslateModule.forChild(),
-        RouterModule,
-
-        SidebarModule,
-        SidebarWorkflowModule,
-        ModalModule,
-        TableComponentsModule
-    ],
+  imports: [
+    CommonModule,
+    TranslateModule.forChild(),
+    RouterModule,
+    SidebarWorkflowModule,
+    TableModule,
+    ModalModule,
+    SidebarFullModule,
+  ],
   declarations: [
     AdminEditWorkflowComponent
   ],

@@ -7,15 +7,14 @@ import { AdminCommunityMembersComponent } from './admin-community-members.compon
 import { AdminCommunityMemberComponent } from './components/admin-community-member/admin-community-member.component';
 
 import { SidebarAdvsearchFormModule } from '../../../../../sidebars/components/advsearch-form/sidebar-advsearch-form.module';
-import { SidebarModule } from '../../../../../sidebars/templates/sidebar/sidebar.module';
 import { SidebarAddAmbassadorFormModule } from '../../../../../sidebars/components/add-ambassador-form/sidebar-add-ambassador-form.module';
 import { SharedAmbassadorListModule } from '../../../../../shared/components/shared-ambassador-list/shared-ambassador-list.module';
 import { PipeModule } from '../../../../../../pipe/pipe.module';
 import { SidebarCommunityFormModule } from '../../../../../sidebars/components/community-form/sidebar-community-form.module';
 import { ErrorTemplate1Module } from '../../../../../utility/errors/error-template-1/error-template-1.module';
 import { NguiAutoCompleteModule } from '../../../../../utility/auto-complete/auto-complete.module';
-import { TableComponentsModule } from '@umius/umi-common-component/table';
 import {LangEntryPipeModule} from '../../../../../../pipe/lang-entry/langEntryPipe.module';
+import {SidebarFullModule} from '@umius/umi-common-component';
 
 
 @NgModule({
@@ -26,14 +25,13 @@ import {LangEntryPipeModule} from '../../../../../../pipe/lang-entry/langEntryPi
     SharedAmbassadorListModule,
     TranslateModule.forChild(),
     PipeModule,
-    SidebarModule,
     SidebarAdvsearchFormModule,
     SidebarAddAmbassadorFormModule,
     SidebarCommunityFormModule,
     ErrorTemplate1Module,
     NguiAutoCompleteModule,
-    TableComponentsModule,
-    LangEntryPipeModule
+    LangEntryPipeModule,
+    SidebarFullModule
   ],
   declarations: [
     AdminCommunityMembersComponent,

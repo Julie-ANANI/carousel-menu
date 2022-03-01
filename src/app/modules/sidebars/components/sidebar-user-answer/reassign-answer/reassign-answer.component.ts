@@ -4,18 +4,17 @@ import {first} from 'rxjs/operators';
 import {TranslateNotificationsService} from '../../../../../services/translate-notifications/translate-notifications.service';
 import {HttpErrorResponse} from '@angular/common/http';
 import {ErrorFrontService} from '../../../../../services/error/error-front.service';
-import { Config } from '@umius/umi-common-component/models';
-import {Company} from '../../../../../models/company';
-import {Country} from '../../../../../models/country';
 import {countries} from '../../../../../models/static-data/country';
+import {UmiusCompanyInterface} from '@umius/umi-common-component/models/company';
+import {UmiusConfigInterface, UmiusCountryInterface} from '@umius/umi-common-component';
 
 export interface NewPro {
   firstName: string;
   lastName: string;
   email: string;
   jobTitle: string;
-  company: string | Company;
-  country: string | Country;
+  company: string | UmiusCompanyInterface;
+  country: string | UmiusCountryInterface;
 }
 
 @Component({
@@ -28,7 +27,7 @@ export class ReassignAnswerComponent {
 
   private _newPro: NewPro = <NewPro>{};
 
-  private _proConfig: Config = {
+  private _proConfig: UmiusConfigInterface = {
     fields: 'firstName lastName company email country jobTitle',
     limit: '1',
     offset: '0',
@@ -43,9 +42,9 @@ export class ReassignAnswerComponent {
 
   private _showBanner = false;
 
-  private _country: Country = <Country>{};
+  private _country: UmiusCountryInterface = <UmiusCountryInterface>{};
 
-  private _company: Company = <Company>{};
+  private _company: UmiusCompanyInterface = <UmiusCompanyInterface>{};
 
   constructor(private _professionalService: ProfessionalsService,
               private _translateNotificationsService: TranslateNotificationsService) { }
@@ -94,12 +93,12 @@ export class ReassignAnswerComponent {
     this.proToAssign.emit(this._newPro);
   }
 
-  public onCountrySelect(event: Country) {
+  public onCountrySelect(event: UmiusCountryInterface) {
     this._country = event;
     this.emitPro();
   }
 
-  public onCompanySelect(event: Company) {
+  public onCompanySelect(event: UmiusCompanyInterface) {
     this._company = event;
     this.emitPro();
   }
@@ -108,11 +107,11 @@ export class ReassignAnswerComponent {
     return this._newPro;
   }
 
-  get company(): Company {
+  get company(): UmiusCompanyInterface {
     return this._company;
   }
 
-  get country(): Country {
+  get country(): UmiusCountryInterface {
     return this._country;
   }
 
@@ -128,7 +127,7 @@ export class ReassignAnswerComponent {
     return this._isSearchingPro;
   }
 
-  get proConfig(): Config {
+  get proConfig(): UmiusConfigInterface {
     return this._proConfig;
   }
 

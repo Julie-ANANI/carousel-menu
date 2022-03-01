@@ -39,10 +39,11 @@
     <div *ngIf="!hideAnswers" class="p-top-25 text-center">
       <button
         (click)="toggleAnswers = !toggleAnswers"
-        class="button is-community is-sm"
+        class="button is-sm"
         type="button">
         {{ (toggleAnswers ? 'MARKET_REPORT.BTN_ANSWERS_CLOSE' : 'MARKET_REPORT.BTN_ANSWERS_OPEN') | translateIn: reportingLang }}
-        <i class="icon" aria-hidden="true" [ngClass]="toggleAnswers ? 'icon-arrow-up' : 'icon-arrow-down'"></i>
+        <i class="icon icon-right" aria-hidden="true"
+           [ngClass]="toggleAnswers ? 'icon-arrow-up' : 'icon-arrow-down'"></i>
       </button>
     </div>
     <!-- /answer toggle button -->
@@ -50,7 +51,7 @@
     <!-- now showing the answers, this contains both the answers to show and comments  -->
     <div [ngClass]="toggleAnswers ? 'is-expand' : 'is-collapse'" class="answers-wrapper">
       <ng-container *ngIf="toggleAnswers">
-        <div class="d-flex justify-between clearbit-list-wrapper flex-wrap">
+        <div class="d-flex justify-space clearbit-list-wrapper flex-wrap-wrap">
 
           <div *ngIf="answersWithComment.length > 0" class="flex-full m-right-20 p-top-25 card-wrapper">
             <div *ngFor="let answer of answersWithComment" class="card">
@@ -92,10 +93,10 @@
     <div *ngIf="!hideAnswers" class="p-top-25 text-center">
       <button
         (click)="toggleAnswers = !toggleAnswers"
-        class="button is-community is-sm"
+        class="button is-sm"
         type="button">
         {{ (toggleAnswers ? 'MARKET_REPORT.BTN_ANSWERS_CLOSE' : 'MARKET_REPORT.BTN_ANSWERS_OPEN') | translateIn: reportingLang }}
-        <i class="icon" aria-hidden="true" [ngClass]="toggleAnswers ? 'icon-arrow-up' : 'icon-arrow-down'"></i>
+        <i class="icon icon-right" aria-hidden="true" [ngClass]="toggleAnswers ? 'icon-arrow-up' : 'icon-arrow-down'"></i>
       </button>
     </div>
     <!-- answer toggle button -->
@@ -149,7 +150,7 @@
 
           <!-- toggle ---->
           <div *ngSwitchCase="'toggle'" class="toggle-wrapper p-top-25">
-            <div class="card-wrapper">
+            <div class="card-wrapper card-responsive">
               <div *ngFor="let answer of answersToShow | async" class="card is-responsive">
                 <div class="card-body">
                   <app-pro-tag

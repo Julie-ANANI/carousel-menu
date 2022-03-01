@@ -4,20 +4,16 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { SidebarSearchHistoryComponent } from './sidebar-search-history.component';
+import {TableModule} from '@umius/umi-common-component';
 
-import { SidebarModule } from '../../templates/sidebar/sidebar.module';
-import { CountryFlagModule } from '@umius/umi-common-component/country-flag';
-import { TableComponentsModule } from '@umius/umi-common-component/table';
 @NgModule({
-    imports: [
-        CommonModule,
-        FormsModule,
-        ReactiveFormsModule,
-        TranslateModule.forChild(),
-        SidebarModule,
-        CountryFlagModule,
-        TableComponentsModule
-    ],
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    TranslateModule.forChild(),
+    TableModule
+  ],
   declarations: [
    SidebarSearchHistoryComponent
   ],

@@ -9,7 +9,7 @@
     <pre>email,date,subject,messageId</pre>
 </div>
 <div *ngIf="autorizedActions(2)" class="text-center">
-    <label class="btn ghost-primary btn-primary">
+    <label class="button is-outlined">
         <input #fileupload type="file" [hidden]="true" (change)="importAnswers(fileupload.files[0], $event)" />
         {{ 'CAMPAIGNS.IMPORT-ANSWERS' | translate }}
     </label>

@@ -12,17 +12,17 @@
       <div class="flex-start action-wrapper">
 
         <div
-          class="filter-icon text-notify c-hand"
+          class="filter-icon text-meta c-hand"
           (click)="showAllTags()">
           <i class="fas fa-sliders-h"></i>
           <span class="text-medium" [innerText]="'DISCOVER.FILTER_TEXT'" translate></span>
         </div>
 
         <div class="search-wrapper">
-          <app-utility-search-input-2
+          <umius-search-input
             [searchPlaceholder]="'DISCOVER.SEARCH_INPUT_PLACEHOLDER'"
             (searchFieldOutput)="onInputField($event)">
-          </app-utility-search-input-2>
+          </umius-search-input>
         </div>
 
       </div>
@@ -34,7 +34,7 @@
           <a
             [queryParams]="{ 'tag': getSelectedTagsIds() }"
             [routerLink]="['/demo', 'showcase']"
-            class="ghost-edit btn btn-sm rounded m-right-20"
+            class="button is-sm is-info is-rounded m-right-20"
             target="_blank">
             <span [innerText]="'DISCOVER.BUTTON_SHOWCASE'" translate></span>
           </a>
@@ -42,9 +42,9 @@
 
         <button
           (click)="onClickShare()"
-          class="btn btn-sm rounded btn-secondary"
+          class="button is-rounded is-sm"
           type="button">
-          <i class="fas fa-share"></i>{{ 'DISCOVER.BUTTON_SHARE' | translate }}
+          <i class="fas fa-share icon-left"></i>{{ 'DISCOVER.BUTTON_SHARE' | translate }}
         </button>
 
       </div>
@@ -93,7 +93,7 @@
   <!-- suggested tags -->
   <div *ngIf="suggestedTags.length > 0"  class="sector-suggested">
 
-    <h3 class="text-notify animate-appear">{{ 'DISCOVER.RELATED_SECTORS' | translate }}</h3>
+    <h3 class="text-meta animate-appear">{{ 'DISCOVER.RELATED_SECTORS' | translate }}</h3>
 
     <div class="d-flex sector-wrapper">
       <div
@@ -133,14 +133,14 @@
 
 
 <!-- modal tags -->
-<app-utility-modal [(showModal)]="modalTag" [maxWidth]="'840px'" [title]="'DISCOVER.ALL_SECTORS'">
+<umius-modal [(showModal)]="modalTag" maxWidth="840px" title="DISCOVER.ALL_SECTORS">
   <section class="modal-body">
     <div class="modal-tag-wrapper">
       <div class="d-flex sector-wrapper">
         <div
           *ngFor="let tag of allTags"
           class="label is-rounded c-hand"
-          [ngClass]=" checkFilter(tag._id) ? 'is-primary' : 'is-draft' ">
+          [ngClass]=" checkFilter(tag._id) ? 'is-primary' : 'is-draft'">
           <label class="c-hand">
             <ng-container *ngIf="tag.entry && tag.entry.length; else noAllTagsEntryLabel">
               <input
@@ -167,21 +167,21 @@
       </div>
     </div>
   </section>
-</app-utility-modal>
+</umius-modal>
 <!-- /modal tags -->
 
 
 <!-- modal share -->
-<app-utility-modal [(showModal)]="modalShare" [enableCloseButton]="true">
+<umius-modal [(showModal)]="modalShare">
   <section class="modal-body">
     <div class="modal-share-wrapper text-center">
 
-      <h3 class="text-background text-normal" [innerText]="'DISCOVER.MODAL_SHARE.TITLE'" translate></h3>
+      <h3 class="text-draft text-normal" [innerText]="'DISCOVER.MODAL_SHARE.TITLE'" translate></h3>
 
       <div *ngIf="!urlCopied">
         <button
           (click)="onClickCopy($event)"
-          class="btn btn-sm ghost-edit"
+          class="button is-info is-sm"
           type="button">
           {{ 'DISCOVER.TOOLTIP_TEXT' | translate }}
         </button>
@@ -189,7 +189,7 @@
 
       <div *ngIf="urlCopied">
         <button
-          class="btn btn-sm ghost-success c-not-allowed"
+          class="button is-outlined is-success is-sm c-not-allowed"
           type="button">
           {{ 'DISCOVER.TOOLTIP_TEXT_COPIED' | translate }}
         </button>
@@ -197,5 +197,5 @@
 
     </div>
   </section>
-</app-utility-modal>
+</umius-modal>
 <!-- /modal share -->

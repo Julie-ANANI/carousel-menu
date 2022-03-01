@@ -11,25 +11,24 @@ import { isPlatformBrowser } from '@angular/common';
 import { first, takeUntil } from 'rxjs/operators';
 import { InnovationFrontService } from '../../../../../../services/innovation/innovation-front.service';
 import { StatsInterface } from '../../../../../../models/stats';
-import { ConfigService } from '@umius/umi-common-component/services/config';
 import { RolesFrontService } from '../../../../../../services/roles/roles-front.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { TranslateNotificationsService } from '../../../../../../services/translate-notifications/translate-notifications.service';
 import { AnswerService } from '../../../../../../services/answer/answer.service';
 import { CampaignFrontService } from '../../../../../../services/campaign/campaign-front.service';
 import { Answer, AnswerStatus } from '../../../../../../models/answer';
-import { SidebarInterface } from '../../../../../sidebars/interfaces/sidebar-interface';
 import { Question } from '../../../../../../models/question';
-import { Company } from '../../../../../../models/company';
 import { SocketService } from '../../../../../../services/socket/socket.service';
 import { Professional } from '../../../../../../models/professional';
 import { MissionQuestion } from '../../../../../../models/mission';
 import { ErrorFrontService } from '../../../../../../services/error/error-front.service';
-import { Table, Config } from '@umius/umi-common-component/models';
 import { CommonService } from "../../../../../../services/common/common.service";
+import {Table, UmiusConfigInterface, UmiusConfigService, UmiusSidebarInterface} from '@umius/umi-common-component';
+import {UmiusCompanyInterface} from '@umius/umi-common-component/models/company';
 
 @Component({
   templateUrl: './admin-project-collection.component.html',
+  styleUrls: ['./admin-project-collection.component.scss'],
 })
 export class AdminProjectCollectionComponent implements OnInit, OnDestroy {
   private _isLoading = true;
@@ -38,7 +37,7 @@ export class AdminProjectCollectionComponent implements OnInit, OnDestroy {
 
   private _statsConfig: Array<StatsInterface> = [];
 
-  private _localConfig: Config = {
+  private _localConfig: UmiusConfigInterface = {
     fields: '',
     limit: this._configService.configLimit('admin-project-collection'),
     offset: '0',
@@ -50,17 +49,23 @@ export class AdminProjectCollectionComponent implements OnInit, OnDestroy {
 
   private _isImportingAnswers = false;
 
+  private _errorsModal = false;
+
+  private _importingErrors: Array<any>;
+
+  private _slicedErrors: Array<any> = [];
+
   private _tableData: Table = <Table>{};
 
   private _answers: Array<Answer> = [];
 
   private _sidebarAnswer: Answer = <Answer>{};
 
-  private _sidebarValue: SidebarInterface = <SidebarInterface>{};
+  private _sidebarValue: UmiusSidebarInterface = <UmiusSidebarInterface>{};
 
   private _questions: Array<Question | MissionQuestion> = [];
 
-  private _excludedCompanies: Array<Company> = [];
+  private _excludedCompanies: Array<UmiusCompanyInterface> = [];
 
   private _campaignList: Array<{ _name: ''; _alias: '' }> = [];
 
@@ -69,6 +74,8 @@ export class AdminProjectCollectionComponent implements OnInit, OnDestroy {
   private _socketListening = false;
 
   private _targetWarnings = 0;
+
+  private _accessPath: Array<string> = ['projects', 'project', 'campaigns', 'campaign', 'search'];
 
   private static _campaignStat(
     answers: Array<Answer>,
@@ -80,7 +87,7 @@ export class AdminProjectCollectionComponent implements OnInit, OnDestroy {
 
   constructor(
     @Inject(PLATFORM_ID) protected _platformId: Object,
-    private _configService: ConfigService,
+    private _configService: UmiusConfigService,
     private _translateNotificationsService: TranslateNotificationsService,
     private _answerService: AnswerService,
     private _rolesFrontService: RolesFrontService,
@@ -265,26 +272,23 @@ export class AdminProjectCollectionComponent implements OnInit, OnDestroy {
     return this._rolesFrontService.hasAccessAdminSide(_default.concat(path));
   }
 
-  public onImport(file: File) {
-    if (!this._isImportingAnswers && this._selectedCampaign) {
-      this._isImportingAnswers = true;
-      this._answerService
-        .importAsCsv(this._selectedCampaign, file)
-        .pipe(first())
-        .subscribe(
-          () => {
-            this._translateNotificationsService.success(
-              'Success',
-              'The answers has been imported.'
-            );
-            this._isImportingAnswers = false;
-          },
-          (err: HttpErrorResponse) => {
-            this._translateNotificationsService.error('Importing Error...', ErrorFrontService.getErrorKey(err.error));
-            this._isImportingAnswers = false;
-            console.error(err);
-          }
-        );
+  public openImportModal() {
+    this._importingErrors = null;
+    this._slicedErrors = null;
+    this._isImportingAnswers = true;
+    this._errorsModal = false;
+  }
+
+  public onImport(errorMessage: []) {
+    if(errorMessage) {
+      this._importingErrors = errorMessage
+      if(this._importingErrors.length > 1) {
+        this._errorsModal = true;
+        this._isImportingAnswers = false;
+        this._slicedErrors = this._importingErrors.slice(0, 10);
+      }
+    } else {
+      this._isImportingAnswers = false;
     }
   }
 
@@ -301,16 +305,16 @@ export class AdminProjectCollectionComponent implements OnInit, OnDestroy {
       _content: answers,
       _total: totalAnswers,
       _isPaginable: true,
+      _paginationTemplate: 'TEMPLATE_1',
       _isTitle: true,
       _isLocal: true,
       _hasCustomFilters: true,
       _isNoMinHeight: totalAnswers < 11,
-      _clickIndex:
-        this.canAccess(['view']) || this.canAccess(['edit']) ? 1 : null,
+      _clickIndex: 1,
       _isSearchable:
         !!this.canAccess(['searchBy']) || !!this.canAccess(['filterBy']),
       _isSelectable: this.canAccess(['validate']) || this.canAccess(['reject']),
-      _buttons: [
+      _actions: [
         {
           _label: 'Validate',
           _icon: 'fas fa-check',
@@ -324,7 +328,7 @@ export class AdminProjectCollectionComponent implements OnInit, OnDestroy {
       ],
       _columns: [
         {
-          _attrs: ['professional.firstName', 'professional.lastName'],
+          _attrs: ['professional.displayName'],
           _name: 'Name',
           _type: 'TEXT',
           _isSearchable: this.canAccess(['searchBy', 'name']),
@@ -519,12 +523,27 @@ export class AdminProjectCollectionComponent implements OnInit, OnDestroy {
     }
   }
 
+  public onClickSeeMore() {
+    const currentNumberOfErrors = this._slicedErrors.length;
+    const end = currentNumberOfErrors + 10 > this._importingErrors.length ?
+      this._importingErrors.length : currentNumberOfErrors + 10;
+    this._slicedErrors = this._importingErrors.slice(0, end);
+  }
 
-  get localConfig(): Config {
+
+  public closeModal(event: Event) {
+    event.preventDefault();
+    this._isImportingAnswers = false;
+    this._errorsModal = false;
+    this._importingErrors = null;
+    this._slicedErrors = null;
+  }
+
+  get localConfig(): UmiusConfigInterface {
     return this._localConfig;
   }
 
-  set localConfig(value: Config) {
+  set localConfig(value: UmiusConfigInterface) {
     this._localConfig = value;
   }
 
@@ -536,11 +555,11 @@ export class AdminProjectCollectionComponent implements OnInit, OnDestroy {
     this._sidebarAnswer = value;
   }
 
-  get sidebarValue(): SidebarInterface {
+  get sidebarValue(): UmiusSidebarInterface {
     return this._sidebarValue;
   }
 
-  set sidebarValue(value: SidebarInterface) {
+  set sidebarValue(value: UmiusSidebarInterface) {
     this._sidebarValue = value;
   }
 
@@ -576,7 +595,7 @@ export class AdminProjectCollectionComponent implements OnInit, OnDestroy {
     return this._questions;
   }
 
-  get excludedCompanies(): Array<Company> {
+  get excludedCompanies(): Array<UmiusCompanyInterface> {
     return this._excludedCompanies;
   }
 
@@ -589,6 +608,30 @@ export class AdminProjectCollectionComponent implements OnInit, OnDestroy {
    */
   get targetWarnings(): number {
     return this._targetWarnings;
+  }
+
+  get accessPath(): Array<string> {
+    return this._accessPath;
+  }
+
+  get importingErrors(): any[] {
+    return this._importingErrors;
+  }
+
+  set isImportingAnswers(value: boolean) {
+    this._isImportingAnswers = value;
+  }
+
+  get slicedErrors(): Array<any> {
+    return this._slicedErrors;
+  }
+
+  set errorsModal(value: boolean) {
+    this._errorsModal = value;
+  }
+
+  get errorsModal(): boolean {
+    return this._errorsModal;
   }
 
   ngOnDestroy(): void {

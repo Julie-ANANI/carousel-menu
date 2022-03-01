@@ -4,9 +4,6 @@ import {
   FormBuilder,
   FormGroup
 } from '@angular/forms';
-import { SidebarInterface } from '../../../../../sidebars/interfaces/sidebar-interface';
-import { Enterprise /*, Pattern*/ } from '../../../../../../models/enterprise';
-import { Table, Config } from '@umius/umi-common-component/models';
 import { first } from 'rxjs/operators';
 import { isPlatformBrowser } from '@angular/common';
 import { RolesFrontService } from '../../../../../../services/roles/roles-front.service';
@@ -15,6 +12,12 @@ import { TranslateNotificationsService } from '../../../../../../services/transl
 import { ErrorFrontService } from '../../../../../../services/error/error-front.service';
 import { Router } from '@angular/router';
 import { EnterpriseValueChains, Industries } from '../../../../../../models/static-data/enterprise';
+import {
+  Table,
+  UmiusConfigInterface,
+  UmiusEnterpriseInterface,
+  UmiusSidebarInterface
+} from '@umius/umi-common-component';
 
 @Component({
   templateUrl: './admin-enterprise-management.component.html',
@@ -28,7 +31,7 @@ export class AdminEnterpriseManagementComponent implements OnInit {
 
   private _isSearching = false;
 
-  private _sidebarValue: SidebarInterface = <SidebarInterface>{};
+  private _sidebarValue: UmiusSidebarInterface = <UmiusSidebarInterface>{};
 
   private _results = false;
 
@@ -36,7 +39,7 @@ export class AdminEnterpriseManagementComponent implements OnInit {
 
   private _companiesSelected: Array<any> = [];
 
-  private _queryConfig: Config = {
+  private _queryConfig: UmiusConfigInterface = {
     fields: '',
     limit: '10',
     offset: '0',
@@ -50,7 +53,7 @@ export class AdminEnterpriseManagementComponent implements OnInit {
 
   private _isLoading = false;
 
-  private _selectedEnterprise: Enterprise = <Enterprise>{};
+  private _selectedEnterprise: UmiusEnterpriseInterface = <UmiusEnterpriseInterface>{};
 
   private _isEditable = false;
 
@@ -108,7 +111,7 @@ export class AdminEnterpriseManagementComponent implements OnInit {
     }
   }
 
-  private _getCompanies(config: Config) {
+  private _getCompanies(config: UmiusConfigInterface) {
     this._isSearching = true;
     this._resultTableConfiguration._total = -1;
     this._enterpriseService
@@ -148,10 +151,10 @@ export class AdminEnterpriseManagementComponent implements OnInit {
       _isSearchable: !!this.canAccess(['searchBy']),
       _isSelectable: true,
       _isPaginable: total > 10,
-      _buttons: this._customButtons,
+      _paginationTemplate: 'TEMPLATE_1',
+      _actions: this._customButtons,
       _isDeletable: this.canAccess(['delete']),
       _isNoMinHeight: total < 11,
-      _isEditable: this.canAccess(['edit']),
       _clickIndex:
         this.canAccess(['edit']) || this.canAccess(['view']) ? 2 : null,
       _columns:
@@ -176,7 +179,6 @@ export class AdminEnterpriseManagementComponent implements OnInit {
             _name: 'Domain',
             _type: 'TEXT',
             _width: '180px',
-            _enableTooltip: true,
             _isSortable: true,
             _isSearchable: this.canAccess(['searchBy', 'domain']),
             _isHidden: !this.canAccess(['tableColumns', 'domain']),
@@ -188,7 +190,6 @@ export class AdminEnterpriseManagementComponent implements OnInit {
             _name: 'Patterns',
             _type: 'LENGTH',
             _width: '120px',
-            _enableTooltip: true,
             _isHidden: !this.canAccess(['tableColumns', 'patterns']),
           },
           {
@@ -197,7 +198,6 @@ export class AdminEnterpriseManagementComponent implements OnInit {
             _type: 'TEXT',
             _width: '250px',
             _isSortable: true,
-            _enableTooltip: true,
             _isHidden: !this.canAccess(['tableColumns', 'url']),
             _isEditable: true,
             _editType: 'TEXT',
@@ -246,7 +246,6 @@ export class AdminEnterpriseManagementComponent implements OnInit {
             _attrs: ['industries'],
             _name: 'Industry',
             _type: 'LABEL-OBJECT-LIST',
-            _enableTooltip: true,
             _width: '280px',
             _isHidden: !this.canAccess(['tableColumns', 'industry']),
             _isEditable: true,
@@ -262,7 +261,6 @@ export class AdminEnterpriseManagementComponent implements OnInit {
             _attrs: ['brands'],
             _name: 'Brand',
             _type: 'LABEL-OBJECT-LIST',
-            _enableTooltip: true,
             _isHidden: !this.canAccess(['tableColumns', 'brand']),
             _label: 'label'
           },
@@ -273,7 +271,6 @@ export class AdminEnterpriseManagementComponent implements OnInit {
             _width: '180px',
             _isSearchable: this.canAccess(['searchBy', 'type']),
             _isSortable: true,
-            _enableTooltip: true,
             _isHidden: !this.canAccess(['tableColumns', 'type']),
             _isEditable: true,
             _choices: [
@@ -288,7 +285,6 @@ export class AdminEnterpriseManagementComponent implements OnInit {
             _name: 'Geographical Zone',
             _type: 'LABEL-OBJECT-LIST',
             _width: '190px',
-            _enableTooltip: true,
             _isHidden: !this.canAccess(['tableColumns', 'geoZone']),
             _label: 'name'
           },
@@ -298,7 +294,6 @@ export class AdminEnterpriseManagementComponent implements OnInit {
             _type: 'TEXT',
             _width: '280px',
             _isSortable: true,
-            _enableTooltip: true,
             _isHidden: !this.canAccess(['tableColumns', 'valueChain']),
             _isEditable: true,
             _editType: 'MULTI-INPUT',
@@ -343,7 +338,7 @@ export class AdminEnterpriseManagementComponent implements OnInit {
       case 'CREATE':
         this._isEditable = this.canAccess(['add']);
         this._isSaving = false;
-        this._selectedEnterprise = <Enterprise>{};
+        this._selectedEnterprise = <UmiusEnterpriseInterface>{};
         this._sidebarValue = {
           animate_state: 'active',
           title: 'Create Enterprise',
@@ -364,7 +359,7 @@ export class AdminEnterpriseManagementComponent implements OnInit {
     }
   }
 
-  public updateEnterprise(event: { enterprise: Enterprise; opType: string, enterpriseBeforeUpdate?: Enterprise }) {
+  public updateEnterprise(event: { enterprise: UmiusEnterpriseInterface; opType: string, enterpriseBeforeUpdate?: UmiusEnterpriseInterface }) {
     switch (event.opType) {
       case 'CREATE':
         this._enterpriseService
@@ -377,7 +372,7 @@ export class AdminEnterpriseManagementComponent implements OnInit {
                 'Success',
                 'The enterprise is created.'
               );
-              this._selectedEnterprise = <Enterprise>{};
+              this._selectedEnterprise = <UmiusEnterpriseInterface>{};
             },
             (err: HttpErrorResponse) => {
               this._translateNotificationsService.error(
@@ -446,7 +441,7 @@ export class AdminEnterpriseManagementComponent implements OnInit {
    * when delete a company, remove others' parentEnterprise if needed
    * @param parent
    */
-  removeParentEnterprise(parent: Enterprise) {
+  removeParentEnterprise(parent: UmiusEnterpriseInterface) {
     this._resultTableConfiguration._content.map(enterprise => {
       if (enterprise.parentEnterprise && parent._id) {
         enterprise.parentEnterprise = null;
@@ -459,7 +454,7 @@ export class AdminEnterpriseManagementComponent implements OnInit {
    * when create/update a company, company choose some subs, find subs and add parent
    * @param parent
    */
-  addParentEnterprise(parent: Enterprise) {
+  addParentEnterprise(parent: UmiusEnterpriseInterface) {
     this._resultTableConfiguration._content.map(enterprise => {
       if (enterprise._id && parent.subsidiariesList.find(sub => sub._id === enterprise._id)) {
         enterprise.parentEnterprise = parent._id;
@@ -473,7 +468,7 @@ export class AdminEnterpriseManagementComponent implements OnInit {
    * @param subsidiary
    * @param subsidiaryId
    */
-  addSubsidiariesList(subsidiary: Enterprise, subsidiaryId: string) {
+  addSubsidiariesList(subsidiary: UmiusEnterpriseInterface, subsidiaryId: string) {
     this._resultTableConfiguration._content.map(enterprise => {
       if (enterprise._id === subsidiary.parentEnterprise) {
         subsidiary['_id'] = subsidiaryId;
@@ -523,7 +518,7 @@ export class AdminEnterpriseManagementComponent implements OnInit {
     }
   }
 
-  private saveEnterprise(enterprise: Enterprise) {
+  private saveEnterprise(enterprise: UmiusEnterpriseInterface) {
     this._enterpriseService
       .save(enterprise._id, enterprise)
       .pipe(first())
@@ -569,11 +564,11 @@ export class AdminEnterpriseManagementComponent implements OnInit {
     return this._isSearching;
   }
 
-  get sidebarValue(): SidebarInterface {
+  get sidebarValue(): UmiusSidebarInterface {
     return this._sidebarValue;
   }
 
-  set sidebarValue(value: SidebarInterface) {
+  set sidebarValue(value: UmiusSidebarInterface) {
     this._sidebarValue = value;
   }
 
@@ -602,7 +597,7 @@ export class AdminEnterpriseManagementComponent implements OnInit {
     return this._isLoading;
   }
 
-  get selectedEnterprise(): Enterprise {
+  get selectedEnterprise(): UmiusEnterpriseInterface {
     return this._selectedEnterprise;
   }
 

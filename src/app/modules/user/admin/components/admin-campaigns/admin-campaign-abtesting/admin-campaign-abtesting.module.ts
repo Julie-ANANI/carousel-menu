@@ -4,15 +4,15 @@ import { CommonModule } from '@angular/common';
 import {AdminCampaignAbtestingComponent} from './admin-campaign-abtesting.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import {TranslateModule} from '@ngx-translate/core';
-import { TableComponentsModule } from '@umius/umi-common-component/table';
+import {TableModule} from '@umius/umi-common-component';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        ReactiveFormsModule,
-        TranslateModule.forChild(),
-        TableComponentsModule
-    ],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    TranslateModule.forChild(),
+    TableModule,
+  ],
   declarations: [
     AdminCampaignAbtestingComponent
   ]

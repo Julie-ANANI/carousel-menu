@@ -5,10 +5,8 @@ import { MultilingPipe } from '../../../../../../pipe/pipes/multiling.pipe';
 import { TagsService } from '../../../../../../services/tags/tags.service';
 import { TranslateService } from '@ngx-translate/core';
 import { TranslateNotificationsService } from '../../../../../../services/translate-notifications/translate-notifications.service';
-import {Pagination} from '../../../../../utility/paginations/interfaces/pagination';
 import { first } from 'rxjs/operators';
-import { Config } from '@umius/umi-common-component/models';
-
+import {UmiusConfigInterface, UmiusPaginationInterface} from '@umius/umi-common-component';
 
 @Component({
   selector: 'app-admin-tag-list',
@@ -19,7 +17,7 @@ export class AdminTagListComponent implements OnInit {
   private _data: Array<Tag> = [];
   total = 0;
 
-  private _config: Config = {
+  private _config: UmiusConfigInterface = {
     fields: '',
     limit: '10',
     offset: '0',
@@ -27,7 +25,7 @@ export class AdminTagListComponent implements OnInit {
     sort: '{"label":-1}'
   };
 
-  private _paginationConfig: Pagination = {};
+  private _paginationConfig: UmiusPaginationInterface = {};
 
   private _addAttachmentConfig: {
     placeholder: string,
@@ -102,9 +100,9 @@ export class AdminTagListComponent implements OnInit {
 
   get data(): Array<Tag> { return this._data; };
 
-  get config(): Config { return this._config; };
+  get config(): UmiusConfigInterface { return this._config; };
 
-  set config(value: Config) {
+  set config(value: UmiusConfigInterface) {
     this._config = value;
   };
 
@@ -117,7 +115,7 @@ export class AdminTagListComponent implements OnInit {
     this.loadData(this._config);
   }
 
-  get paginationConfig(): Pagination { return this._paginationConfig; }
+  get paginationConfig(): UmiusPaginationInterface { return this._paginationConfig; }
 
   get lang(): string { return this._translateService.currentLang; };
 

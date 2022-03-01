@@ -3,24 +3,23 @@ import { CommonModule } from '@angular/common';
 
 import {AdminCampaignProsComponent} from './admin-campaign-pros.component';
 import {SharedProfessionalsListModule} from '../../../../../shared/components/shared-professionals-list/shared-professionals-list.module';
-import {SidebarModule} from '../../../../../sidebars/templates/sidebar/sidebar.module';
 import {SidebarUserFormModule} from '../../../../../sidebars/components/user-form/sidebar-user-form.module';
-import {ModalModule} from '../../../../../utility/modals/modal/modal.module';
 import {AutoCompleteInputModule} from '../../../../../utility/auto-complete-input/auto-complete-input.module';
 import {FormsModule} from '@angular/forms';
 import {AdminStatsBannerModule} from "../../admin-stats-banner/admin-stats-banner.module";
+import {ModalModule, SidebarFullModule} from '@umius/umi-common-component';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        SharedProfessionalsListModule,
-        SidebarModule,
-        SidebarUserFormModule,
-        ModalModule,
-        AutoCompleteInputModule,
-        FormsModule,
-        AdminStatsBannerModule,
-    ],
+  imports: [
+    CommonModule,
+    SharedProfessionalsListModule,
+    SidebarUserFormModule,
+    AutoCompleteInputModule,
+    FormsModule,
+    AdminStatsBannerModule,
+    SidebarFullModule,
+    ModalModule,
+  ],
   declarations: [
     AdminCampaignProsComponent
   ]

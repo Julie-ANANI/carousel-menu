@@ -1,6 +1,5 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {Question} from '../../../../../../models/question';
-import {Multiling} from '../../../../../../models/multiling';
 import {Subject} from 'rxjs';
 import {TranslateService} from '@ngx-translate/core';
 import {DataService} from '../../services/data.service';
@@ -10,6 +9,7 @@ import {ResponseService} from '../../services/response.service';
 import * as _ from 'lodash';
 import {MissionQuestionService} from '../../../../../../services/mission/mission-question.service';
 import {MissionQuestion} from '../../../../../../models/mission';
+import {UmiusMultilingInterface} from '@umius/umi-common-component';
 
 @Component({
   selector: 'app-ranks',
@@ -21,7 +21,7 @@ export class RanksComponent implements OnInit, OnDestroy {
 
   @Input() reportingLang = this._translateService.currentLang;
 
-  private _ranksData: Array<{label: Multiling, sum: number, identifier: string, percentage: string}> = [];
+  private _ranksData: Array<{label: UmiusMultilingInterface, sum: number, identifier: string, percentage: string}> = [];
 
   private _ngUnsubscribe: Subject<any> = new Subject<any>();
 
@@ -40,7 +40,7 @@ export class RanksComponent implements OnInit, OnDestroy {
     return MissionQuestionService.label(option, 'label', this.reportingLang);
   }
 
-  get ranksData(): Array<{ label: Multiling; sum: number; identifier: string; percentage: string }> {
+  get ranksData(): Array<{ label: UmiusMultilingInterface; sum: number; identifier: string; percentage: string }> {
     return this._ranksData;
   }
 

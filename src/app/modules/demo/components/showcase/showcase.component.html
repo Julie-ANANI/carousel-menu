@@ -2,10 +2,10 @@
   <div class="column col-xs-12 col-11 col-mx-auto">
 
     <!-- history icon -->
-    <div class="shape is-circle bg-white history-wrapper c-hand absolute tooltip is-left history-icon"
+    <div class="shape is-circled bg-white history-wrapper c-hand absolute tooltip is-left history-icon"
          [attr.data-tooltip]="'COMMON.TOOLTIP.HISTORY' | translate"
          (click)="onClickHistoryIcon($event)">
-      <i class="fas fa-history text-notify"></i>
+      <i class="fas fa-history text-meta"></i>
     </div>
     <!-- /history icon -->
 
@@ -26,11 +26,11 @@
 
           <div class="text-center">
 
-            <h4 [innerText]="'SHOWCASE.CREATE_SHOWCASE'" class="text-background" translate></h4>
+            <h4 [innerText]="'SHOWCASE.CREATE_SHOWCASE'" class="text-draft" translate></h4>
 
             <div class="m-top-25">
-              <button (click)="modifyTag()" class="btn btn-primary rounded shadow" type="button">
-                <i class="fas fa-pencil-alt m-no-left"></i>
+              <button (click)="modifyTag()" class="button is-rounded is-shadowed" type="button">
+                <i class="fas fa-pencil-alt icon-left"></i>
                 {{ 'COMMON.BUTTON.CREATE' | translate }}
               </button>
             </div>
@@ -45,7 +45,7 @@
 
     <!-- section stat -->
     <ng-container *ngIf="selectedTagsStats.length > 0 && !fetchingError">
-      <div class="section-pad">
+      <div class="p-top-50 p-bottom-50">
 
         <!-- heading -->
         <h1 class="text-center title-primary text-normal" [innerText]="'SHOWCASE.MAIN_TITLE'" translate></h1>
@@ -54,7 +54,7 @@
         <!-- header section -->
         <div class="d-flex selected-tags-wrapper text-center">
 
-          <div *ngFor="let tagStat of selectedTagsStats; let i = index;" class="tag text-notify">
+          <div *ngFor="let tagStat of selectedTagsStats; let i = index;" class="tag text-meta">
             <span>
               <ng-container *ngIf="tagStat.tag.entry; else noTagStatEntryLabel">
                 {{ (tagStat.tag.entry | langEntry:'label':currentLang:true) | titlecase }}
@@ -82,7 +82,7 @@
         <!-- /horizontal line -->
 
         <!-- section answer and innovations -->
-        <div class="flex-centered section-wrapper section-pad">
+        <div class="flex-centered section-wrapper p-top-50 p-bottom-50">
 
           <!-- answers wrapper -->
           <div class="answer-wrapper">
@@ -113,10 +113,10 @@
         <!-- /section answer and innovations -->
 
         <!-- section map -->
-        <div class="flex-centered section-wrapper section-pad">
+        <div class="flex-centered section-wrapper p-top-50 p-bottom-50">
           <div class="map-wrapper">
 
-            <h2 class="text text-notify" [innerText]="'SHOWCASE.COUNTRIES_TITLE'" translate></h2>
+            <h2 class="text text-meta" [innerText]="'SHOWCASE.COUNTRIES_TITLE'" translate></h2>
 
             <h3 class="text-normal">
               {{ countriesCount }} <span [innerText]="'SHOWCASE.COUNTRIES'" translate></span>
@@ -143,11 +143,10 @@
 
 
 <!-- modal to modify the tags -->
-<app-utility-modal [(showModal)]="modalShow" [maxWidth]="'840px'" [enableCloseButton]="true">
-
+<umius-modal maxWidth="840px" [(showModal)]="modalShow">
   <section class="modal-body">
 
-    <h2 class="text text-background m-no-bottom title-secondary p-right-1 text-medium p-bottom-1" [innerText]="'SHOWCASE.SECTORS_MODAL.TITLE'" translate></h2>
+    <h2 class="text text-draft m-no-bottom title-secondary p-right-1 text-medium p-bottom-1" [innerText]="'SHOWCASE.SECTORS_MODAL.TITLE'" translate></h2>
 
     <ng-container *ngIf="selectedTagsStats.length">
       <div class="selected-wrapper">
@@ -166,7 +165,7 @@
 
     <hr class="hr">
 
-    <div class="d-flex tags-wrapper flex-wrap">
+    <div class="d-flex tags-wrapper flex-wrap-wrap">
       <div *ngFor="let tag of sectorTags" class="card is-responsive">
         <label class="form-checkbox text-sm">
           <input
@@ -185,12 +184,11 @@
     <button class="button modal-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
     <button (click)="onClickApply($event)" class="button is-primary">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
   </footer>
-
-</app-utility-modal>
+</umius-modal>
 <!-- /modal to modify the tags -->
 
 <!-- sidebar for history -->
-<app-sidebar [(template)]="sidebarValue">
+<umius-sidebar-full [(template)]="sidebarValue">
   <app-sidebar-showcase-history
     [selectedAnswers]="selectedAnswers"
     [selectedClients]="selectedClients"
@@ -198,5 +196,5 @@
     [tagsStats]="selectedTagsStats"
     (displayShowcase)="displayCustomShowcase($event)">
   </app-sidebar-showcase-history>
-</app-sidebar>
+</umius-sidebar-full>
 <!-- /sidebar for history -->

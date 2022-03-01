@@ -7,7 +7,6 @@ import { ShareService } from '../../../../../services/share/share.service';
 import { Tag } from '../../../../../models/tag';
 import { InnovationService } from '../../../../../services/innovation/innovation.service';
 import { first } from 'rxjs/operators';
-import { Media } from '../../../../../models/media';
 import { InnovationFrontService } from '../../../../../services/innovation/innovation-front.service';
 import { TranslateTitleService } from '../../../../../services/title/title.service';
 import { ContactFrontService } from '../../../../../services/contact/contact-front.service';
@@ -15,6 +14,7 @@ import {QuizService} from '../../../../../services/quiz/quiz.service';
 import {LangEntryService} from '../../../../../services/lang-entry/lang-entry.service';
 import {htmlTagsRegex} from '../../../../../utils/regex';
 import {environment} from '../../../../../../environments/environment';
+import {UmiusMediaInterface, UmiusModalMedia} from '@umius/umi-common-component';
 
 @Component({
   templateUrl: './discover-description.component.html',
@@ -47,7 +47,7 @@ export class DiscoverDescriptionComponent implements OnInit {
 
   private _quizButtonDisplay: string;
 
-  private _selectedMedia: string;
+  private _selectedMedia: UmiusModalMedia = <UmiusModalMedia>{};
 
   private _lang: string;
 
@@ -88,6 +88,7 @@ export class DiscoverDescriptionComponent implements OnInit {
       this._innovation = this._activatedRoute.snapshot.data.innovation;
       this._innovationCard = InnovationFrontService.currentLangInnovationCard(this._innovation, this._lang, 'CARD');
       this._pageTitle = this._innovationCard.title;
+      console.log("Here!:" + this._router.url);
       /**
        * Remove old meta tags. This don't add anything for SEO
        */
@@ -170,13 +171,16 @@ export class DiscoverDescriptionComponent implements OnInit {
 
   }
 
-  public getSrc(media: Media): string {
+  public getSrc(media: UmiusMediaInterface): string {
     return InnovationFrontService.getMediaSrc(media, 'mediaSrc', '280', '177');
   }
 
   public mediaToShow(src: string) {
     this._modalMedia = true;
-    this._selectedMedia = src;
+    this._selectedMedia = {
+      src: src,
+      active: true
+    }
   }
 
   public getRelatedSrc(innovCard: InnovCard): string {
@@ -207,7 +211,7 @@ export class DiscoverDescriptionComponent implements OnInit {
     return this._domSanitizer1;
   }
 
-  get selectedMedia(): string {
+  get selectedMedia(): UmiusModalMedia {
     return this._selectedMedia;
   }
 

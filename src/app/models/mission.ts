@@ -1,8 +1,8 @@
 import { Innovation } from './innovation';
 import { User } from './user.model';
-import { Multiling } from './multiling';
 import { InnovCardSection } from './innov-card';
 import {MailConfiguration} from './mail-configuration';
+import {UmiusMultilingInterface} from '@umius/umi-common-component';
 
 export type MissionType = 'USER' | 'CLIENT' | 'DEMO' | 'TEST';
 export type MissionTemplateSectionType = 'NOTHING' | 'ISSUE' | 'SOLUTION' | 'OTHER' | 'CONTEXT';
@@ -320,8 +320,8 @@ export interface Mission {
    * on 1st June 2021
    */
   objective?: {
-    principal: Multiling;
-    secondary: Array<Multiling>;
+    principal: UmiusMultilingInterface;
+    secondary: Array<UmiusMultilingInterface>;
     comment: string
   };
 

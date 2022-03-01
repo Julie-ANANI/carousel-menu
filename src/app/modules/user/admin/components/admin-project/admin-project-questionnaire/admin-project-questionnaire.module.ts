@@ -7,9 +7,9 @@ import { FormsModule } from '@angular/forms';
 import { AdminProjectQuestionnaireComponent } from './admin-project-questionnaire.component';
 
 import { SharedPresetModule } from '../../../../../shared/components/shared-preset/shared-preset.module';
-import { ModalModule } from '../../../../../utility/modals/modal/modal.module';
 import { NguiAutoCompleteModule } from '../../../../../utility/auto-complete/auto-complete.module';
 import {SharedQuestionnaireModule} from '../../../../../shared/components/shared-questionnaire/shared-questionnaire.module';
+import {ModalModule} from '@umius/umi-common-component';
 
 @NgModule({
   imports: [
@@ -18,9 +18,9 @@ import {SharedQuestionnaireModule} from '../../../../../shared/components/shared
     RouterModule,
     SharedPresetModule,
     FormsModule,
-    ModalModule,
     NguiAutoCompleteModule,
-    SharedQuestionnaireModule
+    SharedQuestionnaireModule,
+    ModalModule
   ],
   declarations: [
     AdminProjectQuestionnaireComponent,

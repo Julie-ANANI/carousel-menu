@@ -1,10 +1,10 @@
-@import "../../../../../../style/framework/src/variables";
+@import "~@umius/umi-style-framework/scss/variables";
 
 .rating-item {
   display: flex;
 
   .fas {
-    color: $text-meta-color;
+    color: $meta-color;
     font-size: 14px;
   }
 
@@ -29,45 +29,45 @@
   }
 
   .thumbs-up-wrapper:hover, .thumbs-up-wrapper.active {
-    background-color: $bg-success-color;
+    background-color: $success-color;
     cursor: pointer;
 
     .fa-thumbs-up {
-      color: $text-white-color;
+      color: $white-color;
     }
 
   }
 
   .thumbs-down-wrapper:hover, .thumbs-down-wrapper.active {
-    background-color: $bg-alert-color;
+    background-color: $alert-color;
     cursor: pointer;
 
     .fa-thumbs-down {
-      color: $text-white-color;
+      color: $white-color;
     }
 
   }
 
   .c-thumbs-up-wrapper {
-    border: $border-width solid $border-success-color;
-    background-color: $bg-success-color;
+    border: $border-width solid $success-color;
+    background-color: $success-color;
     border-radius: $border-radius;
-    color: $text-white-color;
+    color: $white-color;
 
     .fa-thumbs-up {
-      color: $text-white-color;
+      color: $white-color;
     }
 
   }
 
   .c-thumbs-down-wrapper {
-    border: $border-width solid $border-alert-color;
+    border: $border-width solid $alert-color;
     border-radius: $border-radius;
-    background-color: $bg-alert-color;
-    color: $text-white-color;
+    background-color: $alert-color;
+    color: $white-color;
 
     .fa-thumbs-down {
-      color: $text-white-color;
+      color: $white-color;
     }
 
   }

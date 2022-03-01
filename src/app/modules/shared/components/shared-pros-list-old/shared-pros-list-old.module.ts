@@ -5,25 +5,22 @@ import { TranslateModule } from '@ngx-translate/core';
 
 import { SharedProsListOldComponent } from './shared-pros-list-old.component';
 
-import { SharedSortModule } from '../shared-sort/shared-sort.module';
 import { SharedFilterInputModule } from '../shared-filter-input/shared-filter-input.module';
 import { SharedSmartSelectModule } from '../shared-smart-select/shared-smart-select.module';
-import { PaginationTemplate1Module} from '../../../utility/paginations/pagination-template-1/pagination-template-1.module';
-import { CountryFlagModule } from '@umius/umi-common-component/country-flag';
-import { ModalModule } from "../../../utility/modals/modal/modal.module";
+import {CountryFlagModule, ModalModule, PaginationModule, SortModule} from '@umius/umi-common-component';
 
 @NgModule({
   imports: [
     CommonModule,
     ReactiveFormsModule,
     TranslateModule.forChild(),
-    SharedSortModule,
     SharedFilterInputModule,
     SharedSmartSelectModule,
     FormsModule,
-    PaginationTemplate1Module,
+    SortModule,
     CountryFlagModule,
-    ModalModule
+    PaginationModule,
+    ModalModule,
   ],
   declarations: [
     SharedProsListOldComponent

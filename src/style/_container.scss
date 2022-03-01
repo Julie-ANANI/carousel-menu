@@ -1,0 +1,14 @@
+.pws-wrapper {
+  display: flex;
+
+  .sidebar-wrapper {
+    max-width: 265px;
+  }
+
+  .content-wrapper {
+    flex: 1;
+    padding-left: 35px;
+    padding-right: 35px;
+  }
+
+}

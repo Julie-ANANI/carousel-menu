@@ -19,9 +19,7 @@ import { ObjectivesPrincipal } from '../../../../../models/static-data/missionOb
 import { MissionTemplate } from '../../../../../models/mission';
 import { MissionService } from '../../../../../services/mission/mission.service';
 import { MissionFrontService } from '../../../../../services/mission/mission-front.service';
-import { Column, Config, Table } from '@umius/umi-common-component/models';
-import { ConfigService } from '@umius/umi-common-component/services/config';
-import { LocalStorageService } from "@umius/umi-common-component/services/localStorage";
+import {Column, Table, UmiusConfigInterface, UmiusConfigService, UmiusLocalStorageService} from '@umius/umi-common-component';
 
 @Component({
   templateUrl: './admin-projects.component.html',
@@ -52,7 +50,7 @@ export class AdminProjectsComponent implements OnInit {
 
   private _table: Table = <Table>{};
 
-  private _config: Config = {
+  private _config: UmiusConfigInterface = {
     fields: '',
     limit: this._configService.configLimit('admin-projects-limit'),
     offset: '0',
@@ -86,7 +84,7 @@ export class AdminProjectsComponent implements OnInit {
   private _canImport = false;
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
-              private _configService: ConfigService,
+              private _configService: UmiusConfigService,
               private _innovationService: InnovationService,
               private _translateService: TranslateService,
               private _translateNotificationsService: TranslateNotificationsService,
@@ -95,7 +93,7 @@ export class AdminProjectsComponent implements OnInit {
               private _translateTitleService: TranslateTitleService,
               private _missionService: MissionService,
               private _changeDetectorRef: ChangeDetectorRef,
-              private _localStorageService: LocalStorageService,
+              private _localStorageService: UmiusLocalStorageService,
               private _userService: UserService) {
     this._translateTitleService.setTitle('Market Tests');
   }
@@ -109,7 +107,7 @@ export class AdminProjectsComponent implements OnInit {
       this._setConfigForUmiBack();
 
       this._getOperators().then(_ => {
-        if (!this._rolesFrontService.isMTMUMIBack()) {
+        if (this._rolesFrontService.isMTMUMIRole()) {
           this._configOperator();
         }
         this._getProjects();
@@ -174,7 +172,7 @@ export class AdminProjectsComponent implements OnInit {
             _isHidden: !this.canAccess(['tableColumns', 'status']),
             _width: '200px',
             _choices: [
-              {_name: 'EDITING', _alias: 'Editing', _class: 'label is-secondary'},
+              {_name: 'EDITING', _alias: 'Editing', _class: 'label is-primary'},
               {_name: 'SUBMITTED', _alias: 'Submitted', _class: 'label is-draft'},
               {_name: 'EVALUATING', _alias: 'Evaluating', _class: 'label is-progress'},
               {_name: 'DONE', _alias: 'Done', _class: 'label is-success'},
@@ -327,7 +325,7 @@ export class AdminProjectsComponent implements OnInit {
             _isHidden: !this.canAccess(['tableColumns', 'status']),
             _width: '150px',
             _choices: [
-              {_name: 'EDITING', _alias: 'Editing', _class: 'label is-secondary'},
+              {_name: 'EDITING', _alias: 'Editing', _class: 'label is-primary'},
               {_name: 'SUBMITTED', _alias: 'Submitted', _class: 'label is-draft'},
               {_name: 'EVALUATING', _alias: 'Evaluating', _class: 'label is-progress'},
               {_name: 'DONE', _alias: 'Done', _class: 'label is-success'},
@@ -607,7 +605,7 @@ export class AdminProjectsComponent implements OnInit {
             _isHidden: !this.canAccess(['tableColumns', 'status']),
             _width: '200px',
             _choices: [
-              {_name: 'EDITING', _alias: 'Editing', _class: 'label is-secondary'},
+              {_name: 'EDITING', _alias: 'Editing', _class: 'label is-primary'},
               {_name: 'SUBMITTED', _alias: 'Submitted', _class: 'label is-draft'},
               {_name: 'EVALUATING', _alias: 'Evaluating', _class: 'label is-progress'},
               {_name: 'DONE', _alias: 'Done', _class: 'label is-success'},
@@ -663,7 +661,7 @@ export class AdminProjectsComponent implements OnInit {
     }
   }
 
-  set config(value: Config) {
+  set config(value: UmiusConfigInterface) {
     this._config = value; // TODO how to change the config when searching things like the operator?
     try {
       // Parse the config.search field to see if there's something
@@ -710,7 +708,7 @@ export class AdminProjectsComponent implements OnInit {
    */
   private _getOperators() {
     return new Promise((resolve, reject) => {
-      const operatorConfig = <Config>{
+      const operatorConfig = <UmiusConfigInterface>{
         fields: 'firstName,lastName',
         limit: '0',
         offset: '0',
@@ -763,6 +761,7 @@ export class AdminProjectsComponent implements OnInit {
       _isTitle: true,
       _clickIndex: this.canAccess(['project', 'tabs']) ? 1 : null,
       _isPaginable: true,
+      _paginationTemplate: 'TEMPLATE_1',
       _isNoMinHeight: true,
       _columns: this._setColumnOrderForUser()
     };
@@ -898,7 +897,7 @@ export class AdminProjectsComponent implements OnInit {
     }
   }
 
-  get config(): Config {
+  get config(): UmiusConfigInterface {
     return this._config;
   }
 

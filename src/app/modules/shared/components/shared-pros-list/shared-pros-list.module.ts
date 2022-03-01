@@ -5,22 +5,20 @@ import { TranslateModule } from '@ngx-translate/core';
 
 import { SharedProsListComponent } from './shared-pros-list.component';
 
-import { SidebarModule } from '../../../sidebars/templates/sidebar/sidebar.module';
 import { SidebarUserFormModule } from '../../../sidebars/components/user-form/sidebar-user-form.module';
 import { SidebarTagsModule } from '../../../sidebars/components/sidebar-tags/sidebar-tags.module';
-import { ModalModule } from '../../../utility/modals/modal/modal.module';
-import { TableComponentsModule } from '@umius/umi-common-component/table';
+import {ModalModule, SidebarFullModule, TableModule} from '@umius/umi-common-component';
 @NgModule({
-    imports: [
-        CommonModule,
-        ReactiveFormsModule,
-        SidebarModule,
-        TranslateModule.forChild(),
-        SidebarUserFormModule,
-        SidebarTagsModule,
-        ModalModule,
-        TableComponentsModule
-    ],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    TranslateModule.forChild(),
+    SidebarUserFormModule,
+    SidebarTagsModule,
+    TableModule,
+    SidebarFullModule,
+    ModalModule,
+  ],
   declarations: [
     SharedProsListComponent
   ],

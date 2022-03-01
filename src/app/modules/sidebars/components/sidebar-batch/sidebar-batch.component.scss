@@ -1,4 +1,4 @@
-@import "../../../../../style/framework/src/variables";
+@import "~@umius/umi-style-framework/scss/variables";
 
 #sidebar-batch {
 
@@ -7,7 +7,7 @@
   }
 
   .text-error {
-    color: $text-alert-color;
+    color: $alert-color;
     font-size: 12px;
     padding-top: 4px;
   }

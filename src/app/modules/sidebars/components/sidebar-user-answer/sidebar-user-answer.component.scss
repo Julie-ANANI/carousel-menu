@@ -1,4 +1,4 @@
-@import "../../../../../style/framework/src/variables";
+@import "~@umius/umi-style-framework/scss/variables";
 
 #sidebar-user-answer {
 
@@ -34,8 +34,11 @@
       &.is-danger input {
 
         &:checked + .form-icon {
-          background: $bg-alert-color none;
-          border-color: $border-alert-color;
+          border: 2px solid $alert-color;
+        }
+
+        &:checked + .form-icon::before {
+          background: $alert-color none;
         }
 
       }
@@ -43,10 +46,12 @@
       &.is-progress input {
 
         &:checked + .form-icon {
-          background: $bg-progress-color none;
-          border-color: $border-progress-color;
+          border: 2px solid #F79323;
         }
 
+        &:checked + .form-icon::before {
+          background: #F79323 none;
+        }
       }
 
     }

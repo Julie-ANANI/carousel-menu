@@ -52,7 +52,7 @@
           [color]="pieChart.colors[indexSection]"
           [nbColors]="pieChart.colors.length"
           (colorChanged)="chartColorChanged($event, indexSection)">
-          <label class="form-checkbox text-background">
+          <label class="form-checkbox text-draft">
             <input type="checkbox" [(ngModel)]="positiveSections[indexSection]" (change)="chartPositiveSectionChanged(indexSection)">
             <i class="form-icon"></i> {{ 'MARKET_REPORT.POSITIVE_ANSWER' | translateIn: reportingLang }}
           </label>
@@ -64,14 +64,14 @@
   <ul *ngIf="pieChart" class="pie-data-wrapper animate-fade is-5">
     <li *ngFor="let label of (pieChart.labels | multiling:reportingLang); let i = index">
       <div class="popover" (mouseleave)="indexLegend = -1">
-        <span (click)="indexLegend = i" class="shape is-circle is-xs m-right-1 c-hand"
+        <span (click)="indexLegend = i" class="shape is-circled is-xs m-right-1 c-hand"
               [ngStyle]="{ 'background-color': colors[0].backgroundColor[i], 'border-color': colors[0].backgroundColor[i] }">
         </span>
         <div *ngIf="!readonly && indexLegend === i" class="absolute popover-container max-width-250">
           <div class="card p-10">
             <span>{{(pieChart.labels | multiling:reportingLang)[indexLegend]}}</span>
             <div class="divider"></div>
-            <label class="form-checkbox text-background">
+            <label class="form-checkbox text-draft">
               <input type="checkbox" [(ngModel)]="positiveSections[indexLegend]" (change)="chartPositiveSectionChanged(indexLegend)">
               <i class="form-icon"></i> {{ 'MARKET_REPORT.POSITIVE_ANSWER' | translateIn: reportingLang }}
             </label>

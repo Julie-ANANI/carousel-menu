@@ -18,7 +18,7 @@
 
         <!-- sidebar -->
         <aside style="max-width: 297px" class="sidebar-wrapper">
-          <app-sidebar-in-page [(sidebarTemplate)]="leftSidebarTemplateValue">
+          <umius-sidebar-inline [(template)]="leftSidebarTemplateValue">
             <app-sidebar-filter-answers
               *ngIf="displayFilters"
               [answers]="answers"
@@ -30,20 +30,20 @@
               [reportingLang]="reportingLang"
               [templateType]="leftSidebarTemplateValue.type">
             </app-sidebar-filter-answers>
-            <div *ngIf="!displayFilters" class="m-top-30 loading is-lg"></div>
-          </app-sidebar-in-page>
+            <div *ngIf="!displayFilters" class="m-top-30 loading is-lg is-primary"></div>
+          </umius-sidebar-inline>
         </aside>
         <!-- /sidebar -->
 
         <!-- answers section -->
         <div class="content-wrapper">
 
-          <div *ngIf="areAnswersLoading" class="m-top-50 loading is-lg"></div>
+          <div *ngIf="areAnswersLoading" class="m-top-50 loading is-lg is-primary"></div>
 
           <!-- synthesis reporting lang -->
           <div *ngIf="!areAnswersLoading && adminSide"
                class="d-flex flex-d-row align-center justify-end dropdown w-full m-top-15 is-right">
-            <span class="text-sm text-background m-right-4">{{ 'MARKET_REPORT.RESTITUTION_LANG' | translateIn: reportingLang }}</span>
+            <span class="text-sm text-draft m-right-4">{{ 'MARKET_REPORT.RESTITUTION_LANG' | translateIn: reportingLang }}</span>
             <a class="button dropdown-toggle is-info is-sm is-outlined" tabindex="0">
               {{ 'COMMON.LANG.' + reportingLang | uppercase | translateIn: reportingLang }} <i class="icon icon-caret"></i>
             </a>
@@ -108,16 +108,16 @@
             <div *ngIf="filteredAnswers.length" class="text-center p-top-25">
               <button
                 (click)="toggleProfessional = !toggleProfessional"
-                class="button is-community is-sm"
+                class="button is-sm"
                 type="button">
                 {{ (toggleProfessional ? 'MARKET_REPORT.BTN_PROFESSIONAL_CLOSE'
                 : 'MARKET_REPORT.BTN_PROFESSIONAL_OPEN') | translateIn: reportingLang }}
-                <i class="icon" [ngClass]="toggleProfessional ? 'icon-arrow-down' : 'icon-arrow-up'"></i>
+                <i class="icon icon-right" [ngClass]="toggleProfessional ? 'icon-arrow-down' : 'icon-arrow-up'"></i>
               </button>
             </div>
 
             <div class="professional-wrapper" [ngClass]=" toggleProfessional ? 'is-expand' : 'is-collapse' ">
-              <div class="card-wrapper">
+              <div class="card-wrapper card-3">
                 <div *ngFor="let answer of filteredAnswers" class="card is-card-3 relative">
                   <div (click)="filterPro(answer, $event)" class="icon-container text-alert absolute">
                     <span class="tooltip" [attr.data-tooltip]="'MARKET_REPORT.TOOLTIP_HIDE_PROFESSIONAL' | translateIn: reportingLang">
@@ -183,7 +183,7 @@
 </div>
 
 <!-- modal -->
-<app-utility-modal-empty [(showModal)]="showModal">
+<umius-modal [(showModal)]="showModal">
 
   <section class="modal-body">
 
@@ -218,7 +218,7 @@
       (click)="onNotifyDocuments($event)"
       *ngSwitchCase="'NOTIFY_DOCUMENTS'"
       [disabled]="isSendingNotification"
-      class="button is-community"
+      class="button "
       id="btn-modal-confirm-notify-documents"
       type="button">
       Confirm
@@ -227,7 +227,7 @@
 
   </footer>
 
-</app-utility-modal-empty>
+</umius-modal>
 <!-- /modal -->
 
 <!-- save button -->
@@ -242,7 +242,7 @@
 <!-- /save button -->
 
 <!-- sidebar insight preview -->
-<app-sidebar *ngIf="innovation && innovation._id" [(template)]="sidebarTemplateValue">
+<umius-sidebar-full *ngIf="innovation && innovation._id" [(template)]="sidebarTemplateValue">
   <app-sidebar-user-answer
     *ngIf="modalAnswer._id"
     [adminMode]="canAccess(['edit', 'respondentProfile'])"
@@ -253,5 +253,5 @@
     [sidebarState]="sidebarTemplateValue.animate_state"
     [userAnswer]="modalAnswer">
   </app-sidebar-user-answer>
-</app-sidebar>
+</umius-sidebar-full>
 <!-- /sidebar insight preview-->

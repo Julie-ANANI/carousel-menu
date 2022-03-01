@@ -8,7 +8,6 @@ import { TranslateTitleService } from '../../../../../services/title/title.servi
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AutocompleteService } from '../../../../../services/autocomplete/autocomplete.service';
-import { SidebarInterface } from '../../../../sidebars/interfaces/sidebar-interface';
 import { distinctUntilChanged, first } from 'rxjs/operators';
 import { countries } from '../../../../../models/static-data/country';
 import { Observable } from 'rxjs';
@@ -16,6 +15,7 @@ import { Clearbit } from "../../../../../models/clearbit";
 import { emailRegEx } from '../../../../../utils/regex';
 import { HttpErrorResponse } from "@angular/common/http";
 import { ErrorFrontService } from "../../../../../services/error/error-front.service";
+import {UmiusSidebarInterface} from '@umius/umi-common-component';
 
 @Component({
   templateUrl: './account.component.html',
@@ -40,7 +40,7 @@ export class AccountComponent implements OnInit {
 
   private _profilePicture = '';
 
-  private _sidebarValue: SidebarInterface = {};
+  private _sidebarValue: UmiusSidebarInterface = {};
 
   private _countries = countries;
 
@@ -297,11 +297,11 @@ export class AccountComponent implements OnInit {
     return this._displayCountrySuggestion;
   }
 
-  get sidebarValue(): SidebarInterface {
+  get sidebarValue(): UmiusSidebarInterface {
     return this._sidebarValue;
   }
 
-  set sidebarValue(value: SidebarInterface) {
+  set sidebarValue(value: UmiusSidebarInterface) {
     this._sidebarValue = value;
   }
 

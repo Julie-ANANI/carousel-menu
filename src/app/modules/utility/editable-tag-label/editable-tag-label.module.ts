@@ -4,7 +4,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { EditableTagLabelComponent } from './editable-tag-label.component';
 import { NguiAutoCompleteModule } from "../auto-complete/auto-complete.module";
 import { PipeModule } from "../../../pipe/pipe.module";
-import { ModalModule } from "../modals/modal/modal.module";
+import {ModalModule} from '@umius/umi-common-component';
 
 @NgModule({
   imports: [

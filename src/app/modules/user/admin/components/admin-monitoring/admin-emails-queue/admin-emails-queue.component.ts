@@ -2,16 +2,18 @@ import { Component, OnInit } from '@angular/core';
 import { EmailQueueModel } from '../../../../../../models/mail-queue';
 import { EmailService } from '../../../../../../services/email/email.service';
 import { TranslateNotificationsService } from '../../../../../../services/translate-notifications/translate-notifications.service';
-import { Table } from '@umius/umi-common-component/models';
-import { SidebarInterface } from '../../../../../sidebars/interfaces/sidebar-interface';
 import { Subject } from 'rxjs';
 import { first } from 'rxjs/operators';
+import {Table, UmiusSidebarInterface} from '@umius/umi-common-component';
 
 @Component({
   selector: 'app-admin-email-queue',
   templateUrl: 'admin-emails-queue.component.html',
 })
 export class AdminEmailQueueComponent implements OnInit {
+  set more(value: UmiusSidebarInterface) {
+    this._more = value;
+  }
 
   private _queueList: { mailqueues: Array<EmailQueueModel>, _metadata: any } = {
     mailqueues: [],
@@ -27,7 +29,7 @@ export class AdminEmailQueueComponent implements OnInit {
   };
 
   private _tableInfos: Table;
-  private _more: SidebarInterface = {};
+  private _more: UmiusSidebarInterface = {};
   sidebarState = new Subject<string>();
   private _currentQueue: EmailQueueModel = null;
 
@@ -62,6 +64,7 @@ export class AdminEmailQueueComponent implements OnInit {
             _isSearchable: true,
             _isTitle: true,
             _isPaginable: true,
+            _paginationTemplate: 'TEMPLATE_1',
             _clickIndex: 1,
             _columns: [
               {
@@ -116,7 +119,7 @@ export class AdminEmailQueueComponent implements OnInit {
     };
   }
 
-  closeSidebar(value: SidebarInterface) {
+  closeSidebar(value: UmiusSidebarInterface) {
     this.more.animate_state = value.animate_state;
     this.sidebarState.next(this.more.animate_state);
   }
@@ -146,7 +149,7 @@ export class AdminEmailQueueComponent implements OnInit {
     return this._currentQueue;
   }
 
-  get more(): SidebarInterface {
+  get more(): UmiusSidebarInterface {
     return this._more;
   }
 

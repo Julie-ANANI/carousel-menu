@@ -1,6 +1,5 @@
 import {Component, Inject, OnDestroy, OnInit, PLATFORM_ID} from '@angular/core';
 import {Subject} from 'rxjs';
-import {SidebarInterface} from '../../../../../sidebars/interfaces/sidebar-interface';
 import {TranslateNotificationsService} from '../../../../../../services/translate-notifications/translate-notifications.service';
 import {EmailService} from '../../../../../../services/email/email.service';
 import {isPlatformBrowser} from '@angular/common';
@@ -9,7 +8,7 @@ import {HttpErrorResponse} from '@angular/common/http';
 import {ErrorFrontService} from '../../../../../../services/error/error-front.service';
 import {RolesFrontService} from '../../../../../../services/roles/roles-front.service';
 import {domainRegEx} from '../../../../../../utils/regex';
-import { Table, Config } from '@umius/umi-common-component/models';
+import {Table, UmiusConfigInterface, UmiusSidebarInterface} from '@umius/umi-common-component';
 
 @Component({
   templateUrl: 'admin-email-blacklist.component.html',
@@ -17,7 +16,7 @@ import { Table, Config } from '@umius/umi-common-component/models';
 
 export class AdminEmailBlacklistComponent implements OnInit, OnDestroy {
 
-  private _config: Config = {
+  private _config: UmiusConfigInterface = {
     fields: '',
     limit: '10',
     offset: '0',
@@ -40,7 +39,7 @@ export class AdminEmailBlacklistComponent implements OnInit, OnDestroy {
 
   private _fetchingError = false;
 
-  private _sidebarValue = <SidebarInterface>{};
+  private _sidebarValue = <UmiusSidebarInterface>{};
 
   private _isEditable = false;
 
@@ -59,7 +58,7 @@ export class AdminEmailBlacklistComponent implements OnInit, OnDestroy {
     }
   }
 
-  private _getBlacklist(config: Config) {
+  private _getBlacklist(config: UmiusConfigInterface) {
     this._config = config || this._config;
 
     this._emailService.getBlacklist(this._config).pipe(first()).subscribe((result: any) => {
@@ -99,6 +98,7 @@ export class AdminEmailBlacklistComponent implements OnInit, OnDestroy {
       _isTitle: true,
       _isSearchable: !!this.canAccess(['searchBy']) || !!this.canAccess(['sortBy']),
       _isPaginable: this._emailDataset._metadata.totalCount > 10,
+      _paginationTemplate: 'TEMPLATE_1',
       _clickIndex: this.canAccess(['view']) || this.canAccess(['edit']) ? 1 : null,
       _columns: [
         {
@@ -287,11 +287,11 @@ export class AdminEmailBlacklistComponent implements OnInit, OnDestroy {
     return this._isEditable;
   }
 
-  get sidebarValue(): SidebarInterface {
+  get sidebarValue(): UmiusSidebarInterface {
     return this._sidebarValue;
   }
 
-  set sidebarValue(value: SidebarInterface) {
+  set sidebarValue(value: UmiusSidebarInterface) {
     this._sidebarValue = value;
   }
 

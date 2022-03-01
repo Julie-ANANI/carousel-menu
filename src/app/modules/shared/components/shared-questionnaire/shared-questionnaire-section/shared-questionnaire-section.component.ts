@@ -4,7 +4,6 @@ import { picto, Picto } from '../../../../../models/static-data/picto';
 import { TranslateService } from '@ngx-translate/core';
 import { MissionQuestionService } from '../../../../../services/mission/mission-question.service';
 import { RolesFrontService } from '../../../../../services/roles/roles-front.service';
-import { AutoSuggestionConfig } from '../../../../utility/auto-suggestion/interface/auto-suggestion-config';
 import { MissionFrontService } from '../../../../../services/mission/mission-front.service';
 import { MissionService } from '../../../../../services/mission/mission.service';
 import { first } from 'rxjs/operators';
@@ -13,6 +12,7 @@ import { ErrorFrontService } from '../../../../../services/error/error-front.ser
 import { TranslateNotificationsService } from '../../../../../services/translate-notifications/translate-notifications.service';
 import { InnovCardSection } from '../../../../../models/innov-card';
 import { PresetFrontService } from "../../../../../services/preset/preset-front.service";
+import {UmiusAutoSuggestionInterface} from '@umius/umi-common-component';
 
 interface AddQuestion {
   from: 'SCRATCH' | 'LIBRARY';
@@ -78,7 +78,7 @@ export class SharedQuestionnaireSectionComponent implements OnInit {
 
   private _questionToAdd: AddQuestion = <AddQuestion>{};
 
-  private _searchConfig: AutoSuggestionConfig = {
+  private _searchConfig: UmiusAutoSuggestionInterface = {
     minChars: 3,
     type: 'questions',
     identifier: 'label',
@@ -387,7 +387,7 @@ export class SharedQuestionnaireSectionComponent implements OnInit {
     return this._identifierError;
   }
 
-  get searchConfig(): AutoSuggestionConfig {
+  get searchConfig(): UmiusAutoSuggestionInterface {
     return this._searchConfig;
   }
 

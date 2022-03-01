@@ -5,7 +5,7 @@
 
     <h6 class="text-normal m-bottom-15">{{ 'SHARED_TARGETING_WORLD.SELECT_CONTINENTS' | translate }}</h6>
 
-    <div class="d-flex flex-wrap">
+    <div class="d-flex flex-wrap-wrap">
 
       <div class="m-right-20">
         <label class="form-checkbox text-sm">
@@ -44,7 +44,7 @@
   <div class="stw-toggle-list-wrapper">
 
     <!-- toggle button -->
-    <button (click)="onClickToggle($event)" class="button is-link p-no" type="button">
+    <button (click)="onClickToggle($event)" class="button is-link p-no text-sm" type="button">
       {{ 'SHARED_TARGETING_WORLD.COUNTRY_SELECTED' | translate }} ({{ geography.include.length }})
       <i class="icon icon-right" [ngClass]="showToggleList ? 'icon-arrow-down' : 'icon-arrow-right' "></i>
     </button>
@@ -55,17 +55,17 @@
 
       <!-- /search bar -->
       <div *ngIf="isShowSearch">
-        <app-utility-search-input-2
+        <umius-search-input
           [searchPlaceholder]="'Search'"
           (searchFieldOutput)="onChangeCountrySearch($event)">
-        </app-utility-search-input-2>
+        </umius-search-input>
       </div>
       <!-- /search bar -->
 
       <!-- countries after search-->
       <div class="stw-continent-list-wrapper p-top-10" *ngIf="searchCountryString !== ''">
-        <div class="country-list-wrapper">
-          <div *ngFor="let country of searchCountries" class="card is-responsive">
+        <div class="country-list-wrapper card-responsive">
+          <div *ngFor="let country of searchCountries" class="card">
             <div class="d-flex align-center" style="min-height: 40px">
 
               <label class="form-checkbox p-no-right">
@@ -111,8 +111,8 @@
         <!-- /continents -->
 
         <!-- countries -->
-        <div class="country-list-wrapper">
-          <div *ngFor="let country of getCountriesByContinent(continent)" class="card is-responsive">
+        <div class="country-list-wrapper card-responsive">
+          <div *ngFor="let country of getCountriesByContinent(continent)" class="card">
             <div class="d-flex align-center" style="min-height: 40px">
 
               <label class="form-checkbox p-no-right">

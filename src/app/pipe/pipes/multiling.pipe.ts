@@ -1,31 +1,21 @@
-import { Injectable, Pipe, PipeTransform } from '@angular/core';
+import { Injectable, Pipe } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { Multiling } from '../../models/multiling';
+import { UmiusMultilingPipe } from '@umius/umi-common-component';
+
+/**
+ * UmiusMultilingPipe:
+ *
+ * 1. transform(value: UmiusMultilingInterface, lang: string = this._translateService.currentLang, returnDefault = true): string;
+ */
 
 @Pipe({
   name: 'multiling'
 })
-
 @Injectable({ providedIn: 'root' })
-export class MultilingPipe implements PipeTransform {
+export class MultilingPipe extends UmiusMultilingPipe {
 
-  constructor(private translate: TranslateService) {}
-
-  transform(value: Multiling, lang: string = this.translate.currentLang): string {
-    if (!!value) {
-      if (value[lang]) {
-        return value[lang];
-      } else {
-        if (lang !== this.translate.defaultLang && value[this.translate.defaultLang]) {
-          return value[this.translate.defaultLang];
-        } else {
-          for (const a in value) { if(value[a]) return value[a]; }
-          return ''
-        }
-      }
-    } else {
-      return '';
-    }
+  constructor(protected translate: TranslateService) {
+    super(translate);
   }
 
 }

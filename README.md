@@ -1,4 +1,5 @@
 [![Build Status](https://drone.umi.us/api/badges/unitedmotionideas/umi-application-front/status.svg)](https://drone.umi.us/unitedmotionideas/umi-application-front)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=unitedmotionideas_umi-application-v3&metric=alert_status&token=9ede48b0b0c7eeb0b1fe92f787f04343c266c814)](https://sonarcloud.io/summary/new_code?id=unitedmotionideas_umi-application-v3)
 
 # umi-application-front
 

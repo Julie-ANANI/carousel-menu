@@ -20,6 +20,7 @@ import { ApiUrlInterceptor } from './interceptors/apiUrl.interceptor';
 import { GlobalErrorHandler } from './handlers/error-handler';
 import { LoaderBrowserInterceptor } from './interceptors/loader.interceptor';
 import { SessionInterceptor } from './interceptors/session.interceptor';
+import {CachingInterceptor} from './interceptors/caching.interceptor';
 
 @NgModule({
   imports: [
@@ -44,15 +45,16 @@ import { SessionInterceptor } from './interceptors/session.interceptor';
   declarations: [
     AppComponent
   ],
+  bootstrap: [
+    AppComponent
+  ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: ApiUrlInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: LoaderBrowserInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: SessionInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: CachingInterceptor, multi: true },
     { provide: ErrorHandler, useClass: GlobalErrorHandler },
     Meta
-  ],
-  bootstrap: [
-    AppComponent
   ]
 })
 

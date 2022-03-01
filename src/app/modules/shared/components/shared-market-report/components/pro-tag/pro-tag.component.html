@@ -35,7 +35,7 @@
     <!-- /name -->
 
     <!-- job -->
-    <p *ngIf="answer.job || (answer.professional && answer.professional.jobTitle)" class="text-15 text-background">
+    <p *ngIf="answer.job || (answer.professional && answer.professional.jobTitle)" class="text-15 text-draft">
       {{ (answer.job || answer?.professional?.jobTitle) | FormatText:true }}
     </p>
     <!-- /job -->
@@ -43,7 +43,7 @@
     <!-- company -->
     <p
       *ngIf="(answer.company && answer.company.name) || (answer.professional && answer.professional.company && answer.professional.company.name)"
-      class="text-notify text-medium">
+      class="text-meta text-medium">
       {{ (answer.company?.name || answer.professional?.company?.name || '') | FormatText:true }}
     </p>
     <!-- /company -->
@@ -53,7 +53,7 @@
 
   <!-- tag -->
   <div *ngIf="tags.length > 0" class="tags-wrapper">
-    <div *ngFor="let tag of tags" [title]="tag.description | multiling:currentLang" class="label is-tag is-rounded">
+    <div *ngFor="let tag of tags" [title]="tag.description | multiling:currentLang" class="label is-draft is-rounded">
       <i class="fas fa-tag icon-left"></i>
       {{ tag.label | multiling:currentLang }}
     </div>

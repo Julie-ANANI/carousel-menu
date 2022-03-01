@@ -2,13 +2,11 @@ import { Component, Inject, Input, OnInit, PLATFORM_ID } from '@angular/core';
 import { SearchService } from '../../../../services/search/search.service';
 import { TranslateNotificationsService } from '../../../../services/translate-notifications/translate-notifications.service';
 import { first } from 'rxjs/operators';
-import { SidebarInterface } from '../../../sidebars/interfaces/sidebar-interface';
 import { COUNTRIES } from '../shared-search-pros/COUNTRIES';
 import { countries } from '../../../../models/static-data/country';
 import { Campaign } from '../../../../models/campaign';
 import { ProfessionalsService } from '../../../../services/professionals/professionals.service';
 import { Router } from '@angular/router';
-import {ConfigService} from '@umius/umi-common-component/services/config';
 import { CampaignService } from '../../../../services/campaign/campaign.service';
 import { GeographySettings } from '../../../../models/innov-settings';
 import { IndexService } from '../../../../services/index/index.service';
@@ -17,8 +15,8 @@ import { isPlatformBrowser } from '@angular/common';
 import { RolesFrontService } from '../../../../services/roles/roles-front.service';
 import { ErrorFrontService } from '../../../../services/error/error-front.service';
 import { JobConfig, TargetPros } from '../../../../models/target-pros';
-import { Table, Config } from '@umius/umi-common-component/models';
 import * as _ from 'lodash';
+import {Table, UmiusConfigInterface, UmiusConfigService, UmiusSidebarInterface} from '@umius/umi-common-component';
 
 @Component({
   selector: 'app-shared-search-history',
@@ -42,7 +40,7 @@ export class SharedSearchHistoryComponent implements OnInit {
     }
   }
 
-  private _sidebarValue: SidebarInterface = {};
+  private _sidebarValue: UmiusSidebarInterface = {};
 
   private _tableInfos: Table = <Table>{};
 
@@ -65,7 +63,7 @@ export class SharedSearchHistoryComponent implements OnInit {
   private _waitingTime = '0'; // in minutes
 
 
-  private _config: Config = {
+  private _config: UmiusConfigInterface = {
     fields: 'entity region keywords created country elapsedTime status countries cost flag campaign ' +
       'innovation motherRequest totalResults metadata results targetPros',
     limit: this._configService.configLimit('admin-search-history-limit'),
@@ -75,7 +73,7 @@ export class SharedSearchHistoryComponent implements OnInit {
     recycled: 'false'
   };
 
-  private _configQueue: Config = {
+  private _configQueue: UmiusConfigInterface = {
     fields: 'keywords innovation',
     search: '{}',
     status: '{"$in": ["QUEUED", "PROCESSING"]}',
@@ -104,7 +102,7 @@ export class SharedSearchHistoryComponent implements OnInit {
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _router: Router,
-              private _configService: ConfigService,
+              private _configService: UmiusConfigService,
               private _campaignService: CampaignService,
               private _searchService: SearchService,
               private _rolesFrontService: RolesFrontService,
@@ -255,10 +253,11 @@ export class SharedSearchHistoryComponent implements OnInit {
       _clickIndex: this.canAccess(['view', 'request']) ? 1 : null,
       _isSearchable: this.canAccess(['searchBy', 'keywords']),
       _isPaginable: true,
+      _paginationTemplate: 'TEMPLATE_1',
       _isSelectable: true,
       _isTitle: this._total !== 10000,
       _isNoMinHeight: this._total < 11,
-      _buttons: [
+      _actions: [
         {
           _icon: 'fas fa-times',
           _label: 'Pause the requests',
@@ -346,7 +345,6 @@ export class SharedSearchHistoryComponent implements OnInit {
           _name: 'Email reconstruction',
           _type: 'MULTI-CHOICES',
           _isHidden: !this.canAccess(['tableColumns', 'emailStatus']),
-          _enableTooltip: true,
           _tooltip: 'The module is testing email ' + '\n' + 'pattern to (in)validate them',
           _choices: [
             {_name: 'PROS_ADDED', _alias: 'Pros added', _class: 'label is-success'},
@@ -593,11 +591,11 @@ export class SharedSearchHistoryComponent implements OnInit {
     return this._googleQuota;
   }
 
-  get config(): Config {
+  get config(): UmiusConfigInterface {
     return this._config;
   }
 
-  set config(value: Config) {
+  set config(value: UmiusConfigInterface) {
     this._config = value;
     const tmp = JSON.parse(value.search);
     this._loadHistory();
@@ -614,11 +612,11 @@ export class SharedSearchHistoryComponent implements OnInit {
     return this._tableInfos;
   }
 
-  get sidebarValue(): SidebarInterface {
+  get sidebarValue(): UmiusSidebarInterface {
     return this._sidebarValue;
   }
 
-  set sidebarValue(value: SidebarInterface) {
+  set sidebarValue(value: UmiusSidebarInterface) {
     this._sidebarValue = value;
   }
 

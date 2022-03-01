@@ -2,7 +2,7 @@
 
   <!-- bar icon -->
   <ng-container *ngIf="isAdmin && answers.length > 0">
-    <div class="icon-container is-overlay text-notify absolute" (click)="openModal($event)">
+    <div class="icon-container is-overlay text-meta absolute" (click)="openModal($event)">
       <span class="tooltip" [attr.data-tooltip]="'Menu'">
         <i class="icon icon-menu"></i>
       </span>
@@ -12,7 +12,7 @@
 
 
   <!-- heading 1st -->
-  <h2 class="text text-notify" [innerText]="'SHOWCASE.PROFESSIONALS_TITLE'" translate></h2>
+  <h2 class="text text-meta" [innerText]="'SHOWCASE.PROFESSIONALS_TITLE'" translate></h2>
   <!-- /heading 1st -->
 
 
@@ -34,11 +34,11 @@
 
         <div class="info-wrapper">
 
-          <h4 class="text-background text-medium text-sm">{{ answer.job }}</h4>
+          <h4 class="text-draft text-medium text-sm">{{ answer.job }}</h4>
 
           <div class="flex-start">
             <umius-country-flag [country]="answer.country?.flag" [width]="30" [height]="20"></umius-country-flag>
-            <p class="text-notify text-medium text-xs">{{ answer.company?.name }}</p>
+            <p class="text-meta text-medium text-xs">{{ answer.company?.name }}</p>
           </div>
 
         </div>
@@ -51,7 +51,7 @@
 
   <!-- section see more -->
   <ng-container *ngIf="answers.length > 6">
-    <div class="text-right section-light-pad rm-pad-bottom see-more-wrapper">
+    <div class="text-right p-top-25 rm-pad-bottom see-more-wrapper">
       <span class="text-link" (click)="openModal($event)" [innerText]="'SHOWCASE.SEE_MORE'" translate></span>
     </div>
   </ng-container>
@@ -62,32 +62,31 @@
 
 
 <!-- modal to select the answers -->
-<app-utility-modal [(showModal)]="modalShow" [maxWidth]="'960px'" [enableCloseButton]="true">
+<umius-modal [(showModal)]="modalShow" maxWidth="960px">
+  <section class="modal-body">
+    <div class="card-wrapper card-responsive d-flex">
+      <ng-container *ngFor="let answer of answers">
+        <div class="card is-responsive badge badge-icon" [ngClass]="{ 'badge-active': activeAnswer(answer) && isAdmin }">
 
- <section class="modal-body">
-   <div class="card-wrapper d-flex">
-     <ng-container *ngFor="let answer of answers">
-       <div class="card is-responsive badge badge-save" [ngClass]="{ 'active': activeAnswer(answer) && isAdmin }">
+          <i class="fas fa-check-circle"></i>
 
-         <i class="fas fa-check-circle"></i>
+          <ng-container *ngIf="isAdmin">
+            <label class="absolute c-hand">
+              <input type="checkbox" (change)="onChangeAnswer($event, answer)" [checked]="activeAnswer(answer)">
+            </label>
+          </ng-container>
 
-         <ng-container *ngIf="isAdmin">
-           <label class="absolute c-hand">
-             <input type="checkbox" (change)="onChangeAnswer($event, answer)" [checked]="activeAnswer(answer)">
-           </label>
-         </ng-container>
+          <h4 class="text-draft text-medium text-xs">{{ answer.job }}</h4>
 
-         <h4 class="text-background text-medium text-xs">{{ answer.job }}</h4>
+          <div class="flex-start">
+            <umius-country-flag [country]="answer.country?.flag" [width]="30" [height]="20"></umius-country-flag>
+            <p class="text-meta text-medium text-xs">{{ answer.company?.name }}</p>
+          </div>
 
-         <div class="flex-start">
-           <umius-country-flag [country]="answer.country?.flag" [width]="30" [height]="20"></umius-country-flag>
-           <p class="text-notify text-medium text-xs">{{ answer.company?.name }}</p>
-         </div>
-
-       </div>
-     </ng-container>
-   </div>
- </section>
+        </div>
+      </ng-container>
+    </div>
+  </section>
 
   <ng-container *ngIf="isAdmin">
     <footer class="modal-footer">
@@ -95,6 +94,5 @@
       <button (click)="onClickApply($event)" class="button is-primary">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
     </footer>
   </ng-container>
-
-</app-utility-modal>
+</umius-modal>
 <!-- /modal to select the answers -->

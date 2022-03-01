@@ -9,11 +9,21 @@ export class DomSanitizerPipe implements PipeTransform {
   }
 
   transform(html: string): SafeHtml {
-    html = this.extractImgFromHref(html);
-    html = this.extractVideoFromHref(html);
+    if(!!html) {
+      html = this.extractImgFromHref(html);
+      html = this.addClassToImg(html);
+      html = this.extractVideoFromHref(html);
+    }
     return this.sanitizer.bypassSecurityTrustHtml(html);
   }
 
+  // Add a class to images in html to allow further formatting
+  // This class is used by etherpad editor
+  addClassToImg(html: string) {
+    return html.replace('<img', '<img class="img-editor"');
+  }
+
+  // Old etherpad images handling
   // Display <img> tags from <a> tags containing img url
   // Used for etherpad formatting
   extractImgFromHref(html: string) {

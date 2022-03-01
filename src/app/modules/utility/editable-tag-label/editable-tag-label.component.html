@@ -1,6 +1,6 @@
 <div id="editable-tag-label" class="is-draft">
 
-  <div class="tag-container label is-tag is-draft is-rounded">
+  <div class="tag-container label is-draft is-draft is-rounded">
     <i class="fas fa-tag icon-left"></i>
     <label class="d-block w-full" *ngIf="isEditable">
       <input
@@ -40,7 +40,7 @@
 
 
 <!-- modal to create new tag -->
-<app-utility-modal [(showModal)]="showModal" [title]="'Creation Board'">
+<umius-modal [(showModal)]="showModal" [title]="'Creation Board'">
 
   <section class="modal-body">
     Do you really want to create a new tag?
@@ -53,5 +53,5 @@
     <button (click)="createNewTag()" class="button is-primary" type="button">Confirm</button>
   </footer>
 
-</app-utility-modal>
+</umius-modal>
 <!-- /modal to create new tag -->

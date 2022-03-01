@@ -5,7 +5,7 @@ import { first } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
 import { TranslateNotificationsService } from '../../../../../../../services/translate-notifications/translate-notifications.service';
 import { ErrorFrontService } from '../../../../../../../services/error/error-front.service';
-import { Table, Config, Column } from '@umius/umi-common-component/models';
+import {Column, Table, UmiusConfigInterface} from '@umius/umi-common-component';
 
 @Component({
   templateUrl: './admin-product-shared-tracking-table.component.html',
@@ -30,7 +30,7 @@ export class AdminProductSharedTrackingTableComponent implements OnInit {
 
   protected _content: Array<any> = [];
 
-  protected _queryConfig: Config = <Config>{
+  protected _queryConfig: UmiusConfigInterface = <UmiusConfigInterface>{
     fields: '',
     limit: '10',
     offset: '0',
@@ -148,11 +148,11 @@ export class AdminProductSharedTrackingTableComponent implements OnInit {
     return this._trackingTable;
   }
 
-  get queryConfig(): Config {
+  get queryConfig(): UmiusConfigInterface {
     return this._queryConfig;
   }
 
-  set queryConfig(value: Config) {
+  set queryConfig(value: UmiusConfigInterface) {
     this._queryConfig = value;
   }
 

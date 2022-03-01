@@ -1,4 +1,4 @@
-@import "../../../../../style/framework/src/variables";
+@import "~@umius/umi-style-framework/scss/variables";
 
 #shared-mail-editor {
 
@@ -39,13 +39,13 @@
 
         &.active {
           color: $primary-color;
-          text-decoration: none;
+          text-decoration: underline;
           cursor: default;
         }
 
         &:hover {
           color: $primary-color;
-          text-decoration: none;
+          text-decoration: underline;
         }
 
       }

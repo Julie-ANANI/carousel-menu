@@ -1,5 +1,5 @@
-@import "../../../../../../style/framework/src/variables";
-@import "../../../../../../style/framework/src/mixins";
+@import "~@umius/umi-style-framework/scss/variables";
+@import "~@umius/umi-style-framework/scss/mixins";
 
 #account-component {
 
@@ -8,8 +8,8 @@
 
     .left-content-wrapper {
       text-align: center;
-      padding-right: 2.5rem;
-      padding-top: 1.25rem;
+      padding-right: 50px;
+      padding-top: 50px;
       flex: 0 1 25% !important;
 
       .profile-pic {
@@ -37,14 +37,14 @@
           font-size: 63px;
           margin-bottom: 0;
           font-family: Oswald, sans-serif;
-          color: $text-draft-color;
+          color: $draft-color;
         }
 
       }
 
       h1 {
-        margin-top: 0.75rem;
-        margin-bottom: 0.1rem;
+        margin-top: 15px;
+        margin-bottom: 2px;
         font-size: $font-size-lg;
       }
 
@@ -86,7 +86,7 @@
 
     .right-content-wrapper {
       border-left: $border-width solid $border-default-color;
-      padding-left: 2.5rem;
+      padding-left: 50px;
       flex: 0 1 75% !important;
 
       .title-wrapper {
@@ -122,8 +122,8 @@
         }
 
         .save-wrapper {
-          padding-top: 2rem;
-          padding-bottom: 2rem;
+          padding-top: 20px;
+          padding-bottom: 20px;
         }
 
       }

@@ -1,12 +1,12 @@
-@import "../../../../../../style/framework/src/variables";
+@import "~@umius/umi-style-framework/scss/variables";
 
 #synthesis-list-component {
 
   .report-wrapper {
-    margin-bottom: -1.5rem;
+    margin-bottom: -25px;
 
     .card-report {
-      margin-bottom: 1.5rem;
+      margin-bottom: 25px;
 
       .card-content {
         width: 100%;
@@ -16,7 +16,7 @@
           margin-right: $unit-5;
 
           &:hover {
-            box-shadow: $box-shadow-6;
+            box-shadow: 0 12px 30px 0 rgba(0,0,0,.2);
             cursor: pointer;
           }
 
@@ -27,12 +27,18 @@
           width: 100%;
 
           a span {
-            font-size: 1.1rem;
+            font-size: 22px;
+            color: $dark-color;
+
+            &:hover {
+              color: $primary-color;
+            }
+
           }
 
           .text {
             font-size: $font-size-sm;
-            margin-top: 0.75rem;
+            margin-top: 15px;
           }
 
         }

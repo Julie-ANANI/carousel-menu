@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { TranslateNotificationsService } from '../../../../../../services/translate-notifications/translate-notifications.service';
-import { Table, Config } from '@umius/umi-common-component/models';
 import { Subject } from 'rxjs';
 import { first } from 'rxjs/operators';
 import { ShieldService } from '../../../../../../services/shield/shield.service';
+import {Table, UmiusConfigInterface} from '@umius/umi-common-component';
 
 @Component({
   selector: 'app-admin-professional-shield',
@@ -11,7 +11,7 @@ import { ShieldService } from '../../../../../../services/shield/shield.service'
 })
 export class AdminProfessionalShieldComponent implements OnInit {
 
-  private _config = <Config>{
+  private _config = <UmiusConfigInterface>{
     fields: '',
     limit: '10',
     offset: '0',
@@ -45,9 +45,9 @@ export class AdminProfessionalShieldComponent implements OnInit {
       _isSearchable: false,
       _isDeletable: false,
       _isSelectable: true,
-      _isEditable: false,
       _isTitle: true,
       _isPaginable: true,
+      _paginationTemplate: 'TEMPLATE_1',
       _clickIndex: 1,
       _columns: [
         {_attrs: ['professional.firstName', 'professional.lastName'],
@@ -72,11 +72,11 @@ export class AdminProfessionalShieldComponent implements OnInit {
       });
   }
 
-  get config(): Config {
+  get config(): UmiusConfigInterface {
     return this._config;
   }
 
-  set config(value: Config) {
+  set config(value: UmiusConfigInterface) {
     this._config = value;
     this._getShieldedPros();
   }

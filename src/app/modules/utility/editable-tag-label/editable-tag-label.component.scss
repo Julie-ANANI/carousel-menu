@@ -1,4 +1,4 @@
-@import "../../../../style/framework/src/variables";
+@import "~@umius/umi-style-framework/scss/variables";
 
 #editable-tag-label{
     .tag-container{
@@ -8,7 +8,7 @@
 
       .form-input{
         border: none;
-        background: $bg-draft-color;
+        background: $draft-color;
         font-weight: 600;
         height: 17px;
         min-width: 120px;

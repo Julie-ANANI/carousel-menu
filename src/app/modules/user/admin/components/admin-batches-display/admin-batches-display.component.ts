@@ -6,10 +6,10 @@ import { TranslateNotificationsService } from '../../../../../services/translate
 import { ErrorFrontService } from '../../../../../services/error/error-front.service';
 import { TranslateService } from '@ngx-translate/core';
 import { InnovCard } from '../../../../../models/innov-card';
-import { SidebarInterface } from '../../../../sidebars/interfaces/sidebar-interface';
 import { isPlatformBrowser } from '@angular/common';
 import { InnovationService } from '../../../../../services/innovation/innovation.service';
 import { InnovationFrontService } from '../../../../../services/innovation/innovation-front.service';
+import {UmiusSidebarInterface} from '@umius/umi-common-component';
 
 /***
  * this is to display the batches.
@@ -36,7 +36,7 @@ export class AdminBatchesDisplayComponent implements OnInit {
 
   private _selectedInnovCard: InnovCard = <InnovCard>{};
 
-  private _sidebarTemplate: SidebarInterface = <SidebarInterface>{};
+  private _sidebarTemplate: UmiusSidebarInterface = <UmiusSidebarInterface>{};
 
   private _isLoading = true;
 
@@ -193,11 +193,11 @@ export class AdminBatchesDisplayComponent implements OnInit {
     return this._selectedInnovCard;
   }
 
-  get sidebarTemplate(): SidebarInterface {
+  get sidebarTemplate(): UmiusSidebarInterface {
     return this._sidebarTemplate;
   }
 
-  set sidebarTemplate(value: SidebarInterface) {
+  set sidebarTemplate(value: UmiusSidebarInterface) {
     this._sidebarTemplate = value;
   }
 

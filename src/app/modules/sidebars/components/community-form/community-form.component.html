@@ -66,7 +66,7 @@
 
           <!-- checking for professional -->
           <ng-container *ngIf="lookingProfessional">
-            <div class="text-pro text-center"><span class="text-notify text-medium">Checking the professional already exists or not...</span></div>
+            <div class="text-pro text-center"><span class="text-meta text-medium">Checking the professional already exists or not...</span></div>
             <div class="loading is-lg"></div>
           </ng-container>
 
@@ -108,12 +108,12 @@
 
 
           <!-- button -->
-          <div *ngIf="!lookingProfessional" class="text-center section-light-pad">
+          <div *ngIf="!lookingProfessional" class="text-center p-bottom-25 p-top-25">
 
             <ng-container *ngIf="!professional?.ambassador?.is">
               <button
                 type="submit"
-                class="btn btn-primary"
+                class="button"
                 [disabled]="form.invalid || addingProfessional"
                 [innerText]="'COMMON.BUTTON.CONTINUE'"
                 translate
@@ -122,7 +122,8 @@
             </ng-container>
 
             <ng-container *ngIf="professional?.ambassador?.is">
-              <button type="submit" class="btn btn-primary" [innerText]="'View ambassador'" translate (click)="goToAmbassador()"></button>
+              <button type="submit" class="button" [innerText]="'View ambassador'" translate
+                      (click)="goToAmbassador()"></button>
             </ng-container>
 
           </div>
@@ -139,7 +140,7 @@
           <!-- adding professional -->
           <ng-container *ngIf="addingProfessional">
             <div class="text-pro text-center">
-              <span class="text-notify text-medium">We are adding the professional as an Ambassador. Please wait we will redirect you to the Ambassador page where you can edit all the details about it.</span>
+              <span class="text-meta text-medium">We are adding the professional as an Ambassador. Please wait we will redirect you to the Ambassador page where you can edit all the details about it.</span>
             </div>
             <div class="loading is-lg"></div>
           </ng-container>

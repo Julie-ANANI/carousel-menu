@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
-import { Table } from '@umius/umi-common-component/models';
 import { RolesFrontService } from '../../../../../../../services/roles/roles-front.service';
 import { TrackingService } from '../../../../../../../services/tracking/tracking.service';
 import { AdminProductSharedTrackingTableComponent } from './admin-product-shared-tracking-table.component';
 import { TranslateNotificationsService } from '../../../../../../../services/translate-notifications/translate-notifications.service';
+import {Table} from '@umius/umi-common-component';
 
 @Component({
   selector: 'app-help-community',

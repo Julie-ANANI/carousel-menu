@@ -27,7 +27,7 @@
             adding the workflow...
           </ng-container>
           <ng-template #textAdd>
-            <i class="fas fa-plus m-no-left"></i>
+            <i class="icon icon-plus icon-left"></i>
             Add workflow
           </ng-template>
         </button>
@@ -70,7 +70,7 @@
 
 
 <!-- modal to add the new workflow -->
-<app-utility-modal *ngIf="canAccess(['add'])" [(showModal)]="modalAdd" [title]="'Addition Board'">
+<umius-modal *ngIf="canAccess(['add'])" [(showModal)]="modalAdd" [title]="'Addition Board'">
 
   <section class="modal-body">
 
@@ -121,5 +121,5 @@
 
   </footer>
 
-</app-utility-modal>
+</umius-modal>
 <!-- /modal to add the new workflow -->

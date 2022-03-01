@@ -1,9 +1,9 @@
-@import "../../../../../../../../../style/framework/src/variables";
+@import "~@umius/umi-style-framework/scss/variables";
 
 #admin-community-project-component {
 
   .section-header {
-    background-color: $bg-white-color;
+    background-color: $white-color;
 
     .name-wrapper {
       border-bottom: $border-width solid $border-default-color;
@@ -35,7 +35,7 @@
 
   .section-details {
 
-    .btn.ghost-primary {
+    .button.is-outlined {
       margin-right: $unit-5;
     }
 

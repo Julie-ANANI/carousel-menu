@@ -3,7 +3,7 @@
 
     <!-- geography section -->
     <div>
-      <span class="shape is-rounded bg-draft">1</span>
+      <span class="shape is-rounded bg-draft m-right-2 text-white">1</span>
       <span class="text text-question">{{ 'SHARED_PROJECT_SETTINGS.GEOGRAPHY.LABEL' | translate }}</span>
       <div class="pd-input">
         <app-shared-worldmap [targetingCountries]="targetingCountries"></app-shared-worldmap>
@@ -31,7 +31,7 @@
         <!-- Comment countries -->
         <ng-container *ngIf="!canEdit && !!innovation.settings.geography.comments">
           <p class="pd-para">
-            <span class="text text-secondary-dark">
+            <span class="text text-dark">
               {{ 'SHARED_PROJECT_SETTINGS.GEOGRAPHY.COMMENT' | translate }}
             </span>
           </p>
@@ -42,7 +42,7 @@
         <!-- Activity sectors -->
         <div class="pd-ques">
 
-          <span class="shape is-rounded bg-draft">2</span>
+          <span class="shape is-rounded bg-draft m-right-2 text-white">2</span>
           <span class="text text-question">{{ 'SHARED_PROJECT_SETTINGS.MARKET.LABEL' | translate }}</span>
 
           <ng-container *ngIf="!canEdit">
@@ -72,7 +72,7 @@
         <!-- Type of enterprises -->
         <div class="pd-ques">
 
-          <span class="shape is-rounded bg-draft">3</span>
+          <span class="shape is-rounded bg-draft m-right-2 text-white">3</span>
           <span class="text text-question">{{ 'SHARED_PROJECT_SETTINGS.COMPANIES.LABEL' | translate }}</span>
 
           <ng-container *ngIf="!canEdit && innovation.settings.companies.include.length === 0 && innovation.settings.companies.exclude.length === 0
@@ -143,7 +143,7 @@
           <!-- Companies comment -->
           <ng-container *ngIf="!canEdit && !!innovation.settings.companies.description">
             <p class="pd-top">
-              <span class="text text-secondary-dark">{{ 'SHARED_PROJECT_SETTINGS.COMPANIES.COMMENT' | translate }}</span>
+              <span class="text text-dark">{{ 'SHARED_PROJECT_SETTINGS.COMPANIES.COMMENT' | translate }}</span>
             </p>
             <ng-container *ngIf="!canEdit && innovation.settings.companies.description">
               <div class="pd-input">
@@ -187,7 +187,7 @@
         <!-- Professional profiles -->
         <div class="pd-ques">
 
-          <span class="shape is-rounded bg-draft">4</span>
+          <span class="shape is-rounded bg-draft m-right-2 text-white">4</span>
           <span class="text text-question">{{ 'SHARED_PROJECT_SETTINGS.PROFESSIONALS.LABEL' | translate }}</span>
 
           <ng-container *ngIf="!canEdit && innovation.settings.professionals.exclude.length === 0 && !innovation.settings.professionals.description">
@@ -221,7 +221,7 @@
           <!-- Exclude professional -->
           <ng-container *ngIf="!canEdit && innovation.settings.professionals.exclude.length > 0">
             <p class="pd-para">
-              <span class="text text-secondary-dark">{{ 'SHARED_PROJECT_SETTINGS.PROFESSIONALS.TO_EXCLUDE' | translate }}</span>
+              <span class="text text-dark">{{ 'SHARED_PROJECT_SETTINGS.PROFESSIONALS.TO_EXCLUDE' | translate }}</span>
             </p>
             <div class="pd-input">
               <div *ngFor="let professionalExclude of innovation.settings.professionals.exclude" class="label label-answer">
@@ -257,7 +257,7 @@
         <!-- contact internal -->
         <div [ngStyle]="{ 'padding-top': innovation.settings.contact && canEdit ? '40px' : '25px' }">
 
-          <span class="shape is-rounded bg-draft">5</span>
+          <span class="shape is-rounded bg-draft m-right-2 text-white">5</span>
           <span class="text text-question">{{ 'SHARED_PROJECT_SETTINGS.CONTACT_INTERNAL.LABEL' | translate }}</span>
 
           <div *ngIf="!canEdit" class="pd-input">
@@ -288,7 +288,7 @@
         <!-- Keyword and other stuffs -->
         <div [ngStyle]="{ 'padding-top': innovation.settings.professionals.exclude.length === 0 && canEdit ? '40px' : '25px' }">
 
-          <span class="shape is-rounded bg-draft">6</span>
+          <span class="shape is-rounded bg-draft m-right-2 text-white">6</span>
           <span class="text text-question">{{ 'SHARED_PROJECT_SETTINGS.OTHER.LABEL' | translate }}</span>
 
           <ng-container *ngIf="!canEdit">

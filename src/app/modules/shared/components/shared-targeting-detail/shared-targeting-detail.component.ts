@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { Innovation } from '../../../../models/innovation';
-import { Country } from '../../../../models/country';
 import { WorldmapService } from "../../../../services/worldmap/worldmap.service";
+import {UmiusCountryInterface} from '@umius/umi-common-component';
 
 @Component({
   selector: 'app-shared-targeting-detail',
@@ -37,7 +37,7 @@ export class SharedTargetingDetailComponent {
 
   private _getCountries(continent: any) {
     this._worldMapService.getCountriesList().then(response => {
-      let countries: Array<Country> = [];
+      let countries: Array<UmiusCountryInterface> = [];
 
       for (const prop in continent) {
         if (continent.hasOwnProperty(prop)) {

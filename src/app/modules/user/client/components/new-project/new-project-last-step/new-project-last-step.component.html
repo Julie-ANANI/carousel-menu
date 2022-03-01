@@ -7,7 +7,7 @@
   <!-- /heading -->
 
   <!-- lang selection -->
-  <div [ngClass]="{'p-bottom-40': !!reportingLang}" class="flex-centered flex-wrap">
+  <div [ngClass]="{'p-bottom-40': !!reportingLang}" class="flex-centered flex-wrap-wrap">
     <a
       (click)="onChangeProjectLang($event, lang)"
       *ngFor="let lang of projectLangs"
@@ -112,18 +112,17 @@
       </div>
 
       <div class="mxw-750 m-top-25 m-left-auto m-right-auto">
-        <app-utility-text-input
+        <umius-text-input
           (textEntered)="addEmail($event)"
           (valueToRemove)="removeEmail($event)"
+          [placeholder]="textInputPlaceholder"
           [addedText]="collaborators"
-          [buttonColorClass]="'is-community'"
           [fieldType]="'email'"
           [inputMaxWidth]="'450px'"
           [isFieldCenter]="true"
           [labelBgColor]="'is-success'"
-          [placeholder]="'jhon@catco.com'"
           [template]="'TYPE_2'">
-        </app-utility-text-input>
+        </umius-text-input>
       </div>
 
     </div>

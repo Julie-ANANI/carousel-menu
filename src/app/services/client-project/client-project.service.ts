@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { ClientProject } from '../../models/client-project';
 import { Mission } from '../../models/mission';
 import {Innovation, NewInnovation} from '../../models/innovation';
-import { Config } from '@umius/umi-common-component/models';
+import {UmiusConfigInterface} from '@umius/umi-common-component';
 
 interface CreateResponse {
   clientProject: ClientProject;
@@ -27,7 +27,7 @@ export class ClientProjectService {
     return this._http.post<CreateResponse>('/clientProject/create', _data);
   }
 
-  public get(clientProjectId: string, config?: Config): Observable<ClientProject> {
+  public get(clientProjectId: string, config?: UmiusConfigInterface): Observable<ClientProject> {
     return this._http.get<ClientProject>(`/clientProject/${clientProjectId}`, { params: config });
   }
 

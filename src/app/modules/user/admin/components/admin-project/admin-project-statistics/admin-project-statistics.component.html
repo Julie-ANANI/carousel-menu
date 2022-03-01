@@ -3,7 +3,7 @@
 
     <!-- when fetching -->
     <ng-container *ngIf="isFetchingPros">
-      <div class="section-light-pad">
+      <div class="p-bottom-25 p-top-25">
         <app-message-template
           [srcImage]="'https://res.cloudinary.com/umi/image/upload/v1541660257/app/default-images/bot/table_bot.svg'">
           <div class="flex-centered">
@@ -19,7 +19,7 @@
     <ng-container *ngIf="!isFetchingPros && stats && !stats.byJobTitle.length
                                                   && !stats.byCompanies.length
                                                   && !stats.byCountries.length">
-      <div class="section-light-pad">
+      <div class="p-bottom-25 p-top-25">
         <app-message-template
           [srcImage]="'https://res.cloudinary.com/umi/image/upload/v1541660257/app/default-images/bot/table_bot.svg'"
           [widthMax]="'362px'">

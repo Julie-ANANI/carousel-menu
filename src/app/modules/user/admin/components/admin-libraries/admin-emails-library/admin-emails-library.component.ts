@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { TemplatesService } from '../../../../../../services/templates/templates.service';
 import {TransactionalEmail} from '../../../../../../models/transactional-email';
-import { Table } from '@umius/umi-common-component/models';
 import { TranslateNotificationsService } from '../../../../../../services/translate-notifications/translate-notifications.service';
-import { SidebarInterface } from '../../../../../sidebars/interfaces/sidebar-interface';
 import { EmailSignature } from '../../../../../../models/email-signature';
 import { first } from 'rxjs/operators';
 import {LangEntryService} from '../../../../../../services/lang-entry/lang-entry.service';
+import {Table, UmiusSidebarInterface} from '@umius/umi-common-component';
 
 @Component({
   selector: 'app-admin-emails-library',
@@ -24,7 +23,7 @@ export class AdminEmailsLibraryComponent implements OnInit {
 
   private _newEmailName: string = null;
 
-  private _sidebarValue: SidebarInterface = {};
+  private _sidebarValue: UmiusSidebarInterface = {};
 
   private _total = 0;
 
@@ -100,7 +99,6 @@ export class AdminEmailsLibraryComponent implements OnInit {
       _total: this._total,
       _isDeletable: true,
       _isSelectable: true,
-      _isEditable: true,
       _clickIndex: 1,
       _columns: [
         {_attrs: [`name`], _name: 'Nom', _type: 'TEXT'},
@@ -189,11 +187,11 @@ export class AdminEmailsLibraryComponent implements OnInit {
     return this._emailToEdit;
   }
 
-  get sidebarValue(): SidebarInterface {
+  get sidebarValue(): UmiusSidebarInterface {
     return this._sidebarValue;
   }
 
-  set sidebarValue(value: SidebarInterface) {
+  set sidebarValue(value: UmiusSidebarInterface) {
     this._sidebarValue = value;
   }
 

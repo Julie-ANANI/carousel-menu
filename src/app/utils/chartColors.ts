@@ -6,8 +6,8 @@ export const colors = [
   {label: 'neutral-1', value: '#bbc7d6'},
   {label: 'neutral-2', value: '#ffb300'},
   {label: 'neutral-3', value: '#ffcc6e'},
-  {label: 'neutral-4', value: '#2e6188'},
-  {label: 'neutral-5', value: '#3a78a8'},
+  {label: 'neutral-4', value: '#8f9cdb'},
+  {label: 'neutral-5', value: '#db8fb6'},
   {label: 'neutral-6', value: '#dde3ea'},
 ];
 

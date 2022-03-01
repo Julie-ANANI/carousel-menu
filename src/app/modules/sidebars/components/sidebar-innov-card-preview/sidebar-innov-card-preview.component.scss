@@ -1,4 +1,4 @@
-@import "../../../../../style/framework/src/variables";
+@import "~@umius/umi-style-framework/scss/variables";
 
 #innov-card-preview {
 
@@ -14,7 +14,7 @@
   .text-wrapper {
     padding-top: 5px;
     font-size: 15px;
-    color: $text-dark-color;
+    color: $dark-color;
     margin-bottom: -4px;
   }
 

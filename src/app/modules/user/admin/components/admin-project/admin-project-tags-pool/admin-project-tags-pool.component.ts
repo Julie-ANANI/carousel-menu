@@ -2,17 +2,15 @@ import { Component, Inject, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core
 import { TagsService } from '../../../../../../services/tags/tags.service';
 import { TranslateNotificationsService } from '../../../../../../services/translate-notifications/translate-notifications.service';
 import { Innovation } from '../../../../../../models/innovation';
-import { Table, Config } from '@umius/umi-common-component/models';
 import { Tag } from '../../../../../../models/tag';
-import { SidebarInterface } from '../../../../../sidebars/interfaces/sidebar-interface';
 import { first, takeUntil } from 'rxjs/operators';
 import { isPlatformBrowser } from '@angular/common';
-import {ConfigService} from '@umius/umi-common-component/services/config';
 import { RolesFrontService } from '../../../../../../services/roles/roles-front.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorFrontService } from '../../../../../../services/error/error-front.service';
 import { InnovationFrontService } from '../../../../../../services/innovation/innovation-front.service';
 import { Subject } from 'rxjs';
+import {Table, UmiusConfigInterface, UmiusConfigService, UmiusSidebarInterface} from '@umius/umi-common-component';
 
 @Component({
   templateUrl: 'admin-project-tags-pool.component.html',
@@ -20,7 +18,7 @@ import { Subject } from 'rxjs';
 
 export class AdminProjectTagsPoolComponent implements OnInit, OnDestroy {
 
-  private _localConfig: Config = {
+  private _localConfig: UmiusConfigInterface = {
     fields: '',
     limit: this._configService.configLimit('admin-project-tags-pool-limit'),
     offset: '0',
@@ -36,7 +34,7 @@ export class AdminProjectTagsPoolComponent implements OnInit, OnDestroy {
 
   private _fetchingError = false;
 
-  private _sidebarValue: SidebarInterface = <SidebarInterface>{};
+  private _sidebarValue: UmiusSidebarInterface = <UmiusSidebarInterface>{};
 
   private _table: Table = <Table>{};
 
@@ -49,7 +47,7 @@ export class AdminProjectTagsPoolComponent implements OnInit, OnDestroy {
   private _ngUnsubscribe: Subject<any> = new Subject<any>();
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
-              private _configService: ConfigService,
+              private _configService: UmiusConfigService,
               private _rolesFrontService: RolesFrontService,
               private _innovationFrontService: InnovationFrontService,
               private _translateNotificationsService: TranslateNotificationsService,
@@ -77,6 +75,7 @@ export class AdminProjectTagsPoolComponent implements OnInit, OnDestroy {
       _total: this._total,
       _isLocal: true,
       _isPaginable: true,
+      _paginationTemplate: 'TEMPLATE_1',
       _isNoMinHeight: this._total < 11,
       _isDeletable: this.canAccess(['delete']),
       _isSelectable: this.canAccess(['delete']),
@@ -195,7 +194,7 @@ export class AdminProjectTagsPoolComponent implements OnInit, OnDestroy {
     });
   }
 
-  get localConfig(): Config {
+  get localConfig(): UmiusConfigInterface {
     return this._localConfig;
   }
 
@@ -215,11 +214,11 @@ export class AdminProjectTagsPoolComponent implements OnInit, OnDestroy {
     return this._fetchingError;
   }
 
-  get sidebarValue(): SidebarInterface {
+  get sidebarValue(): UmiusSidebarInterface {
     return this._sidebarValue;
   }
 
-  set sidebarValue(value: SidebarInterface) {
+  set sidebarValue(value: UmiusSidebarInterface) {
     this._sidebarValue = value;
   }
 

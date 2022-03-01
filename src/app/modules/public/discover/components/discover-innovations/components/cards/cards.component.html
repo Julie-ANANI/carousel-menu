@@ -1,7 +1,7 @@
 <div id="cards">
 
   <!-- cards -->
-  <section class="c-cards-wrapper d-flex text-center flex-wrap">
+  <section class="c-cards-wrapper card-responsive d-flex text-center flex-wrap-wrap">
     <div
       *ngFor="let innovation of innovations"
       [ngClass]="{ 'c-effect': stopLoading }"
@@ -9,7 +9,7 @@
       <a
         [href]="[getInnovationDetail('url', innovation)]"
         [ngClass]="{ 'c-default': !stopLoading }"
-        class="text-primary-dark text-sm p-4"
+        class="text-dark text-sm p-4"
         style="height: 100%">
 
         <div class="card-image" [ngClass]="stopLoading ? 'relative' : 'loading-content'">
@@ -37,7 +37,7 @@
 
   <!-- pagination -->
   <section *ngIf="isPagination && total > 10 && stopLoading" class="p-top-25 p-bottom-25">
-    <app-pagination-2 [(pagination)]="pagination" [totalCount]="total"></app-pagination-2>
+    <umius-pagination-template1 [(pagination)]="pagination" [totalCount]="total"></umius-pagination-template1>
   </section>
   <!-- /pagination -->
 

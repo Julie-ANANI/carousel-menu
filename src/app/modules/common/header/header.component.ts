@@ -6,12 +6,12 @@ import { User } from '../../../models/user.model';
 import { TranslateService} from '../../../i18n/i18n';
 import { CookieService } from 'ngx-cookie';
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { SidebarInterface } from '../../sidebars/interfaces/sidebar-interface';
 import { UserFrontService } from '../../../services/user/user-front.service';
 import { Subject } from 'rxjs';
 import { RolesFrontService } from '../../../services/roles/roles-front.service';
 import { RouteFrontService } from '../../../services/route/route-front.service';
 import {takeUntil} from 'rxjs/operators';
+import {UmiusSidebarInterface} from '@umius/umi-common-component';
 
 interface Header {
   pageName: string;
@@ -60,11 +60,15 @@ interface Header {
 
 export class HeaderComponent implements OnInit, OnDestroy {
 
+  get isMobileView(): boolean {
+    return this._isMobileView;
+  }
+
   private _backOfficeValue = false; // if true, then display back office menu options.
 
   private _flag = this.currentLang === 'fr' ? 'FR' : 'US';
 
-  private _sidebarValues: SidebarInterface = {
+  private _sidebarValues: UmiusSidebarInterface = {
     animate_state: 'inactive'
   };
 
@@ -107,6 +111,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   private _isLoading = true;
 
+  private _isMobileView = false;
+
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _authService: AuthService,
               private _routeFrontService: RouteFrontService,
@@ -117,6 +123,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     if (isPlatformBrowser(this._platformId)) {
+      this._checkMobileView();
       this._routeFrontService.isAdminSide().pipe(takeUntil(this._ngUnsubscribe)).subscribe((value) => {
         this._backOfficeValue = value;
       });
@@ -126,9 +133,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   @HostListener('window:resize', ['$event'])
   onResize(_event: Event) {
+    this._checkMobileView();
     if (window.innerWidth > 960) {
       this._sidebarValues = { animate_state: 'inactive' };
     }
+  }
+
+  private _checkMobileView() {
+    this._isMobileView = window.innerWidth < 960;
   }
 
   /***
@@ -229,7 +241,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     return this._flag;
   }
 
-  get sidebarValues(): SidebarInterface {
+  get sidebarValues(): UmiusSidebarInterface {
     return this._sidebarValues;
   }
 

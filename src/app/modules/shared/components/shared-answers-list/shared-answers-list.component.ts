@@ -1,10 +1,10 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Answer } from '../../../../models/answer';
 import { AnswerService } from '../../../../services/answer/answer.service';
-import { Table } from '@umius/umi-common-component/models';
 import { HttpErrorResponse } from "@angular/common/http";
 import { TranslateNotificationsService } from "../../../../services/translate-notifications/translate-notifications.service";
 import { ErrorFrontService } from "../../../../services/error/error-front.service";
+import {Table} from '@umius/umi-common-component';
 
 @Component({
   selector: 'app-shared-answers-list',
@@ -48,9 +48,8 @@ export class SharedAnswersListComponent {
         _total: this._answers.length,
         _isSearchable: true,
         _isSelectable: true,
-        _isEditable: true,
         _clickIndex: 1,
-        _buttons: [{_label: 'ANSWER.VALID_ANSWER'}, {_label: 'ANSWER.REJECT_ANSWER'}],
+        _actions: [{_label: 'ANSWER.VALID_ANSWER'}, {_label: 'ANSWER.REJECT_ANSWER'}],
         _columns: [
           {_attrs: ['professional.firstName', 'professional.lastName'], _name: 'COMMON.NAME', _type: 'TEXT'},
           {_attrs: ['country'], _name: 'COMMON.COUNTRY', _type: 'COUNTRY'},

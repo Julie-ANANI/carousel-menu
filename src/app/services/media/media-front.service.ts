@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Media} from '../../models/media';
+import {UmiusMediaInterface} from '@umius/umi-common-component';
 
 @Injectable({providedIn: 'root'})
 export class MediaFrontService {
@@ -54,7 +54,7 @@ export class MediaFrontService {
    * @param width - custom width
    * @param height - custom height
    */
-  public static getMedia(media: Media, width = '240', height = '159'): string {
+  public static getMedia(media: UmiusMediaInterface, width = '240', height = '159'): string {
     let _src = '';
 
     if (media && media.type && media.type === 'PHOTO') {
@@ -74,7 +74,7 @@ export class MediaFrontService {
    * @param height - custom height
    * @param options ex: ['c_fill', 'f_auto']
    */
-  public static imageSrc(media: Media, width = '240', height = '159', options?: Array<string>): string {
+  public static imageSrc(media: UmiusMediaInterface, width = '240', height = '159', options?: Array<string>): string {
     let _prefix = `https://res.cloudinary.com/umi/image/upload/c_fill,f_auto,g_center,h_${height},q_auto,w_${width}/`;
     const _suffix = '.jpg';
 
@@ -89,7 +89,7 @@ export class MediaFrontService {
   /**
    * @param media
    */
-  public static videoThumbnail(media: Media): string {
+  public static videoThumbnail(media: UmiusMediaInterface): string {
     return media && media.video && media.video.thumbnail || '';
   }
 

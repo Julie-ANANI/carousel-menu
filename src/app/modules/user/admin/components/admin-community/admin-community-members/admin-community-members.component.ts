@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { ProfessionalsService } from '../../../../../../services/professionals/professionals.service';
 import { TranslateNotificationsService } from '../../../../../../services/translate-notifications/translate-notifications.service';
-import { SidebarInterface } from '../../../../../sidebars/interfaces/sidebar-interface';
-import { Config } from '@umius/umi-common-component/models';
+import {UmiusConfigInterface, UmiusSidebarInterface} from '@umius/umi-common-component';
 
 
 @Component({
@@ -12,7 +11,7 @@ import { Config } from '@umius/umi-common-component/models';
 
 export class AdminCommunityMembersComponent {
 
-  private _config: Config = {
+  private _config: UmiusConfigInterface = {
     fields: 'language firstName lastName company country jobTitle campaigns tags messages ambassador.industry',
     limit: '10',
     offset: '0',
@@ -22,7 +21,7 @@ export class AdminCommunityMembersComponent {
 
   private _searchResult: any;
 
-  private _sidebarValue: SidebarInterface = {};
+  private _sidebarValue: UmiusSidebarInterface = {};
 
   constructor(private _professionalService: ProfessionalsService,
               private _translateNotificationsService: TranslateNotificationsService) { }
@@ -74,19 +73,19 @@ export class AdminCommunityMembersComponent {
     return this._searchResult;
   }
 
-  get sidebarValue(): SidebarInterface {
+  get sidebarValue(): UmiusSidebarInterface {
     return this._sidebarValue;
   }
 
-  set sidebarValue(value: SidebarInterface) {
+  set sidebarValue(value: UmiusSidebarInterface) {
     this._sidebarValue = value;
   }
 
-  get config(): Config {
+  get config(): UmiusConfigInterface {
     return this._config;
   }
 
-  set config(value: Config) {
+  set config(value: UmiusConfigInterface) {
     this._config = value;
   }
 

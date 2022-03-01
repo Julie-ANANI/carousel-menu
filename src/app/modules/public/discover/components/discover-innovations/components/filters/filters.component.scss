@@ -1,4 +1,4 @@
-@import "../../../../../../../../style/framework/src/variables";
+@import "~@umius/umi-style-framework/scss/variables";
 
 #filters {
 
@@ -21,7 +21,7 @@
     }
 
     h3 {
-      margin-bottom: 0.6rem;
+      margin-bottom: 12px;
       font-size: $font-size-sm;
     }
 
@@ -33,7 +33,7 @@
   }
 
   .sector-suggested {
-    padding-top: 1rem;
+    padding-top: 20px;
   }
 
   .sector-highlighted {
@@ -41,10 +41,10 @@
     .flex-between {
 
       .action-wrapper {
-        margin-bottom: 0.35rem;
+        margin-bottom: 7px;
 
         .search-wrapper, .filter-icon {
-          margin-bottom: 0.5rem;
+          margin-bottom: 10px;
         }
 
         .filter-icon {
@@ -79,9 +79,9 @@
 
       .share-button {
 
-        .btn {
+        .button {
           min-width: 100px;
-          margin-bottom: 0.75rem;
+          margin-bottom: 15px;
 
           i {
             margin-left: 0;
@@ -105,7 +105,7 @@
   }
 
   h3 {
-    margin-bottom: 0.6rem;
+    margin-bottom: 12px;
     font-size: $font-size-sm;
   }
 
@@ -118,12 +118,12 @@
 
 .modal-share-wrapper {
 
-  .btn {
-    margin-top: 0.75rem;
+  .button {
+    margin-top: 15px;
   }
 
   .ghost-edit {
-    border-color: $border-meta-color;
+    border-color: $meta-color;
     color: $meta-color;
   }
 

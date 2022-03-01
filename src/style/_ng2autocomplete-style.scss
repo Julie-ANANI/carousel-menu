@@ -1,5 +1,5 @@
-@import "framework/src/variables";
-@import "framework/src/mixins";
+@import "~@umius/umi-style-framework/scss/variables";
+@import "~@umius/umi-style-framework/scss/mixins";
 
 
 /*
@@ -20,7 +20,7 @@
   margin-bottom: 0 !important;
   list-style: none;
   z-index: 2;
-  background-color: $bg-white-color;
+  background-color: $white-color;
   border: none !important;
   border-radius: $border-radius !important;
 }
@@ -30,7 +30,7 @@
   padding: $unit-2 !important;
   font-size: $font-size-sm;
   margin-top: $unit-1 !important;
-  color: $text-dark-color !important;
+  color: $dark-color !important;
 
   img {
     width: 22px;

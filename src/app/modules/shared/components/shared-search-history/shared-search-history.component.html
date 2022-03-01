@@ -4,7 +4,7 @@
   <section class="text-md text-medium p-bottom-30">
     <div *ngIf="canAccess(['launch', 'googleRequests'])" class="icon-container m-right-1 is-overlay is-sm">
       <span [attr.data-tooltip]="'Relaunch google request'" class="tooltip">
-        <i (click)="relaunchRequests()" class="c-hand fa fa-bolt text-primary-dark"></i>
+        <i (click)="relaunchRequests()" class="c-hand fa fa-bolt text-dark"></i>
       </span>
     </div>
     <span *ngIf="paused" class="text-error">Module is paused.</span>
@@ -27,7 +27,7 @@
   <!-- robot suggested -->
   <section *ngIf="suggestions.length" class="p-bottom-30">
     <h5>Robot suggested searches</h5>
-    <ul class="d-flex flex-wrap">
+    <ul class="d-flex flex-wrap-wrap">
       <li *ngFor="let suggestion of suggestions" class="text-sm m-right-20">{{ suggestion }}</li>
     </ul>
   </section>
@@ -48,16 +48,16 @@
 
 
 <!-- sidebar to request details -->
-<app-sidebar *ngIf="canAccess(['view'])" [(template)]="sidebarValue">
+<umius-sidebar-full *ngIf="canAccess(['view'])" [(template)]="sidebarValue">
   <app-sidebar-search-history
     [accessPath]="accessPath"
     [request]="selectedRequest">
   </app-sidebar-search-history>
-</app-sidebar>
+</umius-sidebar-full>
 <!-- /sidebar to advanced search -->
 
 <!-- MODAL : Ajout de pros à une campagne -->
-<app-utility-modal
+<umius-modal
   *ngIf="canAccess(['add', 'toCampaign'])"
   [(showModal)]="addToCampaignModal"
   [title]="'Add to a campaign'">
@@ -117,4 +117,4 @@
     </button>
   </footer>
 
-</app-utility-modal>
+</umius-modal>

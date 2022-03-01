@@ -7,7 +7,7 @@
         <button
           (click)="openModal($event, 'NOTIFY_TEAM')"
           [disabled]="isSendingNotification"
-          class="button is-community is-outlined"
+          class="button  is-outlined"
           id="btn-notify-team">
           Notify project team
         </button>
@@ -28,16 +28,16 @@
           <div class="form-group">
 
             <!-- label / actions -->
-            <div [ngStyle]="{'margin-bottom': isEditable ? '10px' : '11px'}" class="d-flex align-center flex-wrap">
+            <div [ngStyle]="{'margin-bottom': isEditable ? '10px' : '11px'}" class="d-flex align-center flex-wrap-wrap">
 
-              <div class="d-flex align-center flex-wrap title-wrapper m-no-bottom" style="min-width: 100%">
+              <div class="d-flex align-center flex-wrap-wrap title-wrapper m-no-bottom" style="min-width: 100%">
 
                 <label
                   [id]="section.type.toUpperCase()+'-'+i + 1+'href'"
                   [for]="section.type+i"
                   [ngClass]="innovation.innovationCards.length > 1 && isEditable ? 'm-right-10' : 'm-right-30'"
                   class="form-label">
-                  <span class="shape is-rounded bg-draft">{{ i + 1 }}</span>
+                  <span class="shape is-rounded bg-draft text-white">{{ i + 1 }}</span>
                   <ng-container *ngIf="!isEditable">{{ section.title }}</ng-container>
                   <ng-container *ngIf="isEditable">
                     <input
@@ -56,8 +56,7 @@
                   [attr.data-tooltip]="!(getPadPreviewMode(i.toString()))? 'Preview':'Edit'"
                   (click)="padPreviewModeOnChange(i.toString())"
                   class="button tooltip is-circled is-action is-outlined text-no-underline is-info
-                  m-right-15
-                  is-xxs text-sm op-text text-notify"
+                  m-right-15 is-xs text-sm op-text text-meta"
                   type="button">
                   <i class="fas fa-pencil-alt"
                      *ngIf="getPadPreviewMode(i.toString())"></i>
@@ -245,14 +244,14 @@
         <div class="section-content">
           <div class="form-group">
 
-            <div class="d-flex align-center flex-wrap title-wrapper" style="min-width: 100%">
+            <div class="d-flex align-center flex-wrap-wrap title-wrapper" style="min-width: 100%">
 
               <label
                 id="project-title-href"
                 [ngClass]="{'m-right-10': innovation.innovationCards.length > 1 && isEditable}"
                 class="form-label"
                 for="project-title">
-                <span class="shape is-rounded bg-draft">{{activeInnovCard.sections.length + 1}}</span>Title
+                <span class="shape is-rounded bg-draft text-white">{{activeInnovCard.sections.length + 1}}</span>Title
               </label>
 
               <!-- edit-preview button -->
@@ -260,7 +259,7 @@
                 *ngIf=" isEditable"
                 [attr.data-tooltip]="!(getPadPreviewMode('title'))? 'Preview':'Edit'"
                 (click)="padPreviewModeOnChange('title')"
-                class="button tooltip is-circled is-action is-outlined text-no-underline is-info is-xxs text-sm op-text text-notify m-left-20"
+                class="button tooltip is-circled is-action is-outlined text-no-underline is-info is-xs text-sm op-text text-meta m-left-20"
                 type="button">
                 <i class="fas fa-pencil-alt"
                    *ngIf="getPadPreviewMode('title')"></i>
@@ -390,14 +389,14 @@
         <div class="section-content">
           <div class="form-group">
 
-            <div class="d-flex align-center flex-wrap title-wrapper" style="min-width: 100%">
+            <div class="d-flex align-center flex-wrap-wrap title-wrapper" style="min-width: 100%">
 
               <label
                 id="project-summary-href"
                 [ngClass]="{'m-right-10': innovation.innovationCards.length > 1 && isEditable}"
                 class="form-label"
                 for="project-summary">
-                <span class="shape is-rounded bg-draft">{{activeInnovCard.sections.length + 2}}</span>Summary
+                <span class="shape is-rounded bg-draft text-white">{{activeInnovCard.sections.length + 2}}</span>Summary
               </label>
 
               <!-- edit-preview button -->
@@ -405,7 +404,7 @@
                 *ngIf="isEditable"
                 [attr.data-tooltip]="!(getPadPreviewMode('summary'))? 'Preview':'Edit'"
                 (click)="padPreviewModeOnChange('summary')"
-                class="button tooltip is-circled is-action is-outlined text-no-underline is-info is-xxs text-sm op-text text-notify m-left-15"
+                class="button tooltip is-circled is-action is-outlined text-no-underline is-info is-xs text-sm op-text text-meta m-left-15"
                 type="button">
                 <i class="fas fa-pencil-alt"
                    *ngIf="getPadPreviewMode('summary')"></i>
@@ -540,7 +539,7 @@
           <div class="form-group">
             <div class="title-wrapper">
               <label class="form-label" id="project-media-href">
-                <span class="shape is-rounded bg-draft">
+                <span class="shape is-rounded bg-draft text-white">
                   {{ activeInnovCard.sections && activeInnovCard.sections.length + 3 || 4 }}
                 </span>
                 Add medias
@@ -573,7 +572,7 @@
       <div
         *ngIf="activeInnovCard.media.length"
         style="margin-left: -10px; margin-right: -20px"
-        class="d-flex flex-wrap">
+        class="d-flex flex-wrap-wrap">
 
         <!-- principal media -->
         <div *ngIf="activeInnovCard.principalMedia" class="text-center media-wrapper">
@@ -689,7 +688,7 @@
 </div>
 
 <!-- modal to add New section | Delete section -->
-<app-utility-modal-empty *ngIf="isEditable" [(showModal)]="showModal">
+<umius-modal *ngIf="isEditable" [(showModal)]="showModal">
 
   <section class="modal-body">
 
@@ -775,7 +774,7 @@
       (click)="onNotifyTeam($event)"
       *ngSwitchCase="'NOTIFY_TEAM'"
       [disabled]="isSendingNotification"
-      class="button is-community"
+      class="button "
       id="btn-modal-confirm-notify-team"
       type="button">
       Confirm
@@ -787,7 +786,7 @@
       *ngSwitchCase="'NEW_SECTION'"
       (click)="createNewSection($event)"
       [disabled]="!newSection.title"
-      class="button is-community"
+      class="button "
       type="button">
       Confirm
     </button>
@@ -797,7 +796,7 @@
     <button
       *ngSwitchCase="'DELETE_SECTION'"
       (click)="deleteSection($event)"
-      class="button is-community"
+      class="button "
       type="button">
       Confirm
     </button>
@@ -805,9 +804,9 @@
 
   </footer>
 
-</app-utility-modal-empty>
+</umius-modal>
 <!-- /modal to add New section | Delete section -->
 
 <!-- modal to view image -->
-<app-utility-modal-media [(showModal)]="modalMedia" [mediaSrc]="selectedMedia"></app-utility-modal-media>
+<umius-modal [(showModal)]="modalMedia" [medias]="[selectedMedia]"></umius-modal>
 <!-- /modal to view image-->

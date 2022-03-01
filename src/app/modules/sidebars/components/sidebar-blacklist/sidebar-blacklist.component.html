@@ -5,7 +5,7 @@
     <div *ngIf="isEditable" class="text-right p-bottom-30">
       <button
         [disabled]="!toBeSaved"
-        class="button is-community is-sm"
+        class="button  is-sm"
         id="btn-save"
         (click)="onSubmit()">
         Save
@@ -118,7 +118,7 @@
       <!-- type === 'EDIT_COUNTRY' If a country is selected we show the settings -->
       <div class="form-group" *ngIf=" type === 'EDIT_COUNTRY' && (country !== null)">
         <label class="form-label" for="accept">Acceptance mails percentage
-          <span class="text-notify">{{ formData.get('acceptation').value }}</span>
+          <span class="text-meta">{{ formData.get('acceptation').value }}</span>
         </label>
         <input
           (change)="saveChanges()"

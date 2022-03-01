@@ -1,13 +1,12 @@
 import {Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
 import {first} from 'rxjs/operators';
-import {SidebarInterface} from '../../../../../sidebars/interfaces/sidebar-interface';
 import {TranslateNotificationsService} from '../../../../../../services/translate-notifications/translate-notifications.service';
 import {EmailService} from '../../../../../../services/email/email.service';
 import {isPlatformBrowser} from '@angular/common';
 import {HttpErrorResponse} from '@angular/common/http';
 import {ErrorFrontService} from '../../../../../../services/error/error-front.service';
 import {RolesFrontService} from '../../../../../../services/roles/roles-front.service';
-import { Table, Config } from '@umius/umi-common-component/models';
+import {Table, UmiusConfigInterface, UmiusSidebarInterface} from '@umius/umi-common-component';
 
 @Component({
   templateUrl: './admin-country-management.component.html',
@@ -17,7 +16,7 @@ export class AdminCountryManagementComponent implements OnInit {
 
   private _countriesTable: Table = <Table>{};
 
-  private _config: Config = {
+  private _config: UmiusConfigInterface = {
     fields: '',
     limit: '10',
     offset: '0',
@@ -40,7 +39,7 @@ export class AdminCountryManagementComponent implements OnInit {
 
   private _showDeleteModal = false;
 
-  private _sidebarValue: SidebarInterface = <SidebarInterface>{};
+  private _sidebarValue: UmiusSidebarInterface = <UmiusSidebarInterface>{};
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _emailService: EmailService,
@@ -54,7 +53,7 @@ export class AdminCountryManagementComponent implements OnInit {
     }
   }
 
-  private _getCountries(config: Config) {
+  private _getCountries(config: UmiusConfigInterface) {
     this._config = config || this._config;
 
     this._emailService.getCountries(this._config).pipe(first()).subscribe((result: any) => {
@@ -83,6 +82,7 @@ export class AdminCountryManagementComponent implements OnInit {
       _content: this._countryList.filteredCountries,
       _total: this._countryList._metadata.totalCount,
       _isTitle: true,
+      _paginationTemplate: 'TEMPLATE_1',
       _isPaginable: this._countryList._metadata.totalCount > 10,
       _isSearchable: !!this.canAccess(['searchBy']),
       _isDeletable: this.canAccess(['delete']),
@@ -189,11 +189,11 @@ export class AdminCountryManagementComponent implements OnInit {
     return this._countriesTable;
   }
 
-  get config(): Config {
+  get config(): UmiusConfigInterface {
     return this._config;
   }
 
-  set config(value: Config) {
+  set config(value: UmiusConfigInterface) {
     this._config = value;
     this._getCountries(this._config);
   }
@@ -218,11 +218,11 @@ export class AdminCountryManagementComponent implements OnInit {
     return this._fetchingError;
   }
 
-  get sidebarValue(): SidebarInterface {
+  get sidebarValue(): UmiusSidebarInterface {
     return this._sidebarValue;
   }
 
-  set sidebarValue(value: SidebarInterface) {
+  set sidebarValue(value: UmiusSidebarInterface) {
     this._sidebarValue = value;
   }
 

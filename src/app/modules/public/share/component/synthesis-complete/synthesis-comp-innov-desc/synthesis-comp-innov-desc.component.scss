@@ -1,7 +1,7 @@
-@import '../../../../../../../style/framework/src/variables';
+@import "~@umius/umi-style-framework/scss/variables";
 
 #synthesis-comp-innov-desc {
-  background-color: $bg-white-color;
+  background-color: $white-color;
   border-right: $border-radius;
   font-size: 15px;
 
@@ -11,7 +11,7 @@
 
   .title.is-secondary {
     font-size: 20px;
-    color: $text-secondary-color;
+    color: $primary-color;
     font-weight: normal;
   }
 

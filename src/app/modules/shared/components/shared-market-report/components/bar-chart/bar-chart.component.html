@@ -21,10 +21,10 @@
     <div *ngIf="barsData.length > 0" class="p-top-25 text-center">
       <button
         (click)="toggleAnswer($event)"
-        class="button is-community is-sm"
+        class="button is-sm"
         type="button">
         {{ (toggleAnswers ? 'MARKET_REPORT.BTN_ANSWERS_CLOSE' : 'MARKET_REPORT.BTN_ANSWERS_OPEN') | translateIn: reportingLang }}
-        <i class="icon" aria-hidden="true" [ngClass]="toggleAnswers ? 'icon-arrow-up' : 'icon-arrow-down'"></i>
+        <i class="icon icon-right" aria-hidden="true" [ngClass]="toggleAnswers ? 'icon-arrow-up' : 'icon-arrow-down'"></i>
       </button>
     </div>
     <!-- /button to toggle answers display -->
@@ -52,7 +52,7 @@
                     </i>
                   </span>
                 </div>
-                <span class="text-lg m-left-3 m-right-2 text-background">
+                <span class="text-lg m-left-3 m-right-2 text-draft">
                   {{ barDataLabel(barData) }}
                 </span>
               </div>
@@ -60,7 +60,7 @@
               <div
                 (click)="onShowAnswers(i, (barData.answers && barData.answers.length))"
                 [ngClass]="{'c-hand': barData.answers && barData.answers.length}"
-                class="d-flex text-notify text-medium align-center text-md">
+                class="d-flex text-meta text-medium align-center text-md">
                 <span class="m-right-2">{{ barData.count }} {{ 'MARKET_REPORT.ANSWERS' | translateIn: reportingLang }}</span>
                 <i [ngClass]="showAnswers[i] ? 'icon-arrow-up' : 'icon-arrow-down'" aria-hidden="true" class="icon"></i>
               </div>
@@ -83,7 +83,7 @@
             <!-- /row 2 -->
 
             <!-- row 3 -->
-            <div *ngIf="showAnswers[i]" class="d-flex card-wrapper p-top-25 justify-between">
+            <div *ngIf="showAnswers[i]" class="d-flex card-wrapper p-top-25 justify-space">
               <div *ngFor="let answer of barData.answers" class="card">
                 <div class="card-body">
                   <app-market-comment

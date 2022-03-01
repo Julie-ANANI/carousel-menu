@@ -70,6 +70,7 @@ export function app() {
   // cookies
   server.use(cookieparser());
 
+  // All regular routes use the Universal engine
   server.get('/discover/**', (req, res) => {
     res.render('index', {
       req,
@@ -91,23 +92,7 @@ export function app() {
 
   // All regular routes use the Universal engine
   server.get('*', (req, res) => {
-    res.sendFile(join(distFolder, '/index.html')); // TODO active the SSR mode
-    /*res.render('index', {
-      req,
-      res,
-      providers: [
-        {provide: APP_BASE_HREF, useValue: req.baseUrl},
-        {provide: REQUEST, useValue: req},
-        {provide: RESPONSE, useValue: res}
-      ]
-    }, (err, html) => {
-      if (err) {
-        // Here we catch the errors, and we send back a generic error message.
-        console.error(err);
-        res.send(`An error occured: ${err.message}`);
-      }
-      return res.send(html)
-    });*/
+    res.sendFile(join(distFolder, '/index.html'));
   });
 
   return server;

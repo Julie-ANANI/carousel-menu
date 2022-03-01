@@ -1,5 +1,5 @@
-@import "../../../../../../../style/framework/src/variables";
-@import "../../../../../../../style/framework/src/mixins";
+@import "~@umius/umi-style-framework/scss/variables";
+@import "~@umius/umi-style-framework/scss/mixins";
 
 #showcase-answers {
   height: 100%;
@@ -21,7 +21,7 @@
 
   h3 {
     font-family: $font-family-oswald;
-    color: $secondary-color;
+    color: $primary-color;
     font-size: 1.85rem;
 
     span {

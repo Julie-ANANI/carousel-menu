@@ -2,10 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { MissionService } from '../../../../../services/mission/mission.service';
 import { TranslateNotificationsService } from '../../../../../services/translate-notifications/translate-notifications.service';
-import { Table, Config } from '@umius/umi-common-component/models';
 import { Mission } from '../../../../../models/mission';
-import {SidebarInterface} from '../../../../sidebars/interfaces/sidebar-interface';
-
+import {Table, UmiusConfigInterface, UmiusSidebarInterface} from '@umius/umi-common-component';
 
 @Component({
   selector: 'app-admin-missions-list',
@@ -15,12 +13,12 @@ export class AdminMissionsListComponent implements OnInit {
 
   private _tableInfos: Table;
 
-  private _config: Config;
+  private _config: UmiusConfigInterface;
 
   public showModalAdd: boolean;
   public newMissionName: string;
 
-  public sidebarValue: SidebarInterface = {
+  public sidebarValue: UmiusSidebarInterface = {
     animate_state: 'inactive',
     title: 'SIDEBAR.TITLE.EDIT_MISSION'
   };
@@ -61,6 +59,7 @@ export class AdminMissionsListComponent implements OnInit {
         _isSelectable: true,
         _isSearchable: true,
         _isPaginable: true,
+        _paginationTemplate: 'TEMPLATE_1',
         _isTitle: true,
         _columns: [
           {_attrs: ['name'], _name: 'COMMON.MISSIONS', _type: 'TEXT', _isSearchable: true, _isSortable: true},
@@ -105,11 +104,11 @@ export class AdminMissionsListComponent implements OnInit {
     this.sidebarValue = {...this.sidebarValue, animate_state: 'active'};
   }
 
-  get config(): Config {
+  get config(): UmiusConfigInterface {
     return this._config;
   }
 
-  set config(value: Config) {
+  set config(value: UmiusConfigInterface) {
     this._config = value;
     this.loadMissions();
   }

@@ -4,7 +4,7 @@
 
       <!-- add project button -->
       <section *ngIf="innovations.length > 0 && !isError" class="text-right">
-        <button [id]="'btn-new'" routerLink="new" class="button is-lg is-primary">
+        <button [id]="'btn-new'" routerLink="new" class="button is-lg">
           {{ 'PROJECT_MODULE.PROJECTS_LIST.ADD_PROJECT' | translate }}
         </button>
       </section>
@@ -20,7 +20,7 @@
         <p class="text-sm">{{ 'PROJECT_MODULE.PROJECTS_LIST.NO_PROJECT.CONTENT' | translate }}</p>
 
         <div class="p-top-30">
-          <button [id]="'btn-new'" routerLink="new" class="button is-primary is-xl">
+          <button [id]="'btn-new'" routerLink="new" class="button is-lg">
             {{ 'PROJECT_MODULE.PROJECTS_LIST.ADD_PROJECT' | translate }}
           </button>
         </div>
@@ -44,13 +44,13 @@
 
               <div class="card-body">
 
-                <a [routerLink]="getRelevantLink(innovation)">
+                <a [routerLink]="getRelevantLink(innovation)" class="text-no-underline">
                   <span style="font-size: 22px">
                     {{ innovation.name || ('PROJECT_MODULE.PROJECTS_LIST.UNTITLED' | translate) }}
                   </span>
                 </a>
 
-                <p class="text-sm m-top-15 text-notify m-no-bottom text-medium">
+                <p class="text-sm m-top-15 text-meta m-no-bottom text-medium">
                   {{ 'COMMON.ADDED' | translate }} {{ innovation.created | date:dateFormat }}
                   •
                   {{ 'COMMON.UPDATED' | translate }} {{ innovation.updated | date:dateFormat }}
@@ -59,9 +59,10 @@
                   |
                   <span
                     (click)="onClickDelete($event, innovation._id)"
-                    [attr.data-tooltip]="'COMMON.BUTTON.DELETE' | translate"
-                    class="icons is-delete tooltip">
-                      <i class="fas fa-trash-alt"></i>
+                    class="icon-container is-overlay">
+                      <span [attr.data-tooltip]="'COMMON.BUTTON.DELETE' | translate" class="tooltip">
+                        <i class="fas text-alert fa-trash-alt"></i>
+                      </span>
                     </span>
                 </p>
 
@@ -75,11 +76,11 @@
 
       <!-- pagination if projects -->
       <section *ngIf="total > 10" class="flex-centered p-top-30">
-        <app-pagination-2
+        <umius-pagination-template1
           [(pagination)]="pagination"
           [totalCount]="total"
           class="w-full">
-        </app-pagination-2>
+        </umius-pagination-template1>
       </section>
       <!-- /pagination if projects -->
 
@@ -88,7 +89,7 @@
 </div>
 
 <!-- delete project confirmation modal -->
-<app-utility-modal [(showModal)]="deleteModal" [title]="'COMMON.MODAL.TITLE_DELETE'">
+<umius-modal [(showModal)]="deleteModal" [title]="'COMMON.MODAL.TITLE_DELETE'">
 
   <section class="modal-body">
     {{ 'PROJECT_MODULE.PROJECTS_LIST.DELETE_PROJECT_MODAL.CONTENT' | translate }}
@@ -103,5 +104,5 @@
     </button>
   </footer>
 
-</app-utility-modal>
+</umius-modal>
 <!-- /delete project confirmation modal -->

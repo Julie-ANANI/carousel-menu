@@ -1,9 +1,7 @@
 import {Component, EventEmitter, Input, OnDestroy, Output} from '@angular/core';
 import {Answer} from '../../../../../models/answer';
-import {Table, Config} from '@umius/umi-common-component/models';
 import {Innovation, InnovationFollowUpEmails, InnovationFollowUpEmailsCc} from '../../../../../models/innovation';
 import {MissionQuestion} from '../../../../../models/mission';
-import {SidebarInterface} from '../../../../sidebars/interfaces/sidebar-interface';
 import {EmailsObject} from '../../../../../models/email';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {TranslateNotificationsService} from '../../../../../services/translate-notifications/translate-notifications.service';
@@ -21,6 +19,7 @@ import {ScrapeHTMLTags} from '../../../../../pipe/pipes/ScrapeHTMLTags';
 import {TranslateService} from '@ngx-translate/core';
 import {UserFrontService} from '../../../../../services/user/user-front.service';
 import {LangEntryService} from '../../../../../services/lang-entry/lang-entry.service';
+import {Table, UmiusConfigInterface, UmiusSidebarInterface} from '@umius/umi-common-component';
 
 @Component({
   selector: 'app-shared-follow-up-client',
@@ -82,9 +81,9 @@ export class SharedFollowUpClientComponent implements OnDestroy {
 
   private _modalAnswer: Answer = null;
 
-  private _sidebarAnswer: SidebarInterface = <SidebarInterface>{};
+  private _sidebarAnswer: UmiusSidebarInterface = <UmiusSidebarInterface>{};
 
-  private _sidebarTemplate: SidebarInterface = {
+  private _sidebarTemplate: UmiusSidebarInterface = {
     animate_state: 'inactive',
     type: 'FOLLOW_UP'
   };
@@ -115,7 +114,7 @@ export class SharedFollowUpClientComponent implements OnDestroy {
 
   private _finalTableInfos: Table = <Table>{};
 
-  private _finalConfig: Config = {
+  private _finalConfig: UmiusConfigInterface = {
     fields: '',
     limit: '10',
     offset: '0',
@@ -133,7 +132,7 @@ export class SharedFollowUpClientComponent implements OnDestroy {
 
   private _tableInfos: Table = <Table>{};
 
-  private _config: Config = {
+  private _config: UmiusConfigInterface = {
     fields: '',
     limit: '10',
     offset: '0',
@@ -177,6 +176,7 @@ export class SharedFollowUpClientComponent implements OnDestroy {
       _clickIndex: 1,
       _isSelectable: this._startContactProcess,
       _isPaginable: true,
+      _paginationTemplate: 'TEMPLATE_1',
       _isLocal: true,
       _isNoMinHeight: answers.length < 11,
       _isRowDisabled: (answer: Answer) => SharedFollowUpClientComponent._isRowDisabled(answer),
@@ -397,14 +397,14 @@ export class SharedFollowUpClientComponent implements OnDestroy {
   private _highlightFields(lang: string, card: InnovCard, cc: string) {
     this._emailsObject[lang]['subject'] = this._emailsObject[lang]['subject']
       .replace(/\*\|TITLE\|\*/g,
-        `<span class="label is-mail width-120 is-sm m-h text-xs text-background m-no-right">${card.title}</span>`
+        `<span class="label is-mail width-120 is-sm m-h text-xs text-draft m-no-right">${card.title}</span>`
       );
 
     this._emailsObject[lang]['content'] = this._emailsObject[lang]['content']
       .replace(/\*\|COMPANY_NAME\|\*/g, `<span class="label is-mail width-120 is-sm text-xs
-       text-background m-h m-no-right">${new ScrapeHTMLTags().transform(this.companyName.trim())}</span>`)
-      .replace(/\*\|CLIENT_NAME\|\*/g, `<span class="label is-mail width-120 is-sm text-xs text-background m-h m-no-right">${cc}</span>`)
-      .replace(/\*\|TITLE\|\*/g, `<span class="label is-mail width-120 is-sm text-xs text-background m-h m-no-right">${card.title}</span>`);
+       text-draft m-h m-no-right">${new ScrapeHTMLTags().transform(this.companyName.trim())}</span>`)
+      .replace(/\*\|CLIENT_NAME\|\*/g, `<span class="label is-mail width-120 is-sm text-xs text-draft m-h m-no-right">${cc}</span>`)
+      .replace(/\*\|TITLE\|\*/g, `<span class="label is-mail width-120 is-sm text-xs text-draft m-h m-no-right">${card.title}</span>`);
   }
 
   private _replaceVariables(lang: string, card: InnovCard, cc: string) {
@@ -514,11 +514,11 @@ export class SharedFollowUpClientComponent implements OnDestroy {
     return this._finalAnswers;
   }
 
-  get config(): Config {
+  get config(): UmiusConfigInterface {
     return this._config;
   }
 
-  set config(value: Config) {
+  set config(value: UmiusConfigInterface) {
     this._config = value;
   }
 
@@ -538,15 +538,15 @@ export class SharedFollowUpClientComponent implements OnDestroy {
     this._companyName = value;
   }
 
-  set finalConfig(value: Config) {
+  set finalConfig(value: UmiusConfigInterface) {
     this._finalConfig = value;
   }
 
-  set sidebarAnswer(value: SidebarInterface) {
+  set sidebarAnswer(value: UmiusSidebarInterface) {
     this._sidebarAnswer = value;
   }
 
-  set sidebarTemplate(value: SidebarInterface) {
+  set sidebarTemplate(value: UmiusSidebarInterface) {
     this._sidebarTemplate = value;
   }
 
@@ -590,11 +590,11 @@ export class SharedFollowUpClientComponent implements OnDestroy {
     return this._modalAnswer;
   }
 
-  get sidebarAnswer(): SidebarInterface {
+  get sidebarAnswer(): UmiusSidebarInterface {
     return this._sidebarAnswer;
   }
 
-  get sidebarTemplate(): SidebarInterface {
+  get sidebarTemplate(): UmiusSidebarInterface {
     return this._sidebarTemplate;
   }
 
@@ -642,7 +642,7 @@ export class SharedFollowUpClientComponent implements OnDestroy {
     return this._finalTableInfos;
   }
 
-  get finalConfig(): Config {
+  get finalConfig(): UmiusConfigInterface {
     return this._finalConfig;
   }
 

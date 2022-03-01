@@ -4,7 +4,6 @@ import { ADMIN_USERS } from '../modules/user/admin/components/admin-users/i18n/f
 import {CONTINENTS} from '../modules/shared/components/shared-worldmap/i18n/fr';
 import { MY_ACCOUNT } from '../modules/user/client/components/account/i18n/fr';
 import { MARKET_REPORT } from '../modules/shared/components/shared-market-report/i18n/fr';
-import { DASHBOARD } from '../modules/user/admin/components/admin-dashboard/i18n/fr';
 import { PRESETS } from '../modules/user/admin/components/admin-libraries/admin-presets/i18n/fr';
 import { CAMPAIGNS } from '../modules/user/admin/components/admin-campaigns/i18n/fr';
 import { SEARCH } from '../modules/user/admin/components/admin-search/i18n/fr';
@@ -16,7 +15,6 @@ import { SIDEBAR_USER_ANSWER } from '../modules/sidebars/components/sidebar-user
 import { LOG_IN } from '../modules/common/login/i18n/fr';
 import { SIGN_UP } from '../modules/common/signup/i18n/fr';
 import { WELCOME } from '../modules/common/welcome/i18n/fr';
-import { PAGINATION } from '../modules/utility/paginations/i18n/fr';
 import { SHARE } from '../modules/public/share/i18n/fr';
 import { FOOTER } from '../modules/common/footer/i18n/fr';
 import { HEADER } from '../modules/common/header/i18n/fr';
@@ -62,9 +60,7 @@ export const fr = {
   'SIGN_UP': SIGN_UP,
   'WELCOME': WELCOME,
   'HEADER': HEADER,
-  'PAGINATION': PAGINATION,
   'PROJECT': PROJECT,
-  'DASHBOARD': DASHBOARD,
   'PRESETS': PRESETS,
   'CAMPAIGNS': CAMPAIGNS,
   'SEARCH': SEARCH,

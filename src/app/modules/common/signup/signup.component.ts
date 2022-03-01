@@ -5,7 +5,6 @@ import {ActivatedRoute, Params, Router} from '@angular/router';
 import {first} from 'rxjs/operators';
 import {TranslateNotificationsService} from '../../../services/translate-notifications/translate-notifications.service';
 import {AuthService} from '../../../services/auth/auth.service';
-import {SidebarInterface} from '../../sidebars/interfaces/sidebar-interface';
 import {FormGroup} from '@angular/forms';
 import {User} from '../../../models/user.model';
 import {UserService} from '../../../services/user/user.service';
@@ -15,6 +14,7 @@ import {MediaFrontService} from '../../../services/media/media-front.service';
 import {TranslateService} from '@ngx-translate/core';
 import { HttpErrorResponse } from "@angular/common/http";
 import { ErrorFrontService } from "../../../services/error/error-front.service";
+import {UmiusSidebarInterface} from '@umius/umi-common-component';
 
 @Component({
   selector: 'app-signup',
@@ -30,7 +30,7 @@ export class SignupComponent implements OnInit {
 
   private _linkedInState: string = Date.now().toString();
 
-  private _sidebarValue: SidebarInterface = <SidebarInterface>{};
+  private _sidebarValue: UmiusSidebarInterface = <UmiusSidebarInterface>{};
 
   private _backgroundImage = '';
 
@@ -152,11 +152,11 @@ export class SignupComponent implements OnInit {
     return this._isInvitation;
   }
 
-  get sidebarValue(): SidebarInterface {
+  get sidebarValue(): UmiusSidebarInterface {
     return this._sidebarValue;
   }
 
-  set sidebarValue(value: SidebarInterface) {
+  set sidebarValue(value: UmiusSidebarInterface) {
     this._sidebarValue = value;
   }
 
