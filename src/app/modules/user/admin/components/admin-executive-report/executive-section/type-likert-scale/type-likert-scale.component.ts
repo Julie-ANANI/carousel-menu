@@ -8,11 +8,7 @@ import colorsAndNames from '../../../../../../../../../assets/json/likert-scale_
 import {Subject} from 'rxjs';
 import {Question} from '../../../../../../../models/question';
 import {TranslateService} from '@ngx-translate/core';
-import {ResponseService} from '../../../../../../shared/components/shared-market-report/services/response.service';
 import {MissionQuestionService} from '../../../../../../../services/mission/mission-question.service';
-import {DataService} from '../../../../../../shared/components/shared-market-report/services/data.service';
-import {takeUntil} from 'rxjs/operators';
-import {Answer} from '../../../../../../../models/answer';
 import _ from 'lodash';
 import {MissionQuestion} from '../../../../../../../models/mission';
 
@@ -65,15 +61,9 @@ export class TypeLikertScaleComponent implements OnInit, OnDestroy {
     color: this._colorsAndNames[2].color
   };
 
-  private _stackedChart: {
-    likertScaleChart: object[],
-    averageGeneralEvaluation?: number
-  };
-
   private _scorePercentage: number = 0;
 
-  constructor ( private _dataService: DataService,
-                private _translateService: TranslateService ) {}
+  constructor (private _translateService: TranslateService ) {}
 
   ngOnInit(): void {
     this._label = this.getLikertText(this._content.name);

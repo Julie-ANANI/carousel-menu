@@ -12,12 +12,14 @@ import { MissionQuestion, MissionQuestionOption } from '../../../../../models/mi
 import { MissionQuestionService } from '../../../../../services/mission/mission-question.service';
 import {LikertScaleChart} from '../../../../../models/executive-report';
 import {UmiusMultilingInterface} from '@umius/umi-common-component';
+import colorsAndNames from '../../../../../../../assets/json/likert-scale_executive-report.json';
 
 @Injectable({ providedIn: 'root' })
 
 export class ResponseService {
 
   filteredAnswers = new Subject<Array<Answer>>();
+
 
   /***
    * Return the list of tags on every user answers for a given question
@@ -95,7 +97,7 @@ export class ResponseService {
    */
   public static getStarsAnswers(question: any, answers: Array<Answer>) {
 
-    let notesData: Array<{ label: UmiusMultilingInterface, sum: number, percentage: string, entry: [] }> = [];
+    let notesData: Array<{ label: Multiling, sum: number, percentage: string, entry: [] }> = [];
 
     if (question && answers) {
 
@@ -262,15 +264,15 @@ export class ResponseService {
     return barsData;
   }
 
-/**
- * This function calculated percentage for checkbox
- * @static
- * @param {Array} barsData
- * @param {Any} Question
- * */
+  /**
+   * This function calculated percentage for checkbox
+   * @static
+   * @param {Array} barsData
+   * @param {Any} Question
+   * */
   static getRelativePercentagebarsData(barsData: Array<BarData>, question: any): { relativePercentages: any, maxAnswersCount: number } {
 
-    const maxAnswersCount = question.controlType === 'checkbox'?
+    const maxAnswersCount = question.controlType === 'checkbox' ?
       barsData.reduce((acc, bd) => {
         return (acc < bd.count) ? bd.count : acc;
       }, 0) :
@@ -348,7 +350,8 @@ export class ResponseService {
       answers: Answer[];
       percentage: number;
       count: number;
-      identifier: string; }[] = [];
+      identifier: string;
+    }[] = [];
 
     const weights = this.computeWeights(question.options.length);
     const multipliers = this.computeMultiplier(question.options.length);
@@ -459,10 +462,10 @@ export class ResponseService {
 
     //This score is calculated according to the likert-scale methodology
     // It returns a score with only the importance weights of the selected options per occurrence
-    averageGeneralEvaluation = averageGeneralEvaluation/ scoreTotalOptionWithoutCharacterValue;
+    averageGeneralEvaluation = averageGeneralEvaluation / scoreTotalOptionWithoutCharacterValue;
     averageGeneralEvaluation = (averageGeneralEvaluation - scale) / (1 - scale);
 
-    averageGeneralEvaluation = parseFloat(((averageGeneralEvaluation < 0) ? 0 : averageGeneralEvaluation * 20) .toFixed(2));
+    averageGeneralEvaluation = parseFloat(((averageGeneralEvaluation < 0) ? 0 : averageGeneralEvaluation * 20).toFixed(2));
 
 
     if (isNaN(averageGeneralEvaluation)) {
@@ -588,13 +591,13 @@ export class ResponseService {
          * here we are checking that at least one of the options of the answer is true.
          * @type {Answer[]}
          */
-         answersToShow = answersToShow.filter(
-         (a) => Object.keys(a.answers[questionID]).some((k) => a.answers[questionID][k])
-         );
-         break;
+        answersToShow = answersToShow.filter(
+          (a) => Object.keys(a.answers[questionID]).some((k) => a.answers[questionID][k])
+        );
+        break;
 
-         case 'stars':
-         /***
+      case 'stars':
+        /***
          * here we are checking that at least one of the options of the answer is noted > 0.
          * @type {Answer[]}
          */
@@ -665,25 +668,29 @@ export class ResponseService {
     return abstract ? abstract.value : '';
   }
 
-  getLikertScaleGraphicScore(// 1- answers <> = [],
-    answer: Array<answer> = [],
-    //2- question : Question |MissionQuestion
-    question: Question | MissionQuestion = <Question | MissionQuestion>{},
-    //3- lang
-    lang: string
-    // 4- averageGeneralEvaluation
-    ) :  LikertScaleChart {
+  /**
+   * Ret
+   * @param averageGeneralEvaluation
+   */
+  static getLikertScaleGraphicScore (averageGeneralEvaluation : number): any {
 
-    // 1  récupère [] colorsAndNames  (JSON file)
+     //2 récupère averageGeneralEvaluation || 0
 
-    //2 récupère tous les answers of likertScaleChartData (
+    averageGeneralEvaluation = averageGeneralEvaluation || 0;
 
-    //3 récupère averageGeneralEvaluation || 0
+    //3 récupère   index option
+    const index = (averageGeneralEvaluation - averageGeneralEvaluation % 4) / 4; // will give 0,1,2,3,4
 
-    //4 récupère   index option
+    // 4 récupère const scorePercentage
+    const scorePercentage = (averageGeneralEvaluation * 98) / 20; // will give margin percentage for the pointer of marker
+    // 5 - return objet with scorePercentage, name, color
 
-    // 5 récupère const scorePercentage
-
-    // 6 - return objet with scorePercentage, name, color
+    return {
+      scoreName: colorsAndNames[index].name,
+      color: colorsAndNames[index].color,
+      scorePercentage: scorePercentage
+    };
 
   }
+
+}

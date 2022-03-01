@@ -9,7 +9,6 @@ import {Subject} from 'rxjs';
 import _ from 'lodash';
 import {MissionQuestionService} from '../../../../../../services/mission/mission-question.service';
 import {SectionLikertScale} from '../../../../../../models/executive-report';
-import colorsAndNames from '../../../../../../../../assets/json/likert-scale_executive-report.json';
 
 
 @Component({
@@ -30,14 +29,13 @@ export class LikertScaleChartComponent implements OnInit, OnDestroy {
 
   private _ngUnsubscribe: Subject<any> = new Subject<any>();
   private _label: any = 'VALIDATED'
-  private _colorsAndNames = colorsAndNames;
   private _scorePercentage: number = 0;
 
   //Retrieves unmodifiable names and colours in a JSON file
   private _content: SectionLikertScale = {
-    name: this._colorsAndNames[2].name,
+    name: '',
     legend: '',
-    color: this._colorsAndNames[2].color
+    color: ''
   };
 
   //Retrieves data for the progress bar
@@ -61,12 +59,11 @@ export class LikertScaleChartComponent implements OnInit, OnDestroy {
         const averageGeneralEvaluation = this._stackedChart.averageGeneralEvaluation || 0;
 
         // Choose which score label to display
-        const index = (averageGeneralEvaluation - averageGeneralEvaluation % 4) / 4; // will give 0,1,2,3,4
-        const scorePercentage = (averageGeneralEvaluation * 98) / 20; // will give margin percentage for the pointer of marker
+        this._scorePercentage = (averageGeneralEvaluation * 98) / 20; // will give margin percentage for the pointer of marker
 
-        this._scorePercentage = scorePercentage;
-        this._content.name = this._colorsAndNames[index].name;
-        this._content.color = this._colorsAndNames[index].color;
+        const graphics = ResponseService.getLikertScaleGraphicScore(averageGeneralEvaluation);
+        this._content.color = graphics.color;
+        this._content.name = graphics.scoreName;
       });
   }
 

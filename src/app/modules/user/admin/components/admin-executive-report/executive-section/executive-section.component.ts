@@ -303,15 +303,21 @@ export class ExecutiveSectionComponent {
    * @private
    */
   private _setLikertScaleData() {
+    /* Section Custom */
     if (this._section.questionIdentifier === `quesCustom_${this.sectionIndex}`) {
       this._section.title = 'Custom likert scale';
       this._section.content = this._executiveReportFrontService.likertScaleTagsSection([], this.reportLang);
+
     } else {
+      /* Section with specific question of quiz */
       const question: Question | MissionQuestion = this._getQuestion(this._section.questionIdentifier);
       const answers: Array<Answer> = this._responseService.answersToShow(this.answers, question);
       this._section.title = MissionQuestionService.label(question, 'title', this.reportLang);
-      let data = ResponseService.likertScaleChartData(answers, question, this.reportLang);
-      this._section.content = this._executiveReportFrontService.likertScaleSection(data, this.reportLang);
+      const data = ResponseService.likertScaleChartData(answers, question, this.reportLang);
+      // graphics is service for calculate score and return name, color and percentage
+      // This service is used when a questionnaire question is selected, it returns the current score value and its name and color
+      const graphics = ResponseService.getLikertScaleGraphicScore(data.averageGeneralEvaluation)
+      this._section.content = this._executiveReportFrontService.likertScaleSection(data, this.reportLang, graphics);
     }
   }
 
