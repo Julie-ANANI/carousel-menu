@@ -64,8 +64,11 @@
             [ngModel] = "getLikertText(label) | uppercase | translate"
             (ngModelChange)="changeValueLabel($event)"
             maxlength="20"
-            class="form-input"
-            type="text">
+            class="form-input">
+
+          <span [ngStyle]="{ 'color': nameColor }" class="text-limit-wrapper">
+          {{ 20 - section.content.name.length }}
+          </span>
         </label>
       </div>
       <!-- /name -->
@@ -82,10 +85,9 @@
             class="form-input"
             type="text">
 
-          <span [ngStyle]="{ 'color': legendColor }"
-                class="text-limit-wrapper">
+          <span [ngStyle]="{ 'color': legendColor }" class="text-limit-wrapper">
               {{ 13 - content.legend.length }}
-            </span>
+          </span>
         </label>
       </div>
       <!-- /legend -->
@@ -97,10 +99,10 @@
         <div class="popover-container">
           <div class="card-likert"
                (change)="emitChanges()">
-            <div (click)="chooseColor(0);" [ngStyle]="{ 'background-color': '#EA5858'}"  class="shape is-circled is-sm bg-alert"></div>
-            <div (click)="chooseColor(1);" [ngStyle]="{ 'background-color': '#F89424'}" class="shape is-circled is-sm"></div>
-            <div (click)="chooseColor(2);" [ngStyle]="{ 'background-color': '#BBC7D6'}" class="shape is-circled is-sm"></div>
-            <div (click)="chooseColor(3);" [ngStyle]="{ 'background-color': '#99E04B'}" class="shape is-circled is-sm"></div>
+            <div (click)="chooseColor(0);" [ngStyle]="{ 'background-color': '#EA5858'}"class="shape is-circled is-sm bg-alert"></div>
+            <div (click)="chooseColor(1);" [ngStyle]="{ 'background-color': '#F89424'}"class="shape is-circled is-sm"></div>
+            <div (click)="chooseColor(2);" [ngStyle]="{ 'background-color': '#BBC7D6'}"class="shape is-circled is-sm"></div>
+            <div (click)="chooseColor(3);" [ngStyle]="{ 'background-color': '#99E04B'}"class="shape is-circled is-sm"></div>
             <div (click)="chooseColor(4);" [ngStyle]="{ 'background-color': '#2ECC71'}"class="shape is-circled is-sm bg-success"></div>
           </div>
         </div>
@@ -123,10 +125,12 @@
     <div class="m-bottom-20 text-center">
 
       <p [ngStyle]="{ 'line-height': '24px', 'min-height': '24px'}" class="text-lg text-medium">
-        <ng-container *ngIf="content.legend">{{ content.legend }}</ng-container>
+        <ng-container *ngIf="content.legend">
+          {{ content.legend }}
+        </ng-container>
       </p>
 
-      <div  [ngStyle]="{ 'background-color': content.color, 'min-height': '30px'}" class="label is-rounded">
+      <div [ngStyle]="{ 'background-color': content.color, 'min-height': '30px'}" class="label is-rounded">
             {{ label| uppercase| translate }}
       </div>
 
