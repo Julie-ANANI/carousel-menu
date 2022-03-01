@@ -21,8 +21,6 @@ import {Professional} from '../../../../models/professional';
 import {UserFrontService} from '../../../../services/user/user-front.service';
 import {picto, Picto} from '../../../../models/static-data/picto';
 import {MissionQuestionService} from '../../../../services/mission/mission-question.service';
-import {MissionFrontService} from '../../../../services/mission/mission-front.service';
-import {Mission} from '../../../../models/mission';
 
 type Template = 'MARKET_REPORT' | 'FOLLOW_UP';
 
@@ -56,8 +54,7 @@ export class SidebarFilterAnswersComponent implements OnChanges, OnDestroy {
     if (value && value._id) {
       this._innovation = value;
       if (this._innovation.marketReport) {
-        this._isKeyLearning = !MissionFrontService.hasMissionTemplate(<Mission>this._innovation?.mission) &&
-          !!this._innovation?.marketReport?.keyLearning?.conclusion;
+        this._isKeyLearning = !!this._innovation?.marketReport?.keyLearning?.conclusion;
         this._isFinalConclusion = this._innovation.marketReport.finalConclusion
           && this._innovation.marketReport.finalConclusion.conclusion
           && this._innovation.marketReport.finalConclusion.conclusion !== '';

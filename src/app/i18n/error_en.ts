@@ -82,6 +82,7 @@ export const ERROR = {
     UPDATE_MISSION_TYPE_FAILED: 'Sorry, we are having trouble to update mission type.',
     UPDATE_MISSION_TEAM_FAILED: 'Sorry, we are having trouble to update mission team.',
     UPDATE_MISSION_TEMPLATE_FAILED: 'Sorry, we are having trouble to update mission template',
+    UPDATE_MISSION_RESULT_FAILED: 'Sorry, we are having trouble to update mission result',
     SAVE_INNOVATION_FAILED: 'Sorry, we are having trouble to save the innovation.',
     SAVE_MEDIA_FAILED: 'Sorry, we are having trouble to save the media.',
     DELETE_MEDIA_FAILED: 'Sorry, we are having trouble to delete the media.',

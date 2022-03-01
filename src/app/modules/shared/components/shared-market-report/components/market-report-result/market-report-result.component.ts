@@ -68,7 +68,11 @@ export class MarketReportResultComponent implements OnInit {
    */
   public keyupHandlerFunction(event: {content: string}) {
     this._mission.result.abstract = event['content'];
-    this._innovationFrontService.setNotifyChanges({key: 'marketReport', state: true});
+    this._notifyChanges();
+  }
+
+  private _notifyChanges() {
+    this._innovationFrontService.setNotifyChanges({key: 'marketReportResult', state: true});
   }
 
   public onClickSeeMore(event: Event) {
