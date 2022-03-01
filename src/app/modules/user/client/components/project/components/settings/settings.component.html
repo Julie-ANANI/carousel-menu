@@ -349,10 +349,10 @@
 
 
 <!-- modals -->
-<app-utility-modal-empty
+<umius-modal
+  closeBtnClass="text-white"
   *ngIf="activeModalSection.name && showModal"
   [(showModal)]="showModal"
-  [isCloseBtnDark]="false"
   [maxWidth]="activeModalSection.name === 'PRINCIPAL_OBJECTIVE' ? hasMissionTemplate ? '95%' : '963px' :
   activeModalSection.name === 'SECONDARY_OBJECTIVE' ? '920px' : '640px'">
 
@@ -571,12 +571,12 @@
   </footer>
   <!-- /footer -->
 
-</app-utility-modal-empty>
+</umius-modal>
 <!-- /modals -->
 
 
 <!-- delete modal -->
-<app-utility-modal-empty *ngIf="showDeleteModal" [(showModal)]="showDeleteModal">
+<umius-modal *ngIf="showDeleteModal" [(showModal)]="showDeleteModal">
 
   <!-- body -->
   <section class="modal-body">
@@ -636,5 +636,5 @@
   </footer>
   <!-- /footer -->
 
-</app-utility-modal-empty>
+</umius-modal>
 <!-- /delete modal -->
