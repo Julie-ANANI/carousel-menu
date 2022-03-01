@@ -1,7 +1,9 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Inject, Input, OnInit} from '@angular/core';
 import {Innovation} from '../../../../../../models/innovation';
 import {Mission} from '../../../../../../models/mission';
 import {InnovationFrontService} from '../../../../../../services/innovation/innovation-front.service';
+import {PageScrollService} from 'ngx-page-scroll-core';
+import {DOCUMENT} from '@angular/common';
 
 interface Toggle {
   abstract: boolean
@@ -43,20 +45,38 @@ export class MarketReportResultComponent implements OnInit {
 
   private _mission: Mission = <Mission>{};
 
-  constructor(private _innovationFrontService: InnovationFrontService) { }
+  constructor(@Inject(DOCUMENT) private _document: Document,
+              private _innovationFrontService: InnovationFrontService,
+              private _pageScrollService: PageScrollService,) { }
 
   ngOnInit(): void {
   }
 
+  /**
+   * toggle edit btn
+   * @param event
+   * @param btn
+   */
   public toggleBtn(event: Event, btn: 'abstract') {
     event.preventDefault();
     this._toggleEdit[btn] = !this._toggleEdit[btn];
   }
 
+  /**
+   * save the abstract
+   * @param event
+   */
   public keyupHandlerFunction(event: {content: string}) {
     this._mission.result.abstract = event['content'];
     this._innovationFrontService.setNotifyChanges({key: 'marketReport', state: true});
-    console.log(this._mission);
+  }
+
+  public onClickSeeMore(event: Event) {
+    event.preventDefault();
+    this._pageScrollService.scroll({
+      document: this._document,
+      scrollTarget: '#origin-responses'
+    });
   }
 
 }

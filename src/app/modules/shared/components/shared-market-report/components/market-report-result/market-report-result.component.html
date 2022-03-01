@@ -35,13 +35,35 @@
     <!-- view -->
     <ng-container [ngSwitch]="mission?.template?.methodology">
 
-      <!-- case DETECTING_MARKET -->
-      <ng-container *ngSwitchCase="'DETECTING_MARKET'">
-        <div class="content-box__view">
+      <!-- if has essentials -->
+      <ng-container *ngIf="(mission | mission:'essentialsObjectives')?.length">
 
-        </div>
+        <!-- case DETECTING_MARKET -->
+        <ng-container *ngSwitchCase="'DETECTING_MARKET'">
+          <div class="content-box__view">
+
+          </div>
+        </ng-container>
+        <!-- /case DETECTING_MARKET -->
+
+        <!-- case VALIDATING_MARKET -->
+        <ng-container *ngSwitchCase="'VALIDATING_MARKET'">
+          <div class="content-box__view">
+
+          </div>
+        </ng-container>
+        <!-- /case VALIDATING_MARKET -->
+
+        <!-- case VALIDATING_INTEREST -->
+        <ng-container *ngSwitchCase="'VALIDATING_INTEREST'">
+          <div class="content-box__view">
+
+          </div>
+        </ng-container>
+        <!-- /case VALIDATING_INTEREST -->
+
       </ng-container>
-      <!-- /case DETECTING_MARKET -->
+      <!-- if has essentials -->
 
       <!-- case SOURCING_SOLUTIONS -->
       <ng-container *ngSwitchCase="'SOURCING_SOLUTIONS'">
@@ -59,14 +81,6 @@
       </ng-container>
       <!-- /case IDENTIFYING_RECEPTIVE -->
 
-      <!-- case VALIDATING_INTEREST -->
-      <ng-container *ngSwitchCase="'VALIDATING_INTEREST'">
-        <div class="content-box__view">
-
-        </div>
-      </ng-container>
-      <!-- /case VALIDATING_INTEREST -->
-
     </ng-container>
     <!-- /view -->
 
@@ -74,6 +88,7 @@
     <ng-container *ngIf="mission?.template?.methodology !== 'OPTIMIZING_VALUE'">
       <div class="m-top-20 m-bottom-20 flex-centered">
         <button
+          (click)="onClickSeeMore($event)"
           [id]="'btn-see-more'"
           class="button is-link text-no-underline">
           <span>{{ 'COMMON.BUTTON.SEE_MORE' | translate }}</span>
@@ -112,9 +127,9 @@
           (textChange)="keyupHandlerFunction($event)"
           elementId="result"
           type="synthesis"
-          [text]="mission?.result?.abstract || ''"
           [innovationId]="innovation._id"
-          [isEditable]="true">
+          [isEditable]="true"
+          [text]="mission?.result?.abstract || ''">
         </app-shared-editors>
         <p class="text-right text-meta text-sm text-medium p-top-15">
           {{ 1000 - mission?.result?.abstract.length }} characters remaining
