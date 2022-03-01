@@ -5,8 +5,6 @@ import { TranslateModule } from '@ngx-translate/core';
 
 import {SidebarSearchComponent} from './sidebar-search.component';
 
-import { SidebarModule } from '../../templates/sidebar/sidebar.module';
-import { CountryFlagModule } from '@umius/umi-common-component/country-flag';
 import { SharedTargetingWorldModule } from "../../../shared/components/shared-targeting-world/shared-targeting-world.module";
 
 @NgModule({
@@ -15,8 +13,6 @@ import { SharedTargetingWorldModule } from "../../../shared/components/shared-ta
     FormsModule,
     ReactiveFormsModule,
     TranslateModule.forChild(),
-    SidebarModule,
-    CountryFlagModule,
     SharedTargetingWorldModule
   ],
   declarations: [

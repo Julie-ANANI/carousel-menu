@@ -1,15 +1,15 @@
-@import "../../../../../../style/framework/src/variables";
+@import "~@umius/umi-style-framework/scss/variables";
 
 .shared-preset-section {
 
   .header-wrapper {
-    background-color: $bg-draft-color;
+    background-color: $draft-color;
     min-height: 20px;
     border-radius: 6px;
     padding: 15px 25px 5px 20px;
     font-size: 14px;
     font-weight: 600;
-    color: $text-white-color;
+    color: $white-color;
 
     .form-select {
       min-width: 115px;
@@ -29,7 +29,7 @@
         cursor: pointer;
 
         &:hover {
-          color: $text-primary-color;
+          color: $primary-color;
         }
 
       }
@@ -42,10 +42,10 @@
     border-color: transparent;
 
     .icon-container {
-      color: $text-white-color;
+      color: $white-color;
 
       &::before {
-        background-color: $bg-primary-color;
+        background-color: $primary-color;
       }
 
     }

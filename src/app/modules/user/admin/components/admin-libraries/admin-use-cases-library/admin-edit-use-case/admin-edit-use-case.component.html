@@ -15,7 +15,7 @@
         <section [hidden]="!canAccess(['edit'])" class="flex-end m-bottom-20">
 
           <!--<div class="d-flex align-center">
-            <h2 class="title is-6 text-background m-bottom-15 m-right-10">Use case:</h2>
+            <h2 class="title is-6 text-draft m-bottom-15 m-right-10">Use case:</h2>
             <label
               [attr.data-tooltip]="'COMMON.CHANGE_WITHOUT_SAVE' | translate"
               [ngClass]="{'tooltip is-multiline': toBeSaved}">
@@ -85,7 +85,7 @@
   </div>
 </div>
 
-<app-utility-modal-empty
+<umius-modal
   *ngIf="canAccess(['section', 'edit']) || canAccess(['question', 'edit'])"
   [(showModal)]="showModal"
   [maxWidth]="'720px'">
@@ -133,11 +133,11 @@
     <button
       (click)="onClickValidate($event)"
       [disabled]="!validate.tool || !validate.template"
-      class="button is-community"
+      class="button "
       type="button">
       Validate
     </button>
 
   </footer>
 
-</app-utility-modal-empty>
+</umius-modal>

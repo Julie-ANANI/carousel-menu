@@ -5,7 +5,7 @@
     <div class="d-flex align-center">
       <img [src]="getFlagSrc(tooltipInfo?.flag)" alt=" " width="23" height="16">
       <h3 class="text-normal">{{ tooltipInfo?.name }}</h3>
-      <p class="p-left-30 text-background text-medium">{{ tooltipInfo?.value }}</p>
+      <p class="p-left-30 text-draft text-medium">{{ tooltipInfo?.value }}</p>
     </div>
   </div>
   <!-- /country info -->
@@ -577,15 +577,15 @@
   <!-- legends -->
   <div *ngIf="showLegend && secondThreshold" class="text-center">
     <div class="swm-legend-wrapper">
-      <span class="shape is-circle is-xs circle-1"></span>
+      <span class="shape is-circled is-xs circle-1"></span>
       <span> < {{ firstThreshold }} {{ 'TABLE.TITLE.ANSWERS' | translate }}</span>
     </div>
     <div class="swm-legend-wrapper">
-      <span class="shape is-circle is-xs circle-2"></span>
+      <span class="shape is-circled is-xs circle-2"></span>
       <span> {{ firstThreshold }} - {{ secondThreshold }} {{ 'TABLE.TITLE.ANSWERS' | translate }}</span>
     </div>
     <div class="swm-legend-wrapper">
-      <span class="shape is-circle is-xs bg-success"></span>
+      <span class="shape is-circled is-xs bg-success"></span>
       <span> > {{ secondThreshold }} {{ 'TABLE.TITLE.ANSWERS' | translate }}</span>
     </div>
   </div>
@@ -594,19 +594,19 @@
   <!-- quartiles -->
   <div *ngIf="quartiles && isShowableQuartiles" class="text-center">
     <div class="swm-legend-wrapper">
-      <span class="shape is-circle is-xs circle-3"></span>
+      <span class="shape is-circled is-xs circle-3"></span>
       <span> < {{ quartiles[0] }} </span>
     </div>
     <div class="swm-legend-wrapper">
-      <span class="shape is-circle is-xs circle-1"></span>
+      <span class="shape is-circled is-xs circle-1"></span>
       <span> {{ quartiles[0] }} - {{ quartiles[1] }} </span>
     </div>
     <div class="swm-legend-wrapper">
-      <span class="shape is-circle is-xs circle-2"></span>
+      <span class="shape is-circled is-xs circle-2"></span>
       <span> {{ quartiles[1] }} - {{ quartiles[2] }} </span>
     </div>
     <div class="swm-legend-wrapper">
-      <span class="shape is-circle is-xs bg-success"></span>
+      <span class="shape is-circled is-xs bg-success"></span>
       <span> > {{ quartiles[2] }} </span>
     </div>
   </div>

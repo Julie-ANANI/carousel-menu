@@ -1,6 +1,6 @@
 <div class="container fluid grid-2xl p-bottom-20" id="project-settings">
   <div class="column col-sm-12 col-11 col-mx-auto">
-    <div class="d-flex flex-wrap settings-wrapper m-left-auto m-right-auto">
+    <div class="d-flex flex-wrap-wrap settings-wrapper m-left-auto m-right-auto">
 
       <!-- menu wrapper -->
       <aside *ngIf="isVisibleMenu" class="menu-wrapper">
@@ -38,7 +38,7 @@
               <ng-container *ngIf="editButton(section.name)">
                 <div (click)="openModal($event, section)" class="icon-container absolute is-overlay btn-edit">
                   <span [attr.data-tooltip]="'COMMON.BUTTON.EDIT' | translate" class="tooltip">
-                    <i class="fas fa-pen text-community"></i>
+                    <i class="fas fa-pen text-primary"></i>
                   </span>
                 </div>
               </ng-container>
@@ -124,7 +124,7 @@
                   <ul class="roadmap-wrapper">
                     <li *ngIf="!!mission.milestoneDates.length" class="active">
                     <span style="padding-top: 2px"  class="d-flex flex-d-column align-center">
-                      <span class="shape is-circle is-sm"></span>
+                      <span class="shape is-circled is-sm"></span>
                       <span class="divider-vert" [ngClass]="{ 'active': isNextMilestoneReached(0) }"></span>
                     </span>
                       {{ innovation.created | date:dateFormat }} - {{ 'COMMON.LABEL.PREPARATION' | translate }}
@@ -132,7 +132,7 @@
                     <ng-container *ngFor="let milestone of mission.milestoneDates; let i = index;">
                       <li *ngIf="!!milestone.dueDate" [ngClass]="{ 'active': isMilestoneReached(milestone.dueDate) }">
                       <span style="padding-top: 2px"  class="d-flex flex-d-column align-center">
-                        <span class="shape is-circle is-sm"></span>
+                        <span class="shape is-circled is-sm"></span>
                         <span
                           *ngIf="i < mission.milestoneDates.length - 1"
                           [ngClass]="{ 'active': isNextMilestoneReached(i+1) }"
@@ -168,7 +168,7 @@
 
               <!-- OWNER -->
               <div *ngSwitchCase="'OWNER'">
-                <div class="flex-wrap text-md flex-start">
+                <div class="flex-wrap-wrap text-md flex-start">
                   <span class="text-bold">{{ fullName(innovation.owner) }}</span>
                   <ng-container *ngIf="!!(innovation.owner.company && innovation.owner.company.name)">
                     <span>&nbsp;•&nbsp;</span>
@@ -229,7 +229,7 @@
               <div *ngSwitchCase="'OPERATOR'">
 
                 <ng-container *ngIf="!!fullName(innovation.operator)">
-                  <div class="flex-wrap text-md flex-start">
+                  <div class="flex-wrap-wrap text-md flex-start">
                     <span class="text-bold">{{ fullName(innovation.operator) }}</span>
                     <ng-container *ngIf="!!innovation.operator.phone">
                       <span>&nbsp;•&nbsp;</span>
@@ -253,7 +253,7 @@
               <div *ngSwitchCase="'COMMERCIAL'">
 
                 <ng-container *ngIf="!!fullName(clientProject.commercial)">
-                  <div class="flex-wrap text-md flex-start">
+                  <div class="flex-wrap-wrap text-md flex-start">
                     <span class="text-bold">{{ fullName(clientProject.commercial) }}</span>
                     <ng-container *ngIf="!!clientProject.commercial.phone">
                       <span>&nbsp;•&nbsp;</span>
@@ -349,10 +349,10 @@
 
 
 <!-- modals -->
-<app-utility-modal-empty
+<umius-modal
   *ngIf="activeModalSection.name && showModal"
   [(showModal)]="showModal"
-  [isCloseBtnDark]="false"
+  [closeBtnClass]="'is-dark'"
   [maxWidth]="activeModalSection.name === 'PRINCIPAL_OBJECTIVE' ? hasMissionTemplate ? '95%' : '963px' :
   activeModalSection.name === 'SECONDARY_OBJECTIVE' ? '920px' : '640px'">
 
@@ -551,7 +551,7 @@
     <button
       (click)="closeModal()"
       [id]="'settings-modal-btn-cancel'"
-      class="button is-white is-outlined is-sm">
+      class="button is-white is-outlined">
       {{ 'COMMON.BUTTON.CANCEL' | translate }}
     </button>
 
@@ -559,7 +559,7 @@
       (click)="onClickSaveModal($event)"
       [disabled]="isDisabled || !objectiveConsent"
       [id]="'settings-modal-btn-save'"
-      class="button is-community is-sm">
+      class="button">
       <ng-container
         *ngIf="activeModalSection.name === 'PRINCIPAL_OBJECTIVE' || activeModalSection.name === 'SECONDARY_OBJECTIVE';
         else defBtnSave">
@@ -571,12 +571,12 @@
   </footer>
   <!-- /footer -->
 
-</app-utility-modal-empty>
+</umius-modal>
 <!-- /modals -->
 
 
 <!-- delete modal -->
-<app-utility-modal-empty *ngIf="showDeleteModal" [(showModal)]="showDeleteModal">
+<umius-modal *ngIf="showDeleteModal" [(showModal)]="showDeleteModal">
 
   <!-- body -->
   <section class="modal-body">
@@ -628,7 +628,7 @@
     <button
       [disabled]="isDeleting"
       (click)="confirmDeleteModal($event)"
-      class="button is-community"
+      class="button"
       id="btn-confirm">
       {{ 'COMMON.BUTTON.CONFIRM' | translate }}
     </button>
@@ -636,5 +636,5 @@
   </footer>
   <!-- /footer -->
 
-</app-utility-modal-empty>
+</umius-modal>
 <!-- /delete modal -->

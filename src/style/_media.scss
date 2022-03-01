@@ -1,0 +1,78 @@
+@import "~@umius/umi-style-framework/scss/variables";
+@import "~@umius/umi-style-framework/scss/mixins";
+
+.img-overlay {
+  display: flex;
+
+  &:hover {
+    background: $bg-overlay-dark-color;
+
+    img {
+      transition: all 0.3s ease;
+      opacity: 0.7;
+    }
+
+  }
+
+}
+
+.img-hover-button {
+  position: relative;
+  display: flex;
+
+  .img-button {
+    @include text-overflow(ellipsis);
+    position: absolute;
+    text-align: center;
+    transform: translateY(-50%);
+    top: 50%;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    padding: $unit-2 $unit-3;
+    width: 100%;
+    max-width: 160px;
+    color: $white-color;
+    font-size: $font-size-xs;
+    border: $border-width solid $white-color;
+    border-radius: 25px;
+    visibility: hidden;
+    text-transform: uppercase;
+    font-weight: $font-weight-medium;
+    letter-spacing: 1px;
+    transition: background-color 0.25s ease,
+                color 0.25s ease;
+
+    &:hover {
+      background-color: $white-color;
+      color: $dark-color;
+    }
+
+  }
+
+  &:hover {
+    background: $bg-overlay-dark-color;
+
+    img {
+      transition: opacity 0.2s ease;
+      opacity: 0.5;
+    }
+
+    .img-button {
+      opacity: 1;
+      visibility: visible;
+      cursor: pointer;
+    }
+
+  }
+
+}
+
+.img-editor {
+  width: auto;
+  height: auto;
+  max-width: 350px;
+  max-height: 350px;
+  margin: 5px 5%;
+}

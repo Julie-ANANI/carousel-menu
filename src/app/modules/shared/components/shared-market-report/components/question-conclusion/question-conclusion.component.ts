@@ -7,12 +7,12 @@ import {Tag} from '../../../../../../models/tag';
 import {environment} from '../../../../../../../environments/environment';
 import {PieChart} from '../../../../../../models/chart/pie-chart';
 import {InnovationFrontService} from '../../../../../../services/innovation/innovation-front.service';
-import {Multiling} from '../../../../../../models/multiling';
 import {Picto, picto} from '../../../../../../models/static-data/picto';
 import {htmlTagsRegex} from '../../../../../../utils/regex';
 import {Mission, MissionQuestion, MissionTemplate} from '../../../../../../models/mission';
 import {MissionFrontService} from '../../../../../../services/mission/mission-front.service';
 import {MissionQuestionService} from '../../../../../../services/mission/mission-question.service';
+import {UmiusMultilingInterface} from '@umius/umi-common-component';
 
 @Component({
   selector: 'app-question-conclusion',
@@ -123,7 +123,7 @@ export class QuestionConclusionComponent implements OnInit {
     }
   }
 
-  positiveAnswerLabelChanged(positivesAnswersLabel: Multiling) {
+  positiveAnswerLabelChanged(positivesAnswersLabel: UmiusMultilingInterface) {
     if (this.hasMissionTemplate) {
       (<MissionQuestion>this._question).entry.forEach((_entry) => {
         this._missionQuestionService.changeQuestionEntry(

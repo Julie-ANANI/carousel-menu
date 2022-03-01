@@ -1,10 +1,8 @@
-@import "../../../../style/framework/src/variables";
+@import "~@umius/umi-style-framework/scss/variables";
 
 #header {
-  background-color: #2E6188;
 
   .navbar {
-    border-bottom: 0;
 
     .navbar-menu {
 
@@ -62,8 +60,19 @@
         .navbar-item {
 
           &.lang-wrapper {
-            background-color: $bg-page-color;
+            background-color: $page-light-color;
             padding-left: 40px;
+          }
+
+          &.user-info-wrapper {
+            background-color: $bg-menu-item-color;
+
+            .info {
+              flex-direction: column;
+              word-break: break-all;
+              max-width: 160px;
+            }
+
           }
 
         }

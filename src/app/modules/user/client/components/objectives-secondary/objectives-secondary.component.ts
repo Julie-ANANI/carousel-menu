@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Multiling } from '../../../../../models/multiling';
 import { TranslateService } from '@ngx-translate/core';
+import {UmiusMultilingInterface} from '@umius/umi-common-component';
 
 /***
  * this module is to select the secondary objectives for the client project.
@@ -51,15 +51,15 @@ export class ObjectivesSecondaryComponent {
     this._objectiveComment = value;
   }
 
-  @Input() set objectives(value: Array<Multiling>) {
+  @Input() set objectives(value: Array<UmiusMultilingInterface>) {
     this._objectives = value;
   }
 
-  @Output() objectivesChange: EventEmitter<Array<Multiling>> = new EventEmitter<Array<Multiling>>();
+  @Output() objectivesChange: EventEmitter<Array<UmiusMultilingInterface>> = new EventEmitter<Array<UmiusMultilingInterface>>();
 
   @Output() objectiveCommentChange: EventEmitter<string> = new EventEmitter<string>();
 
-  private _objectives: Array<Multiling> = [];
+  private _objectives: Array<UmiusMultilingInterface> = [];
 
   private _objectiveComment = '';
 
@@ -143,7 +143,7 @@ export class ObjectivesSecondaryComponent {
     this.objectiveCommentChange.emit(this._objectiveComment);
   }
 
-  get objectives(): Array<Multiling> {
+  get objectives(): Array<UmiusMultilingInterface> {
     return this._objectives;
   }
 

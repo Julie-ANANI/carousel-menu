@@ -1,9 +1,9 @@
 <header class="container fluid grid-2xl" id="header-unauth">
   <div class="column col-sm-12 col-11 col-mx-auto">
-    <nav class="navbar header-height">
+    <nav class="navbar header__height">
 
       <!-- brand -->
-      <div class="navbar-brand header-height">
+      <div class="navbar-brand header__height">
         <a routerLink="/" class="gtm-menu-logo navbar-item m-no">
           <img
             [alt]="company"
@@ -16,7 +16,7 @@
       <!-- /brand -->
 
       <!-- hamburger icon for mobile -->
-      <div class="navbar-burger header-height" (click)="toggleMenuState($event)">
+      <div class="navbar-burger header__height" (click)="toggleMenuState($event)">
         <i class="icon icon-menu"></i>
         <span class="m-left-2 text-medium">Menu</span>
       </div>
@@ -90,22 +90,22 @@
 
 
 <!-- sign up sidebar -->
-<app-sidebar [(template)]="sidebarValue">
+<umius-sidebar-full [(template)]="sidebarValue">
   <app-sidebar-signup-form
     (finalOutput)="createUser($event)"
     [isCreating]="isCreatingAccount"
     [sidebarState]="sidebarValue.animate_state">
   </app-sidebar-signup-form>
-</app-sidebar>
+</umius-sidebar-full>
 <!-- /sign up sidebar -->
 
 
 <!-- login modal -->
-<app-utility-modal-empty [(showModal)]="modalSignIn" [maxWidth]="'420px'">
+<umius-modal maxWidth="420px" [(showModal)]="modalSignIn">
   <section class="modal-body">
 
     <!-- heading -->
-    <h2 style="font-size: 28px" class="title text-background text-center m-bottom-30">
+    <h2 style="font-size: 28px" class="title text-draft text-center m-bottom-30">
       {{ 'COMMON.MODAL.LOGIN' | translate }}
     </h2>
     <!-- /heading -->
@@ -170,5 +170,5 @@
     <!-- /form -->
 
   </section>
-</app-utility-modal-empty>
+</umius-modal>
 <!-- /login modal -->

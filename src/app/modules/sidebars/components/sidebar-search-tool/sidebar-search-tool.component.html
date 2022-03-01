@@ -7,17 +7,17 @@
 
       <div>
 
-        <label class="btn btn-sm ghost-primary">
+        <label class="button is-outlined is-sm">
           {{ 'COMMON.BUTTON.IMPORT' | translate }}
           <input #fileupload type="file" [hidden]="true" (change)="uploadRequest(fileupload.files[0], $event)" />
         </label>
 
-        <button class="btn btn-sm btn-primary" (click)="downloadRequest()" [disabled]="!searchFieldValue" [innerText]="'COMMON.BUTTON.DOWNLOAD'" translate></button>
+        <button class="button is-outlined is-sm" (click)="downloadRequest()" [disabled]="!searchFieldValue" [innerText]="'COMMON.BUTTON.DOWNLOAD'" translate></button>
 
       </div>
 
       <div>
-        <button class="btn btn-sm btn-primary" (click)="saveRequest()" [innerText]="'COMMON.BUTTON.SAVE'" translate></button>
+        <button class="button is-outlined is-sm" (click)="saveRequest()" [innerText]="'COMMON.BUTTON.SAVE'" translate></button>
       </div>
 
     </div>

@@ -27,7 +27,7 @@
       <div class="column col-sm-12 col-11 col-mx-auto">
 
         <!-- header section -->
-        <section class="header-wrapper d-flex flex-wrap">
+        <section class="header-wrapper d-flex flex-wrap-wrap">
 
           <!-- lang -->
           <div class="content-wrapper p-right-10 p-bottom-30">
@@ -103,7 +103,7 @@
                 </button>
 
                 <div *ngIf="isVideoDisabled" class="popover-container is-sm">
-                  <div class="p-top-20 text-center p-bottom-20 p-left-25 p-right-25">
+                  <div class="p-top-20 text-center p-bottom-20 p-left-25 p-right-25 card">
                     Either report is incomplete or it is not able to download at the client side.
                   </div>
                 </div>
@@ -207,7 +207,7 @@
 
 
 <!-- modal to select/change language -->
-<app-utility-modal
+<umius-modal
   *ngIf="canAccess(['changeLang']) || canAccess(['create'])"
   [(showModal)]="isModalLang"
   [title]="modalTitle | translate">
@@ -215,12 +215,12 @@
 
     <section [ngClass]="executiveReport.lang ? 'p-top-30 p-bottom-10' : 'p-top-40'" class="modal-body">
 
-      <div *ngIf="executiveReport.lang" class="m-bottom-15 text-background">
+      <div *ngIf="executiveReport.lang" class="m-bottom-15 text-draft">
         {{ 'ADMIN_STORYBOARD.MODAL.CURRENT_LANG' | translate }}
-        <span *ngIf="executiveReport.lang === 'en'" class="text-medium text-primary-dark">
+        <span *ngIf="executiveReport.lang === 'en'" class="text-medium text-dark">
         {{ 'COMMON.LANG.EN' | translate }}
       </span>
-        <span *ngIf="executiveReport.lang === 'fr'" class="text-medium text-primary-dark">
+        <span *ngIf="executiveReport.lang === 'fr'" class="text-medium text-dark">
         {{ 'COMMON.LANG.FR' | translate }}
       </span>
       </div>
@@ -266,12 +266,12 @@
     </footer>
 
   </ng-container>
-</app-utility-modal>
+</umius-modal>
 <!-- /modal to select/change language -->
 
 
 <!-- modal to select type of video -->
-<app-utility-modal-empty *ngIf="canAccess(['generateVideo'])" [(showModal)]="isModalVideo">
+<umius-modal *ngIf="canAccess(['generateVideo'])" [(showModal)]="isModalVideo">
   <ng-container *ngIf="isModalVideo && !isLoading">
 
     <!-- body -->
@@ -321,7 +321,7 @@
       <button
         [disabled]="isGeneratingVideo"
         (click)="generateVideo($event)"
-        class="button is-community"
+        class="button "
         id="btn-continue">
         <ng-container *ngIf="!isGeneratingVideo; else genVideo">
           {{ 'COMMON.BUTTON.GENERATE' | translate }}
@@ -335,5 +335,5 @@
     <!-- /footer -->
 
   </ng-container>
-</app-utility-modal-empty>
+</umius-modal>
 <!-- /modal to select type of video -->

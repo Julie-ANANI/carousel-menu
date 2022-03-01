@@ -7,8 +7,8 @@
 
   <!-- uploading -->
   <div *ngIf="isUploading">
-    <p class="text-sm text-medium text-background">{{ 'COMMON.MEDIA.UPLOADING' | translate }}</p>
-    <div class="loading is-lg"></div>
+    <p class="text-sm text-medium text-draft">{{ 'COMMON.MEDIA.UPLOADING' | translate }}</p>
+    <div class="loading is-primary is-lg"></div>
   </div>
   <!-- /uploading -->
 
@@ -19,7 +19,7 @@
 
     <ng-container *ngIf="!isWrongFormat && !isWrongSize">
       <i style="font-size: 70px" class="fas text-primary fa-cloud-upload-alt"></i>
-      <p class="text-13 text-background m-top-1 m-no-bottom">{{ 'COMMON.PLACEHOLDER.MEDIA_SLIDE' | translate }}</p>
+      <p class="text-13 text-draft m-top-1 m-no-bottom">{{ 'COMMON.PLACEHOLDER.MEDIA_SLIDE' | translate }}</p>
     </ng-container>
 
     <ng-container *ngIf="isWrongFormat || isWrongSize">
@@ -30,7 +30,7 @@
     </ng-container>
 
     <!-- or || Try -->
-    <p class="text-sm text-primary-dark m-top-10 m-bottom-15">
+    <p class="text-sm text-dark m-top-10 m-bottom-15">
       {{!isWrongFormat && !isWrongSize ? ('COMMON.OR' | translate | lowercase) : ('COMMON.LABEL.TRY_AGAIN' | translate)}}
     </p>
     <!-- /or || try -->
@@ -46,7 +46,7 @@
     <!-- /upload button -->
 
     <!-- info text -->
-    <p class="text-xs text-primary-dark m-top-2">
+    <p class="text-xs text-dark m-top-2">
       {{ 'COMMON.MEDIA.FORMAT' | translate }}, {{ 'COMMON.MEDIA.SIZE' | translate }}
     </p>
     <!-- /info text -->

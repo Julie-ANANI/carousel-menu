@@ -20,7 +20,7 @@
         <section *ngIf="!fetchingError" class="d-content-wrapper">
 
           <!-- filters -->
-          <div class="section-light-pad">
+          <div class="p-bottom-25 p-top-25">
             <app-filters
               [tags]="sectorTags"
               (appliedFilters)="onSelectFilters($event)"
@@ -33,15 +33,15 @@
           <section *ngIf="!filterActivated && recommendedInnovationId">
             <div class="p-top-25">
 
-              <h2 class="d-title-secondary text-background" [ngClass]="{ 'loading-content': !stopLoading }">
+              <h2 class="d-title-secondary text-draft" [ngClass]="{ 'loading-content': !stopLoading }">
                 <span>{{ 'DISCOVER.RECOMMENDATION' | translate }}</span>
               </h2>
 
               <div class="p-top-10">
                 <app-cards
                   [allInnovations]="recommendedInnovations"
-                  [stopLoading]="stopLoading">
-                  (offsetLimit)="onChangePage($event)"
+                  [stopLoading]="stopLoading"
+                  (offsetLimit)="onChangePage($event)">
                 </app-cards>
               </div>
 
@@ -53,7 +53,7 @@
           <section *ngIf="!filterActivated">
             <div class="p-top-25">
 
-              <h2 class="d-title-secondary text-background" [ngClass]="{ 'loading-content': !stopLoading }">
+              <h2 class="d-title-secondary text-draft" [ngClass]="{ 'loading-content': !stopLoading }">
                 <span>{{ 'DISCOVER.LATEST' | translate }}</span>
               </h2>
 
@@ -68,16 +68,16 @@
           </section>
           <!-- /section latest innovations -->
 
-          <!-- section whith all innovations -->
+          <!-- section with all innovations -->
           <section>
             <div class="p-top-25">
 
               <!-- filter applied -->
               <div
-                class="text-background text-normal d-flex m-bottom-10 flex-wrap text-md c-filter-wrapper"
+                class="text-draft text-normal d-flex m-bottom-10 flex-wrap-wrap text-md c-filter-wrapper"
                 [ngClass]="{ 'loading-content': !stopLoading }">
 
-                <div  style="margin-bottom: 0.25rem" *ngIf="filterActivated">
+                <div style="margin-bottom: 0.25rem" *ngIf="filterActivated">
                   <span>
                     {{ totalFilteredInnovations }} {{ 'DISCOVER.RESULT' | translate }} {{ 'DISCOVER.FOR' | translate }}
                     <ng-container *ngIf="searchKey">
@@ -87,7 +87,7 @@
                   </span>
                 </div>
 
-                <h2 class="d-title-secondary text-background" [ngClass]="{ 'loading-content': !stopLoading }" *ngIf="!filterActivated">
+                <h2 class="d-title-secondary text-draft" [ngClass]="{ 'loading-content': !stopLoading }" *ngIf="!filterActivated">
                   <span>{{ 'DISCOVER.TRENDING' | translate }}</span>
                 </h2>
 
@@ -102,7 +102,7 @@
                     <ng-template #noFilterEntryLabel>
                       {{ (filter | langEntry:'label':userLang:true) | titlecase }}
                     </ng-template>
-                    <i class="fas fa-times-circle text-notify"></i>
+                    <i class="fas fa-times-circle text-meta"></i>
                   </span>
                 </div>
 
@@ -126,7 +126,7 @@
                   class="img-responsive"
                   alt=" ">
                 <h3 class="text-normal m-top-50" [innerText]="'DISCOVER.NO_RESULT_HEADING'" translate></h3>
-                <span class="text-notify text-medium" [innerText]="'DISCOVER.NO_RESULT_TEXT'" translate></span>
+                <span class="text-meta text-medium" [innerText]="'DISCOVER.NO_RESULT_TEXT'" translate></span>
               </div>
 
             </div>
@@ -156,7 +156,7 @@
             <a
               [href]="getCommunityUrl()"
               [innerText]="'DISCOVER.BUTTON_COMMUNITY'"
-              class="btn btn-primary rounded"
+              class="button btn__community is-rounded"
               rel="noopener"
               target="_blank"
               translate>

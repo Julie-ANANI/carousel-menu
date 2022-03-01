@@ -46,13 +46,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
 
   private _showBanner = '';
 
-  private _tabs: Array<Tab> = [
-    { route: 'settings', iconClass: 'fas fa-cog', name: 'SETTINGS_TAB', tracking: 'gtm-tabs-settings' },
-    { route: 'setup', name: 'SETUP_TAB', tracking: 'gtm-tabs-description' },
-    { route: 'exploration', name: 'EXPLORATION_TAB', tracking: 'gtm-tabs-exploration' },
-    { route: 'synthesis', name: 'SYNTHESIS_TAB', tracking: 'gtm-tabs-synthesis' },
-    { route: 'documents', iconClass: 'fas fa-file-alt', name: 'DOCUMENTS_TAB', tracking: 'gtm-tabs-documents' }
-  ];
+  private _tabs: Array<Tab> = [];
 
   private _currentPage = '';
 
@@ -86,6 +80,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this._initPageTitle();
+    this._setTabs();
 
     this._activatedRoute.params.subscribe((params) => {
       if (params['projectId']) {
@@ -102,6 +97,16 @@ export class ProjectComponent implements OnInit, OnDestroy {
       this._initValues();
       this._socket();
     });
+  }
+
+  private _setTabs() {
+    this._tabs = [
+      { route: 'settings', iconClass: 'fas fa-cog', name: 'SETTINGS_TAB', tracking: 'gtm-tabs-settings' },
+      { route: 'setup', name: 'SETUP_TAB', tracking: 'gtm-tabs-description' },
+      { route: 'exploration', name: 'EXPLORATION_TAB', tracking: 'gtm-tabs-exploration' },
+      { route: 'synthesis', name: 'SYNTHESIS_TAB', tracking: 'gtm-tabs-synthesis' },
+      { route: 'documents', iconClass: 'fas fa-file-alt', name: 'DOCUMENTS_TAB', tracking: 'gtm-tabs-documents' }
+    ];
   }
 
   /***
@@ -142,6 +147,8 @@ export class ProjectComponent implements OnInit, OnDestroy {
           );
         }
       }
+    } else {
+      this._setTabs();
     }
   }
 

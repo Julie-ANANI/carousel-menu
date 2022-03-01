@@ -1,4 +1,4 @@
-@import "../../../../../../../style/framework/src/variables";
+@import "~@umius/umi-style-framework/scss/variables";
 
 #new-project-last-step {
 
@@ -36,11 +36,19 @@
 
     }
 
+    input:checked + .form-icon {
+      background: $success-color;
+    }
+
+    input:checked + .form-icon::before {
+      border-color: $white-color;
+    }
+
   }
 
   // Form element: Input hint && validation styles
   .form-input-error {
-    color: $text-alert-color;
+    color: $alert-color;
     font-size: $font-size-sm;
     padding: $unit-1 0 $layout-spacing;
     margin: 0;

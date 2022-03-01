@@ -5,13 +5,13 @@
     (editRow)="onClickEdit($event)"
     (removeRows)="deleteProsModal($event)"
     (performAction)="performActions($event)"
-    (selectRowAction)="selectPro($event)">
+    (selectRows)="selectPro($event)">
   </umius-table>
 </section>
 
 
 <!-- section sidebar -->
-<app-sidebar [(template)]="sidebarValue">
+<umius-sidebar-full [(template)]="sidebarValue">
 
   <ng-container *ngIf="isProfessionalForm">
     <app-user-form
@@ -32,11 +32,11 @@
     </app-sidebar-tags>
   </ng-container>
 
-</app-sidebar>
+</umius-sidebar-full>
 
 
 <!-- modal to ask admin to sure about deleting the professional(s) -->
-<app-utility-modal [(showModal)]="modalDelete" [title]="'COMMON.MODAL.TITLE_DELETE'">
+<umius-modal [(showModal)]="modalDelete" [title]="'COMMON.MODAL.TITLE_DELETE'">
 
   <section class="modal-body">
     {{ 'COMMON.PROFESSIONAL.DELETE_BOARD.CONTENT' | translate }}
@@ -47,5 +47,5 @@
     <button class="button is-primary" (click)="onClickSubmit($event)">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
   </footer>
 
-</app-utility-modal>
+</umius-modal>
 <!-- /modal to ask admin to sure about deleting the professional(s) -->

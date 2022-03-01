@@ -1,12 +1,12 @@
 import {Injectable} from '@angular/core';
 import {FilterService} from './filters.service';
 import {WorldmapService} from '../../../../../services/worldmap/worldmap.service';
-import {Country} from '../../../../../models/country';
+import {UmiusCountryInterface} from '@umius/umi-common-component';
 
 @Injectable({providedIn: 'root'})
 export class WorldmapFiltersService {
 
-  private _continentCountries: { [continent: string]: Country[]; };
+  private _continentCountries: { [continent: string]: UmiusCountryInterface[]; };
   private _selectedContinents: { [c: string]: boolean };
   private _selectedCountries: { [code: string]: boolean };
 
@@ -81,18 +81,18 @@ export class WorldmapFiltersService {
     });
   }
 
-  markCountriesOfContinent(countries: Array<Country>, continent: string, value: boolean) {
-    countries.forEach((country: Country) => {
+  markCountriesOfContinent(countries: Array<UmiusCountryInterface>, continent: string, value: boolean) {
+    countries.forEach((country: UmiusCountryInterface) => {
       this._selectedCountries[country.code] = value;
     });
   }
 
-  markCountriesOfAllContinents(continentsCountries: { [p: string]: Country[] }, continentChecked: { [p: string]: boolean }) {
+  markCountriesOfAllContinents(continentsCountries: { [p: string]: UmiusCountryInterface[] }, continentChecked: { [p: string]: boolean }) {
     WorldmapService.continentsList.forEach(continent =>
       this.markCountriesOfContinent(continentsCountries[continent], continent, continentChecked[continent]));
   }
 
-  initSelectedCountries(continents: { [p: string]: Country[] }) {
+  initSelectedCountries(continents: { [p: string]: UmiusCountryInterface[] }) {
     const countries = [].concat(...Object.values(continents));
     this._selectedCountries = countries.reduce((acc, country) => {
       acc[country.code] = true;
@@ -101,7 +101,7 @@ export class WorldmapFiltersService {
   }
 
   // Limit countries with only those in answers
-  getOnlyCountriesInAnswers(answersCountries: string[]): { [p: string]: Country[] } {
+  getOnlyCountriesInAnswers(answersCountries: string[]): { [p: string]: UmiusCountryInterface[] } {
     const continentCountries = {};
     Object.keys(this._continentCountries).forEach((key: string) => {
       continentCountries[key] = this._continentCountries[key].filter(c => answersCountries.includes(c.code));
@@ -109,11 +109,11 @@ export class WorldmapFiltersService {
     return continentCountries;
   }
 
-  areAllCountriesOfContinentChecked(continents: { [p: string]: Country[] }, continent: string): boolean {
+  areAllCountriesOfContinentChecked(continents: { [p: string]: UmiusCountryInterface[] }, continent: string): boolean {
     return continents[continent].every((c) => this._selectedCountries[c.code]);
   }
 
-  areAllCountriesChecked(continents: { [p: string]: Country[] }): boolean {
+  areAllCountriesChecked(continents: { [p: string]: UmiusCountryInterface[] }): boolean {
     const countries = [].concat(...Object.values(continents));
     return countries.every((c) => this._selectedCountries[c.code]);
   }

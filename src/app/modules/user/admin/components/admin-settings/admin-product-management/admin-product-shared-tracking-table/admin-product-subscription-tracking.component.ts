@@ -2,10 +2,10 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@
 import { RolesFrontService } from '../../../../../../../services/roles/roles-front.service';
 import { TrackingService } from '../../../../../../../services/tracking/tracking.service';
 import { first } from 'rxjs/operators';
-import { Table } from '@umius/umi-common-component/models';
 import { AdminProductSharedTrackingTableComponent } from './admin-product-shared-tracking-table.component';
 import { TranslateNotificationsService } from '../../../../../../../services/translate-notifications/translate-notifications.service';
 import { ErrorFrontService } from '../../../../../../../services/error/error-front.service';
+import {Table} from '@umius/umi-common-component';
 
 @Component({
   selector: 'app-product-subscription-tracking',

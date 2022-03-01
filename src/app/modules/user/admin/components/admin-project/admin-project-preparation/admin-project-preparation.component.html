@@ -67,7 +67,7 @@
               [disabled]="isAddingCard"
               class="button is-link is-sm m-right-10"
               id="btn-add-card">
-              <i class="fas fa-plus-circle"></i>
+              <i class="fas fa-plus-circle m-right-2"></i>
               {{ activeCard.lang === 'fr' ? 'Add english' : 'Add french' }}
             </button>
             <!-- /add lang -->
@@ -75,7 +75,7 @@
             <!-- lang change -->
             <div *ngIf="showLangDrop && activeTab === 'description'" class="dropdown is-right m-right-10">
               <a class="button is-sm is-link dropdown-toggle" tabindex="0">
-                {{ activeCard.lang === 'fr' ? 'French' : 'English' }}<i class="fas fa-caret-down"></i>
+                {{ activeCard.lang === 'fr' ? 'French' : 'English' }}<i class="fas fa-caret-down m-right-2"></i>
               </a>
               <ul class="menu">
                 <li
@@ -101,13 +101,9 @@
                 *ngIf="project.quizId"
                 [href]="quizPreviewLink"
                 [id]="'admin-btn-preview-quiz'"
-                class="button is-link is-sm m-right-10"
+                class="button is-link is-sm m-right-10 d-flex"
                 target="_blank">
-                <img
-                  src="https://res.cloudinary.com/umi/image/upload/app/default-images/pictos/picto-eye.svg"
-                  alt=""
-                  width="17"
-                  class="icon-left">
+                <i class="fa fa-eye m-right-2"></i>
                 Preview quiz
               </a>
             </ng-container>
@@ -142,7 +138,7 @@
               id="btn-save"
               type="button">
               {{ isSaving ? 'saving the project...' : 'Save' }}
-              <span *ngIf="!isSaving && (toBeSaved || toBeSavedComment)" class="shape is-circle">
+              <span *ngIf="!isSaving && (toBeSaved || toBeSavedComment)" class="shape is-circled">
                 <i class="fas fa-save"></i>
               </span>
             </button>
@@ -171,7 +167,7 @@
 </div>
 
 <!-- modal -->
-<app-utility-modal-empty [(showModal)]="showModal">
+<umius-modal [(showModal)]="showModal">
 
   <section class="modal-body">
 
@@ -206,7 +202,7 @@
       (click)="onAskValidation($event)"
       *ngSwitchCase="'ASK_VALIDATION'"
       [disabled]="isSendingNotification"
-      class="button is-community"
+      class="button"
       id="btn-modal-confirm-ask-final-validation"
       type="button">
       Confirm
@@ -215,11 +211,11 @@
 
   </footer>
 
-</app-utility-modal-empty>
+</umius-modal>
 <!-- /modal -->
 
 <!-- modal to innovation card add / delete lang -->
-<app-utility-modal-empty *ngIf="canEditDescription" [(showModal)]="showCardModal">
+<umius-modal *ngIf="canEditDescription" [(showModal)]="showCardModal">
 
   <!-- body -->
   <section class="modal-body p-bottom-40">
@@ -256,7 +252,7 @@
         (click)="addInnovationCard($event)"
         [disabled]="isAddingCard"
         [id]="'btn-confirm-card'"
-        class="button is-community">
+        class="button ">
         {{ isAddingCard ? 'adding the language...' : 'Confirm' }}
       </button>
 
@@ -278,7 +274,7 @@
         (click)="deleteInnovationCard($event)"
         [disabled]="isDeletingCard"
         [id]="'btn-confirm-card'"
-        class="button is-community">
+        class="button ">
         {{ isDeletingCard ? 'deleting the language...' : 'Confirm' }}
       </button>
 
@@ -288,5 +284,5 @@
   </footer>
   <!-- /footer -->
 
-</app-utility-modal-empty>
+</umius-modal>
 <!-- modal to innovation card add / delete lang -->

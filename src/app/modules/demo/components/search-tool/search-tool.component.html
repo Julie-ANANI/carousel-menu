@@ -3,22 +3,22 @@
 
 
     <!-- section search bar -->
-    <section class="section-search section-pad rm-pad-bottom">
+    <section class="section-search p-top-50">
       <app-utility-search-input-3 [searchFieldValue]="searchFieldValue" (searchFieldOutput)="onClickSearch($event)"></app-utility-search-input-3>
     </section>
     <!-- /section search bar -->
 
 
     <!-- history icon -->
-    <div class="shape is-circle bg-white history-wrapper c-hand absolute tooltip is-left" [attr.data-tooltip]="'COMMON.TOOLTIP.HISTORY' | translate" (click)="onClickHistoryIcon($event)">
-      <i class="fas fa-history text-notify"></i>
+    <div class="shape is-circled bg-white history-wrapper c-hand absolute tooltip is-left" [attr.data-tooltip]="'COMMON.TOOLTIP.HISTORY' | translate" (click)="onClickHistoryIcon($event)">
+      <i class="fas fa-history text-meta"></i>
     </div>
     <!-- /history icon -->
 
 
     <!-- section showing video when no search -->
     <ng-container *ngIf="!searchStarted && !searchStopped">
-      <section class="section-pad rm-pad-bottom" [ngClass]="{ 'animate-disappear': searchStarted }">
+      <section class="p-top-50" [ngClass]="{ 'animate-disappear': searchStarted }">
         <video class="video-responsive" autoplay loop>
           <source src="https://res.cloudinary.com/umi/video/upload/v1554473766/app/videos/search-tool/demo.mp4" type="video/mp4">
         </video>
@@ -34,13 +34,13 @@
       <div class="text-center professional-count-wrapper">
         <ng-container *ngIf="professionalCount">
 
-          <h2 class="title-secondary text-background">
+          <h2 class="title-secondary text-draft">
             <ng-container *ngIf="professionalCount < 100">< </ng-container>
             <ng-container *ngIf="professionalCount === 20000">+ </ng-container>
             {{ professionalCount }}
           </h2>
 
-          <h1 class="title-primary text-notify" [innerText]="'SEARCH_DEMO.PROFESSIONALS'" translate></h1>
+          <h1 class="title-primary text-meta" [innerText]="'SEARCH_DEMO.PROFESSIONALS'" translate></h1>
 
         </ng-container>
       </div>
@@ -56,7 +56,7 @@
 
       <!-- when searching for professionals done -->
       <ng-container *ngIf="searchStopped">
-        <div class="flex-centered section-light-pad" [ngClass]=" { 'animate-appear': searchStopped } ">
+        <div class="flex-centered p-bottom-25 p-top-25" [ngClass]=" { 'animate-appear': searchStopped } ">
 
           <!-- display map -->
           <div class="map-wrapper">
@@ -81,7 +81,7 @@
         <div class="section-pad rm-pad-top" [ngClass]=" { 'animate-appear': searchStopped } ">
           <div class="stat">
             <div class="stat-container">
-              <h3 class="stat-heading text-notify">RESULT BY CONTINENT</h3>
+              <h3 class="stat-heading text-meta">RESULT BY CONTINENT</h3>
 
               <div class="stat-body">
                 <h4 class="stat-sub-heading">Africa</h4>
@@ -125,19 +125,19 @@
 
 
         <!-- if filter not activated -->
-        <h3 *ngIf="!selectedCountry" class="title-pro text-background" [innerText]="'SEARCH_DEMO.SOME_PROS'" translate></h3>
+        <h3 *ngIf="!selectedCountry" class="title-pro text-draft" [innerText]="'SEARCH_DEMO.SOME_PROS'" translate></h3>
 
 
         <!-- if filter activated -->
         <ng-container *ngIf="selectedCountry">
           <div class="flex-start" style="margin-bottom: 1rem">
 
-            <div class="text-background text-md">
+            <div class="text-draft text-md">
               <span>{{ slicedPros.length }} {{ 'SEARCH_DEMO.RESULTS_FOR' | translate }}</span>
             </div>
 
             <div class="filter-wrapper c-hand text-md" (click)="resetCountry()">
-              <span class="text-background text-medium">{{ names[selectedCountry] }} <i class="fas text-notify fa-times-circle"></i></span>
+              <span class="text-draft text-medium">{{ names[selectedCountry] }} <i class="fas text-meta fa-times-circle"></i></span>
             </div>
 
           </div>
@@ -147,10 +147,10 @@
 
         <!-- if no professionals found on filter activated -->
         <ng-container *ngIf="slicedPros.length === 0">
-          <div class="section-pad flex-centered no-result-wrapper">
+          <div class="p-bottom-50 p-top-50 flex-centered no-result-wrapper">
             <img src="https://res.cloudinary.com/umi/image/upload/v1541075335/app/default-images/icons/no_result.png" class="img-responsive" alt=" ">
             <h3 class="text-normal" [innerText]="'SEARCH_DEMO.NO_RESULT_HEADING'" translate></h3>
-            <span class="text-notify text-medium" [innerText]="'SEARCH_DEMO.NO_RESULT_TEXT'" translate></span>
+            <span class="text-meta text-medium" [innerText]="'SEARCH_DEMO.NO_RESULT_TEXT'" translate></span>
           </div>
         </ng-container>
         <!-- /if no professionals found on filter activated -->
@@ -200,13 +200,13 @@
                   <ng-container *ngIf="professional && professional.email">
                     <p class="relative tooltip" data-tooltip="E-mail">
                       <span class="text-email">{{ professional.email }}</span>
-                      <span class="absolute email-icon text-background"><i class="fas fa-envelope"></i></span>
+                      <span class="absolute email-icon text-draft"><i class="fas fa-envelope"></i></span>
                     </p>
                   </ng-container>
 
                   <!-- job -->
                   <ng-container *ngIf="professional && (professional.job || professional.jobTitle)">
-                    <p class="text-job text-background">
+                    <p class="text-job text-draft">
                       {{ professional.job || professional.jobTitle }}
                     </p>
                   </ng-container>
@@ -259,8 +259,9 @@
 
       <!-- button to show more pros -->
       <ng-container *ngIf="searchStopped && slicedPros.length !== searchResult.pros.length && !selectedCountry">
-        <div class="text-center section-pad rm-pad-top">
-          <button class="btn btn-primary rounded shadow " (click)="onClickSeeMore()" [innerText]="'COMMON.BUTTON.SEE_MORE'" translate></button>
+        <div class="text-center p-bottom-50">
+          <button class="button is-rounded shadow " (click)="onClickSeeMore()" [innerText]="'COMMON.BUTTON.SEE_MORE'"
+                  translate></button>
         </div>
       </ng-container>
       <!-- /button to show more pros -->
@@ -275,7 +276,7 @@
 
 
 <!-- sidebar for history -->
-<app-sidebar [(template)]="sidebarValue">
+<umius-sidebar-full [(template)]="sidebarValue">
   <app-sidebar-search-tool
     [sidebarState]="sidebarValue.animate_state"
     [searchFieldValue]="searchFieldOutput"
@@ -284,5 +285,5 @@
     (onUpload)="uploadRequest($event)"
     (onLoadRequest)="loadRequest($event)">
   </app-sidebar-search-tool>
-</app-sidebar>
+</umius-sidebar-full>
 <!-- /sidebar for history -->

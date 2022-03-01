@@ -1,4 +1,4 @@
-@import "../../../../style/framework/src/variables";
+@import "~@umius/umi-style-framework/scss/variables";
 
 #header-unauth {
 
@@ -36,7 +36,7 @@
           background-color: transparent;
 
           &:hover {
-            border-color: $border-meta-color;
+            border-color: $meta-color;
           }
 
         }

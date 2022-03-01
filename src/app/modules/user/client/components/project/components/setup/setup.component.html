@@ -11,7 +11,7 @@
   <!-- header -->
   <section [ngClass]="{'header_sticky': scrollOn}" class="container grid-2xl fluid p-top-10 bg-white">
     <div class="column col-sm-12 col-11 col-mx-auto">
-      <div style="min-height: 60px" class="flex-between flex-wrap">
+      <div style="min-height: 60px" class="flex-between flex-wrap-wrap">
 
         <!-- title -->
         <h2  style="font-size: 22px" class="title m-bottom-15">
@@ -20,7 +20,7 @@
         <!-- /title -->
 
         <!-- buttons currentPage === 'PITCH' -->
-        <div *ngIf="currentPage === 'PITCH'" class="d-flex flex-wrap align-center animate-fade is-4">
+        <div *ngIf="currentPage === 'PITCH'" class="d-flex flex-wrap-wrap align-center animate-fade is-4">
 
           <!-- card example -->
           <button
@@ -28,12 +28,8 @@
             *ngIf="quizExample"
             class="button is-link is-sm m-bottom-15 p-no"
             id="btn-quiz-example">
-            <img
-              [src]="pictos?.example?.primary"
-              alt="picto example"
-              class="icon-left"
-              width="18">
-            {{ 'COMMON.BUTTON.EXAMPLE' | translate }}
+            <i class="fas fa-file-alt icon-left text-lg"></i>
+            <span class="text-hover-underline">{{ 'COMMON.BUTTON.EXAMPLE' | translate }}</span>
           </button>
           <!-- card example -->
 
@@ -42,36 +38,36 @@
             *ngIf="previewLink"
             [href]="previewLink"
             [ngClass]="{'m-right-15': hasDropdownLang}"
-            class="button is-link is-sm m-bottom-15 p-no"
+            class="button is-link is-sm m-bottom-15 p-no text-no-underline"
             id="btn-preview"
             target="_blank">
-            <img
-              [src]="pictos?.eye?.primary"
-              alt="picto preview"
-              class="icon-left"
-              width="20">
-            {{ 'COMMON.BUTTON.PREVIEW' | translate }}
+            <i class="fas fa-eye icon-left text-lg"></i>
+            <span class="text-hover-underline">{{ 'COMMON.BUTTON.PREVIEW' | translate }}</span>
           </a>
           <!-- /preview -->
 
           <!-- card lang -->
 
           <!-- if only one lang then Add card lang -->
-          <div *ngIf="canAddCard" class="m-bottom-15">
-            <button
-              (click)="onAddCard($event)"
-              [disabled]="isAddingCard"
-              class="button is-link is-sm p-no"
-              id="btn-add-card">
-              <i class="fas fa-plus-circle"></i>
-              <ng-container *ngIf="activeInnovCard.lang === 'en'">
-                {{ 'COMMON.BUTTON.ADD_LANG_FRENCH' | translate }}
-              </ng-container>
-              <ng-container *ngIf="activeInnovCard.lang === 'fr'">
-                {{ 'COMMON.BUTTON.ADD_LANG_ENGLISH' | translate }}
-              </ng-container>
-            </button>
-          </div>
+          <ng-container *ngIf="(innovation.status === 'EDITING' || innovation.status === 'SUBMITTED') && canAddCard">
+            <div class="m-bottom-15 m-right-15">
+              <button
+                (click)="onAddCard($event)"
+                [disabled]="isAddingCard"
+                class="button is-link text-no-underline is-sm p-no"
+                id="btn-add-card">
+                <i class="fas fa-plus-circle text-lg icon-left"></i>
+                <span class="text-hover-underline">
+                <ng-container *ngIf="activeInnovCard.lang === 'en'">
+                  {{ 'COMMON.BUTTON.ADD_LANG_FRENCH' | translate }}
+                </ng-container>
+                <ng-container *ngIf="activeInnovCard.lang === 'fr'">
+                  {{ 'COMMON.BUTTON.ADD_LANG_ENGLISH' | translate }}
+                </ng-container>
+              </span>
+              </button>
+            </div>
+          </ng-container>
           <!-- /if only one lang then Add card lang -->
 
           <!-- has more than 2 lang -->
@@ -101,8 +97,8 @@
           <button
             (click)="onSaveProject($event)"
             [disabled]="isSavingProject"
-            [ngClass]="{'is-active': activeSaveBadge}"
-            class="button is-primary is-sm badge is-icon"
+            [ngClass]="{'badge-active': activeSaveBadge}"
+            class="button is-sm badge badge-icon"
             id="btn-project-save"
             style="min-width: 100px">
             <i class="fas fa-save" *ngIf="activeSaveBadge"></i>
@@ -148,7 +144,7 @@
 
 
 <!-- modal to innovation card add lang -->
-<app-utility-modal-empty [(showModal)]="showCardModal">
+<umius-modal [(showModal)]="showCardModal">
 
   <!-- body -->
   <section class="modal-body p-bottom-40">
@@ -175,7 +171,7 @@
     <button
       (click)="addInnovationCard($event)"
       [disabled]="isAddingCard"
-      class="button is-community"
+      class="button "
       id="btn-confirm-card">
       <ng-container *ngIf="isAddingCard; else defConfirmText">
         {{ 'COMMON.BUTTON.ADDING_LANG' | translate }}
@@ -188,5 +184,5 @@
   </footer>
   <!-- /footer -->
 
-</app-utility-modal-empty>
+</umius-modal>
 <!-- modal to innovation card add lang -->

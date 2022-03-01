@@ -1,9 +1,9 @@
-@import "../../../../../style/framework/src/variables";
+@import "~@umius/umi-style-framework/scss/variables";
 
 .comments-container {
   max-height: 300px;
   overflow-y: scroll;
-  background-color: $bg-draft-color;
+  background-color: $draft-color;
 }
 
 .suggestion-display {

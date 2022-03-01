@@ -13,18 +13,14 @@ import { PitchComponent } from './components/setup/components/pitch/pitch.compon
 import { TargetingComponent } from './components/setup/components/targeting/targeting.component';
 
 import { PipeModule } from '../../../../../pipe/pipe.module';
-import { SidebarModule } from '../../../../sidebars/templates/sidebar/sidebar.module';
 import { SharedProjectSettingsModule } from '../../../../shared/components/shared-project-settings-component/shared-project-settings.module';
 import { SharedWorldmapModule } from '../../../../shared/components/shared-worldmap/shared-worldmap.module';
 import { SidebarUserAnswerModule } from '../../../../sidebars/components/sidebar-user-answer/sidebar-user-answer.module';
 import { SharedMarketReportModule } from '../../../../shared/components/shared-market-report/shared-market-report.module';
-import { ModalModule } from '../../../../utility/modals/modal/modal.module';
 import { SharedEditorTinymceModule } from '../../../../shared/components/shared-editor-tinymce/shared-editor-tinymce.module';
 import { ObjectivesSecondaryModule } from '../objectives-secondary/objectives-secondary.module';
-import { ModalEmptyModule } from '../../../../utility/modals/modal-empty/modal-empty.module';
 import { ObjectivesPrimaryModule } from '../objectives-primary/objectives-primary.module';
 import { AngularMyDatePickerModule } from 'angular-mydatepicker';
-import { AutoSuggestionModule } from '../../../../utility/auto-suggestion/auto-suggestion.module';
 import { NgxPageScrollModule } from 'ngx-page-scroll';
 import { BannerModule } from '../../../../utility/banner/banner.module';
 import { SidebarProjectPitchModule } from '../../../../sidebars/components/sidebar-project-pitch/sidebar-project-pitch.module';
@@ -36,13 +32,11 @@ import {MarketTestMethodologyModule} from '../market-test-methodology/market-tes
 import {MarketTestObjectivesModule} from '../market-test-objectives/market-test-objectives.module';
 import {DatePickerModule} from '../../../../utility/date-picker/date-picker.module';
 import {MarketTestObjectivesComplementaryModule} from '../market-test-objectives-complementary/market-test-objectives-complementary.module';
-import { ModalMediaModule } from '../../../../utility/modals/modal-media/modal-media.module';
 import { ContactComponent } from './components/contact/contact.component';
-import {SidebarInPageModule} from '../../../../sidebars/templates/sidebar-in-page/sidebar-in-page.module';
 import {SharedFollowUpModule} from '../../../../shared/components/shared-follow-up/shared-follow-up.module';
 import {MessageTemplate2Module} from '../../../../utility/messages/message-template-2/message-template-2.module';
-import { TableComponentsModule } from '@umius/umi-common-component/table';
 import {LangEntryPipeModule} from '../../../../../pipe/lang-entry/langEntryPipe.module';
+import {ModalModule, SidebarFullModule, TableModule} from '@umius/umi-common-component';
 
 @NgModule({
   imports: [
@@ -50,19 +44,15 @@ import {LangEntryPipeModule} from '../../../../../pipe/lang-entry/langEntryPipe.
     ProjectRoutingModule,
     TranslateModule.forChild(),
     PipeModule,
-    SidebarModule,
     SharedProjectSettingsModule,
     SharedWorldmapModule,
     SidebarUserAnswerModule,
     SharedMarketReportModule,
-    ModalModule,
     FormsModule,
     SharedEditorTinymceModule,
     ObjectivesSecondaryModule,
-    ModalEmptyModule,
     ObjectivesPrimaryModule,
     AngularMyDatePickerModule,
-    AutoSuggestionModule,
     NgxPageScrollModule,
     BannerModule,
     SidebarProjectPitchModule,
@@ -73,12 +63,12 @@ import {LangEntryPipeModule} from '../../../../../pipe/lang-entry/langEntryPipe.
     MarketTestObjectivesModule,
     DatePickerModule,
     MarketTestObjectivesComplementaryModule,
-    ModalMediaModule,
-    SidebarInPageModule,
     SharedFollowUpModule,
     MessageTemplate2Module,
-    TableComponentsModule,
-    LangEntryPipeModule
+    LangEntryPipeModule,
+    ModalModule,
+    TableModule,
+    SidebarFullModule
   ],
   declarations: [
     ProjectComponent,

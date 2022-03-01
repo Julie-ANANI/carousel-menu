@@ -30,7 +30,6 @@
               }
             ],
             "styles": [
-              "src/style/framework/src/umi.scss",
               "src/style/styles.scss"
             ],
             "scripts": [
@@ -294,7 +293,6 @@
               }
             ],
             "styles": [
-              "src/style/framework/src/umi.scss",
               "src/style/styles.dynergie.scss"
             ],
             "scripts": [
@@ -414,7 +412,6 @@
               }
             ],
             "styles": [
-              "src/style/framework/src/umi.scss",
               "src/style/styles.multivalente.scss"
             ],
             "scripts": [

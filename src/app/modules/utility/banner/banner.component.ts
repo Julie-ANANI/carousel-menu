@@ -28,13 +28,13 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
         [ngStyle]="{'position': position}"
         class="banner animate-fade is-7"
         id="banner">
-        <div class="m-right-15 text-white">
+        <div class="m-right-15">
           <ng-content></ng-content>
         </div>
         <button
           (click)="onCloseBanner($event)"
           *ngIf="showCloseBtn"
-          class="close is-background is-xs"
+          class="close has-background is-xs"
           id="banner-btn-close">
         </button>
       </div>
@@ -49,7 +49,7 @@ export class BannerComponent {
    * provide the class
    * like bg-primary | bg-success
    */
-  @Input() background = 'bg-primary';
+  @Input() background = 'bg-primary text-white';
 
   @Input() position = 'absolute';
 

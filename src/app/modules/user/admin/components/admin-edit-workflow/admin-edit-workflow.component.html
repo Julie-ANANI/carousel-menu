@@ -19,18 +19,17 @@
     <div
       *ngIf="innovationCardLanguages && innovationCardLanguages.indexOf('en') !== -1"
       [ngClass]="inCampaign && isModifiedEn ? 'complete' : 'incomplete'"
-      class="shape is-circle m-left-2">
+      class="shape is-circled m-left-2">
       <i [ngClass]="{'font-size': '10px'}" class="fas fa-check"></i>
     </div>
 
     <div
+      class="text-link m-left-1"
       *ngIf="innovationCardLanguages && innovationCardLanguages.indexOf('en') !== -1"
       (click)="changeLanguage('en')"
-      [ngClass]="{ 'active': language === 'en' }"
-      class="text-link">
+      [ngClass]="{ 'active': language === 'en' }">
       English
     </div>
-
 
     &nbsp;&nbsp;<span *ngIf="innovationCardLanguages && innovationCardLanguages.length===2">|</span>
 
@@ -38,7 +37,7 @@
     <div
       *ngIf="innovationCardLanguages && innovationCardLanguages.indexOf('fr') !== -1"
       [ngClass]="inCampaign && isModifiedFr ? 'complete' : 'incomplete'"
-      class="shape is-circle m-left-2">
+      class="shape is-circled m-left-2">
       <i [ngClass]="{'font-size': '10px'}" class="fas fa-check"></i>
     </div>
 
@@ -46,7 +45,7 @@
       *ngIf="innovationCardLanguages && innovationCardLanguages.indexOf('fr') !== -1"
       (click)="changeLanguage('fr')"
       [ngClass]="{ 'active': language === 'fr' }"
-      class="text-link">
+      class="text-link m-left-1">
       French
     </div>
 
@@ -76,7 +75,7 @@
 
 
 <!-- modal to delete the scenario -->
-<app-utility-modal *ngIf="isDeletable" [(showModal)]="modalDelete" [title]="'Delete Board'">
+<umius-modal *ngIf="isDeletable" [(showModal)]="modalDelete" [title]="'Delete Board'">
 
   <section class="modal-body">
     Do you really want to delete this workflow? This action is irreversible.
@@ -92,12 +91,12 @@
     </button>
   </footer>
 
-</app-utility-modal>
+</umius-modal>
 <!-- /modal to delete the scenario -->
 
 
 <!-- sidebar to edit / view workflow -->
-<app-sidebar [(template)]="sidebar">
+<umius-sidebar-full [(template)]="sidebar">
   <app-sidebar-workflow
     (emailChange)="updateEmail($event)"
     [emailsObject]="emailToEdit"
@@ -106,5 +105,5 @@
     [innovationCardLanguages]="innovationCardLanguages"
     [isEditable]="isEditable">
   </app-sidebar-workflow>
-</app-sidebar>
+</umius-sidebar-full>
 <!-- /sidebar to edit / view workflow -->

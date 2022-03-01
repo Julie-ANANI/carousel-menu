@@ -15,11 +15,11 @@ import { Innovation } from '../../../../../../../../models/innovation';
 import { InnovationFrontService } from '../../../../../../../../services/innovation/innovation-front.service';
 import { InnovCard } from '../../../../../../../../models/innov-card';
 import { TranslateTitleService } from '../../../../../../../../services/title/title.service';
-import { Table } from '@umius/umi-common-component/models';
-import { Company } from '../../../../../../../../models/company';
 import { HttpErrorResponse } from "@angular/common/http";
 import { ErrorFrontService } from "../../../../../../../../services/error/error-front.service";
 import {CommonService} from '../../../../../../../../services/common/common.service';
+import {UmiusCompanyInterface} from '@umius/umi-common-component/models/company';
+import { Table } from '@umius/umi-common-component';
 
 @Component({
   selector: 'admin-community-member',
@@ -41,7 +41,7 @@ export class AdminCommunityMemberComponent implements OnInit {
 
   private _displayCountrySuggestion = false;
 
-  private _companySuggestions: Array<Company> = [];
+  private _companySuggestions: Array<UmiusCompanyInterface> = [];
 
   private _displayCompanySuggestion = false;
 
@@ -380,7 +380,7 @@ export class AdminCommunityMemberComponent implements OnInit {
         if (res.length === 0) {
           this._displayCompanySuggestion = false;
         } else {
-          res.forEach((item: Company) => {
+          res.forEach((item: UmiusCompanyInterface) => {
             const find = this._companySuggestions.find((company) => company.name === item.name);
             if (!find) {
               this._companySuggestions.push(item);
@@ -581,7 +581,7 @@ export class AdminCommunityMemberComponent implements OnInit {
     return this._configEmail;
   }
 
-  get companySuggestions(): Array<Company> {
+  get companySuggestions(): Array<UmiusCompanyInterface> {
     return this._companySuggestions;
   }
 

@@ -1,10 +1,9 @@
 import {Component, EventEmitter, Inject, Input, Output, PLATFORM_ID} from '@angular/core';
 import { Innovation } from '../../../../../../../models/innovation';
-import { LocalStorageService } from '@umius/umi-common-component/services/localStorage';
 import { InnovCard } from '../../../../../../../models/innov-card';
 import { TranslateService } from '@ngx-translate/core';
 import { InnovationFrontService } from '../../../../../../../services/innovation/innovation-front.service';
-import { Pagination } from '../../../../../../utility/paginations/interfaces/pagination';
+import {UmiusLocalStorageService, UmiusPaginationInterface} from '@umius/umi-common-component';
 
 @Component({
   selector: 'app-cards',
@@ -36,7 +35,7 @@ export class CardsComponent {
 
   @Output() offsetLimit: EventEmitter<{offset: number; limit: number}> = new EventEmitter<{offset: number; limit: number}>();
 
-  private _pagination: Pagination;
+  private _pagination: UmiusPaginationInterface = <UmiusPaginationInterface>{};
 
   private _innovations: Array<any> = [];
 
@@ -55,7 +54,7 @@ export class CardsComponent {
   private _userLang = this._translateService.currentLang || 'en';
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
-              private _localStorage: LocalStorageService,
+              private _localStorage: UmiusLocalStorageService,
               private _translateService: TranslateService) { }
 
 
@@ -97,11 +96,11 @@ export class CardsComponent {
     }
   }
 
-  get pagination(): Pagination {
+  get pagination(): UmiusPaginationInterface {
     return this._pagination;
   }
 
-  set pagination(value: Pagination) {
+  set pagination(value: UmiusPaginationInterface) {
     this._pagination = value;
     this._startIndex = value.offset;
     this._endIndex = value.currentPage * value.parPage;

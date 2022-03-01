@@ -2,16 +2,16 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {CheckBoxFilterComponent} from './check-box-filter.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {SearchInput2Module} from '../search-inputs/search-template-2/search-input-2.module';
 import {MessageTemplateModule} from '../messages/message-template/message-template.module';
+import {SearchInputModule} from '@umius/umi-common-component';
 
 @NgModule({
   imports: [
     CommonModule,
     ReactiveFormsModule,
     FormsModule,
-    SearchInput2Module,
     MessageTemplateModule,
+    SearchInputModule,
   ],
   declarations: [CheckBoxFilterComponent],
   exports: [CheckBoxFilterComponent],

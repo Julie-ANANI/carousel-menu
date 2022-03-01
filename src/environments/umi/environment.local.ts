@@ -5,6 +5,7 @@ export const environment = {
   apiGatewayUrl: 'http://128.199.35.244:9080/v3/api',
   etherpadUrl: 'http://localhost:9001',
   clientUrl: 'http://localhost:4200',
+  apiGatewayUrl: 'http://128.199.35.244:9080/v3/api',
   companyName: 'United Motion Ideas (local)',
   companyShortName: 'UMI',
   domain: 'umi',

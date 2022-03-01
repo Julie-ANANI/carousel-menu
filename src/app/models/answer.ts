@@ -1,6 +1,6 @@
 import { Professional } from './professional';
 import { Tag } from './tag';
-import {Company} from './company';
+import {UmiusCompanyInterface} from '@umius/umi-common-component/models/company';
 
 export type AnswerStatus = 'DRAFT' | 'SUBMITTED' | 'TO_COMPLETE' | 'REJECTED' | 'VALIDATED' | 'VALIDATED_UMIBOT'
   | 'REJECTED_UMIBOT' | 'REJECTED_GMAIL';
@@ -20,7 +20,7 @@ export interface Answer {
   country: {flag: string, domain?: string, name?: string};
   job: string;
   _isSelected?: boolean;
-  company: Company;
+  company: UmiusCompanyInterface;
   mailType?: string;
   readonly ip?: any;
   readonly answeredByEmail: boolean;

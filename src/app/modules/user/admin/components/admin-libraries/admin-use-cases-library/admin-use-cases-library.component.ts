@@ -1,5 +1,4 @@
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
-import { Config, Table } from '@umius/umi-common-component/models';
 import { MissionService } from '../../../../../../services/mission/mission.service';
 import { isPlatformBrowser } from '@angular/common';
 import { MissionTemplate } from '../../../../../../models/mission';
@@ -11,8 +10,8 @@ import { MissionFrontService } from '../../../../../../services/mission/mission-
 import { TranslateService } from '@ngx-translate/core';
 import { Router } from '@angular/router';
 import { MissionQuestionService } from '../../../../../../services/mission/mission-question.service';
-import { LocalStorageService } from "@umius/umi-common-component/services/localStorage";
 import { HttpErrorResponse } from "@angular/common/http";
+import {Table, UmiusConfigInterface, UmiusLocalStorageService} from '@umius/umi-common-component';
 
 @Component({
   selector: 'app-admin-use-cases-library',
@@ -24,7 +23,7 @@ export class AdminUseCasesLibraryComponent implements OnInit {
 
   private _total = -1;
 
-  private _config: Config = {
+  private _config: UmiusConfigInterface = {
     fields: '',
     limit: '0',
     offset: '0',
@@ -43,7 +42,7 @@ export class AdminUseCasesLibraryComponent implements OnInit {
               private _translateService: TranslateService,
               private _translateNotificationsService: TranslateNotificationsService,
               private _missionService: MissionService,
-              private _localStorageService: LocalStorageService) {
+              private _localStorageService: UmiusLocalStorageService) {
   }
 
   ngOnInit() {
@@ -99,11 +98,11 @@ export class AdminUseCasesLibraryComponent implements OnInit {
       _title: 'use case(s)',
       _content: this._templates,
       _total: this._total,
-      _isEditable: this.canAccess(['edit']),
       _isTitle: true,
       _clickIndex: 1,
       _isNoMinHeight: true,
       _isPaginable: true,
+      _paginationTemplate: 'TEMPLATE_1',
       _columns: [
         {
           _attrs: ['name'],
@@ -185,7 +184,7 @@ export class AdminUseCasesLibraryComponent implements OnInit {
     this._router.navigate([`${this._router.url}/${event._id}`]);
   }
 
-  set config(value: Config) {
+  set config(value: UmiusConfigInterface) {
     this._config = value;
     this._getAllTemplates();
   }
@@ -198,7 +197,7 @@ export class AdminUseCasesLibraryComponent implements OnInit {
     return this._templates;
   }
 
-  get config(): Config {
+  get config(): UmiusConfigInterface {
     return this._config;
   }
 

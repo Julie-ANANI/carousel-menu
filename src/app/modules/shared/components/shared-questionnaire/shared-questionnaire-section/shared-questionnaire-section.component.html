@@ -27,7 +27,7 @@
           </select>
         </label>
 
-        <div class="d-flex flex-wrap">
+        <div class="d-flex flex-wrap-wrap">
           <div
             *ngFor="let lang of questionnaireLangs"
             class="m-right-20 d-flex align-center tooltip"
@@ -219,7 +219,7 @@
 </div>
 
 
-<app-utility-modal-empty *ngIf="isLibraryView && showModal" [(showModal)]="showModal" [maxWidth]="'840px'">
+<umius-modal *ngIf="isLibraryView && showModal" [(showModal)]="showModal" [maxWidth]="'840px'">
 
   <section class="modal-body">
 
@@ -282,7 +282,7 @@
         <ng-container
           *ngIf="!identifierError.letter && !identifierError.exist && !isAvailableIdentifier; else showIdentText">
           <p class="text-xs text-alert text-medium m-top-2 m-bottom-h">Note:</p>
-          <ul class="text-xs text-notify text-medium m-left-2 m-no">
+          <ul class="text-xs text-meta text-medium m-left-2 m-no">
             <li class="m-top-h">Should be less than or equal to 23.</li>
             <li class="m-top-h">Try to have only characters ex: ContactOwner.</li>
             <li class="m-top-h">Should be an unique.</li>
@@ -323,16 +323,16 @@
     <ng-container *ngIf="questionToAdd.from === 'LIBRARY'">
       <div [ngStyle]="{'min-height': '180px'}" class="m-top-10 m-bottom-30">
         <div class="mxw-450 m-left-auto m-right-auto">
-          <app-utility-auto-suggestion
+          <umius-auto-suggestion
             (valueSelected)="questionSelected($event)"
             [config]="searchConfig"
             [isSmallInput]="true">
-          </app-utility-auto-suggestion>
+          </umius-auto-suggestion>
         </div>
         <div
           *ngFor="let value of questionToAdd.value"
           [attr.data-tooltip]="value.label"
-          class="label is-community is-rounded is-sm m-top-15 m-right-10 m-left-10 tooltip is-multiline">
+          class="label  is-rounded is-sm m-top-15 m-right-10 m-left-10 tooltip is-multiline">
           <span class="text-ellipsis w-120 m-right-2">{{ value.label }}</span>
           <span class="icon-container is-xs is-overlay text-white">
             <i (click)="onRemoveFromList(value['ques']['question']['_id'])" class="icon icon-cross"></i>
@@ -357,11 +357,11 @@
     <button
       (click)="onAddQuestion($event)"
       [disabled]="isDisabled"
-      class="button is-community"
+      class="button "
       type="button">
       Add
     </button>
 
   </footer>
 
-</app-utility-modal-empty>
+</umius-modal>

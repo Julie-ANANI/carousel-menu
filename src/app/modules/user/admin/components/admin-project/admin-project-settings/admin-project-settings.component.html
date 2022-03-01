@@ -51,7 +51,7 @@
         <!-- left content -->
         <div class="content-wrapper">
 
-          <h6 class="text-notify">Setup</h6>
+          <h6 class="text-meta">Setup</h6>
 
           <div class="content-box">
 
@@ -177,7 +177,7 @@
 
               <div class="dropdown is-right">
 
-                <a class="button dropdown-toggle text-primary-dark is-link" tabindex="0">
+                <a class="button dropdown-toggle text-dark is-link" tabindex="0">
                   Members ({{ mission.team.length }}) <i class="icon icon-caret"></i>
                 </a>
 
@@ -350,7 +350,7 @@
         <!-- right content -->
         <div class="content-wrapper">
 
-          <h6 class="text-notify">Campaign / Delivery</h6>
+          <h6 class="text-meta">Campaign / Delivery</h6>
 
           <div class="content-box">
 
@@ -366,7 +366,7 @@
                   <ul *ngIf="mission.milestoneDates && mission.milestoneDates.length" class="roadmap-wrapper w-full">
                     <li *ngIf="mission.milestoneDates.length > 1" class="active">
                         <span style="margin-top: 3px" class="d-flex flex-d-column align-center">
-                      <span class="shape is-circle"></span>
+                      <span class="shape is-circled"></span>
                       <span class="divider-vert active"></span>
                     </span>
                       <ng-container>
@@ -378,7 +378,7 @@
                           style="cursor:pointer"
                           [ngClass]="{ 'active': isMilestoneReached(milestone.dueDate) }">
                       <span style="margin-top: 3px" class="d-flex flex-d-column align-center">
-                        <span class="shape is-circle"></span>
+                        <span class="shape is-circled"></span>
                         <span
                           *ngIf="i < mission.milestoneDates.length - 1"
                           [ngClass]="{ 'active': isNextMilestoneReached(i+1) }"
@@ -444,7 +444,7 @@
                   <!--                  </div>-->
                 </div>
 
-                <div class="m-top-15">
+                <div class="m-top-15 m-left-10">
                   <ng-container *ngIf="!isAddMilestone; else addMileStone">
                     <div>
                       <button
@@ -469,10 +469,18 @@
                       class="form-input is-xs"
                       type="date">
                   </div>
-                  <button class="button is-primary is-circled m-left-auto is-xxs"
+                  <button class="button is-primary is-circled m-left-auto"
+                          style="width: 20px;
+                                 height: 20px;
+                                 margin-bottom: 8px;
+                                 padding: 2px;"
                           type="submit"
                           [disabled]="milestoneForm.invalid"><i class="fas fa-check"></i></button>
-                  <button class="button is-danger is-circled m-left-auto is-xxs"
+                  <button class="button is-danger is-circled m-left-auto"
+                          style="width: 20px;
+                                 height: 20px;
+                                 margin-bottom: 8px;
+                                 padding: 2px;"
                           type="button"
                           (click)="cancelAddMileStone($event)"><i
                     class="fas fa-times"></i></button>
@@ -701,7 +709,7 @@
 
 
 <!-- sidebar -->
-<app-sidebar *ngIf="!isLoading" [(template)]="sidebarValue">
+<umius-sidebar-full *ngIf="!isLoading" [(template)]="sidebarValue">
 
   <!-- tags -->
   <app-sidebar-tags
@@ -732,5 +740,5 @@
   </ng-container>
   <!-- /blocklist -->
 
-</app-sidebar>
+</umius-sidebar-full>
 <!-- /sidebar -->

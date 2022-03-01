@@ -21,7 +21,7 @@
     <!-- banner project message  -->
 
     <!-- header -->
-    <section class="section-header p-top-25">
+    <section class="p-top-25 main__bg-color">
       <div class="container fluid grid-2xl">
         <div class="column col-sm-12 col-11 col-mx-auto">
 
@@ -42,7 +42,7 @@
                 <h3 class="op-8 text-lg text-normal text-white m-bottom-2">{{ objectiveName }}</h3>
                 <button
                   (click)="showModal($event)"
-                  class="button is-link is-community p-no text-underline"
+                  class="button is-link text-sm p-no text-underline"
                   id="project-btn-our-methodology">
                   {{ 'COMMON.BUTTON.OUR_METHODOLOGY' | translate }}
                 </button>
@@ -78,7 +78,7 @@
                   routerLinkActive="active">
                   <ng-container *ngIf="!!tab.iconClass; else number"><i [ngClass]="tab.iconClass"></i></ng-container>
                   <ng-template #number>
-                    <span class="shape is-circle is-sm text-13">{{ i }}</span>
+                    <span class="shape is-circled is-sm m-right-2 text-13">{{ i }}</span>
                   </ng-template>
                   {{ 'PROJECT_MODULE.' + tab.name | translate }}
                 </a>
@@ -102,13 +102,13 @@
 
 <!-- modal methodology -->
 <ng-container *ngIf="!fetchingError && !!mission.template">
-  <app-utility-modal-empty [maxWidth]="'1024px'" [(showModal)]="openModal">
+  <umius-modal [maxWidth]="'1024px'" [(showModal)]="openModal">
     <section class="modal-body p-no br-6">
       <app-market-test-methodology
         [methodology]="mission.template.methodology"
         [title]="objectiveName">
       </app-market-test-methodology>
     </section>
-  </app-utility-modal-empty>
+  </umius-modal>
 </ng-container>
 <!-- /modal methodology -->

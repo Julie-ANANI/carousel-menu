@@ -7,20 +7,18 @@ import { MessageErrorModule } from '../../../../../utility/messages/message-erro
 import { AdminEditUseCaseComponent } from './admin-edit-use-case/admin-edit-use-case.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedQuestionnaireModule } from '../../../../../shared/components/shared-questionnaire/shared-questionnaire.module';
-import { ModalEmptyModule } from '../../../../../utility/modals/modal-empty/modal-empty.module';
-import { TableComponentsModule } from '@umius/umi-common-component/table';
+import {ModalModule, TableModule} from '@umius/umi-common-component';
 
 @NgModule({
   imports: [
     CommonModule,
     TranslateModule.forChild(),
     MessageErrorModule,
-
     ReactiveFormsModule,
     FormsModule,
     SharedQuestionnaireModule,
-    ModalEmptyModule,
-    TableComponentsModule,
+    TableModule,
+    ModalModule,
   ],
   declarations: [
     AdminUseCasesLibraryComponent,

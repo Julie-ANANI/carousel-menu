@@ -3,7 +3,7 @@
 
   <!-- bar icon -->
   <ng-container *ngIf="isAdmin && count > 0">
-    <div class="icon-container is-overlay text-notify absolute" (click)="openModal($event)">
+    <div class="icon-container is-overlay text-meta absolute" (click)="openModal($event)">
       <span class="tooltip" [attr.data-tooltip]="'Menu'">
         <i class="icon icon-menu"></i>
       </span>
@@ -13,7 +13,7 @@
 
 
   <!-- heading 1st -->
-  <h2 class="text text-notify" [innerText]="'SHOWCASE.INNOVATIONS_TITLE'" translate></h2>
+  <h2 class="text text-meta" [innerText]="'SHOWCASE.INNOVATIONS_TITLE'" translate></h2>
   <!-- /heading 1st -->
 
 
@@ -25,9 +25,9 @@
 
 
   <!-- section innovations -->
-  <div class="section-card-wrapper section-light-pad rm-pad-top d-flex text-center justify-center">
+  <div class="section-card-wrapper card-3 p-bottom-25 rm-pad-top d-flex text-center justify-center">
     <div *ngFor="let innovationCard of topCards" class="card is-card-3 animate-zoomIn">
-      <a [routerLink]="['/discover', innovationCard.innovation._id, lang]" target="_blank" class="text-primary-dark text-xs">
+      <a [routerLink]="['/discover', innovationCard.innovation._id, lang]" target="_blank" class="text-dark text-xs">
 
         <div class="card-image">
           <figure class="img-hover-button">
@@ -57,12 +57,12 @@
 
 
 <!-- modal to select innovations -->
-<app-utility-modal [(showModal)]="modalShow" [maxWidth]="'960px'" [enableCloseButton]="true">
-
+<umius-modal maxWidth="960px" [(showModal)]="modalShow">
   <section class="modal-body">
     <div class="modal-card-wrapper d-flex text-center">
       <ng-container *ngFor="let innovationCard of cards">
-        <div class="card modal-card badge badge-save" [ngClass]="{ 'active': activeInnovation(innovationCard.innovation._id) }">
+        <div class="card modal-card badge badge-icon" [ngClass]="{ 'badge-active':
+        activeInnovation(innovationCard.innovation._id) }">
 
           <i class="fas fa-check-circle"></i>
 
@@ -83,11 +83,9 @@
     </div>
   </section>
 
-
   <footer class="modal-footer">
     <button class="button modal-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
     <button (click)="onClickApply($event)" class="button is-primary">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
   </footer>
-
-</app-utility-modal>
+</umius-modal>
 <!-- /modal to select innovations -->

@@ -21,7 +21,7 @@
           </span>
         </div>
 
-        <div style="line-height: 1" class="text-notify text-medium text-13">
+        <div style="line-height: 1" class="text-meta text-medium text-13">
           <span>{{ prosInterview.length }} {{ 'SHARED_FOLLOW_UP.CONTACTS_ADDED' | translate }} | </span>
           <span>{{ prosInterviewSent.length }} {{ 'SHARED_FOLLOW_UP.EMAILS_SENT' | translate }} </span>
         </div>
@@ -45,7 +45,7 @@
           </span>
         </div>
 
-        <div style="line-height: 1" class="text-notify text-medium text-13">
+        <div style="line-height: 1" class="text-meta text-medium text-13">
           <span>{{ prosOpening.length }} {{ 'SHARED_FOLLOW_UP.CONTACTS_ADDED' | translate }} | </span>
           <span>{{ prosOpeningSent.length }} {{ 'SHARED_FOLLOW_UP.EMAILS_SENT' | translate }} </span>
         </div>
@@ -69,7 +69,7 @@
           </span>
         </div>
 
-        <div style="line-height: 1" class="text-notify text-medium text-13">
+        <div style="line-height: 1" class="text-meta text-medium text-13">
           <span>{{ prosNoFollow.length }} {{ 'SHARED_FOLLOW_UP.CONTACTS_ADDED' | translate }} | </span>
           <span>{{ prosNoFollowSent.length }} {{ 'SHARED_FOLLOW_UP.EMAILS_SENT' | translate }} </span>
         </div>
@@ -84,12 +84,12 @@
 
       <button
         (click)="openModal($event)"
-        class="button is-primary is-lg"
+        class="button is-lg"
         id="btn-send-mail">
         {{ 'SHARED_FOLLOW_UP.BUTTON_DONE' | translate }}
       </button>
 
-      <p class="text-notify m-top-2 m-no-bottom text-sm">
+      <p class="text-meta m-top-2 m-no-bottom text-sm">
         {{ prosWithoutObjective.length }} {{ 'SHARED_FOLLOW_UP.CONTACT_WITHOUT_OBJECTIVE' | translate }}
       </p>
 
@@ -102,9 +102,9 @@
   <!-- table -->
   <div class="p-top-30">
 
-    <h6 class="text-sm text-notify m-bottom-10">
-      <span class="text-background">{{ tableInfos._total === -1 ? 0 : tableInfos._total }}</span> contacts /
-      <span class="text-background">{{ prosWithoutObjective.length }}</span>
+    <h6 class="text-sm text-meta m-bottom-10">
+      <span class="text-draft">{{ tableInfos._total === -1 ? 0 : tableInfos._total }}</span> contacts /
+      <span class="text-draft">{{ prosWithoutObjective.length }}</span>
       {{ 'SHARED_FOLLOW_UP.WITHOUT_OBJECTIVE' | translate }}
     </h6>
 
@@ -125,7 +125,7 @@
 
 <!-- answer sidebar -->
 <ng-container *ngIf="!!canAccess(['view', 'answer']) || !!canAccess(['edit', 'answer'])">
-  <app-sidebar [(template)]="sidebarAnswer">
+  <umius-sidebar-full [(template)]="sidebarAnswer">
     <app-sidebar-user-answer
       [adminMode]="canAccess(['edit', 'answer'])"
       [userAnswer]="modalAnswer"
@@ -133,13 +133,13 @@
       [innovationCards]="project.innovationCards"
       [questions]="questions">
     </app-sidebar-user-answer>
-  </app-sidebar>
+  </umius-sidebar-full>
 </ng-container>
 <!-- /answer sidebar -->
 
 <!-- filter sidebar -->
 <ng-container *ngIf="!!canAccess()">
-  <sidebar-left [(sidebarTemplate)]="sidebarTemplate">
+  <umius-sidebar-inline [(template)]="sidebarTemplate">
     <app-sidebar-filter-answers
       [answers]="answers"
       [innovation]="project"
@@ -148,13 +148,13 @@
       (selectedAnswers)="updateAnswers($event)"
       [templateType]="sidebarTemplate.type">
     </app-sidebar-filter-answers>
-  </sidebar-left>
+  </umius-sidebar-inline>
 </ng-container>
 <!-- /filter sidebar -->
 
 <!-- modal for mails -->
 <ng-container *ngIf="!!(emailsObject && showEmailsModal && canAccess(['workflow']))">
-  <app-utility-modal [(showModal)]="showEmailsModal" [maxWidth]="'1080px'">
+  <umius-modal [(showModal)]="showEmailsModal" [maxWidth]="'1080px'">
     <section class="modal-body p-top-30 p-bottom-30 p-left-50 p-right-50">
 
       <!-- heading -->
@@ -165,7 +165,7 @@
 
       <!-- close button -->
       <div style="right: 15px; top: 21px" class="absolute">
-        <button (click)="closeModal($event)" class="close text-notify" type="button"></button>
+        <button (click)="closeModal($event)" class="close text-meta" type="button"></button>
       </div>
       <!-- /close button -->
 
@@ -190,20 +190,20 @@
           (click)="saveProject()"
 
           style="width: 141px"
-          class="button is-primary">
+          class="button">
           {{ 'COMMON.BUTTON.SAVE' | translate }}
         </button>
       </div>
       <!-- /save button -->
 
     </section>
-  </app-utility-modal>
+  </umius-modal>
 </ng-container>
 <!-- /modal for mails -->
 
 <!-- modal for warning : objective already assigned -->
 <ng-container *ngIf="!!canAccess(['edit', 'objective'])">
-  <app-utility-modal [(showModal)]="showWarningModal" [title]="'Objective Board'">
+  <umius-modal [(showModal)]="showWarningModal" [title]="'Objective Board'">
 
     <section class="modal-body">
       <p>{{ 'SHARED_FOLLOW_UP.MODAL.WARNING_1' | translate }}</p>
@@ -219,18 +219,18 @@
       <button class="button modal-cancel">Cancel</button>
       <button
         (click)="updateManyObjectives(pendingAction.answersIds, pendingAction.objective)"
-        class="button is-primary">
+        class="button">
         Confirm
       </button>
     </footer>
 
-  </app-utility-modal>
+  </umius-modal>
 </ng-container>
 <!-- /modal for warning : objective already assigned -->
 
 <!-- modal for sending emails : are you sure ? -->
 <ng-container *ngIf="!!(showSendModal && canAccess(['workflow', 'send']))">
-  <app-utility-modal [(showModal)]="showSendModal">
+  <umius-modal [(showModal)]="showSendModal">
     <section class="modal-body p-top-30 p-bottom-30 p-left-50 p-right-50">
 
       <!-- heading -->
@@ -242,7 +242,7 @@
 
       <!-- close button -->
       <div style="right: 15px; top: 21px" class="absolute">
-        <button (click)="closeModal($event)" class="close text-notify" type="button"></button>
+        <button (click)="closeModal($event)" class="close text-meta" type="button"></button>
       </div>
       <!-- /close button -->
 
@@ -272,7 +272,7 @@
                   {{ 'SHARED_FOLLOW_UP.INTERVIEW' | translate }}
                 </div>
 
-                <div style="line-height: 1" class="text-notify text-medium">
+                <div style="line-height: 1" class="text-meta text-medium">
                   {{ prosInterview.length }} {{ 'SHARED_FOLLOW_UP.CONTACTS_ADDED' | translate }}
                 </div>
 
@@ -288,7 +288,7 @@
                   {{ 'SHARED_FOLLOW_UP.OPENING' | translate }}
                 </div>
 
-                <div style="line-height: 1" class="text-notify text-medium">
+                <div style="line-height: 1" class="text-meta text-medium">
                   {{ prosOpening.length }} {{ 'SHARED_FOLLOW_UP.CONTACTS_ADDED' | translate }}
                 </div>
 
@@ -304,7 +304,7 @@
                   {{ 'SHARED_FOLLOW_UP.NOFOLLOW' | translate }}
                 </div>
 
-                <div style="line-height: 1" class="text-notify text-medium">
+                <div style="line-height: 1" class="text-meta text-medium">
                   {{ prosNoFollow.length }} {{ 'SHARED_FOLLOW_UP.CONTACTS_ADDED' | translate }}
                 </div>
 
@@ -324,13 +324,13 @@
         <button
           (click)="onClickConfirm($event)"
           [disabled]="loadingButton"
-          class="button is-lg is-primary">
+          class="button is-lg">
           {{ 'SHARED_FOLLOW_UP.BUTTON.INFORM_UMI' | translate }}
         </button>
       </div>
       <!-- /button -->
 
     </section>
-  </app-utility-modal>
+  </umius-modal>
 </ng-container>
 <!-- /modal for sending emails : are you sure ? -->

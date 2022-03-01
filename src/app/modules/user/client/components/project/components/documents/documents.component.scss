@@ -1,5 +1,5 @@
-@import "../../../../../../../../style/framework/src/variables";
-@import "../../../../../../../../style/framework/src/mixins";
+@import "~@umius/umi-style-framework/scss/variables";
+@import "~@umius/umi-style-framework/scss/mixins";
 
 #project-documents {
 
@@ -61,10 +61,10 @@
         }
 
         .document-cover {
-          @include absolute-full();
+          @include full-page(absolute);
           transition: background 0.3s ease-in-out;
           font-size: 16px;
-          color: $text-white-color;
+          color: $white-color;
           font-weight: $font-weight-bold;
           display: none;
           flex-direction: column;

@@ -45,7 +45,7 @@
         <!-- /export -->
 
         <!-- modal to import -->
-        <app-utility-modal [(showModal)]="isImportingAnswers" [title]="'Import Board'">
+        <umius-modal [(showModal)]="isImportingAnswers" [title]="'Import Board'">
 
           <section class="modal-body">
             <app-shared-import-answers
@@ -69,11 +69,11 @@
             </button>
           </footer>
 
-        </app-utility-modal>
+        </umius-modal>
         <!-- /modal to import -->
 
         <!-- errors modal -->
-        <app-utility-modal [(showModal)]="errorsModal" [title]="'Import errors'">
+        <umius-modal [(showModal)]="errorsModal" [title]="'Import errors'">
 
           <section *ngIf="importingErrors && slicedErrors" class="modal-body max-height-365">
             <ng-container *ngIf="importingErrors.length" >
@@ -92,7 +92,7 @@
             </ng-container>
           </section>
 
-        </app-utility-modal>
+        </umius-modal>
         <!-- /errors modal -->
 
 
@@ -118,7 +118,7 @@
 </div>
 
 <!-- sidebar insight preview -->
-<app-sidebar
+<umius-sidebar-full
   *ngIf="answers.length > 0 && (canAccess(['view']) || canAccess(['edit']))"
   [(template)]="sidebarValue">
   <app-sidebar-user-answer
@@ -133,5 +133,5 @@
     (sendNewPro)="updatePros($event)"
     [userAnswer]="sidebarAnswer">
   </app-sidebar-user-answer>
-</app-sidebar>
+</umius-sidebar-full>
 <!-- /sidebar insight preview -->

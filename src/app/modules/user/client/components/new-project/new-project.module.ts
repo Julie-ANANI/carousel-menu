@@ -11,11 +11,11 @@ import { AngularMyDatePickerModule } from 'angular-mydatepicker';
 import { NewProjectWelcomeComponent } from './new-project-welcome/new-project-welcome.component';
 import {MarketTestObjectivesModule} from '../market-test-objectives/market-test-objectives.module';
 import { NewProjectLastStepComponent } from './new-project-last-step/new-project-last-step.component';
-import {TextInputModule} from '../../../../utility/text-input/text-input.module';
 import {DatePickerModule} from '../../../../utility/date-picker/date-picker.module';
 import {NgxPageScrollModule} from 'ngx-page-scroll';
 import {NgxPageScrollCoreModule} from 'ngx-page-scroll-core';
 import {NewProjectRoutingModule} from './new-project-routing.module';
+import {TextInputModule} from '@umius/umi-common-component';
 
 @NgModule({
   imports: [
@@ -26,11 +26,11 @@ import {NewProjectRoutingModule} from './new-project-routing.module';
     ObjectivesSecondaryModule,
     MarketTestObjectivesModule,
     AngularMyDatePickerModule,
-    TextInputModule,
     DatePickerModule,
     NgxPageScrollModule,
     NewProjectRoutingModule,
-    NgxPageScrollCoreModule
+    NgxPageScrollCoreModule,
+    TextInputModule
   ],
   declarations: [
     NewProjectComponent,

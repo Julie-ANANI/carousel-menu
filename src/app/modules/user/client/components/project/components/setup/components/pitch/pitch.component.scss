@@ -1,4 +1,4 @@
-@import "../../../../../../../../../../style/framework/src/variables";
+@import "~@umius/umi-style-framework/scss/variables";
 
 #pitch {
   display: flex;
@@ -60,9 +60,9 @@
           }
 
           &.is-active {
-            background-color: $bg-draft-color;
-            color: $text-white-color;
-            border-color: $border-draft-color;
+            background-color: $draft-color;
+            color: $white-color;
+            border-color: $draft-color;
             transition: background-color, border 0.5s ease;
           }
 
@@ -85,7 +85,7 @@
     }
 
     &.is-questionnaire {
-      background-color: $bg-white-color;
+      background-color: $white-color;
 
       .content-wrapper {
         margin-right: auto;
@@ -103,7 +103,7 @@
           .icon {
 
             &.icon-arrow-down, &.icon-arrow-up {
-              color: $text-community-color;
+              color: $primary-color;
 
               &:before {
                 width: 10px;
@@ -116,7 +116,7 @@
 
           .label {
             background-color: #B2B2B2;
-            color: $text-white-color;
+            color: $white-color;
           }
 
         }

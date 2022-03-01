@@ -3,19 +3,18 @@ import { SearchService } from '../../../../services/search/search.service';
 import { TranslateNotificationsService } from '../../../../services/translate-notifications/translate-notifications.service';
 import { AuthService } from '../../../../services/auth/auth.service';
 import { Campaign } from '../../../../models/campaign';
-import { SidebarInterface } from '../../../sidebars/interfaces/sidebar-interface';
 import { first, takeUntil } from 'rxjs/operators';
 import { GeographySettings } from '../../../../models/innov-settings';
 import { RolesFrontService } from '../../../../services/roles/roles-front.service';
 import { isPlatformBrowser } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorFrontService } from '../../../../services/error/error-front.service';
-import { LocalStorageService } from '@umius/umi-common-component/services/localStorage';
 import { CampaignService } from '../../../../services/campaign/campaign.service';
 import { TargetPros } from '../../../../models/target-pros';
 import { JobsFrontService } from '../../../../services/jobs/jobs-front.service';
 
 import { Subject } from 'rxjs/Subject';
+import {UmiusLocalStorageService, UmiusSidebarInterface} from '@umius/umi-common-component';
 
 
 @Component({
@@ -54,7 +53,7 @@ export class SharedSearchProsComponent implements OnInit, OnDestroy {
 
   private _campaign: Campaign = <Campaign>{};
 
-  private _sidebarValue: SidebarInterface = <SidebarInterface>{};
+  private _sidebarValue: UmiusSidebarInterface = <UmiusSidebarInterface>{};
 
   private _googleQuota = 100000;
 
@@ -104,7 +103,7 @@ export class SharedSearchProsComponent implements OnInit, OnDestroy {
     private _rolesFrontService: RolesFrontService,
     private _authService: AuthService,
     private _campaignService: CampaignService,
-    private _localStorageService: LocalStorageService,
+    private _localStorageService: UmiusLocalStorageService,
     private _jobFrontService: JobsFrontService,
   ) {
   }
@@ -607,11 +606,11 @@ export class SharedSearchProsComponent implements OnInit, OnDestroy {
     return this._params;
   }
 
-  get sidebarValue(): SidebarInterface {
+  get sidebarValue(): UmiusSidebarInterface {
     return this._sidebarValue;
   }
 
-  set sidebarValue(value: SidebarInterface) {
+  set sidebarValue(value: UmiusSidebarInterface) {
     this._sidebarValue = value;
   }
 

@@ -1,4 +1,4 @@
-import {Multiling} from './multiling';
+import {UmiusMultilingInterface} from '@umius/umi-common-component';
 
 export interface QuestionReportEntry {
   lang: string;
@@ -12,6 +12,6 @@ export interface QuestionReport {
   entry?: Array<QuestionReportEntry>;
 
   // TODO remove
-  title?: Multiling;
-  subtitle?: Multiling;
+  title?: UmiusMultilingInterface;
+  subtitle?: UmiusMultilingInterface;
 }

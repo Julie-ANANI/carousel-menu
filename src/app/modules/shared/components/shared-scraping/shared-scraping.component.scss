@@ -1,5 +1,5 @@
-@import "../../../../../style/framework/src/variables";
-@import "../../../../../style/framework/src/mixins";
+@import "~@umius/umi-style-framework/scss/variables";
+@import "~@umius/umi-style-framework/scss/mixins";
 
 #hiddenLinks a {
   font-size: 12px;
@@ -43,7 +43,7 @@
       }
 
       .title-secondary {
-        color: $text-meta-color;
+        color: $meta-color;
         font-size: 16px;
         margin-right: 10px;
       }
@@ -61,20 +61,20 @@
       }
 
       .title-secondary {
-        color: $text-meta-color;
+        color: $meta-color;
         font-size: 16px;
         margin-right: 10px;
       }
 
       .line {
-        color: $text-meta-color;
+        color: $meta-color;
       }
 
       .popover {
         margin-bottom: 15px;
 
         .text-help {
-          color: $text-primary-color;
+          color: $primary-color;
           font-size: 14px;
           cursor: default;
         }
@@ -96,7 +96,7 @@
 
               }
 
-              .shape.is-circle {
+              .shape.is-circled {
                 margin-left: 5px;
                 margin-right: 11px;
               }
@@ -128,7 +128,7 @@
           position: absolute;
           right: 10px;
           bottom: 4px;
-          color: $text-primary-color;
+          color: $primary-color;
 
           &:hover {
             cursor: pointer;
@@ -142,7 +142,7 @@
         display: flex;
         justify-content: space-between;
         font-size: 12px;
-        color: $text-meta-color;
+        color: $meta-color;
         font-weight: 600;
       }
 
@@ -157,7 +157,7 @@
   .loader-wrapper {
 
     .loading::after {
-      border-color: $text-primary-color;
+      border-color: $primary-color;
       border-right-color: transparent;
       border-top-color: transparent;
     }
@@ -167,7 +167,7 @@
   .analysis-content, .suggested-content, .profile-content {
     font-size: 14px;
     font-weight: 600;
-    color: $text-draft-color;
+    color: $draft-color;
     padding-top: 2px;
     padding-bottom: 25px;
     border-bottom: 1px solid $border-default-color;
@@ -208,7 +208,7 @@
           }
 
           .fa-plus-circle {
-            color: $text-meta-color;
+            color: $meta-color;
             font-size: 20px;
             vertical-align: middle;
 
@@ -258,7 +258,7 @@
           margin-bottom: 15px;
 
           .text-title:hover {
-            color: $text-primary-color;
+            color: $primary-color;
             cursor: pointer;
           }
 

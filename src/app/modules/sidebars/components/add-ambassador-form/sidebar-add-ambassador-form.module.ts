@@ -5,7 +5,6 @@ import { TranslateModule } from '@ngx-translate/core';
 import { AddAmbassadorFormComponent } from './add-ambassador-form.component';
 import { AutoCompleteInputModule } from '../../../utility/auto-complete-input/auto-complete-input.module';
 import { SharedTagsModule } from '../../../shared/components/shared-tags/shared-tags.module';
-import { SidebarModule } from '../../templates/sidebar/sidebar.module';
 
 @NgModule({
   imports: [
@@ -14,8 +13,7 @@ import { SidebarModule } from '../../templates/sidebar/sidebar.module';
     ReactiveFormsModule,
     TranslateModule.forChild(),
     AutoCompleteInputModule,
-    SharedTagsModule,
-    SidebarModule
+    SharedTagsModule
   ],
   declarations: [
     AddAmbassadorFormComponent

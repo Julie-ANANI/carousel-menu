@@ -6,11 +6,11 @@ import {SharedSearchHistoryModule} from '../../../../../shared/components/shared
 import {AdminStatsBannerModule} from '../../admin-stats-banner/admin-stats-banner.module';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        SharedSearchHistoryModule,
-        AdminStatsBannerModule,
-    ],
+  imports: [
+    CommonModule,
+    SharedSearchHistoryModule,
+    AdminStatsBannerModule,
+  ],
   declarations: [
     AdminCampaignHistoryComponent
   ]

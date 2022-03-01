@@ -1,5 +1,5 @@
-@import "../style/framework/src/variables";
-@import "../style/framework/src/mixins";
+@import "~@umius/umi-style-framework/scss/variables";
+@import "~@umius/umi-style-framework/scss/mixins";
 
 .shared-market-report {
 
@@ -15,11 +15,11 @@
       box-shadow: $box-shadow;
       border-radius: 6px;
       font-size: 15px;
-      background-color: $bg-white-color;
+      background-color: $white-color;
     }
 
     .op-text {
-      color: $text-primary-color;
+      color: $highlight-color;
       margin-top: 25px;
       font-size: 14px;
       margin-bottom: 15px;
@@ -43,7 +43,7 @@
           }
 
           &:hover {
-            box-shadow: $box-shadow-7;
+            box-shadow: 0 0 55px 0 rgba(0,0,0,0.31);
           }
 
         }
@@ -173,7 +173,7 @@
         text-align: center;
         width: 360px;
         background-color: #2E6188;
-        color: $text-white-color;
+        color: $white-color;
         border-top-right-radius: 6px;
         border-bottom-right-radius: 6px;
       }

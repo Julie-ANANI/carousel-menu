@@ -11,24 +11,24 @@ import { AdminBatchesDisplayModule } from '../admin-batches-display/admin-batche
 import { MessageErrorModule } from '../../../../utility/messages/message-error/message-error.module';
 import { AdminProjectsRoutingModule } from './admin-projects-routing.module';
 import { AdminProjectModule } from '../admin-project/admin-project.module';
-import { TableComponentsModule } from '@umius/umi-common-component/table';
 import {AdminProjectDoneModule} from '../admin-project-done-modal/admin-project-done.module';
+import {TableModule} from '@umius/umi-common-component';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        ReactiveFormsModule,
-        RouterModule,
-        TranslateModule.forChild(),
-        PipeModule,
-        RouterModule,
-        AdminBatchesDisplayModule,
-        MessageErrorModule,
-        AdminProjectsRoutingModule,
-        AdminProjectModule,
-        TableComponentsModule,
-        AdminProjectDoneModule
-    ],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    RouterModule,
+    TranslateModule.forChild(),
+    PipeModule,
+    RouterModule,
+    AdminBatchesDisplayModule,
+    MessageErrorModule,
+    AdminProjectsRoutingModule,
+    AdminProjectModule,
+    AdminProjectDoneModule,
+    TableModule
+  ],
   declarations: [
     AdminProjectsComponent
   ],

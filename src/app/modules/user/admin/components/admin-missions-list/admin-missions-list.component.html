@@ -5,7 +5,7 @@
   <umius-table [(config)]="config" [data]="tableInfos" (editRow)="editMission($event)" (removeRows)="removeMissions($event)"></umius-table>
 </div>
 
-<app-utility-modal [(showModal)]="showModalAdd" [title]="'COMMON.MODAL.TITLE_CREATE'">
+<umius-modal [(showModal)]="showModalAdd" [title]="'COMMON.MODAL.TITLE_CREATE'">
 
   <section class="modal-body">
     <div class="form-group">
@@ -25,8 +25,8 @@
     <button (click)="onClickCreate($event)" [disabled]="!newMissionName" class="button is-primary">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
   </footer>
 
-</app-utility-modal>
+</umius-modal>
 
-<app-sidebar [(template)]="sidebarValue">
+<umius-sidebar-full [(template)]="sidebarValue">
   <app-mission-form [(mission)]="selectedMission"></app-mission-form>
-</app-sidebar>
+</umius-sidebar-full>

@@ -7,7 +7,7 @@ import {SharedScrapingModule} from '../../../../../shared/components/shared-scra
 import { FormsModule } from '@angular/forms';
 import { SharedImportProsModule } from '../../../../../shared/components/shared-import-pros/shared-import-pros.module';
 import { MessageTemplateModule } from '../../../../../utility/messages/message-template/message-template.module';
-import { ModalModule } from '../../../../../utility/modals/modal/modal.module';
+import {ModalModule} from '@umius/umi-common-component';
 
 @NgModule({
   imports: [
@@ -17,7 +17,7 @@ import { ModalModule } from '../../../../../utility/modals/modal/modal.module';
     FormsModule,
     SharedImportProsModule,
     MessageTemplateModule,
-    ModalModule
+    ModalModule,
   ],
   declarations: [
     AdminCampaignSearchComponent

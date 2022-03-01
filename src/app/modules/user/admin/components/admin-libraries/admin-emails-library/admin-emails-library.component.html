@@ -1,11 +1,11 @@
 <section id="admin-emails-library-component">
 
   <div class="text-right">
-    <button type="button" (click)="onClickAdd()" class="btn btn-primary">Add</button>
+    <button type="button" (click)="onClickAdd()" class="button">Add</button>
   </div>
 
   <ng-container *ngIf="emails.length > 0">
-    <div class="section-light-pad rm-pad-bottom">
+    <div class="p-top-25">
       <umius-table
         [(config)]="config"
         [data]="tableInfos"
@@ -16,7 +16,7 @@
   </ng-container>
 
   <ng-container *ngIf="emails.length === 0">
-    <div class="section-pad rm-pad-bottom">
+    <div class="p-top-50">
       <app-message-template [widthMax]="'320px'">
         Don't have any emails? Create the email by clicking on "Add" button.
       </app-message-template>
@@ -27,7 +27,7 @@
 
 
 <!-- sidebar to edit email -->
-<app-sidebar [(template)]="sidebarValue">
+<umius-sidebar-full [(template)]="sidebarValue">
   <app-sidebar-workflow
     [id]="getId()"
     [emailsObject]="emailToEdit"
@@ -35,11 +35,11 @@
     [signatures]="signatures"
     [inputLanguage]="language">
   </app-sidebar-workflow>
-</app-sidebar>
+</umius-sidebar-full>
 <!-- /sidebar to edit email -->
 
 <!-- modal to add the new email -->
-<app-utility-modal [(showModal)]="modalAdd" [title]="'COMMON.MODAL.TITLE_CREATE'">
+<umius-modal [(showModal)]="modalAdd" [title]="'COMMON.MODAL.TITLE_CREATE'">
 
   <div class="form-group">
     <label class="form-label" for="add-email">Email Name</label>
@@ -53,9 +53,10 @@
   </div>
 
   <div class="modal-footer">
-    <button class="btn btn-sm btn-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
-    <button class="btn btn-sm btn-primary" (click)="onClickConfirm()" [disabled]="!newEmailName">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
+    <button class="button modal-cancel is-sm">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
+    <button class="button is-sm" (click)="onClickConfirm()"
+            [disabled]="!newEmailName">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
   </div>
 
-</app-utility-modal>
+</umius-modal>
 <!-- /modal to add the new email -->

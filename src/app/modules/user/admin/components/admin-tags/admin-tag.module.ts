@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
-import { SharedSortModule } from '../../../../shared/components/shared-sort/shared-sort.module';
 import { PipeModule } from '../../../../../pipe/pipe.module';
 import { AdminTagsComponent } from './admin-tags.component';
 import { AdminTagListComponent } from './admin-tag-list/admin-tag-list.component';
@@ -12,21 +11,21 @@ import { AdminTagAttachmentsSubsetComponent } from './admin-tag-attachment-list/
 import { AdminTagNewModalComponent } from './admin-tag-new/admin-tag-new-modal/admin-tag-new-modal.component';
 import { RouterModule } from '@angular/router';
 import { AutoCompleteInputModule } from '../../../../utility/auto-complete-input/auto-complete-input.module';
-import { PaginationTemplate1Module } from '../../../../utility/paginations/pagination-template-1/pagination-template-1.module';
 import {AdminTagsRoutingModule} from './admin-tags-routing.module';
+import {PaginationModule, SortModule} from '@umius/umi-common-component';
 
 @NgModule({
   imports: [
     CommonModule,
-    SharedSortModule,
     TranslateModule.forChild(),
     PipeModule,
     AutoCompleteInputModule,
-    PaginationTemplate1Module,
     RouterModule,
     FormsModule,
     ReactiveFormsModule,
-    AdminTagsRoutingModule
+    AdminTagsRoutingModule,
+    SortModule,
+    PaginationModule
   ],
   declarations: [
     AdminTagsComponent,

@@ -4,17 +4,16 @@ import { makeStateKey, TransferState } from '@angular/platform-browser';
 import { EMPTY, Observable } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { isPlatformServer } from '@angular/common';
-import { Config } from '@umius/umi-common-component/models';
-import {ConfigService} from '@umius/umi-common-component/services/config';
 import { Response } from '../../models/response';
 import { UserService } from '../../services/user/user.service';
+import {UmiusConfigInterface, UmiusConfigService} from '@umius/umi-common-component';
 
 const USERS_KEY = makeStateKey('users');
 
 @Injectable({providedIn: 'root'})
 export class UsersResolver implements Resolve<Response> {
 
-  private _config: Config = {
+  private _config: UmiusConfigInterface = {
     fields: 'id company jobTitle created domain location firstName lastName',
     limit: '10',
     offset: '0',
@@ -25,7 +24,7 @@ export class UsersResolver implements Resolve<Response> {
   constructor(@Inject(PLATFORM_ID) private _platformId: Object,
               private _transferState: TransferState,
               private _userService: UserService,
-              private _configService: ConfigService) { }
+              private _configService: UmiusConfigService) { }
 
   resolve(activatedRouteSnapshot: ActivatedRouteSnapshot, routerStateSnapshot: RouterStateSnapshot): Observable<Response> {
 
@@ -57,7 +56,7 @@ export class UsersResolver implements Resolve<Response> {
 
   }
 
-  get config(): Config {
+  get config(): UmiusConfigInterface {
     return this._config;
   }
 

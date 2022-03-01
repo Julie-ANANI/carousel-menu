@@ -1,5 +1,5 @@
-import {Multiling} from './multiling';
 import {EmailType} from "./seniority-classification";
+import {UmiusMultilingInterface} from '@umius/umi-common-component';
 
 export interface JobClassificationCategoryLabel {
   lang: string;
@@ -28,10 +28,10 @@ export interface JobsClassification {
    */
   categories: [
     {
-      label: Multiling;
+      label: UmiusMultilingInterface;
       count: number;
       jobs: [{
-        label: Multiling;
+        label: UmiusMultilingInterface;
         count: number;
       }];
     }

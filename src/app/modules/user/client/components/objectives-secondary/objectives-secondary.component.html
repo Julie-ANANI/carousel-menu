@@ -1,7 +1,7 @@
 <div id="objectives-secondary">
 
   <!-- options -->
-  <div class="d-flex flex-wrap options-wrapper m-left-auto m-right-auto p-bottom-30">
+  <div class="d-flex flex-wrap-wrap options-wrapper m-left-auto m-right-auto p-bottom-30">
     <div *ngFor="let objective of objectiveOptions" class="popover col-sm-12 col-6">
 
       <label [ngClass]="{'text-white': isTextWhite}" class="form-checkbox">
@@ -15,7 +15,7 @@
       </label>
 
       <div *ngIf="isEnabledOptions" class="popover-container">
-        <div class="p-left-10 p-right-15 p-top-15 p-bottom-15 text-center">
+        <div class="p-left-10 p-right-15 p-top-15 p-bottom-15 text-center bg-white">
           {{ objective[currentLang]['description'] }}
         </div>
       </div>

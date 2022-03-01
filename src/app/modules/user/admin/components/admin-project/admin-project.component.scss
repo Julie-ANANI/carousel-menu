@@ -1,4 +1,4 @@
-@import "../../../../../../style/framework/src/variables";
+@import "~@umius/umi-style-framework/scss/variables";
 
 #admin-project {
 
@@ -42,14 +42,14 @@
     }
 
     *:focus + .popover-container, &:hover .popover-container, .popover-container:hover, &.active + .popover-container {
-      border-bottom: 4px solid $secondary-color;
+      border-bottom: 4px solid $primary-color;
       display: block;
       opacity: 1;
       transform: translate(-50%, calc(-100% - 12px)) scale(1);
     }
 
     *:focus + .popover-container::before, &:hover .popover-container::before, .popover-container:hover::before, &.active + .popover-container::before {
-      border-top-color: $secondary-color;
+      border-top-color: $primary-color;
       transform: translate(-50%, calc(100% + 12px)) scale(1);
     }
 
@@ -68,13 +68,13 @@
 
       :focus + .popover-container, &:hover .popover-container, .popover-container:hover, &.active + .popover-container {
         border: none;
-        border-top: 4px solid $secondary-color;
+        border-top: 4px solid $primary-color;
         transform: translate(-50%, 0) scale(1);
       }
 
       :focus + .popover-container::before, &:hover .popover-container::before, .popover-container:hover::before, &.active + .popover-container::before {
         transform: translate(calc(50% - 8px), 0) scale(1);
-        border-bottom-color: $secondary-color;
+        border-bottom-color: $primary-color;
       }
 
     }

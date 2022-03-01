@@ -1,19 +1,19 @@
-@import "../../../../../../style/framework/src/variables";
-@import "../../../../../../style/framework/src/mixins";
+@import "~@umius/umi-style-framework/scss/variables";
 
 .answer-question {
 
   .answer-wrapper {
-    color: $text-success-color;
+    color: $success-color;
 
     .label-answer {
-      @include label-variant($text-dark-color, #F8F4F4);
+      background: #F8F4F4;
+      color: $dark-color;
       font-size: 12px;
     }
 
     .sa-thumbs-up {
       margin-left: $unit-2;
-      color: $text-success-color;
+      color: $success-color;
 
       i {
         vertical-align: 4px;
@@ -23,7 +23,7 @@
 
     .sa-thumbs-down {
       margin-left: $unit-2;
-      color: $text-alert-color;
+      color: $alert-color;
 
       i {
         vertical-align: -1px;
@@ -69,8 +69,8 @@
   font-weight: $font-weight-bold;
 }
 
-.answer-question .answer-wrapper .text-primary-dark {
-  color: $text-meta-color;
+.answer-question .answer-wrapper .text-dark {
+  color: $meta-color;
   font-style: italic;
 }
 
@@ -80,8 +80,8 @@
   font-weight: $font-weight-bold;
 }
 
-.answer-question .answer-wrapper .text-primary-dark {
-  color: $text-meta-color;
+.answer-question .answer-wrapper .text-dark {
+  color: $meta-color;
   opacity: 0.33;
   font-style: italic;
 }

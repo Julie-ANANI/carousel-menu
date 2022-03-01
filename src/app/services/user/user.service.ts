@@ -3,8 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { User } from '../../models/user.model';
 import { Tag } from '../../models/tag';
-import { Config } from '@umius/umi-common-component/models';
 import { environment } from '../../../environments/environment';
+import {UmiusConfigInterface} from '@umius/umi-common-component';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
@@ -80,7 +80,7 @@ export class UserService {
     return this._http.get<Array<User>>('/user', { params: config });
   }
 
-  public getCommercials(config?: Config): Observable<Array<User>> {
+  public getCommercials(config?: UmiusConfigInterface): Observable<Array<User>> {
     const _config = config || {
       roles: 'commercial',
       fields: '_id firstName lastName email phone',

@@ -23,11 +23,11 @@
 
       <!-- sign in -->
       <div class="flex-end">
-        <span class="text-13 text-notify m-right-20">{{ 'SIGN_UP.HAVE_ACCOUNT' | translate }}</span>
+        <span class="text-13 text-meta m-right-20">{{ 'SIGN_UP.HAVE_ACCOUNT' | translate }}</span>
         <button
           [id]="'signup-btn-signin'"
           [routerLink]="'/login'"
-          class="button is-primary text-xs is-sm is-rounded is-outlined"
+          class="button text-xs is-sm is-rounded is-outlined"
           type="button">
           {{ 'LOG_IN.LOG_IN_BTN' | translate }}
         </button>
@@ -49,9 +49,9 @@
               (click)="onSignUpClick($event)"
               [id]="'signup-btn-create-account-email'"
               [disabled]="isCreatingAccount || isCreatingAccountLinkedin"
-              class="button is-primary icon-left text-sm is-xl gtm-signup-email"
+              class="button text-sm is-lg gtm-signup-email"
               type="button">
-              <i class="fas fa-envelope"></i> {{ 'SIGN_UP.SIGN_UP_EMAIL' | translate }}
+              {{ 'SIGN_UP.SIGN_UP_EMAIL' | translate }}
             </button>
           </div>
           <!-- /sign up button  -->
@@ -60,7 +60,7 @@
           <ng-container *ngIf="isDomainUMI">
 
             <div class="text-center p-top-25 p-bottom-30">
-              <span class="or-divider"> {{ 'COMMON.OR' | translate }} </span>
+              <div class="divider" [attr.data-content]="'COMMON.OR' | translate"></div>
             </div>
 
             <!-- linkedin -->
@@ -69,10 +69,10 @@
                 (click)="linkedInEvent()"
                 [disabled]="isCreatingAccount || isCreatingAccountLinkedin"
                 [id]="'signup-btn-create-account-linkedin'"
-                class="button is-secondary icon-left text-sm is-xl gtm-signup-linkedin">
+                class="button text-sm is-lg gtm-signup-linkedin">
                 <span *ngIf="isCreatingAccountLinkedin" class="loading is-white"></span>
                 <ng-container *ngIf="!isCreatingAccountLinkedin">
-                  <i class="fab fa-1x fa-linkedin-in"></i> {{ 'SIGN_UP.SIGN_UP_LINKEDIN' | translate }}
+                  <i class="fab fa-linkedin-in icon-left"></i> {{ 'SIGN_UP.SIGN_UP_LINKEDIN' | translate }}
                 </ng-container>
               </button>
             </div>
@@ -92,11 +92,11 @@
 </div>
 
 <!-- sign up sidebar -->
-<app-sidebar [(template)]="sidebarValue">
+<umius-sidebar-full [(template)]="sidebarValue">
   <app-sidebar-signup-form
     (finalOutput)="createUser($event)"
     [isCreating]="isCreatingAccount"
     [sidebarState]="sidebarValue.animate_state">
   </app-sidebar-signup-form>
-</app-sidebar>
+</umius-sidebar-full>
 <!-- /sign up sidebar -->

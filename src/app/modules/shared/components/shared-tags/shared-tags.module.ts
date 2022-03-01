@@ -7,22 +7,22 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedTagsComponent } from './shared-tags.component';
 
 import { NguiAutoCompleteModule } from '../../../utility/auto-complete/auto-complete.module';
-import { ModalModule } from '../../../utility/modals/modal/modal.module';
 import { PipeModule } from '../../../../pipe/pipe.module';
 import {LangEntryPipeModule} from '../../../../pipe/lang-entry/langEntryPipe.module';
+import {ModalModule} from '@umius/umi-common-component';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        TranslateModule.forChild(),
-        FormsModule,
-        ModalModule,
-        ReactiveFormsModule,
-        NguiAutoCompleteModule,
-        RouterModule,
-        PipeModule,
-        LangEntryPipeModule
-    ],
+  imports: [
+    CommonModule,
+    TranslateModule.forChild(),
+    FormsModule,
+    ReactiveFormsModule,
+    NguiAutoCompleteModule,
+    RouterModule,
+    PipeModule,
+    LangEntryPipeModule,
+    ModalModule
+  ],
   declarations: [
     SharedTagsComponent
   ],

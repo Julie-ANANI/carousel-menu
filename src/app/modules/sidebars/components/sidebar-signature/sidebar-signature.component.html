@@ -4,7 +4,7 @@
 
 
       <!-- actions -->
-      <div class="flex-between flex-wrap">
+      <div class="flex-between flex-wrap-wrap">
 
         <div class="d-flex p-bottom-20 align-center">
 
@@ -24,7 +24,7 @@
           <div class="m-left-25 m-bottom-15">
             <label class="form-switch">
               <input (change)="editionMode = !editionMode" type="checkbox">
-              <i class="form-icon"></i><span class="text-notify text-medium text-sm">Preview</span>
+              <i class="form-icon"></i><span class="text-meta text-medium text-sm">Preview</span>
             </label>
           </div>
 
@@ -34,7 +34,7 @@
           <button
             (click)="onClickSave()"
             [innerText]="'COMMON.BUTTON.SAVE'"
-            class="btn btn-sm btn-primary"
+            class="button is-sm"
             translate
             type="submit">
           </button>

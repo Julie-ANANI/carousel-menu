@@ -4,7 +4,7 @@
     <!-- button create -->
     <section *ngIf="canAccess(['add'])" class="text-right p-bottom-30">
       <button (click)="openSidebar($event, 'CREATE')" class="button is-primary is-sm" type="button">
-        <i class="fas fa-plus m-no-left"></i>
+        <i class="icon icon-plus icon-left"></i>
         Create enterprise
       </button>
     </section>
@@ -33,7 +33,7 @@
 </div>
 
 <!-- sidebar -->
-<app-sidebar [(template)]="sidebarValue">
+<umius-sidebar-full [(template)]="sidebarValue">
   <app-sidebar-enterprises
     (finalOutput)="updateEnterprise($event)"
     [enterprise]="selectedEnterprise._id"
@@ -42,7 +42,7 @@
     [sidebarState]="sidebarValue.animate_state"
     [type]="sidebarValue.type">
   </app-sidebar-enterprises>
-</app-sidebar>
+</umius-sidebar-full>
 <!-- /sidebar -->
 
 

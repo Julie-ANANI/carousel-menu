@@ -1,5 +1,5 @@
-@import "../../../../../style/framework/src/variables";
-@import "../../../../../style/framework/src/mixins";
+@import "~@umius/umi-style-framework/scss/variables";
+@import "~@umius/umi-style-framework/scss/mixins";
 
 #sidebar-enterprise {
   .syntax-info {
@@ -39,7 +39,7 @@
         cursor: pointer;
         background: $bg-overlay-dark-color;
         border-color: $bg-overlay-dark-color;
-        color: $text-white-color;
+        color: $white-color;
       }
 
     }
@@ -47,7 +47,7 @@
   }
 
   .input-wrapper {
-    @include flex-between();
+    @include flex-position(space-between);
 
     label {
       width: 80%;
@@ -65,7 +65,7 @@
 
     li {
       @include control-transition();
-      @include flex-between();
+      @include flex-position(space-between);
       margin-top: 10px;
       border-radius: $border-radius;
       background-color: #F8F4F4;

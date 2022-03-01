@@ -44,7 +44,7 @@
       </ng-container>
 
       <div class="p-top-25 text-center">
-        <button class="btn btn-primary" (click)="acceptTerms($event)" [disabled]="isAdmin && !tokenEmail">
+        <button class="button" (click)="acceptTerms($event)" [disabled]="isAdmin && !tokenEmail">
           {{ 'COMMON.ACCEPT' | translate }}
         </button>
       </div>

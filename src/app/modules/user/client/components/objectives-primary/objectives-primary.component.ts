@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { Multiling } from '../../../../../models/multiling';
 import { Objective, ObjectivesPrincipal } from '../../../../../models/static-data/missionObjectives';
+import {UmiusMultilingInterface} from '@umius/umi-common-component';
 
 /***
  * this module is to select the primary objective for the client project.
@@ -27,15 +27,15 @@ import { Objective, ObjectivesPrincipal } from '../../../../../models/static-dat
 
 export class ObjectivesPrimaryComponent {
 
-  @Input() set objective(value: Multiling) {
+  @Input() set objective(value: UmiusMultilingInterface) {
     this._objective = value;
   };
 
-  @Output() objectiveChange: EventEmitter<Multiling> = new EventEmitter<Multiling>();
+  @Output() objectiveChange: EventEmitter<UmiusMultilingInterface> = new EventEmitter<UmiusMultilingInterface>();
 
   private readonly _currentLang = this._translateService.currentLang;
 
-  private _objective: Multiling = {
+  private _objective: UmiusMultilingInterface = {
     en: '', fr: ''
   };
 
@@ -53,7 +53,7 @@ export class ObjectivesPrimaryComponent {
     return this._objective[this._currentLang] === objective[this._currentLang]['label'];
   }
 
-  get objective(): Multiling {
+  get objective(): UmiusMultilingInterface {
     return this._objective;
   }
 

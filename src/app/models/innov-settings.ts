@@ -1,4 +1,4 @@
-import {Country} from './country';
+import {UmiusCountryInterface} from '@umius/umi-common-component';
 
 export interface GeographySettings {
   continentTarget: {
@@ -9,8 +9,8 @@ export interface GeographySettings {
     readonly americaNord: boolean;
     readonly americaSud: boolean;
   };
-  exclude: Array<Country>;
-  include: Array<Country>;
+  exclude: Array<UmiusCountryInterface>;
+  include: Array<UmiusCountryInterface>;
   comments?: string;
 }
 

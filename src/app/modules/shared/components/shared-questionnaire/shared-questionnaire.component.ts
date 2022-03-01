@@ -25,7 +25,7 @@ export class SharedQuestionnaireComponent implements OnInit {
   @Input() accessPath: Array<string> = [];
 
   /**
-   * can be edit or not.
+   * can be edited or not.
    */
   @Input() isEditable = false;
 

@@ -1,5 +1,3 @@
-@import "../../../../../../../style/framework/src/variables";
-
 .ranking-group {
   max-width: 300px;
 
@@ -8,6 +6,10 @@
     text-align: left;
     padding-left: 10px;
     padding-right: 10px;
+
+    .shape.is-circled {
+      margin-right: 8px;
+    }
 
     &:not(:last-child) {
       margin-bottom: 10px;

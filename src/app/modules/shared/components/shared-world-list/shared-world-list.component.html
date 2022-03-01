@@ -1,6 +1,6 @@
 <div class="filter-wrapper animate-fade is-3">
 
-  <label class="form-checkbox">
+  <label class="form-checkbox is-sm">
     <input
       type="checkbox"
       id="select-all-continent"
@@ -13,7 +13,7 @@
   <div [id]="continent" *ngFor="let continent of continents">
     <app-shared-toggle-list>
       <div slot="header">
-        <label class="form-checkbox">
+        <label class="form-checkbox is-sm">
           <input
             type="checkbox"
             [name]="continent"
@@ -26,7 +26,7 @@
       </div>
       <div slot="body">
         <div *ngFor="let country of continentCountries[continent]" class="m-left-15">
-          <label class="form-checkbox">
+          <label class="form-checkbox is-sm">
             <input
               type="checkbox"
               [name]="country.code"

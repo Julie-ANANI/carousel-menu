@@ -4,11 +4,11 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { CampaignService } from '../../../../../../services/campaign/campaign.service';
 import { TranslateNotificationsService } from '../../../../../../services/translate-notifications/translate-notifications.service';
 import { Campaign } from '../../../../../../models/campaign';
-import { Table } from '@umius/umi-common-component/models';
 import { Batch } from '../../../../../../models/batch';
 import { first } from 'rxjs/operators';
 import { HttpErrorResponse } from "@angular/common/http";
 import { ErrorFrontService } from "../../../../../../services/error/error-front.service";
+import {Table} from '@umius/umi-common-component';
 
 @Component({
   selector: 'app-admin-campaign-abtesting',

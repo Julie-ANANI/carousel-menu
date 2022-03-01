@@ -3,7 +3,6 @@ import { ERROR } from './error_en';
 import { ADMIN_USERS } from '../modules/user/admin/components/admin-users/i18n/en';
 import { MY_ACCOUNT } from '../modules/user/client/components/account/i18n/en';
 import { MARKET_REPORT } from '../modules/shared/components/shared-market-report/i18n/en';
-import { DASHBOARD } from '../modules/user/admin/components/admin-dashboard/i18n/en';
 import { PRESETS } from '../modules/user/admin/components/admin-libraries/admin-presets/i18n/en';
 import { CAMPAIGNS } from '../modules/user/admin/components/admin-campaigns/i18n/en';
 import { SEARCH } from '../modules/user/admin/components/admin-search/i18n/en';
@@ -15,7 +14,6 @@ import { SIDEBAR_USER_ANSWER } from '../modules/sidebars/components/sidebar-user
 import { LOG_IN } from '../modules/common/login/i18n/en';
 import { SIGN_UP } from '../modules/common/signup/i18n/en';
 import { WELCOME } from '../modules/common/welcome/i18n/en';
-import { PAGINATION } from '../modules/utility/paginations/i18n/en';
 import { SHARE } from '../modules/public/share/i18n/en';
 import { FOOTER } from '../modules/common/footer/i18n/en';
 import { HEADER } from '../modules/common/header/i18n/en';
@@ -62,9 +60,7 @@ export const en = {
   'SIGN_UP': SIGN_UP,
   'WELCOME': WELCOME,
   'HEADER': HEADER,
-  'PAGINATION': PAGINATION,
   'PROJECT': PROJECT,
-  'DASHBOARD': DASHBOARD,
   'PRESETS': PRESETS,
   'CAMPAIGNS': CAMPAIGNS,
   'SEARCH': SEARCH,

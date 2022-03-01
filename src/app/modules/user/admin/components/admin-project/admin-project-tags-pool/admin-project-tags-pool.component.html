@@ -39,7 +39,7 @@
 
 
 <!-- sidebar -->
-<app-sidebar *ngIf="canAccess()" [(template)]="sidebarValue">
+<umius-sidebar-full *ngIf="canAccess()" [(template)]="sidebarValue">
   <app-sidebar-tags
     (newTags)="onNewTags($event)"
     (updateTag)="onUpdateTag($event)"
@@ -50,5 +50,5 @@
     [tag]="tagToEdit"
     [type]="sidebarValue.type">
   </app-sidebar-tags>
-</app-sidebar>
+</umius-sidebar-full>
 <!-- /sidebar -->

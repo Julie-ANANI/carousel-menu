@@ -28,7 +28,6 @@ export class ApiUrlInterceptor implements HttpInterceptor {
     const newParameters: any = {
       url: environment.apiGatewayUrl + req.url,
       withCredentials: true,
-      Host: 'httpbin.org'
     };
     this._setCookie(newParameters, req);
     this._setJwtoken(newParameters, req);
@@ -46,7 +45,6 @@ export class ApiUrlInterceptor implements HttpInterceptor {
 
   private _setCookie(newParameters: any, req: HttpRequest<any>) {
     if (isPlatformServer(this._platformId) && this._cookieService.get('connect.sid')) {
-      console.log('add cookie');
       newParameters.headers = req.headers
         .append('Cookie', `connect.sid=${this._cookieService.get('connect.sid')}`);
     }

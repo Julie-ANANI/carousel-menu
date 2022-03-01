@@ -24,7 +24,7 @@
         <button
           [disabled]="!canAdd"
           [ngClass]="{'tooltip': canAdd, 'is-xs': isSmall, 'is-sm': !isSmall}"
-          class="button is-circled is-primary"
+          class="button is-circled"
           data-tooltip="Add tag">
           <i class="icon icon-plus"></i>
         </button>
@@ -36,12 +36,12 @@
 
   <!-- displaying tags -->
   <!--IT's for EDIT TAGS-->
-  <div *ngIf="tags.length" style="margin: -4px" class="flex-wrap d-flex p-top-10">
+  <div *ngIf="tags.length" style="margin: -4px" class="flex-wrap-wrap d-flex p-top-10">
     <ng-container *ngFor="let tag of tags">
       <ng-container *ngIf="tag.entry && tag.entry.length; else noTagsEntry">
         <div
           [title]="tag.entry | langEntry:'description':currentLang:true"
-          class="label is-tag is-rounded">
+          class="label is-draft is-rounded">
           <i class="fas fa-tag icon-left"></i>
           {{ tag.entry | langEntry:'label':currentLang:true }}
           <i (click)="onRemoveTag(tag)" *ngIf="editMode" class="icon icon-cross icon-right c-hand"></i>
@@ -50,7 +50,7 @@
       <ng-template #noTagsEntry class="d-none">
         <div
           [title]="tag | langEntry:'description':currentLang:true"
-          class="label is-tag is-rounded">
+          class="label is-draft is-rounded">
           <i class="fas fa-tag icon-left"></i>
           {{ tag | langEntry:'label':currentLang:true }}
           <i (click)="onRemoveTag(tag)" *ngIf="editMode" class="icon icon-cross icon-right c-hand"></i>
@@ -64,7 +64,7 @@
 
 
 <!-- modal to create new tag -->
-<app-utility-modal *ngIf="editMode" [(showModal)]="showModal" [title]="'Creation Board'">
+<umius-modal *ngIf="editMode" [(showModal)]="showModal" [title]="'Creation Board'">
 
   <section class="modal-body">
     Do you really want to create a new tag?
@@ -77,5 +77,5 @@
     <button (click)="createNewTag()" class="button is-primary" type="button">Confirm</button>
   </footer>
 
-</app-utility-modal>
+</umius-modal>
 <!-- /modal to create new tag -->

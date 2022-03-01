@@ -40,7 +40,7 @@
           <p class="text-md">Visit these below links to see the questionnaire:</p>
           <ul class="m-no-bottom">
             <li *ngFor="let url of quizLinks" class="text-sm m-top-1 text-hover-underline">
-              <a [href]="url" target="_blank" class="text-primary-dark">{{ url }}</a>
+              <a [href]="url" target="_blank" class="text-dark">{{ url }}</a>
             </li>
           </ul>
         </div>
@@ -103,7 +103,7 @@
 
 
 <!-- sidebar insight preview -->
-<app-sidebar
+<umius-sidebar-full
   *ngIf="answers.length > 0 && (canAccess(['view']) || canAccess(['edit']))"
   [(template)]="sidebarValue">
   <app-sidebar-user-answer
@@ -115,5 +115,5 @@
     [innovationCards]="campaign.innovation.innovationCards"
     [userAnswer]="modalAnswer">
   </app-sidebar-user-answer>
-</app-sidebar>
+</umius-sidebar-full>
 <!-- /sidebar insight preview -->

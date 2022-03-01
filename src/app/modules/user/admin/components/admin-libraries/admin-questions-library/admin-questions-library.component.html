@@ -48,7 +48,7 @@
   </div>
 </div>
 
-<app-utility-modal-empty *ngIf="canAccess(['add']) && showModal" [(showModal)]="showModal">
+<umius-modal *ngIf="canAccess(['add']) && showModal" [(showModal)]="showModal">
 
   <section class="modal-body">
     <h2 class="title is-4 text-center text-bold m-bottom-30">Add a question from Scratch</h2>
@@ -63,7 +63,7 @@
         <option value="scale">{{ 'COMMON.QUESTIONNAIRE_TYPE.scale' | translate }}</option>
         <option value="stars">{{ 'COMMON.QUESTIONNAIRE_TYPE.stars' | translate }}</option>
         <option value="ranking">{{ 'COMMON.QUESTIONNAIRE_TYPE.ranking' | translate }}</option>
-      <!--  <option value="likert-scale">{{ 'COMMON.QUESTIONNAIRE_TYPE.likert-scale' | translate }}</option>-->
+<!--        <option value="likert-scale">{{ 'COMMON.QUESTIONNAIRE_TYPE.likert-scale' | translate }}</option>-->
       </select>
     </div>
 
@@ -78,7 +78,7 @@
         required>
       <ng-container *ngIf="!identifierError.letter && !identifierError.exist; else identError">
         <p class="text-xs text-alert text-medium m-top-2 m-bottom-h">Note:</p>
-        <ul class="text-xs text-notify text-medium m-left-2 m-no">
+        <ul class="text-xs text-meta text-medium m-left-2 m-no">
           <li class="m-top-h">Should be less than or equal to 23.</li>
           <li class="m-top-h">Try to have only characters ex: ContactOwner.</li>
           <li class="m-top-h">Should be an unique.</li>
@@ -111,11 +111,11 @@
       (click)="onCreate($event)"
       [disabled]="!newQuestion.identifier || !newQuestion.controlType"
       [id]="'adminQuestionsLibrary-btn-modal-create'"
-      class="button is-community"
+      class="button "
       type="button">
       Create
     </button>
 
   </footer>
 
-</app-utility-modal-empty>
+</umius-modal>

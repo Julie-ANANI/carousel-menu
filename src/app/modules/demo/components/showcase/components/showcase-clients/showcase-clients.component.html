@@ -2,7 +2,7 @@
 
   <!-- bar icon -->
   <ng-container *ngIf="isAdmin && totalClients.length > 0">
-    <div class="icon-container is-overlay text-notify absolute" (click)="openModal($event)">
+    <div class="icon-container is-overlay text-meta absolute" (click)="openModal($event)">
       <span class="tooltip" [attr.data-tooltip]="'Menu'">
         <i class="icon icon-menu"></i>
       </span>
@@ -10,7 +10,7 @@
   </ng-container>
 
   <!-- heading 1st -->
-  <h2 class="text text-notify" [innerText]="'SHOWCASE.CLIENTS_TITLE'" translate></h2>
+  <h2 class="text text-meta" [innerText]="'SHOWCASE.CLIENTS_TITLE'" translate></h2>
   <!-- /heading 1st -->
 
   <!-- heading
@@ -18,7 +18,7 @@
       /heading -->
 
   <!-- section client logos -->
-  <div class="d-flex text-center s-c-card-wrapper flex-wrap">
+  <div class="d-flex text-center s-c-card-wrapper flex-wrap-wrap">
       <div *ngFor="let client of topClients" class="s-c-card-content animate-zoomIn">
 
         <ng-container *ngIf="client.logo">
@@ -28,7 +28,7 @@
         </ng-container>
 
         <ng-container *ngIf="!client.logo">
-          <div class="text-background text-medium">
+          <div class="text-draft text-medium">
             <span class="text-name">{{ client.name }}</span>
           </div>
         </ng-container>
@@ -40,8 +40,7 @@
 </section>
 
 <!-- modal to select clients -->
-<app-utility-modal [(showModal)]="modalShow" [maxWidth]="'840px'" [enableCloseButton]="true">
-
+<umius-modal maxWidth="840px" [(showModal)]="modalShow">
   <section class="modal-body">
     <div class="section-card columns text-center">
       <ng-container *ngFor="let client of totalClients">
@@ -53,7 +52,7 @@
             <div *ngIf="client.logo" class="card-img tooltip" [attr.data-tooltip]="client.name">
               <img [src]="client.logo" height="50" [alt]="client.name"/>
             </div>
-            <div *ngIf="!client.logo" class="card-title text-background"><span>{{ client.name }}</span></div>
+            <div *ngIf="!client.logo" class="card-title text-draft"><span>{{ client.name }}</span></div>
           </div>
 
         </div>
@@ -65,6 +64,5 @@
     <button class="button modal-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
     <button (click)="onClickApply($event)" class="button is-primary">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
   </footer>
-
-</app-utility-modal>
+</umius-modal>
 <!-- /modal to select innovations -->

@@ -19,32 +19,30 @@ import { TypePieComponent } from './executive-section/type-pie/type-pie.componen
 import { TypeLikertScaleComponent } from './executive-section/type-likert-scale/type-likert-scale.component';
 
 import { PipeModule } from '../../../../../pipe/pipe.module';
-import { CountryFlagModule } from '@umius/umi-common-component/country-flag';
 import { SharedWorldmapModule } from '../../../../shared/components/shared-worldmap/shared-worldmap.module';
-import { ProgressBarModule } from '../../../../utility/progress-bar/progress-bar.module';
 import { PiechartExecutiveModule } from '../../../../utility/canvas/piechart-executive/piechart-executive.module';
-import { ModalModule } from '../../../../utility/modals/modal/modal.module';
 import { NguiAutoCompleteModule } from '../../../../utility/auto-complete/auto-complete.module';
 import { AutoCompleteInputModule } from '../../../../utility/auto-complete-input/auto-complete-input.module';
 import { SharedUploadZonePhotoModule } from "../../../../shared/components/shared-upload-zone-photo/shared-upload-zone-photo.module";
+import {CountryFlagModule, ModalModule, ProgressBarModule} from '@umius/umi-common-component';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        TranslateModule.forChild(),
-        PipeModule,
-        RouterModule,
-        SharedWorldmapModule,
-        CountryFlagModule,
-        FormsModule,
-        ProgressBarModule,
-        PiechartExecutiveModule,
-        ModalModule,
-        NguiAutoCompleteModule,
-        AutoCompleteInputModule,
-        ReactiveFormsModule,
-        SharedUploadZonePhotoModule
-    ],
+  imports: [
+    CommonModule,
+    TranslateModule.forChild(),
+    PipeModule,
+    RouterModule,
+    SharedWorldmapModule,
+    FormsModule,
+    PiechartExecutiveModule,
+    NguiAutoCompleteModule,
+    AutoCompleteInputModule,
+    ReactiveFormsModule,
+    SharedUploadZonePhotoModule,
+    ModalModule,
+    CountryFlagModule,
+    ProgressBarModule
+  ],
   declarations: [
     ExecutiveConclusionComponent,
     ExecutiveProfessionalComponent,

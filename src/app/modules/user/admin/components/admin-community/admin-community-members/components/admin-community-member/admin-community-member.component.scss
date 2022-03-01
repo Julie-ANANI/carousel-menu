@@ -1,9 +1,9 @@
-@import "../../../../../../../../../style/framework/src/variables";
+@import "~@umius/umi-style-framework/scss/variables";
 
 #admin-community-member-component {
 
   .section-header {
-    background-color: $bg-white-color;
+    background-color: $white-color;
 
     .name-wrapper {
       border-bottom: $border-width solid $border-default-color;
@@ -62,7 +62,7 @@
 
               .form-icon {
                 border-width: 2px;
-                border-color: $border-meta-color;
+                border-color: $meta-color;
                 background: transparent;
               }
 
@@ -120,7 +120,7 @@
               height: 130px;
             }
 
-            .btn {
+            .button {
               visibility: hidden;
               top: 35%;
               left: 27%;
@@ -139,7 +139,7 @@
           &:hover {
             box-shadow: none;
 
-            .btn {
+            .button {
               visibility: visible !important;
             }
 

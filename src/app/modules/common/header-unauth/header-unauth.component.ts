@@ -1,6 +1,5 @@
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { environment } from '../../../../environments/environment';
-import { SidebarInterface } from '../../sidebars/interfaces/sidebar-interface';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TranslateNotificationsService } from '../../../services/translate-notifications/translate-notifications.service';
 import { User } from '../../../models/user.model';
@@ -12,6 +11,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { CookieService } from 'ngx-cookie';
 import { initTranslation } from '../../../i18n/i18n';
 import {emailRegEx} from '../../../utils/regex';
+import {UmiusSidebarInterface} from '@umius/umi-common-component';
 
 @Component({
   selector: 'app-header-unauth',
@@ -21,7 +21,7 @@ import {emailRegEx} from '../../../utils/regex';
 
 export class HeaderUnauthComponent implements OnInit {
 
-  private _sidebarValue: SidebarInterface = <SidebarInterface>{};
+  private _sidebarValue: UmiusSidebarInterface = <UmiusSidebarInterface>{};
 
   private _formData: FormGroup;
 
@@ -124,7 +124,7 @@ export class HeaderUnauthComponent implements OnInit {
   }
 
   /***
-   * this function open the sign up sidebar where user can
+   * this function open the sign-up sidebar where user can
    * fill the details to register in the framework.
    * @param event
    */
@@ -177,11 +177,11 @@ export class HeaderUnauthComponent implements OnInit {
     return this._company;
   }
 
-  get sidebarValue(): SidebarInterface {
+  get sidebarValue(): UmiusSidebarInterface {
     return this._sidebarValue;
   }
 
-  set sidebarValue(value: SidebarInterface) {
+  set sidebarValue(value: UmiusSidebarInterface) {
     this._sidebarValue = value;
   }
 

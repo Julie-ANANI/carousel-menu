@@ -1,9 +1,9 @@
-@import "../../../../../style/framework/src/variables";
+@import "~@umius/umi-style-framework/scss/variables";
 
 #report {
 
   .first-page {
-    background-color: $bg-white-color;
+    background-color: $white-color;
     display: flex;
     min-height: 934.5px;
   }
@@ -25,12 +25,12 @@
     width: 66.67%;
     display: flex;
     flex-wrap: wrap;
-    background-color: $bg-white-color;
+    background-color: $white-color;
   }
 
   .section {
     display: inline-flex;
-    background-color: $bg-white-color;
+    background-color: $white-color;
     padding: 20px;
   }
 

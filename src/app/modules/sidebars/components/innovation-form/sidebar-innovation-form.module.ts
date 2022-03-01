@@ -5,7 +5,6 @@ import { TranslateModule } from '@ngx-translate/core';
 
 import { InnovationFormComponent } from './innovation-form.component';
 
-import { SidebarModule } from '../../templates/sidebar/sidebar.module';
 import { SharedMailEditorModule } from '../../../shared/components/shared-mail-editor/shared-mail-editor.module';
 import { SharedProjectSettingsModule } from '../../../shared/components/shared-project-settings-component/shared-project-settings.module';
 
@@ -15,7 +14,6 @@ import { SharedProjectSettingsModule } from '../../../shared/components/shared-p
     FormsModule,
     ReactiveFormsModule,
     TranslateModule.forChild(),
-    SidebarModule,
     SharedMailEditorModule,
     SharedProjectSettingsModule
   ],

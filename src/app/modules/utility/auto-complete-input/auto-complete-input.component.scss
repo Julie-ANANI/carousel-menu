@@ -1,10 +1,10 @@
-@import "../../../../style/framework/src/variables";
-@import "../../../../style/framework/src/mixins";
+@import "~@umius/umi-style-framework/scss/variables";
+@import "~@umius/umi-style-framework/scss/mixins";
 
 #auto-complete-input {
 
   .aci-input-wrapper {
-    @include flex-between();
+    @include flex-position(space-between);
 
     .form-input {
       border-color: $border-default-color;
@@ -18,7 +18,7 @@
 
     li {
       @include control-transition();
-      @include flex-between();
+      @include flex-position(space-between);
       margin-top: 10px;
       border-radius: $border-radius;
       background-color: #F8F4F4;
@@ -50,13 +50,13 @@
         }
 
         .fa-thumbs-up, .fa-thumbs-down, .icon-arrow-down, .icon-arrow-up {
-          color: $text-meta-color;
+          color: $meta-color;
         }
 
         .fa-thumbs-up {
 
           &.active {
-            color: $text-success-color;
+            color: $success-color;
           }
 
         }
@@ -64,7 +64,7 @@
         .fa-thumbs-down {
 
           &.active {
-            color: $text-alert-color;
+            color: $alert-color;
           }
 
         }

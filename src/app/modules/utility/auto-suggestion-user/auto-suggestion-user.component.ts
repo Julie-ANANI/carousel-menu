@@ -4,7 +4,7 @@ import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
 import { AutocompleteService } from '../../../services/autocomplete/autocomplete.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { AutoSuggestionConfig } from '../auto-suggestion/interface/auto-suggestion-config';
+import {UmiusAutoSuggestionInterface} from '@umius/umi-common-component';
 
 /***
  * this component is to show the suggestion based on the autocompleteService. You can select
@@ -40,7 +40,7 @@ import { AutoSuggestionConfig } from '../auto-suggestion/interface/auto-suggesti
 })
 
 export class AutoSuggestionUserComponent implements OnInit, OnDestroy {
-  @Input() set config(config: AutoSuggestionConfig) {
+  @Input() set config(config: UmiusAutoSuggestionInterface) {
     if (config) {
       this._minChars = config.minChars || 3;
       this._placeholder = config.placeholder || 'COMMON.PLACEHOLDER.AUTO_SUGGESTION';

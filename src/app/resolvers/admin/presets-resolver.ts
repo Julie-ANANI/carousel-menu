@@ -4,17 +4,16 @@ import { makeStateKey, TransferState } from '@angular/platform-browser';
 import { EMPTY, Observable } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { isPlatformServer } from '@angular/common';
-import { Config } from '@umius/umi-common-component/models';
-import {ConfigService} from '@umius/umi-common-component/services/config';
 import { Response } from '../../models/response';
 import { PresetService } from '../../services/preset/preset.service';
+import {UmiusConfigInterface, UmiusConfigService} from '@umius/umi-common-component';
 
 const PRESETS_KEY = makeStateKey('presets');
 
 @Injectable({providedIn: 'root'})
 export class PresetsResolver implements Resolve<Response> {
 
-  private _config: Config = {
+  private _config: UmiusConfigInterface = {
     fields: '',
     limit: '10',
     offset: '0',
@@ -25,7 +24,7 @@ export class PresetsResolver implements Resolve<Response> {
   constructor(@Inject(PLATFORM_ID) private _platformId: Object,
               private _transferState: TransferState,
               private _presetsService: PresetService,
-              private _configService: ConfigService) { }
+              private _configService: UmiusConfigService) { }
 
   resolve(activatedRouteSnapshot: ActivatedRouteSnapshot, routerStateSnapshot: RouterStateSnapshot): Observable<Response> {
 
@@ -57,7 +56,7 @@ export class PresetsResolver implements Resolve<Response> {
 
   }
 
-  get config(): Config {
+  get config(): UmiusConfigInterface {
     return this._config;
   }
 

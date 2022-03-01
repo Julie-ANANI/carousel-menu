@@ -1,4 +1,4 @@
-@import "../../../../../../../style/framework/src/variables";
+@import "~@umius/umi-style-framework/scss/variables";
 
 #admin-project-description {
 
@@ -86,7 +86,7 @@
 
         .spec-text-op {
           font-size: $font-size-md;
-          color: $text-secondary-color;
+          color: $primary-color;
           margin-right: $unit-2;
           font-weight: $font-weight-medium;
           cursor: pointer;

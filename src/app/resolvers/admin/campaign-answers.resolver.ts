@@ -4,17 +4,16 @@ import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/r
 import { TransferState, makeStateKey } from '@angular/platform-browser';
 import { EMPTY, Observable } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
-import { Config } from '@umius/umi-common-component/models';
 import { CampaignService } from '../../services/campaign/campaign.service';
-import {ConfigService} from '@umius/umi-common-component/services/config';
 import { Response } from '../../models/response';
+import {UmiusConfigInterface, UmiusConfigService} from '@umius/umi-common-component';
 
 const CAMPAIGN_ANSWERS_KEY = makeStateKey('campaign_answers');
 
 @Injectable({providedIn: 'root'})
 export class CampaignAnswersResolver implements Resolve<Response> {
 
-  private _config: Config = {
+  private _config: UmiusConfigInterface = {
     fields: '',
     limit: '10',
     offset: '0',
@@ -24,7 +23,7 @@ export class CampaignAnswersResolver implements Resolve<Response> {
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object,
               private _campaignService: CampaignService,
-              private _configService: ConfigService,
+              private _configService: UmiusConfigService,
               private _transferState: TransferState) { }
 
   resolve(activatedRouteSnapshot: ActivatedRouteSnapshot, routerStateSnapshot: RouterStateSnapshot): Observable<Response> {
@@ -53,7 +52,7 @@ export class CampaignAnswersResolver implements Resolve<Response> {
     }
   }
 
-  get config(): Config {
+  get config(): UmiusConfigInterface {
     return this._config;
   }
 

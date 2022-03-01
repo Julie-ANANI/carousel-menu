@@ -5,8 +5,8 @@ import {AdminCampaignWorkflowsComponent} from './admin-campaign-workflows.compon
 import {FormsModule} from '@angular/forms';
 import {MessageTemplateModule} from '../../../../../utility/messages/message-template/message-template.module';
 import {AdminEditWorkflowModule} from '../../admin-edit-workflow/admin-edit-workflow.module';
-import {ModalModule} from '../../../../../utility/modals/modal/modal.module';
 import {TranslateModule} from '@ngx-translate/core';
+import {ModalModule} from '@umius/umi-common-component';
 
 @NgModule({
   imports: [
@@ -14,8 +14,8 @@ import {TranslateModule} from '@ngx-translate/core';
     FormsModule,
     MessageTemplateModule,
     AdminEditWorkflowModule,
-    ModalModule,
-    TranslateModule.forChild()
+    TranslateModule.forChild(),
+    ModalModule
   ],
   declarations: [
     AdminCampaignWorkflowsComponent

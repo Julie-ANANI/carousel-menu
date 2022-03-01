@@ -1,14 +1,14 @@
-@import "../../../../../style/framework/src/variables";
+@import "~@umius/umi-style-framework/scss/variables";
 
 #user-form-component {
-  padding-top: 1.5rem;
+  padding-top: 25px;
 
   .save-wrapper {
-    padding-bottom: 1.25rem;
+    padding-bottom: 25px;
   }
 
   .form-group {
-    margin-bottom: 1.2rem;
+    margin-bottom: 20px;
     position: relative;
   }
 
@@ -16,32 +16,32 @@
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
-    padding-top: 0.25rem;
-    padding-bottom: 0.75rem;
+    padding-top: 5px;
+    padding-bottom: 15px;
 
     .form-switch {
-      margin-bottom: 0.5rem;
+      margin-bottom: 10px;
     }
 
   }
 
   .domain-wrapper {
-    padding-bottom: 0.75rem;
+    padding-bottom: 15px;
 
     .fa-pencil-alt {
-      font-size: $font-icon;
-      margin-left: 0.25rem;
+      font-size: 15px;
+      margin-left: 5px;
       vertical-align: 1px;
     }
 
   }
 
   .projects-wrapper {
-    padding-bottom: 1rem;
+    padding-bottom: 20px;
   }
 
   .pro-quiz-wrapper {
-    padding-top: 0.5rem;
+    padding-top: 10px;
 
     p {
       margin-top: $unit-1;
@@ -50,7 +50,7 @@
       cursor: pointer;
 
       .fa-link {
-        font-size: 0.6rem;
+        font-size: 12px;
       }
 
     }

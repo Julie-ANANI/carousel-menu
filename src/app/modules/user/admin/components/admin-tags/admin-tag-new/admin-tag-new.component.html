@@ -1,10 +1,11 @@
 <div [hidden]="showForm" class="columns p-bottom-20">
-    <button (click)="showForm = !showForm" class="btn btn-primary centered">{{ 'TAGS.ADD' | translate }}
+    <button (click)="showForm = !showForm" class="button centered">{{ 'TAGS.ADD' | translate }}
     <i class="fas fa-plus"></i></button>
 
-    <button (click)="exportTags()" class="btn ghost-primary btn-sm m-right-20 m-bottom-10">{{ 'TAGS.EXPORT' | translate }}</button>
+    <button (click)="exportTags()"
+            class="button is-outlined is-sm m-right-20 m-bottom-10">{{ 'TAGS.EXPORT' | translate }}</button>
 
-    <label class="btn ghost-primary btn-sm m-right-20 m-bottom-10">
+    <label class="button is-outlined is-sm m-right-20 m-bottom-10">
       <input #fileupload (change)="importTags(fileupload.files[0])" [hidden]="true" type="file"/>
       {{ 'COMMON.BUTTON.IMPORT' | translate }}
     </label>
@@ -73,7 +74,8 @@
                 </div>
             </div>
             <div class="bblock">
-                <button type="submit" class="btn btn-primary centered" [disabled]="formData.invalid">{{ 'TAGS.NEW.SUBMIT' | translate }}</button>
+                <button type="submit" class="button centered" [disabled]="formData.invalid">{{ 'TAGS.NEW.SUBMIT' |
+                  translate }}</button>
                 <!--<button type="reset" class="btn btn-primary centered" (click)="onReset()">{{ 'TAGS.NEW.CANCEL' | translate }}</button>-->
             </div>
 

@@ -1,16 +1,16 @@
-@import "../../../../style/framework/src/variables";
+@import "~@umius/umi-style-framework/scss/variables";
 
 #welcome-page {
 
   .title-primary {
     font-size: 1.4rem;
-    color: $text-draft-color;
+    color: $draft-color;
   }
 
   .title-secondary {
     font-size: 1.1rem;
     font-weight: 600;
-    color: $text-draft-color;
+    color: $draft-color;
   }
 
   .section-terms {

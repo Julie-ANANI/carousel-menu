@@ -3,17 +3,16 @@ import { TranslateService } from '@ngx-translate/core';
 import { TranslateTitleService } from '../../../../../services/title/title.service';
 import { UserService } from '../../../../../services/user/user.service';
 import { Innovation } from '../../../../../models/innovation';
-import { Pagination } from '../../../../utility/paginations/interfaces/pagination';
 import { TranslateNotificationsService } from '../../../../../services/translate-notifications/translate-notifications.service';
 import { first } from 'rxjs/operators';
 import { animate, keyframes, query, stagger, style, transition, trigger } from '@angular/animations';
 import { InnovationService } from '../../../../../services/innovation/innovation.service';
 import { InnovationFrontService } from '../../../../../services/innovation/innovation-front.service';
-import { Config } from '@umius/umi-common-component/models';
 import { isPlatformBrowser } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorFrontService } from '../../../../../services/error/error-front.service';
 import {CommonService} from '../../../../../services/common/common.service';
+import {UmiusConfigInterface, UmiusPaginationInterface} from '@umius/umi-common-component';
 
 @Component({
   templateUrl: 'projects-list.component.html',
@@ -48,7 +47,7 @@ export class ProjectsListComponent implements OnInit {
 
   private _isError = false;
 
-  private _config: Config = {
+  private _config: UmiusConfigInterface = {
     fields: 'name created updated status collaborators principalMedia innovationCards',
     limit: '10',
     offset: '0',
@@ -56,7 +55,7 @@ export class ProjectsListComponent implements OnInit {
     sort: '{ "created" :-1}'
   };
 
-  private _pagination: Pagination = {
+  private _pagination: UmiusPaginationInterface = {
     propertyName: 'client-projects',
     offset: Number(this._config.offset)
   };
@@ -148,19 +147,19 @@ export class ProjectsListComponent implements OnInit {
     });
   }
 
-  set config(value: Config) {
+  set config(value: UmiusConfigInterface) {
     this._config = value;
   }
 
-  get config(): Config {
+  get config(): UmiusConfigInterface {
     return this._config;
   }
 
-  get pagination(): Pagination {
+  get pagination(): UmiusPaginationInterface {
     return this._pagination;
   }
 
-  set pagination(value: Pagination) {
+  set pagination(value: UmiusPaginationInterface) {
     this._pagination = value;
     this._config.limit = this._pagination.parPage ? this._pagination.parPage.toString(10) : '10';
     this._config.offset = this._pagination.offset ? this._pagination.offset.toString(10) : '0';

@@ -1,15 +1,26 @@
-@import "../../../../style/framework/src/variables";
+@import "~@umius/umi-style-framework/scss/variables";
 
 #signup {
 
   .main-wrapper {
+
+    #signup-btn-create-account-linkedin {
+      background-color: #0173B1;
+      border-color: #0173B1;
+
+      &:hover {
+        background-color: darken(#0173B1, 15%);
+        border-color: darken(#0173B1, 15%);
+      }
+
+    }
 
     .cover-image {
       background-repeat: no-repeat;
       background-size: cover;
       background-position: center center;
       min-height: 100vh;
-      background-color: #CAF0F8;
+      background-color: $bg-media-color;
       max-width: 480px;
       width: 100%;
     }

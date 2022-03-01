@@ -1,5 +1,5 @@
-@import "framework/src/variables";
-@import "framework/src/mixins";
+@import "~@umius/umi-style-framework/scss/variables";
+@import "~@umius/umi-style-framework/scss/mixins";
 
 .shared-editor-etherpad, .shared-editor-tinymce {
   position: relative;
@@ -15,17 +15,17 @@
 
   &.is-active {
     &.box-shadow {
-      box-shadow: $box-shadow-5;
+      box-shadow: 0 2px 8px 2px rgba(20,23,28,.15);
     }
   }
 
   &.is-active, &.is-loading {
     border-radius: 4px;
-    background: $bg-white-color;
+    background: $white-color;
   }
 
   .loading-wrapper {
-    @include flex-centered();
+    @include flex-position(center);
     position: absolute;
     top: calc(50% - 22.5px);
     left: calc(50% - 52.5px);

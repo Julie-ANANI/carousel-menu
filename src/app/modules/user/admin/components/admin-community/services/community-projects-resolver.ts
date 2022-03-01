@@ -6,14 +6,14 @@ import { AdvSearchService } from '../../../../../../services/advsearch/advsearch
 import { catchError, tap } from 'rxjs/operators';
 import { isPlatformServer } from '@angular/common';
 import { Response } from '../../../../../../models/response';
-import { Config } from '@umius/umi-common-component/models';
+import {UmiusConfigInterface} from '@umius/umi-common-component';
 
 const COMMUNITY_PROJECTS_KEY = makeStateKey('community_projects');
 
 @Injectable({providedIn: 'root'})
 export class CommunityProjectsResolver implements Resolve<Response> {
 
-  private _config: Config = {
+  private _config: UmiusConfigInterface = {
     fields: '',
     limit: '',
     offset: '',
@@ -53,7 +53,7 @@ export class CommunityProjectsResolver implements Resolve<Response> {
   }
 
 
-  get config(): Config {
+  get config(): UmiusConfigInterface {
     return this._config;
   }
 

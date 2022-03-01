@@ -1,4 +1,4 @@
-@import "../../../../../../style/framework/src/variables";
+@import "~@umius/umi-style-framework/scss/variables";
 
 #report-conclusion {
   display: flex;
@@ -7,7 +7,7 @@
   width: 100%;
   height: 100%;
   color: white;
-  background-color: $bg-draft-color;
+  background-color: $draft-color;
 
   .result-wrapper {
     padding: 20px;
@@ -36,7 +36,7 @@
     }
 
     h6 {
-      color: $text-primary-color;
+      color: #FFB300;
     }
 
   }
@@ -53,7 +53,7 @@
 
     h2, h3, h4, h5 {
       font-size: 16px;
-      color: $text-white-color;
+      color: $white-color;
       margin-bottom: 2px;
     }
 
@@ -61,8 +61,8 @@
       margin-bottom: 6px;
     }
 
-    h4{
-      color: $text-primary-color;
+    h4 {
+      color: #FFB300;
     }
 
     h5 {

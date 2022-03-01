@@ -1,4 +1,4 @@
-@import "../../../../../../../style/framework/src/variables";
+@import "~@umius/umi-style-framework/scss/variables";
 
 #admin-project-settings {
   padding-bottom: 30px;
@@ -16,7 +16,7 @@
       margin-right: 25px;
 
       .content-box {
-        background-color: $bg-white-color;
+        background-color: $white-color;
         box-shadow: 0 0 4px 0 rgba(0,0,0,0.1);
         border-radius: 6px;
         padding: 30px 25px 5px 25px;
@@ -32,7 +32,7 @@
             width: 100%;
             font-size: 16px;
             font-weight: 600;
-            color: $text-draft-color;
+            color: $draft-color;
             margin-right: 20px;
           }
 
@@ -112,12 +112,13 @@
                   height: 20px;
                 }
               }
-              .shape.is-circle {
+
+              .shape.is-circled {
                 margin: 0 10px;
                 width: 16px;
                 height: 16px;
                 border: 2px solid $border-default-color;
-                background-color: $bg-white-color;
+                background-color: $white-color;
               }
 
               input[type="date"]::-webkit-inner-spin-button,
@@ -136,7 +137,7 @@
                 }
 
                 &.active::before {
-                  border-color: $border-success-color;
+                  border-color: $success-color;
                 }
 
               }
@@ -147,9 +148,9 @@
 
               &.active {
 
-                .shape.is-circle {
-                  border-color: $bg-success-color;
-                  background-color: lighten($bg-success-color, 42%);
+                .shape.is-circled {
+                  border-color: $success-color;
+                  background-color: lighten($success-color, 42%);
                 }
 
               }

@@ -19,7 +19,8 @@ import {picto, Picto} from '../../../../../../../models/static-data/picto';
 import {TranslateService} from '@ngx-translate/core';
 import {TranslateTitleService} from '../../../../../../../services/title/title.service';
 import {HttpErrorResponse} from '@angular/common/http';
-import { Config } from '@umius/umi-common-component/models';
+import {UmiusConfigInterface} from '@umius/umi-common-component';
+
 interface ConfirmUpdate {
   tool: boolean;
   template: boolean;
@@ -63,7 +64,7 @@ export class AdminEditQuestionComponent implements OnInit {
 
   private _questions: Array<MissionQuestion> = [];
 
-  private _questionsConfig: Config = {
+  private _questionsConfig: UmiusConfigInterface = {
     fields: '',
     limit: '-1',
     offset: '0',

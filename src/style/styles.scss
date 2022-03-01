@@ -1,26 +1,13 @@
-// this is for the help disk widget.
-// todo find better solution.
-#jsd-widget {
-  visibility: hidden;
-}
+// Global styles
+@import "~@fortawesome/fontawesome-free/css/all.min.css";
+@import "~@umius/umi-style-framework/scss/umi";
 
-// calculate page height => 65px (Header) + 45px (Footer)
-.page-height {
-  min-height: calc(100vh - 110px);
-}
-
-.header-height {
-  min-height: 65px !important;
-}
-
-.footer-height {
-  min-height: 45px !important;
-}
-
-.header-bg-color {
-  background-color: #2E6188 !important;
-}
-
+// Custom styles specific to Application
+@import "../style/container";
+@import "../style/border";
+@import "../style/stats";
+@import "../style/media";
+@import "../style/simple-notification-style";
 @import "../style/shared-editors";
 @import "../style/admin-executive-report";
 @import "../style/admin-campaign-stat";
@@ -28,11 +15,45 @@
 @import "../style/shared-market-report";
 @import "../style/ng2autocomplete-style";
 @import "../style/upload-zone-photo-video";
-@import "../style/simple-notification-style";
 @import "../style/date-picker";
 
 // print style
 @import "../style/print";
+
+// this is for the help disk widget.
+// todo find better solution.
+#jsd-widget {
+  visibility: hidden;
+}
+
+// calculate page height => 65px (Header) + 45px (Footer)
+.page__height {
+  min-height: calc(100vh - 110px);
+}
+
+.page__full-height {
+  height: 100vh;
+}
+
+.header__height {
+  min-height: 65px !important;
+}
+
+.footer__height {
+  min-height: 45px !important;
+}
+
+.main__bg-color {
+  background: #2E6188 !important;
+}
+
+.header__bg-color {
+  background-color: #2E6188 !important;
+}
+
+.footer__bg-color {
+  background-color: #2E6188 !important;
+}
 
 
 

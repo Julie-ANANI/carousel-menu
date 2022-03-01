@@ -1,4 +1,4 @@
-<section class="section-pad" id="account-component">
+<section class="p-top-50 p-bottom-50" id="account-component">
   <div class="column col-xs-12 col-11 col-mx-auto">
     <div class="profile-wrapper">
 
@@ -228,9 +228,10 @@
 
           <!-- save button -->
           <div class="save-wrapper text-center">
-            <button class="button is-primary badge is-icon" type="submit"
-                    [ngClass]="{'is-active': toSave}"
-                    [disabled]="formData.invalid || !toSave">
+            <button
+              class="button badge badge-icon" type="submit"
+              [ngClass]="{'badge-active': toSave}"
+              [disabled]="formData.invalid || !toSave">
               <i class="fas fa-save" *ngIf="toSave"></i>
               {{ 'COMMON.BUTTON.SAVE' | translate }}
             </button>
@@ -247,22 +248,22 @@
 
 
 <!-- change password sidebar -->
-<app-sidebar [(template)]="sidebarValue">
+<umius-sidebar-full [(template)]="sidebarValue">
   <app-user-change-password [sidebarState]="sidebarValue.animate_state" (passwordUpdate)="updatePassword($event)"></app-user-change-password>
-</app-sidebar>
+</umius-sidebar-full>
 <!-- /change password sidebar -->
 
 
 <!-- modal to delete account -->
-<app-utility-modal [(showModal)]="modalDelete" [title]="'COMMON.MODAL.TITLE_DELETE'">
+<umius-modal [(showModal)]="modalDelete" [title]="'COMMON.MODAL.TITLE_DELETE'">
   {{ 'MY_ACCOUNT.DELETE_MODAL.TITLE' | translate }}
   <br><br>
   {{ 'MY_ACCOUNT.DELETE_MODAL.CONTENT' | translate }}
   <div class="modal-footer">
-    <button class="btn btn-sm btn-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
-    <button class="btn btn-sm btn-primary" (click)="onClickSubmit($event)">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
+    <button class="button is-sm modal-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
+    <button class="button is-sm" (click)="onClickSubmit($event)">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
   </div>
-</app-utility-modal>
+</umius-modal>
 <!-- /modal to delete account -->
 
 

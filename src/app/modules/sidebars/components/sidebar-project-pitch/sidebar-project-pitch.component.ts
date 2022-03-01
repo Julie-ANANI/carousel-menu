@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core';
 import { PitchHelpFields } from '../../../../models/static-data/project-pitch';
 import { CommonService } from '../../../../services/common/common.service';
-import { Media, Video } from '../../../../models/media';
 import { InnovationFrontService } from '../../../../services/innovation/innovation-front.service';
 import { CardComment, CardSectionTypes } from '../../../../models/innov-card';
 import { CollaborativeComment } from '../../../../models/collaborative-comment';
@@ -11,6 +10,7 @@ import { Subject } from 'rxjs';
 import { SocketService } from '../../../../services/socket/socket.service';
 import { EtherpadFrontService } from '../../../../services/etherpad/etherpad-front.service';
 import { MediaFrontService } from '../../../../services/media/media-front.service';
+import {UmiusMediaInterface, UmiusModalMedia, UmiusVideoInterface} from '@umius/umi-common-component';
 
 /***
  * It involves the edition of the Innovation Card fields.
@@ -58,7 +58,7 @@ export class SidebarProjectPitchComponent implements OnInit, OnChanges, OnDestro
 
   @Input() imagePostUri = '';
 
-  @Input() mainMedia: Media = <Media>{};
+  @Input() mainMedia: UmiusMediaInterface = <UmiusMediaInterface>{};
 
   @Input() pitchHelp: PitchHelpFields = <PitchHelpFields>{};
 
@@ -118,7 +118,7 @@ export class SidebarProjectPitchComponent implements OnInit, OnChanges, OnDestro
 
   private _modalMedia = false;
 
-  private _selectedMedia: string;
+  private _selectedMedia: UmiusModalMedia = <UmiusModalMedia>{};
 
   constructor(private _innovationFrontService: InnovationFrontService,
               private _etherpadFrontService: EtherpadFrontService,
@@ -127,6 +127,16 @@ export class SidebarProjectPitchComponent implements OnInit, OnChanges, OnDestro
 
   ngOnInit(): void {
     // Listen on save from another user
+
+    // If there is comment or suggestion, we hide help/example section by default
+    // If there is no comment and no suggestion, we display help/example section by default;
+    this._showHelp = !((this.collaborativesComments && this.collaborativesComments.length > 0)
+      || (this.comment && this.comment.comment)
+      || this.comment && this.comment.suggestion);
+
+    this._showExample = !((this.collaborativesComments && this.collaborativesComments.length > 0)
+      || (this.comment && this.comment.comment)
+      || this.comment && this.comment.suggestion);
     this._socketService.getProjectFieldUpdates(this.innovationId, 'innovationCards')
       .pipe(takeUntil(this._ngUnsubscribe))
       .subscribe(() => {
@@ -184,7 +194,7 @@ export class SidebarProjectPitchComponent implements OnInit, OnChanges, OnDestro
    * @param media
    * @param type
    */
-  public onUploadMedia(media: Media | Video, type: 'IMAGE' | 'VIDEO') {
+  public onUploadMedia(media: UmiusMediaInterface | UmiusVideoInterface, type: 'IMAGE' | 'VIDEO') {
     if (media && type && this.isEditable) {
       this.isSavingChange.emit(true);
       this.saveProject.emit({type: type, content: media});
@@ -222,7 +232,7 @@ export class SidebarProjectPitchComponent implements OnInit, OnChanges, OnDestro
   public onSetPrincipal(media: any) {
     if (media && this.isNotMainMedia(media) && !this._isSaving && this.isEditable) {
       this.isSavingChange.emit(true);
-      this.saveProject.emit({type: 'MAIN_MEDIA', content: <Media>media});
+      this.saveProject.emit({type: 'MAIN_MEDIA', content: <UmiusMediaInterface>media});
     }
   }
 
@@ -233,7 +243,7 @@ export class SidebarProjectPitchComponent implements OnInit, OnChanges, OnDestro
   public onDeleteMedia(media: any) {
     if (media && !this._isSaving && this.isEditable) {
       this.isSavingChange.emit(true);
-      this.saveProject.emit({type: 'DELETE_MEDIA', content: <Media>media});
+      this.saveProject.emit({type: 'DELETE_MEDIA', content: <UmiusMediaInterface>media});
     }
   }
 
@@ -309,7 +319,10 @@ export class SidebarProjectPitchComponent implements OnInit, OnChanges, OnDestro
 
   mediaToShow(mediaSrc: any) {
     this._modalMedia = true;
-    this._selectedMedia = mediaSrc;
+    this._selectedMedia = {
+      src: mediaSrc,
+      active: true
+    };
   }
 
   public help(type: string): string {
@@ -411,7 +424,7 @@ export class SidebarProjectPitchComponent implements OnInit, OnChanges, OnDestro
   }
 
 
-  get selectedMedia(): string {
+  get selectedMedia(): UmiusModalMedia {
     return this._selectedMedia;
   }
 

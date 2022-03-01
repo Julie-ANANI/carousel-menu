@@ -38,12 +38,12 @@
       <!-- Industry input -->
       <div class="input-column" *ngIf="canAccess(['edit'])">
         <span class="text is-sm">Industry</span>
-        <app-utility-auto-suggestion
+        <umius-auto-suggestion
           [config]="industrySelectConfig"
           [isSmallInput]="true"
           (valueAdded)="getValueSelected($event)"
           (valueSelected)="getValueSelected($event)">
-        </app-utility-auto-suggestion>
+        </umius-auto-suggestion>
         <ng-container
           *ngTemplateOutlet="answerArea; context: {$implicit: getContext('industry', industries, false)}">
         </ng-container>
@@ -70,12 +70,12 @@
       <div class="input-column" *ngIf="canAccess(['edit'])">
         <span class="text is-sm">Enterprise Type
           </span>
-        <app-utility-auto-suggestion
+        <umius-auto-suggestion
           [isSmallInput]="true"
           [config]="enterpriseTypeSelectConfig"
           (valueAdded)="getValueSelected($event)"
           (valueSelected)="getValueSelected($event)">
-        </app-utility-auto-suggestion>
+        </umius-auto-suggestion>
         <ng-container
           *ngTemplateOutlet="answerArea; context: {$implicit: getContext('enterpriseType', enterpriseTypes, true)}">
         </ng-container>
@@ -113,24 +113,24 @@
           <span>ETI : 250-5000 employés</span>
           <span>GE : >5000 employés</span>
         </span>
-        <app-utility-auto-suggestion
+        <umius-auto-suggestion
           [isSmallInput]="true"
           [config]="enterpriseSizeSelectConfig"
           (valueAdded)="getValueSelected($event)"
           (valueSelected)="getValueSelected($event)">
-        </app-utility-auto-suggestion>
+        </umius-auto-suggestion>
       </div>
       <!-- /Enterprise size input -->
 
       <!-- Value chain input -->
       <div class="input-column" *ngIf="canAccess(['edit'])">
         <span class="text is-sm">Value chain</span>
-        <app-utility-auto-suggestion
+        <umius-auto-suggestion
           [config]="valueChainSelectConfig"
           [isSmallInput]="true"
           (valueAdded)="getValueSelected($event)"
           (valueSelected)="getValueSelected($event)">
-        </app-utility-auto-suggestion>
+        </umius-auto-suggestion>
         <ng-container
           *ngTemplateOutlet="answerArea; context: {$implicit: getContext('valueChain', valueChains, true)}">
         </ng-container>
@@ -179,7 +179,7 @@
     <li *ngFor="let answer of context.answerList; let i = index">
 
       <!-- text -->
-      <div class="answer-wrapper text-sm text-primary-dark m-right-2">
+      <div class="answer-wrapper text-sm text-dark m-right-2">
         <span
           *ngIf="!context.isString">{{answer.text || answer.name || answer.label || answer.expression }}</span>
         <span *ngIf="context.isString">{{answer}}</span>
