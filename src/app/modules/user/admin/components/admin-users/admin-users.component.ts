@@ -71,9 +71,6 @@ export class AdminUsersComponent implements OnInit {
     this._userService.getAll(this._config).pipe(first()).subscribe((response: Response) => {
       this._users = response && response.result || [];
       this._total = response && response._metadata && response._metadata.totalCount || 0;
-      this._users.map(user => {
-        user['fullName'] = user.firstName + ' ' + user.lastName
-      });
       this._checkJuan();
       this._initializeTable(this._users);
       this._isLoading = false;
@@ -109,7 +106,7 @@ export class AdminUsersComponent implements OnInit {
       _clickIndex: this.canAccess(['user', 'view']) || this.canAccess(['user', 'edit']) ? 1 : null,
       _columns: [
         {
-          _attrs: ['fullName'],
+          _attrs: ['firstName', 'lastName'],
           _type: 'TEXT',
           _isSearchable: this.canAccess(['searchBy', 'name']),
           _isHidden: !this.canAccess(['tableColumns', 'name']),
