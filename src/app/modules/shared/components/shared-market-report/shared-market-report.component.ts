@@ -88,7 +88,7 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy, OnChanges
         this._authService.userId ===
           (this._innovation.owner && this._innovation.owner.id) ||
         this._authService.adminLevel > 3;
-      console.log(value);
+      console.log(value.mission);
     }
   }
 
@@ -516,6 +516,7 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy, OnChanges
     // Modified only admin side
     if (this._toSaveTemplate && MissionFrontService.hasMissionTemplate(<Mission>this._innovation.mission)) {
       objToSave['missionTemplate'] = (<Mission>this._innovation.mission).template;
+      objToSave['missionResult'] = (<Mission>this._innovation.mission).result;
     } else {
       objToSave['preset'] = this._innovation.preset;
     }
