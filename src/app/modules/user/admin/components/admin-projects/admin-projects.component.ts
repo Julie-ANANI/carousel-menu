@@ -107,7 +107,7 @@ export class AdminProjectsComponent implements OnInit {
       this._setConfigForUmiBack();
 
       this._getOperators().then(_ => {
-        if (!this._rolesFrontService.isMTMUMIBack()) {
+        if (this._rolesFrontService.isMTMUMIRole()) {
           this._configOperator();
         }
         this._getProjects();
