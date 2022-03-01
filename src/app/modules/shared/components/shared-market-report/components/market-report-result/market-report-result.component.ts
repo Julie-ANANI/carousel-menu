@@ -16,8 +16,8 @@ interface Toggle {
 })
 export class MarketReportResultComponent implements OnInit {
 
-  get toggleEdit(): Toggle {
-    return this._toggleEdit;
+  get canEdit(): Toggle {
+    return this._canEdit;
   }
 
   get mission(): Mission {
@@ -39,7 +39,7 @@ export class MarketReportResultComponent implements OnInit {
 
   @Input() isEditable = false;
 
-  private _toggleEdit: Toggle = <Toggle>{}
+  private _canEdit: Toggle = <Toggle>{}
 
   private _innovation: Innovation = <Innovation>{}
 
@@ -59,7 +59,7 @@ export class MarketReportResultComponent implements OnInit {
    */
   public toggleBtn(event: Event, btn: 'abstract') {
     event.preventDefault();
-    this._toggleEdit[btn] = !this._toggleEdit[btn];
+    this._canEdit[btn] = !this._canEdit[btn];
   }
 
   /**

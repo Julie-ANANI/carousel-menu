@@ -162,6 +162,17 @@
   </div>
   <!-- /key-learning type === 'MARKET_REPORT'  -->
 
+  <!-- result type === 'MARKET_REPORT' -->
+  <ng-container *ngIf="templateType === 'MARKET_REPORT' && (innovation.mission | mission:'hasMissionTemplate')
+  && !innovation?.marketReport?.keyLearning?.conclusion">
+    <div class="scroll-wrapper">
+      <a [href]="'#result'" pageScroll>
+        <i class="icon icon-arrow-right"></i> {{ 'COMMON.LABEL.RESULT' | translateIn: reportingLang }}
+      </a>
+    </div>
+  </ng-container>
+  <!-- /result type === 'MARKET_REPORT'  -->
+
   <!-- origin type === 'MARKET_REPORT' -->
   <div *ngIf="templateType === 'MARKET_REPORT'" class="scroll-wrapper">
     <a [href]="'#origin-responses'" pageScroll>

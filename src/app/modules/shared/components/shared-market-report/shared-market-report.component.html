@@ -90,7 +90,7 @@
           <!-- dynamic result -->
           <ng-container *ngIf="(innovation.mission | mission:'hasMissionTemplate') &&
           !innovation?.marketReport?.keyLearning?.conclusion">
-            <div class="m-top-50">
+            <div class="p-top-50" id="result">
               <app-market-report-result
                 [isEditable]="true"
                 [innovation]="innovation"

@@ -29,9 +29,7 @@
   <div class="mrr__content-box p-top-25 p-left-50 p-right-50 p-bottom-40">
 
     <!-- heading -->
-    <h2 class="title is-main m-bottom-25">
-      {{ reportingLang === 'fr' ? 'Résultat' : 'Result' }}
-    </h2>
+    <h2 class="title is-main m-bottom-25">{{ 'COMMON.LABEL.RESULT' | translateIn: reportingLang }}</h2>
     <!-- /heading -->
 
     <!-- view -->
@@ -93,7 +91,7 @@
           (click)="onClickSeeMore($event)"
           [id]="'btn-see-more'"
           class="button is-link text-no-underline">
-          <span>{{ reportingLang === 'fr' ? 'En voir plus' : 'See more' }}</span>
+          <span>{{ 'COMMON.BUTTON.SEE_MORE' | translateIn: reportingLang }}</span>
           <i class="fas fa-arrow-circle-right icon-right" style="font-size: 22px;"></i>
         </button>
       </div>
@@ -108,7 +106,7 @@
         <div class="mrr_edit-wrapper">
           <button
             (click)="toggleBtn($event, 'abstract')"
-            [attr.data-tooltip]="toggleEdit.abstract ? 'Stop editing' : 'Edit'"
+            [attr.data-tooltip]="canEdit.abstract ? 'Stop editing' : 'Edit'"
             [id]="'btn-edit-abstract'"
             class="button is-circled is-xs tooltip">
             <i class="fas fa-pencil-alt"></i>
@@ -118,13 +116,13 @@
       <!-- /edit button -->
 
       <!-- view mode -->
-      <ng-container *ngIf="!toggleEdit.abstract">
+      <ng-container *ngIf="!canEdit.abstract">
         <div [innerHTML]="mission?.result?.abstract" style="margin-bottom: -8px;"></div>
       </ng-container>
       <!-- /view mode -->
 
       <!-- edit mode -->
-      <ng-container *ngIf="toggleEdit.abstract">
+      <ng-container *ngIf="canEdit.abstract">
         <app-shared-editors
           (textChange)="keyupHandlerFunction($event)"
           elementId="result"
