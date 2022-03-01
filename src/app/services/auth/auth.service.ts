@@ -88,15 +88,6 @@ export class AuthService {
   }
 
   public login(user: User): Observable<User> {
-   // const  headers ={
-   //    'Host': 'httpbin.org',
-   //  };
-   //  return this._http.get('http://128.199.35.244:9080/get?foo1=bar1&foo2=bar2').pipe(
-   //    map((res:any) =>{
-   //      console.log(res);
-   //      return res;
-   //    })
-   //  )
     return this._http.post('/auth/login', user.toJSON())
       .pipe(
         map((res: any) => {
