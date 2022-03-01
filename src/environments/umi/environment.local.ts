@@ -2,10 +2,10 @@ export const environment = {
   local: true,
   production: false,
   apiUrl: 'http://localhost:3000/api',
-  apiGatewayUrl: 'http://128.199.35.244:9080/v3/api',
   etherpadUrl: 'http://localhost:9001',
   clientUrl: 'http://localhost:4200',
-  apiGatewayUrl: 'http://128.199.35.244:9080/v3/api',
+  // If you don't want to launch apisix at local, just change the url in apiUrl.interceptors
+  apiGatewayUrl: 'http://192.168.1.32:9080/api',
   companyName: 'United Motion Ideas (local)',
   companyShortName: 'UMI',
   domain: 'umi',
