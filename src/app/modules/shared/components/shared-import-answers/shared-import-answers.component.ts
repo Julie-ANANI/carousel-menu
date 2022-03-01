@@ -37,11 +37,11 @@ export class SharedImportAnswersComponent implements OnInit {
       .importAsCsv(this.campaign, file)
       .pipe(first())
       .subscribe(
-        () => {
+        (message) => {
           this.importingError.emit(null)
           this._translateNotificationsService.success(
-            'Success',
-            'The answers has been imported.'
+            'Importing',
+            `${message.newAnswers} new answers will be imported and ${message.existingAnswers} are already answers of known pros`
           );
         },
         (err: HttpErrorResponse) => {
