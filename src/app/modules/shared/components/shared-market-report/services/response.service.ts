@@ -12,9 +12,9 @@ import { MissionQuestion, MissionQuestionOption } from '../../../../../models/mi
 import { MissionQuestionService } from '../../../../../services/mission/mission-question.service';
 import {LikertScaleChart} from '../../../../../models/executive-report';
 import {UmiusMultilingInterface} from '@umius/umi-common-component';
+import colorsAndNames from '../../../../../../../assets/json/likert-scale_executive-report.json';
 
 @Injectable({ providedIn: 'root' })
-
 export class ResponseService {
 
   filteredAnswers = new Subject<Array<Answer>>();
@@ -95,7 +95,7 @@ export class ResponseService {
    */
   public static getStarsAnswers(question: any, answers: Array<Answer>) {
 
-    let notesData: Array<{ label: UmiusMultilingInterface, sum: number, percentage: string, entry: [] }> = [];
+    let notesData: Array<{ label: Multiling, sum: number, percentage: string, entry: [] }> = [];
 
     if (question && answers) {
 
@@ -181,7 +181,6 @@ export class ResponseService {
             && a.answers[question.identifier][q.identifier]
             && a.answers[question.identifier + 'Quality'] !== 0);
 
-
         } else if (question.controlType === 'radio' || question.controlType === 'likert-scale') {
           filteredAnswers = answers.filter((a) => a.answers[question.identifier] === q.identifier
             && a.answers[question.identifier + 'Quality'] !== 0);
@@ -262,15 +261,15 @@ export class ResponseService {
     return barsData;
   }
 
-/**
- * This function calculated percentage for checkbox
- * @static
- * @param {Array} barsData
- * @param {Any} Question
- * */
+  /**
+   * This function calculated percentage for checkbox
+   * @static
+   * @param {Array} barsData
+   * @param {Any} Question
+   * */
   static getRelativePercentagebarsData(barsData: Array<BarData>, question: any): { relativePercentages: any, maxAnswersCount: number } {
 
-    const maxAnswersCount = question.controlType === 'checkbox'?
+    const maxAnswersCount = question.controlType === 'checkbox' ?
       barsData.reduce((acc, bd) => {
         return (acc < bd.count) ? bd.count : acc;
       }, 0) :
@@ -348,7 +347,8 @@ export class ResponseService {
       answers: Answer[];
       percentage: number;
       count: number;
-      identifier: string; }[] = [];
+      identifier: string;
+    }[] = [];
 
     const weights = this.computeWeights(question.options.length);
     const multipliers = this.computeMultiplier(question.options.length);
@@ -417,8 +417,8 @@ export class ResponseService {
       identifier: string;
     }[] = [];
 
-    // Depends on likert scale type, it's for calculated
-    //These are weights to be included in the score for each specific value of each option
+/*    Depends on likert scale type, it's for calculated
+    These are weights to be included in the score for each specific value of each option*/
     const characterSureOrNegative = [0, 0.25, 0.5, 0.75, 1];
     const weightImportanceOpt = [2, 1, 1, 1, 2];
 
@@ -457,12 +457,12 @@ export class ResponseService {
     // Compute score of question
     const scale: number = 0.44;
 
-    //This score is calculated according to the likert-scale methodology
-    // It returns a score with only the importance weights of the selected options per occurrence
-    averageGeneralEvaluation = averageGeneralEvaluation/ scoreTotalOptionWithoutCharacterValue;
+   /* This score is calculated according to the likert-scale methodology
+     It returns a score with only the importance weights of the selected options per occurrence*/
+    averageGeneralEvaluation = averageGeneralEvaluation / scoreTotalOptionWithoutCharacterValue;
     averageGeneralEvaluation = (averageGeneralEvaluation - scale) / (1 - scale);
 
-    averageGeneralEvaluation = parseFloat(((averageGeneralEvaluation < 0) ? 0 : averageGeneralEvaluation * 20) .toFixed(2));
+    averageGeneralEvaluation = parseFloat(((averageGeneralEvaluation < 0) ? 0 : averageGeneralEvaluation * 20).toFixed(2));
 
 
     if (isNaN(averageGeneralEvaluation)) {
@@ -588,13 +588,13 @@ export class ResponseService {
          * here we are checking that at least one of the options of the answer is true.
          * @type {Answer[]}
          */
-         answersToShow = answersToShow.filter(
-         (a) => Object.keys(a.answers[questionID]).some((k) => a.answers[questionID][k])
-         );
-         break;
+        answersToShow = answersToShow.filter(
+          (a) => Object.keys(a.answers[questionID]).some((k) => a.answers[questionID][k])
+        );
+        break;
 
-         case 'stars':
-         /***
+      case 'stars':
+        /***
          * here we are checking that at least one of the options of the answer is noted > 0.
          * @type {Answer[]}
          */
@@ -663,6 +663,26 @@ export class ResponseService {
     const abstract = innovation.executiveReport.abstracts.find((ques) =>
       ques.quesId === quesId);
     return abstract ? abstract.value : '';
+  }
+
+  /**
+   * Ret
+   * @param averageGeneralEvaluation
+   */
+  static getLikertScaleGraphicScore (averageGeneralEvaluation : number): any {
+
+    averageGeneralEvaluation = averageGeneralEvaluation || 0;
+
+    const index = (averageGeneralEvaluation - averageGeneralEvaluation % 4) / 4; // will give 0,1,2,3,4
+
+    const scorePercentage = (averageGeneralEvaluation * 98) / 20; // will give margin percentage for the pointer of marker
+
+    return {
+      scoreName: colorsAndNames[index].name,
+      color: colorsAndNames[index].color,
+      scorePercentage: scorePercentage
+    };
+
   }
 
 }

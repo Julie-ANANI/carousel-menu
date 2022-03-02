@@ -288,7 +288,9 @@ export class AdminProjectStoryboardComponent implements OnInit, OnDestroy {
             case 'likert-scale':
               const likertScaleData = ResponseService.likertScaleChartData(answersToShow, question, this.currentLang);
               sections[index].questionType = 'LIKERT-SCALE';
-              sections[index].content = this._executiveReportFrontService.likertScaleSection(likertScaleData, this._executiveReport.lang);
+              const data = ResponseService.likertScaleChartData(answers, question, this._executiveReport.lang);
+              const graphics = ResponseService.getLikertScaleGraphicScore(data.averageGeneralEvaluation)
+              sections[index].content = this._executiveReportFrontService.likertScaleSection(likertScaleData, this._executiveReport.lang, graphics);
 
             default:
               const tagsData: Array<Tag> = ResponseService.tagsList(answersToShow, question);

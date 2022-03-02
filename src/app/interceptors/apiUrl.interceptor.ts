@@ -26,7 +26,7 @@ export class ApiUrlInterceptor implements HttpInterceptor {
    */
   private _setAppV3Url(req: HttpRequest<any>): HttpRequest<any> {
     const newParameters: any = {
-      //url: environment.apiUrl + req.url: use this at local
+      //url: environment.apiUrl + req.url, //use this at local
       url: environment.apiGatewayUrl + req.url,
       withCredentials: true,
     };
