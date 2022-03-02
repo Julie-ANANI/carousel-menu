@@ -80,7 +80,7 @@
           <div class="view__circle">{{ 'MARKET_REPORT.RESULT.SOLUTION' | translateIn:reportingLang }}</div>
 
           <div class="view__line-wrapper">
-            <ng-container *ngIf="!canEdit.addItem && !canEdit.editItem">
+            <ng-container *ngIf="!canEdit.addItem && !canEdit.editItem && resultItems.length">
               <ng-container *ngFor="let line of (resultItems.length === 3 ?
               ['is-1 length__3', 'is-2 length__3', 'is-3 length__3'] :
               resultItems.length === 2 ? ['is-1 length__2', 'is-2 length__2'] :
