@@ -92,7 +92,6 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy, OnChanges
         this._authService.userId ===
           (this._innovation.owner && this._innovation.owner.id) ||
         this._authService.adminLevel > 3;
-      console.log(value.mission);
     }
   }
 
@@ -534,7 +533,9 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy, OnChanges
       objToSave['preset'] = this._innovation.preset;
     }
 
-    this._innovationService.save(this._innovation._id, objToSave).pipe(first()).subscribe(() => {
+
+    this._innovationService.save(this._innovation._id, objToSave).pipe(first()).subscribe((innovation) => {
+      this._innovationFrontService.setInnovation(innovation);
       this._toBeSaved = false;
       this._toSaveTemplate = false;
       this._toSaveMissionResult = false;
