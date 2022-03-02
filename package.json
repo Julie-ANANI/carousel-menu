@@ -1,6 +1,6 @@
 {
   "name": "umi-application-client",
-  "version": "2.12.1",
+  "version": "2.12.2",
   "license": "MIT",
   "scripts": {
     "serve": "ng serve umi -c=local",
@@ -42,7 +42,7 @@
     "@nguniversal/express-engine": "^9.1.1",
     "@ngx-translate/core": "^12.1.2",
     "@sentry/browser": "5.5.0",
-    "@umius/umi-common-component": "2.1.6",
+    "@umius/umi-common-component": "2.1.8",
     "@umius/umi-style-framework": "1.0.9",
     "angular-gauge-chart": "^0.7.2",
     "angular-mydatepicker": "^0.5.3",
