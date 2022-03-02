@@ -355,6 +355,7 @@ export class SharedFollowUpClientComponent implements OnDestroy {
       _selector: 'project-contact-send',
       _content: this._finalAnswers,
       _total: this._finalAnswers.length,
+      _paginationTemplate: 'TEMPLATE_1',
       _isLocal: true,
       _columns: [
         {
