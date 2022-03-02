@@ -35,6 +35,8 @@ export class MarketReportResultComponent implements OnInit {
     }
   }
 
+  @Input() scrollTo = '#';
+
   @Input() reportingLang = 'en';
 
   @Input() isEditable = false;
@@ -79,7 +81,8 @@ export class MarketReportResultComponent implements OnInit {
     event.preventDefault();
     this._pageScrollService.scroll({
       document: this._document,
-      scrollTarget: '#origin-responses'
+      scrollTarget: this.scrollTo,
+      scrollOffset: 50
     });
   }
 

@@ -94,7 +94,8 @@
               <app-market-report-result
                 [isEditable]="true"
                 [innovation]="innovation"
-                [reportingLang]="reportingLang">
+                [reportingLang]="reportingLang"
+                [scrollTo]="'#'+(questions.length?questions[0].identifier:'')">
               </app-market-report-result>
             </div>
           </ng-container>
