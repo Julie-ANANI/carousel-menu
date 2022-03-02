@@ -86,14 +86,16 @@ export class TypeLikertScaleComponent implements OnInit, OnDestroy {
     this._label= this.getLikertText(event);
   }
 
+  /*This function replaces the default result with what is typed in the input.
+  Translating initially to a specific text caused problems when you only
+  wanted to change the content.name*/
   public getLikertText(name: string) {
     const nameScore = ['TOTALLY_INVALIDATED', 'INVALIDED','UNCERTAIN','VALIDATED','TOTALLY_VALIDATED'];
 
     if (nameScore.indexOf(name.toUpperCase()) === -1) {
       return name;
     } else{
-     // const translate = 'ADMIN_EXECUTIVE_REPORT.LIKERT-SCALE_SECTION.'
-      const translate = 'MARKET_REPORT.LIKERT-SCALE_SECTION.'
+      const translate = 'ADMIN_EXECUTIVE_REPORT.LIKERT-SCALE_SECTION.'
       return translate + name.toUpperCase();
     }
   }
@@ -135,6 +137,7 @@ export class TypeLikertScaleComponent implements OnInit, OnDestroy {
   get nameColor():string {
     return this._nameColor;
   }
+
 
   ngOnDestroy(): void {
     this._ngUnsubscribe.next();

@@ -30,7 +30,6 @@ export class AnswerQuestionComponent {
   @Input() adminMode = false;
 
   @Input() set fullAnswer(value: Answer) {
-    console.log(this.editMode);
     this._fullAnswer = value;
 
     if ((this.question.controlType === 'checkbox' || this.question.controlType === 'stars')
@@ -87,7 +86,6 @@ export class AnswerQuestionComponent {
   }
 
   public selectOption(event: Event, option: any) {
-    console.log(this.editMode);
     event.preventDefault();
     this.emitChanges();
 
@@ -99,8 +97,6 @@ export class AnswerQuestionComponent {
     }
 
   }
-
-
 
   public setAnswer(event: any) {
     this.fullAnswer.answers[this.question.identifier] = event.value;

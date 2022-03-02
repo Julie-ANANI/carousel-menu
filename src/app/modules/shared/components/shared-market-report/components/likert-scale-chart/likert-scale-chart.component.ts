@@ -19,10 +19,6 @@ import {SectionLikertScale} from '../../../../../../models/executive-report';
 
 export class LikertScaleChartComponent implements OnInit, OnDestroy {
 
-  ngOnInit() {
-    this._createChart();
-  }
-
   @Input() question: Question = <Question>{};
   @Input() reportingLang = this._translateService.currentLang;
 
@@ -38,8 +34,8 @@ export class LikertScaleChartComponent implements OnInit, OnDestroy {
     color: ''
   };
 
-  //Retrieves data for the progress bar
-  //averageGeneralEvaluation is an average score of all responses out of 20
+/*  Retrieves data for the progress bar
+  averageGeneralEvaluation is an average score of all responses out of 20*/
   private _stackedChart: {
     likertScaleChart: object[],
     averageGeneralEvaluation?: number
@@ -47,25 +43,29 @@ export class LikertScaleChartComponent implements OnInit, OnDestroy {
 
   isShowResult: boolean;
 
+  private _createChart() {
+    this._dataService.getAnswers(this.question).pipe(takeUntil(this._ngUnsubscribe)).subscribe((answers: Array<Answer>) => {
+      this._stackedChart = ResponseService.likertScaleChartData(answers, this.question, this.reportingLang);
+      const averageGeneralEvaluation = this._stackedChart.averageGeneralEvaluation || 0;
+
+      // Choose which score label to display
+      this._scorePercentage = (averageGeneralEvaluation * 98) / 20; // will give margin percentage for the pointer of marker
+
+      const graphics = ResponseService.getLikertScaleGraphicScore(averageGeneralEvaluation);
+      this._content.color = graphics.color;
+      this._content.name = graphics.scoreName;
+    });
+  }
 
   constructor(private _dataService: DataService,
               private _translateService: TranslateService) {
   }
 
 
-  private _createChart() {
-    this._dataService.getAnswers(this.question).pipe(takeUntil(this._ngUnsubscribe)).subscribe((answers: Array<Answer>) => {
-        this._stackedChart = ResponseService.likertScaleChartData(answers, this.question, this.reportingLang);
-        const averageGeneralEvaluation = this._stackedChart.averageGeneralEvaluation || 0;
-
-        // Choose which score label to display
-        this._scorePercentage = (averageGeneralEvaluation * 98) / 20; // will give margin percentage for the pointer of marker
-
-        const graphics = ResponseService.getLikertScaleGraphicScore(averageGeneralEvaluation);
-        this._content.color = graphics.color;
-        this._content.name = graphics.scoreName;
-      });
+  ngOnInit() {
+    this._createChart();
   }
+
 
   getValueForAverageText(): string {
     return (this.scorePercentage - 5).toString() +'%';

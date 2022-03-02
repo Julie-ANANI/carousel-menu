@@ -15,11 +15,9 @@ import {UmiusMultilingInterface} from '@umius/umi-common-component';
 import colorsAndNames from '../../../../../../../assets/json/likert-scale_executive-report.json';
 
 @Injectable({ providedIn: 'root' })
-
 export class ResponseService {
 
   filteredAnswers = new Subject<Array<Answer>>();
-
 
   /***
    * Return the list of tags on every user answers for a given question
@@ -182,7 +180,6 @@ export class ResponseService {
           filteredAnswers = answers.filter((a) => a.answers[question.identifier]
             && a.answers[question.identifier][q.identifier]
             && a.answers[question.identifier + 'Quality'] !== 0);
-
 
         } else if (question.controlType === 'radio' || question.controlType === 'likert-scale') {
           filteredAnswers = answers.filter((a) => a.answers[question.identifier] === q.identifier
@@ -420,8 +417,8 @@ export class ResponseService {
       identifier: string;
     }[] = [];
 
-    // Depends on likert scale type, it's for calculated
-    //These are weights to be included in the score for each specific value of each option
+/*    Depends on likert scale type, it's for calculated
+    These are weights to be included in the score for each specific value of each option*/
     const characterSureOrNegative = [0, 0.25, 0.5, 0.75, 1];
     const weightImportanceOpt = [2, 1, 1, 1, 2];
 
@@ -460,8 +457,8 @@ export class ResponseService {
     // Compute score of question
     const scale: number = 0.44;
 
-    //This score is calculated according to the likert-scale methodology
-    // It returns a score with only the importance weights of the selected options per occurrence
+   /* This score is calculated according to the likert-scale methodology
+     It returns a score with only the importance weights of the selected options per occurrence*/
     averageGeneralEvaluation = averageGeneralEvaluation / scoreTotalOptionWithoutCharacterValue;
     averageGeneralEvaluation = (averageGeneralEvaluation - scale) / (1 - scale);
 
@@ -674,16 +671,11 @@ export class ResponseService {
    */
   static getLikertScaleGraphicScore (averageGeneralEvaluation : number): any {
 
-     //2 récupère averageGeneralEvaluation || 0
-
     averageGeneralEvaluation = averageGeneralEvaluation || 0;
 
-    //3 récupère   index option
     const index = (averageGeneralEvaluation - averageGeneralEvaluation % 4) / 4; // will give 0,1,2,3,4
 
-    // 4 récupère const scorePercentage
     const scorePercentage = (averageGeneralEvaluation * 98) / 20; // will give margin percentage for the pointer of marker
-    // 5 - return objet with scorePercentage, name, color
 
     return {
       scoreName: colorsAndNames[index].name,
