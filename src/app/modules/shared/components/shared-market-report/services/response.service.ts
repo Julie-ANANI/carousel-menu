@@ -19,6 +19,7 @@ export class ResponseService {
 
   filteredAnswers = new Subject<Array<Answer>>();
 
+
   /***
    * Return the list of tags on every user answers for a given question
    * @param answers
@@ -95,7 +96,7 @@ export class ResponseService {
    */
   public static getStarsAnswers(question: any, answers: Array<Answer>) {
 
-    let notesData: Array<{ label: Multiling, sum: number, percentage: string, entry: [] }> = [];
+    let notesData: Array<{ label: UmiusMultilingInterface, sum: number, percentage: string, entry: [] }> = [];
 
     if (question && answers) {
 
