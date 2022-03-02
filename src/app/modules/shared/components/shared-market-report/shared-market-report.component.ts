@@ -54,6 +54,10 @@ type ModalType = 'NOTIFY_DOCUMENTS' | '';
 })
 export class SharedMarketReportComponent implements OnInit, OnDestroy, OnChanges {
 
+  get toSaveMissionResult(): boolean {
+    return this._toSaveMissionResult;
+  }
+
   get modalType(): ModalType {
     return this._modalType;
   }
@@ -88,6 +92,7 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy, OnChanges
         this._authService.userId ===
           (this._innovation.owner && this._innovation.owner.id) ||
         this._authService.adminLevel > 3;
+      console.log(value.mission);
     }
   }
 
@@ -151,6 +156,8 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy, OnChanges
 
   private _modalType: ModalType = '';
 
+  private _toSaveMissionResult = false;
+
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _translateService: TranslateService,
               private _answerService: AnswerService,
@@ -177,6 +184,9 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy, OnChanges
       .getNotifyChanges()
       .pipe(takeUntil(this._ngUnsubscribe))
       .subscribe((value) => {
+        if (value.key === 'marketReportResult') {
+          this._toSaveMissionResult = value.state;
+        }
         this._toBeSaved = !!(value && value.state);
       });
 
@@ -513,15 +523,21 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy, OnChanges
     };
 
     // Modified only admin side
-    if (this._toSaveTemplate && MissionFrontService.hasMissionTemplate(<Mission>this._innovation.mission)) {
-      objToSave['missionTemplate'] = (<Mission>this._innovation.mission).template;
-    } else {
+    if (MissionFrontService.hasMissionTemplate(<Mission>this._innovation.mission)) {
+      if (this._toSaveTemplate) {
+        objToSave['missionTemplate'] = (<Mission>this._innovation.mission).template;
+      }
+      if (this._toSaveMissionResult) {
+        objToSave['missionResult'] = (<Mission>this._innovation.mission).result;
+      }
+    } else if (!!this._innovation.preset) {
       objToSave['preset'] = this._innovation.preset;
     }
 
     this._innovationService.save(this._innovation._id, objToSave).pipe(first()).subscribe(() => {
       this._toBeSaved = false;
       this._toSaveTemplate = false;
+      this._toSaveMissionResult = false;
       this._translateNotificationsService.success('Success', 'The synthesis has been saved.');
       }, (err: HttpErrorResponse) => {
         this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));

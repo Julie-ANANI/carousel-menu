@@ -1,4 +1,9 @@
 export const MARKET_REPORT = {
+
+  'RESULT': {
+    'SOLUTION': 'Solution',
+  },
+
   'TITLE': 'Market potential of your project',
 
   'CUSTOM_FILTERS': 'Custom filters',

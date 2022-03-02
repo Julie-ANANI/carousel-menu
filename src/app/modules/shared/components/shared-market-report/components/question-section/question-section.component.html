@@ -43,7 +43,7 @@
         type="button">
         {{ (toggleAnswers ? 'MARKET_REPORT.BTN_ANSWERS_CLOSE' : 'MARKET_REPORT.BTN_ANSWERS_OPEN') | translateIn: reportingLang }}
         <i class="icon icon-right" aria-hidden="true"
-           [ngClass]="toggleAnswers ? 'icon-arrow-up' : 'icon-arrow-down'"></i>
+           [ngClass]="toggleAnswers ? 'icon-arrow-down' : 'icon-arrow-up'"></i>
       </button>
     </div>
     <!-- /answer toggle button -->
@@ -96,7 +96,8 @@
         class="button is-sm"
         type="button">
         {{ (toggleAnswers ? 'MARKET_REPORT.BTN_ANSWERS_CLOSE' : 'MARKET_REPORT.BTN_ANSWERS_OPEN') | translateIn: reportingLang }}
-        <i class="icon icon-right" aria-hidden="true" [ngClass]="toggleAnswers ? 'icon-arrow-up' : 'icon-arrow-down'"></i>
+        <i class="icon icon-right" aria-hidden="true"
+           [ngClass]="toggleAnswers ? 'icon-arrow-down' : 'icon-arrow-up'"></i>
       </button>
     </div>
     <!-- answer toggle button -->

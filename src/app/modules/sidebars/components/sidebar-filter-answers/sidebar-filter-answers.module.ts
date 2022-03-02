@@ -10,19 +10,21 @@ import {SharedWorldListModule} from '../../../shared/components/shared-world-lis
 import {InputListModule} from '../../../utility/input-list/input-list.module';
 import {AdminProjectDoneModule} from '../../../user/admin/components/admin-project-done-modal/admin-project-done.module';
 import {ModalModule} from '@umius/umi-common-component';
+import {MissionPipeModule} from '../../../../pipe/mission/missionPipe.module';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    TranslateModule.forChild(),
-    FormsModule,
-    PipeModule,
-    NgxPageScrollModule,
-    SharedWorldListModule,
-    InputListModule,
-    AdminProjectDoneModule,
-    ModalModule
-  ],
+    imports: [
+        CommonModule,
+        TranslateModule.forChild(),
+        FormsModule,
+        PipeModule,
+        NgxPageScrollModule,
+        SharedWorldListModule,
+        InputListModule,
+        AdminProjectDoneModule,
+        ModalModule,
+        MissionPipeModule
+    ],
   declarations: [
     SidebarFilterAnswersComponent
   ],
