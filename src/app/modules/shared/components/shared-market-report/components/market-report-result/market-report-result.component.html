@@ -98,8 +98,10 @@
                 <div class="m-bottom-40">
                   <div class="d-flex align-center m-bottom-2">
                     <p class="text-medium m-right-10 text-lg m-no">{{ item.title }}</p>
-                    <ng-container
-                      *ngTemplateOutlet="editItemBtn;context:{value: {index: i, btn: 'editItem'}}">
+                    <ng-container *ngIf="isEditable">
+                      <ng-container
+                        *ngTemplateOutlet="editItemBtn;context:{value: {index: i, btn: 'editItem'}}">
+                      </ng-container>
                     </ng-container>
                   </div>
                   <div style="min-height: 42px;" class="bg-draft text-white text-medium flex-centered br-3">
