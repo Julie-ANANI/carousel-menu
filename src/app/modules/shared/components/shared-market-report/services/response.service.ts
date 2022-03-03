@@ -19,6 +19,8 @@ export class ResponseService {
 
   filteredAnswers = new Subject<Array<Answer>>();
 
+  //private _averageGeneralEvaluation :number = 0;
+  private static _averageGeneralEvaluation: number =0;
 
   /***
    * Return the list of tags on every user answers for a given question
@@ -407,7 +409,6 @@ export class ResponseService {
                                      lang: string): LikertScaleChart {
 
 
-    let averageGeneralEvaluation: number = 0;
     let scoreTotalOptionWithoutCharacterValue: number = 0;
 
     const likertScaleChart: {
@@ -442,7 +443,7 @@ export class ResponseService {
       const weightsResultsFilteredOption = filteredAnswers.length * allWeightsOption;
 
       // Score total for the question
-      averageGeneralEvaluation += weightsResultsFilteredOption;
+      this._averageGeneralEvaluation += weightsResultsFilteredOption;
       scoreTotalOptionWithoutCharacterValue += filteredAnswers.length * weightImportance;
 
       likertScaleChart.push({
@@ -456,23 +457,23 @@ export class ResponseService {
     });
 
     // Compute score of question
-    const scale: number = 0.44;
+     const scale: number = 0.44;
 
    /* This score is calculated according to the likert-scale methodology
      It returns a score with only the importance weights of the selected options per occurrence*/
-    averageGeneralEvaluation = averageGeneralEvaluation / scoreTotalOptionWithoutCharacterValue;
-    averageGeneralEvaluation = (averageGeneralEvaluation - scale) / (1 - scale);
+    this._averageGeneralEvaluation = this._averageGeneralEvaluation / scoreTotalOptionWithoutCharacterValue;
+    this._averageGeneralEvaluation = (this._averageGeneralEvaluation - scale) / (1 - scale);
 
-    averageGeneralEvaluation = parseFloat(((averageGeneralEvaluation < 0) ? 0 : averageGeneralEvaluation * 20).toFixed(2));
+    this._averageGeneralEvaluation = parseFloat(((this._averageGeneralEvaluation < 0) ? 0 : this._averageGeneralEvaluation * 20).toFixed(2));
 
 
-    if (isNaN(averageGeneralEvaluation)) {
-      averageGeneralEvaluation = 0;
+    if (isNaN(this._averageGeneralEvaluation)) {
+      this._averageGeneralEvaluation = 0;
     }
 
     likertScaleChart.sort((a, b) => b.percentage - a.percentage);
 
-    return {likertScaleChart: likertScaleChart, averageGeneralEvaluation: averageGeneralEvaluation};
+    return {likertScaleChart: likertScaleChart, averageGeneralEvaluation: this._averageGeneralEvaluation};
   }
 
 
@@ -667,21 +668,21 @@ export class ResponseService {
   }
 
   /**
-   * Ret
+   *
    * @param averageGeneralEvaluation
    */
   static getLikertScaleGraphicScore (averageGeneralEvaluation : number): any {
 
-    averageGeneralEvaluation = averageGeneralEvaluation || 0;
+    const index = (this._averageGeneralEvaluation - this._averageGeneralEvaluation % 4) / 4; // will give 0,1,2,3,4
 
-    const index = (averageGeneralEvaluation - averageGeneralEvaluation % 4) / 4; // will give 0,1,2,3,4
-
-    const scorePercentage = (averageGeneralEvaluation * 98) / 20; // will give margin percentage for the pointer of marker
+    const scorePercentage = (this._averageGeneralEvaluation * 98) / 20; // will give margin percentage for the pointer of marker
 
     return {
       scoreName: colorsAndNames[index].name,
       color: colorsAndNames[index].color,
-      scorePercentage: scorePercentage
+      scoreNumber: this._averageGeneralEvaluation,
+      scorePercentage: scorePercentage,
+      markerIntervals: index
     };
 
   }

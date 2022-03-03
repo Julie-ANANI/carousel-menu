@@ -317,6 +317,7 @@ export class ExecutiveSectionComponent {
       // graphics is service for calculate score and return name, color and percentage
       // This service is used when a questionnaire question is selected, it returns the current score value and its name and color
       const graphics = ResponseService.getLikertScaleGraphicScore(data.averageGeneralEvaluation)
+      //console.log(graphics);
       this._section.content = this._executiveReportFrontService.likertScaleSection(data, this.reportLang, graphics);
     }
   }
@@ -371,10 +372,6 @@ export class ExecutiveSectionComponent {
   get enableVisualLikertScale(): boolean {
     return this._enableVisualLikertScale;
   }
-
-  /*get question(): Question | MissionQuestion {
-    return this._question;
-  }*/
 
 }
 

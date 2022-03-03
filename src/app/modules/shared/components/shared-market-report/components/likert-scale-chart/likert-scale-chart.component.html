@@ -6,8 +6,7 @@
         <div class="fa-user user__three"></div>
     </div>
 
-  <div *ngIf="stackedChart && stackedChart.likertScaleChart">
-
+  <div>
     <span [ngStyle]="{ 'color': content }" class="chart__name">
       {{ ('MARKET_REPORT.LIKERT-SCALE_SECTION.' + label) | uppercase| translate }}
     </span>
@@ -42,7 +41,7 @@
         <div class="average__text"
              [ngStyle]="{'left': getValueForAverageText()}">
 
-          {{ stackedChart.averageGeneralEvaluation }} /20
+          {{averageGeneralEvaluation }} /20
         </div>
 
       </div>

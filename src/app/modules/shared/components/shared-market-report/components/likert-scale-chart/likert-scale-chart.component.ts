@@ -24,14 +24,13 @@ export class LikertScaleChartComponent implements OnInit, OnDestroy {
 
 
   private _ngUnsubscribe: Subject<any> = new Subject<any>();
-  private _label: any = 'VALIDATED'
   private _scorePercentage: number = 0;
 
-  //Retrieves unmodifiable names and colours in a JSON file
   private _content: SectionLikertScale = {
-    name: '',
-    legend: '',
-    color: ''
+    name: '',  //totally  invalided
+    legend: '',  //null
+    color: '',   // #EA5858
+    percentage: 0, // 12
   };
 
 /*  Retrieves data for the progress bar
@@ -41,31 +40,31 @@ export class LikertScaleChartComponent implements OnInit, OnDestroy {
     averageGeneralEvaluation?: number
   };
 
+  private _graphics : any;
+
   isShowResult: boolean;
+  private _averageGeneralEvaluation : number;
 
   private _createChart() {
     this._dataService.getAnswers(this.question).pipe(takeUntil(this._ngUnsubscribe)).subscribe((answers: Array<Answer>) => {
-      this._stackedChart = ResponseService.likertScaleChartData(answers, this.question, this.reportingLang);
-      const averageGeneralEvaluation = this._stackedChart.averageGeneralEvaluation || 0;
+        this._stackedChart = ResponseService.likertScaleChartData(answers, this.question, this.reportingLang);
+        this._graphics = ResponseService.getLikertScaleGraphicScore(this._averageGeneralEvaluation);
 
-      // Choose which score label to display
-      this._scorePercentage = (averageGeneralEvaluation * 98) / 20; // will give margin percentage for the pointer of marker
-
-      const graphics = ResponseService.getLikertScaleGraphicScore(averageGeneralEvaluation);
-      this._content.color = graphics.color;
-      this._content.name = graphics.scoreName;
-    });
+        this._graphics._averageGeneralEvaluation = this._stackedChart.averageGeneralEvaluation || 0;
+        this._scorePercentage = this._graphics.scorePercentage;
+        this._content.name = this._graphics.scoreName;
+        this._content.color = this._graphics.color;
+      });
   }
 
-  constructor(private _dataService: DataService,
-              private _translateService: TranslateService) {
-  }
+
+  constructor( private _dataService: DataService,
+               private _translateService: TranslateService) {}
 
 
   ngOnInit() {
     this._createChart();
   }
-
 
   getValueForAverageText(): string {
     return (this.scorePercentage - 5).toString() +'%';
@@ -76,12 +75,12 @@ export class LikertScaleChartComponent implements OnInit, OnDestroy {
     return MissionQuestionService.label(option, 'label', this.reportingLang);
   }
 
-  get stackedChart(): { likertScaleChart?: any[]; averageGeneralEvaluation?: number } {
-    return this._stackedChart;
+  get averageGeneralEvaluation (): number {
+    return this._stackedChart.averageGeneralEvaluation;
   }
 
   get label():string {
-    return this._label;
+    return this._content.name;
   }
 
   get content(): string {
