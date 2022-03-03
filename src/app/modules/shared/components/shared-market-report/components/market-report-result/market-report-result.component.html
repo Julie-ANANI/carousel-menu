@@ -67,7 +67,53 @@
 
       <!-- case SOURCING_SOLUTIONS -->
       <ng-container *ngSwitchCase="'SOURCING_SOLUTIONS'">
-        <div class="content-box__view">
+        <div class="content-box__view d-flex align-center">
+
+          <!-- show item -->
+          <ng-container *ngIf="!canEdit.addItem && !canEdit.editItem">
+            <div [ngClass]="{'justify-space w-full': resultItems.length === 3}" class="d-flex flex-wrap-wrap">
+              <ng-container *ngFor="let item of resultItems; let i = index;">
+                <div [ngClass]="{'m-right-50': i < 2}">
+                  <div style="height: 81px; width: 232px;" class="d-flex m-bottom-2">
+                    <p class="text-medium m-right-10 text-lg m-no flex-full">{{ item.title }}</p>
+                    <ng-container *ngIf="isEditable">
+                      <ng-container
+                        *ngTemplateOutlet="editItemBtn;context:{value: {index: i, btn: 'editItem'}}">
+                      </ng-container>
+                    </ng-container>
+                  </div>
+                  <div
+                    style="min-height: 83px; width: 232px;"
+                    class="bg-draft text-white text-medium flex-centered br-3 p-10">
+                    {{ item.content }}
+                  </div>
+                </div>
+              </ng-container>
+            </div>
+          </ng-container>
+          <!-- /show item -->
+
+          <!-- add item btn -->
+          <ng-container *ngIf="!canEdit.editItem && (!canEdit.addItem && resultItems.length < 3 && isEditable)">
+            <div class="m-left-auto m-right-auto" style="height: 83px; width: 232px;">
+              <ng-container *ngTemplateOutlet="addItemBtn;context:{btn: 'addItem'}"></ng-container>
+            </div>
+          </ng-container>
+          <!-- /add item btn -->
+
+          <!-- edit container -->
+          <ng-container *ngIf="canEdit.addItem || canEdit.editItem">
+            <div class="w-full">
+              <ng-container
+                *ngTemplateOutlet="fillItem;context:{value: {
+                textarea: true,
+                title: {placeholder: 'Family / Supplier', limit: 50},
+                btn: canEdit.addItem ? 'addItem' : 'editItem',
+                content: {placeholder: 'Content', limit: 100}}}">
+              </ng-container>
+            </div>
+          </ng-container>
+          <!-- /edit container -->
 
         </div>
       </ng-container>
@@ -75,7 +121,7 @@
 
       <!-- case IDENTIFYING_RECEPTIVE -->
       <ng-container *ngSwitchCase="'IDENTIFYING_RECEPTIVE'">
-        <div class="content-box__view is__identifying-receptive">
+        <div class="content-box__view is__identifying-receptive d-flex align-center">
 
           <div class="view__circle">{{ 'MARKET_REPORT.RESULT.SOLUTION' | translateIn:reportingLang }}</div>
 
@@ -97,7 +143,7 @@
               <ng-container *ngFor="let item of resultItems; let i = index;">
                 <div class="m-bottom-40">
                   <div class="d-flex align-center m-bottom-2">
-                    <p class="text-medium m-right-10 text-lg m-no">{{ item.title }}</p>
+                    <p class="text-medium m-right-10 text-lg m-no flex-full">{{ item.title }}</p>
                     <ng-container *ngIf="isEditable">
                       <ng-container
                         *ngTemplateOutlet="editItemBtn;context:{value: {index: i, btn: 'editItem'}}">
@@ -216,20 +262,35 @@
       <input
         (change)="onChangeItem()"
         [(ngModel)]="selectedItem.title"
-        class="form-input is-shadowed"
-        [maxLength]="item.title.limit"
         [attr.placeholder]="item.title.placeholder"
-        type="text">
-    </div>
-    <div class="form-group m-no-bottom">
-      <input
-        (change)="onChangeItem()"
-        [(ngModel)]="selectedItem.content"
+        [maxLength]="item.title.limit"
         class="form-input is-shadowed"
-        [maxLength]="item.content.limit"
-        [attr.placeholder]="item.content.placeholder"
         type="text">
     </div>
+    <ng-container *ngIf="!item.textarea">
+      <div class="form-group m-no-bottom">
+        <input
+          (change)="onChangeItem()"
+          [(ngModel)]="selectedItem.content"
+          [attr.placeholder]="item.content.placeholder"
+          [maxLength]="item.content.limit"
+          class="form-input is-shadowed"
+          type="text">
+      </div>
+    </ng-container>
+    <ng-container *ngIf="item.textarea">
+      <div class="form-group m-no-bottom">
+        <textarea
+          (change)="onChangeItem()"
+          [(ngModel)]="selectedItem.content"
+          [attr.placeholder]="item.content.placeholder"
+          [maxLength]="item.content.limit"
+          class="form-input is-shadowed"
+          rows="4"
+          type="text">
+        </textarea>
+      </div>
+    </ng-container>
 
   </div>
 </ng-template>

@@ -54,8 +54,6 @@
       font-size: $font-size-sm;
 
       &.is__identifying-receptive {
-        display: flex;
-        align-items: center;
 
         .view__circle {
           @include flex-position(center);
