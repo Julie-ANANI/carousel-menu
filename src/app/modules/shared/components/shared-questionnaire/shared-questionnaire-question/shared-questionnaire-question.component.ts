@@ -133,8 +133,14 @@ export class SharedQuestionnaireQuestionComponent implements OnInit {
   public removeQuestion(event: Event) {
     event.preventDefault();
 
-    const _msg = this.platformLang === 'fr' ? 'Êtes-vous sûr de vouloir supprimer cette question ?'
+    let _msg = this.platformLang === 'fr' ? 'Êtes-vous sûr de vouloir supprimer cette question ?'
       : 'Are you sure you want to delete this question?';
+
+    if (this._question.type === 'ESSENTIAL' && !this.isLibraryView) {
+     _msg = 'By deleting this question, the specific result visual won’t be available. Do you really ' +
+       'want to delete this question ?'
+    }
+
     const res = confirm(_msg);
 
     if (res) {
