@@ -1,6 +1,6 @@
 <div *ngIf="isBrowser" class="text-sm text-medium" id="piechart">
-
   <p *ngIf="showFavorable && pieChart" class="m-bottom-15 d-flex align-center justify-center">
+    Things here
     <ng-container  *ngIf="!editFavorableAnswersLabel">
       <span>
         {{ pieChart.percentage || 0 }}% {{ favorableAnswersLabel[reportingLang] || ('MARKET_REPORT.PIE_CHART' | translateIn: reportingLang) }}
@@ -29,7 +29,8 @@
     </sub>
   </p>
 
-  <div class="popover" (mouseleave)="indexSection = -1">
+  <!--<div class="popover" (mouseleave)="indexSection = -1">-->
+  <div>
     <canvas
       class="c-hand"
       *ngIf="pieChart"
