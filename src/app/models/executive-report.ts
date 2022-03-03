@@ -114,10 +114,11 @@ export interface SectionRanking {
 
 export interface SectionLikertScale {
   name:string;
-  legend:string;
+  legend?:string;
   visibility?:boolean;
   color:string;
   percentage?:number;
+  score?:number;
 }
 
 export interface LikertScaleChart {
