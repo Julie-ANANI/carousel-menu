@@ -49,52 +49,13 @@
 
           <section class="modal-body">
             <app-shared-import-answers
-              (importingError)="onImport($event)"
+              (importFinished)="isImportingAnswers=false"
               [accessPath]="accessPath"
               [campaign]="selectedCampaign">
             </app-shared-import-answers>
           </section>
-
-          <footer class="modal-footer">
-            <ng-container *ngIf="importingErrors && importingErrors.length === 1">
-              <app-shared-csv-error [error]="importingErrors[0]"></app-shared-csv-error>
-            </ng-container>
-
-            <button
-              (click)="closeModal($event)"
-              [id]="'btn-cancel'"
-              class="button modal-cancel"
-              type="button">
-              Cancel
-            </button>
-          </footer>
-
         </umius-modal>
         <!-- /modal to import -->
-
-        <!-- errors modal -->
-        <umius-modal [(showModal)]="errorsModal" [title]="'Import errors'">
-
-          <section *ngIf="importingErrors && slicedErrors" class="modal-body max-height-365">
-            <ng-container *ngIf="importingErrors.length" >
-              <div class="flex-d-column d-flex errors-box">
-                <span class="text-error text-sm"> {{ importingErrors.length }} error(s) </span>
-                <ul>
-                  <app-shared-csv-error *ngFor="let err of slicedErrors" [error]="err" [htmlTag]="'li'"></app-shared-csv-error>
-                </ul>
-              </div>
-
-              <!-- button to show more errors -->
-              <div class="text-center" *ngIf="importingErrors.length > slicedErrors.length">
-                <a class="text-link text-xs" (click)="onClickSeeMore()">{{ 'COMMON.BUTTON.SEE_MORE' | translate}}</a>
-              </div>
-              <!-- /button to show more errors -->
-            </ng-container>
-          </section>
-
-        </umius-modal>
-        <!-- /errors modal -->
-
 
       </section>
       <!-- /action buttons -->
