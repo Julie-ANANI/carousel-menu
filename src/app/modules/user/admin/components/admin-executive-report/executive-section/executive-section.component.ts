@@ -318,6 +318,7 @@ export class ExecutiveSectionComponent {
       // This service is used when a questionnaire question is selected, it returns the current score value and its name and color
       const graphics = ResponseService.getLikertScaleGraphicScore(data.averageGeneralEvaluation)
       //console.log(graphics);
+      // @ts-ignore
       this._section.content = this._executiveReportFrontService.likertScaleSection(data, this.reportLang, graphics);
     }
   }

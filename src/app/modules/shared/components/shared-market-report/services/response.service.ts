@@ -20,7 +20,7 @@ export class ResponseService {
   filteredAnswers = new Subject<Array<Answer>>();
 
   //private _averageGeneralEvaluation :number = 0;
-  private static _averageGeneralEvaluation: number = 0;
+  //private static _averageGeneralEvaluation: number = 0;
 
   /***
    * Return the list of tags on every user answers for a given question
@@ -409,7 +409,7 @@ export class ResponseService {
                                      lang: string): LikertScaleChart {
 
 
-    let averageGeneralEvaluation =  this._averageGeneralEvaluation = 0;
+    let averageGeneralEvaluation : number = 0;
     let scoreTotalOptionWithoutCharacterValue: number = 0;
 
     const likertScaleChart: {
@@ -425,6 +425,7 @@ export class ResponseService {
     const characterSureOrNegative = [0, 0.25, 0.5, 0.75, 1];
     const weightImportanceOpt = [2, 1, 1, 1, 2];
 
+    //TODO change comms
     //Retrieves all answers from the 5 identifiers
     answers = answers.filter((a) => a.answers[question.identifier]);
 
@@ -458,22 +459,14 @@ export class ResponseService {
 
     });
 
-    averageGeneralEvaluation = averageGeneralEvaluation / scoreTotalOptionWithoutCharacterValue;
-    let score = this.getScoreOfLikertScale(averageGeneralEvaluation);
-
-    averageGeneralEvaluation = score
-    console.log(averageGeneralEvaluation);
-    likertScaleChart.sort((a, b) => b.percentage - a.percentage);
-
-    return {likertScaleChart: likertScaleChart, averageGeneralEvaluation: averageGeneralEvaluation};
-  }
-
-  public static getScoreOfLikertScale (averageGeneralEvaluation: number) {
-
     /*This scale is the starting point for our 0 score.
-    It represents the failure rate of innovations that is specific to the UMI data.
-    The score below this scale is considered as null*/
+     It represents the failure rate of innovations that is specific to the UMI data.
+     The score below this scale is considered as null*/
     const scale: number = 0.44;
+
+    //This score is calculated according to the likert-scale methodology
+    // It returns a score with only the importance weights of the selected options per occurrence
+    averageGeneralEvaluation = averageGeneralEvaluation / scoreTotalOptionWithoutCharacterValue;
 
     /* This score is calculated according to the likert-scale methodology
       It returns a score with only the importance weights of the selected options per occurrence*/
@@ -483,28 +476,56 @@ export class ResponseService {
 
 
     if (isNaN(averageGeneralEvaluation)) {
-       return 0;
+      averageGeneralEvaluation = 0;
     }
-    console.log(averageGeneralEvaluation);
+    this.getLikertScaleGraphicScore(averageGeneralEvaluation);
 
-    return averageGeneralEvaluation;
+    likertScaleChart.sort((a, b) => b.percentage - a.percentage);
+
+    // averageGeneralEvaluation = score
+    return {likertScaleChart: likertScaleChart, averageGeneralEvaluation: averageGeneralEvaluation};
   }
 
   /**
-   * Compute positions weights depending of number of options
-   * First position will always be 1
-   * Last position will always be 0
-   * @param n
+   *
+   * @param averageGeneralEvaluation
    */
-  public static computeWeights(n: number) {
-    const weights = [].constructor(n);
-    const steps = 1 / (n - 1);
-    for (let i = 0; i < weights.length; i++) {
-      weights[i] = 1 - steps * i;
+  public static getLikertScaleGraphicScore (averageGeneralEvaluation:number) {
+
+    const scorePercentage = (averageGeneralEvaluation * 98) / 20; // will give margin percentage for the pointer of marker
+    let index = Math.floor((averageGeneralEvaluation / 4));
+
+    /*small fix for situation for score = 20 */
+    if (index === 5) {
+      index = 4;
     }
 
-    return weights;
-  }
+    return {
+      scoreName: colorsAndNames[index].name,
+      scoreColor: colorsAndNames[index].color,
+      scoreNumber: averageGeneralEvaluation,
+      scorePercentage: scorePercentage,
+    }
+  };
+
+    /**
+     * Compute positions weights depending of number of options
+     * First position will always be 1
+     /**
+     * Compute positions weights depending of number of options
+     * First position will always be 1
+     * Last position will always be 0
+     * @param n
+     */
+  public static computeWeights(n:number){
+      const weights = [].constructor(n);
+      const steps = 1 / (n - 1);
+      for (let i = 0; i < weights.length; i++) {
+        weights[i] = 1 - steps * i;
+      }
+
+      return weights;
+    }
 
   /**
    * Compute positions multiplier depending of number of options
@@ -520,6 +541,7 @@ export class ResponseService {
 
     return multipliers;
   }
+
 
   /**
    * @param {any} question
@@ -678,39 +700,6 @@ export class ResponseService {
     const abstract = innovation.executiveReport.abstracts.find((ques) =>
       ques.quesId === quesId);
     return abstract ? abstract.value : '';
-  }
-
-  /**
-   *
-   * @param averageGeneralEvaluation
-   */
-  static getLikertScaleGraphicScore (averageGeneralEvaluation : number): any {
-
-    //console.log(this._averageGeneralEvaluation);
-    //averageGeneralEvaluation = this._averageGeneralEvaluation;
-   // console.log(averageGeneralEvaluation);
-    //const tableauTestNotes = [0,1,3,4,5,6,7,8,9,11,12,13,14,15,16,17,18,19,20]
-
-  /*  for (let valeur of tableauTestNotes) {
-      let index = (valeur - valeur % 4) / 4;
-      console.log(index);
-    }*/
-    let index = (this._averageGeneralEvaluation - this._averageGeneralEvaluation % 4) / 4; // will give 0,1,2,3,4,5
-
-    console.log(index);
-    /*petit fix for situation for score = 20 */
-    if( index === 5) {
-       index = 4;
-    }
-    const scorePercentage = (this._averageGeneralEvaluation * 98) / 20; // will give margin percentage for the pointer of marker
-
-    return {
-      scoreName: colorsAndNames[index].name,
-      color: colorsAndNames[index].color,
-      scoreNumber: this._averageGeneralEvaluation,
-      scorePercentage: scorePercentage,
-    };
-
   }
 
 }

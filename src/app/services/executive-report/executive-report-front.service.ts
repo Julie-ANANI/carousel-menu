@@ -276,12 +276,11 @@ export class ExecutiveReportFrontService {
    * @param graphics
    * @type SectionLikertScale
    */
-  public likertScaleSection(likertScaleData: LikertScaleChart, lang: string, graphics: { scoreName: string, color: string, scorePercentage: number}): SectionLikertScale {
-
+  public likertScaleSection(likertScaleData: LikertScaleChart, lang: string, graphics: { scoreName: string, scoreColor: string, scorePercentage: number}): SectionLikertScale {
     /* -I use graphics for display name of score + color +  percentage by response.service
      */
     return {
-      color: graphics.color,
+      color: graphics.scoreColor,
       legend: '',
       name: graphics.scoreName,
       visibility: false
