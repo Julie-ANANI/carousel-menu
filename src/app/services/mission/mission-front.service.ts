@@ -21,14 +21,28 @@ export class MissionFrontService {
   }
 
   /**
-   * check template has the question or not in it.
+   * check template has the question or not in it based on the key
+   * and the value for which we are looking
    *
    * @param template
-   * @param questionId
+   * @param key
+   * @param value
    */
-  public static hasMissionQuestion(template: MissionTemplate, questionId: string): boolean {
+  public static hasMissionQuestion(template: MissionTemplate, key: string, value: string): boolean {
     const questions = MissionFrontService.totalTemplateQuestions(template);
-    return questions.some((_ques) => _ques['question']._id === questionId);
+    return questions.some((_ques) => _ques[key] && _ques[key] === value);
+  }
+
+  /**
+   * return the question from the list of questions based on the key
+   * and the value for which we are looking
+   *
+   * @param questions
+   * @param key
+   * @param value
+   */
+  public static question(questions: Array<MissionQuestion> = [], key: string, value: string): MissionQuestion {
+    return questions.find((_ques) => _ques[key] && _ques[key] === value);
   }
 
   /**
@@ -129,7 +143,7 @@ export class MissionFrontService {
   }
 
   /***
-   * this function return the value based on the required filed and the provided language.
+   * this function return the value based on the required to be filed and the provided language.
    * when required is equal to
    * 1. OBJECTIVE: gives the full principal objective text.
    * 2. PICTO: gives the img src of the principal objective.
@@ -139,7 +153,7 @@ export class MissionFrontService {
    *
    * hasTemplate - means using the new mission template - check for the template object in the mission.
    *
-   * updated on 7th June, 2021 to work with the mission templates.
+   * updated on 7th June 2021 to work with the mission templates.
    * @param mission
    * @param lang
    * @param required: the value to return
