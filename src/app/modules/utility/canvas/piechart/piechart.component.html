@@ -1,4 +1,4 @@
-<div *ngIf="isBrowser" class="text-sm text-medium" id="piechart">
+<div *ngIf="isBrowser" class="text-sm text-medium d-flex flex-d-column align-center" id="piechart">
 
   <p *ngIf="showFavorable && pieChart" class="m-bottom-15 d-flex align-center justify-center">
     <ng-container *ngIf="!editFavorableAnswersLabel">
@@ -33,7 +33,7 @@
 
   <div class="popover d-flex" (mouseleave)="mouseLeave()">
     <canvas
-      class="c-hand"
+      class="canvas-pie c-hand"
       *ngIf="pieChart"
       [chartType]="'pie'"
       [colors]="colors"
