@@ -264,7 +264,7 @@ export class SharedQuestionnaireSectionComponent implements OnInit {
   public questionSelected(event: { label: string, question: MissionQuestion }) {
     const questionId = event.question && event.question._id;
 
-    if (!!questionId && MissionFrontService.hasMissionQuestion(this._missionQuestionService.template, (questionId))) {
+    if (!!questionId && MissionFrontService.hasMissionQuestion(this._missionQuestionService.template, '_id', questionId)) {
       this._translateNotificationsService.error('Error', 'The question already exists in the use case.');
     } else if (!!questionId && !this._alreadyInList(questionId)) {
       const value = {
