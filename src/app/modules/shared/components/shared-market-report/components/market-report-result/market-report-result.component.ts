@@ -1,9 +1,10 @@
 import {Component, Inject, Input, OnInit} from '@angular/core';
 import {Innovation} from '../../../../../../models/innovation';
-import {Mission, MissionResultItem} from '../../../../../../models/mission';
+import {Mission, MissionQuestion, MissionResultItem} from '../../../../../../models/mission';
 import {InnovationFrontService} from '../../../../../../services/innovation/innovation-front.service';
 import {PageScrollService} from 'ngx-page-scroll-core';
 import {DOCUMENT} from '@angular/common';
+import {MissionFrontService} from '../../../../../../services/mission/mission-front.service';
 
 type toggleType = 'abstract' | 'addItem' | 'editItem';
 
@@ -13,12 +14,40 @@ interface Toggle {
   editItem: boolean;
 }
 
+interface Label {
+  color: 'color-1' | 'color-2' | 'color-3' | 'color-4' | 'color-5';
+  label: string;
+  margin: string;
+  left: string;
+  right: string;
+}
+
 @Component({
   selector: 'app-market-report-result',
   templateUrl: './market-report-result.component.html',
   styleUrls: ['./market-report-result.component.scss']
 })
 export class MarketReportResultComponent implements OnInit {
+
+  get activeBar(): number {
+    return this._activeBar;
+  }
+
+  get label(): Label {
+    return this._label;
+  }
+
+  get score(): number {
+    return this._score;
+  }
+
+  get showSeeMore(): boolean {
+    return this._showSeeMore;
+  }
+
+  get showBarSection(): boolean {
+    return this._showBarSection;
+  }
 
   get itemIndex(): number {
     return this._itemIndex;
@@ -51,9 +80,7 @@ export class MarketReportResultComponent implements OnInit {
   @Input() set innovation(value: Innovation) {
     this._innovation = value;
     if (this._innovation.mission && (<Mission>this._innovation.mission)._id) {
-      this._mission = (<Mission>this._innovation.mission);
-      this._resultItems = this._mission?.result?.items || [];
-      this._initItemIndex();
+      this._initData();
     }
   }
 
@@ -75,11 +102,97 @@ export class MarketReportResultComponent implements OnInit {
 
   private _itemIndex = 0;
 
+  private _essentialQuestions: Array<MissionQuestion> = [];
+
+  private _showBarSection = false;
+
+  private _showSeeMore = false;
+
+  private _score = 0;
+
+  private _label: Label = <Label>{};
+
+  private _activeBar: number = 0;
+
   constructor(@Inject(DOCUMENT) private _document: Document,
               private _innovationFrontService: InnovationFrontService,
               private _pageScrollService: PageScrollService,) { }
 
   ngOnInit(): void {
+  }
+
+  private _setLabel() {
+    this._label.left = this.score < 85 ? this.score + '%' : '';
+    this._label.right = this.score >= 85 ? (99 - this.score) + '%' : '';
+    this._label.margin = (this.score >= 30 && this.score <= 85) ? '-5%' : '';
+
+    if (this.score >= 0 && this.score < 20) {
+      this._activeBar = 0;
+      this._label.color = 'color-1';
+      this._label.label = 'MARKET_REPORT.RESULT.' + this._mission?.template?.methodology + '.BAR.LABEL_A';
+    } else if (this.score >= 20 && this.score < 40) {
+      this._activeBar = 1;
+      this._label.color = 'color-2';
+      this._label.label = 'MARKET_REPORT.RESULT.' + this._mission?.template?.methodology + '.BAR.LABEL_B';
+    } else if (this.score >= 40 && this.score < 60) {
+      this._activeBar = 2;
+      this._label.color = 'color-3';
+      this._label.label = 'MARKET_REPORT.RESULT.' + this._mission?.template?.methodology + '.BAR.LABEL_C';
+    } else if (this.score >= 60 && this.score < 80) {
+      this._activeBar = 3;
+      this._label.color = 'color-4';
+      this._label.label = 'MARKET_REPORT.RESULT.' + this._mission?.template?.methodology + '.BAR.LABEL_D';
+    } else {
+      this._activeBar = 4;
+      this._label.color = 'color-5';
+      this._label.label = 'MARKET_REPORT.RESULT.' + this._mission?.template?.methodology + '.BAR.LABEL_E';
+    }
+  }
+
+  private _initData() {
+    this._mission = (<Mission>this._innovation.mission);
+    this._resultItems = this._mission?.result?.items || [];
+    this._essentialQuestions = MissionFrontService.essentialQuestions(MissionFrontService.totalTemplateQuestions(this._mission.template));
+    this._initItemIndex();
+
+    if (!!this._mission.template && !!this._mission.template.methodology) {
+      let ques1: MissionQuestion, ques2: MissionQuestion, ques3: MissionQuestion, ques4: MissionQuestion = <MissionQuestion>{};
+
+      switch (this._mission.template && this._mission.template.methodology) {
+        case 'DETECTING_MARKET':
+          ques1 = this._getQuestion('InnovOpp');
+          this._showBarSection = this._showSeeMore = !!(ques1 && ques1._id);
+          break;
+
+        case 'IDENTIFYING_RECEPTIVE':
+        case 'SOURCING_SOLUTIONS':
+          this._showSeeMore = true;
+          break;
+
+        case 'VALIDATING_INTEREST':
+          ques1 = this._getQuestion('ExistenceOfNeeds');
+          ques2 = this._getQuestion('CritOfNeeds');
+          ques3 = this._getQuestion('ValueOfSol');
+          ques4 = this._getQuestion('Adaptability');
+          this._showBarSection = this._showSeeMore = !!(ques1 && ques1._id && ques2 && ques2._id && ques3 && ques3._id
+            && ques4 && ques4._id);
+          break;
+
+        case 'VALIDATING_MARKET':
+          ques1 = this._getQuestion('ExistenceOfNeeds');
+          ques2 = this._getQuestion('CritOfNeeds');
+          this._showBarSection = this._showSeeMore = !!(ques1 && ques1._id && ques2 && ques2._id);
+          break;
+      }
+    }
+
+    if (this._showBarSection) {
+      this._setLabel();
+    }
+  }
+
+  private _getQuestion(identifier: string): MissionQuestion {
+    return MissionFrontService.question(this._essentialQuestions, 'identifier', identifier);
   }
 
   private _initItemIndex() {

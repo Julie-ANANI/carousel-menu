@@ -462,7 +462,7 @@ export class ResponseService {
     averageGeneralEvaluation = averageGeneralEvaluation/ scoreTotalOptionWithoutCharacterValue;
     averageGeneralEvaluation = (averageGeneralEvaluation - scale) / (1 - scale);
 
-    averageGeneralEvaluation = parseFloat(((averageGeneralEvaluation < 0) ? 0 : averageGeneralEvaluation * 20) .toFixed(2));
+    averageGeneralEvaluation = parseFloat(((averageGeneralEvaluation < 0) ? 0 : averageGeneralEvaluation * 20).toFixed(2));
 
 
     if (isNaN(averageGeneralEvaluation)) {
