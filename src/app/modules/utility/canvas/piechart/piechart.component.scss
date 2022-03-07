@@ -1,5 +1,10 @@
 #piechart {
 
+  .canvas-pie{
+    width: 300px !important;
+    height: 150px !important;
+  }
+
   .pie-data-wrapper {
     display: flex;
     justify-content: center;
