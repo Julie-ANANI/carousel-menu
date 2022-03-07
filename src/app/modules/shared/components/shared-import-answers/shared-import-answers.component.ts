@@ -40,8 +40,8 @@ export class SharedImportAnswersComponent implements OnInit {
         (message) => {
           this.importingError.emit(null)
           this._translateNotificationsService.success(
-            'Importing',
-            `${message.newAnswers} new answers will be imported and ${message.existingAnswers} are already answers of known pros`
+            'Success',
+            'The answers has been imported.'
           );
         },
         (err: HttpErrorResponse) => {
