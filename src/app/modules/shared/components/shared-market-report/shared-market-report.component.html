@@ -92,7 +92,7 @@
           !innovation?.marketReport?.keyLearning?.conclusion">
             <div class="p-top-50" id="result">
               <app-market-report-result
-                [isEditable]="adminSide"
+                [isEditable]="canAccess(['edit', 'result'])"
                 [reportingLang]="reportingLang"
                 [innovation]="innovation"
                 [scrollTo]="'#'+(questions.length?questions[0].identifier:'')">
