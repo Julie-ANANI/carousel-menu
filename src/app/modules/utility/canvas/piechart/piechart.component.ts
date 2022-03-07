@@ -13,6 +13,7 @@ import {UmiusMultilingInterface} from '@umius/umi-common-component';
   styleUrls: ['piechart.component.scss']
 })
 
+
 export class PiechartComponent {
 
   @Input() showFavorable = true;
@@ -55,7 +56,7 @@ export class PiechartComponent {
 
   private _picto: Picto = picto;
 
-  private _indexSection: number;
+  private _indexSection: number = -1;
   private _indexLegend: number;
   private _offsetXSection: number;
   private _offsetYSection: number;
@@ -64,7 +65,11 @@ export class PiechartComponent {
               private _translateService: TranslateService) { }
 
   chartClicked(event: any) {
-    this.indexSection = event.active[0]._index;
+    if(event.active && event.active.length){
+      this.indexSection = event.active[0]._index;
+    }else{
+      this.indexSection = -1;
+    }
     this.offsetXSection = event.event.offsetX;
     this.offsetYSection = event.event.offsetY;
   }
@@ -161,5 +166,9 @@ export class PiechartComponent {
 
   set indexLegend(value: number) {
     this._indexLegend = value;
+  }
+
+  mouseLeave() {
+    this._indexSection = -1;
   }
 }
