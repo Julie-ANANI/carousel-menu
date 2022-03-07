@@ -1,28 +1,8 @@
 @import "~@umius/umi-style-framework/scss/mixins";
 
-// The results are already defined by default for the likert-scale type
-//Here I use the same type of input for the ranking type
-.admin-executive-wrapper .content-wrapper .falsePlaceholder {
-  appearance: none;
-  border: $border-width solid $form-border-color;
-  color: $form-input-color;
-  border-radius: $border-radius;
-  display: flex;
-  align-items: center;
-  width: 211px;
-  height: 50px;
-  outline: none;
-  padding: 14.5px;
-  position: relative;
-  background: $white-color none;
-  max-width: 100%;
-  line-height: $line-height-sm;
-  border: 2px solid #000000;
-  font-size: $font-size-sm;
-}
-
 #type-likert-scale .card-likert {
   padding: 10px;
+  background-color: white;
 }
 
 #type-likert-scale .card-likert div {
@@ -32,4 +12,5 @@
 #type-likert-scale .card-likert div .shape.is-circled.is-sm {
   justify-content: center;
   align-items: center;
+  border-radius: 50%;
 }

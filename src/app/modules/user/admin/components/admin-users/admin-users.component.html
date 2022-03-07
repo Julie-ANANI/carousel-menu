@@ -28,10 +28,10 @@
       <!-- table -->
       <section>
         <umius-table
-          (editRow)="onClickEdit($event)"
-          (removeRows)="onClickDelete($event)"
           [(config)]="config"
-          [data]="table">
+          [data]="table"
+          (editRow)="onClickEdit($event)"
+          (removeRows)="onClickDelete($event)">
         </umius-table>
       </section>
       <!-- /table -->

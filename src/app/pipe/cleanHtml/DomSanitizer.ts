@@ -9,8 +9,11 @@ export class DomSanitizerPipe implements PipeTransform {
   }
 
   transform(html: string): SafeHtml {
-    html = this.addClassToImg(html);
-    html = this.extractVideoFromHref(html);
+    if(!!html) {
+      html = this.extractImgFromHref(html);
+      html = this.addClassToImg(html);
+      html = this.extractVideoFromHref(html);
+    }
     return this.sanitizer.bypassSecurityTrustHtml(html);
   }
 
@@ -18,6 +21,24 @@ export class DomSanitizerPipe implements PipeTransform {
   // This class is used by etherpad editor
   addClassToImg(html: string) {
     return html.replace('<img', '<img class="img-editor"');
+  }
+
+  // Old etherpad images handling
+  // Display <img> tags from <a> tags containing img url
+  // Used for etherpad formatting
+  extractImgFromHref(html: string) {
+    const imgInHrefTagRegex = /<a[^>]*(http?s?:?\/\/[^"'<>]*\.(?:png|jpg|jpeg|gif|svg)).*?<\/a>/gm;
+    const htmlToTransform = html;
+    let m;
+
+    while ((m = imgInHrefTagRegex.exec(htmlToTransform)) !== null) {
+      if (m.index === imgInHrefTagRegex.lastIndex) {
+        imgInHrefTagRegex.lastIndex++;
+      }
+      const imgTag = `<img class='img-editor' src="${m[1]}" alt="img">`;
+      html = html.replace(m[0], imgTag);
+    }
+    return html;
   }
 
   // Display <video> from <a> tags containing video url

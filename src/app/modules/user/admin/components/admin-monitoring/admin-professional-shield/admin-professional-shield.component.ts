@@ -47,6 +47,7 @@ export class AdminProfessionalShieldComponent implements OnInit {
       _isSelectable: true,
       _isTitle: true,
       _isPaginable: true,
+      _paginationTemplate: 'TEMPLATE_1',
       _clickIndex: 1,
       _columns: [
         {_attrs: ['professional.firstName', 'professional.lastName'],

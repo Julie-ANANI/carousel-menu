@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { SidebarInterface } from "../../../../../../../sidebars/interfaces/sidebar-interface";
 import { Innovation } from '../../../../../../../../models/innovation';
 import { TranslateNotificationsService } from "../../../../../../../../services/translate-notifications/translate-notifications.service";
 import { TranslateTitleService } from '../../../../../../../../services/title/title.service';
 import { AnswerService } from '../../../../../../../../services/answer/answer.service';
 import {ContextInterface} from '../../../interfaces/context-interface';
+import {UmiusSidebarInterface} from '@umius/umi-common-component';
 
 @Component({
   selector: 'admin-community-project',
@@ -32,7 +32,7 @@ export class AdminCommunityProjectComponent {
 
   private _targetCountries: Array<string> = [];
 
-  private _sidebarValue: SidebarInterface = {};
+  private _sidebarValue: UmiusSidebarInterface = {};
 
   private _totalThreshold: number;
 
@@ -136,11 +136,11 @@ export class AdminCommunityProjectComponent {
   }
 
 
-  get sidebarValue(): SidebarInterface {
+  get sidebarValue(): UmiusSidebarInterface {
     return this._sidebarValue;
   }
 
-  set sidebarValue(value: SidebarInterface) {
+  set sidebarValue(value: UmiusSidebarInterface) {
     this._sidebarValue = value;
   }
 

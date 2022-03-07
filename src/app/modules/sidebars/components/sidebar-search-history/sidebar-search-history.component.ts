@@ -122,6 +122,7 @@ export class SidebarSearchHistoryComponent {
       _total: this._total,
       _clickIndex: this.canAccess(['view', 'results']) ? 1 : null,
       _isPaginable: true,
+      _paginationTemplate: 'TEMPLATE_1',
       _isSelectable: true,
       _isTitle: true,
       _isLocal: true,

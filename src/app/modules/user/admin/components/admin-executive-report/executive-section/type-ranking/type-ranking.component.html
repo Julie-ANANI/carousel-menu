@@ -69,6 +69,8 @@
               class="form-input"
               type="text">
 
+            <div>{{content.values[i].name}}</div>
+
             <span [ngStyle]="{ 'color': i === 0 ? element1Color : i === 1 ? element2Color : element3Color }"
                   class="text-limit-wrapper">
               {{ 20 - tag.name.length }}
@@ -86,7 +88,6 @@
               (keyup)="textColor('legend' , (i + 1))"
               [(ngModel)]="tag.legend"
               [attr.placeholder]="'ADMIN_EXECUTIVE_REPORT.RANKING_SECTION.LEGEND_' + (i + 1) | translate"
-              maxlength="13"
               class="form-input"
               type="text">
 

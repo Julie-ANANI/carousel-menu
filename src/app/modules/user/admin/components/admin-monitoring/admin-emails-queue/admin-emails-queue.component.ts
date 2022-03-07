@@ -64,6 +64,7 @@ export class AdminEmailQueueComponent implements OnInit {
             _isSearchable: true,
             _isTitle: true,
             _isPaginable: true,
+            _paginationTemplate: 'TEMPLATE_1',
             _clickIndex: 1,
             _columns: [
               {

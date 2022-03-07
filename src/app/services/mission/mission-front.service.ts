@@ -80,11 +80,19 @@ export class MissionFrontService {
   }
 
   /**
-   * return the list of the complementary objectives
+   * return the list of the complementary questions
    * @param questions
    */
   public static complementaryQuestions(questions: Array<MissionQuestion>): Array<MissionQuestion> {
     return questions.filter((_question) => _question.type === 'COMPLEMENTARY');
+  }
+
+  /**
+   * return the list of the essential questions
+   * @param questions
+   */
+  public static essentialQuestions(questions: Array<MissionQuestion>): Array<MissionQuestion> {
+    return questions.filter((_question) => _question.type === 'ESSENTIAL');
   }
 
   /**

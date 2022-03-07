@@ -87,8 +87,15 @@ export class AnswerQuestionComponent {
 
   public selectOption(event: Event, option: any) {
     event.preventDefault();
-    this.fullAnswer.answers[this.question.identifier] = option.identifier;
     this.emitChanges();
+
+    if (option.identifier === this.fullAnswer.answers[this.question.identifier]) {
+      this.fullAnswer.answers[this.question.identifier] = true;
+
+    } else if (option.identifier !== this.fullAnswer.answers[this.question.identifier]){
+      this.fullAnswer.answers[this.question.identifier] = option.identifier;
+    }
+
   }
 
   public setAnswer(event: any) {

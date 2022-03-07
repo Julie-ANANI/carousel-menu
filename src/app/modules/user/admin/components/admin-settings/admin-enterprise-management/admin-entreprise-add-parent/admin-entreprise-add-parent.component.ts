@@ -1,17 +1,18 @@
-import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { Router } from '@angular/router';
 import { RolesFrontService } from '../../../../../../../services/roles/roles-front.service';
 import { EnterpriseService } from '../../../../../../../services/enterprise/enterprise.service';
 import { first } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
 import { NotificationsService } from 'angular2-notifications';
-import {Table, Column, UmiusConfigInterface, UmiusEnterpriseInterface} from '@umius/umi-common-component';
+import { Column, Table, UmiusConfigInterface, UmiusEnterpriseInterface } from '@umius/umi-common-component';
 import { TranslateNotificationsService } from "../../../../../../../services/translate-notifications/translate-notifications.service";
 import { ErrorFrontService } from "../../../../../../../services/error/error-front.service";
 
 
 @Component({
   templateUrl: './admin-entreprise-add-parent.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AdminEntrepriseAddParentComponent implements OnInit {
   private _companiesToAddParent: Array<any> = [];
@@ -45,6 +46,7 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
     private _notificationService: NotificationsService,
     private _entrepriseService: EnterpriseService,
     private _rolesFrontService: RolesFrontService,
+    private _changeDetectorRef: ChangeDetectorRef,
     private _translateNotificationsService: TranslateNotificationsService
   ) {
   }
@@ -66,6 +68,7 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
       _isTitle: true,
       _isLegend: true,
       _isPaginable: this.companiesToAddParent.length > 10,
+      _paginationTemplate: 'TEMPLATE_1',
       _isNoMinHeight: this.companiesToAddParent.length < 11,
       _columns: [
         {
@@ -269,6 +272,7 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
       this.addReplaceStyle(c);
       this.replaceChildValues(c._attrs[0], item);
     }
+    this._changeDetectorRef.markForCheck();
   }
 
   /**
@@ -427,24 +431,27 @@ export class AdminEntrepriseAddParentComponent implements OnInit {
     this._companiesOriginalTable = JSON.parse(
       JSON.stringify(this._companiesTable)
     );
+    this._changeDetectorRef.markForCheck();
   }
 
   addReplaceStyle(c: Column) {
-    /*c._color = '#00B0FF';
-    c._isReplaceable = true;
-    c._isFilled = false;*/
+    c._textColorConfig = {
+      color: '#00B0FF',
+      condition: 'replace',
+      icon: 'fas fa-redo'
+    }
   }
 
   addFilledStyle(c: Column) {
-    /*c._isFilled = true;
-    c._isReplaceable = true;
-    c._color = '#EA5858';*/
+    c._textColorConfig = {
+      color: '#EA5858',
+      condition: 'fill',
+      icon: 'fa-solid fa-arrows-rotate'
+    }
   }
 
   removeStyle(c: Column) {
-    /*c._color = '';
-    c._isReplaceable = undefined;
-    c._isFilled = undefined;*/
+    delete c._textColorConfig;
   }
 
   returnTo(event: Event) {

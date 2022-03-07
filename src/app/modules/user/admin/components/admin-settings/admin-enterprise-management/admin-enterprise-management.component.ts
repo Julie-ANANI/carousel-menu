@@ -12,7 +12,12 @@ import { TranslateNotificationsService } from '../../../../../../services/transl
 import { ErrorFrontService } from '../../../../../../services/error/error-front.service';
 import { Router } from '@angular/router';
 import { EnterpriseValueChains, Industries } from '../../../../../../models/static-data/enterprise';
-import {Table, UmiusConfigInterface, UmiusEnterpriseInterface, UmiusSidebarInterface} from '@umius/umi-common-component';
+import {
+  Table,
+  UmiusConfigInterface,
+  UmiusEnterpriseInterface,
+  UmiusSidebarInterface
+} from '@umius/umi-common-component';
 
 @Component({
   templateUrl: './admin-enterprise-management.component.html',
@@ -146,6 +151,7 @@ export class AdminEnterpriseManagementComponent implements OnInit {
       _isSearchable: !!this.canAccess(['searchBy']),
       _isSelectable: true,
       _isPaginable: total > 10,
+      _paginationTemplate: 'TEMPLATE_1',
       _actions: this._customButtons,
       _isDeletable: this.canAccess(['delete']),
       _isNoMinHeight: total < 11,

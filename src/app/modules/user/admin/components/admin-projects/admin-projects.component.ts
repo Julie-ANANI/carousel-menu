@@ -107,7 +107,7 @@ export class AdminProjectsComponent implements OnInit {
       this._setConfigForUmiBack();
 
       this._getOperators().then(_ => {
-        if (!this._rolesFrontService.isMTMUMIBack()) {
+        if (this._rolesFrontService.isMTMUMIRole()) {
           this._configOperator();
         }
         this._getProjects();
@@ -172,7 +172,7 @@ export class AdminProjectsComponent implements OnInit {
             _isHidden: !this.canAccess(['tableColumns', 'status']),
             _width: '200px',
             _choices: [
-              {_name: 'EDITING', _alias: 'Editing', _class: 'label is-secondary'},
+              {_name: 'EDITING', _alias: 'Editing', _class: 'label is-primary'},
               {_name: 'SUBMITTED', _alias: 'Submitted', _class: 'label is-draft'},
               {_name: 'EVALUATING', _alias: 'Evaluating', _class: 'label is-progress'},
               {_name: 'DONE', _alias: 'Done', _class: 'label is-success'},
@@ -325,7 +325,7 @@ export class AdminProjectsComponent implements OnInit {
             _isHidden: !this.canAccess(['tableColumns', 'status']),
             _width: '150px',
             _choices: [
-              {_name: 'EDITING', _alias: 'Editing', _class: 'label is-secondary'},
+              {_name: 'EDITING', _alias: 'Editing', _class: 'label is-primary'},
               {_name: 'SUBMITTED', _alias: 'Submitted', _class: 'label is-draft'},
               {_name: 'EVALUATING', _alias: 'Evaluating', _class: 'label is-progress'},
               {_name: 'DONE', _alias: 'Done', _class: 'label is-success'},
@@ -605,7 +605,7 @@ export class AdminProjectsComponent implements OnInit {
             _isHidden: !this.canAccess(['tableColumns', 'status']),
             _width: '200px',
             _choices: [
-              {_name: 'EDITING', _alias: 'Editing', _class: 'label is-secondary'},
+              {_name: 'EDITING', _alias: 'Editing', _class: 'label is-primary'},
               {_name: 'SUBMITTED', _alias: 'Submitted', _class: 'label is-draft'},
               {_name: 'EVALUATING', _alias: 'Evaluating', _class: 'label is-progress'},
               {_name: 'DONE', _alias: 'Done', _class: 'label is-success'},
@@ -663,6 +663,7 @@ export class AdminProjectsComponent implements OnInit {
 
   set config(value: UmiusConfigInterface) {
     this._config = value; // TODO how to change the config when searching things like the operator?
+    console.log(value);
     try {
       // Parse the config.search field to see if there's something
       this._getProjects();
@@ -761,6 +762,7 @@ export class AdminProjectsComponent implements OnInit {
       _isTitle: true,
       _clickIndex: this.canAccess(['project', 'tabs']) ? 1 : null,
       _isPaginable: true,
+      _paginationTemplate: 'TEMPLATE_1',
       _isNoMinHeight: true,
       _columns: this._setColumnOrderForUser()
     };

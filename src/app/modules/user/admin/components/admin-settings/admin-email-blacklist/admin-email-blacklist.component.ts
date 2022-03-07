@@ -98,6 +98,7 @@ export class AdminEmailBlacklistComponent implements OnInit, OnDestroy {
       _isTitle: true,
       _isSearchable: !!this.canAccess(['searchBy']) || !!this.canAccess(['sortBy']),
       _isPaginable: this._emailDataset._metadata.totalCount > 10,
+      _paginationTemplate: 'TEMPLATE_1',
       _clickIndex: this.canAccess(['view']) || this.canAccess(['edit']) ? 1 : null,
       _columns: [
         {

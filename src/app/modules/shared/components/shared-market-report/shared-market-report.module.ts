@@ -35,6 +35,8 @@ import {RankingChartModule} from './components/ranking-chart/ranking-chart.modul
 import {RanksModule} from './components/ranks/ranks.module';
 import {LikertScaleChartModule} from './components/likert-scale-chart/likert-scale-chart.module';
 import {CountryFlagModule, ModalModule, SidebarFullModule, SidebarInlineModule} from '@umius/umi-common-component';
+import {MissionPipeModule} from '../../../../pipe/mission/missionPipe.module';
+import { MarketReportResultComponent } from './components/market-report-result/market-report-result.component';
 
 @NgModule({
   imports: [
@@ -63,6 +65,7 @@ import {CountryFlagModule, ModalModule, SidebarFullModule, SidebarInlineModule} 
     ModalModule,
     SidebarFullModule,
     CountryFlagModule,
+    MissionPipeModule,
   ],
   declarations: [
     SharedMarketReportComponent,
@@ -77,6 +80,7 @@ import {CountryFlagModule, ModalModule, SidebarFullModule, SidebarInlineModule} 
     SharedMarketReportPopoverComponent,
     QuestionSectionComponent,
     StarsComponent,
+    MarketReportResultComponent,
   ],
   exports: [
     SharedMarketReportComponent,

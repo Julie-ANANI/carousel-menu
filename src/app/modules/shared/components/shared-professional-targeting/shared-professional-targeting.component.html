@@ -8,7 +8,7 @@
         <div class="card-body">
           <section class="section-all">
 
-            <div class="select-wrapper d-flex align-center">
+            <div class="select-wrapper d-flex align-center w-full">
               <div class="button-checker m-left-3"
                    [ngClass]="{'state-full-check': selectAllSeniorityLevels === 1,
                    'state-none-check': selectAllSeniorityLevels===0, 'state-mixed': selectAllSeniorityLevels === 3}"
@@ -26,15 +26,15 @@
                 </ng-container>
               </div>
 
-              <div class="m-left-4 d-flex align-center width-100">
+              <div class="m-left-4 d-flex align-center w-full">
                 All
 
                 <!-- nb of included/excluded jobs-->
-                <div class="d-flex flex-end flex-grow">
+                <div class="d-flex flex-end flex-grow m-left-2 w-full">
                   <span *ngIf="nbAllSeniorityLevelSelected"
-                        class="shape bg-success is-circle is-md text-13"> {{nbAllSeniorityLevelSelected}} </span>
+                        class="shape bg-success is-circled is-md text-13 text-white m-right-1"> {{nbAllSeniorityLevelSelected}} </span>
                   <span *ngIf="nbAllSeniorityLevelExcluded"
-                        class="shape bg-alert is-circle is-md text-13"> {{nbAllSeniorityLevelExcluded}} </span>
+                        class="shape bg-alert is-circled is-md text-13 text-white m-right-1"> {{nbAllSeniorityLevelExcluded}} </span>
                 </div>
                 <!-- /nb of included/excluded jobs-->
 
@@ -56,14 +56,14 @@
 
     <!-- Search operator -->
     <div class="d-flex flex-d-column align-center" style="width: 10%; margin-top: 10%">
-      <button class="button m-top-10 text-bold text-20"
+      <button class="button is-info is-outlined m-top-10 text-bold text-20"
               [disabled]="isPreview"
               [ngStyle]="{color: searchOperator==='OR'? '#EA5858' : '#333333'}"
               (click)="searchOperatorOnChange('OR')">
         OR
       </button>
 
-      <button class="button m-top-10 text-bold text-20"
+      <button class="button is-info is-outlined m-top-10 text-bold text-20"
               [disabled]="isPreview"
               [ngStyle]="{color: searchOperator==='AND'? '#EA5858' : '#333333'}"
               (click)="searchOperatorOnChange('AND')">
@@ -88,8 +88,8 @@
           <!-- /search jobs -->
 
           <!-- select all -->
-          <section class="section-all">
-            <div class="select-wrapper d-flex align-center">
+          <section class="section-all w-full">
+            <div class="select-wrapper d-flex align-center w-full">
               <div class="button-checker m-left-3"
                    [ngClass]="{'state-full-check': selectAllJobs === 1,
                    'state-neutral-check': selectAllJobs === 2,
@@ -111,15 +111,15 @@
                 </ng-container>
               </div>
 
-              <div class="m-left-4 d-flex align-center width-100">
+              <div class="m-left-4 d-flex align-center w-full">
                 All
 
                 <!-- nb of included/excluded jobs-->
-                <div class="d-flex flex-end flex-grow">
+                <div class="d-flex flex-end flex-grow m-left-2 w-full">
                   <span *ngIf="nbAllJobSelected"
-                        class="shape bg-success is-circle is-md text-13"> {{nbAllJobSelected}} </span>
+                        class="shape bg-success is-circled is-md text-13 text-white m-right-1"> {{nbAllJobSelected}} </span>
                   <span *ngIf="nbAllJobExcluded"
-                        class="shape bg-alert is-circle is-md text-13"> {{nbAllJobExcluded}} </span>
+                        class="shape bg-alert is-circled is-md text-13 text-white m-right-1"> {{nbAllJobExcluded}} </span>
 
                 </div>
                 <!-- /nb of included/excluded jobs-->

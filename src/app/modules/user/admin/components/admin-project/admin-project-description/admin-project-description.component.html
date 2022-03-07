@@ -37,7 +37,7 @@
                   [for]="section.type+i"
                   [ngClass]="innovation.innovationCards.length > 1 && isEditable ? 'm-right-10' : 'm-right-30'"
                   class="form-label">
-                  <span class="shape is-rounded bg-draft">{{ i + 1 }}</span>
+                  <span class="shape is-rounded bg-draft text-white">{{ i + 1 }}</span>
                   <ng-container *ngIf="!isEditable">{{ section.title }}</ng-container>
                   <ng-container *ngIf="isEditable">
                     <input
@@ -56,8 +56,7 @@
                   [attr.data-tooltip]="!(getPadPreviewMode(i.toString()))? 'Preview':'Edit'"
                   (click)="padPreviewModeOnChange(i.toString())"
                   class="button tooltip is-circled is-action is-outlined text-no-underline is-info
-                  m-right-15
-                  is-xxs text-sm op-text text-meta"
+                  m-right-15 is-xs text-sm op-text text-meta"
                   type="button">
                   <i class="fas fa-pencil-alt"
                      *ngIf="getPadPreviewMode(i.toString())"></i>
@@ -252,7 +251,7 @@
                 [ngClass]="{'m-right-10': innovation.innovationCards.length > 1 && isEditable}"
                 class="form-label"
                 for="project-title">
-                <span class="shape is-rounded bg-draft">{{activeInnovCard.sections.length + 1}}</span>Title
+                <span class="shape is-rounded bg-draft text-white">{{activeInnovCard.sections.length + 1}}</span>Title
               </label>
 
               <!-- edit-preview button -->
@@ -260,7 +259,7 @@
                 *ngIf=" isEditable"
                 [attr.data-tooltip]="!(getPadPreviewMode('title'))? 'Preview':'Edit'"
                 (click)="padPreviewModeOnChange('title')"
-                class="button tooltip is-circled is-action is-outlined text-no-underline is-info is-xxs text-sm op-text text-meta m-left-20"
+                class="button tooltip is-circled is-action is-outlined text-no-underline is-info is-xs text-sm op-text text-meta m-left-20"
                 type="button">
                 <i class="fas fa-pencil-alt"
                    *ngIf="getPadPreviewMode('title')"></i>
@@ -397,7 +396,7 @@
                 [ngClass]="{'m-right-10': innovation.innovationCards.length > 1 && isEditable}"
                 class="form-label"
                 for="project-summary">
-                <span class="shape is-rounded bg-draft">{{activeInnovCard.sections.length + 2}}</span>Summary
+                <span class="shape is-rounded bg-draft text-white">{{activeInnovCard.sections.length + 2}}</span>Summary
               </label>
 
               <!-- edit-preview button -->
@@ -405,7 +404,7 @@
                 *ngIf="isEditable"
                 [attr.data-tooltip]="!(getPadPreviewMode('summary'))? 'Preview':'Edit'"
                 (click)="padPreviewModeOnChange('summary')"
-                class="button tooltip is-circled is-action is-outlined text-no-underline is-info is-xxs text-sm op-text text-meta m-left-15"
+                class="button tooltip is-circled is-action is-outlined text-no-underline is-info is-xs text-sm op-text text-meta m-left-15"
                 type="button">
                 <i class="fas fa-pencil-alt"
                    *ngIf="getPadPreviewMode('summary')"></i>
@@ -540,7 +539,7 @@
           <div class="form-group">
             <div class="title-wrapper">
               <label class="form-label" id="project-media-href">
-                <span class="shape is-rounded bg-draft">
+                <span class="shape is-rounded bg-draft text-white">
                   {{ activeInnovCard.sections && activeInnovCard.sections.length + 3 || 4 }}
                 </span>
                 Add medias

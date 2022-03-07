@@ -35,7 +35,7 @@
         <div class="answer-wrapper text-sm text-dark m-right-2">
           <span (click)="clickItem.emit(answer)"
                 *ngIf="!isClickable && !(enableUpdate && i === indexNumber)">{{ answer.text || answer.name || answer.label || answer.expression}}</span>
-          <a class="c-hand" *ngIf="isClickable && !(enableUpdate && i === indexNumber)"
+          <a class="c-hand text-dark" *ngIf="isClickable && !(enableUpdate && i === indexNumber)"
              (click)="clickItem.emit(answer)">{{ answer.text || answer.name || answer.label || answer.expression}}</a>
           <label *ngIf="enableUpdate && i === indexNumber">
             <input

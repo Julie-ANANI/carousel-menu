@@ -21,7 +21,7 @@
     }
 
     h3 {
-      margin-bottom: 0.6rem;
+      margin-bottom: 12px;
       font-size: $font-size-sm;
     }
 
@@ -33,7 +33,7 @@
   }
 
   .sector-suggested {
-    padding-top: 1rem;
+    padding-top: 20px;
   }
 
   .sector-highlighted {
@@ -41,10 +41,10 @@
     .flex-between {
 
       .action-wrapper {
-        margin-bottom: 0.35rem;
+        margin-bottom: 7px;
 
         .search-wrapper, .filter-icon {
-          margin-bottom: 0.5rem;
+          margin-bottom: 10px;
         }
 
         .filter-icon {
@@ -81,7 +81,7 @@
 
         .button {
           min-width: 100px;
-          margin-bottom: 0.75rem;
+          margin-bottom: 15px;
 
           i {
             margin-left: 0;
@@ -105,7 +105,7 @@
   }
 
   h3 {
-    margin-bottom: 0.6rem;
+    margin-bottom: 12px;
     font-size: $font-size-sm;
   }
 
@@ -119,7 +119,7 @@
 .modal-share-wrapper {
 
   .button {
-    margin-top: 0.75rem;
+    margin-top: 15px;
   }
 
   .ghost-edit {

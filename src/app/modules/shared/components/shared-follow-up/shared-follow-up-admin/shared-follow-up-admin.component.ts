@@ -122,6 +122,7 @@ export class SharedFollowUpAdminComponent implements OnInit {
       _isRowDisabled: (answer: Answer) => SharedFollowUpAdminComponent._isRowDisabled(answer),
       _clickIndex: this.canAccess(['view', 'answer']) || this.canAccess(['edit', 'answer']) ? 1 : null,
       _isPaginable: true,
+      _paginationTemplate: 'TEMPLATE_1',
       _isLocal: true,
       _isNoMinHeight: answers.length < 11,
       _actions: [

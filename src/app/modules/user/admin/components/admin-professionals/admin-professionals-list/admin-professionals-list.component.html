@@ -9,10 +9,10 @@
     <section [hidden]="fetchingError && !isLoading" class="p-top-30 p-bottom-30">
       <app-shared-professionals-list
         [(config)]="config"
-        [professionals]="professionals"
         [accessPath]="['professionals']"
         [tableSelector]="'admin-pros-limit'"
-        [total]="total">
+        [total]="total"
+        [professionals]="professionals">
       </app-shared-professionals-list>
     </section>
     <!-- /no fetching error -->

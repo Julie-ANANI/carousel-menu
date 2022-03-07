@@ -8,7 +8,6 @@ import { TranslateNotificationsService } from '../../../../../../services/transl
 import { first } from 'rxjs/operators';
 import {UmiusConfigInterface, UmiusPaginationInterface} from '@umius/umi-common-component';
 
-
 @Component({
   selector: 'app-admin-tag-list',
   templateUrl: 'admin-tag-list.component.html',

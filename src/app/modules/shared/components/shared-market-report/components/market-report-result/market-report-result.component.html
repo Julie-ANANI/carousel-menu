@@ -1,0 +1,332 @@
+<div id="market-report-result" class="bg-white box-style">
+
+  <!-- top bar -->
+  <div class="mrr__top-bar">
+    <div class="d-flex align-center text-medium m-right-10">
+      <img
+        alt="Compass active"
+        class="img-responsive m-right-2"
+        src="https://res.cloudinary.com/umi/image/upload/app/default-images/configurator/compass-active.svg">
+      {{ mission | mission:'objectiveName':reportingLang }}
+    </div>
+    <div class="relative flex-full">
+      <div class="top-bar__path"></div>
+      <div class="top-bar__img-boat absolute">
+        <img
+          alt="Boat"
+          class="img-responsive m-auto"
+          src="https://res.cloudinary.com/umi/image/upload/app/default-images/configurator/boat.svg">
+      </div>
+    </div>
+    <img
+      alt="Compass inactive"
+      class="img-responsive"
+      src="https://res.cloudinary.com/umi/image/upload/app/default-images/configurator/compass-inactive.svg">
+  </div>
+  <!-- /top bar -->
+
+  <!-- content -->
+  <div class="mrr__content-box p-top-25 p-left-50 p-right-50 p-bottom-40">
+
+    <!-- heading -->
+    <h2 class="title is-main m-bottom-25">{{ 'COMMON.LABEL.RESULT' | translateIn: reportingLang }}</h2>
+    <!-- /heading -->
+
+    <!-- view -->
+    <ng-container [ngSwitch]="mission?.template?.methodology">
+
+      <!-- if has essentials -->
+      <ng-container *ngIf="(mission | mission:'essentialsObjectives')?.length">
+
+        <!-- case DETECTING_MARKET -->
+        <ng-container *ngSwitchCase="'DETECTING_MARKET'">
+          <div class="content-box__view">
+
+          </div>
+        </ng-container>
+        <!-- /case DETECTING_MARKET -->
+
+        <!-- case VALIDATING_MARKET -->
+        <ng-container *ngSwitchCase="'VALIDATING_MARKET'">
+          <div class="content-box__view">
+
+          </div>
+        </ng-container>
+        <!-- /case VALIDATING_MARKET -->
+
+        <!-- case VALIDATING_INTEREST -->
+        <ng-container *ngSwitchCase="'VALIDATING_INTEREST'">
+          <div class="content-box__view">
+
+          </div>
+        </ng-container>
+        <!-- /case VALIDATING_INTEREST -->
+
+      </ng-container>
+      <!-- if has essentials -->
+
+      <!-- case SOURCING_SOLUTIONS -->
+      <ng-container *ngSwitchCase="'SOURCING_SOLUTIONS'">
+        <div class="content-box__view d-flex align-center">
+
+          <!-- show item -->
+          <ng-container *ngIf="!canEdit.addItem && !canEdit.editItem">
+            <div [ngClass]="{'justify-space w-full': resultItems.length === 3}" class="d-flex flex-wrap-wrap">
+              <ng-container *ngFor="let item of resultItems; let i = index;">
+                <div [ngClass]="{'m-right-50': i < 2}">
+                  <div style="height: 81px; width: 232px;" class="d-flex m-bottom-2">
+                    <p class="text-medium m-right-10 text-lg m-no flex-full">{{ item.title }}</p>
+                    <ng-container *ngIf="isEditable">
+                      <ng-container
+                        *ngTemplateOutlet="editItemBtn;context:{value: {index: i, btn: 'editItem'}}">
+                      </ng-container>
+                    </ng-container>
+                  </div>
+                  <div
+                    style="min-height: 83px; width: 232px;"
+                    class="bg-draft text-white text-medium flex-centered br-3 p-10">
+                    {{ item.content }}
+                  </div>
+                </div>
+              </ng-container>
+            </div>
+          </ng-container>
+          <!-- /show item -->
+
+          <!-- add item btn -->
+          <ng-container *ngIf="!canEdit.editItem && (!canEdit.addItem && resultItems.length < 3 && isEditable)">
+            <div class="m-left-auto m-right-auto" style="height: 83px; width: 232px;">
+              <ng-container *ngTemplateOutlet="addItemBtn;context:{btn: 'addItem'}"></ng-container>
+            </div>
+          </ng-container>
+          <!-- /add item btn -->
+
+          <!-- edit container -->
+          <ng-container *ngIf="canEdit.addItem || canEdit.editItem">
+            <div class="w-full">
+              <ng-container
+                *ngTemplateOutlet="fillItem;context:{value: {
+                textarea: true,
+                title: {placeholder: 'Family / Supplier', limit: 50},
+                btn: canEdit.addItem ? 'addItem' : 'editItem',
+                content: {placeholder: 'Content', limit: 100}}}">
+              </ng-container>
+            </div>
+          </ng-container>
+          <!-- /edit container -->
+
+        </div>
+      </ng-container>
+      <!-- /case SOURCING_SOLUTIONS -->
+
+      <!-- case IDENTIFYING_RECEPTIVE -->
+      <ng-container *ngSwitchCase="'IDENTIFYING_RECEPTIVE'">
+        <div class="content-box__view is__identifying-receptive d-flex align-center">
+
+          <div class="view__circle">{{ 'MARKET_REPORT.RESULT.SOLUTION' | translateIn:reportingLang }}</div>
+
+          <div class="view__line-wrapper">
+            <ng-container *ngIf="!canEdit.addItem && !canEdit.editItem && resultItems.length">
+              <ng-container *ngFor="let line of (resultItems.length === 3 ?
+              ['is-1 length__3', 'is-2 length__3', 'is-3 length__3'] :
+              resultItems.length === 2 ? ['is-1 length__2', 'is-2 length__2'] :
+              ['is-1 length__1'])">
+                <div [ngClass]="line" class="view__line absolute"></div>
+              </ng-container>
+            </ng-container>
+          </div>
+
+          <div class="flex-full">
+
+            <!-- show item -->
+            <ng-container *ngIf="!canEdit.addItem && !canEdit.editItem">
+              <ng-container *ngFor="let item of resultItems; let i = index;">
+                <div class="m-bottom-40">
+                  <div class="d-flex align-center m-bottom-2">
+                    <p class="text-medium m-right-10 text-lg m-no flex-full">{{ item.title }}</p>
+                    <ng-container *ngIf="isEditable">
+                      <ng-container
+                        *ngTemplateOutlet="editItemBtn;context:{value: {index: i, btn: 'editItem'}}">
+                      </ng-container>
+                    </ng-container>
+                  </div>
+                  <div style="min-height: 42px;" class="bg-draft text-white text-medium flex-centered br-3">
+                    {{ item.content }}
+                  </div>
+                </div>
+              </ng-container>
+            </ng-container>
+            <!-- /show item -->
+
+            <!-- add item btn -->
+            <ng-container *ngIf="!canEdit.editItem && (!canEdit.addItem && resultItems.length < 3 && isEditable)">
+              <div class="m-bottom-40" style="height: 42px;">
+                <ng-container *ngTemplateOutlet="addItemBtn;context:{btn: 'addItem'}"></ng-container>
+              </div>
+            </ng-container>
+            <!-- /add item btn -->
+
+            <!-- edit container -->
+            <ng-container *ngIf="canEdit.addItem || canEdit.editItem">
+              <ng-container
+                *ngTemplateOutlet="fillItem;context:{value: {
+                title: {placeholder: 'Market', limit: 50},
+                btn: canEdit.addItem ? 'addItem' : 'editItem',
+                content: {placeholder: 'List of applications', limit: 100}}}">
+              </ng-container>
+            </ng-container>
+            <!-- /edit container -->
+
+          </div>
+
+        </div>
+      </ng-container>
+      <!-- /case IDENTIFYING_RECEPTIVE -->
+
+    </ng-container>
+    <!-- /view -->
+
+    <!-- see more -->
+    <ng-container *ngIf="mission?.template?.methodology !== 'OPTIMIZING_VALUE'">
+      <div class="m-top-20 m-bottom-20 flex-centered">
+        <button
+          (click)="onClickSeeMore($event)"
+          [id]="'btn-see-more'"
+          class="button is-link text-no-underline">
+          <span>{{ 'COMMON.BUTTON.SEE_MORE' | translateIn: reportingLang }}</span>
+          <i class="fas fa-arrow-circle-right icon-right" style="font-size: 22px;"></i>
+        </button>
+      </div>
+    </ng-container>
+    <!-- /see more -->
+
+    <!-- abstract -->
+    <div [ngClass]="{'p-top-40': canEdit.abstract}" class="context-box__abstract relative">
+
+      <!-- edit button -->
+      <ng-container *ngIf="isEditable">
+        <ng-container *ngTemplateOutlet="defEditToggleBtn;context:{btn: 'abstract'}"></ng-container>
+      </ng-container>
+      <!-- /edit button -->
+
+      <!-- view mode -->
+      <ng-container *ngIf="!canEdit.abstract">
+        <div [innerHTML]="mission?.result?.abstract" style="margin-bottom: -8px;"></div>
+      </ng-container>
+      <!-- /view mode -->
+
+      <!-- edit mode -->
+      <ng-container *ngIf="canEdit.abstract">
+        <app-shared-editors
+          (textChange)="keyupHandlerFunction($event)"
+          elementId="result"
+          type="synthesis"
+          [innovationId]="innovation._id"
+          [isEditable]="isEditable"
+          [text]="mission?.result?.abstract || ''">
+        </app-shared-editors>
+        <p class="text-right text-meta text-sm text-medium p-top-15">
+          {{ 1000 - mission?.result?.abstract.length }} characters remaining
+        </p>
+      </ng-container>
+      <!-- /edit mode -->
+
+    </div>
+    <!-- /abstract -->
+
+  </div>
+  <!-- /content -->
+
+</div>
+
+<!-- edit item toggle btn -->
+<ng-template #editItemBtn let-value='value'>
+  <button
+    (click)="itemIndex = value.index; onToggle($event, value['btn'])"
+    data-tooltip="Edit item"
+    [id]="'btn-edit-item'"
+    class="button is-circled is-xs tooltip">
+    <i class="fas fa-pencil-alt"></i>
+  </button>
+</ng-template>
+<!-- /edit item toggle btn -->
+
+
+<!-- fill item value -->
+<ng-template #fillItem let-item='value'>
+  <div [ngSwitch]="item.type" class="relative">
+
+    <ng-container *ngTemplateOutlet="defEditToggleBtn;context:{btn: item['btn']}"></ng-container>
+
+    <div class="form-group">
+      <input
+        (change)="onChangeItem()"
+        [(ngModel)]="selectedItem.title"
+        [attr.placeholder]="item.title.placeholder"
+        [maxLength]="item.title.limit"
+        class="form-input is-shadowed"
+        type="text">
+    </div>
+    <ng-container *ngIf="!item.textarea">
+      <div class="form-group m-no-bottom">
+        <input
+          (change)="onChangeItem()"
+          [(ngModel)]="selectedItem.content"
+          [attr.placeholder]="item.content.placeholder"
+          [maxLength]="item.content.limit"
+          class="form-input is-shadowed"
+          type="text">
+      </div>
+    </ng-container>
+    <ng-container *ngIf="item.textarea">
+      <div class="form-group m-no-bottom">
+        <textarea
+          (change)="onChangeItem()"
+          [(ngModel)]="selectedItem.content"
+          [attr.placeholder]="item.content.placeholder"
+          [maxLength]="item.content.limit"
+          class="form-input is-shadowed"
+          rows="4"
+          type="text">
+        </textarea>
+      </div>
+    </ng-container>
+
+  </div>
+</ng-template>
+<!-- /fill item value -->
+
+
+<!-- item add -->
+<ng-template #addItemBtn let-toggle='btn'>
+  <div class="mrr__item-add">
+    <button
+      (click)="onToggle($event, toggle)"
+      data-tooltip="Add"
+      [id]="'btn-add-item'"
+      class="button is-circled is-xs tooltip">
+      <i class="fas fa-plus"></i>
+    </button>
+  </div>
+</ng-template>
+<!-- /item add -->
+
+
+<!-- edit toggle btn -->
+<ng-template #defEditToggleBtn let-toggle='btn'>
+  <div class="mrr_edit-wrapper">
+    <button
+      (click)="onToggle($event, toggle)"
+      [attr.data-tooltip]="canEdit[toggle] ? 'View' : 'Edit'"
+      [id]="'btn-edit'"
+      class="button is-circled is-xs tooltip">
+      <ng-container *ngIf="canEdit[toggle]">
+        <i class="fas fa-eye"></i>
+      </ng-container>
+      <ng-container *ngIf="!canEdit[toggle]">
+        <i class="fas fa-pencil-alt"></i>
+      </ng-container>
+    </button>
+  </div>
+</ng-template>
+<!-- /edit toggle btn -->

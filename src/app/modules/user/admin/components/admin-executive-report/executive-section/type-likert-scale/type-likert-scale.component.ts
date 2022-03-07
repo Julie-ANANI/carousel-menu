@@ -1,19 +1,24 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, EventEmitter, Input, Output,OnInit, OnDestroy} from '@angular/core';
 import {
   ExecutiveSection,
   SectionLikertScale
 } from '../../../../../../../models/executive-report';
 import {CommonService} from '../../../../../../../services/common/common.service';
 import colorsAndNames from '../../../../../../../../../assets/json/likert-scale_executive-report.json';
+import {Subject} from 'rxjs';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-admin-section-type-likert-scale',
   templateUrl: './type-likert-scale.component.html',
   styleUrls: ['./type-likert-scale.component.scss']
 })
-export class TypeLikertScaleComponent {
 
+export class TypeLikertScaleComponent implements OnInit, OnDestroy {
+
+  @Input() reportingLang = this._translateService.currentLang;
   @Input() isEditable = false;
+
   @Input() set section(value: ExecutiveSection) {
     this._section = value;
     this._content = <SectionLikertScale>this._section.content;
@@ -23,14 +28,18 @@ export class TypeLikertScaleComponent {
     this.textColor('legend', 1);
   }
 
+
   @Output() sectionChange: EventEmitter<ExecutiveSection> = new EventEmitter<ExecutiveSection>();
   @Output() playSection: EventEmitter<void> = new EventEmitter<void>();
 
+  private _ngUnsubscribe: Subject<any> = new Subject<any>();
   private _colorsAndNames = colorsAndNames;
   private _section: ExecutiveSection = <ExecutiveSection>{};
   private _titleColor = '';
   private _abstractColor = '';
   private _legendColor = '';
+  private _nameColor = '';
+  private _label: any = 'VALIDATED'
 
   private _content: SectionLikertScale = {
     name: this._colorsAndNames[2].name,
@@ -38,8 +47,11 @@ export class TypeLikertScaleComponent {
     color: this._colorsAndNames[2].color
   };
 
+  constructor (private _translateService: TranslateService ) {}
 
-  constructor() { }
+  ngOnInit(): void {
+    this._label = this.getLikertText(this._content.name);
+  }
 
   public emitChanges() {
     if (this.isEditable) {
@@ -49,6 +61,7 @@ export class TypeLikertScaleComponent {
   }
 
   public textColor(field: string, index?: number) {
+
     switch (field) {
 
       case 'title':
@@ -62,9 +75,30 @@ export class TypeLikertScaleComponent {
       case 'legend':
           this._legendColor = CommonService.getLimitColor(this._content && this._content.legend, 13);
         break;
+
+      case 'name':
+        this._nameColor = CommonService.getLimitColor(this._content && this._content.name, 20);
     }
   }
 
+  public changeValueLabel (event: string) {
+    this._content.name = event;
+    this._label= this.getLikertText(event);
+  }
+
+  /*This function replaces the default result with what is typed in the input.
+  Translating initially to a specific text caused problems when you only
+  wanted to change the content.name*/
+  public getLikertText(name: string) {
+    const nameScore = ['TOTALLY_INVALIDATED', 'INVALIDED','UNCERTAIN','VALIDATED','TOTALLY_VALIDATED'];
+
+    if (nameScore.indexOf(name.toUpperCase()) === -1) {
+      return name;
+    } else{
+      const translate = 'ADMIN_EXECUTIVE_REPORT.LIKERT-SCALE_SECTION.'
+      return translate + name.toUpperCase();
+    }
+  }
 
   public onClickPlay(event: Event) {
     event.preventDefault();
@@ -72,9 +106,7 @@ export class TypeLikertScaleComponent {
   }
 
   public chooseColor(index: number) {
-
     this._content.color = this._colorsAndNames[index].color;
-    this._content.name = this._colorsAndNames[index].name;
     this.emitChanges();
   }
 
@@ -98,7 +130,18 @@ export class TypeLikertScaleComponent {
     return this._legendColor;
   }
 
-  get colorsAndNames(): { name: string , color: string; }[] {
-    return this._colorsAndNames;
+  get label():string {
+    return this._label;
   }
+
+  get nameColor():string {
+    return this._nameColor;
+  }
+
+
+  ngOnDestroy(): void {
+    this._ngUnsubscribe.next();
+    this._ngUnsubscribe.complete();
+  }
+
 }

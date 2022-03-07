@@ -1,16 +1,22 @@
-import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { Router } from '@angular/router';
 import { RolesFrontService } from '../../../../../../../services/roles/roles-front.service';
 import { EnterpriseService } from '../../../../../../../services/enterprise/enterprise.service';
 import { first } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
 import { NotificationsService } from 'angular2-notifications';
-import { EnterpriseSizeList, EnterpriseTypes, EnterpriseValueChains, Industries } from '../../../../../../../models/static-data/enterprise';
-import {Column, Table, UmiusAutoSuggestionInterface, UmiusConfigInterface} from '@umius/umi-common-component';
+import {
+  EnterpriseSizeList,
+  EnterpriseTypes,
+  EnterpriseValueChains,
+  Industries
+} from '../../../../../../../models/static-data/enterprise';
+import { Column, Table, UmiusAutoSuggestionInterface, UmiusConfigInterface } from '@umius/umi-common-component';
 
 @Component({
   templateUrl: './admin-entreprise-bulk-edit.component.html',
-  styleUrls: ['./admin-entreprise-bulk-edit.component.scss']
+  styleUrls: ['./admin-entreprise-bulk-edit.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class AdminEntrepriseBulkEditComponent implements OnInit {
@@ -89,6 +95,7 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _rolesFrontService: RolesFrontService,
               private _router: Router,
+              private _changeDetectorRef: ChangeDetectorRef,
               private _notificationService: NotificationsService,
               private _enterpriseService: EnterpriseService) {
   }
@@ -107,6 +114,7 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
       _isTitle: true,
       _isPaginable: this.companiesToEdit.length > 10,
       _isNoMinHeight: this.companiesToEdit.length < 11,
+      _paginationTemplate: 'TEMPLATE_1',
       _columns:
         [
           {
@@ -285,14 +293,15 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
 
   /**
    * initialize table states after updated
-   * TODO check with @WEI
    */
   removeFillTemplate() {
-    /*this.companiesTable._columns.map(c => {
-      c._color = '';
-      c._isFilled = undefined;
-      c._isReplaceable = undefined;
-    });*/
+    this.companiesTable._columns.map(c => {
+      c._textColorConfig = {
+        color: '',
+        condition: '',
+        icon: ''
+      }
+    });
     this._companiesOriginalTable = JSON.parse(JSON.stringify(this._companiesTable));
   }
 
@@ -345,6 +354,7 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
       });
       const columnToUpdate = this._companiesTable._columns.find(c => c._name === name);
       this.addStyleToColumn(columnToUpdate);
+      this._changeDetectorRef.markForCheck();
     }
   }
 
@@ -361,6 +371,7 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
       }
       const columnToUpdate = this._companiesTable._columns.find(c => c._name === name);
       this.removeStyleToColumn(columnToUpdate);
+      this._changeDetectorRef.markForCheck();
     } else {
       this._companiesTable._content.map(item => {
         item[attr] = value;
@@ -369,15 +380,15 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
   }
 
   removeStyleToColumn(c: Column) {
-    /*c._color = '';
-    c._isFilled = undefined;
-    c._isReplaceable = undefined;*/
+    delete c._textColorConfig
   }
 
   addStyleToColumn(c: Column) {
-    /*c._color = '#EA5858';
-    c._isFilled = true;
-    c._isReplaceable = false;*/
+    c._textColorConfig = {
+      color: '#EA5858',
+      condition: 'fill',
+      icon: 'fas fa-redo'
+    }
   }
 
   geoZoneUpdate($event: any) {

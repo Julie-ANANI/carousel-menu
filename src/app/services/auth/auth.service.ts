@@ -95,6 +95,7 @@ export class AuthService {
           this._setAdminTo(res.adminLevel);
           this._setConfirmedTo(res.isConfirmed);
           this._setIsOperatorTo(res.isOperator);
+          this._setJwToken(res.jwt);
           this._user = res;
           this._setEtherpadAccessesTo(res.etherpad);
           // this._setAdminAccess(this._user && this._user.access && this._user.access.adminSide);
@@ -116,6 +117,7 @@ export class AuthService {
           this._setAdminTo(res.adminLevel);
           this._setConfirmedTo(res.isConfirmed);
           this._setIsOperatorTo(res.isOperator);
+          this._setJwToken(res.jwt);
           this._user = res;
           this._setEtherpadAccessesTo(res.etherpad);
           // this._setAdminAccess(this._user && this._user.access && this._user.access.adminSide);
@@ -204,6 +206,12 @@ export class AuthService {
     }
   }
 
+  private _setJwToken(jwt: string): void {
+    if (isPlatformBrowser(this._platformId)) {
+      this._cookieService.put('jwToken-application-front', jwt, this._cookieOptions);
+    }
+  }
+
   private _setAdminTo(newValue: number): void {
     this._admin = newValue;
     if (isPlatformBrowser(this._platformId)) {
@@ -212,8 +220,10 @@ export class AuthService {
   }
 
   private _setEtherpadAccessesTo(newValue: EtherpadAccesses): void {
+    console.log(this.isAcceptingCookies);
     if (this.isAcceptingCookies && newValue) {
       this._etherpadAccesses = newValue;
+      console.log(newValue);
       if (isPlatformBrowser(this._platformId)) {
         this._cookieService.put('sessionID', `${newValue.sessions.map(session => {
           return session.id;

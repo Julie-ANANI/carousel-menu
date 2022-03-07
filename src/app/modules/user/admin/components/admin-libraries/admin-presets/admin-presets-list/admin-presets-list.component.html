@@ -53,7 +53,7 @@
 
 
 <!-- modal -->
-<app-utility-modal
+<umius-modal
   *ngIf="canAccess(['add']) || canAccess(['clone']) || canAccess(['delete'])"
   [(showModal)]="modalOpen"
   [title]="modalTitle">
@@ -133,5 +133,5 @@
 
   </footer>
 
-</app-utility-modal>
+</umius-modal>
 <!-- /modal -->

@@ -42,7 +42,7 @@
 
       &.active {
         color: $primary-color;
-        text-decoration: none;
+        text-decoration: underline;
         cursor: default;
       }
 
@@ -50,7 +50,7 @@
 
     .text-link:hover {
       color: $primary-color;
-      text-decoration: none;
+      text-decoration: underline;
     }
 
   }

@@ -49,14 +49,15 @@
           <!-- card lang -->
 
           <!-- if only one lang then Add card lang -->
-          <div class="m-bottom-15">
-            <button
-              (click)="onAddCard($event)"
-              [disabled]="isAddingCard"
-              class="button is-link text-no-underline is-sm p-no"
-              id="btn-add-card">
-              <i class="fas fa-plus-circle text-lg icon-left"></i>
-              <span class="text-hover-underline">
+          <ng-container *ngIf="(innovation.status === 'EDITING' || innovation.status === 'SUBMITTED') && canAddCard">
+            <div class="m-bottom-15 m-right-15">
+              <button
+                (click)="onAddCard($event)"
+                [disabled]="isAddingCard"
+                class="button is-link text-no-underline is-sm p-no"
+                id="btn-add-card">
+                <i class="fas fa-plus-circle text-lg icon-left"></i>
+                <span class="text-hover-underline">
                 <ng-container *ngIf="activeInnovCard.lang === 'en'">
                   {{ 'COMMON.BUTTON.ADD_LANG_FRENCH' | translate }}
                 </ng-container>
@@ -64,8 +65,9 @@
                   {{ 'COMMON.BUTTON.ADD_LANG_ENGLISH' | translate }}
                 </ng-container>
               </span>
-            </button>
-          </div>
+              </button>
+            </div>
+          </ng-container>
           <!-- /if only one lang then Add card lang -->
 
           <!-- has more than 2 lang -->

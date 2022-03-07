@@ -6,7 +6,7 @@ export class AbstractSocketService {
 
   constructor() {
     this.socket = io(environment.apiUrl.slice(0, -4), {
-      path: '/api/socket-io',
+      path: '/api/socket-io'
     });
   }
 

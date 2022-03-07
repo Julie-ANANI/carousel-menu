@@ -11,6 +11,7 @@ export class ListConfigurations {
       _clickIndex: 1,
       _isLocal: true,
       _isPaginable: true,
+      _paginationTemplate: 'TEMPLATE_1',
       _columns: [
         {_attrs: ['firstName', 'lastName'], _name: 'TABLE.HEADING.NAME', _type: 'TEXT'},
         {_attrs: ['tags'], _name: 'TABLE.HEADING.SECTORS', _type: 'TAG-LIST'},
@@ -33,6 +34,7 @@ export class ListConfigurations {
       _activeMinHeight: true,
       _isLocal: true,
       _isPaginable: true,
+      _paginationTemplate: 'TEMPLATE_1',
       _actions: [{_label: 'Add', _icon: 'fas fa-plus'}],
       _columns: [
         {_attrs: ['firstName', 'lastName'], _name: 'TABLE.HEADING.NAME', _type: 'TEXT'},

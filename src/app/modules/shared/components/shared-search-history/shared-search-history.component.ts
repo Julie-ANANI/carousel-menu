@@ -253,6 +253,7 @@ export class SharedSearchHistoryComponent implements OnInit {
       _clickIndex: this.canAccess(['view', 'request']) ? 1 : null,
       _isSearchable: this.canAccess(['searchBy', 'keywords']),
       _isPaginable: true,
+      _paginationTemplate: 'TEMPLATE_1',
       _isSelectable: true,
       _isTitle: this._total !== 10000,
       _isNoMinHeight: this._total < 11,

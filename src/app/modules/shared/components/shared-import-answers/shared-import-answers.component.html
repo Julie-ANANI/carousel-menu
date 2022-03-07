@@ -1,24 +1,83 @@
 <div class="width-80 m-auto" id="shared-import-pros">
 
-  <!-- import button -->
-  <div class="text-center p-top-15 p-bottom-30">
-    <label class="button is-primary is-sm is-outlined">
-      <input #fileupload (click)="fileupload.value = null" (change)="onClickImport(fileupload.files[0])" [hidden]="true" type="file">
-      <i class="fas fa-file-import icon-left"></i> Import answers
-    </label>
-  </div>
-  <!-- /import button -->
+  <!-- import instructions and button -->
+  <ng-container *ngIf="!importingInfos && !errorsModal">
 
-  <p class="text-center text-sm">The file must use these <b>exact names</b> for the columns:
-    <b>firstName,	lastName,	email,	companyName,	country*, status</b>,
-    tags,	companyDomain,	companyLogo,	profileQuality,	created,	answeredByEmail</p>
+    <!-- import button -->
+    <div class="text-center p-top-15 p-bottom-30">
+      <label class="button is-primary is-sm is-outlined">
+        <input #fileupload (click)="fileupload.value = null" (change)="onClickImport(fileupload.files[0])"
+               [hidden]="true"
+               type="file">
+        <i class="fas fa-file-import icon-left"></i> Import answers
+      </label>
+    </div>
+    <!-- /import button -->
 
-  <p class="text-center text-sm">You can also add <b>questions identifiers</b> as columns names</p>
+    <p class="text-center text-sm">The file must use these <b>exact names</b> for the columns:
+      <b>firstName, lastName, email, jobTitle, companyName, country*, status</b>,
+      tags, companyDomain, companyLogo, profileQuality, created, answeredByEmail, emailConfidence</p>
 
-  <p class="text-center text-sm">Bold columns are mandatory, other columns are optional. The order of the columns does
-    not matter</p>
+    <p class="text-center text-sm">Bold columns are mandatory, other columns are optional. The order of the columns does
+      not matter</p>
 
-  <p class="text-center text-xs text-italics">*should be a valid country code.
-    If not possible it could country name in French, Italian, English, Spanish or Deutsch.</p>
+    <p class="text-center text-xs text-italics">*Can be country code or country name in French, Italian, English,
+      Spanish or Deutsch.</p>
+  </ng-container>
+  <!-- /import instructions and button -->
+
+  <!-- import infos before saving answers -->
+  <ng-container *ngIf="importingInfos">
+    <p class="text-center text-sm"> {{importingInfos.new || 0}} new answer(s) will be added </p>
+
+    <p class="text-center text-sm"> {{importingInfos.existing || 0}} answer(s) already exist and won’t be imported </p>
+
+    <p class="text-center text-sm text-alert" *ngIf="importingInfos.new === 0">
+      <i class="fas fa-exclamation-triangle"></i> You should have at least 1 new answer to import.
+    </p>
+  </ng-container>
+  <!-- /import infos before saving answers -->
+
+  <!-- import errors -->
+  <ng-container *ngIf="importingErrors && importingErrors.length === 1">
+    <app-shared-csv-error [error]="importingErrors[0]"></app-shared-csv-error>
+  </ng-container>
+  <!-- /import errors -->
+
+  <footer class="modal-footer">
+
+    <button *ngIf="importingInfos" class="button is-primary" type="button"
+            [disabled]="importingInfos.new === 0"
+            (click)="onConfirmImport()">{{ 'COMMON.BUTTON.CONFIRM' | translate }}
+    </button>
+
+    <button class="button modal-cancel" type="button"
+            (click)="closeModal($event)"> {{ 'COMMON.BUTTON.CANCEL' | translate }}
+    </button>
+
+  </footer>
 
 </div>
+
+<!-- errors modal -->
+<umius-modal [(showModal)]="errorsModal" [title]="'Import errors'">
+
+  <section *ngIf="importingErrors && slicedErrors" class="modal-body max-height-365">
+    <ng-container *ngIf="importingErrors.length">
+      <div class="flex-d-column d-flex errors-box">
+        <span class="text-error text-sm"> {{ importingErrors.length }} error(s) </span>
+        <ul>
+          <app-shared-csv-error *ngFor="let err of slicedErrors" [error]="err" [htmlTag]="'li'"></app-shared-csv-error>
+        </ul>
+      </div>
+
+      <!-- button to show more errors -->
+      <div class="text-center" *ngIf="importingErrors.length > slicedErrors.length">
+        <a class="text-link text-xs" (click)="onClickSeeMore()">{{ 'COMMON.BUTTON.SEE_MORE' | translate}}</a>
+      </div>
+      <!-- /button to show more errors -->
+    </ng-container>
+  </section>
+
+</umius-modal>
+<!-- /errors modal -->

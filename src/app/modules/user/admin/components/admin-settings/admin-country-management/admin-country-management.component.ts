@@ -82,6 +82,7 @@ export class AdminCountryManagementComponent implements OnInit {
       _content: this._countryList.filteredCountries,
       _total: this._countryList._metadata.totalCount,
       _isTitle: true,
+      _paginationTemplate: 'TEMPLATE_1',
       _isPaginable: this._countryList._metadata.totalCount > 10,
       _isSearchable: !!this.canAccess(['searchBy']),
       _isDeletable: this.canAccess(['delete']),

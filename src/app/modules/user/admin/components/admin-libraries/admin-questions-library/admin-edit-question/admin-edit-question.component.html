@@ -452,7 +452,7 @@
   </div>
 </div>
 
-<app-utility-modal-empty *ngIf="canAccess(['edit'])" [(showModal)]="showModal" [maxWidth]="'720px'">
+<umius-modal *ngIf="canAccess(['edit'])" [(showModal)]="showModal" [maxWidth]="'720px'">
 
   <section class="modal-body">
 
@@ -504,4 +504,4 @@
 
   </footer>
 
-</app-utility-modal-empty>
+</umius-modal>

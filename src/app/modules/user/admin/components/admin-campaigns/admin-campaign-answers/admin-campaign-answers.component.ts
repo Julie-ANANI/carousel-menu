@@ -146,6 +146,7 @@ export class AdminCampaignAnswersComponent implements OnInit {
       _isSearchable: !!this.canAccess(['searchBy']) || !!this.canAccess(['filterBy']),
       _isSelectable: this.canAccess(['validate']) || this.canAccess(['reject']),
       _isPaginable: true,
+      _paginationTemplate: 'TEMPLATE_1',
       _clickIndex: (this.canAccess(['view']) || this.canAccess(['edit'])) ? 1 : null,
       _isTitle: true,
       _isLocal: true,

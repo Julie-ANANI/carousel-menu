@@ -1,4 +1,9 @@
 export const MARKET_REPORT = {
+
+  'RESULT': {
+    'SOLUTION': 'Solution',
+  },
+
   'TITLE': 'Market potential of your project',
 
   'CUSTOM_FILTERS': 'Custom filters',
@@ -137,7 +142,7 @@ export const MARKET_REPORT = {
 
   'ANSWER': 'answer',
 
-  'ANSWERS': 'professional(s)',
+  'ANSWERS': 'professional (s)',
 
   'SEE_ANSWERS': 'Show answer',
 

@@ -14,23 +14,24 @@ import { InputListModule } from '../../../utility/input-list/input-list.module';
 import { ReassignAnswerComponent } from './reassign-answer/reassign-answer.component';
 import {BannerModule} from '../../../utility/banner/banner.module';
 import { EditableTagLabelModule } from "../../../utility/editable-tag-label/editable-tag-label.module";
-import {AutoCompleteCompanyModule, AutoCompleteCountryModule} from '@umius/umi-common-component';
+import { AutoCompleteCompanyModule, AutoCompleteCountryModule, CountryFlagModule } from '@umius/umi-common-component';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    TranslateModule.forChild(),
-    AutoCompleteInputModule,
-    SharedTagsModule,
-    PipeModule,
-    InputListModule,
-    BannerModule,
-    EditableTagLabelModule,
-    AutoCompleteCompanyModule,
-    AutoCompleteCountryModule
-  ],
+    imports: [
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        TranslateModule.forChild(),
+        AutoCompleteInputModule,
+        SharedTagsModule,
+        PipeModule,
+        InputListModule,
+        BannerModule,
+        EditableTagLabelModule,
+        AutoCompleteCompanyModule,
+        AutoCompleteCountryModule,
+        CountryFlagModule
+    ],
   declarations: [
     SidebarUserAnswerComponent,
     AnswerQuestionComponent,

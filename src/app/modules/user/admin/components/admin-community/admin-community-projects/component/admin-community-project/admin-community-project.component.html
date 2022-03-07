@@ -106,7 +106,7 @@
 
 <!-- sidebar community -->
 <ng-container *ngIf="!fetchingError && innovation">
-  <app-sidebar [(template)]="sidebarValue">
+  <umius-sidebar-full [(template)]="sidebarValue">
     <community-form
       [sidebarState]="sidebarValue.animate_state"
       [innovationId]="innovation._id"
@@ -115,6 +115,6 @@
       [context]="context"
       (callbackNotification)="actionsResultCallback($event)">
     </community-form>
-  </app-sidebar>
+  </umius-sidebar-full>
 </ng-container>
 <!-- /sidebar community -->

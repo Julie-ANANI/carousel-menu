@@ -48,7 +48,7 @@
   </div>
 </div>
 
-<app-utility-modal-empty *ngIf="canAccess(['add']) && showModal" [(showModal)]="showModal">
+<umius-modal *ngIf="canAccess(['add']) && showModal" [(showModal)]="showModal">
 
   <section class="modal-body">
     <h2 class="title is-4 text-center text-bold m-bottom-30">Add a question from Scratch</h2>
@@ -118,4 +118,4 @@
 
   </footer>
 
-</app-utility-modal-empty>
+</umius-modal>

@@ -30,6 +30,10 @@ export class RolesFrontService {
     return !!(this._authService.user && this._authService.user.roles && this._authService.user.roles === 'community');
   }
 
+  public isMTMUMIRole(): boolean{
+    return !!(this._authService.user && this._authService.user.roles && this._authService.user.roles === 'market-test-manager-umi');
+  }
+
   public isMTMUMIBack(): boolean {
     return !!(this._authService.user && this._authService.user.roles && this._authService.user.roles === 'market-test-manager-umi-back');
   }
