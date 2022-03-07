@@ -2,6 +2,7 @@ export const MARKET_REPORT = {
 
   'RESULT': {
     'SOLUTION': 'Solution',
+    'NEEDS_EXPRESSED': 'Needs expressed',
     'VALIDATING_INTEREST': {
       'TITLE': 'Level of market interest',
       'BAR': {

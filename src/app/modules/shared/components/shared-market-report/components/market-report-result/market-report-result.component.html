@@ -74,6 +74,54 @@
         <ng-container *ngSwitchCase="'DETECTING_MARKET'">
           <div class="content-box__view">
 
+            <h5 class="text-lg m-bottom-20">
+              {{ ('MARKET_REPORT.RESULT.NEEDS_EXPRESSED') | translateIn:reportingLang }}
+            </h5>
+
+            <!-- show item -->
+            <ng-container *ngIf="!canEdit.addItem && !canEdit.editItem">
+              <div class="d-flex flex-wrap-wrap justify-space w-full">
+                <ng-container *ngFor="let item of resultItems; let i = index;">
+                  <div class="m-bottom-20">
+                    <div
+                      style="height: 56px; width: 390px;"
+                      class="bg-draft text-white text-medium flex-centered br-3 p-10 relative">
+                      {{ item.content }}
+                      <ng-container *ngIf="isEditable">
+                        <div class="mrr_edit-wrapper">
+                          <ng-container
+                            *ngTemplateOutlet="editItemBtn;context:{value: {index: i, btn: 'editItem'}}">
+                          </ng-container>
+                        </div>
+                      </ng-container>
+                    </div>
+                  </div>
+                </ng-container>
+              </div>
+            </ng-container>
+            <!-- /show item -->
+
+            <!-- add item btn -->
+            <ng-container *ngIf="!canEdit.editItem && (!canEdit.addItem && resultItems.length < 4 && isEditable)">
+              <div class="m-left-auto m-right-auto" style="height: 56px; width: 390px;">
+                <ng-container *ngTemplateOutlet="addItemBtn;context:{btn: 'addItem'}"></ng-container>
+              </div>
+            </ng-container>
+            <!-- /add item btn -->
+
+            <!-- edit container -->
+            <ng-container *ngIf="canEdit.addItem || canEdit.editItem">
+              <div class="w-full">
+                <ng-container
+                  *ngTemplateOutlet="fillItem;context:{value: {
+                  textarea: true,
+                  btn: canEdit.addItem ? 'addItem' : 'editItem',
+                  content: {placeholder: 'Content', limit: 100}}}">
+                </ng-container>
+              </div>
+            </ng-container>
+            <!-- /edit container -->
+
           </div>
         </ng-container>
         <!-- /case DETECTING_MARKET -->
@@ -274,15 +322,17 @@
 
     <ng-container *ngTemplateOutlet="defEditToggleBtn;context:{btn: item['btn']}"></ng-container>
 
-    <div class="form-group">
-      <input
-        (change)="onChangeItem()"
-        [(ngModel)]="selectedItem.title"
-        [attr.placeholder]="item.title.placeholder"
-        [maxLength]="item.title.limit"
-        class="form-input is-shadowed"
-        type="text">
-    </div>
+    <ng-container *ngIf="!!item.title">
+      <div class="form-group">
+        <input
+          (change)="onChangeItem()"
+          [(ngModel)]="selectedItem.title"
+          [attr.placeholder]="item.title.placeholder"
+          [maxLength]="item.title.limit"
+          class="form-input is-shadowed"
+          type="text">
+      </div>
+    </ng-container>
     <ng-container *ngIf="!item.textarea">
       <div class="form-group m-no-bottom">
         <input

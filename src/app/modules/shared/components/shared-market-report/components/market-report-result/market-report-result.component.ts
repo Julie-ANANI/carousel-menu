@@ -202,7 +202,8 @@ export class MarketReportResultComponent implements OnInit {
   public onChangeItem() {
     if (!!this._resultItems[this._itemIndex]) {
       this._resultItems[this._itemIndex] = this._selectedItem;
-    } else if (this._resultItems.length < 3) {
+    } else if ((this._resultItems.length < 3 && this._mission.template.methodology !== 'DETECTING_MARKET')
+      || (this._resultItems.length < 4 && this._mission.template.methodology === 'DETECTING_MARKET')) {
       this._resultItems.push(this._selectedItem);
     }
     this._sliceItem(this._itemIndex)
