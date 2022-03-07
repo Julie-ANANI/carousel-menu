@@ -136,7 +136,7 @@ export const COMMON = {
     'ACTIVITY_FIELDS': 'Champs d\'activité',
     'SEND': 'Envoi',
     'RESPONDENTS': 'Répondants',
-    'SELECTED': 'Sélectionner',
+    'SELECTED': 'Sélectionnés',
     'CONFIGURE': 'Configurer',
     'FIRSTNAME': 'Prénom',
     'LASTNAME': 'Nom',
