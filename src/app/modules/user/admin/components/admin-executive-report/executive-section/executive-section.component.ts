@@ -24,13 +24,8 @@ export class ExecutiveSectionComponent {
   @Input() reportLang: 'en';
   @Input() sectionIndex = 0;
 
- /* get questions(): Array<Question | MissionQuestion> {
-    return this._questions;
-  }*/
-
-
   @Input() set section(value: ExecutiveSection) {
-    //console.log(this.questions);
+
     this._section = {
       questionId: value.questionId || '',
       questionType: value.questionType,
@@ -48,21 +43,6 @@ export class ExecutiveSectionComponent {
   private _enableVisualRanking = false;
   private _enableVisualPie = false;
   private _enableVisualLikertScale = false;
-  //private _question: Question | MissionQuestion = <Question>{};
-  //private _question: Question | MissionQuestion = <MissionQuestion | Question>{};
-
-
-/*
-
-  @Input() set question(value: Question | MissionQuestion) {
-    this._question = value;
-  }
-
-  @Output() questionChanged = new EventEmitter<Question>();
-
-
-*/
-
 
   private _resetVisuals() {
     this._enableVisualBar = false;
@@ -314,11 +294,10 @@ export class ExecutiveSectionComponent {
       const answers: Array<Answer> = this._responseService.answersToShow(this.answers, question);
       this._section.title = MissionQuestionService.label(question, 'title', this.reportLang);
       const data = ResponseService.likertScaleChartData(answers, question, this.reportLang);
-      // graphics is service for calculate score and return name, color and percentage
-      // This service is used when a questionnaire question is selected, it returns the current score value and its name and color
+
+      /*graphics is service for calculate score and return name, color and percentage
+      This service is used when a questionnaire question is selected, it returns the current score value and its name and color*/
       const graphics = ResponseService.getLikertScaleGraphicScore(data.averageGeneralEvaluation)
-      //console.log(graphics);
-      // @ts-ignore
       this._section.content = this._executiveReportFrontService.likertScaleSection(data, this.reportLang, graphics);
     }
   }

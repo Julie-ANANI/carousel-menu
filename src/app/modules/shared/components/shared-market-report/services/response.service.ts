@@ -19,9 +19,6 @@ export class ResponseService {
 
   filteredAnswers = new Subject<Array<Answer>>();
 
-  //private _averageGeneralEvaluation :number = 0;
-  //private static _averageGeneralEvaluation: number = 0;
-
   /***
    * Return the list of tags on every user answers for a given question
    * @param answers
@@ -224,7 +221,7 @@ export class ResponseService {
         };
 
       });
-      const relativePercentages = this.getRelativePercentagebarsData(barsData, question).relativePercentages;
+      const relativePercentages = this.getRelativePercentagebars(barsData, question).relativePercentages;
 
       barsData.forEach((bd) => {
         const absolutePercentage = bd.count * 100 / answers.length;
@@ -268,9 +265,9 @@ export class ResponseService {
    * This function calculated percentage for checkbox
    * @static
    * @param {Array} barsData
-   * @param {Any} Question
+   * @param question
    * */
-  static getRelativePercentagebarsData(barsData: Array<BarData>, question: any): { relativePercentages: any, maxAnswersCount: number } {
+  static getRelativePercentagebars(barsData: Array<BarData>, question: any): { relativePercentages: any, maxAnswersCount: number } {
 
     const maxAnswersCount = question.controlType === 'checkbox' ?
       barsData.reduce((acc, bd) => {
@@ -404,9 +401,9 @@ export class ResponseService {
    * @param {String} lang
    * @returns {likertScaleChart: likertScaleChart, scoreTotal: scoreTotal}
    * */
-  public static likertScaleChartData(answers: Array<Answer> = [],
-                                     question: Question | MissionQuestion = <Question | MissionQuestion>{},
-                                     lang: string): LikertScaleChart {
+  public static likertScaleChartData( answers: Array<Answer> = [],
+                                      question: Question | MissionQuestion = <Question | MissionQuestion>{},
+                                      lang: string): LikertScaleChart {
 
 
     let averageGeneralEvaluation : number = 0;
@@ -420,19 +417,18 @@ export class ResponseService {
       identifier: string;
     }[] = [];
 
-/*    Depends on likert scale type, it's for calculated
-    These are weights to be included in the score for each specific value of each option*/
+    /* Depends on likert scale type, it's for calculated
+    These are weights to be included in the score for each specific value of each option */
     const characterSureOrNegative = [0, 0.25, 0.5, 0.75, 1];
     const weightImportanceOpt = [2, 1, 1, 1, 2];
 
-    //TODO change comms
-    //Retrieves all answers from the 5 identifiers
+    //Retrieves the identifier of the question
     answers = answers.filter((a) => a.answers[question.identifier]);
-
     question.options.forEach((option: Option | MissionQuestionOption) => {
 
+      //Retrieves all answers from the 5 identifiers of one option likert-scale
       const identifier = option.identifier; // 0 1 2 3 4
-     // console.log(identifier);
+
       // Collects the answers that have chosen the same option
       const filteredAnswers: Array<Answer> = answers.filter((a) => a.answers[question.identifier]
         && a.answers[question.identifier] === identifier);
@@ -444,7 +440,6 @@ export class ResponseService {
       const allWeightsOption = weightCharacter * weightImportance; // 0, 0.25, 0.5, 0.75, 2
       const weightsResultsFilteredOption = filteredAnswers.length * allWeightsOption;
 
-      //console.log(weightsResultsFilteredOption);
       // Score total for the question
       averageGeneralEvaluation += weightsResultsFilteredOption;
       scoreTotalOptionWithoutCharacterValue += filteredAnswers.length * weightImportance;
@@ -462,40 +457,40 @@ export class ResponseService {
     /*This scale is the starting point for our 0 score.
      It represents the failure rate of innovations that is specific to the UMI data.
      The score below this scale is considered as null*/
-    const scale: number = 0.44;
+     const scale: number = 2.25;
 
-    //This score is calculated according to the likert-scale methodology
-    // It returns a score with only the importance weights of the selected options per occurrence
+    /*This score is calculated according to the likert-scale methodology
+    It returns a score with only the importance weights of the selected options per occurrence*/
     averageGeneralEvaluation = averageGeneralEvaluation / scoreTotalOptionWithoutCharacterValue;
 
-    /* This score is calculated according to the likert-scale methodology
-      It returns a score with only the importance weights of the selected options per occurrence*/
-    averageGeneralEvaluation = (averageGeneralEvaluation - scale) / (1 - scale);
-
     averageGeneralEvaluation = parseFloat(((averageGeneralEvaluation < 0) ? 0 : averageGeneralEvaluation * 20).toFixed(2));
+    averageGeneralEvaluation = (averageGeneralEvaluation - scale);
 
+    averageGeneralEvaluation = (averageGeneralEvaluation * 5) / 20;
+    averageGeneralEvaluation = parseFloat((averageGeneralEvaluation).toFixed(1));
 
     if (isNaN(averageGeneralEvaluation)) {
       averageGeneralEvaluation = 0;
     }
+
     this.getLikertScaleGraphicScore(averageGeneralEvaluation);
 
     likertScaleChart.sort((a, b) => b.percentage - a.percentage);
 
-    // averageGeneralEvaluation = score
     return {likertScaleChart: likertScaleChart, averageGeneralEvaluation: averageGeneralEvaluation};
   }
 
   /**
    *
-   * @param averageGeneralEvaluation
+   * @param averageGeneralEvaluation ( LikertScaleChart)
    */
   public static getLikertScaleGraphicScore (averageGeneralEvaluation:number) {
 
-    const scorePercentage = (averageGeneralEvaluation * 98) / 20; // will give margin percentage for the pointer of marker
-    let index = Math.floor((averageGeneralEvaluation / 4));
+    /*score of 5*/
+    const scorePercentage = (averageGeneralEvaluation * 98) / 5; // will give margin percentage for the pointer of marker
+    let index = Math.floor(averageGeneralEvaluation);
 
-    /*small fix for situation for score = 20 */
+    /*small fix for situation for score = 20 or 5 */
     if (index === 5) {
       index = 4;
     }

@@ -9,7 +9,6 @@ import {Subject} from 'rxjs';
 import _ from 'lodash';
 import {MissionQuestionService} from '../../../../../../services/mission/mission-question.service';
 import {SectionLikertScale} from '../../../../../../models/executive-report';
-//import colorsAndNames from '../../../../../../../../assets/json/likert-scale_executive-report.json';
 
 
 @Component({
@@ -30,11 +29,11 @@ export class LikertScaleChartComponent implements OnInit, OnDestroy {
 
   private _content: SectionLikertScale = {
     name: '',  // example totally  invalided
-    color: '',   // #EA5858
+    color: '',   // example #EA5858
   };
 
-/*  Retrieves data for the progress bar
-  averageGeneralEvaluation is an average score of all responses out of 20*/
+  /* Retrieves data for the progress bar averageGeneralEvaluation
+  is an average score of all responses out of 5 */
   private _stackedChart: {
     likertScaleChart: object[],
     averageGeneralEvaluation?: number

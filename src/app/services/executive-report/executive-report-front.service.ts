@@ -245,26 +245,16 @@ export class ExecutiveReportFrontService {
 
 
   /***
-   * this returns the content of the LIKERT-SCALE section for tags.
+   * this returns the content of the LIKERT-SCALE section custom
    * @param tagsData
    * @param lang
    */
   public likertScaleTagsSection(tagsData: Array<Tag>, lang: string): SectionLikertScale {
-
- /*   if (tagsData && tagsData.length > 0) {
       return {
-        color: '#BBC7D6',
-        legend:  tagsData[0].count + 'X',
-        name: this._multilingPipe.transform(tagsData[0].label, lang),
-        visibility: tagsData[0].count > 0
-      };
-    } else {*/
-      return {
-        color: '#BBC7D6',
-        legend: '',
-        name: 'UNCERTAIN',
-        visibility: false
-   /*   };*/
+      color: '#BBC7D6',
+      legend: '',
+      name: 'UNCERTAIN',
+      visibility: false
     }
   }
 
@@ -276,9 +266,16 @@ export class ExecutiveReportFrontService {
    * @param graphics
    * @type SectionLikertScale
    */
-  public likertScaleSection(likertScaleData: LikertScaleChart, lang: string, graphics: { scoreName: string, scoreColor: string, scorePercentage: number}): SectionLikertScale {
-    /* -I use graphics for display name of score + color +  percentage by response.service
-     */
+  public likertScaleSection( likertScaleData: LikertScaleChart,
+                             lang: string,
+                             graphics: { scoreName: string,
+                                         scoreColor: string,
+                                         scorePercentage: number}
+                            ): SectionLikertScale {
+
+    /* -I use graphics to display the name of the score + the color + the percentage
+    by a service which generates the graphic data coming from the calculation of the
+    score for the likert-scale type. */
     return {
       color: graphics.scoreColor,
       legend: '',
