@@ -32,22 +32,31 @@ export class LikertScaleChartComponent implements OnInit, OnDestroy {
     color: '',   // example #EA5858
   };
 
-  /* Retrieves data for the progress bar averageGeneralEvaluation
+  /* Retrieves data for the progress bar averageFinalScore
   is an average score of all responses out of 5 */
   private _stackedChart: {
     likertScaleChart: object[],
-    averageGeneralEvaluation?: number
+    averageFinalScore?: number
   };
+
+  /*private _dataGraphic: LikertScaleDataScore = {
+    name: '',  // example totally  invalided
+    color: '',   // example #EA5858
+    score: 0,
+    scorePercentage: '',
+    index: 0,
+  };*/
+
 
 
   private _createChart() {
     this._dataService.getAnswers(this.question).pipe(takeUntil(this._ngUnsubscribe)).subscribe((answers: Array<Answer>) => {
       this._stackedChart = ResponseService.likertScaleChartData(answers, this.question, this.reportingLang);
 
-      this._graphics = ResponseService.getLikertScaleGraphicScore(this._stackedChart.averageGeneralEvaluation);
-      this._content.name = this._graphics.scoreName;
-      this._content.color = this._graphics.scoreColor;
-      this._content.score = this._graphics.scoreNumber;
+      this._graphics = ResponseService.getLikertScaleGraphicScore(this._stackedChart.averageFinalScore);
+      this._content.name = this._graphics.name;
+      this._content.color = this._graphics.color;
+      this._content.score = this._graphics.score;
       this._content.percentage = this._graphics.scorePercentage;
       });
   }
@@ -61,16 +70,12 @@ export class LikertScaleChartComponent implements OnInit, OnDestroy {
     this._createChart();
   }
 
-  getValueForAverageText(): string {
-    return (this.scorePercentage - 5).toString() +'%';
-  }
-
   public optionLabel(identifier: string) {
     const option = _.find(this.question.options, (option: any) => option.identifier === identifier);
     return MissionQuestionService.label(option, 'label', this.reportingLang);
   }
 
-  get stackedChart(): { likertScaleChart?: any[]; averageGeneralEvaluation?: number } {
+  get stackedChart(): { likertScaleChart?: any[]; averageFinalScore?: number } {
     return this._stackedChart;
   }
 

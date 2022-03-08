@@ -221,7 +221,7 @@ export class ResponseService {
         };
 
       });
-      const relativePercentages = this.getRelativePercentagebars(barsData, question).relativePercentages;
+      const relativePercentages = this.getRelativePercentageBars(barsData, question).relativePercentages;
 
       barsData.forEach((bd) => {
         const absolutePercentage = bd.count * 100 / answers.length;
@@ -267,7 +267,7 @@ export class ResponseService {
    * @param {Array} barsData
    * @param question
    * */
-  static getRelativePercentagebars(barsData: Array<BarData>, question: any): { relativePercentages: any, maxAnswersCount: number } {
+  static getRelativePercentageBars(barsData: Array<BarData>, question: any): { relativePercentages: any, maxAnswersCount: number } {
 
     const maxAnswersCount = question.controlType === 'checkbox' ?
       barsData.reduce((acc, bd) => {
@@ -406,7 +406,7 @@ export class ResponseService {
                                       lang: string): LikertScaleChart {
 
 
-    let averageGeneralEvaluation : number = 0;
+    let averageFinalScore: number = 0;
     let scoreTotalOptionWithoutCharacterValue: number = 0;
 
     const likertScaleChart: {
@@ -417,33 +417,33 @@ export class ResponseService {
       identifier: string;
     }[] = [];
 
-    /* Depends on likert scale type, it's for calculated
-    These are weights to be included in the score for each specific value of each option */
+    /* It is related to the likert-scale types, these tables define the specific weights included to each option for the final score */
     const characterSureOrNegative = [0, 0.25, 0.5, 0.75, 1];
     const weightImportanceOpt = [2, 1, 1, 1, 2];
 
-    //Retrieves the identifier of the question
+    //Step 1 --- Retrieves the identifier of the question
     answers = answers.filter((a) => a.answers[question.identifier]);
     question.options.forEach((option: Option | MissionQuestionOption) => {
 
-      //Retrieves all answers from the 5 identifiers of one option likert-scale
-      const identifier = option.identifier; // 0 1 2 3 4
+    // Step 1_1 --- Retrieves all answers from the 5 identifiers of one option likert-scale - 0 1 2 3 4
+    const identifier = option.identifier;
 
-      // Collects the answers that have chosen the same option
-      const filteredAnswers: Array<Answer> = answers.filter((a) => a.answers[question.identifier]
-        && a.answers[question.identifier] === identifier);
+    // Step 1_2 --- Collects the answers that have chosen the same option
+    const filteredAnswers: Array<Answer> = answers.filter((a) => a.answers[question.identifier]
+    && a.answers[question.identifier] === identifier);
 
 
-      // Score by option
-      const weightCharacter = characterSureOrNegative[identifier]; // weight of the option - 0, 0.25, 0.5, 0.75, 1
-      const weightImportance = weightImportanceOpt[identifier]; // multiplier of the option - 2, 1, 1, 1, 2
-      const allWeightsOption = weightCharacter * weightImportance; // 0, 0.25, 0.5, 0.75, 2
-      const weightsResultsFilteredOption = filteredAnswers.length * allWeightsOption;
+    // Step 2 --- Score by option
+    const weightCharacter = characterSureOrNegative[identifier]; // weight of the option - 0, 0.25, 0.5, 0.75, 1
+    const weightImportance = weightImportanceOpt[identifier]; // multiplier of the option - 2, 1, 1, 1, 2
+    const allWeightsOption = weightCharacter * weightImportance; // 0, 0.25, 0.5, 0.75, 2
+    const weightsResultsFilteredOption = filteredAnswers.length * allWeightsOption;
 
-      // Score total for the question
-      averageGeneralEvaluation += weightsResultsFilteredOption;
-      scoreTotalOptionWithoutCharacterValue += filteredAnswers.length * weightImportance;
+    // Step 2_1 --- Score total for the question
+    averageFinalScore += weightsResultsFilteredOption;
+    scoreTotalOptionWithoutCharacterValue += filteredAnswers.length * weightImportance;
 
+      // Step 2_2 --- Send all the data collected in the first big step (1-2)
       likertScaleChart.push({
         label: MissionQuestionService.label(option, 'label', lang),
         answers: filteredAnswers,
@@ -454,53 +454,75 @@ export class ResponseService {
 
     });
 
-    /*This scale is the starting point for our 0 score.
-     It represents the failure rate of innovations that is specific to the UMI data.
-     The score below this scale is considered as null*/
-     const scale: number = 2.25;
+    // Step 2_3 --- Calculation of the score without changing the threshold
+      /*This score is calculated according to the likert-scale methodology
+      It returns a score with only the importance weights of the selected options per occurrence*/
+    averageFinalScore = averageFinalScore / scoreTotalOptionWithoutCharacterValue;
 
-    /*This score is calculated according to the likert-scale methodology
-    It returns a score with only the importance weights of the selected options per occurrence*/
-    averageGeneralEvaluation = averageGeneralEvaluation / scoreTotalOptionWithoutCharacterValue;
+    /* Step 3 --- It is to calculate the average score in relation to a choice here it is on 20 then on 5*/
+      /*This scale is the starting point for our 0 score. It represents the failure rate of innovations that is specific to the UMI data.
+      The score below this scale is considered as null*/
+    const threshold: number = 2.25;
+    const DIVISION = 20;
 
-    averageGeneralEvaluation = parseFloat(((averageGeneralEvaluation < 0) ? 0 : averageGeneralEvaluation * 20).toFixed(2));
-    averageGeneralEvaluation = (averageGeneralEvaluation - scale);
+    // Step 3_1 --- score out of 20
+    averageFinalScore = parseFloat(((averageFinalScore < 0) ? 0 : averageFinalScore * DIVISION).toFixed(2));
+    averageFinalScore = (averageFinalScore - threshold);
 
-    averageGeneralEvaluation = (averageGeneralEvaluation * 5) / 20;
-    averageGeneralEvaluation = parseFloat((averageGeneralEvaluation).toFixed(1));
+    // Step 3_2 --- score out of 5
+    const DIVISION_FINAL = 5;
+    averageFinalScore = (averageFinalScore * DIVISION_FINAL) / DIVISION;
+    averageFinalScore = parseFloat((averageFinalScore).toFixed(1));
 
-    if (isNaN(averageGeneralEvaluation)) {
-      averageGeneralEvaluation = 0;
+    if (isNaN(averageFinalScore)) {
+      averageFinalScore = 0;
     }
 
-    this.getLikertScaleGraphicScore(averageGeneralEvaluation);
+    // Return value for function
+    this.getLikertScaleGraphicScore(averageFinalScore);
 
     likertScaleChart.sort((a, b) => b.percentage - a.percentage);
 
-    return {likertScaleChart: likertScaleChart, averageGeneralEvaluation: averageGeneralEvaluation};
+    /* Step 3_3 --- return the final object */
+    return {likertScaleChart: likertScaleChart, averageFinalScore: averageFinalScore};
+
   }
 
+
   /**
-   *
-   * @param averageGeneralEvaluation ( LikertScaleChart)
+   * @param averageFinalScore (LikertScaleChart)
    */
-  public static getLikertScaleGraphicScore (averageGeneralEvaluation:number) {
+  public static getLikertScaleGraphicScore (averageFinalScore:number) {
 
-    /*score of 5*/
-    const scorePercentage = (averageGeneralEvaluation * 98) / 5; // will give margin percentage for the pointer of marker
-    let index = Math.floor(averageGeneralEvaluation);
+  /*  const dataGraphic : {
+      name: string;
+      color: string;
+      score: number;
+      scorePercentage: string;
+      index: number;
+    }[] = [];*/
 
-    /*small fix for situation for score = 20 or 5 */
+    /* This value is defined by which number we want to divide our score*/
+    const DIVISION_FINAL = 5;
+
+    /* The percentage is rounded because the pointer goes over either 0 or 100 because the bar is rounded */
+    let percentage: number = (averageFinalScore * 98) / DIVISION_FINAL; // will give margin percentage for the pointer of marker
+    const scorePercentage = (percentage - 5).toString() +'%';
+
+    let index = Math.floor(averageFinalScore);
+    //We ask to return the index 4 when the score is at its maximum because the index 5 does not exist
     if (index === 5) {
       index = 4;
     }
 
+    //sauvegarder dans un objet la valeur car elle est pas globale
     return {
-      scoreName: colorsAndNames[index].name,
-      scoreColor: colorsAndNames[index].color,
-      scoreNumber: averageGeneralEvaluation,
+      name: colorsAndNames[index].name,
+      color: colorsAndNames[index].color,
+      score: averageFinalScore,
       scorePercentage: scorePercentage,
-    }
+      index: index,
+    };
   };
 
     /**

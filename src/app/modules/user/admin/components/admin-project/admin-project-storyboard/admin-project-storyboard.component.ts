@@ -290,7 +290,7 @@ export class AdminProjectStoryboardComponent implements OnInit, OnDestroy {
               sections[index].questionType = 'LIKERT-SCALE';
 
               const data = ResponseService.likertScaleChartData(answers, question, this._executiveReport.lang);
-              const graphics = ResponseService.getLikertScaleGraphicScore(data.averageGeneralEvaluation)
+              const graphics = ResponseService.getLikertScaleGraphicScore(data.averageFinalScore)
               sections[index].content = this._executiveReportFrontService.likertScaleSection(likertScaleData, this._executiveReport.lang, graphics);
 
             default:

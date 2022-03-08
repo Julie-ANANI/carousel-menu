@@ -245,11 +245,11 @@ export class ExecutiveReportFrontService {
 
 
   /***
-   * this returns the content of the LIKERT-SCALE section custom
+   * this returns the content of the likertScaleCustomSection
    * @param tagsData
    * @param lang
    */
-  public likertScaleTagsSection(tagsData: Array<Tag>, lang: string): SectionLikertScale {
+  public likertScaleCustomSection(tagsData: Array<Tag>, lang: string): SectionLikertScale {
       return {
       color: '#BBC7D6',
       legend: '',
@@ -268,18 +268,18 @@ export class ExecutiveReportFrontService {
    */
   public likertScaleSection( likertScaleData: LikertScaleChart,
                              lang: string,
-                             graphics: { scoreName: string,
-                                         scoreColor: string,
-                                         scorePercentage: number}
+                             graphics: { name: string,
+                                         color: string,
+                                         scorePercentage: string}
                             ): SectionLikertScale {
 
     /* -I use graphics to display the name of the score + the color + the percentage
     by a service which generates the graphic data coming from the calculation of the
     score for the likert-scale type. */
     return {
-      color: graphics.scoreColor,
+      color: graphics.color,
       legend: '',
-      name: graphics.scoreName,
+      name: graphics.name,
       visibility: false
     };
 

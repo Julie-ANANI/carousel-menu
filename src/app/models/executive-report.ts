@@ -123,5 +123,15 @@ export interface SectionLikertScale {
 
 export interface LikertScaleChart {
   likertScaleChart: Array<{label: string; answers: Answer[]; percentage: number; count: number; identifier: string;}>;
-  averageGeneralEvaluation: number;
+  averageFinalScore: number;
+}
+
+export interface LikertScaleDataScore {
+  dataGraphic : Array<{
+    name: string;
+    color: string;
+    score: number;
+    scorePercentage: string;
+    index: number;
+  }>;
 }
