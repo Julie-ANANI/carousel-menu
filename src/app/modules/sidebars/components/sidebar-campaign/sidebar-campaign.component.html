@@ -24,18 +24,21 @@
     </div>
     <!-- /campaign name -->
 
+    <!-- RGPD switch -->
     <div *ngIf="isEditName" class="form-group">
-      <label class="form-label" for="sidebar-campaign-title">GDPR mode for the campaign:
-        <input
-          formControlName="rgpd"
-          id="sidebar-campaign-mode"
-          type="checkbox">
-        <i class="form-icon"></i>
-        {{ isGDPRMode ? 'Activated' : 'Deactivated' }}
+      <label class="form-switch">
+        <input type="checkbox"
+               id="sidebar-campaign-mode"
+               (change)="modeOnChange($event)"
+               [checked]="isGDPRMode">
+        <i class="form-icon"></i> GDPR mode for the campaign
+        <span class="label is-draft" *ngIf="!isGDPRMode">Deactivated</span>
+        <span class="label is-success" *ngIf="isGDPRMode">Activated</span>
       </label>
       <div>
       </div>
     </div>
+    <!-- /RGPD switch -->
 
   </form>
 </div>
