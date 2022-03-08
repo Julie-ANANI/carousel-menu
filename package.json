@@ -1,6 +1,6 @@
 {
   "name": "umi-application-client",
-  "version": "2.13.1",
+  "version": "2.13.2",
   "license": "MIT",
   "scripts": {
     "serve": "ng serve umi -c=local",
@@ -41,7 +41,8 @@
     "@fortawesome/fontawesome-free": "^5.11.2",
     "@nguniversal/express-engine": "^9.1.1",
     "@ngx-translate/core": "^12.1.2",
-    "@sentry/browser": "5.5.0",
+    "@sentry/browser": "^6.18.1",
+    "@sentry/tracing": "^6.18.1",
     "@umius/umi-common-component": "2.1.8",
     "@umius/umi-style-framework": "1.0.9",
     "angular-gauge-chart": "^0.7.2",
@@ -91,6 +92,7 @@
     "@angular/cli": "^9.1.15",
     "@angular/compiler-cli": "9.1.13",
     "@nguniversal/builders": "^9.1.1",
+    "@sentry/webpack-plugin": "^1.18.8",
     "@types/angular": "^1.6.57",
     "@types/compression": "^1.7.0",
     "@types/cookie-parser": "^1.4.2",
