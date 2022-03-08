@@ -5,6 +5,8 @@ import {InnovationFrontService} from '../../../../../../services/innovation/inno
 import {PageScrollService} from 'ngx-page-scroll-core';
 import {DOCUMENT} from '@angular/common';
 import {MissionFrontService} from '../../../../../../services/mission/mission-front.service';
+import {Answer} from '../../../../../../models/answer';
+import {ResponseService} from '../../services/response.service';
 
 type toggleType = 'abstract' | 'addItem' | 'editItem';
 
@@ -28,6 +30,14 @@ interface Label {
   styleUrls: ['./market-report-result.component.scss']
 })
 export class MarketReportResultComponent implements OnInit {
+
+  get questions(): Array<MissionQuestion> {
+    return this._questions;
+  }
+
+  get answers(): Array<Answer> {
+    return this._answers;
+  }
 
   get activeBar(): number {
     return this._activeBar;
@@ -84,6 +94,11 @@ export class MarketReportResultComponent implements OnInit {
     }
   }
 
+  @Input() set answers(value: Array<Answer>) {
+    this._answers = value;
+    this._calculateScore();
+  }
+
   @Input() scrollTo = '#';
 
   @Input() reportingLang = 'en';
@@ -114,31 +129,54 @@ export class MarketReportResultComponent implements OnInit {
 
   private _activeBar: number = 0;
 
+  private _questions: Array<MissionQuestion> = [];
+
+  private _answers: Array<Answer> = [];
+
   constructor(@Inject(DOCUMENT) private _document: Document,
               private _innovationFrontService: InnovationFrontService,
+              private _responseService: ResponseService,
               private _pageScrollService: PageScrollService,) { }
 
   ngOnInit(): void {
   }
 
-  private _setLabel() {
-    this._label.left = this.score < 85 ? this.score + '%' : '';
-    this._label.right = this.score >= 85 ? (99 - this.score) + '%' : '';
-    this._label.margin = (this.score >= 30 && this.score <= 85) ? '-5%' : '';
+  private _calculateScore() {
+    if (this._showBarSection) {
 
-    if (this.score >= 0 && this.score < 20) {
+      switch (this._mission.template && this._mission.template.methodology) {
+        case 'DETECTING_MARKET':
+          break;
+
+        case 'VALIDATING_INTEREST':
+          break;
+
+        case 'VALIDATING_MARKET':
+          break;
+      }
+
+      this._setLabel();
+    }
+  }
+
+  private _setLabel() {
+    this._label.left = this._score < 85 ? this._score + '%' : '';
+    this._label.right = this._score >= 85 ? (99 - this._score) + '%' : '';
+    this._label.margin = (this._score >= 30 && this._score <= 85) ? '-5%' : '';
+
+    if (this._score >= 0 && this._score < 20) {
       this._activeBar = 0;
       this._label.color = 'color-1';
       this._label.label = 'MARKET_REPORT.RESULT.' + this._mission?.template?.methodology + '.BAR.LABEL_A';
-    } else if (this.score >= 20 && this.score < 40) {
+    } else if (this._score >= 20 && this._score < 40) {
       this._activeBar = 1;
       this._label.color = 'color-2';
       this._label.label = 'MARKET_REPORT.RESULT.' + this._mission?.template?.methodology + '.BAR.LABEL_B';
-    } else if (this.score >= 40 && this.score < 60) {
+    } else if (this._score >= 40 && this._score < 60) {
       this._activeBar = 2;
       this._label.color = 'color-3';
       this._label.label = 'MARKET_REPORT.RESULT.' + this._mission?.template?.methodology + '.BAR.LABEL_C';
-    } else if (this.score >= 60 && this.score < 80) {
+    } else if (this._score >= 60 && this._score < 80) {
       this._activeBar = 3;
       this._label.color = 'color-4';
       this._label.label = 'MARKET_REPORT.RESULT.' + this._mission?.template?.methodology + '.BAR.LABEL_D';
@@ -162,6 +200,9 @@ export class MarketReportResultComponent implements OnInit {
         case 'DETECTING_MARKET':
           ques1 = this._getQuestion('InnovOpp');
           this._showBarSection = this._showSeeMore = !!(ques1 && ques1._id);
+          if (this._showBarSection) {
+            this._questions = [ques1];
+          }
           break;
 
         case 'IDENTIFYING_RECEPTIVE':
@@ -176,18 +217,20 @@ export class MarketReportResultComponent implements OnInit {
           ques4 = this._getQuestion('Adaptability');
           this._showBarSection = this._showSeeMore = !!(ques1 && ques1._id && ques2 && ques2._id && ques3 && ques3._id
             && ques4 && ques4._id);
+          if (this._showBarSection) {
+            this._questions = [ques1, ques2, ques3, ques4];
+          }
           break;
 
         case 'VALIDATING_MARKET':
           ques1 = this._getQuestion('ExistenceOfNeeds');
           ques2 = this._getQuestion('CritOfNeeds');
           this._showBarSection = this._showSeeMore = !!(ques1 && ques1._id && ques2 && ques2._id);
+          if (this._showBarSection) {
+            this._questions = [ques1, ques2];
+          }
           break;
       }
-    }
-
-    if (this._showBarSection) {
-      this._setLabel();
     }
   }
 

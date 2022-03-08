@@ -344,7 +344,7 @@
           type="text">
       </div>
     </ng-container>
-    <ng-container *ngIf="item.textarea">
+    <ng-container *ngIf="!!item.textarea">
       <div class="form-group m-no-bottom">
         <textarea
           (change)="onChangeItem()"
