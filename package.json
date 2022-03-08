@@ -44,7 +44,7 @@
     "@sentry/browser": "^6.18.1",
     "@sentry/tracing": "^6.18.1",
     "@umius/umi-common-component": "2.1.8",
-    "@umius/umi-style-framework": "1.0.9",
+    "@umius/umi-style-framework": "1.0.10",
     "angular-gauge-chart": "^0.7.2",
     "angular-mydatepicker": "^0.5.3",
     "angular2-notifications": "^9.0.0",
