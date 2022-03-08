@@ -8,6 +8,10 @@ RUN echo "!!!!!! Building front@${VERSION} with 'ng build ${APP_NAME} -c=${ENV_N
 
 WORKDIR /var/web
 
+# Update this image
+RUN apk update
+RUN apk add gzip
+
 # Install npm packages
 RUN npm install -g @angular/cli@9.1.15
 RUN npm install -g typings

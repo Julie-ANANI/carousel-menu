@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # Remove hidden files
 rm -rf .dockerignore .drone.yml .editorconfig .eslintrc.json .git .gitignore

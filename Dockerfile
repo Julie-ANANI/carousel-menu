@@ -29,11 +29,12 @@ RUN rm -f dist/browser/*.js.map
 RUN ng run ${APP_NAME}:server -c=${ENV_NAME}
 
 # gzip every files for the browser
-RUN gzip -k dist/browser/
+RUN gzip -k -r dist/browser/
 
 RUN npm run server:webpack
 
-#RUN chmod +x cleanup.sh && ./cleanup.sh
+RUN chmod +x cleanup.sh && ./cleanup.sh
+RUN rm -f cleanup.sh
 
 EXPOSE  3080
 CMD ["npm", "run", "serve:ssr"]
