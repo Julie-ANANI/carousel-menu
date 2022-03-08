@@ -33,7 +33,7 @@ RUN gzip -k -r dist/browser/
 
 RUN npm run server:webpack
 
-RUN ./cleanup.sh
+RUN chmod +x cleanup.sh && ./cleanup.sh
 
 EXPOSE  3080
 CMD ["npm", "run", "serve:ssr"]
