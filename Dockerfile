@@ -21,7 +21,7 @@ RUN if [ $VERSION != "latest" ]; then ./node_modules/.bin/sentry-cli releases fi
 RUN rm -f /var/web/.sentryclirc
 
 # delete source-map files
-RUN rm dist/browser/*.js.map;
+RUN rm -f dist/browser/*.js.map;
 
 # build server
 RUN ng run ${APP_NAME}:server -c=${ENV_NAME}
