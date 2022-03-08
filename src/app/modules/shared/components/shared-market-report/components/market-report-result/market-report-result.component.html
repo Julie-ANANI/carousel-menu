@@ -36,31 +36,95 @@
     <ng-container [ngSwitch]="mission?.template?.methodology">
 
       <!-- if has essentials -->
-      <ng-container *ngIf="(mission | mission:'essentialsObjectives')?.length">
+      <ng-container *ngIf="showBarSection">
+
+        <!-- title -->
+        <h5 class="text-lg m-bottom-20">
+          {{ ('MARKET_REPORT.RESULT.' + mission?.template?.methodology + '.TITLE') | translateIn:reportingLang }}
+        </h5>
+        <!-- /title -->
+
+        <!-- progress bar -->
+        <div class="content-box__bar relative w-full">
+
+          <div class="bar">
+            <ng-container *ngFor="let bar of ['color-1 bar-item', 'color-2 bar-item', 'color-3 bar-item',
+            'color-4 bar-item', 'color-5 bar-item']; let i = index;">
+              <div [ngClass]="{'disabled': i !== activeBar}" [className]="bar" style="width: 20%"></div>
+            </ng-container>
+          </div>
+
+          <div [ngClass]="{'p-bottom-40': mission?.template?.methodology !== 'DETECTING_MARKET'}" class="m-bottom-50">
+            <div class="bar__label">
+              <div [ngStyle]="{'left': score+'%'}" style="top: -5px;" class="label__rect absolute"></div>
+              <div
+                [ngClass]="label.color"
+                [ngStyle]="{'left': label.left, 'right': label.right, 'margin-left': label.margin}"
+                class="label text-white absolute"
+                style="top: 22px;">
+                {{ label.label | translateIn:reportingLang }}
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <!-- /progress bar -->
 
         <!-- case DETECTING_MARKET -->
         <ng-container *ngSwitchCase="'DETECTING_MARKET'">
           <div class="content-box__view">
 
+            <h5 class="text-lg m-bottom-20">
+              {{ ('MARKET_REPORT.RESULT.NEEDS_EXPRESSED') | translateIn:reportingLang }}
+            </h5>
+
+            <!-- show item -->
+            <ng-container *ngIf="!canEdit.addItem && !canEdit.editItem">
+              <div class="d-flex flex-wrap-wrap justify-space w-full">
+                <ng-container *ngFor="let item of resultItems; let i = index;">
+                  <div class="m-bottom-20">
+                    <div
+                      style="height: 56px; width: 390px;"
+                      class="bg-draft text-white text-medium flex-centered br-3 p-10 relative">
+                      {{ item.content }}
+                      <ng-container *ngIf="isEditable">
+                        <div class="mrr_edit-wrapper">
+                          <ng-container
+                            *ngTemplateOutlet="editItemBtn;context:{value: {index: i, btn: 'editItem'}}">
+                          </ng-container>
+                        </div>
+                      </ng-container>
+                    </div>
+                  </div>
+                </ng-container>
+              </div>
+            </ng-container>
+            <!-- /show item -->
+
+            <!-- add item btn -->
+            <ng-container *ngIf="!canEdit.editItem && (!canEdit.addItem && resultItems.length < 4 && isEditable)">
+              <div class="m-left-auto m-right-auto" style="height: 56px; width: 390px;">
+                <ng-container *ngTemplateOutlet="addItemBtn;context:{btn: 'addItem'}"></ng-container>
+              </div>
+            </ng-container>
+            <!-- /add item btn -->
+
+            <!-- edit container -->
+            <ng-container *ngIf="canEdit.addItem || canEdit.editItem">
+              <div class="w-full">
+                <ng-container
+                  *ngTemplateOutlet="fillItem;context:{value: {
+                  textarea: true,
+                  btn: canEdit.addItem ? 'addItem' : 'editItem',
+                  content: {placeholder: 'Content', limit: 100}}}">
+                </ng-container>
+              </div>
+            </ng-container>
+            <!-- /edit container -->
+
           </div>
         </ng-container>
         <!-- /case DETECTING_MARKET -->
-
-        <!-- case VALIDATING_MARKET -->
-        <ng-container *ngSwitchCase="'VALIDATING_MARKET'">
-          <div class="content-box__view">
-
-          </div>
-        </ng-container>
-        <!-- /case VALIDATING_MARKET -->
-
-        <!-- case VALIDATING_INTEREST -->
-        <ng-container *ngSwitchCase="'VALIDATING_INTEREST'">
-          <div class="content-box__view">
-
-          </div>
-        </ng-container>
-        <!-- /case VALIDATING_INTEREST -->
 
       </ng-container>
       <!-- if has essentials -->
@@ -187,7 +251,7 @@
     <!-- /view -->
 
     <!-- see more -->
-    <ng-container *ngIf="mission?.template?.methodology !== 'OPTIMIZING_VALUE'">
+    <ng-container *ngIf="showSeeMore">
       <div class="m-top-20 m-bottom-20 flex-centered">
         <button
           (click)="onClickSeeMore($event)"
@@ -258,15 +322,17 @@
 
     <ng-container *ngTemplateOutlet="defEditToggleBtn;context:{btn: item['btn']}"></ng-container>
 
-    <div class="form-group">
-      <input
-        (change)="onChangeItem()"
-        [(ngModel)]="selectedItem.title"
-        [attr.placeholder]="item.title.placeholder"
-        [maxLength]="item.title.limit"
-        class="form-input is-shadowed"
-        type="text">
-    </div>
+    <ng-container *ngIf="!!item.title">
+      <div class="form-group">
+        <input
+          (change)="onChangeItem()"
+          [(ngModel)]="selectedItem.title"
+          [attr.placeholder]="item.title.placeholder"
+          [maxLength]="item.title.limit"
+          class="form-input is-shadowed"
+          type="text">
+      </div>
+    </ng-container>
     <ng-container *ngIf="!item.textarea">
       <div class="form-group m-no-bottom">
         <input
@@ -278,7 +344,7 @@
           type="text">
       </div>
     </ng-container>
-    <ng-container *ngIf="item.textarea">
+    <ng-container *ngIf="!!item.textarea">
       <div class="form-group m-no-bottom">
         <textarea
           (change)="onChangeItem()"

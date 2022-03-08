@@ -6,7 +6,7 @@ import {Pipe, PipeTransform} from '@angular/core';
 import {Mission} from '../../models/mission';
 import {MissionFrontService} from '../../services/mission/mission-front.service';
 
-type requested = 'hasMissionTemplate' | 'objectiveName' | 'essentialsObjectives';
+type requested = 'hasMissionTemplate' | 'objectiveName' | 'essentialsQuestions';
 
 @Pipe({
   name: 'mission'
@@ -24,8 +24,8 @@ export class MissionPipe implements PipeTransform {
         return MissionFrontService.hasMissionTemplate(value);
       case 'objectiveName':
         return MissionFrontService.objectiveName(value.template, lang);
-      case 'essentialsObjectives':
-        return MissionFrontService.essentialsObjectives(MissionFrontService.totalTemplateQuestions(value?.template));
+      case 'essentialsQuestions':
+        return MissionFrontService.essentialQuestions(MissionFrontService.totalTemplateQuestions(value.template));
     }
   }
 
