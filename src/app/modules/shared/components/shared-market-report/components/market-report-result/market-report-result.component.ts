@@ -6,7 +6,6 @@ import {PageScrollService} from 'ngx-page-scroll-core';
 import {DOCUMENT} from '@angular/common';
 import {MissionFrontService} from '../../../../../../services/mission/mission-front.service';
 import {Answer} from '../../../../../../models/answer';
-import {ResponseService} from '../../services/response.service';
 
 type toggleType = 'abstract' | 'addItem' | 'editItem';
 
@@ -135,7 +134,6 @@ export class MarketReportResultComponent implements OnInit {
 
   constructor(@Inject(DOCUMENT) private _document: Document,
               private _innovationFrontService: InnovationFrontService,
-              private _responseService: ResponseService,
               private _pageScrollService: PageScrollService,) { }
 
   ngOnInit(): void {
