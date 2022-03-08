@@ -24,6 +24,7 @@ RUN rm -f /var/web/.npmrc
 
 ADD src /var/web/src
 ADD server.ts /var/web/server.ts
+ADD angular.json /var/web/angular.json
 ADD tsconfig.* /var/web/
 ADD webpack.server.config.js /var/web/webpack.server.config.js
 
