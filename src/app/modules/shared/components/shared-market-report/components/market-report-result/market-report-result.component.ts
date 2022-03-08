@@ -23,12 +23,22 @@ interface Label {
   right: string;
 }
 
+interface Scale {
+  percentage: number;
+  score: number;
+  index: number
+}
+
 @Component({
   selector: 'app-market-report-result',
   templateUrl: './market-report-result.component.html',
   styleUrls: ['./market-report-result.component.scss']
 })
 export class MarketReportResultComponent implements OnInit {
+
+  get scale(): Scale {
+    return this._scale;
+  }
 
   get questions(): Array<MissionQuestion> {
     return this._questions;
@@ -38,16 +48,8 @@ export class MarketReportResultComponent implements OnInit {
     return this._answers;
   }
 
-  get activeBar(): number {
-    return this._activeBar;
-  }
-
   get label(): Label {
     return this._label;
-  }
-
-  get score(): number {
-    return this._score;
   }
 
   get showSeeMore(): boolean {
@@ -122,11 +124,9 @@ export class MarketReportResultComponent implements OnInit {
 
   private _showSeeMore = false;
 
-  private _score = 0;
+  private _scale: Scale = <Scale>{};
 
   private _label: Label = <Label>{};
-
-  private _activeBar: number = 0;
 
   private _questions: Array<MissionQuestion> = [];
 
@@ -158,28 +158,23 @@ export class MarketReportResultComponent implements OnInit {
   }
 
   private _setLabel() {
-    this._label.left = this._score < 85 ? this._score + '%' : '';
-    this._label.right = this._score >= 85 ? (99 - this._score) + '%' : '';
-    this._label.margin = (this._score >= 30 && this._score <= 85) ? '-5%' : '';
+    this._label.left = this._scale.percentage < 85 ? this._scale.percentage + '%' : '';
+    this._label.right = this._scale.percentage >= 85 ? (99 - this._scale.percentage) + '%' : '';
+    this._label.margin = (this._scale.percentage >= 30 && this._scale.percentage <= 85) ? '-5%' : '';
 
-    if (this._score >= 0 && this._score < 20) {
-      this._activeBar = 0;
+    if (this._scale.score < 2.25) {
       this._label.color = 'color-1';
       this._label.label = 'MARKET_REPORT.RESULT.' + this._mission?.template?.methodology + '.BAR.LABEL_A';
-    } else if (this._score >= 20 && this._score < 40) {
-      this._activeBar = 1;
+    } else if (this._scale.score >= 2.25 && this._scale.score < 2.9375) {
       this._label.color = 'color-2';
       this._label.label = 'MARKET_REPORT.RESULT.' + this._mission?.template?.methodology + '.BAR.LABEL_B';
-    } else if (this._score >= 40 && this._score < 60) {
-      this._activeBar = 2;
+    } else if (this._scale.score >= 2.9375 && this._scale.score < 3.635) {
       this._label.color = 'color-3';
       this._label.label = 'MARKET_REPORT.RESULT.' + this._mission?.template?.methodology + '.BAR.LABEL_C';
-    } else if (this._score >= 60 && this._score < 80) {
-      this._activeBar = 3;
+    } else if (this._scale.score >= 3.635 && this._scale.score < 4.3125) {
       this._label.color = 'color-4';
       this._label.label = 'MARKET_REPORT.RESULT.' + this._mission?.template?.methodology + '.BAR.LABEL_D';
-    } else {
-      this._activeBar = 4;
+    } else if (this._scale.score >= 4.3125) {
       this._label.color = 'color-5';
       this._label.label = 'MARKET_REPORT.RESULT.' + this._mission?.template?.methodology + '.BAR.LABEL_E';
     }
