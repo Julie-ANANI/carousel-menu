@@ -29,7 +29,7 @@
       <div class="progress__bar__marker"
            (mouseover)="isShowResult=true"
            (mouseout)="isShowResult=false"
-           [ngStyle]="{ 'left': scorePercentage + '%' }">
+           [ngStyle]="{ 'left': scorePercentage }">
 
         <div class="icon-container"><i class="icon icon-location"></i></div>
         <div class="marker__pointer"></div>
@@ -40,9 +40,8 @@
            [ngStyle]="{ 'visibility': isShowResult? 'visible': 'hidden' }">
 
         <div class="average__text"
-             [ngStyle]="{'left': getValueForAverageText()}">
-
-          {{ stackedChart.averageGeneralEvaluation }} /20
+             [ngStyle]="{'left': scorePercentage}">
+          {{ stackedChart.averageFinalScore }} /5
         </div>
 
       </div>
