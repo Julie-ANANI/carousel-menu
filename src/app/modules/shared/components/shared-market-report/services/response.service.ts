@@ -460,25 +460,23 @@ export class ResponseService {
     averageFinalScore = averageFinalScore / scoreTotalOptionWithoutCharacterValue;
 
     /* Step 3 --- It is to calculate the average score in relation to a choice here it is on 20 then on 5*/
-      /*This scale is the starting point for our 0 score. It represents the failure rate of innovations that is specific to the UMI data.
-      The score below this scale is considered as null*/
-    const threshold: number = 2.25;
     const DIVISION = 20;
 
     // Step 3_1 --- score out of 20
     averageFinalScore = parseFloat(((averageFinalScore < 0) ? 0 : averageFinalScore * DIVISION).toFixed(2));
-    averageFinalScore = (averageFinalScore - threshold);
+    //averageFinalScore = (averageFinalScore - threshold);
 
     // Step 3_2 --- score out of 5
     const DIVISION_FINAL = 5;
     averageFinalScore = (averageFinalScore * DIVISION_FINAL) / DIVISION;
-    averageFinalScore = parseFloat((averageFinalScore).toFixed(1));
+    averageFinalScore = parseFloat((averageFinalScore).toFixed(2));
 
     if (isNaN(averageFinalScore)) {
       averageFinalScore = 0;
     }
 
     // Return value for function
+    averageFinalScore = 5.02
     this.getLikertScaleGraphicScore(averageFinalScore);
 
     likertScaleChart.sort((a, b) => b.percentage - a.percentage);
@@ -493,29 +491,86 @@ export class ResponseService {
    * @param averageFinalScore (LikertScaleChart)
    */
   public static getLikertScaleGraphicScore (averageFinalScore:number) {
+     console.log(averageFinalScore);
 
-  /*  const dataGraphic : {
-      name: string;
-      color: string;
-      score: number;
-      scorePercentage: string;
-      index: number;
-    }[] = [];*/
+
 
     /* This value is defined by which number we want to divide our score*/
     const DIVISION_FINAL = 5;
 
     /* The percentage is rounded because the pointer goes over either 0 or 100 because the bar is rounded */
     let percentage: number = (averageFinalScore * 98) / DIVISION_FINAL; // will give margin percentage for the pointer of marker
-    const scorePercentage = (percentage - 5).toString() +'%';
 
-    let index = Math.floor(averageFinalScore);
-    //We ask to return the index 4 when the score is at its maximum because the index 5 does not exist
-    if (index === 5) {
-      index = 4;
+    let scorePercentage = (percentage - 5).toString() +'%';
+
+    if (averageFinalScore < 2.25) {
+        percentage = 0;
+        scorePercentage = (percentage + 5).toString() +'%';
     }
 
-    //sauvegarder dans un objet la valeur car elle est pas globale
+
+
+
+
+    // Step 1 constitution of index color
+    /*This scale is the starting point for our 0 score. It represents the failure rate of innovations that is specific to the UMI data.
+    The score below this scale is considered as null*/
+    //const threshold: number = 2.25;
+    //const numberOfCategories = 4; //0,1,2,3,4
+   // let interval = (5-threshold)/numberOfCategories
+
+    let index = 0;
+
+   /* Number.prototype.between = function(lower, upper) {
+      return lower <= this && this <= upper;
+    };
+
+    //let age = 2.67;
+
+    if (averageFinalScore.between(2.25, 2.93)) {
+      console.log("You are able to sign up");
+    } else {
+      console.log("Sorry, you do not have access to this part of the website");
+    }*/
+
+    /*if (500 < thenumber && thenumber < 600) {
+      // ...
+    }*/
+
+    const score = averageFinalScore
+console.log(score)
+    if (score < 2.25) { //totally in 0
+      console.log('je suis dans index 0');
+      index = 0;
+    } else if (2.25 <= score && score < 2.93) { // in
+      console.log('je suis dans index 1');
+      index = 1;
+    } else if (2.93 <= score && score < 3.63) { //neutre
+      console.log('je suis dans index 2');
+      index = 2;
+    } else if (3.63 <= score && score < 4.31) { // valid
+      console.log('je suis dans index 3');
+      index = 3;
+    } else if (4.31 <= score  ) { // totally validated
+      console.log('je suis dans index 4');
+      index = 4;
+    }
+/*
+    Score <2,25 - Catégorie = Potentiel totalement invalidé
+
+    2,25=<Score <2,9375 - Catégorie = Invalidé
+
+    2,9375=<Score 3,635 - Catégorie = Incertain
+
+    3,635=<Score <4,3125 - Catégorie = Potentiel validé
+
+    4,3125=<Score - Catégorie = Potentiel totalement validé*/
+
+
+    console.log(index);
+    //console.log(averageFinalScore);
+    console.log(colorsAndNames[index].name);
+    console.log(scorePercentage);
     return {
       name: colorsAndNames[index].name,
       color: colorsAndNames[index].color,
@@ -525,6 +580,7 @@ export class ResponseService {
       percentage: percentage > 5 ? (percentage - 5) : percentage
     };
   };
+
 
     /**
      * Compute positions weights depending of number of options
