@@ -220,10 +220,8 @@ export class AuthService {
   }
 
   private _setEtherpadAccessesTo(newValue: EtherpadAccesses): void {
-    console.log(this.isAcceptingCookies);
     if (this.isAcceptingCookies && newValue) {
       this._etherpadAccesses = newValue;
-      console.log(newValue);
       if (isPlatformBrowser(this._platformId)) {
         this._cookieService.put('sessionID', `${newValue.sessions.map(session => {
           return session.id;

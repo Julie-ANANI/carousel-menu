@@ -38,14 +38,15 @@ export class SidebarCampaignComponent implements OnInit {
 
   private _isEditName = false;
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private formBuilder: FormBuilder) {
+  }
 
   ngOnInit(): void {
     this.buildForm();
   }
 
   private buildForm() {
-    this._campaignForm = this.formBuilder.group( {
+    this._campaignForm = this.formBuilder.group({
       title: [{value: '', disabled: !this.isEditable}],
       rgpd: [{value: false, disabled: !this.isEditable}]
     });
@@ -65,7 +66,7 @@ export class SidebarCampaignComponent implements OnInit {
         break;
 
       default:
-        // do nothing...
+      // do nothing...
 
     }
 
@@ -93,6 +94,10 @@ export class SidebarCampaignComponent implements OnInit {
     }
   }
 
+  modeOnChange(event: Event) {
+    this._campaignForm.get('rgpd').setValue((event.target as HTMLInputElement).checked);
+  }
+
   get isGDPRMode(): boolean {
     return this._campaignForm.get('rgpd').value;
   }
@@ -104,5 +109,4 @@ export class SidebarCampaignComponent implements OnInit {
   get isEditName(): boolean {
     return this._isEditName;
   }
-
 }
