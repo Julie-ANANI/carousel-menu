@@ -50,13 +50,13 @@
           <div class="bar">
             <ng-container *ngFor="let bar of ['color-1 bar-item', 'color-2 bar-item', 'color-3 bar-item',
             'color-4 bar-item', 'color-5 bar-item']; let i = index;">
-              <div [ngClass]="{'disabled': i !== activeBar}" [className]="bar" style="width: 20%"></div>
+              <div [ngClass]="{'disabled': i !== scale.index}" [className]="bar" style="width: 20%"></div>
             </ng-container>
           </div>
 
           <div [ngClass]="{'p-bottom-40': mission?.template?.methodology !== 'DETECTING_MARKET'}" class="m-bottom-50">
             <div class="bar__label">
-              <div [ngStyle]="{'left': score+'%'}" style="top: -5px;" class="label__rect absolute"></div>
+              <div [ngStyle]="{'left': scale.percentage+'%'}" style="top: -5px;" class="label__rect absolute"></div>
               <div
                 [ngClass]="label.color"
                 [ngStyle]="{'left': label.left, 'right': label.right, 'margin-left': label.margin}"
