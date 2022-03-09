@@ -6,6 +6,7 @@ import {PageScrollService} from 'ngx-page-scroll-core';
 import {DOCUMENT} from '@angular/common';
 import {MissionFrontService} from '../../../../../../services/mission/mission-front.service';
 import {Answer} from '../../../../../../models/answer';
+import {ResponseService} from '../../services/response.service';
 
 type toggleType = 'abstract' | 'addItem' | 'editItem';
 
@@ -141,16 +142,20 @@ export class MarketReportResultComponent implements OnInit {
 
   private _calculateScore() {
     if (this._showBarSection) {
+      this._scale = {percentage: 0, index: 0, score: 0};
 
-      switch (this._mission.template && this._mission.template.methodology) {
-        case 'DETECTING_MARKET':
-          break;
+      this._questions.forEach((_question) => {
+        const {averageFinalScore} = ResponseService.likertScaleChartData(this._answers, _question, this.reportingLang);
+        const {score, percentage, index} = ResponseService.getLikertScaleGraphicScore(averageFinalScore);
+        this._scale.score += score;
+        this._scale.index += index;
+        this._scale.percentage += percentage;
+      });
 
-        case 'VALIDATING_INTEREST':
-          break;
-
-        case 'VALIDATING_MARKET':
-          break;
+      this._scale = {
+        score: this._scale.score / this._questions.length,
+        percentage: this._scale.percentage / this._questions.length,
+        index: Math.floor(this._scale.index / this._questions.length),
       }
 
       this._setLabel();

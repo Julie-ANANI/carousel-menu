@@ -522,6 +522,7 @@ export class ResponseService {
       score: averageFinalScore,
       scorePercentage: scorePercentage,
       index: index,
+      percentage: percentage > 5 ? (percentage - 5) : percentage
     };
   };
 

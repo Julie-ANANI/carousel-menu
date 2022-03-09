@@ -37,7 +37,7 @@ export class InnovationService {
     return this._http.get<{result: Array<Innovation>, _metadata: any}>('/innovation/', {params: params});
   }
 
-  public getMarketTests(params: {[header: string]: string | string[]}, cache: 'clear' | '' = 'clear'):
+  public getMarketTests(params: {[header: string]: string | string[]}, cache: CacheType = 'clear'):
     Observable<{result: Array<Innovation>, _metadata: any}> {
     return this._http.get<{result: Array<Innovation>, _metadata: any}>('/innovation/queryable',
       {params: params, headers: new HttpHeaders().set('cache', cache)});

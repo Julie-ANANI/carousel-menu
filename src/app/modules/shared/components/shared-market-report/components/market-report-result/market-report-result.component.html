@@ -62,7 +62,7 @@
                 [ngStyle]="{'left': label.left, 'right': label.right, 'margin-left': label.margin}"
                 class="label text-white absolute"
                 style="top: 22px;">
-                {{ label.label | translateIn:reportingLang }}
+                {{ !!label.label ? (label.label | translateIn:reportingLang) : '' }}
               </div>
             </div>
           </div>

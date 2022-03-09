@@ -1,0 +1,1 @@
+type CacheType = 'clear' | 'reset' | '';
