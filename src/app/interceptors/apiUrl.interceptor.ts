@@ -25,20 +25,10 @@ export class ApiUrlInterceptor implements HttpInterceptor {
    * @private
    */
   private _setAppV3Url(req: HttpRequest<any>): HttpRequest<any> {
-    let newParameters: any = {}
-
-    // for the time being
-    if (environment.local) {
-      newParameters = {
-        url: environment.apiUrl + req.url,
-        withCredentials: true,
-      };
-    } else {
-      newParameters = {
-        url: environment.apiUrl + req.url,
-        withCredentials: true,
-      };
-    }
+    const newParameters: any = {
+      url: environment.apiUrl + req.url, //use this at local
+      withCredentials: true,
+    };
     this._setCookie(newParameters, req);
     this._setJwtoken(newParameters, req);
     return req.clone(newParameters);

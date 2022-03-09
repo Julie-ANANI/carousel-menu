@@ -10,7 +10,6 @@ export const environment = {
   apiUrl: '',
   etherpadUrl: '',
   clientUrl: '',
-  apiGatewayUrl: '',
   companyName: '',
   companyShortName: '',
   companyURL: '',

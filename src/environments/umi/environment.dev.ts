@@ -3,12 +3,8 @@
 export const environment = {
   local: false,
   production: false,
-  apiUrl: 'https://dev.umi.us/api', // 'http://umiapplication:3000/api'
+  apiUrl: 'https://api-dev.umi.us/v3/api', //'https://dev.umi.us/api',
   etherpadUrl: 'https://etherpad-dev.umi.us',
-  /**
-   * this is the url for apisix server on dev
-   */
-  apiGatewayUrl: 'https://api-dev.umi.us/v3/api',
   clientUrl: 'https://umicli-dev.umi.us',
   companyName: 'United Motion Ideas (dev)',
   companyShortName: 'UMI',
