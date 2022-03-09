@@ -7,6 +7,10 @@ import {DOCUMENT} from '@angular/common';
 import {MissionFrontService} from '../../../../../../services/mission/mission-front.service';
 import {Answer} from '../../../../../../models/answer';
 import {ResponseService} from '../../services/response.service';
+import {InnovationService} from '../../../../../../services/innovation/innovation.service';
+import {TranslateNotificationsService} from '../../../../../../services/translate-notifications/translate-notifications.service';
+import {HttpErrorResponse} from '@angular/common/http';
+import {ErrorFrontService} from '../../../../../../services/error/error-front.service';
 
 type toggleType = 'abstract' | 'addItem' | 'editItem';
 
@@ -30,12 +34,28 @@ interface Scale {
   index: number
 }
 
+interface Item extends MissionResultItem {
+  isFilled: boolean;
+}
+
 @Component({
   selector: 'app-market-report-result',
   templateUrl: './market-report-result.component.html',
   styleUrls: ['./market-report-result.component.scss']
 })
 export class MarketReportResultComponent implements OnInit {
+
+  get addItemIndex(): number {
+    return this._addItemIndex;
+  }
+
+  get toBeSaved(): boolean {
+    return this._toBeSaved;
+  }
+
+  get items(): Array<Item> {
+    return this._items;
+  }
 
   get scale(): Scale {
     return this._scale;
@@ -113,7 +133,7 @@ export class MarketReportResultComponent implements OnInit {
 
   private _mission: Mission = <Mission>{};
 
-  private _selectedItem: MissionResultItem = <MissionResultItem>{};
+  private _selectedItem: Item = <Item>{};
 
   private _resultItems: Array<MissionResultItem> = [];
 
@@ -133,7 +153,15 @@ export class MarketReportResultComponent implements OnInit {
 
   private _answers: Array<Answer> = [];
 
+  private _items: Array<Item> = [];
+
+  private _toBeSaved = false;
+
+  private _addItemIndex = 0;
+
   constructor(@Inject(DOCUMENT) private _document: Document,
+              private _innovationService: InnovationService,
+              private _translateNotificationsService: TranslateNotificationsService,
               private _innovationFrontService: InnovationFrontService,
               private _pageScrollService: PageScrollService,) { }
 
@@ -185,9 +213,30 @@ export class MarketReportResultComponent implements OnInit {
     }
   }
 
+  private _initItems(total: number) {
+    for (let i = 0; i < total; i++) {
+      if (this._resultItems.length && this._resultItems[i]) {
+        this._items.push({
+          ...this._resultItems[i],
+          isFilled: true
+        });
+      } else {
+        this._items.push(<Item>{});
+      }
+    }
+  }
+
+  private _reInitVariables() {
+    this._toBeSaved = false;
+    this._resultItems = [];
+    this._items = [];
+  }
+
   private _initData() {
+    this._reInitVariables();
     this._mission = (<Mission>this._innovation.mission);
     this._resultItems = this._mission?.result?.items || [];
+    this._addItemIndex = this._resultItems.length;
     this._essentialQuestions = MissionFrontService.essentialQuestions(MissionFrontService.totalTemplateQuestions(this._mission.template));
     this._initItemIndex();
 
@@ -196,6 +245,7 @@ export class MarketReportResultComponent implements OnInit {
 
       switch (this._mission.template && this._mission.template.methodology) {
         case 'DETECTING_MARKET':
+          this._initItems(4);
           ques1 = this._getQuestion('InnovOpp');
           this._showBarSection = this._showSeeMore = !!(ques1 && ques1._id);
           if (this._showBarSection) {
@@ -241,19 +291,16 @@ export class MarketReportResultComponent implements OnInit {
   }
 
   public onChangeItem() {
-    if (!!this._resultItems[this._itemIndex]) {
-      this._resultItems[this._itemIndex] = this._selectedItem;
-    } else if ((this._resultItems.length < 3 && this._mission.template.methodology !== 'DETECTING_MARKET')
-      || (this._resultItems.length < 4 && this._mission.template.methodology === 'DETECTING_MARKET')) {
-      this._resultItems.push(this._selectedItem);
-    }
-    this._sliceItem(this._itemIndex)
+    this._items[this._itemIndex] = this._selectedItem;
+    this._sliceItem(this._itemIndex);
+    this._items.forEach((_item) => _item.isFilled = !!(_item.title || _item.content));
+    this._toBeSaved = true;
     this._notifyChanges();
   }
 
   private _sliceItem(index: number){
     if (!this._selectedItem.title && !this._selectedItem.content) {
-      this._resultItems.splice(index, 1);
+      this._items.splice(index, 1);
     }
   }
 
@@ -267,15 +314,40 @@ export class MarketReportResultComponent implements OnInit {
 
     switch (btn) {
       case 'addItem':
-        this._selectedItem = <MissionResultItem>{};
+        this._selectedItem = <Item>{};
         this._initItemIndex();
         break;
       case 'editItem':
-        this._selectedItem = this._resultItems[this._itemIndex];
+        this._selectedItem = this._items[this._itemIndex];
         break;
     }
 
     this._canEdit[btn] = !this._canEdit[btn];
+
+    if (btn === 'addItem' && !this._canEdit.addItem) {
+      this._addItemIndex = this._resultItems.length + 1;
+    }
+
+    if (!this._canEdit[btn]) {
+      this._saveResult();
+    }
+  }
+
+  private _saveResult() {
+    if (this._toBeSaved) {
+      const objToSave = {};
+      objToSave['missionResult'] = this._mission.result;
+
+      this._innovationService.save(this._innovation._id, objToSave).subscribe((innovation) => {
+        this._innovationFrontService.setInnovation(innovation);
+        this._toBeSaved = false;
+        this._translateNotificationsService.success('Success', 'The result has been saved.');
+      }, (err: HttpErrorResponse) => {
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
+        this._toBeSaved = true;
+        console.error(err);
+      });
+    }
   }
 
   /**
@@ -284,11 +356,19 @@ export class MarketReportResultComponent implements OnInit {
    */
   public keyupHandlerFunction(event: {content: string}) {
     this._mission.result.abstract = event['content'];
+    this._toBeSaved = true;
     this._notifyChanges();
   }
 
   private _notifyChanges() {
     if (this.isEditable) {
+      this._resultItems = this._items.filter((_item) => !!_item.isFilled).map((val) => {
+        return {
+          title: val.title,
+          content: val.content
+        }
+      });
+      this._mission.result.items = this._resultItems;
       this._innovationFrontService.setNotifyChanges({key: 'marketReportResult', state: true});
     }
   }
