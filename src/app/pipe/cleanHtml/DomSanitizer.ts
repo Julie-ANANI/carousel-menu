@@ -20,7 +20,7 @@ export class DomSanitizerPipe implements PipeTransform {
   // Add a class to images in html to allow further formatting
   // This class is used by etherpad editor
   addClassToImg(html: string) {
-    return html.replace('<img', '<img class="img-editor"');
+    return html.replace(/<img/gm, '<img class="img-editor"');
   }
 
   // Old etherpad images handling
