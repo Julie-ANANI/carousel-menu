@@ -1,1 +1,1 @@
-type CacheType = 'clear' | 'reset' | '';
+export type CacheType = 'clear' | 'reset' | '';

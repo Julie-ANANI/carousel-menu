@@ -4,6 +4,7 @@ import { Answer } from '../../models/answer';
 import { Tag } from '../../models/tag';
 import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
+import {CacheType} from '../../models/cache';
 
 @Injectable({providedIn: 'root'})
 export class AnswerService {
