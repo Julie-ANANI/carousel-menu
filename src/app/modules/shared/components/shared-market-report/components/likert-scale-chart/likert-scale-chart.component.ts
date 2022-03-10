@@ -39,16 +39,6 @@ export class LikertScaleChartComponent implements OnInit, OnDestroy {
     averageFinalScore?: number
   };
 
-  /*private _dataGraphic: LikertScaleDataScore = {
-    name: '',  // example totally  invalided
-    color: '',   // example #EA5858
-    score: 0,
-    scorePercentage: '',
-    index: 0,
-  };*/
-
-
-
   private _createChart() {
     this._dataService.getAnswers(this.question).pipe(takeUntil(this._ngUnsubscribe)).subscribe((answers: Array<Answer>) => {
       this._stackedChart = ResponseService.likertScaleChartData(answers, this.question, this.reportingLang);

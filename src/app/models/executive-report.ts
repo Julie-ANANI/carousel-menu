@@ -125,13 +125,3 @@ export interface LikertScaleChart {
   likertScaleChart: Array<{label: string; answers: Answer[]; percentage: number; count: number; identifier: string;}>;
   averageFinalScore: number;
 }
-
-export interface LikertScaleDataScore {
-  dataGraphic : Array<{
-    name: string;
-    color: string;
-    score: number;
-    scorePercentage: string;
-    index: number;
-  }>;
-}

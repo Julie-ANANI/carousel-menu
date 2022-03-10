@@ -393,6 +393,7 @@ export class ResponseService {
     return rankingChart;
   }
 
+
   /**
    * @public
    * @static
@@ -488,17 +489,25 @@ export class ResponseService {
   /**
    * @param averageFinalScore (LikertScaleChart)
    */
-  public static getLikertScaleGraphicScore (averageFinalScore:number) {
+  public static getLikertScaleGraphicScore (averageFinalScore: number) {
 
     /* This multiplier is to have the value in percentage*/
     const multiply = 20;
-    //const numberOfCategories = 4; //0,1,2,3,4
+    const numberOfCategories = 5;
     // let interval = (5-threshold)/numberOfCategories
+
     let scorePercentage = (averageFinalScore * multiply).toString() +'%';
+    if (averageFinalScore === 0 ) {
+      scorePercentage = (1).toString() +'%';
+    } else if (averageFinalScore === numberOfCategories){
+      scorePercentage = (97).toString() +'%';
+    }
+
 
     // Step 1 constitution of index color
     /*This scale is the starting point for our 0 score. It represents the failure rate of innovations that is specific to the UMI data.
     The score below this scale is considered as null*/
+    //const threshold = 2.25;
 
     let index = 0;
     const score = averageFinalScore
@@ -526,7 +535,7 @@ export class ResponseService {
   };
 
 
-    /**
+  /**
      * Compute positions weights depending of number of options
      * First position will always be 1
      /**
