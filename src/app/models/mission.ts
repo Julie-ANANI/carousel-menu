@@ -11,6 +11,19 @@ export type MissionQuestionParameterType = 'color' | 'date' |'datetime-local' | 
   | 'password' | 'tel' | 'text' | 'time' | 'url' | 'week' | '';
 export type AttitudeMeasureType = 'agreement' | 'frequency' | 'satisfaction' | 'use'| 'quality' | 'relevance' | 'importance'
   | 'interest' |'criticality' ;
+export type MissionMethodologyType = 'DETECTING_MARKET' | 'VALIDATING_MARKET' | 'SOURCING_SOLUTIONS'
+  | 'IDENTIFYING_RECEPTIVE' | 'VALIDATING_INTEREST' | 'OPTIMIZING_VALUE';
+
+
+export interface MissionResult {
+  abstract: string;
+  items?: Array<MissionResultItem>;
+}
+
+export interface MissionResultItem {
+  title: string;
+  content: string;
+}
 
 export interface MissionCardTitle {
   en: Array<InnovCardSection>;
@@ -249,7 +262,7 @@ export interface MissionTemplate {
   /**
    * defines the methodology (description to show)
    */
-  methodology: string;
+  methodology: MissionMethodologyType;
 
   entry: Array<{
     lang: string;
@@ -261,6 +274,7 @@ export interface MissionTemplate {
   }>;
 }
 
+
 export interface  MissionMilestone {
  name: string;
  code: string;
@@ -269,9 +283,15 @@ export interface  MissionMilestone {
  [property: string]: any;
 }
 
+
 export interface Mission {
   readonly _id?: string;
   readonly created?: Date;
+
+  /**
+   * dynamic result specific to the use case.
+   */
+  result?: MissionResult;
 
   /**
    * if the client deleted the project we make the status of the mission Hidden
@@ -287,7 +307,6 @@ export interface Mission {
   innovations?: Array<Innovation>;
   goal?: string;
   mailConf?: Array<MailConfiguration>;
-
 
   /**
    * same as owner of the innovation

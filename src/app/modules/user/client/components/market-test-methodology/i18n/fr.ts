@@ -17,7 +17,7 @@ export const MARKET_TEST_METHODOLOGY = {
     'IDENTIFYING_RECEPTIVE': 'J’ai une solution pour laquelle je recherche les marchés d’application potentiels.',
 
     'VALIDATING_INTEREST': 'J’ai une solution innovante à proposer en réponse à un besoin. Je souhaite vérifier / ' +
-      'démontrer que mon projet présente un intérêt pour les acteurs du marché.',
+      'démontrer que mon projet présente un intérêt pour les acteurs du marché. J’ai déjà identifié les marchés potentiels.',
 
     'OPTIMIZING': 'J’ai un projet innovant dont j’ai déjà validé l’intérêt auprès du marché : besoin avéré et pertinence de ma ' +
       'solution confirmée. Je souhaite maintenant ajuster ma proposition de valeur.',
@@ -74,6 +74,7 @@ export const MARKET_TEST_METHODOLOGY = {
       '<br>- hiérarchiser des fonctionnalités / propriétés… de ma solution,' +
       '<br>- identifier les points forts et points faibles perçus,' +
       '<br>- valider la propension à payer,' +
+      '<br>- hiérarchiser les marchés visés selon leur niveau d’intérêt,' +
       '<br>- …',
 
     'OPTIMIZING': 'Je vais décrire ma proposition de valeur afin de hiérarchiser les éléments plébiscités par les acteurs ' +

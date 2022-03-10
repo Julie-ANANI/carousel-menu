@@ -1,4 +1,40 @@
 export const MARKET_REPORT = {
+
+  'RESULT': {
+    'SOLUTION': 'Solution',
+    'NEEDS_EXPRESSED': 'Needs expressed',
+    'VALIDATING_INTEREST': {
+      'TITLE': 'Level of market interest',
+      'BAR': {
+        'LABEL_A': 'Completely invalidated',
+        'LABEL_B': 'Invalidated',
+        'LABEL_C': 'Uncertain',
+        'LABEL_D': 'Validated',
+        'LABEL_E': 'Completely validated',
+      }
+    },
+    'VALIDATING_MARKET': {
+      'TITLE': 'Level of needs',
+      'BAR': {
+        'LABEL_A': 'Completely invalidated',
+        'LABEL_B': 'Invalidated',
+        'LABEL_C': 'Uncertain',
+        'LABEL_D': 'Validated',
+        'LABEL_E': 'Completely validated',
+      }
+    },
+    'DETECTING_MARKET': {
+      'TITLE': 'Innovation potential on this subject / market',
+      'BAR': {
+        'LABEL_A': 'Completely invalidated',
+        'LABEL_B': 'Invalidated',
+        'LABEL_C': 'Uncertain',
+        'LABEL_D': 'Validated',
+        'LABEL_E': 'Completely validated',
+      }
+    },
+  },
+
   'TITLE': 'Market potential of your project',
 
   'CUSTOM_FILTERS': 'Custom filters',
@@ -137,7 +173,7 @@ export const MARKET_REPORT = {
 
   'ANSWER': 'answer',
 
-  'ANSWERS': 'professional(s)',
+  'ANSWERS': 'professional (s)',
 
   'SEE_ANSWERS': 'Show answer',
 

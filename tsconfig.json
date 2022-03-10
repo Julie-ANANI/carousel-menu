@@ -23,7 +23,8 @@
     ],
     "skipLibCheck": true,
     "noImplicitAny": true,
-    "noUnusedLocals": true
+    "noUnusedLocals": true,
+    "types": ["jest"]
   },
   "exclude": [
     "dist",

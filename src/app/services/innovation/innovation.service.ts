@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import { Observable } from 'rxjs';
 import {environment} from '../../../environments/environment';
 import {Campaign} from '../../models/campaign';
 import {Innovation} from '../../models/innovation';
@@ -15,6 +15,7 @@ import { FamilyEnterprises } from '../../modules/sidebars/components/sidebar-bla
 import {Invitation} from '../../models/invitation';
 import {Response} from '../../models/response';
 import {UmiusConfigInterface, UmiusVideoInterface} from '@umius/umi-common-component';
+import {CacheType} from '../../models/cache';
 
 @Injectable({providedIn: 'root'})
 export class InnovationService {
@@ -37,7 +38,7 @@ export class InnovationService {
     return this._http.get<{result: Array<Innovation>, _metadata: any}>('/innovation/', {params: params});
   }
 
-  public getMarketTests(params: {[header: string]: string | string[]}, cache: 'clear' | '' = 'clear'):
+  public getMarketTests(params: {[header: string]: string | string[]}, cache: CacheType = 'clear'):
     Observable<{result: Array<Innovation>, _metadata: any}> {
     return this._http.get<{result: Array<Innovation>, _metadata: any}>('/innovation/queryable',
       {params: params, headers: new HttpHeaders().set('cache', cache)});

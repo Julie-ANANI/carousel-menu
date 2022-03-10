@@ -1,4 +1,40 @@
 export const MARKET_REPORT = {
+
+  'RESULT': {
+    'SOLUTION': 'Ma solution',
+    'NEEDS_EXPRESSED': 'Besoins exprimés',
+    'VALIDATING_INTEREST': {
+      'TITLE': 'Niveau d’intérêt marché',
+      'BAR': {
+        'LABEL_A': 'Intérêt totalement invalidé',
+        'LABEL_B': 'Intérêt invalidé',
+        'LABEL_C': 'Intérêt incertain',
+        'LABEL_D': 'Intérêt validé',
+        'LABEL_E': 'Intérêt totalement validé',
+      }
+    },
+    'VALIDATING_MARKET': {
+      'TITLE': 'Niveau de besoins',
+      'BAR': {
+        'LABEL_A': 'Besoins totalement invalidés',
+        'LABEL_B': 'Besoins invalidés',
+        'LABEL_C': 'Besoins incertains',
+        'LABEL_D': 'Besoins validés',
+        'LABEL_E': 'Besoins totalement validés',
+      }
+    },
+    'DETECTING_MARKET': {
+      'TITLE': 'Potentiel d\'innovation sur ce sujet / marché',
+      'BAR': {
+        'LABEL_A': 'Potentiel totalement invalidé ',
+        'LABEL_B': 'Potentiel invalidé',
+        'LABEL_C': 'Potentiel incertain',
+        'LABEL_D': 'Potentiel validé',
+        'LABEL_E': 'Potentiel totalement validé',
+      }
+    }
+  },
+
   'TITLE': 'Potentiel marché de votre projet',
 
   'CUSTOM_FILTERS': 'Filtres personnalisés',
@@ -132,7 +168,7 @@ export const MARKET_REPORT = {
 
   'ANSWER': 'réponse',
 
-  'ANSWERS': 'professionnel(s)',
+  'ANSWERS': 'professionnel (s)',
 
   'SEE_ANSWERS': 'Voir la réponse',
 

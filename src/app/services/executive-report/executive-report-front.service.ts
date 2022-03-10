@@ -245,26 +245,16 @@ export class ExecutiveReportFrontService {
 
 
   /***
-   * this returns the content of the LIKERT-SCALE section for tags.
+   * this returns the content of the likertScaleCustomSection
    * @param tagsData
    * @param lang
    */
-  public likertScaleTagsSection(tagsData: Array<Tag>, lang: string): SectionLikertScale {
-
-    if (tagsData && tagsData.length > 0) {
+  public likertScaleCustomSection(tagsData: Array<Tag>, lang: string): SectionLikertScale {
       return {
-        color: '#BBC7D6',
-        legend:  tagsData[0].count + 'X',
-        name: this._multilingPipe.transform(tagsData[0].label, lang),
-        visibility: tagsData[0].count > 0
-      };
-    } else {
-      return {
-        color: '#BBC7D6',
-        legend: '',
-        name: 'UNCERTAIN',
-        visibility: false
-      };
+      color: '#BBC7D6',
+      legend: '',
+      name: 'UNCERTAIN',
+      visibility: false
     }
   }
 
@@ -273,14 +263,23 @@ export class ExecutiveReportFrontService {
    * this returns the content of the Section LIKERT-SCALE
    * @param likertScaleData
    * @param lang
+   * @param graphics
    * @type SectionLikertScale
    */
-  public likertScaleSection(likertScaleData: LikertScaleChart, lang: string): SectionLikertScale {
+  public likertScaleSection( likertScaleData: LikertScaleChart,
+                             lang: string,
+                             graphics: { name: string,
+                                         color: string,
+                                         scorePercentage: string}
+                            ): SectionLikertScale {
 
+    /* -I use graphics to display the name of the score + the color + the percentage
+    by a service which generates the graphic data coming from the calculation of the
+    score for the likert-scale type. */
     return {
-      color: '#BBC7D6',
+      color: graphics.color,
       legend: '',
-      name: 'UNCERTAIN',
+      name: graphics.name,
       visibility: false
     };
 

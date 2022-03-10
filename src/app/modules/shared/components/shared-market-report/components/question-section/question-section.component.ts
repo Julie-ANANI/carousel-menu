@@ -67,6 +67,7 @@ export class QuestionSectionComponent implements OnInit {
 
   /* Update Answers Data */
   private _updateAnswersData() {
+
     if (this.questionReceived && this.questionReceived.identifier) {
 
       const answersToShow = this._responseService.answersToShow(this._answersReceived, this.questionReceived);
