@@ -70,8 +70,8 @@
 
   // Progress bar //
   .progress__bar {
-    background: linear-gradient(to right, rgba(234, 88, 88, 0.5) 20%, rgba(248, 148, 36, 0.5) 20% 40%,
-    rgba(187, 199, 214, 0.5) 40% 60%, rgba(46, 204, 113, 0.5) 60% 80%, rgba(153, 224, 75, 0.5) 80%);
+    background: linear-gradient(to right, rgba(234, 88, 88, 0.5) 45%, rgba(248, 148, 36, 0.5) 45% 58.75%,
+    rgba(187, 199, 214, 0.5) 58.75% 72.5%, rgba(46, 204, 113, 0.5) 72.5% 86.25%, rgba(153, 224, 75, 0.5) 86.25%);
     border-radius: 20px;
     justify-content: center;
     justify-items: center;
@@ -79,32 +79,32 @@
     z-index: $z-index-0;
 
     .totally--invalidated {
-      background: linear-gradient(to right, rgba(234, 88, 88, 1) 20%, rgba(248, 148, 36, 0.5) 20% 40%,
-      rgba(187, 199, 214, 0.5) 40% 60%, rgba(46, 204, 113, 0.5) 60% 80%, rgba(153, 224, 75, 0.5) 80%);
+      background: linear-gradient(to right, rgba(234, 88, 88, 1) 45%, rgba(248, 148, 36, 0.5) 45% 58.75%,
+      rgba(187, 199, 214, 0.5) 58.75% 72.5%, rgba(46, 204, 113, 0.5) 72.5% 86.25%, rgba(153, 224, 75, 0.5) 86.25%);
       z-index: $z-index-1;
     }
 
     &.invalided {
-      background: linear-gradient(to right, rgba(234, 88, 88, 0.5) 20%, rgba(248, 148, 36, 1) 20% 40%,
-      rgba(187, 199, 214, 0.5) 40% 60%, rgba(46, 204, 113, 0.5) 60% 80%, rgba(153, 224, 75, 0.5) 80%);
+      background: linear-gradient(to right, rgba(234, 88, 88, 0.5) 45%, rgba(248, 148, 36, 1) 45% 58.75%,
+      rgba(187, 199, 214, 0.5) 58.75% 72.5%, rgba(46, 204, 113, 0.5) 72.5% 86.25%, rgba(153, 224, 75, 0.5) 86.25%);
       z-index: $z-index-1;
     }
 
     &.uncertain {
-      background: linear-gradient(to right, rgba(234, 88, 88, 0.5) 20%, rgba(248, 148, 36, 0.5) 20% 40%,
-      rgba(187, 199, 214, 1) 40% 60%, rgba(46, 204, 113, 0.5) 60% 80%, rgba(153, 224, 75, 0.5) 80%);
+      background: linear-gradient(to right, rgba(234, 88, 88, 0.5) 45%, rgba(248, 148, 36, 0.5) 45% 58.75%,
+      rgba(187, 199, 214, 1) 58.75% 72.5%, rgba(46, 204, 113, 0.5) 72.5% 86.25%, rgba(153, 224, 75, 0.5) 86.25%);
       z-index: $z-index-1;
     }
 
       &.validated {
-        background: linear-gradient(to right, rgba(234, 88, 88, 0.5) 20%, rgba(248, 148, 36, 0.5) 20% 40%,
-        rgba(187, 199, 214, 0.5) 40% 60%, rgba(46, 204, 113, 1) 60% 80%, rgba(153, 224, 75, 0.5) 80%);
+        background: linear-gradient(to right, rgba(234, 88, 88, 0.5) 45%, rgba(248, 148, 36, 0.5) 45% 58.75%,
+        rgba(187, 199, 214, 0.5) 58.75% 72.5%, rgba(46, 204, 113, 1) 72.5% 86.25%, rgba(153, 224, 75, 0.5) 86.25%);
         z-index: $z-index-1;
       }
 
       &.totally--validated {
-        background: linear-gradient(to right, rgba(234, 88, 88, 0.5) 20%, rgba(248, 148, 36, 0.5) 20% 40%,
-        rgba(187, 199, 214, 0.5) 40% 60%, rgba(46, 204, 113, 0.5) 60% 80%, rgba(153, 224, 75, 1) 80%);
+        background: linear-gradient(to right, rgba(234, 88, 88, 0.5) 45%, rgba(248, 148, 36, 0.5) 45% 58.75%,
+        rgba(187, 199, 214, 0.5) 58.75% 72.5%, rgba(46, 204, 113, 0.5) 72.5% 86.25%, rgba(153, 224, 75, 1) 86.25%);
         z-index: $z-index-1;
       }
     }
