@@ -172,6 +172,11 @@ export class MarketReportResultComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  /**
+   * here we are determining the values for the progress bar based on the
+   * essential questions. We use the same algorithm i.e. likert scale.
+   * @private
+   */
   private _calculateScore() {
     if (this._showBarSection) {
       this._scale = {percentage: 0, index: 0, score: 0};
@@ -194,6 +199,10 @@ export class MarketReportResultComponent implements OnInit {
     }
   }
 
+  /**
+   * setting the values based on the percentage and score
+   * @private
+   */
   private _setLabel() {
     this._label.left = this._scale.percentage < 85 ? this._scale.percentage + '%' : '';
     this._label.right = this._scale.percentage >= 85 ? (99 - this._scale.percentage) + '%' : '';
@@ -217,6 +226,11 @@ export class MarketReportResultComponent implements OnInit {
     }
   }
 
+  /**
+   * we initialize the items
+   * @param total - number of the items based on the use case
+   * @private
+   */
   private _initItems(total: number) {
     for (let i = 0; i < total; i++) {
       if (this._resultItems.length && this._resultItems[i]) {
@@ -236,6 +250,10 @@ export class MarketReportResultComponent implements OnInit {
     this._addItemIndex = this._resultItems.length;
   }
 
+  /**
+   * initializing the different variables based on the use case.
+   * @private
+   */
   private _initData() {
     this._initItemIndex();
 
@@ -253,9 +271,6 @@ export class MarketReportResultComponent implements OnInit {
           break;
 
         case 'IDENTIFYING_RECEPTIVE':
-          this._showSeeMore = true;
-          break;
-
         case 'SOURCING_SOLUTIONS':
           this._initItems(3);
           this._showSeeMore = true;
@@ -329,6 +344,10 @@ export class MarketReportResultComponent implements OnInit {
     }
   }
 
+  /**
+   * call the back to save the mission result.
+   * @private
+   */
   private _saveResult() {
     if (this._toBeSaved) {
       const objToSave = {};

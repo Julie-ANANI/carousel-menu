@@ -80,7 +80,8 @@
 
             <div class="d-flex flex-wrap-wrap justify-space w-full">
               <ng-container *ngFor="let item of items; let i = index;">
-                <ng-container *ngIf="item.isFilled || addItemIndex === i || (canEdit.addItem && itemIndex === i)">
+                <ng-container *ngIf="item.isFilled || addItemIndex === i || ((canEdit.addItem || canEdit.editItem) &&
+                itemIndex === i)">
                   <div class="m-bottom-20">
 
                     <!-- show item -->
@@ -141,8 +142,8 @@
           class="content-box__view d-flex align-flex-end"
           style="margin-right: -50px;">
           <ng-container *ngFor="let item of items; let i = index;">
-            <ng-container *ngIf="item.isFilled || addItemIndex === i || ((canEdit.addItem || canEdit.editItem) && itemIndex
-            === i)">
+            <ng-container *ngIf="item.isFilled || addItemIndex === i || ((canEdit.addItem || canEdit.editItem) &&
+            itemIndex === i)">
               <div class="m-bottom-20 m-right-50">
 
                 <!-- show item -->
@@ -156,8 +157,8 @@
                     </ng-container>
                   </div>
                   <div
-                    style="height: 100px; width: 232px;"
-                    class="bg-draft text-white text-center text-medium flex-centered br-3 p-10">
+                    class="bg-draft text-white text-center text-medium flex-centered br-3 p-10"
+                    style="height: 100px; width: 232px;">
                     {{ item.content }}
                   </div>
                 </ng-container>
@@ -210,45 +211,51 @@
           </div>
 
           <div class="flex-full">
-
-            <!-- show item -->
-            <ng-container *ngIf="!canEdit.addItem && !canEdit.editItem">
-              <ng-container *ngFor="let item of resultItems; let i = index;">
+            <ng-container *ngFor="let item of items; let i = index;">
+              <ng-container *ngIf="item.isFilled || addItemIndex === i || ((canEdit.addItem || canEdit.editItem) &&
+              itemIndex === i)">
                 <div class="m-bottom-40">
-                  <div class="d-flex align-center m-bottom-2">
-                    <p class="text-medium m-right-10 text-lg m-no flex-full">{{ item.title }}</p>
-                    <ng-container *ngIf="isEditable">
-                      <ng-container
-                        *ngTemplateOutlet="editItemBtn;context:{value: {index: i, btn: 'editItem'}}">
+
+                  <!-- show item -->
+                  <ng-container *ngIf="(item.isFilled && ((!canEdit.addItem && !canEdit.editItem) || itemIndex !== i))">
+                    <div class="d-flex align-center m-bottom-2">
+                      <p class="text-medium m-right-10 text-lg m-no flex-full">{{ item.title }}</p>
+                      <ng-container *ngIf="isEditable">
+                        <ng-container
+                          *ngTemplateOutlet="editItemBtn;context:{value: {index: i, btn: 'editItem'}}">
+                        </ng-container>
                       </ng-container>
+                    </div>
+                    <div
+                      class="bg-draft text-white text-center text-medium flex-centered br-3"
+                      style="min-height: 42px;">
+                      {{ item.content }}
+                    </div>
+                  </ng-container>
+                  <!-- /show item -->
+
+                  <!-- add item btn -->
+                  <ng-container *ngIf="!canEdit.editItem && !canEdit.addItem && isEditable && !item.isFilled">
+                    <div style="height: 42px;">
+                      <ng-container *ngTemplateOutlet="addItemBtn;context:{btn: 'addItem'}"></ng-container>
+                    </div>
+                  </ng-container>
+                  <!-- /add item btn -->
+
+                  <!-- edit container -->
+                  <ng-container *ngIf="itemIndex === i && (canEdit.editItem || canEdit.addItem)">
+                    <ng-container
+                      *ngTemplateOutlet="fillItem;context:{value: {
+                        title: {placeholder: 'Market', limit: 50},
+                        btn: canEdit.addItem ? 'addItem' : 'editItem',
+                        content: {placeholder: 'List of applications', limit: 100}}}">
                     </ng-container>
-                  </div>
-                  <div style="min-height: 42px;" class="bg-draft text-white text-medium flex-centered br-3">
-                    {{ item.content }}
-                  </div>
+                  </ng-container>
+                  <!-- /edit container -->
+
                 </div>
               </ng-container>
             </ng-container>
-            <!-- /show item -->
-
-            <!-- add item btn -->
-            <ng-container *ngIf="!canEdit.editItem && (!canEdit.addItem && resultItems.length < 3 && isEditable)">
-              <div class="m-bottom-40" style="height: 42px;">
-                <ng-container *ngTemplateOutlet="addItemBtn;context:{btn: 'addItem'}"></ng-container>
-              </div>
-            </ng-container>
-            <!-- /add item btn -->
-
-            <!-- edit container -->
-            <ng-container *ngIf="canEdit.addItem || canEdit.editItem">
-              <ng-container
-                *ngTemplateOutlet="fillItem;context:{value: {
-                title: {placeholder: 'Market', limit: 50},
-                btn: canEdit.addItem ? 'addItem' : 'editItem',
-                content: {placeholder: 'List of applications', limit: 100}}}">
-              </ng-container>
-            </ng-container>
-            <!-- /edit container -->
 
           </div>
 
