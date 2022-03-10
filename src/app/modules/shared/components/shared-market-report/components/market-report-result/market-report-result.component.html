@@ -87,7 +87,7 @@
                     <ng-container *ngIf="(item.isFilled && ((!canEdit.addItem && !canEdit.editItem) ||
                     itemIndex !== i))">
                       <div
-                        class="bg-draft text-white text-medium flex-centered br-3 p-10 relative"
+                        class="bg-draft text-white text-center text-medium flex-centered br-3 p-10 relative"
                         style="height: 56px; width: 390px;">
                         {{ item.content }}
                         <ng-container *ngIf="isEditable">
@@ -136,14 +136,18 @@
 
       <!-- case SOURCING_SOLUTIONS -->
       <ng-container *ngSwitchCase="'SOURCING_SOLUTIONS'">
-        <div class="content-box__view d-flex align-center">
+        <div
+          [ngClass]="{'justify-space': resultItems.length === 3}"
+          class="content-box__view d-flex align-flex-end"
+          style="margin-right: -50px;">
+          <ng-container *ngFor="let item of items; let i = index;">
+            <ng-container *ngIf="item.isFilled || addItemIndex === i || ((canEdit.addItem || canEdit.editItem) && itemIndex
+            === i)">
+              <div class="m-bottom-20 m-right-50">
 
-          <!-- show item -->
-          <ng-container *ngIf="!canEdit.addItem && !canEdit.editItem">
-            <div [ngClass]="{'justify-space w-full': resultItems.length === 3}" class="d-flex flex-wrap-wrap">
-              <ng-container *ngFor="let item of resultItems; let i = index;">
-                <div [ngClass]="{'m-right-50': i < 2}">
-                  <div style="height: 81px; width: 232px;" class="d-flex m-bottom-2">
+                <!-- show item -->
+                <ng-container *ngIf="(item.isFilled && ((!canEdit.addItem && !canEdit.editItem) || itemIndex !== i))">
+                  <div style="width: 232px;" class="d-flex m-bottom-2">
                     <p class="text-medium m-right-10 text-lg m-no flex-full">{{ item.title }}</p>
                     <ng-container *ngIf="isEditable">
                       <ng-container
@@ -152,38 +156,38 @@
                     </ng-container>
                   </div>
                   <div
-                    style="min-height: 83px; width: 232px;"
-                    class="bg-draft text-white text-medium flex-centered br-3 p-10">
+                    style="height: 100px; width: 232px;"
+                    class="bg-draft text-white text-center text-medium flex-centered br-3 p-10">
                     {{ item.content }}
                   </div>
-                </div>
-              </ng-container>
-            </div>
-          </ng-container>
-          <!-- /show item -->
+                </ng-container>
+                <!-- /show item -->
 
-          <!-- add item btn -->
-          <ng-container *ngIf="!canEdit.editItem && (!canEdit.addItem && resultItems.length < 3 && isEditable)">
-            <div class="m-left-auto m-right-auto" style="height: 83px; width: 232px;">
-              <ng-container *ngTemplateOutlet="addItemBtn;context:{btn: 'addItem'}"></ng-container>
-            </div>
-          </ng-container>
-          <!-- /add item btn -->
+                <!-- add item btn -->
+                <ng-container *ngIf="!canEdit.editItem && !canEdit.addItem && isEditable && !item.isFilled">
+                  <div style="height: 100px; width: 232px;">
+                    <ng-container *ngTemplateOutlet="addItemBtn;context:{btn: 'addItem'}"></ng-container>
+                  </div>
+                </ng-container>
+                <!-- /add item btn -->
 
-          <!-- edit container -->
-          <ng-container *ngIf="canEdit.addItem || canEdit.editItem">
-            <div class="w-full">
-              <ng-container
-                *ngTemplateOutlet="fillItem;context:{value: {
-                textarea: true,
-                title: {placeholder: 'Family / Supplier', limit: 50},
-                btn: canEdit.addItem ? 'addItem' : 'editItem',
-                content: {placeholder: 'Content', limit: 100}}}">
-              </ng-container>
-            </div>
-          </ng-container>
-          <!-- /edit container -->
+                <!-- edit container -->
+                <ng-container *ngIf="itemIndex === i && (canEdit.editItem || canEdit.addItem)">
+                  <div style="height: 137px; width: 232px;">
+                    <ng-container
+                      *ngTemplateOutlet="fillItem;context:{value: {
+                      textarea: true,
+                      title: {placeholder: 'Family / Supplier', limit: 50},
+                      btn: canEdit.addItem ? 'addItem' : 'editItem',
+                      content: {placeholder: 'Content', limit: 100, height: '83px'}}}">
+                    </ng-container>
+                  </div>
+                </ng-container>
+                <!-- /edit container -->
 
+              </div>
+            </ng-container>
+          </ng-container>
         </div>
       </ng-container>
       <!-- /case SOURCING_SOLUTIONS -->
@@ -356,7 +360,8 @@
           [(ngModel)]="selectedItem.content"
           [attr.placeholder]="item.content.placeholder"
           [maxLength]="item.content.limit"
-          class="form-input is-shadowed"
+          [ngStyle]="{'height': item.content.height}"
+          class="form-input is-shadowed is-resize"
           type="text">
         </textarea>
       </div>

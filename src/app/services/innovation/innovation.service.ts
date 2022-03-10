@@ -15,6 +15,7 @@ import { FamilyEnterprises } from '../../modules/sidebars/components/sidebar-bla
 import {Invitation} from '../../models/invitation';
 import {Response} from '../../models/response';
 import {UmiusConfigInterface, UmiusVideoInterface} from '@umius/umi-common-component';
+import {CacheType} from '../../models/cache';
 
 @Injectable({providedIn: 'root'})
 export class InnovationService {

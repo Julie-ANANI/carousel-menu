@@ -112,6 +112,10 @@ export class MarketReportResultComponent implements OnInit {
   @Input() set innovation(value: Innovation) {
     this._innovation = value;
     if (this._innovation.mission && (<Mission>this._innovation.mission)._id) {
+      this._mission = (<Mission>this._innovation.mission);
+      this._essentialQuestions = MissionFrontService.essentialQuestions(MissionFrontService.totalTemplateQuestions(this._mission.template));
+      this._toBeSaved = false;
+      this._reInitVariables();
       this._initData();
     }
   }
@@ -227,17 +231,12 @@ export class MarketReportResultComponent implements OnInit {
   }
 
   private _reInitVariables() {
-    this._toBeSaved = false;
-    this._resultItems = [];
     this._items = [];
+    this._resultItems = this._mission?.result?.items || [];
+    this._addItemIndex = this._resultItems.length;
   }
 
   private _initData() {
-    this._reInitVariables();
-    this._mission = (<Mission>this._innovation.mission);
-    this._resultItems = this._mission?.result?.items || [];
-    this._addItemIndex = this._resultItems.length;
-    this._essentialQuestions = MissionFrontService.essentialQuestions(MissionFrontService.totalTemplateQuestions(this._mission.template));
     this._initItemIndex();
 
     if (!!this._mission.template && !!this._mission.template.methodology) {
@@ -254,7 +253,11 @@ export class MarketReportResultComponent implements OnInit {
           break;
 
         case 'IDENTIFYING_RECEPTIVE':
+          this._showSeeMore = true;
+          break;
+
         case 'SOURCING_SOLUTIONS':
+          this._initItems(3);
           this._showSeeMore = true;
           break;
 
@@ -292,16 +295,9 @@ export class MarketReportResultComponent implements OnInit {
 
   public onChangeItem() {
     this._items[this._itemIndex] = this._selectedItem;
-    this._sliceItem(this._itemIndex);
     this._items.forEach((_item) => _item.isFilled = !!(_item.title || _item.content));
     this._toBeSaved = true;
     this._notifyChanges();
-  }
-
-  private _sliceItem(index: number){
-    if (!this._selectedItem.title && !this._selectedItem.content) {
-      this._items.splice(index, 1);
-    }
   }
 
   /**
