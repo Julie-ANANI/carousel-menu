@@ -91,6 +91,7 @@ export const ERROR = {
     REMOVE_INNOVATION_CARD_FAILED: 'Désolé, nous ne pouvons pas supprimer la carte de l\'innovation.',
     REMOVE_INNOVATION_FAILED: 'Désolé, nous ne pouvons pas supprimer l\'innovation.',
     IMPORT_ANSWER_FAILED: 'Désolé, nous ne pouvons pas importer les réponses.',
+    IMPORT_TAG_FAILED: 'Désolé, nous ne pouvons pas importer les tags.'
   },
 
   NOTIFICATION_400:{
