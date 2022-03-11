@@ -67,11 +67,11 @@ export class SharedMarketComment2Component {
   }
 
   public addTag(tag: Tag): void {
-    this._answerService.addTag(this.answer._id, tag._id, this.questionId).pipe(first()).subscribe((a: any) => {
+    this._answerService.addTag(this.answer._id, tag, this.questionId).pipe(first()).subscribe((tagResult: Tag) => {
       if (this.answer.answerTags[this.questionId]) {
-        this.answer.answerTags[this.questionId].push(tag);
+        this.answer.answerTags[this.questionId].push(tagResult);
       } else {
-        this.answer.answerTags[this.questionId] = [tag];
+        this.answer.answerTags[this.questionId] = [tagResult];
       }
       this._dataService.updateTagsList(this.question);
       this._translateNotificationsService.success('Success' , 'The tag has been added.');
@@ -82,7 +82,7 @@ export class SharedMarketComment2Component {
   }
 
   public createTag(tag: Tag): void {
-    this._answerService.createTag(this.answer._id, tag, this.questionId).pipe(first()).subscribe((newTag: any) => {
+    this._answerService.addTag(this.answer._id, tag, this.questionId).pipe(first()).subscribe((newTag: any) => {
       if (this.answer.answerTags[this.questionId]) {
         this.answer.answerTags[this.questionId].push(newTag);
       } else {

@@ -35,22 +35,16 @@ export class AnswerService {
     return this._http.put('/answer/' + answerId, answerObj);
   }
 
-  public addTag(answerId: string, tagId: string, questionId?: string): Observable<any> {
-    const params: {[param: string]: string | string[]} = {tag: tagId };
+  public addTag(answerId: string, tag: Tag, questionId?: string): Observable<any> {
+    const params: {tag: Tag} = {tag: tag };
     if (questionId) { params['questionId'] = questionId; }
-    return this._http.post('/answer/' + answerId + '/tag', { params: params});
-  }
-
-  public createTag(answerId: string, tag: Tag, questionId?: string): Observable<Tag> {
-    const params: any = { tag: tag };
-    if (questionId) { params['questionId'] = questionId; }
-    return this._http.post<Tag>('/answer/' + answerId + '/new-tag', { params: params});
+    return this._http.post(`/answer/${answerId}/tag`, { params: params});
   }
 
   public removeTag(answerId: string, tagId: string, questionId?: string): Observable<any> {
     const params: {[param: string]: string | string[]} = {tag: tagId };
     if (questionId) { params['questionId'] = questionId; }
-    return this._http.delete('/answer/' + answerId + '/tag', { params: params});
+    return this._http.delete(`/answer/${answerId}/tag`, { params: params});
   }
 
   public getInnovationValidAnswers(innovationId: string, anonymous = false, cache: CacheType = ''):

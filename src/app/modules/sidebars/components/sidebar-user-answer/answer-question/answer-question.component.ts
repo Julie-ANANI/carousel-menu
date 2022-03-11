@@ -104,13 +104,13 @@ export class AnswerQuestionComponent {
   }
 
   public addTag(tag: Tag, q_identifier: string): void {
-    this._answerService.addTag(this.fullAnswer._id, tag._id, q_identifier)
+    this._answerService.addTag(this.fullAnswer._id, tag, q_identifier)
       .pipe(first())
-      .subscribe((a: any) => {
+      .subscribe((tagResult: Tag) => {
         if (this.fullAnswer.answerTags[q_identifier]) {
-          this.fullAnswer.answerTags[q_identifier].push(tag);
+          this.fullAnswer.answerTags[q_identifier].push(tagResult);
         } else {
-          this.fullAnswer.answerTags[q_identifier] = [tag];
+          this.fullAnswer.answerTags[q_identifier] = [tagResult];
         }
         this._translateNotificationsService.success('Success', 'The tag is added to the answer.');
       }, (err: HttpErrorResponse) => {
@@ -120,7 +120,7 @@ export class AnswerQuestionComponent {
   }
 
   public createTag(tag: Tag, q_identifier: string): void {
-    this._answerService.createTag(this.fullAnswer._id, tag, q_identifier)
+    this._answerService.addTag(this.fullAnswer._id, tag, q_identifier)
       .pipe(first())
       .subscribe((newTag: Tag) => {
         if (this.fullAnswer.answerTags[q_identifier]) {
