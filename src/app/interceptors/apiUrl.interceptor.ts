@@ -35,7 +35,7 @@ export class ApiUrlInterceptor implements HttpInterceptor {
       };
     } else {
       newParameters = {
-        url: environment.apiGatewayUrl + req.url,
+        url: environment.apiUrl + req.url,
         withCredentials: true,
       };
     }
