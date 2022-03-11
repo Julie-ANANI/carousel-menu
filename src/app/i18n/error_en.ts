@@ -91,6 +91,7 @@ export const ERROR = {
     REMOVE_INNOVATION_CARD_FAILED: 'Sorry, we are having trouble to delete the innovation card.',
     REMOVE_INNOVATION_FAILED: 'Sorry, we are having trouble to delete the innovation.',
     IMPORT_ANSWER_FAILED: 'Sorry, we are having trouble to import the answers.',
+    IMPORT_TAG_FAILED: 'Sorry, we are having trouble to import the tags.',
   },
 
   NOTIFICATION_400:{

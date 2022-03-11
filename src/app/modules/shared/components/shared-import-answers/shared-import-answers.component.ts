@@ -20,7 +20,7 @@ export class SharedImportAnswersComponent implements OnInit {
 
   private _slicedErrors: Array<any> = [];
 
-  private _importingInfos: { existing: number, new: number };
+  private _importingInfos: { nbExistingAnswers: number; nbNewAnswers: number; newTags: [] };
 
   private _file: File;
 
@@ -47,8 +47,8 @@ export class SharedImportAnswersComponent implements OnInit {
       .checkImportAsCsv(this.campaign, file)
       .pipe(first())
       .subscribe(
-        (message: { nbExistingAnswers: number, nbNewAnswers: number }) => {
-          this._importingInfos = {existing: message.nbExistingAnswers, new: message.nbNewAnswers};
+        (message: { nbExistingAnswers: number, nbNewAnswers: number, newTags: []}) => {
+          this._importingInfos = message;
           this._file = file;
         },
         (err: HttpErrorResponse) => {
@@ -100,7 +100,7 @@ export class SharedImportAnswersComponent implements OnInit {
     this._errorsModal = false;
   }
 
-  get importingInfos(): { existing: number; new: number } {
+  get importingInfos(): { nbExistingAnswers: number; nbNewAnswers: number; newTags: [] } {
     return this._importingInfos;
   }
 
