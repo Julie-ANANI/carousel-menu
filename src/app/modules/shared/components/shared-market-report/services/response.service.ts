@@ -524,13 +524,18 @@ export class ResponseService {
       index = 4;
     }
 
+/*    It's obsolete solution*/
+    /* This value is defined by which number we want to divide our score*/
+    /* The percentage is rounded because the pointer goes over either 0 or 100 because the bar is rounded */
+    let percentage: number = (averageFinalScore * multiply); // will give margin percentage for the pointer of marker
+
     return {
       name: colorsAndNames[index].name,
       color: colorsAndNames[index].color,
       score: averageFinalScore,
       scorePercentage: scorePercentage,
+      percentage : percentage > 5 ? (percentage - 5) : percentage,
       index: index,
-      percentage: percentage > 5 ? (percentage - 5) : percentage
     };
   };
 
