@@ -29,6 +29,7 @@
 
   <app-shared-mail-editor
     *ngIf="isStatus || isMail"
+    [isEditableMode]="true"
     [signatures]="signatures"
     [emailsObject]="email"
     [inputLanguage]="project.owner.language"

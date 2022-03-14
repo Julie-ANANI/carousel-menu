@@ -99,11 +99,11 @@
 <umius-sidebar-full [(template)]="sidebar">
   <app-sidebar-workflow
     (emailChange)="updateEmail($event)"
+    [isEditable]="isEditable && sidebar.animate_state === 'active'"
     [emailsObject]="emailToEdit"
     [id]="getId()"
     [inputLanguage]="language"
-    [innovationCardLanguages]="innovationCardLanguages"
-    [isEditable]="isEditable">
+    [innovationCardLanguages]="innovationCardLanguages">
   </app-sidebar-workflow>
 </umius-sidebar-full>
 <!-- /sidebar to edit / view workflow -->

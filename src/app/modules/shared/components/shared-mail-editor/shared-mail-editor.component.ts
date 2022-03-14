@@ -27,7 +27,7 @@ export class SharedMailEditorComponent implements OnInit {
 
   @Input() isEnablePreviewBtn = false; // to show / Hide the Preview button in the Default template.
 
-  @Input() isEditableMode = true;
+  @Input() isEditableMode = false;
 
   @Input() canTestMails = false;
 

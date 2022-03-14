@@ -10,6 +10,7 @@ import {Column, Table, UmiusConfigInterface, UmiusSidebarInterface} from '@umius
   styleUrls: ['admin-edit-workflow.component.scss'],
 })
 export class AdminEditWorkflowComponent {
+
   @Input() set innovationCardLanguages(value: string[]) {
     if (value && value.length) {
       this._innovationCardLanguages = value;
