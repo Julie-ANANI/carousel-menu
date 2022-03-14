@@ -496,13 +496,12 @@ export class ResponseService {
     const numberOfCategories = 5;
     // let interval = (5-threshold)/numberOfCategories
 
-    let scorePercentage = (averageFinalScore * multiply).toString() +'%';
+    let scorePercentage: string = (averageFinalScore * multiply).toString() +'%';
     if (averageFinalScore === 0 ) {
       scorePercentage = (1).toString() +'%';
     } else if (averageFinalScore === numberOfCategories){
       scorePercentage = (97).toString() +'%';
     }
-
 
     // Step 1 constitution of index color
     /*This scale is the starting point for our 0 score. It represents the failure rate of innovations that is specific to the UMI data.
@@ -528,12 +527,11 @@ export class ResponseService {
     /* This value is defined by which number we want to divide our score*/
     /* The percentage is rounded because the pointer goes over either 0 or 100 because the bar is rounded */
     let percentage: number = (averageFinalScore * multiply); // will give margin percentage for the pointer of marker
-
     return {
       name: colorsAndNames[index].name,
       color: colorsAndNames[index].color,
       score: averageFinalScore,
-      scorePercentage: scorePercentage,
+      scorePercent: scorePercentage.toString(),
       percentage : percentage > 5 ? (percentage - 5) : percentage,
       index: index,
     };
