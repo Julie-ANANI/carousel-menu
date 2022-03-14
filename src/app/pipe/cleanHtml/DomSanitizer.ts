@@ -9,23 +9,51 @@ export class DomSanitizerPipe implements PipeTransform {
   }
 
   transform(html: string): SafeHtml {
+
+    // ETHERPAD
+    // --------
     if(!!html) {
       html = this.extractImgFromHref(html);
-      html = this.addClassToImg(html);
       html = this.extractVideoFromHref(html);
+      html = this.addClassToImg(html);
+      html = this.listInlineDisplayWorkAround(html);
     }
+    // --------
+
     return this.sanitizer.bypassSecurityTrustHtml(html);
   }
 
-  // Add a class to images in html to allow further formatting
-  // This class is used by etherpad editor
+
+  /** ETHERPAD formatting workaround
+   * Etherpad is not working well with html export of it's content.
+   * In order to display it in a beautiful way for QUIZ and FRONT, we need to do some workaround for the moment.
+
+   * ⚠️ The following functions should be added to QUIZ cleanHTML pipe as well
+   * TODO - Add a common formatting in both app
+   **/
+
+
+  /**
+   * Add a class to images in html to allow further formatting
+   * @param html
+   */
   addClassToImg(html: string) {
     return html.replace(/<img/gm, '<img class="img-editor"');
   }
 
-  // Old etherpad images handling
-  // Display <img> tags from <a> tags containing img url
-  // Used for etherpad formatting
+  /**
+   * Display list element inline
+   * If not, list element will be broken and ugly
+   */
+  listInlineDisplayWorkAround(html: string) {
+    return html.replace(/<li><p style='text-align:/gm, "<li><span style='text-align:");
+  }
+
+  /**
+   * Old etherpad images handling
+   * Display <img> tags from <a> tags containing img url
+   * @param html
+   */
   extractImgFromHref(html: string) {
     const imgInHrefTagRegex = /<a[^>]*(http?s?:?\/\/[^"'<>]*\.(?:png|jpg|jpeg|gif|svg)).*?<\/a>/gm;
     const htmlToTransform = html;
@@ -41,8 +69,10 @@ export class DomSanitizerPipe implements PipeTransform {
     return html;
   }
 
-  // Display <video> from <a> tags containing video url
-  // Used for etherpad formatting
+  /**
+   * Display <video> from <a> tags containing video url
+   * @constructor
+   */
   extractVideoFromHref(html: string) {
     // Youtube doesn't authorize cross-platforms iframes
     // const youtubeInHrefTagRegex = /<a.*href="((?:(?:http|https)?:\/\/)?(?:www.youtube\.com\/\S*(?:(?:\/e(?:mbed))?\/|watch\?(?:\S*?&?v=))|youtu\.be\/)(?:[a-zA-Z0-9_-]{6,11}))" .*<\/a>/gm;
