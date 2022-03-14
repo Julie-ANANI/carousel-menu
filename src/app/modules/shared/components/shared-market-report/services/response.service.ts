@@ -496,8 +496,7 @@ export class ResponseService {
     const numberOfCategories = 5;
     // let interval = (5-threshold)/numberOfCategories
 
-    let scorePercentage = (0).toString() +'%';
-    scorePercentage = (averageFinalScore * multiply).toString() +'%';
+    let scorePercentage: string = (averageFinalScore * multiply).toString() +'%';
     if (averageFinalScore === 0 ) {
       scorePercentage = (1).toString() +'%';
     } else if (averageFinalScore === numberOfCategories){
@@ -532,7 +531,7 @@ export class ResponseService {
       name: colorsAndNames[index].name,
       color: colorsAndNames[index].color,
       score: averageFinalScore,
-      scorePercent: scorePercentage,
+      scorePercent: scorePercentage.toString(),
       percentage : percentage > 5 ? (percentage - 5) : percentage,
       index: index,
     };
