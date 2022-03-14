@@ -1,10 +1,14 @@
-<div *ngIf="isBrowser" id="piechart-executive">
-  <canvas baseChart
-          [data]="data"
-          [labels]="labels"
-          [chartType]="type"
-          [options]="options"
-          [colors]="colors"
-          [legend]="true">
-  </canvas>
-</div>
+<ng-container *ngIf="isBrowser">
+  <div id="piechart-executive">
+    <canvas
+      baseChart
+      class="piechart__canvas"
+      [chartType]="'pie'"
+      [data]="data"
+      [labels]="labels"
+      [options]="options"
+      [colors]="colors"
+      [legend]="true">
+    </canvas>
+  </div>
+</ng-container>
