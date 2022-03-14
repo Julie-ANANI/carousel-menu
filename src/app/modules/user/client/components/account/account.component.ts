@@ -99,7 +99,7 @@ export class AccountComponent implements OnInit {
       this._jobTitle = response.jobTitle;
       this._userProvider = response.provider;
       this._profilePicture = response.profilePic ? response.profilePic.url || '' : '';
-      this._originalUserData = this._formData.value;
+      this._originalUserData = JSON.parse(JSON.stringify(this._formData.value));
       this.formDataOnChange();
     }, () => {
       this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.FETCHING_ERROR');
@@ -175,7 +175,7 @@ export class AccountComponent implements OnInit {
         response.country = this.getCountryName(response.country);
         this._formData.patchValue(response);
         this._toSave = false;
-        this._originalUserData = this._formData.value;
+        this._originalUserData = JSON.parse(JSON.stringify(this._formData.value));
       }, (error: any) => {
         this.translateNotificationsService.error('ERROR.ERROR', 'ERROR.SERVER_ERROR');
       });
@@ -187,11 +187,13 @@ export class AccountComponent implements OnInit {
 
 
   addSector(event: { value: Array<string> }) {
+    this._toSave = true;
     this._formData.get('sectors')!.setValue(event.value);
   }
 
 
   addTechnology(event: { value: Array<string> }) {
+    this._toSave = true;
     this._formData.get('technologies')!.setValue(event.value);
   }
 
@@ -241,6 +243,7 @@ export class AccountComponent implements OnInit {
     }
 
   }
+
 
   onChangePreference(event: Event) {
     this._formData.get('preferences').setValue((event.target as HTMLInputElement).checked);
@@ -312,4 +315,5 @@ export class AccountComponent implements OnInit {
   get toSave(): boolean {
     return this._toSave;
   }
+
 }
