@@ -117,11 +117,18 @@ export interface SectionLikertScale {
   legend?:string;
   color:string;
   score? :number;
-  percentage?:number;
+  //percentage?:number;
+  scorePercentage?:string;
   visibility?:boolean;
 }
 
 export interface LikertScaleChart {
-  likertScaleChart: Array<{label: string; answers: Answer[]; percentage: number; count: number; identifier: string;}>;
+  likertScaleChart: Array<{
+    label: string;
+    answers: Answer[];
+    percentage: number;
+    count: number;
+    identifier: string;
+  }>;
   averageFinalScore: number;
 }

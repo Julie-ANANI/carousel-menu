@@ -47,7 +47,7 @@ export class LikertScaleChartComponent implements OnInit, OnDestroy {
       this._content.name = this._graphics.name;
       this._content.color = this._graphics.color;
       this._content.score = this._graphics.score;
-      this._content.percentage = this._graphics.scorePercentage;
+      this._content.scorePercentage = this._graphics.scorePercent;
       });
   }
 
@@ -77,8 +77,8 @@ export class LikertScaleChartComponent implements OnInit, OnDestroy {
     return this._content.color;
   }
 
-  get scorePercentage(): number {
-    return this._content.percentage;
+  get scorePercentage(): string {
+    return this._content.scorePercentage;
   }
 
 

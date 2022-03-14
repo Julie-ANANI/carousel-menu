@@ -292,6 +292,7 @@ export class AdminProjectStoryboardComponent implements OnInit, OnDestroy {
               const data = ResponseService.likertScaleChartData(answers, question, this._executiveReport.lang);
               const graphics = ResponseService.getLikertScaleGraphicScore(data.averageFinalScore)
               sections[index].content = this._executiveReportFrontService.likertScaleSection(likertScaleData, this._executiveReport.lang, graphics);
+              console.table(sections[index].content);
 
             default:
               const tagsData: Array<Tag> = ResponseService.tagsList(answersToShow, question);

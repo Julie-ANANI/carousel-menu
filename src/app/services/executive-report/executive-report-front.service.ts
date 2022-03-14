@@ -270,12 +270,15 @@ export class ExecutiveReportFrontService {
                              lang: string,
                              graphics: { name: string,
                                          color: string,
-                                         percentage: string}
+                                         score: number,
+                                         scorePercent: string}
                             ): SectionLikertScale {
+
 
     /* -I use graphics to display the name of the score + the color + the percentage
     by a service which generates the graphic data coming from the calculation of the
     score for the likert-scale type. */
+
     return {
       color: graphics.color,
       legend: '',
