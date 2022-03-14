@@ -301,7 +301,7 @@ export class MarketReportResultComponent implements OnInit {
   }
 
   private _getQuestion(identifier: string): MissionQuestion {
-    return MissionFrontService.question(this._essentialQuestions, 'identifier', identifier);
+    return this._essentialQuestions.find((_ques) => _ques.identifier === identifier && _ques.controlType === 'likert-scale');
   }
 
   private _initItemIndex() {
