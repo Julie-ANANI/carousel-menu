@@ -1,4 +1,4 @@
-import { Component, Inject, Input, PLATFORM_ID } from '@angular/core';
+import {Component, Inject, Input, OnInit, PLATFORM_ID} from '@angular/core';
 import { ExecutivePieChart } from '../../../../models/chart/pie-chart';
 import { isPlatformBrowser } from '@angular/common';
 import {oldColorsToNewMapping} from "../../../../utils/chartColors";
@@ -11,9 +11,10 @@ import {oldColorsToNewMapping} from "../../../../utils/chartColors";
 @Component({
   selector: 'app-utility-piechart-executive',
   templateUrl: 'piechart-executive.component.html',
+  styleUrls: ['piechart-executive.component.scss']
 })
 
-export class PiechartExecutiveComponent {
+export class PiechartExecutiveComponent implements OnInit {
 
   @Input() set pieChart(value: ExecutivePieChart) {
     this._pieChart = value;
@@ -27,9 +28,7 @@ export class PiechartExecutiveComponent {
     colors: []
   };
 
-  private _type = 'pie';
-
-  private _options = {
+  private _options: any = {
     responsive: true,
     legend: {
       position: 'right',
@@ -45,12 +44,13 @@ export class PiechartExecutiveComponent {
 
   private _colors: Array<{backgroundColor: Array<string>}> = [];
 
-  private readonly _isBrowser: boolean = false;
+  private _isBrowser: boolean = false;
 
   constructor(@Inject(PLATFORM_ID) protected platformId: Object) {
+  }
 
+  ngOnInit(): void {
     this._isBrowser = isPlatformBrowser(this.platformId);
-
   }
 
   private _setData() {
@@ -75,11 +75,7 @@ export class PiechartExecutiveComponent {
     return this._colors;
   }
 
-  get type(): string {
-    return this._type;
-  }
-
-  get options() {
+  get options(): any {
     return this._options;
   }
 

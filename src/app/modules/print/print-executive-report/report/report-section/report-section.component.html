@@ -52,7 +52,9 @@
             {{ content.favorable_answers.percentage }}%
             {{ report.lang === 'fr' ? 'des réponses sont favorables' : ' of responses are favorable' }}
           </h2>
-          <app-utility-piechart-executive [pieChart]="pieChart"></app-utility-piechart-executive>
+          <app-utility-piechart-executive
+            [pieChart]="pieChart">
+          </app-utility-piechart-executive>
         </div>
         <!-- /type PIE -->
 
