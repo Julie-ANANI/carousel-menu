@@ -46,7 +46,18 @@ export class DomSanitizerPipe implements PipeTransform {
    * If not, list element will be broken and ugly
    */
   listInlineDisplayWorkAround(html: string) {
-    return html.replace(/<li><p style='text-align:/gm, "<li><span style='text-align:");
+    const textAlignRegex = /<li><p style=["']text-align:(.*?)["']>/gm;
+    const htmlToTransform = html;
+    let m;
+
+    while ((m = textAlignRegex.exec(htmlToTransform)) !== null) {
+      if (m.index === textAlignRegex.lastIndex) {
+        textAlignRegex.lastIndex++;
+      }
+      const alignTag = `<li><span style='text-align:${m[1]}'>`;
+      html = html.replace(m[0], alignTag);
+    }
+    return html;
   }
 
   /**
