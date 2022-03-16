@@ -142,9 +142,9 @@ export class AdminProjectCollectionComponent implements OnInit, OnDestroy {
           this._answers = response.answers;
           this._targetWarnings = this._areThereWarnings();
           this._answers.forEach((answer) => {
-            if (answer.professional &&
-              !answer.professional.jobTitle && answer.job) {
-              answer.professional.jobTitle = answer.job;
+            // when answer doesn't have a job, take pro.jobTitle
+            if(!answer.job && answer.professional && answer.professional.jobTitle){
+              answer.job = answer.professional.jobTitle;
             }
             if (answer.campaign &&
               this._campaignList.findIndex(
@@ -323,7 +323,7 @@ export class AdminProjectCollectionComponent implements OnInit, OnDestroy {
           _isHidden: !this.canAccess(['tableColumns', 'country']),
         },
         {
-          _attrs: ['professional.jobTitle'],
+          _attrs: ['job'],
           _name: 'Job',
           _type: 'TEXT',
           _isSearchable: this.canAccess(['searchBy', 'job']),
@@ -493,9 +493,11 @@ export class AdminProjectCollectionComponent implements OnInit, OnDestroy {
    */
   updateOneAnswer(answer: Answer) {
     // Search for the answer
+    console.log(answer);
     const idx = this._answers.findIndex(ans => {
       return ans._id === answer._id;
     });
+    console.log(idx);
     if (idx > -1) {
       this._answers[idx] = answer;
     }

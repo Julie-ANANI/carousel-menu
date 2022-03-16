@@ -201,9 +201,9 @@
     <!-- /linkedin -->
 
     <!-- job -->
-    <div *ngIf="professional.jobTitle || userAnswer.job || editMode" class="m-bottom-10">
+    <div *ngIf="userAnswer.job || editMode" class="m-bottom-10">
       <i class="fas fa-address-card text-meta m-right-10"></i>
-      {{ userAnswer.job || professional.jobTitle |  FormatText:true }}
+      {{ userAnswer.job  |  FormatText:true }}
       <span
         (click)="onClickEdit('JOB')"
         *ngIf="editMode"
