@@ -6,18 +6,16 @@ import { FormsModule } from '@angular/forms';
 import { SharedMailEditorComponent } from './shared-mail-editor.component';
 
 import { SharedEditorTinymceModule}  from '../shared-editor-tinymce/shared-editor-tinymce.module';
-import {SharedEditorsModule} from '../shared-editors/shared-editors.module';
 import {CleanHtmlModule} from '../../../../pipe/cleanHtml/cleanHtml.module';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        TranslateModule.forChild(),
-        FormsModule,
-        SharedEditorTinymceModule,
-        SharedEditorsModule,
-        CleanHtmlModule,
-    ],
+  imports: [
+    CommonModule,
+    TranslateModule.forChild(),
+    FormsModule,
+    SharedEditorTinymceModule,
+    CleanHtmlModule,
+  ],
   declarations: [
    SharedMailEditorComponent
   ],

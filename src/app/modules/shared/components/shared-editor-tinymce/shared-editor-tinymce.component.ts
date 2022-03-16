@@ -233,16 +233,8 @@ export class SharedEditorTinymceComponent implements AfterViewInit, OnDestroy {
     return this._editor;
   }
 
-  get sharedText(): string {
-    return this._sharedText;
-  }
-
   get isSaving(): boolean {
     return this._isSaving;
-  }
-
-  get sharedDocument(): any {
-    return this._sharedDocument;
   }
 
   get sharedEditor(): any {
@@ -295,7 +287,7 @@ export class SharedEditorTinymceComponent implements AfterViewInit, OnDestroy {
           });*/
           /**
            * Why we use 'change' event as a trigger to send modified context?
-           * Before we used 'MouseLeave' event, but sometimes, this trigger doesn't work, the modificaion will be missing
+           * Before we used 'MouseLeave' event, but sometimes, this trigger doesn't work, the modification will be missing
            * So we use 'change' event as a trigger, send context as soon as the users make changes
            */
           editor.on('change', ()=>{
@@ -307,7 +299,7 @@ export class SharedEditorTinymceComponent implements AfterViewInit, OnDestroy {
               this.onTextChange.emit({content: content});
             }
           })
-        },
+        }
       });
       if (this._text && this._editor) {
         this._setContent(this._text);

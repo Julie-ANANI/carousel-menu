@@ -25,6 +25,7 @@ export class ExecutiveSectionComponent {
   @Input() sectionIndex = 0;
 
   @Input() set section(value: ExecutiveSection) {
+
     this._section = {
       questionId: value.questionId || '',
       questionType: value.questionType,
@@ -144,8 +145,8 @@ export class ExecutiveSectionComponent {
         case 'LIKERT-SCALE':
           if (this._enableVisualLikertScale) {
             this._section.questionType = type;
-            this._initializeSection();
-            this.emitChanges();
+             this._initializeSection();
+             this.emitChanges();
           }
           break;
 
@@ -282,24 +283,22 @@ export class ExecutiveSectionComponent {
    * @private
    */
   private _setLikertScaleData() {
+    /* Section Custom */
     if (this._section.questionIdentifier === `quesCustom_${this.sectionIndex}`) {
       this._section.title = 'Custom likert scale';
-      this._section.content = this._executiveReportFrontService.likertScaleTagsSection([], this.reportLang);
+      this._section.content = this._executiveReportFrontService.likertScaleCustomSection([], this.reportLang);
 
     } else {
+      /* Section with specific question of quiz */
       const question: Question | MissionQuestion = this._getQuestion(this._section.questionIdentifier);
       const answers: Array<Answer> = this._responseService.answersToShow(this.answers, question);
       this._section.title = MissionQuestionService.label(question, 'title', this.reportLang);
-      let data;
+      const data = ResponseService.likertScaleChartData(answers, question, this.reportLang);
 
-      if (question.controlType === 'likert-scale') {
-        data = ResponseService.likertScaleChartData(answers, question, this.reportLang);
-        this._section.content = this._executiveReportFrontService.likertScaleSection(data, this.reportLang);
-
-      } else {
-        data = ResponseService.tagsList(answers, question);
-        this._section.content = this._executiveReportFrontService.likertScaleTagsSection(data, this.reportLang);
-      }
+      /*graphics is service for calculate score and return name, color and percentage
+      This service is used when a questionnaire question is selected, it returns the current score value and its name and color*/
+      const graphics = ResponseService.getLikertScaleGraphicScore(data.averageFinalScore)
+      this._section.content = this._executiveReportFrontService.likertScaleSection(data, this.reportLang, graphics);
     }
   }
 

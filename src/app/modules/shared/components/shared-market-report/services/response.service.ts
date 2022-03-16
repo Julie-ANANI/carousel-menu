@@ -12,9 +12,9 @@ import { MissionQuestion, MissionQuestionOption } from '../../../../../models/mi
 import { MissionQuestionService } from '../../../../../services/mission/mission-question.service';
 import {LikertScaleChart} from '../../../../../models/executive-report';
 import {UmiusMultilingInterface} from '@umius/umi-common-component';
+import colorsAndNames from '../../../../../../../assets/json/likert-scale_executive-report.json';
 
 @Injectable({ providedIn: 'root' })
-
 export class ResponseService {
 
   filteredAnswers = new Subject<Array<Answer>>();
@@ -181,7 +181,6 @@ export class ResponseService {
             && a.answers[question.identifier][q.identifier]
             && a.answers[question.identifier + 'Quality'] !== 0);
 
-
         } else if (question.controlType === 'radio' || question.controlType === 'likert-scale') {
           filteredAnswers = answers.filter((a) => a.answers[question.identifier] === q.identifier
             && a.answers[question.identifier + 'Quality'] !== 0);
@@ -222,7 +221,7 @@ export class ResponseService {
         };
 
       });
-      const relativePercentages = this.getRelativePercentagebarsData(barsData, question).relativePercentages;
+      const relativePercentages = this.getRelativePercentageBars(barsData, question).relativePercentages;
 
       barsData.forEach((bd) => {
         const absolutePercentage = bd.count * 100 / answers.length;
@@ -262,15 +261,15 @@ export class ResponseService {
     return barsData;
   }
 
-/**
- * This function calculated percentage for checkbox
- * @static
- * @param {Array} barsData
- * @param {Any} Question
- * */
-  static getRelativePercentagebarsData(barsData: Array<BarData>, question: any): { relativePercentages: any, maxAnswersCount: number } {
+  /**
+   * This function calculated percentage for checkbox
+   * @static
+   * @param {Array} barsData
+   * @param question
+   * */
+  static getRelativePercentageBars(barsData: Array<BarData>, question: any): { relativePercentages: any, maxAnswersCount: number } {
 
-    const maxAnswersCount = question.controlType === 'checkbox'?
+    const maxAnswersCount = question.controlType === 'checkbox' ?
       barsData.reduce((acc, bd) => {
         return (acc < bd.count) ? bd.count : acc;
       }, 0) :
@@ -348,7 +347,8 @@ export class ResponseService {
       answers: Answer[];
       percentage: number;
       count: number;
-      identifier: string; }[] = [];
+      identifier: string;
+    }[] = [];
 
     const weights = this.computeWeights(question.options.length);
     const multipliers = this.computeMultiplier(question.options.length);
@@ -393,6 +393,7 @@ export class ResponseService {
     return rankingChart;
   }
 
+
   /**
    * @public
    * @static
@@ -401,12 +402,12 @@ export class ResponseService {
    * @param {String} lang
    * @returns {likertScaleChart: likertScaleChart, scoreTotal: scoreTotal}
    * */
-  public static likertScaleChartData(answers: Array<Answer> = [],
-                                     question: Question | MissionQuestion = <Question | MissionQuestion>{},
-                                     lang: string): LikertScaleChart {
+  public static likertScaleChartData( answers: Array<Answer> = [],
+                                      question: Question | MissionQuestion = <Question | MissionQuestion>{},
+                                      lang: string): LikertScaleChart {
 
 
-    let averageGeneralEvaluation: number = 0;
+    let averageFinalScore: number = 0;
     let scoreTotalOptionWithoutCharacterValue: number = 0;
 
     const likertScaleChart: {
@@ -417,33 +418,33 @@ export class ResponseService {
       identifier: string;
     }[] = [];
 
-    // Depends on likert scale type, it's for calculated
-    //These are weights to be included in the score for each specific value of each option
+    /* It is related to the likert-scale types, these tables define the specific weights included to each option for the final score */
     const characterSureOrNegative = [0, 0.25, 0.5, 0.75, 1];
     const weightImportanceOpt = [2, 1, 1, 1, 2];
 
-    //Retrieves all answers from the 5 identifiers
+    //Step 1 --- Retrieves the identifier of the question
     answers = answers.filter((a) => a.answers[question.identifier]);
-
     question.options.forEach((option: Option | MissionQuestionOption) => {
 
-      const identifier = option.identifier; // 0 1 2 3 4
+    // Step 1_1 --- Retrieves all answers from the 5 identifiers of one option likert-scale - 0 1 2 3 4
+    const identifier = option.identifier;
 
-      // Collects the answers that have chosen the same option
-      const filteredAnswers: Array<Answer> = answers.filter((a) => a.answers[question.identifier]
-        && a.answers[question.identifier] === identifier);
+    // Step 1_2 --- Collects the answers that have chosen the same option
+    const filteredAnswers: Array<Answer> = answers.filter((a) => a.answers[question.identifier]
+    && a.answers[question.identifier] === identifier);
 
 
-      // Score by option
-      const weightCharacter = characterSureOrNegative[identifier]; // weight of the option - 0, 0.25, 0.5, 0.75, 1
-      const weightImportance = weightImportanceOpt[identifier]; // multiplier of the option - 2, 1, 1, 1, 2
-      const allWeightsOption = weightCharacter * weightImportance; // 0, 0.25, 0.5, 0.75, 2
-      const weightsResultsFilteredOption = filteredAnswers.length * allWeightsOption;
+    // Step 2 --- Score by option
+    const weightCharacter = characterSureOrNegative[identifier]; // weight of the option - 0, 0.25, 0.5, 0.75, 1
+    const weightImportance = weightImportanceOpt[identifier]; // multiplier of the option - 2, 1, 1, 1, 2
+    const allWeightsOption = weightCharacter * weightImportance; // 0, 0.25, 0.5, 0.75, 2
+    const weightsResultsFilteredOption = filteredAnswers.length * allWeightsOption;
 
-      // Score total for the question
-      averageGeneralEvaluation += weightsResultsFilteredOption;
-      scoreTotalOptionWithoutCharacterValue += filteredAnswers.length * weightImportance;
+    // Step 2_1 --- Score total for the question
+    averageFinalScore += weightsResultsFilteredOption;
+    scoreTotalOptionWithoutCharacterValue += filteredAnswers.length * weightImportance;
 
+      // Step 2_2 --- Send all the data collected in the first big step (1-2)
       likertScaleChart.push({
         label: MissionQuestionService.label(option, 'label', lang),
         answers: filteredAnswers,
@@ -454,42 +455,107 @@ export class ResponseService {
 
     });
 
-    // Compute score of question
-    const scale: number = 0.44;
+    // Step 2_3 --- Calculation of the score without changing the threshold
+      /*This score is calculated according to the likert-scale methodology
+      It returns a score with only the importance weights of the selected options per occurrence*/
+    averageFinalScore = averageFinalScore / scoreTotalOptionWithoutCharacterValue;
 
-    //This score is calculated according to the likert-scale methodology
-    // It returns a score with only the importance weights of the selected options per occurrence
-    averageGeneralEvaluation = averageGeneralEvaluation/ scoreTotalOptionWithoutCharacterValue;
-    averageGeneralEvaluation = (averageGeneralEvaluation - scale) / (1 - scale);
+    /* Step 3 --- It is to calculate the average score in relation to a choice here it is on 20 then on 5*/
+    const DIVISION = 20;
 
-    averageGeneralEvaluation = parseFloat(((averageGeneralEvaluation < 0) ? 0 : averageGeneralEvaluation * 20) .toFixed(2));
+    // Step 3_1 --- score out of 20
+    averageFinalScore = parseFloat(((averageFinalScore < 0) ? 0 : averageFinalScore * DIVISION).toFixed(2));
 
+    // Step 3_2 --- score out of 5
+    const DIVISION_FINAL = 5;
+    averageFinalScore = (averageFinalScore * DIVISION_FINAL) / DIVISION;
+    averageFinalScore = parseFloat((averageFinalScore).toFixed(2));
 
-    if (isNaN(averageGeneralEvaluation)) {
-      averageGeneralEvaluation = 0;
+    if (isNaN(averageFinalScore)) {
+      averageFinalScore = 0;
     }
+
+    // Return value for function
+    this.getLikertScaleGraphicScore(averageFinalScore);
 
     likertScaleChart.sort((a, b) => b.percentage - a.percentage);
 
-    return {likertScaleChart: likertScaleChart, averageGeneralEvaluation: averageGeneralEvaluation};
+    /* Step 3_3 --- return the final object */
+    return {likertScaleChart: likertScaleChart, averageFinalScore: averageFinalScore};
+
   }
 
 
   /**
-   * Compute positions weights depending of number of options
-   * First position will always be 1
-   * Last position will always be 0
-   * @param n
+   * @param averageFinalScore (LikertScaleChart)
    */
-  public static computeWeights(n: number) {
-    const weights = [].constructor(n);
-    const steps = 1 / (n - 1);
-    for (let i = 0; i < weights.length; i++) {
-      weights[i] = 1 - steps * i;
+  public static getLikertScaleGraphicScore (averageFinalScore: number) {
+
+    /* This multiplier is to have the value in percentage*/
+    const multiply = 20;
+    const numberOfCategories = 5;
+    // let interval = (5-threshold)/numberOfCategories
+
+    let scorePercentage: string = (averageFinalScore * multiply).toString() +'%';
+    if (averageFinalScore === 0 ) {
+      scorePercentage = (1).toString() +'%';
+    } else if (averageFinalScore === numberOfCategories){
+      scorePercentage = (97).toString() +'%';
     }
 
-    return weights;
-  }
+    // Step 1 constitution of index color
+    /*This scale is the starting point for our 0 score. It represents the failure rate of innovations that is specific to the UMI data.
+    The score below this scale is considered as null*/
+    //const threshold = 2.25;
+
+    let index = 0;
+    const score = averageFinalScore
+
+    if (score < 2.25) { //totally invalidated
+      index = 0;
+    } else if (2.25 <= score && score < 2.93) { // invalidated
+      index = 1;
+    } else if (2.93 <= score && score < 3.63) { // uncertain
+      index = 2;
+    } else if (3.63 <= score && score < 4.31) { // validated
+      index = 3;
+    } else if (4.31 <= score ) { // totally validated
+      index = 4;
+    }
+
+/*    It's obsolete solution*/
+    /* This value is defined by which number we want to divide our score*/
+    /* The percentage is rounded because the pointer goes over either 0 or 100 because the bar is rounded */
+    let percentage: number = (averageFinalScore * multiply); // will give margin percentage for the pointer of marker
+    return {
+      name: colorsAndNames[index].name,
+      color: colorsAndNames[index].color,
+      score: averageFinalScore,
+      scorePercent: scorePercentage.toString(),
+      percentage : percentage > 5 ? (percentage - 5) : percentage,
+      index: index,
+    };
+  };
+
+
+  /**
+     * Compute positions weights depending of number of options
+     * First position will always be 1
+     /**
+     * Compute positions weights depending of number of options
+     * First position will always be 1
+     * Last position will always be 0
+     * @param n
+     */
+  public static computeWeights(n:number){
+      const weights = [].constructor(n);
+      const steps = 1 / (n - 1);
+      for (let i = 0; i < weights.length; i++) {
+        weights[i] = 1 - steps * i;
+      }
+
+      return weights;
+    }
 
   /**
    * Compute positions multiplier depending of number of options
@@ -505,6 +571,7 @@ export class ResponseService {
 
     return multipliers;
   }
+
 
   /**
    * @param {any} question
@@ -588,13 +655,13 @@ export class ResponseService {
          * here we are checking that at least one of the options of the answer is true.
          * @type {Answer[]}
          */
-         answersToShow = answersToShow.filter(
-         (a) => Object.keys(a.answers[questionID]).some((k) => a.answers[questionID][k])
-         );
-         break;
+        answersToShow = answersToShow.filter(
+          (a) => Object.keys(a.answers[questionID]).some((k) => a.answers[questionID][k])
+        );
+        break;
 
-         case 'stars':
-         /***
+      case 'stars':
+        /***
          * here we are checking that at least one of the options of the answer is noted > 0.
          * @type {Answer[]}
          */

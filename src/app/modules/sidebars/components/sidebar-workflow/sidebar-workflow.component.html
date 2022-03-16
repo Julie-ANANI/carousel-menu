@@ -14,12 +14,12 @@
   <!-- email content -->
   <app-shared-mail-editor
     (emailChange)="onChangeEmail($event)"
+    [isEditableMode]="isEditable"
+    [isEnablePreviewBtn]="isEditable"
     [emailsObject]="emailsObject"
     [id]="id"
     [inputLanguage]="inputLanguage"
     [innovationCardLanguages]="innovationCardLanguages"
-    [isEditableMode]="isEditable"
-    [isEnablePreviewBtn]="isEditable"
     [signatures]="signatures">
   </app-shared-mail-editor>
   <!-- /email content -->

@@ -9,7 +9,6 @@ import {Subject} from 'rxjs';
 import _ from 'lodash';
 import {MissionQuestionService} from '../../../../../../services/mission/mission-question.service';
 import {SectionLikertScale} from '../../../../../../models/executive-report';
-import colorsAndNamesAndPercentage from '../../../../../../../../assets/json/likert-scale_executive-report.json';
 
 
 @Component({
@@ -20,59 +19,45 @@ import colorsAndNamesAndPercentage from '../../../../../../../../assets/json/lik
 
 export class LikertScaleChartComponent implements OnInit, OnDestroy {
 
-  ngOnInit() {
-    this._createChart();
-  }
-
   @Input() question: Question = <Question>{};
   @Input() reportingLang = this._translateService.currentLang;
 
+
   private _ngUnsubscribe: Subject<any> = new Subject<any>();
-  private _label: any = 'VALIDATED'
-  private _colorsAndNames = colorsAndNamesAndPercentage;
-  private _scorePercentage: number = 0;
-
-  //Retrieves unmodifiable names and colours in a JSON file
-  private _content: SectionLikertScale = {
-    name: this._colorsAndNames[2].name,
-    legend: '',
-    color: this._colorsAndNames[2].color
-  };
-
-  //Retrieves data for the progress bar
-  //averageGeneralEvaluation is an average score of all responses out of 20
-  private _stackedChart: {
-    likertScaleChart: object[],
-    averageGeneralEvaluation?: number
-  };
-
+  private _graphics : any;
   isShowResult: boolean;
 
+  private _content: SectionLikertScale = {
+    name: '',  // example totally  invalided
+    color: '',   // example #EA5858
+  };
 
-  constructor(private _dataService: DataService,
-              private _translateService: TranslateService) {
-  }
-
+  /* Retrieves data for the progress bar averageFinalScore
+  is an average score of all responses out of 5 */
+  private _stackedChart: {
+    likertScaleChart: object[],
+    averageFinalScore?: number
+  };
 
   private _createChart() {
-    this._dataService.getAnswers(this.question).pipe(takeUntil(this._ngUnsubscribe))
+    this._dataService.getAnswers(this.question).pipe(takeUntil(this._ngUnsubscribe)).subscribe((answers: Array<Answer>) => {
+      this._stackedChart = ResponseService.likertScaleChartData(answers, this.question, this.reportingLang);
 
-      .subscribe((answers: Array<Answer>) => {
-        this._stackedChart = ResponseService.likertScaleChartData(answers, this.question, this.reportingLang);
-        const averageGeneralEvaluation = this._stackedChart.averageGeneralEvaluation || 0;
-
-        // Choose which score label to display
-        const index = (averageGeneralEvaluation - averageGeneralEvaluation % 4) / 4; // will give 0,1,2,3,4
-        const scorePercentage = (averageGeneralEvaluation * 98) / 20; // will give margin percentage for the pointer of marker
-
-        this._scorePercentage = scorePercentage;
-        this._label = this._colorsAndNames[index].name;
-        this._content.color = this._colorsAndNames[index].color;
+      this._graphics = ResponseService.getLikertScaleGraphicScore(this._stackedChart.averageFinalScore);
+      this._content.name = this._graphics.name;
+      this._content.color = this._graphics.color;
+      this._content.score = this._graphics.score;
+      this._content.scorePercentage = this._graphics.scorePercent;
       });
   }
 
-  getValueForAverageText(): string {
-    return (this.scorePercentage - 5).toString() +'%';
+
+  constructor( private _dataService: DataService,
+               private _translateService: TranslateService) {}
+
+
+  ngOnInit() {
+    this._createChart();
   }
 
   public optionLabel(identifier: string) {
@@ -80,21 +65,22 @@ export class LikertScaleChartComponent implements OnInit, OnDestroy {
     return MissionQuestionService.label(option, 'label', this.reportingLang);
   }
 
-  get stackedChart(): { likertScaleChart?: any[]; averageGeneralEvaluation?: number } {
+  get stackedChart(): { likertScaleChart?: any[]; averageFinalScore?: number } {
     return this._stackedChart;
   }
 
   get label():string {
-    return this._label;
+    return this._content.name;
   }
 
   get content(): string {
     return this._content.color;
   }
 
-  get scorePercentage(): number {
-    return this._scorePercentage;
+  get scorePercentage(): string {
+    return this._content.scorePercentage;
   }
+
 
   ngOnDestroy(): void {
     this._ngUnsubscribe.next();

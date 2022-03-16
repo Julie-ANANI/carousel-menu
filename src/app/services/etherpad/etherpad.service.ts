@@ -10,7 +10,12 @@ const BASE_PATH = '/etherpad';
 @Injectable({providedIn: 'root'})
 export class EtherpadService {
 
-  constructor(private _http: HttpClient) {}
+  constructor(private _http: HttpClient) {
+  }
+
+  public pingServer() {
+    return this._http.get(`${BASE_PATH}/`);
+  }
 
   /***
    *
@@ -19,41 +24,29 @@ export class EtherpadService {
    * @param content : html content of pad
    */
   public createPad(innovationId: string, padID: string, content: string): Observable<Etherpad> {
-    const _data = {innovationId: innovationId, padID: padID, html: content};
-    return this._http.post<Etherpad>(`${BASE_PATH}/pad`, _data);
-  }
-
-  public setPadHtml(innovationId: string, padID: string, html: string): Observable<any> {
-    const _data = {innovationId: innovationId, html: html};
-    return this._http.post(`${BASE_PATH}/pad/${padID}/html`, {params: _data});
+    const _data = {padID: padID, html: content};
+    return this._http.post<Etherpad>(`${BASE_PATH}/group/${innovationId}/pad`, _data);
   }
 
   /***
-   * returns the total users list subscribed with the specific group
+   * Get the users with actual active session with the specific group
    * @param innovationId
    */
   public subscribedUsersSessions(innovationId: string): Observable<Array<Session>> {
-    const _data = {innovationId: innovationId};
-    return this._http.get<Array<Session>>(`${BASE_PATH}/group/sessions`, {params: _data});
+    return this._http.get<Array<Session>>(`${BASE_PATH}/group/${innovationId}/sessions`);
   }
 
   public getAllCommentsOfPad(innovationId: string, padID: string): Observable<CollaborativeComment[]> {
-    const _data = {innovationId: innovationId};
-    return this._http.get<CollaborativeComment[]>(`${BASE_PATH}/pad/${padID}/comments`, {params: _data});
+    return this._http.get<CollaborativeComment[]>(`${BASE_PATH}/group/${innovationId}/pad/${padID}/comments`);
   }
 
   public getAllRepliesOfPad(innovationId: string, padID: string): Observable<Reply[]> {
-    const _data = {innovationId: innovationId};
-    return this._http.get<Reply[]>(`${BASE_PATH}/pad/${padID}/commentReplies`, {params: _data});
+    return this._http.get<Reply[]>(`${BASE_PATH}/group/${innovationId}/pad/${padID}/commentReplies`);
   }
 
   public addRepliesToComment(innovationId: string, padID: string, replies: Reply[]) {
-    const _data = {innovationId: innovationId, replies: replies};
-    return this._http.post(`${BASE_PATH}/pad/${padID}/commentReplies`, _data);
-  }
-
-  public pingServer() {
-    return this._http.get(`${BASE_PATH}/`);
+    const _data = {replies: replies};
+    return this._http.post(`${BASE_PATH}/group/${innovationId}/pad/${padID}/commentReplies`, _data);
   }
 
 }

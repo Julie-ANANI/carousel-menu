@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { Answer } from '../../models/answer';
 import { Tag } from '../../models/tag';
 import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
+import {CacheType} from '../../models/cache';
 
 @Injectable({providedIn: 'root'})
 export class AnswerService {
@@ -34,26 +35,24 @@ export class AnswerService {
     return this._http.put('/answer/' + answerId, answerObj);
   }
 
-  public addTag(answerId: string, tagId: string, questionId?: string): Observable<any> {
-    const params: {[param: string]: string | string[]} = {tag: tagId };
+  public addTag(answerId: string, tag: Tag, questionId?: string): Observable<any> {
+    const params: {tag: Tag} = {tag: tag };
     if (questionId) { params['questionId'] = questionId; }
-    return this._http.post('/answer/' + answerId + '/tag', { params: params});
-  }
-
-  public createTag(answerId: string, tag: Tag, questionId?: string): Observable<Tag> {
-    const params: any = { tag: tag };
-    if (questionId) { params['questionId'] = questionId; }
-    return this._http.post<Tag>('/answer/' + answerId + '/new-tag', { params: params});
+    return this._http.post(`/answer/${answerId}/tag`, { params: params});
   }
 
   public removeTag(answerId: string, tagId: string, questionId?: string): Observable<any> {
     const params: {[param: string]: string | string[]} = {tag: tagId };
     if (questionId) { params['questionId'] = questionId; }
-    return this._http.delete('/answer/' + answerId + '/tag', { params: params});
+    return this._http.delete(`/answer/${answerId}/tag`, { params: params});
   }
 
-  public getInnovationValidAnswers(innovationId: string, anonymous?: boolean): Observable<{answers: Array<Answer>}> {
-    return this._http.get<{answers: Array<Answer>}>(`/innovation/${innovationId}/validAnswers${anonymous ? '?anonymous=' + !!anonymous : ''}`);
+  public getInnovationValidAnswers(innovationId: string, anonymous = false, cache: CacheType = ''):
+    Observable<{answers: Array<Answer>}> {
+    return this._http.get<{answers: Array<Answer>}>(
+      `/innovation/${innovationId}/validAnswers${anonymous ? '?anonymous=' + !!anonymous : ''}`,
+      {headers: new HttpHeaders().set('cache', cache)}
+    );
   }
 
   public innovationAnswers(innovationId: string, anonymous = false): Observable<{answers: Array<Answer>}> {
@@ -64,7 +63,7 @@ export class AnswerService {
   }
 
   public exportAsCsvByCampaign(campaignId: string, client: Boolean): void {
-    const url = environment.apiUrl + '/campaign/' + campaignId + '/exportAnswers' + (client ? '?client=true' : '');
+    const url = environment.apiUrl + '/campaign/' + campaignId + '/export/answers' + (client ? '?client=true' : '');
     window.open(url);
   }
 
@@ -86,10 +85,21 @@ export class AnswerService {
     return this._http.post('/innovation/importAnswers', formData);
   }
 
+  /**
+   * Check if file does not have errors and if answers already exist
+   * @param campaignId
+   * @param file
+   */
+  public checkImportAsCsv(campaignId: string, file: File): Observable<any> {
+    const formData = new FormData();
+    formData.append('file', file, file.name);
+    return this._http.post('/campaign/' + campaignId + '/import/answers/check', formData);
+  }
+
   public importAsCsv(campaignId: string, file: File): Observable<any> {
     const formData = new FormData();
     formData.append('file', file, file.name);
-    return this._http.post('/campaign/' + campaignId + '/importAnswers', formData);
+    return this._http.post('/campaign/' + campaignId + '/import/answers', formData);
   }
 
   public importFromQuiz(answer: any): Observable<any> {

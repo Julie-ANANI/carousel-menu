@@ -16,7 +16,17 @@ export class SharedImportAnswersComponent implements OnInit {
 
   @Input() campaign: string = '';
 
-  @Output() importingError: EventEmitter<any[]> = new EventEmitter<any[]>();
+  private _importingErrors: Array<any>;
+
+  private _slicedErrors: Array<any> = [];
+
+  private _importingInfos: { nbExistingAnswers: number; nbNewAnswers: number; newTags: [] };
+
+  private _file: File;
+
+  private _errorsModal: boolean = false;
+
+  @Output() importFinished = new EventEmitter();
 
   constructor(private _answerService: AnswerService,
               private _rolesFrontService: RolesFrontService,
@@ -34,23 +44,79 @@ export class SharedImportAnswersComponent implements OnInit {
 
   public onClickImport(file: File) {
     this._answerService
-      .importAsCsv(this.campaign, file)
+      .checkImportAsCsv(this.campaign, file)
       .pipe(first())
       .subscribe(
-        (message) => {
-          this.importingError.emit(null)
-          this._translateNotificationsService.success(
-            'Importing',
-            `${message.newAnswers} new answers will be imported and ${message.existingAnswers} are already answers of known pros`
-          );
+        (message: { nbExistingAnswers: number, nbNewAnswers: number, newTags: []}) => {
+          this._importingInfos = message;
+          this._file = file;
         },
         (err: HttpErrorResponse) => {
           this._translateNotificationsService.error('Importing Error...', ErrorFrontService.getErrorKey(err.error));
-          if(!!err.error.detailedMessage) {
-            this.importingError.emit(err.error.detailedMessage);
+          if (!!err.error.detailedMessage) {
+            this._importingErrors = err.error.detailedMessage;
+            this._slicedErrors = this._importingErrors.slice(0, 10);
+            this._errorsModal = true;
           }
         }
       );
   }
 
+  public onConfirmImport() {
+    if (this._file) {
+      this._answerService
+        .importAsCsv(this.campaign, this._file)
+        .pipe(first())
+        .subscribe(
+          () => {
+            this._onImportFinished();
+            this._translateNotificationsService.success('Success', `Answers imported`);
+          },
+          (err: HttpErrorResponse) => {
+            this._onImportFinished();
+            this._translateNotificationsService.error('Importing Error...', ErrorFrontService.getErrorKey(err.error));
+          }
+        );
+    }
+    this._onImportFinished();
+  }
+
+  public onClickSeeMore() {
+    const currentNumberOfErrors = this._slicedErrors.length;
+    const end = currentNumberOfErrors + 10 > this._importingErrors.length ?
+      this._importingErrors.length : currentNumberOfErrors + 10;
+    this._slicedErrors = this._importingErrors.slice(0, end);
+  }
+
+  public closeModal(event: Event) {
+    event.preventDefault();
+    this._onImportFinished();
+  }
+
+  private _onImportFinished() {
+    this.importFinished.emit()
+    this._importingErrors = null;
+    this._importingInfos = null;
+    this._errorsModal = false;
+  }
+
+  get importingInfos(): { nbExistingAnswers: number; nbNewAnswers: number; newTags: [] } {
+    return this._importingInfos;
+  }
+
+  get importingErrors(): any[] {
+    return this._importingErrors;
+  }
+
+  get errorsModal(): boolean {
+    return this._errorsModal;
+  }
+
+  set errorsModal(value: boolean) {
+    this._errorsModal = value;
+  }
+
+  get slicedErrors(): Array<any> {
+    return this._slicedErrors;
+  }
 }

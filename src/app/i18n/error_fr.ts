@@ -82,6 +82,7 @@ export const ERROR = {
     UPDATE_MISSION_TYPE_FAILED: 'Désolé, nous ne pouvons pas mettre à jour le type de mission.',
     UPDATE_MISSION_TEAM_FAILED: 'Désolé, nous ne pouvons pas mettre à jour l\'équipe de mission.',
     UPDATE_MISSION_TEMPLATE_FAILED: 'Désolé, Nous ne pouvons pas mettre à jour le modèle de mission',
+    UPDATE_MISSION_RESULT_FAILED: 'Désolé, Nous ne pouvons pas mettre à jour le résultat de la mission',
     SAVE_INNOVATION_FAILED: 'Désolé, nous ne pouvons pas sauvegarder l\'innovation.',
     SAVE_MEDIA_FAILED: 'Désolé, nous ne pouvons pas sauvegarder les médias.',
     DELETE_MEDIA_FAILED: 'Désolé, nous ne pouvons pas supprimer les médias.',
@@ -90,6 +91,7 @@ export const ERROR = {
     REMOVE_INNOVATION_CARD_FAILED: 'Désolé, nous ne pouvons pas supprimer la carte de l\'innovation.',
     REMOVE_INNOVATION_FAILED: 'Désolé, nous ne pouvons pas supprimer l\'innovation.',
     IMPORT_ANSWER_FAILED: 'Désolé, nous ne pouvons pas importer les réponses.',
+    IMPORT_TAG_FAILED: 'Désolé, nous ne pouvons pas importer les tags.'
   },
 
   NOTIFICATION_400:{

@@ -21,6 +21,7 @@ import { GlobalErrorHandler } from './handlers/error-handler';
 import { LoaderBrowserInterceptor } from './interceptors/loader.interceptor';
 import { SessionInterceptor } from './interceptors/session.interceptor';
 import {CachingInterceptor} from './interceptors/caching.interceptor';
+import {EtherpadInterceptor} from "./interceptors/etherpad.interceptor";
 
 @NgModule({
   imports: [
@@ -53,6 +54,7 @@ import {CachingInterceptor} from './interceptors/caching.interceptor';
     { provide: HTTP_INTERCEPTORS, useClass: LoaderBrowserInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: SessionInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: CachingInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: EtherpadInterceptor, multi: true },
     { provide: ErrorHandler, useClass: GlobalErrorHandler },
     Meta
   ]

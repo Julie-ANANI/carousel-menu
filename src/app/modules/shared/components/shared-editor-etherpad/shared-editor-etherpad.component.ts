@@ -65,15 +65,14 @@ export class SharedEditorEtherpadComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this._detectEtherpadServerDown();
-    this._etherpadService.pingServer().pipe(first())
-      .subscribe(() => {
-        this._authService.initializeSession().subscribe(() => {
-          this._createEtherpad();
-        });
+    this._etherpadService.pingServer().subscribe(() => {
+      this._authService.etherpadAccesses.active = true;
+      this._createEtherpad();
       }, () => {
         this.disableEtherpad();
       });
   }
+
 
   isEtherpadUp(): boolean {
     return this._authService.etherpadAccesses.active;
@@ -150,6 +149,7 @@ export class SharedEditorEtherpadComponent implements OnInit, OnDestroy {
       .getPadUpdated(groupPadId, this._authService.etherpadAccesses.authorID)
       .pipe(takeUntil(this._ngUnsubscribe))
       .subscribe((data: { text: string }) => {
+        console.log(data);
         if (data.text && data.text.length !== this.text.length) {
           this.textChange.emit({content: data.text});
         }

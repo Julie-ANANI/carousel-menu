@@ -25,13 +25,40 @@ export class ApiUrlInterceptor implements HttpInterceptor {
    * @private
    */
   private _setAppV3Url(req: HttpRequest<any>): HttpRequest<any> {
-    const newParameters: any = {
-      // url: environment.apiGatewayUrl + req.url,
-      url: environment.apiUrl + req.url,
-      withCredentials: true,
-    };
+    let newParameters: any = {}
+
+    // for the time being
+    if (environment.local) {
+      newParameters = {
+        url: environment.apiUrl + req.url,
+        withCredentials: true,
+      };
+    } else {
+      newParameters = {
+        url: environment.apiUrl + req.url,
+        withCredentials: true,
+      };
+    }
     this._setCookie(newParameters, req);
+    this._setJwtoken(newParameters, req);
     return req.clone(newParameters);
+  }
+
+  /**
+   * set a json web token, and save it in cookie, there are userId + user Role
+   * send JWT along with the header, so that in the back-end, we can get JWT
+   * Then back-end can set up the session, the permission and so on
+   * PS: we create JWT after we login
+   * @param newParameters
+   * @param req
+   * @private
+   */
+  private _setJwtoken(newParameters: any, req: HttpRequest<any>){
+    const jwToken = this._cookieService.get('jwToken-application-front');
+    if (jwToken) {
+      newParameters.headers = req.headers
+        .append('Authorization', jwToken);
+    }
   }
 
   private _setCookie(newParameters: any, req: HttpRequest<any>) {
