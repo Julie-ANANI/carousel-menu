@@ -217,7 +217,7 @@ export class AuthService {
       if (isPlatformBrowser(this._platformId)) {
         this._cookieService.put('sessionID', `${newValue.sessions.map(session => {
           return session.id;
-        }).join(',')}`, this._etherpadCookiesOptions());
+        }).join(',')}`, this.etherpadCookiesOptions());
       }
     }
   }
@@ -250,7 +250,7 @@ export class AuthService {
     return this._cookieService.get('mhash') || null;
   }
 
-  private _etherpadCookiesOptions(): any {
+  public etherpadCookiesOptions(): any {
     const hostName = environment.etherpadUrl;
     if (hostName.indexOf('localhost') !== -1) {
       return this._cookieOptions;
