@@ -65,11 +65,9 @@ export class SharedEditorEtherpadComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this._detectEtherpadServerDown();
-    this._etherpadService.pingServer().pipe(first())
-      .subscribe(() => {
-        this._authService.initializeSession().subscribe(() => {
-          this._createEtherpad();
-        });
+    this._etherpadService.pingServer().subscribe(() => {
+      this._authService.etherpadAccesses.active = true;
+      this._createEtherpad();
       }, () => {
         this.disableEtherpad();
       });
