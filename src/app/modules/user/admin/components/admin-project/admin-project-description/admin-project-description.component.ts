@@ -17,6 +17,8 @@ import {NotificationJob} from '../../../../../../models/notification';
 import {isPlatformBrowser} from '@angular/common';
 import {UmiusConfigInterface, UmiusMediaInterface, UmiusModalMedia, UmiusVideoInterface} from '@umius/umi-common-component';
 
+const he = require('he');
+
 type modalType = 'NEW_SECTION' | 'DELETE_SECTION' | 'NOTIFY_TEAM' | '';
 
 interface Toggle {
@@ -312,6 +314,9 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
    * @param index
    */
   public onContentChange(event: { content: string }, property: string, index?: number) {
+    // We save real string value, not encoded
+    // So we decode the string first
+    event.content = he.decode(event.content, {'isAttributeValue': false});
     if (property !== 'sections') {
       this.activeInnovCard[property] = event.content;
     } else {
