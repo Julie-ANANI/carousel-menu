@@ -127,7 +127,6 @@ export class SharedEditorEtherpadComponent implements OnInit, OnDestroy {
     _iframe.setAttribute('src', CommonService.etherpadSrc(this._etherpad));
     _iframe.setAttribute('id', this._etherpad.padID);
     _iframe.style.height = this.minHeight;
-    // _iframe.style.resize = 'vertical';
     this.sharedEditorEtherpad.nativeElement.appendChild(_iframe);
     this._isLoading = false;
   }
@@ -149,7 +148,6 @@ export class SharedEditorEtherpadComponent implements OnInit, OnDestroy {
       .getPadUpdated(groupPadId, this._authService.etherpadAccesses.authorID)
       .pipe(takeUntil(this._ngUnsubscribe))
       .subscribe((data: { text: string }) => {
-        console.log(data);
         if (data.text && data.text.length !== this.text.length) {
           this.textChange.emit({content: data.text});
         }

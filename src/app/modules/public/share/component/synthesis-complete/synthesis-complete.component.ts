@@ -68,7 +68,6 @@ export class SynthesisCompleteComponent implements OnInit {
       this._innovationService.getSharedSynthesis(this._projectId, this._shareKey).pipe(first()).subscribe((response) => {
         this._innovation = response;
         this._getExecutiveReport();
-        console.log(this._innovation);
         this._pageTitle = InnovationFrontService.currentLangInnovationCard(this._innovation, this.userLang, 'TITLE');
         this._setPageTitle();
       }, () => {
