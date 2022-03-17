@@ -214,6 +214,10 @@ export class InnovationService {
     return this._http.get('/innovation/' + innovationId + '/sendFollowUpEmails' + urlParams);
   }
 
+  public updateFollowUp(innovationId: string, answersId: Array<string>, newStatus: string): Observable<any> {
+    return this._http.post<any>(`/innovation/${innovationId}/updateFollowUp`, {status: newStatus, answers: answersId});
+  }
+
   public executiveReportPDF(innovationId: string): Observable<any> {
     let headers = new HttpHeaders();
     headers = headers.set('Accept', 'application/pdf');

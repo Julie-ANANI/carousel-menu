@@ -11,7 +11,6 @@ import {InnovationService} from '../../../../../services/innovation/innovation.s
 import {first, takeUntil} from 'rxjs/operators';
 import {HttpErrorResponse} from '@angular/common/http';
 import {ErrorFrontService} from '../../../../../services/error/error-front.service';
-import {AnswerService} from '../../../../../services/answer/answer.service';
 import {FilterService} from '../../shared-market-report/services/filters.service';
 import {Subject} from 'rxjs';
 import {emailRegEx} from '../../../../../utils/regex';
@@ -150,7 +149,6 @@ export class SharedFollowUpClientComponent implements OnDestroy {
 
   constructor(private _formBuilder: FormBuilder,
               private _innovationService: InnovationService,
-              private _answerService: AnswerService,
               private _filterService: FilterService,
               private _translateService: TranslateService,
               private _translateNotificationsService: TranslateNotificationsService) { }
@@ -228,7 +226,7 @@ export class SharedFollowUpClientComponent implements OnDestroy {
   public onClickSend() {
     if (!this._isSending) {
       this._isSending = true;
-      this._answerService.updateLinkingStatus(this._selectedIds, this._selectedPhrase).pipe(first()).subscribe(() => {
+      this._innovationService.updateFollowUp(this._project._id, this._selectedIds, this._selectedPhrase).pipe(first()).subscribe(() => {
         this._innovationService.sendFollowUpEmails(this._project._id, this._selectedPhrase).pipe(first()).subscribe(() => {
           this.closeModal();
           this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.SEND_EMAILS_OK');
