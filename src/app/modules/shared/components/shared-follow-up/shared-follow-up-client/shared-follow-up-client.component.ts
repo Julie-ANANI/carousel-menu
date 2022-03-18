@@ -509,10 +509,6 @@ export class SharedFollowUpClientComponent implements OnDestroy {
     return !!this._companyName && !!this._companyName.trim();
   }
 
-  get finalAnswers(): Array<Answer> {
-    return this._finalAnswers;
-  }
-
   get config(): UmiusConfigInterface {
     return this._config;
   }

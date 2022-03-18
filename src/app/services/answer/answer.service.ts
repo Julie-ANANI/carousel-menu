@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { Answer } from '../../models/answer';
 import { Tag } from '../../models/tag';
 import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
+import {CacheType} from '../../models/cache';
 
 @Injectable({providedIn: 'root'})
 export class AnswerService {
@@ -52,8 +53,12 @@ export class AnswerService {
     return this._http.delete('/answer/' + answerId + '/tag', { params: params});
   }
 
-  public getInnovationValidAnswers(innovationId: string, anonymous?: boolean): Observable<{answers: Array<Answer>}> {
-    return this._http.get<{answers: Array<Answer>}>(`/innovation/${innovationId}/validAnswers${anonymous ? '?anonymous=' + !!anonymous : ''}`);
+  public getInnovationValidAnswers(innovationId: string, anonymous = false, cache: CacheType = ''):
+    Observable<{answers: Array<Answer>}> {
+    return this._http.get<{answers: Array<Answer>}>(
+      `/innovation/${innovationId}/validAnswers${anonymous ? '?anonymous=' + !!anonymous : ''}`,
+      {headers: new HttpHeaders().set('cache', cache)}
+    );
   }
 
   public innovationAnswers(innovationId: string, anonymous = false): Observable<{answers: Array<Answer>}> {
