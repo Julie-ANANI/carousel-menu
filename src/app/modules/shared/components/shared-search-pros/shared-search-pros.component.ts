@@ -15,6 +15,7 @@ import { JobsFrontService } from '../../../../services/jobs/jobs-front.service';
 
 import { Subject } from 'rxjs/Subject';
 import {UmiusLocalStorageService, UmiusSidebarInterface} from '@umius/umi-common-component';
+import { CampaignFrontService } from "../../../../services/campaign/campaign-front.service";
 
 
 @Component({
@@ -105,6 +106,7 @@ export class SharedSearchProsComponent implements OnInit, OnDestroy {
     private _campaignService: CampaignService,
     private _localStorageService: UmiusLocalStorageService,
     private _jobFrontService: JobsFrontService,
+    private _campaignFrontService: CampaignFrontService
   ) {
   }
 
@@ -113,19 +115,22 @@ export class SharedSearchProsComponent implements OnInit, OnDestroy {
       this._getCountries();
       this._initParams();
 
-      this.getTargetedProsFromService().then(_ => {
-        /**
-         * subscribe: get recent targetPros, not saved, current one
-         * */
-        this._jobFrontService
-          .targetedProsToUpdate()
-          .pipe(takeUntil(this._ngUnsubscribe))
-          .subscribe((result: { targetPros: TargetPros, isToggle?: boolean, identifier?: string, toSave?: boolean }) => {
-            this._toSave = result.toSave;
-            this._targetedProsToUpdate = result.targetPros || <TargetPros>{};
-            this._checkProsTargetingValid();
-          });
-      });
+      this._campaignFrontService.activeCampaign().pipe(takeUntil(this._ngUnsubscribe)).subscribe(campaign =>{
+        this._campaign = campaign;
+        this.getTargetedProsFromService().then(_ => {
+          /**
+           * subscribe: get recent targetPros, not saved, current one
+           * */
+          this._jobFrontService
+            .targetedProsToUpdate()
+            .pipe(takeUntil(this._ngUnsubscribe))
+            .subscribe((result: { targetPros: TargetPros, isToggle?: boolean, identifier?: string, toSave?: boolean }) => {
+              this._toSave = result.toSave;
+              this._targetedProsToUpdate = result.targetPros || <TargetPros>{};
+              this._checkProsTargetingValid();
+            });
+        });
+      })
     }
   }
 
