@@ -12,10 +12,8 @@ import { ErrorFrontService } from '../../../../services/error/error-front.servic
 import { CampaignService } from '../../../../services/campaign/campaign.service';
 import { TargetPros } from '../../../../models/target-pros';
 import { JobsFrontService } from '../../../../services/jobs/jobs-front.service';
-
 import { Subject } from 'rxjs/Subject';
-import {UmiusLocalStorageService, UmiusSidebarInterface} from '@umius/umi-common-component';
-import { CampaignFrontService } from "../../../../services/campaign/campaign-front.service";
+import { UmiusLocalStorageService, UmiusSidebarInterface } from '@umius/umi-common-component';
 
 
 @Component({
@@ -29,6 +27,19 @@ export class SharedSearchProsComponent implements OnInit, OnDestroy {
   @Input() set campaign(value: Campaign) {
     this._campaign = value;
     this._initParams();
+    this.getTargetedProsFromService().then(_ => {
+      /**
+       * subscribe: get recent targetPros, not saved, current one
+       * */
+      this._jobFrontService
+        .targetedProsToUpdate()
+        .pipe(takeUntil(this._ngUnsubscribe))
+        .subscribe((result: { targetPros: TargetPros, isToggle?: boolean, identifier?: string, toSave?: boolean }) => {
+          this._toSave = result.toSave;
+          this._targetedProsToUpdate = result.targetPros || <TargetPros>{};
+          this._checkProsTargetingValid();
+        });
+    });
   }
 
   private _suggestions: Array<{
@@ -105,8 +116,7 @@ export class SharedSearchProsComponent implements OnInit, OnDestroy {
     private _authService: AuthService,
     private _campaignService: CampaignService,
     private _localStorageService: UmiusLocalStorageService,
-    private _jobFrontService: JobsFrontService,
-    private _campaignFrontService: CampaignFrontService
+    private _jobFrontService: JobsFrontService
   ) {
   }
 
@@ -114,23 +124,6 @@ export class SharedSearchProsComponent implements OnInit, OnDestroy {
     if (isPlatformBrowser(this._platformId)) {
       this._getCountries();
       this._initParams();
-
-      this._campaignFrontService.activeCampaign().pipe(takeUntil(this._ngUnsubscribe)).subscribe(campaign =>{
-        this._campaign = campaign;
-        this.getTargetedProsFromService().then(_ => {
-          /**
-           * subscribe: get recent targetPros, not saved, current one
-           * */
-          this._jobFrontService
-            .targetedProsToUpdate()
-            .pipe(takeUntil(this._ngUnsubscribe))
-            .subscribe((result: { targetPros: TargetPros, isToggle?: boolean, identifier?: string, toSave?: boolean }) => {
-              this._toSave = result.toSave;
-              this._targetedProsToUpdate = result.targetPros || <TargetPros>{};
-              this._checkProsTargetingValid();
-            });
-        });
-      })
     }
   }
 
