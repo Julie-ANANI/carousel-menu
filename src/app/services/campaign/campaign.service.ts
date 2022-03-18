@@ -1,11 +1,12 @@
-import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
-import {Answer} from '../../models/answer';
-import {Batch} from '../../models/batch';
-import {Campaign} from '../../models/campaign';
-import {Professional} from '../../models/professional';
-import {TargetPros} from '../../models/target-pros';
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { Answer } from '../../models/answer';
+import { Batch } from '../../models/batch';
+import { Campaign } from '../../models/campaign';
+import { Professional } from '../../models/professional';
+import { TargetPros } from '../../models/target-pros';
+import { CacheType } from '../../models/cache';
 
 @Injectable({providedIn: 'root'})
 export class CampaignService {
@@ -41,8 +42,10 @@ export class CampaignService {
       ('/campaign/' + campaignId + '/answer');
   }
 
-  public getTargetedPros(campaignId: string): Observable<TargetPros> {
-    return this._http.get<TargetPros>('/campaign/' + campaignId + '/targetedPros');
+  public getTargetedPros(campaignId: string, cache: CacheType = 'clear'): Observable<TargetPros> {
+    return this._http.get<TargetPros>(
+      '/campaign/' + campaignId + '/targetedPros',
+      {headers: new HttpHeaders().set('cache', cache)});
   }
 
   public saveTargetedPros(campaignId: string, targetedPros: TargetPros): Observable<TargetPros> {
