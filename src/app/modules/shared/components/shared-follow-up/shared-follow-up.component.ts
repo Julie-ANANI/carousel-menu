@@ -75,7 +75,7 @@ export class SharedFollowUpComponent implements OnInit {
 
   public getAnswers() {
     if (isPlatformBrowser(this._platformId)) {
-      this._answerService.getInnovationValidAnswers(this._project._id)
+      this._answerService.getInnovationValidAnswers(this._project._id, false, 'reset')
         .pipe(first())
         .subscribe((response) => {
           this.answers = response && response.answers || [];
