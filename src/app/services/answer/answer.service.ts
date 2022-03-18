@@ -55,10 +55,12 @@ export class AnswerService {
     );
   }
 
-  public innovationAnswers(innovationId: string, anonymous = false): Observable<{answers: Array<Answer>}> {
+  public innovationAnswers(innovationId: string, anonymous = false, cache: CacheType = ''):
+    Observable<{answers: Array<Answer>}> {
     const _status = ['SUBMITTED', 'REJECTED', 'VALIDATED', 'VALIDATED_UMIBOT', 'REJECTED_UMIBOT', 'REJECTED_GMAIL'];
     return this._http.get<{answers: Array<Answer>}>(
-      `/innovation/${innovationId}/validAnswers?anonymous=${anonymous}&answers=${_status.join(',')}`
+      `/innovation/${innovationId}/validAnswers?anonymous=${anonymous}&answers=${_status.join(',')}`,
+      {headers: new HttpHeaders().set('cache', cache)}
     );
   }
 

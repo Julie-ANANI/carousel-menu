@@ -30,6 +30,18 @@ export class CommonService extends UmiusCommonService {
     super(_platformId, _domSanitize)
   }
 
+  /**
+   * will check the LinkedIn url has https://www. or not, if no then
+   * add and return the full url.
+   * @param url
+   */
+  public static formalizeLinkedInUrl(url: string): string {
+    if (!url) return '';
+    if (url.includes('https://www.linkedin.com')) return url;
+    const indexOf = url.indexOf('linkedin.com/');
+    return `https://www.${url.slice(indexOf)}`;
+  }
+
   public static getRate(value1: number, value2: number, decimals?: number): string {
     const power = decimals ? Math.pow(10, decimals) : 100;
     if (value2 && (value1 || value1 === 0)) {

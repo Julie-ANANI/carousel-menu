@@ -192,12 +192,14 @@
     <!-- /Show warnings when the targeting is off-->
 
     <!-- linkedin -->
-    <div *ngIf="adminMode && professional.profileUrl" class="m-bottom-10">
-      <i class="fab text-secondary fa-linkedin-in m-right-10"></i>
-      <a [href]="professional.profileUrl" target="_blank" class="text-link">
-        {{ professional.profileUrl }}
-      </a>
-    </div>
+    <ng-container *ngIf="adminMode && !!professional.profileUrl">
+      <div class="m-bottom-10">
+        <i class="fab text-secondary fa-linkedin-in m-right-10"></i>
+        <a [href]="(professional.profileUrl | formalizeUrl:'LINKEDIN')" class="text-link" target="_blank">
+          {{ professional.profileUrl | formalizeUrl:'LINKEDIN' }}
+        </a>
+      </div>
+    </ng-container>
     <!-- /linkedin -->
 
     <!-- job -->

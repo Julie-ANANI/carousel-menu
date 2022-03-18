@@ -135,7 +135,7 @@ export class AdminProjectCollectionComponent implements OnInit, OnDestroy {
 
   private _getAnswers() {
     this._answerService
-      .innovationAnswers(this._innovation._id)
+      .innovationAnswers(this._innovation._id, false, 'reset')
       .pipe(first())
       .subscribe(
         (response) => {
