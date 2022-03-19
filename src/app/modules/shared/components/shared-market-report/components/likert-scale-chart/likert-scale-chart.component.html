@@ -12,41 +12,52 @@
       {{ ('MARKET_REPORT.LIKERT-SCALE_SECTION.' + label) | uppercase| translate }}
     </span>
 
-    <div class="relative">
-      <div class="progress__bar"
-        (mouseover)="isShowResult=true"
-        (mouseout)="isShowResult=false"
+<!--    <div class="relative">-->
+<!--      <div class="progress__bar bar"-->
+<!--        (mouseover)="isShowResult=true"-->
+<!--        (mouseout)="isShowResult=false"-->
 
-        [ngClass]="{
-        'totally--invalidated': (label | uppercase) === 'TOTALLY_INVALIDATED',
-        'invalided': (label | uppercase) === 'INVALIDED',
-        'uncertain': (label | uppercase) === 'UNCERTAIN',
-        'validated': (label | uppercase) === 'VALIDATED',
-        'totally--validated ': (label | uppercase) === 'TOTALLY_VALIDATED'
-        }">
-      </div>
-      </div>
+<!--        [ngClass]="{-->
+<!--        'totally&#45;&#45;invalidated': (label | uppercase) === 'TOTALLY_INVALIDATED',-->
+<!--        'invalided': (label | uppercase) === 'INVALIDED',-->
+<!--        'uncertain': (label | uppercase) === 'UNCERTAIN',-->
+<!--        'validated': (label | uppercase) === 'VALIDATED',-->
+<!--        'totally&#45;&#45;validated ': (label | uppercase) === 'TOTALLY_VALIDATED'-->
+<!--        }">-->
+<!--      </div>-->
+<!--      </div>-->
 
-      <div class="progress__bar__marker"
-           (mouseover)="isShowResult=true"
-           (mouseout)="isShowResult=false"
-           [ngStyle]="{ 'left': scorePercentage }">
+    <!--    <div class="relative">-->
+    <div class="progress__bar"
+         (mouseover)="isShowResult=true"
+         (mouseout)="isShowResult=false">
+            <div class="totally--invalidated fill"></div>
+            <div class="invalided fill"></div>
+            <div class="uncertain fill"></div>
+            <div class="validated fill"></div>
+            <div class="totally--validated fill"></div>
+          </div>
 
-        <div class="icon-container"><i class="icon icon-location"></i></div>
-        <div class="marker__pointer"></div>
+            <div class="progress__bar__marker"
+                 (mouseover)="isShowResult=true"
+                 (mouseout)="isShowResult=false"
+                 [ngStyle]="{ 'left': scorePercentage }">
 
-      </div>
+              <div class="icon-container"><i class="icon icon-location"></i></div>
+              <div class="marker__pointer"></div>
 
-      <div class=" average average__evaluation"
-           [ngStyle]="{ 'visibility': isShowResult? 'visible': 'hidden' }">
+            </div>
 
-        <div class="average__text"
-             [ngStyle]="{'left': scorePercentage}">
-          {{ stackedChart.averageFinalScore }} /5
+            <div class=" average average__evaluation"
+                 [ngStyle]="{ 'visibility': isShowResult? 'visible': 'hidden' }">
+
+              <div class="average__text"
+                   [ngStyle]="{'left': scorePercentage}">
+                {{ stackedChart.averageFinalScore }} /5
+              </div>
+
+            </div>
+
+          </div>
+
         </div>
-
-      </div>
-
-    </div>
-
-  </div>
