@@ -8,7 +8,7 @@
 
   <div *ngIf="stackedChart && stackedChart.likertScaleChart">
 
-    <span [ngStyle]="{ 'color': content }" class="chart__name">
+    <span [ngStyle]="{ 'color': color }" class="chart__name">
       {{ ('MARKET_REPORT.LIKERT-SCALE_SECTION.' + label) | uppercase| translate }}
     </span>
 
@@ -24,6 +24,7 @@
         'validated': (label | uppercase) === 'VALIDATED',
         'totally--validated ': (label | uppercase) === 'TOTALLY_VALIDATED'
         }">
+      </div>
       </div>
 
       <div class="progress__bar__marker"
@@ -49,5 +50,3 @@
     </div>
 
   </div>
-
-</div>

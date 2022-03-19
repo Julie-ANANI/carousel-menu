@@ -73,7 +73,7 @@ export class LikertScaleChartComponent implements OnInit, OnDestroy {
     return this._content.name;
   }
 
-  get content(): string {
+  get color(): string {
     return this._content.color;
   }
 
