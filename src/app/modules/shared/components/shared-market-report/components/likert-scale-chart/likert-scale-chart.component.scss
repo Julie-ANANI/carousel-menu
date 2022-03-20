@@ -1,6 +1,7 @@
 @import "~@umius/umi-style-framework/scss/variables";
 
-// Container //
+/* CONTAINER
+  –––––––––––––––––––––––––––––––––––––––––––––––––– */
 .chart__likert_scale {
   display: flex;
   flex-direction: column;
@@ -9,8 +10,6 @@
   width: 300px;
   height: 250px;
 
-
-  // Name of result chart //
   .chart__name{
     display: inline-block;
     font-size: 25px;
@@ -23,19 +22,8 @@
   }
 
 
-  // Icons //
-
-  //Icons for marker//
-  .icon-container {
-
-    .icon-location::before,::after {
-      border: 2px solid currentColor;
-      font-size: 40px;
-      color: white;
-      left: -5.5px;
-    }
-  }
-
+  /* ICONS
+   –––––––––––––––––––––––––––––––––––––––––––––––––– */
   .fas.icon-container {
     margin: 0 0 1em 8.5em;
     position: relative;
@@ -68,17 +56,13 @@
   }
 
 
-  // Progress bar //
-  /* RESET STYLES
-–––––––––––––––––––––––––––––––––––––––––––––––––– */
+  /* PROGRESS BAR
+  –––––––––––––––––––––––––––––––––––––––––––––––––– */
   .progress__bar *,
   .progress__bar::before {
     box-sizing: border-box;
   }
 
-
-  /* CHART-SKILLS STYLES
-  –––––––––––––––––––––––––––––––––––––––––––––––––– */
   .progress__bar {
     position: relative;
     width: 300px;
@@ -92,125 +76,74 @@
     left: 0;
     width: inherit;
     height: inherit;
-    border: 45px solid;
+    border: 30px solid;
     border-top: none;
     border-bottom-left-radius: 150px;
     border-bottom-right-radius: 150px;
     transform-origin: 50% 0;
-    transform-style: preserve-3d;
-    backface-visibility: hidden;
-    animation-fill-mode: forwards;
-    animation-duration: 0s;
-    animation-timing-function: linear;
   }
 
   .progress__bar .totally--invalidated {
     z-index: 5;
     border-color: rgba(234, 88, 88, 1);
-    animation-name: rotate-one;
+    transform: rotate(81deg); // 45% => 81deg
   }
 
   .progress__bar .invalided {
     z-index: 4;
     border-color: rgba(248, 148, 36, 1);
-    animation-name: rotate-two;
+    transform: rotate(105.75deg); // 58.75% => 105.75deg
   }
 
   .progress__bar .uncertain {
     z-index: 3;
     border-color: rgba(187, 199, 214, 1);
-    animation-name: rotate-three;
+    transform: rotate(130.5deg); // 72.5% => 130.5deg
   }
 
   .progress__bar .validated {
     z-index: 2;
     border-color: rgba(46, 204, 113, 1);
-    animation-name: rotate-four;
+    transform: rotate(155.25deg); //86.25% => 155.25deg
   }
 
   .progress__bar .totally--validated {
     z-index: 1;
     border-color: rgba(153, 224, 75, 1);
-    animation-name: rotate-five;
+    transform: rotate(180deg); //100% => 180deg
   }
 
 
-  /* ANIMATIONS
-  –––––––––––––––––––––––––––––––––––––––––––––––––– */
-
-  @keyframes rotate-one {
-    100% {
-      transform: rotate(81deg);
-      /* 45% => 81deg */
-    }
-  }
-
-  @keyframes rotate-two {
-    0% {
-      transform: rotate(81deg);
-    }
-    100% {
-      transform: rotate(105.75deg);
-      /* 58.75% => 105.75deg */
-    }
-  }
-
-  @keyframes rotate-three {
-    0% {
-      transform: rotate(105.75deg);
-    }
-    100% {
-      transform: rotate(130.5deg);
-      /**
-       * 72.5% => 130.5deg
-       */
-    }
-  }
-
-  @keyframes rotate-four {
-    0% {
-      transform: rotate(130.5deg);
-    }
-    100% {
-      transform: rotate(155.25deg);
-      /**
-       * 86.25% => 155.25deg
-       */
-    }
-  }
-
-  @keyframes rotate-five {
-    0% {
-      transform: rotate(155.25deg);
-    }
-    100% {
-      transform: rotate(180deg);
-      /**
-       * 100% => 180deg
-       */
-    }
-  }
-
-  //0, 45, 58,75 // 72,5 //86.25
-  // 81deg, 105.75, 130.5 , 155.25
-
-
-  // Container marker //
-  .progress__bar__marker {
+  /* COMPASS
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+  .compass .needle__circle::after {
+    content: '';
+    width: 30px;
+    height :30px;
+    border-radius:50%;
+    background-color: white;
     position: absolute;
-    text-align: center;
-    top: -39px;
-
-    .marker__pointer {
-      background-color: white;
-      width: 2px;
-      height: 23px;
-      z-index: $z-index-3;
-      margin: 4px 0  0 3px;
-    }
+    top: 6.46em;
+    left: 8.4em;
+    z-index: 0;
   }
 
-  // score //
+  .compass .compass__needle::after {
+    content: '';
+    position: absolute;
+    transform: rotate(344deg);
+    width: 0;
+    height: 0;
+    border-left: 150px solid transparent; //13,3 //193 end //209 borne max
+    border-bottom: 4px solid white;
+    top: 7.4em;
+    left: -0.3em;
+    z-index: 0;
+    transform-origin: top right;
+  }
+
+  /* SCORE
+  –––––––––––––––––––––––––––––––––––––––––––––––––– */
   .average__evaluation {
     font-weight: $font-weight-medium;
     font-size: $font-size-sm;
@@ -218,8 +151,15 @@
     .average__text {
       position: absolute;
       width: fit-content;
+      left: 55.2%;
+      top: 76.5%;
     }
 
+  }
+
+
+  .text-medium #chart__likert_scale sub:is(.c-hand, .m-left-2){
+    margin-left: 120px !important;
   }
 
 }
