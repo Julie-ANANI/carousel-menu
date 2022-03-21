@@ -101,8 +101,12 @@ export class DocumentsComponent implements OnInit, OnDestroy {
       this._initDocuments();
       this._anonymousXLSX = !!(this._innovation._metadata && this._innovation._metadata.campaign
         && this._innovation._metadata.campaign.anonymous_answers);
-      this._ownerConsent = this._innovation.ownerConsent && this._innovation.ownerConsent.value;
+      this._verifyOwnerConsent();
     });
+  }
+
+  private _verifyOwnerConsent() {
+    this._ownerConsent = this._innovation.ownerConsent && this._innovation.ownerConsent.value;
   }
 
   private _initDocuments() {
@@ -164,12 +168,14 @@ export class DocumentsComponent implements OnInit, OnDestroy {
     event.preventDefault();
     if (this.isOwner) {
       this._innovation.ownerConsent.value = !!(event.target as HTMLInputElement).checked;
-      this._innovationService.saveConsent(this._innovation._id, Date.now()).pipe(first()).subscribe(() => {
-      }, (err: HttpErrorResponse) => {
-        this._innovation.ownerConsent.value = !this._innovation.ownerConsent.value;
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
-        console.error(err);
-      });
+      this._innovationService.saveConsent(this._innovation._id, this._innovation.ownerConsent).pipe(first())
+        .subscribe((_) => {
+          this._verifyOwnerConsent();
+        }, (err: HttpErrorResponse) => {
+          this._innovation.ownerConsent.value = !this._innovation.ownerConsent.value;
+          this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
+          console.error(err);
+        });
     }
   }
 

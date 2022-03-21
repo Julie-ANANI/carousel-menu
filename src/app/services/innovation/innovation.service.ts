@@ -16,6 +16,7 @@ import {Invitation} from '../../models/invitation';
 import {Response} from '../../models/response';
 import {UmiusConfigInterface, UmiusVideoInterface} from '@umius/umi-common-component';
 import {CacheType} from '../../models/cache';
+import {Consent} from '../../models/consent';
 
 @Injectable({providedIn: 'root'})
 export class InnovationService {
@@ -106,8 +107,8 @@ export class InnovationService {
     return this._http.post(`/innovation/${innovationId}/card/${innovationCardId}/comment`, commentObj);
   }
 
-  public saveConsent(innovationId: string, date: number) { /* FIXME */
-    return this._http.put(`/innovation/${innovationId}/ownerConsent`, {ownerConsent: {date: date, value: true}});
+  public saveConsent(innovationId: string, data: Consent): Observable<Innovation> { /* FIXME */
+    return this._http.put<Innovation>(`/innovation/${innovationId}/ownerConsent`, {ownerConsent: data});
   }
 
   public saveFilter(innovationId: string, data: { name: string, answers: Array<string>}): Observable<any> {
