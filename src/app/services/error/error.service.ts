@@ -29,7 +29,7 @@ export class ErrorService {
     if (!environment.production || this._rolesFrontService.isTechRole()) {
       console.error(error);
     } else {
-      Sentry.withScope(scope => {
+      Sentry.withScope((scope : any) => {
         const user = this._authService.user;
         scope.setUser({
           email: (user && user.email) || '',
