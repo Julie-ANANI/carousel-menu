@@ -271,7 +271,8 @@ export class ExecutiveReportFrontService {
                              graphics: { name: string,
                                          color: string,
                                          score: number,
-                                         scorePercent: string}
+                                         scorePercent: string,
+                                         scoreRotate:string}
                             ): SectionLikertScale {
 
 

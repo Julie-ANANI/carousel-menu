@@ -18,18 +18,23 @@ id="chart__likert_scale">
          (mouseover)="isShowResult=true"
          (mouseout)="isShowResult=false">
 
-            <div class="compass">
-              <div class="needle__circle"></div>
-              <div class="compass__needle"
-                   [ngStyle]="{ 'left': scorePercentage }"></div>
-            </div>
-
             <div class="totally--invalidated fill"></div>
             <div class="invalided fill"></div>
             <div class="uncertain fill"></div>
             <div class="validated fill"></div>
             <div class="totally--validated fill"></div>
           </div>
+
+    <div class="compass">
+      <div class="needle__circle"></div>
+      <div class="compass__needle"
+               [ngStyle]="{'transform': 'translateX(0px) rotate('+scoreRotate+') translateY(0px)'}">{{scoreRotate}}
+      </div>
+<!--      <div class="compass__needle"-->
+<!--           [ngStyle]="{'transform': 'translateX(0px) rotate(20deg) translateY(0px)'}">{{scoreRotate}}-->
+<!--      </div>-->
+<!--      transform: translateX(4px) rotate(0deg) translateY(0px);-->
+  </div>
 
             <div class=" average average__evaluation"
                  [ngStyle]="{ 'visibility': isShowResult? 'visible': 'hidden' }">

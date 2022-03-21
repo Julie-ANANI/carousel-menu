@@ -490,18 +490,31 @@ export class ResponseService {
    * @param averageFinalScore (LikertScaleChart)
    */
   public static getLikertScaleGraphicScore (averageFinalScore: number) {
+    //todo ju to comment and range code
 
     /* This multiplier is to have the value in percentage*/
-    const multiply = 20;
+    const multiplyPercentage = 20;
     const numberOfCategories = 5;
     // let interval = (5-threshold)/numberOfCategories
 
-    let scorePercentage: string = (averageFinalScore * multiply).toString() +'%';
+    let scorePercentage: string = (averageFinalScore * multiplyPercentage).toString() +'%';
     if (averageFinalScore === 0 ) {
       scorePercentage = (1).toString() +'%';
     } else if (averageFinalScore === numberOfCategories){
       scorePercentage = (97).toString() +'%';
     }
+
+
+    const multiplyDegree = 180; //360/2 = 180deg
+   // 58.75/100 * 180 = 105.75deg
+
+    //multiply pqr 20 pour note sur 100
+    let scoreOfHundred = averageFinalScore * multiplyPercentage
+    //divise sur 100
+    scoreOfHundred = scoreOfHundred / 100;
+
+    //multiply * 80
+    let scoreRotate: string = ((scoreOfHundred) * multiplyDegree).toString() + 'deg';
 
     // Step 1 constitution of index color
     /*This scale is the starting point for our 0 score. It represents the failure rate of innovations that is specific to the UMI data.
@@ -526,12 +539,13 @@ export class ResponseService {
 /*    It's obsolete solution*/
     /* This value is defined by which number we want to divide our score*/
     /* The percentage is rounded because the pointer goes over either 0 or 100 because the bar is rounded */
-    let percentage: number = (averageFinalScore * multiply); // will give margin percentage for the pointer of marker
+    let percentage: number = (averageFinalScore * multiplyPercentage); // will give margin percentage for the pointer of marker
     return {
       name: colorsAndNames[index].name,
       color: colorsAndNames[index].color,
       score: averageFinalScore,
       scorePercent: scorePercentage.toString(),
+      scoreRotate: scoreRotate.toString(),
       percentage : percentage > 5 ? (percentage - 5) : percentage,
       index: index,
     };
