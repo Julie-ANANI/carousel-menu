@@ -122,6 +122,10 @@ export class SharedTagsComponent implements OnInit {
     }
   }
 
+  closeCreatModal() {
+    this._showModal = false;
+  }
+
   get currentLang(): string {
     return this._currentLang;
   }
