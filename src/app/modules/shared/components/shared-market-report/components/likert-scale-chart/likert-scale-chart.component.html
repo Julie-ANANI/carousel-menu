@@ -18,21 +18,38 @@
              (mouseover)="isShowResult=true"
              (mouseout)="isShowResult=false">
 
+              <div *ngIf="(label | uppercase) === 'TOTALLY_INVALIDATED'" class="fill red"></div>
               <div class="totally--invalidated fill"></div>
+
+              <div *ngIf="(label | uppercase) === 'INVALIDED'"  class="fill orange"></div>
               <div class="invalided fill"></div>
+
+              <div *ngIf="(label | uppercase) === 'UNCERTAIN'" class="fill grey"></div>
               <div class="uncertain fill"></div>
+
+              <div *ngIf="(label | uppercase) === 'VALIDATED'" class="fill green"></div>
               <div class="validated fill"></div>
+
+              <div *ngIf="(label | uppercase) === 'TOTALLY_VALIDATED'" class="fill grass"></div>
               <div class="totally--validated fill"></div>
 
         </div>
 
-        <div class="compass">
+       <div class="compass">
 
-        <div class="needle__circle"></div>
-        <div class="compass__needle"
-             [ngStyle]="{'transform': 'translateX(0px) rotate('+scoreRotate+') translateY(0px)'}">
+          <div class="needle__circle"></div>
+
+          <div class="compass__needle__ori"
+               [ngStyle]="{'transform': 'translateX(0px) rotate('+scoreRotate+') translateY(0px)'}">
+          </div>
+
+          <div class="compass__needle"
+               [ngStyle]="{'transform': 'translateX(0px) rotate('+scoreRotate+') translateY(0px)'}">
+          </div>
+
         </div>
-        </div>
+
+
 
         <div class=" average average__evaluation"
              [ngStyle]="{ 'visibility': isShowResult? 'visible': 'hidden' }">

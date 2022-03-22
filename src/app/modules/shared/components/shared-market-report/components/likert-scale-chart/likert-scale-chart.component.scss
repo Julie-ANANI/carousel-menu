@@ -9,8 +9,9 @@
   justify-content: center;
   width: 300px;
   height: 250px;
-  margin-bottom: 1px;
+  margin-bottom: 60px;
   margin-top: 20px;
+  z-index: 2;
 
   .chart__name{
     display: inline-block;
@@ -69,11 +70,11 @@
     width: 300px;
     height: 150px;
     overflow: hidden;
-    mask: radial-gradient(at 50% 100%, #2E6188 67%, transparent 95%);
-    mask-mode: alpha;
-    -webkit-mask: radial-gradient(at 50% 100%, #0000 55%, #000 55.5%);
-    -webkit-mask-mode: alpha;
+    mask-type: alpha;
+    -webkit-mask: radial-gradient(at 50% 100%, #0000 53%, #2E6188 58%);
+    z-index: 1;
   }
+
 
   .progress__bar .fill {
     position: absolute;
@@ -81,7 +82,7 @@
     left: 0;
     width: inherit;
     height: inherit;
-    border: 30px solid;
+    border: 30px outset;
     border-top: none;
     border-bottom-left-radius: 150px;
     border-bottom-right-radius: 150px;
@@ -89,64 +90,68 @@
   }
 
   .progress__bar .red {
-    z-index: 1;
-    border-color: rgba(234, 88, 88, 0.5);
+    z-index: 10;
+    border-color: rgba(234, 88, 88, 1);
     transform: rotate(81deg);
   }
 
+  .progress__bar .totally--invalidated {
+    z-index: 9;
+    border-color: rgb(234, 88, 88);
+    filter: brightness(70%);
+    transform: rotate(81deg); // 45% => 81deg
+    //border: 2px solid;
+  }
+
   .progress__bar .orange {
-    z-index: 1;
-    border-color: rgba(248, 148, 36, 0.5);
+    z-index: 8;
+    border-color: rgba(248, 148, 36, 1);
     transform: rotate(105.75deg);
   }
 
+  .progress__bar .invalided {
+    z-index: 7;
+    border-color: rgb(248, 148, 36);
+    filter: brightness(70%);
+    transform: rotate(105.75deg); // 58.75% => 105.75deg  58.75/100 * 180 = 105.75deg
+  }
+
   .progress__bar .grey {
-    z-index: 1;
-    border-color: rgba(187, 199, 214, 0.5);
+    z-index: 6;
+    border-color: rgba(187, 199, 214, 1);
     transform: rotate(130.5deg);
   }
 
-  .progress__bar .green {
-    border-color: rgba(46, 204, 113, 0.5);
-    transform: rotate(155.25deg);
-  }
-
-  .progress__bar .grass {
-    z-index: 1;
-    border-color: rgba(153, 224, 75, 0.5);
-    transform: rotate(180deg);
-  }
-
-
-  .progress__bar .totally--invalidated {
-    z-index: 5;
-    border-color: rgba(234, 88, 88, 1);
-    transform: rotate(81deg); // 45% => 81deg
-    //border: 0.5px solid red;
-  }
-
-  .progress__bar .invalided {
-    z-index: 4;
-    border-color: rgba(248, 148, 36,1);
-    transform: rotate(105.75deg); // 58.75% => 105.75deg  58.75/100 * 180 = 105.75deg
-    //border:0.5px solid red;
-  }
-
   .progress__bar .uncertain {
-    z-index: 3;
-    border-color: rgba(187, 199, 214, 1);
+    z-index: 5;
+    border-color: rgb(187, 199, 214);
+    filter: brightness(70%);
     transform: rotate(130.5deg); // 72.5% => 130.5deg
   }
 
-  .progress__bar .validated {
-    z-index: 2;
+  .progress__bar .green {
+    z-index: 4;
     border-color: rgba(46, 204, 113, 1);
+    transform: rotate(155.25deg);
+  }
+
+  .progress__bar .validated {
+    z-index: 3;
+    border-color: rgb(46, 204, 113);
+    filter: brightness(70%);
     transform: rotate(155.25deg); //86.25% => 155.25deg
+  }
+
+  .progress__bar .grass {
+    z-index: 2;
+    border-color: rgba(153, 224, 75, 2);
+    transform: rotate(180deg);
   }
 
   .progress__bar .totally--validated {
     z-index: 1;
-    border-color: rgba(153, 224, 75, 1);
+    border-color: rgb(153, 224, 75);
+    filter: brightness(70%);
     transform: rotate(180deg); //100% => 180deg
   }
 
@@ -155,6 +160,7 @@
     align-items: center;
     font-size: 14px;
     width: 2em;
+    margin-top: 10px;
   }
 
   .bar__threshold .two {
@@ -176,20 +182,39 @@
       height : 30px;
       background-color:white;
       border-radius:50%;
-      z-index: $z-index-0;
+      z-index: 0;
+      margin:auto;
     }
 
-    .compass__needle {
-      position:absolute;
-      top: 0;
-      left: -0.7em;
+    //si c'est la couleur resulat affiche normal else appliaue brightness
+
+    .compass__needle::after {
+      content: '';
+      width: 60%;
+      height: 6%;
+      position: absolute;
+      top: -0.14em;
+      left: -2.3em;
       transform: translateX(0px) rotate(0deg) translateY(0px);
-      border-left: 150px solid transparent;
-      border-bottom: 15px solid white;
-      border-right: 15px solid white;
-      transform-origin: top right;
-      margin: auto;
-      z-index: $z-index-0;
+      border-bottom: 5px solid transparent;
+      border-top: 5px solid transparent;
+      border-left: 35px solid transparent;
+      border-right: 127px solid white;
+      transform-origin: 8%;
+      z-index: 5;
+    }
+
+    .compass__needle__test {
+      width: 60%;
+      height: 6%;
+      position: absolute;
+      bottom: -5%;
+      left: 0;
+      background:
+        conic-gradient(at -20% 50%, #0000 88deg, #000 88.25deg 91.75deg, #0000 92deg);
+      transform-origin: 83.33333% 50%;
+      transform: rotate(60deg);
+      z-index:5
     }
   }
 
