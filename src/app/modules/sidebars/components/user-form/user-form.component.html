@@ -205,36 +205,52 @@
       </div>
 
       <!-- company -->
-      <div class="form-group" formGroupName="company">
+      <div class="form-group relative" formGroupName="company">
         <label class="form-label" for="user-form-company">{{ 'COMMON.LABEL.COMPANY' | translate }}</label>
         <input
-          auto-complete
+          (keyup)="onSuggestCompanies()"
+          [attr.placeholder]="'COMMON.PLACEHOLDER.COMPANY' | translate"
           class="form-input"
           formControlName="name"
           id="user-form-company"
-          type="text"
-          [min-chars]="2"
-          [list-formatter]="autocompleteCompanyListFormatter"
-          [source]="companiesSuggestions"
-          (valueChanged)="selectCompany($event)"
-          [attr.placeholder]="'COMMON.PLACEHOLDER.COMPANY' | translate">
+          type="text">
+        <ul
+          *ngIf="userForm.get('company.name').value"
+          [ngStyle]="{ 'display': displayCompanySuggestion ? 'block' : 'none' }"
+          class="menu menu__fixed-height">
+          <li
+            *ngFor="let company of companySuggestion"
+            class="menu-item">
+            <div (click)="onCompanySelect(company)" class="d-flex align-center">
+              <img
+                [alt]="company.name"
+                [src]="company.logo"
+                class="m-right-2 img-responsive"
+                style="height: 36px; max-width: 110px;">
+              <span>{{ company.name | titlecase}}</span>
+            </div>
+          </li>
+        </ul>
       </div>
 
       <!-- country -->
       <div class="form-group">
         <label class="form-label" for="user-form-country">{{ 'COMMON.LABEL.COUNTRY' | translate }}</label>
         <input
+          (keyup)="onSuggestCountries()"
+          [attr.placeholder]="'COMMON.PLACEHOLDER.COUNTRY' | translate"
           class="form-input"
           formControlName="country"
           id="user-form-country"
-          type="text"
-          [attr.placeholder]="'COMMON.PLACEHOLDER.COUNTRY' | translate"
-          (keypress)="onSuggestCountries()">
+          type="text">
         <ul
           *ngIf="userForm.get('country').value"
-          class="input-suggestion"
-          [ngStyle]="{ 'display': displayCountrySuggestion ? 'block' : 'none' }">
-          <li *ngFor="let suggestion of countriesSuggestion.sort()" (click)="onValueSelect(suggestion)">
+          [ngStyle]="{ 'display': displayCountrySuggestion ? 'block' : 'none' }"
+          class="menu menu__fixed-height">
+          <li
+            (click)="onValueSelect(suggestion)"
+            *ngFor="let suggestion of countriesSuggestion.sort()"
+            class="menu-item">
             {{ suggestion }}
           </li>
         </ul>

@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Inject, Input, OnInit, Output, PLATFORM_ID } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
 import { TranslateNotificationsService } from '../../../../services/translate-notifications/translate-notifications.service';
 import { User } from '../../../../models/user.model';
@@ -18,13 +17,13 @@ import { QuizService } from '../../../../services/quiz/quiz.service';
 import { isPlatformBrowser } from '@angular/common';
 import { countries } from '../../../../models/static-data/country';
 import { SearchService } from '../../../../services/search/search.service';
-import { Observable} from 'rxjs';
 import { ProfessionalsService } from '../../../../services/professionals/professionals.service';
 import {ErrorFrontService} from '../../../../services/error/error-front.service';
 import {RolesService} from '../../../../services/roles/roles.service';
 import {EnterpriseService} from '../../../../services/enterprise/enterprise.service';
 import {emailRegEx} from '../../../../utils/regex';
 import {UmiusEnterpriseInterface} from '@umius/umi-common-component';
+import {CommonService} from '../../../../services/common/common.service';
 
 @Component({
   selector: 'app-user-form',
@@ -34,6 +33,10 @@ import {UmiusEnterpriseInterface} from '@umius/umi-common-component';
 
 export class UserFormComponent implements OnInit {
 
+  get companySuggestion(): Array<Clearbit> {
+    return this._companySuggestion;
+  }
+
   @Input() canImpersonate = false;
 
   @Input() isEditable = false;
@@ -42,9 +45,7 @@ export class UserFormComponent implements OnInit {
 
   @Input() set sidebarState(value: string) {
     if (value === undefined || value ===  'active') {
-      this.buildForm();
-      this._editInstanceDomain = false;
-      this._displayCountrySuggestion = false;
+      this._resetVariables();
     } else {
       this._userForm.reset();
     }
@@ -101,7 +102,11 @@ export class UserFormComponent implements OnInit {
 
   private _countriesSuggestion: Array<string> = [];
 
+  private _companySuggestion: Array<Clearbit> = [];
+
   private _displayCountrySuggestion = false;
+
+  private _displayCompanySuggestion = false;
 
   private _selectedProject: String;
 
@@ -145,7 +150,6 @@ export class UserFormComponent implements OnInit {
               private formBuilder: FormBuilder,
               private autoCompleteService: AutocompleteService,
               private router: Router,
-              private sanitizer: DomSanitizer,
               private translateService: TranslateService,
               private translateNotificationsService: TranslateNotificationsService,
               private searchService: SearchService,
@@ -162,6 +166,13 @@ export class UserFormComponent implements OnInit {
 
   public adminLevel(): boolean {
     return this._authService.adminLevel >= 5;
+  }
+
+  private _resetVariables() {
+    this.buildForm();
+    this._editInstanceDomain = false;
+    this._displayCountrySuggestion = false;
+    this._displayCompanySuggestion = false;
   }
 
 
@@ -263,17 +274,10 @@ export class UserFormComponent implements OnInit {
     this._selectedProject = event.target.value;
   }
 
-  public companiesSuggestions = (searchString: string): Observable<Array<{name: string, domain: string, logo: string}>> => {
-    return this.autoCompleteService.get({query: searchString, type: 'company'});
-  }
-
-  public autocompleteCompanyListFormatter = (data: any): SafeHtml => {
-    return this.sanitizer.bypassSecurityTrustHtml(`<img style="vertical-align:middle;" src="${data.logo}" height="35" alt=" "/><span>${data.name}</span>`);
-  }
-
-  public selectCompany(c: string | Clearbit | UmiusEnterpriseInterface) {
+  public onCompanySelect(c: string | Clearbit | UmiusEnterpriseInterface) {
     this._userForm.get('company').reset((typeof c === 'string') ? {name: c} : c);
     this._newCompany = typeof c === 'string' ? {name: c} : c;
+    this._displayCompanySuggestion = false;
   }
 
   public setRole(event: Event) {
@@ -307,6 +311,25 @@ export class UserFormComponent implements OnInit {
     }
   }
 
+  public onSuggestCompanies() {
+    this._userForm.get('company.name').valueChanges.pipe(distinctUntilChanged()).subscribe((input: string) => {
+      this._displayCompanySuggestion = true;
+      this._companySuggestion = [];
+      this.autoCompleteService.get({query: input, type: 'company'}).pipe(first()).subscribe((res: Array<Clearbit>) => {
+        if (res.length === 0) {
+          this._displayCompanySuggestion = false;
+        } else {
+          res.forEach((_item: Clearbit) => {
+            const find = this._companySuggestion.find((_company) => _company.name === _item.name);
+            if (!find) {
+              this._companySuggestion.push(_item);
+            }
+          });
+        }
+        this._companySuggestion = CommonService.sortBy(this._companySuggestion, 'name');
+      });
+    });
+  }
 
   onSuggestCountries() {
     this._userForm.get('country').valueChanges.pipe(distinctUntilChanged()).subscribe((input: any) => {
@@ -521,6 +544,10 @@ export class UserFormComponent implements OnInit {
 
   get displayCountrySuggestion(): boolean {
     return this._displayCountrySuggestion;
+  }
+
+  get displayCompanySuggestion(): boolean {
+    return this._displayCompanySuggestion;
   }
 
   get countries(): any {

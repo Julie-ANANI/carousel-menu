@@ -307,7 +307,7 @@ export class SharedProfessionalsListComponent {
     this._resetSidebarVariables('tags');
     this._resetSidebarVariables('filters');
     this._professionalsService
-      .get(value._id)
+      .get(value._id, 'reset')
       .pipe(first())
       .subscribe(
         (response: Professional) => {
