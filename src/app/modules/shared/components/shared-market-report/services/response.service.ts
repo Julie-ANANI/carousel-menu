@@ -497,6 +497,7 @@ export class ResponseService {
     const numberOfCategories = 5;
     // let interval = (5-threshold)/numberOfCategories
 
+    //It's for calculate for the progress_bar old design of likert-scale
     let scorePercentage: string = (averageFinalScore * multiplyPercentage).toString() +'%';
     if (averageFinalScore === 0 ) {
       scorePercentage = (1).toString() +'%';
@@ -513,7 +514,7 @@ export class ResponseService {
     //divise sur 100
     scoreOfHundred = scoreOfHundred / 100;
 
-    //multiply * 80
+    //It's for calculate for the compass new design of likert-scale
     let scoreRotate: string = ((scoreOfHundred) * multiplyDegree).toString() + 'deg';
 
     // Step 1 constitution of index color

@@ -9,11 +9,13 @@
   justify-content: center;
   width: 300px;
   height: 250px;
+  margin-bottom: 1px;
+  margin-top: 20px;
 
   .chart__name{
     display: inline-block;
-    font-size: 25px;
-    font-weight: $font-weight-bold;
+    font-size: 20px;
+    font-weight: $font-weight-medium;
     width:184px;
     justify-content: center;
     justify-items: center;
@@ -25,7 +27,7 @@
   /* ICONS
    –––––––––––––––––––––––––––––––––––––––––––––––––– */
   .fas.icon-container {
-    margin: 0 0 1em 8.5em;
+    margin: 0 0 1em 9.5em;
     position: relative;
 
     .fa-user {
@@ -58,8 +60,7 @@
 
   /* PROGRESS BAR
   –––––––––––––––––––––––––––––––––––––––––––––––––– */
-  .progress__bar *,
-  .progress__bar::before {
+  .progress__bar *, .progress__bar::before {
     box-sizing: border-box;
   }
 
@@ -68,10 +69,10 @@
     width: 300px;
     height: 150px;
     overflow: hidden;
-    //mask: radial-gradient(at 50% 100%, #2E6188 67%, transparent 95%);
-   // mask-mode: alpha;
-    //-webkit-mask: radial-gradient(at 50% 100%, #0000 55%, #000 55.5%);
-    //-webkit-mask-mode: alpha;
+    mask: radial-gradient(at 50% 100%, #2E6188 67%, transparent 95%);
+    mask-mode: alpha;
+    -webkit-mask: radial-gradient(at 50% 100%, #0000 55%, #000 55.5%);
+    -webkit-mask-mode: alpha;
   }
 
   .progress__bar .fill {
@@ -87,19 +88,48 @@
     transform-origin: 50% 0;
   }
 
+  .progress__bar .red {
+    z-index: 1;
+    border-color: rgba(234, 88, 88, 0.5);
+    transform: rotate(81deg);
+  }
+
+  .progress__bar .orange {
+    z-index: 1;
+    border-color: rgba(248, 148, 36, 0.5);
+    transform: rotate(105.75deg);
+  }
+
+  .progress__bar .grey {
+    z-index: 1;
+    border-color: rgba(187, 199, 214, 0.5);
+    transform: rotate(130.5deg);
+  }
+
+  .progress__bar .green {
+    border-color: rgba(46, 204, 113, 0.5);
+    transform: rotate(155.25deg);
+  }
+
+  .progress__bar .grass {
+    z-index: 1;
+    border-color: rgba(153, 224, 75, 0.5);
+    transform: rotate(180deg);
+  }
+
 
   .progress__bar .totally--invalidated {
     z-index: 5;
     border-color: rgba(234, 88, 88, 1);
     transform: rotate(81deg); // 45% => 81deg
-    border: 0.5px solid red;
+    //border: 0.5px solid red;
   }
 
   .progress__bar .invalided {
     z-index: 4;
-    border-color: rgba(248, 148, 36, 1);
+    border-color: rgba(248, 148, 36,1);
     transform: rotate(105.75deg); // 58.75% => 105.75deg  58.75/100 * 180 = 105.75deg
-    border:0.5px solid red;
+    //border:0.5px solid red;
   }
 
   .progress__bar .uncertain {
@@ -120,36 +150,47 @@
     transform: rotate(180deg); //100% => 180deg
   }
 
+  .bar__threshold {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    width: 2em;
+  }
+
+  .bar__threshold .two {
+    margin-left: 124px;
+  }
+
+
 
   /* COMPASS
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
   .compass {
     position:relative;
-  }
-  .compass .needle__circle::after {
-    content: '';
-    width: 30px;
-    height :30px;
-    border-radius:50%;
-    background-color: pink;
-    position: absolute;
-    top: -1.1em;
-    left: 8.97em;
-    z-index: 0;
-  }
 
-  .compass .compass__needle::after {
-    content: '';
-    position: absolute;
-    //transform: translateX(4px) rotate(0deg) translateY(0px);
-    border-left: 150px solid transparent;
-    //border-right: 4px solid yellow;
-    border-bottom: 4px solid yellow;
-    top: 0;
-    left: -0.55em;
-    margin: auto;
-    z-index: 7;
-    transform-origin: top right;
+    .needle__circle {
+      position:absolute;
+      top: -1.2em;
+      left: 8.9em;
+      width:30px;
+      height : 30px;
+      background-color:white;
+      border-radius:50%;
+      z-index: $z-index-0;
+    }
+
+    .compass__needle {
+      position:absolute;
+      top: 0;
+      left: -0.7em;
+      transform: translateX(0px) rotate(0deg) translateY(0px);
+      border-left: 150px solid transparent;
+      border-bottom: 15px solid white;
+      border-right: 15px solid white;
+      transform-origin: top right;
+      margin: auto;
+      z-index: $z-index-0;
+    }
   }
 
   /* SCORE
@@ -160,16 +201,11 @@
 
     .average__text {
       position: absolute;
+      left: 43%;
+      top: 90%;
       width: fit-content;
-      left: 55.2%;
-      top: 76.5%;
     }
 
-  }
-
-
-  .text-medium #chart__likert_scale sub:is(.c-hand, .m-left-2){
-    margin-left: 120px !important;
   }
 
 }

@@ -1,50 +1,61 @@
-<div class=" chart chart__likert_scale"
-id="chart__likert_scale">
+<div class=" chart chart__likert_scale">
 
-    <div class="fas icon-container">
-        <div class="fa-user user__one"></div>
-        <div class="fa-user user__two"></div>
-        <div class="fa-user user__three"></div>
-    </div>
+  <div class="fas icon-container">
+      <div class="fa-user user__one"></div>
+      <div class="fa-user user__two"></div>
+      <div class="fa-user user__three"></div>
+  </div>
 
   <div *ngIf="stackedChart && stackedChart.likertScaleChart">
 
-    <span [ngStyle]="{ 'color': color }" class="chart__name">
+    <span [ngStyle]="{ 'color': 'white', 'background-color': color }" class="chart__name">
       {{ ('MARKET_REPORT.LIKERT-SCALE_SECTION.' + label) | uppercase| translate }}
     </span>
 
-    <!--    <div class="relative">-->
-    <div class="progress__bar"
-         (mouseover)="isShowResult=true"
-         (mouseout)="isShowResult=false">
+      <div class="relative">
 
-            <div class="totally--invalidated fill"></div>
-            <div class="invalided fill"></div>
-            <div class="uncertain fill"></div>
-            <div class="validated fill"></div>
-            <div class="totally--validated fill"></div>
-          </div>
+        <div class="progress__bar"
+             (mouseover)="isShowResult=true"
+             (mouseout)="isShowResult=false">
 
-    <div class="compass">
-      <div class="needle__circle"></div>
-      <div class="compass__needle"
-               [ngStyle]="{'transform': 'translateX(0px) rotate('+scoreRotate+') translateY(0px)'}">{{scoreRotate}}
-      </div>
-<!--      <div class="compass__needle"-->
-<!--           [ngStyle]="{'transform': 'translateX(0px) rotate(20deg) translateY(0px)'}">{{scoreRotate}}-->
-<!--      </div>-->
-<!--      transform: translateX(4px) rotate(0deg) translateY(0px);-->
-  </div>
+              <div class="totally--invalidated fill"></div>
+              <div class="invalided fill"></div>
+              <div class="uncertain fill"></div>
+              <div class="validated fill"></div>
+              <div class="totally--validated fill"></div>
 
-            <div class=" average average__evaluation"
-                 [ngStyle]="{ 'visibility': isShowResult? 'visible': 'hidden' }">
+        </div>
 
-              <div class="average__text">
-                {{ stackedChart.averageFinalScore }} /5
-              </div>
+        <div class="compass">
 
-            </div>
+        <div class="needle__circle"></div>
+        <div class="compass__needle"
+             [ngStyle]="{'transform': 'translateX(0px) rotate('+scoreRotate+') translateY(0px)'}">
+        </div>
+        </div>
 
+        <div class=" average average__evaluation"
+             [ngStyle]="{ 'visibility': isShowResult? 'visible': 'hidden' }">
+
+          <div class="average__text">
+            {{ stackedChart.averageFinalScore }} /5
           </div>
 
         </div>
+
+        <div class="bar__threshold">
+          <div class="one">
+                {{ ('MARKET_REPORT.LIKERT-SCALE_SECTION.TOTALLY_INVALIDATED') | uppercase| translate }}
+          </div>
+
+          <div class="two">
+                {{ ('MARKET_REPORT.LIKERT-SCALE_SECTION.TOTALLY_VALIDATED') | uppercase| translate }}
+          </div>
+
+        </div>
+
+
+    </div>
+
+  </div>
+</div>

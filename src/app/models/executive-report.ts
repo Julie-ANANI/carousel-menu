@@ -117,7 +117,7 @@ export interface SectionLikertScale {
   legend?:string;
   color:string;
   score? :number;
-  //percentage?:number;
+  percentage?:number;
   scorePercentage?:string;
   scoreRotate?:string
   visibility?:boolean;

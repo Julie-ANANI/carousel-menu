@@ -1,6 +1,5 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {Picto, picto} from '../../../../../../models/static-data/picto';
-import {MissionQuestion} from '../../../../../../models/mission';
 
 @Component({
   selector: 'app-bluesquare',
@@ -16,9 +15,6 @@ export class BluesquareComponent {
   @Input() percentage: number = null;
 
   @Input() readonly = true;
-
-  private _question: MissionQuestion = <MissionQuestion>{};
-
   @Output() subtitleChanged = new EventEmitter<string>();
 
   private _editSubtitle = false;
@@ -47,9 +43,5 @@ export class BluesquareComponent {
 
   get subtitle(): string {
     return this._subtitle;
-  }
-
-  get question(): MissionQuestion {
-    return this._question;
   }
 }

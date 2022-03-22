@@ -85,6 +85,10 @@ export class LikertScaleChartComponent implements OnInit, OnDestroy {
     return this._content.scoreRotate;
   }
 
+  get content():SectionLikertScale {
+    return this._content;
+  }
+
 
   ngOnDestroy(): void {
     this._ngUnsubscribe.next();
