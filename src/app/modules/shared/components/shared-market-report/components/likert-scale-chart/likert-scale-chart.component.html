@@ -1,53 +1,64 @@
-<div class=" chart chart__likert_scale">
+<div class=" chart chart__likert_scale d-flex flex-d-column m-top-20 justify-center w-300">
 
-    <div class="fas icon-container">
-        <div class="fa-user user__one"></div>
-        <div class="fa-user user__two"></div>
-        <div class="fa-user user__three"></div>
-    </div>
+  <div class="fas icon-container relative">
+      <div class="fa-user user__one"></div>
+      <div class="fa-user user__two absolute"></div>
+      <div class="fa-user user__three absolute"></div>
+
+  </div>
 
   <div *ngIf="stackedChart && stackedChart.likertScaleChart">
 
-    <span [ngStyle]="{ 'color': content }" class="chart__name">
+    <span [ngStyle]="{ 'color': 'white', 'background-color': color }" class="chart__name d-inline-block m-bottom-20 text-20
+    text-medium justify-center align-center w-180">
       {{ ('MARKET_REPORT.LIKERT-SCALE_SECTION.' + label) | uppercase| translate }}
     </span>
 
-    <div class="relative">
-      <div class="progress__bar"
-        (mouseover)="isShowResult=true"
-        (mouseout)="isShowResult=false"
+      <div class="relative">
 
-        [ngClass]="{
-        'totally--invalidated': (label | uppercase) === 'TOTALLY_INVALIDATED',
-        'invalided': (label | uppercase) === 'INVALIDED',
-        'uncertain': (label | uppercase) === 'UNCERTAIN',
-        'validated': (label | uppercase) === 'VALIDATED',
-        'totally--validated ': (label | uppercase) === 'TOTALLY_VALIDATED'
-        }">
-      </div>
+        <div class="progress__bar relative w-300 scroll-no"
+             (mouseover)="isShowResult=true"
+             (mouseout)="isShowResult=false">
 
-      <div class="progress__bar__marker"
-           (mouseover)="isShowResult=true"
-           (mouseout)="isShowResult=false"
-           [ngStyle]="{ 'left': scorePercentage }">
+              <div *ngIf="(label | uppercase) === 'TOTALLY_INVALIDATED'" class="fill red absolute"></div>
+              <div class="totally--invalidated fill absolute"></div>
 
-        <div class="icon-container"><i class="icon icon-location"></i></div>
-        <div class="marker__pointer"></div>
+              <div *ngIf="(label | uppercase) === 'INVALIDED'"  class="fill orange absolute"></div>
+              <div class="invalided fill absolute"></div>
 
-      </div>
+              <div *ngIf="(label | uppercase) === 'UNCERTAIN'" class="fill grey absolute"></div>
+              <div class="uncertain fill absolute"></div>
 
-      <div class=" average average__evaluation"
-           [ngStyle]="{ 'visibility': isShowResult? 'visible': 'hidden' }">
+              <div *ngIf="(label | uppercase) === 'VALIDATED'" class="fill green absolute"></div>
+              <div class="validated fill absolute"></div>
 
-        <div class="average__text"
-             [ngStyle]="{'left': scorePercentage}">
-          {{ stackedChart.averageFinalScore }} /5
+              <div *ngIf="(label | uppercase) === 'TOTALLY_VALIDATED'" class="fill grass absolute"></div>
+              <div class="totally--validated fill absolute"></div>
+
         </div>
 
-      </div>
+       <div class="compass relative">
+          <div class="needle__circle m-auto absolute"></div>
+          <div class="compass__needle"
+               [ngStyle]="{'transform': 'translateX(0px) rotate('+scoreRotate+') translateY(0px)'}">
+          </div>
+       </div>
+
+
+        <div class=" average average__evaluation text-medium text-sm"
+             [ngStyle]="{ 'visibility': isShowResult? 'visible': 'hidden' }">
+
+          <div class="average__text absolute">{{ stackedChart.averageFinalScore }} /5 </div>
+        </div>
+
+        <div class="bar__threshold d-flex m-top-2 text-xs align-center">
+          <div class="one">{{ ('MARKET_REPORT.LIKERT-SCALE_SECTION.TOTALLY_INVALIDATED') | uppercase| translate }}</div>
+          <div class="two">{{ ('MARKET_REPORT.LIKERT-SCALE_SECTION.TOTALLY_VALIDATED') | uppercase| translate }}</div>
+
+        </div>
+
 
     </div>
 
   </div>
-
 </div>

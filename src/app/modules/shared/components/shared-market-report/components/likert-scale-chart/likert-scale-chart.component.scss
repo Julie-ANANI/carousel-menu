@@ -1,63 +1,34 @@
 @import "~@umius/umi-style-framework/scss/variables";
 
-// Container //
+/* CONTAINER
+  –––––––––––––––––––––––––––––––––––––––––––––––––– */
 .chart__likert_scale {
-  display: flex;
-  flex-direction: column;
   justify-items: center;
-  justify-content: center;
-  width: 300px;
   height: 250px;
+  margin-bottom: $unit-16;
+  z-index: $z-index-2;
 
-
-  // Name of result chart //
-  .chart__name{
-    display: inline-block;
-    font-size: 25px;
-    font-weight: $font-weight-bold;
-    width:184px;
-    justify-content: center;
-    justify-items: center;
-    align-items: center;
-    margin-bottom: 40px;
-  }
-
-
-  // Icons //
-
-  //Icons for marker//
-  .icon-container {
-
-    .icon-location::before,::after {
-      border: 2px solid currentColor;
-      font-size: 40px;
-      color: white;
-      left: -5.5px;
-    }
-  }
-
+  /* ICONS
+   –––––––––––––––––––––––––––––––––––––––––––––––––– */
   .fas.icon-container {
-    margin: 0 0 1em 8.5em;
-    position: relative;
+    margin: 0 0 1em 9.5em;
 
     .fa-user {
 
       &.user__one {
         font-size: 50px;
+        color: $page-color;
+        margin: -16px 23px 0px 2px;
         z-index: $z-index-1;
-        color: #2E6188;
-        margin: -16px 23px 0px 2px;;
       }
 
       &.user__two {
-        position: absolute;
         font-size: 47px;
         margin: -0.2em 0em 0em -0.5em;
         z-index: $z-index-1;
       }
 
       &.user__three {
-        position: absolute;
         font-size: 37px;
         margin: -2.3px -42px 7px -0.5px;
         z-index: $z-index-0;
@@ -68,73 +39,144 @@
   }
 
 
-  // Progress bar //
+  /* PROGRESS BAR
+  –––––––––––––––––––––––––––––––––––––––––––––––––– */
   .progress__bar {
-    background: linear-gradient(to right, rgba(234, 88, 88, 0.5) 45%, rgba(248, 148, 36, 0.5) 45% 58.75%,
-    rgba(187, 199, 214, 0.5) 58.75% 72.5%, rgba(46, 204, 113, 0.5) 72.5% 86.25%, rgba(153, 224, 75, 0.5) 86.25%);
-    border-radius: 20px;
-    justify-content: center;
-    justify-items: center;
-    height: 20px;
-    z-index: $z-index-0;
+    height: 150px;
+    mask-type: alpha;
+    -webkit-mask: radial-gradient(at 50% 100%, #0000 53%, #2E6188 58%);
+    z-index: $z-index-1;
+  }
+
+  .progress__bar .fill {
+    top: 100%;
+    left: 0;
+    width: inherit;
+    height: inherit;
+    border: 30px solid;
+    border-top: none;
+    border-bottom-left-radius: 150px;
+    border-bottom-right-radius: 150px;
+    transform-origin: 50% 0;
+  }
+
+  //si c'est la couleur resulat affiche normal else appliaue brightness
+  .progress__bar .totally--invalidated, .invalided, .uncertain, .validated, .totally--validated .fill {
+    filter: brightness(70%);
+  }
+
+  .progress__bar :is(.red, .totally--invalidated) {
+    border-color: rgb(234, 88, 88);
+    transform: rotate(81deg); // 45% => 81deg
+  }
+
+  .progress__bar :is(.orange, .invalided) {
+    border-color: rgb(248, 148, 36);
+    transform: rotate(105.75deg); // 58.75% => 105.75deg  58.75/100 * 180 = 105.75deg
+  }
+
+  .progress__bar :is(.grey, .uncertain) {
+    border-color: rgb(187, 199, 214);
+    transform: rotate(130.5deg); // 72.5% => 130.5deg
+  }
+
+  .progress__bar :is(.green, .validated) {
+    border-color: rgb(46, 204, 113);
+    transform: rotate(155.25deg); //86.25% => 155.25deg
+  }
+
+  .progress__bar :is(.grass, .totally--validated) {
+    border-color: rgb(153, 224, 75);
+    transform: rotate(180deg); //100% => 180deg
+  }
+
+
+  .progress__bar {
+    .red {
+      z-index: 1000;
+    }
 
     .totally--invalidated {
-      background: linear-gradient(to right, rgba(234, 88, 88, 1) 45%, rgba(248, 148, 36, 0.5) 45% 58.75%,
-      rgba(187, 199, 214, 0.5) 58.75% 72.5%, rgba(46, 204, 113, 0.5) 72.5% 86.25%, rgba(153, 224, 75, 0.5) 86.25%);
-      z-index: $z-index-1;
+      z-index: 900;
     }
 
-    &.invalided {
-      background: linear-gradient(to right, rgba(234, 88, 88, 0.5) 45%, rgba(248, 148, 36, 1) 45% 58.75%,
-      rgba(187, 199, 214, 0.5) 58.75% 72.5%, rgba(46, 204, 113, 0.5) 72.5% 86.25%, rgba(153, 224, 75, 0.5) 86.25%);
-      z-index: $z-index-1;
+    .orange {
+      z-index: 800;
     }
 
-    &.uncertain {
-      background: linear-gradient(to right, rgba(234, 88, 88, 0.5) 45%, rgba(248, 148, 36, 0.5) 45% 58.75%,
-      rgba(187, 199, 214, 1) 58.75% 72.5%, rgba(46, 204, 113, 0.5) 72.5% 86.25%, rgba(153, 224, 75, 0.5) 86.25%);
-      z-index: $z-index-1;
+    .invalided {
+      z-index: 700;
     }
 
-      &.validated {
-        background: linear-gradient(to right, rgba(234, 88, 88, 0.5) 45%, rgba(248, 148, 36, 0.5) 45% 58.75%,
-        rgba(187, 199, 214, 0.5) 58.75% 72.5%, rgba(46, 204, 113, 1) 72.5% 86.25%, rgba(153, 224, 75, 0.5) 86.25%);
-        z-index: $z-index-1;
-      }
-
-      &.totally--validated {
-        background: linear-gradient(to right, rgba(234, 88, 88, 0.5) 45%, rgba(248, 148, 36, 0.5) 45% 58.75%,
-        rgba(187, 199, 214, 0.5) 58.75% 72.5%, rgba(46, 204, 113, 0.5) 72.5% 86.25%, rgba(153, 224, 75, 1) 86.25%);
-        z-index: $z-index-1;
-      }
+    .grey {
+      z-index: 600;
     }
 
+    .uncertain {
+      z-index: 500;
+    }
 
-  // Container marker //
-  .progress__bar__marker {
-    position: absolute;
-    text-align: center;
-    top: -39px;
+    .green {
+      z-index: $z-index-4;
+    }
 
-    .marker__pointer {
-      background-color: white;
-      width: 2px;
-      height: 23px;
+    .validated {
       z-index: $z-index-3;
-      margin: 4px 0  0 3px;
+    }
+
+    .grass {
+      z-index: $z-index-2;
+    }
+
+    .totally--validated {
+      z-index: $z-index-1;
+    }
+
+  }
+
+  .bar__threshold {
+    width: 2em;
+
+    .two {
+      margin-left: 148px;
     }
   }
 
-  // score //
-  .average__evaluation {
-    font-weight: $font-weight-medium;
-    font-size: $font-size-sm;
 
-    .average__text {
-      position: absolute;
-      width: fit-content;
-    }
+  /* COMPASS
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.needle__circle {
+    top: -1.2em;
+    left: 8.9em;
+    width:$unit-8;
+    height : $unit-8;
+    background-color:white;
+    border-radius:50%;
+    z-index: $z-index-0;
+  }
 
+  .compass__needle::after {
+    content: '';
+    width: 60%;
+    height: 6%;
+    position: absolute;
+    top: -0.14em;
+    left: -2.3em;
+    transform: translateX(0px) rotate(0deg) translateY(0px);
+    border-bottom: $unit-1 solid transparent;
+    border-top: $unit-1 solid transparent;
+    border-left: $unit-9 solid transparent;
+    border-right: 127px solid white;
+    transform-origin: 8%;
+    z-index: $z-index-0;
+  }
+
+  /* SCORE
+  –––––––––––––––––––––––––––––––––––––––––––––––––– */
+  .average__text {
+    left: 43%;
+    top: 90%;
+    width: fit-content;
   }
 
 }
