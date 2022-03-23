@@ -61,7 +61,7 @@
   }
 
   //si c'est la couleur resulat affiche normal else appliaue brightness
-  .progress__bar .totally--invalidated, .invalided, .uncertain, .validated, .totally--validated .fill {
+  .progress__bar .totally--invalidated, .invalided, .uncertain, .validated, .totally--validated {
     filter: brightness(70%);
   }
 
