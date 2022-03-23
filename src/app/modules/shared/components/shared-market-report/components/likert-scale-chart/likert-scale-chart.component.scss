@@ -3,52 +3,32 @@
 /* CONTAINER
   –––––––––––––––––––––––––––––––––––––––––––––––––– */
 .chart__likert_scale {
-  display: flex;
-  flex-direction: column;
   justify-items: center;
-  justify-content: center;
-  width: 300px;
   height: 250px;
-  margin-bottom: 60px;
-  margin-top: 20px;
-  z-index: 2;
-
-  .chart__name{
-    display: inline-block;
-    font-size: 20px;
-    font-weight: $font-weight-medium;
-    width:184px;
-    justify-content: center;
-    justify-items: center;
-    align-items: center;
-    margin-bottom: 20px;
-  }
-
+  margin-bottom: $unit-16;
+  z-index: $z-index-2;
 
   /* ICONS
    –––––––––––––––––––––––––––––––––––––––––––––––––– */
   .fas.icon-container {
     margin: 0 0 1em 9.5em;
-    position: relative;
 
     .fa-user {
 
       &.user__one {
         font-size: 50px;
+        color: $page-color;
+        margin: -16px 23px 0px 2px;
         z-index: $z-index-1;
-        color: #2E6188;
-        margin: -16px 23px 0px 2px;;
       }
 
       &.user__two {
-        position: absolute;
         font-size: 47px;
         margin: -0.2em 0em 0em -0.5em;
         z-index: $z-index-1;
       }
 
       &.user__three {
-        position: absolute;
         font-size: 37px;
         margin: -2.3px -42px 7px -0.5px;
         z-index: $z-index-0;
@@ -61,176 +41,140 @@
 
   /* PROGRESS BAR
   –––––––––––––––––––––––––––––––––––––––––––––––––– */
-  .progress__bar *, .progress__bar::before {
-    box-sizing: border-box;
-  }
-
   .progress__bar {
-    position: relative;
-    width: 300px;
     height: 150px;
-    overflow: hidden;
     mask-type: alpha;
     -webkit-mask: radial-gradient(at 50% 100%, #0000 53%, #2E6188 58%);
-    z-index: 1;
+    z-index: $z-index-1;
   }
 
-
   .progress__bar .fill {
-    position: absolute;
     top: 100%;
     left: 0;
     width: inherit;
     height: inherit;
-    border: 30px outset;
+    border: 30px solid;
     border-top: none;
     border-bottom-left-radius: 150px;
     border-bottom-right-radius: 150px;
     transform-origin: 50% 0;
   }
 
-  .progress__bar .red {
-    z-index: 10;
-    border-color: rgba(234, 88, 88, 1);
-    transform: rotate(81deg);
+  //si c'est la couleur resulat affiche normal else appliaue brightness
+  .progress__bar .totally--invalidated, .invalided, .uncertain, .validated, .totally--validated .fill {
+    filter: brightness(70%);
   }
 
-  .progress__bar .totally--invalidated {
-    z-index: 9;
+  .progress__bar :is(.red, .totally--invalidated) {
     border-color: rgb(234, 88, 88);
-    filter: brightness(70%);
     transform: rotate(81deg); // 45% => 81deg
-    //border: 2px solid;
   }
 
-  .progress__bar .orange {
-    z-index: 8;
-    border-color: rgba(248, 148, 36, 1);
-    transform: rotate(105.75deg);
-  }
-
-  .progress__bar .invalided {
-    z-index: 7;
+  .progress__bar :is(.orange, .invalided) {
     border-color: rgb(248, 148, 36);
-    filter: brightness(70%);
     transform: rotate(105.75deg); // 58.75% => 105.75deg  58.75/100 * 180 = 105.75deg
   }
 
+  .progress__bar {
+    .red {
+      z-index: 1000;
+    }
+
+    .totally--invalidated {
+      z-index: 900;
+    }
+
+    .orange {
+      z-index: 800;
+    }
+  }
+
+
+  .progress__bar .invalided {
+    z-index: 700;
+  }
+
   .progress__bar .grey {
-    z-index: 6;
-    border-color: rgba(187, 199, 214, 1);
+    border-color: rgb(187, 199, 214);
     transform: rotate(130.5deg);
+    z-index: 600;
   }
 
   .progress__bar .uncertain {
-    z-index: 5;
     border-color: rgb(187, 199, 214);
-    filter: brightness(70%);
     transform: rotate(130.5deg); // 72.5% => 130.5deg
+    z-index: 500;
   }
 
   .progress__bar .green {
-    z-index: 4;
     border-color: rgba(46, 204, 113, 1);
     transform: rotate(155.25deg);
+    z-index: $z-index-4;
   }
 
   .progress__bar .validated {
-    z-index: 3;
     border-color: rgb(46, 204, 113);
-    filter: brightness(70%);
     transform: rotate(155.25deg); //86.25% => 155.25deg
+    z-index: $z-index-3;
   }
 
   .progress__bar .grass {
-    z-index: 2;
     border-color: rgba(153, 224, 75, 2);
     transform: rotate(180deg);
+    z-index: $z-index-2;
   }
 
   .progress__bar .totally--validated {
-    z-index: 1;
     border-color: rgb(153, 224, 75);
-    filter: brightness(70%);
     transform: rotate(180deg); //100% => 180deg
+    z-index: $z-index-1;
   }
 
   .bar__threshold {
-    display: flex;
-    align-items: center;
-    font-size: 14px;
     width: 2em;
-    margin-top: 10px;
   }
 
   .bar__threshold .two {
-    margin-left: 124px;
+    margin-left: 148px;
   }
 
 
 
   /* COMPASS
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
-  .compass {
-    position:relative;
+.needle__circle {
+    //position:absolute;
+    top: -1.2em;
+    left: 8.9em;
+    width:$unit-8;
+    height : $unit-8;
+    background-color:white;
+    border-radius:50%;
+    z-index: $z-index-0;
+  }
 
-    .needle__circle {
-      position:absolute;
-      top: -1.2em;
-      left: 8.9em;
-      width:30px;
-      height : 30px;
-      background-color:white;
-      border-radius:50%;
-      z-index: 0;
-      margin:auto;
-    }
-
-    //si c'est la couleur resulat affiche normal else appliaue brightness
-
-    .compass__needle::after {
-      content: '';
-      width: 60%;
-      height: 6%;
-      position: absolute;
-      top: -0.14em;
-      left: -2.3em;
-      transform: translateX(0px) rotate(0deg) translateY(0px);
-      border-bottom: 5px solid transparent;
-      border-top: 5px solid transparent;
-      border-left: 35px solid transparent;
-      border-right: 127px solid white;
-      transform-origin: 8%;
-      z-index: 5;
-    }
-
-    .compass__needle__test {
-      width: 60%;
-      height: 6%;
-      position: absolute;
-      bottom: -5%;
-      left: 0;
-      background:
-        conic-gradient(at -20% 50%, #0000 88deg, #000 88.25deg 91.75deg, #0000 92deg);
-      transform-origin: 83.33333% 50%;
-      transform: rotate(60deg);
-      z-index:5
-    }
+  .compass__needle::after {
+    content: '';
+    width: 60%;
+    height: 6%;
+    position: absolute;
+    top: -0.14em;
+    left: -2.3em;
+    transform: translateX(0px) rotate(0deg) translateY(0px);
+    border-bottom: $unit-1 solid transparent;
+    border-top: $unit-1 solid transparent;
+    border-left: $unit-9 solid transparent;
+    border-right: 127px solid white;
+    transform-origin: 8%;
+    z-index: $z-index-0;
   }
 
   /* SCORE
   –––––––––––––––––––––––––––––––––––––––––––––––––– */
-  .average__evaluation {
-    font-weight: $font-weight-medium;
-    font-size: $font-size-sm;
-
-    .average__text {
-      position: absolute;
-      left: 43%;
-      top: 90%;
-      width: fit-content;
-    }
-
+  .average__text {
+    left: 43%;
+    top: 90%;
+    width: fit-content;
   }
 
 }
