@@ -75,6 +75,22 @@
     transform: rotate(105.75deg); // 58.75% => 105.75deg  58.75/100 * 180 = 105.75deg
   }
 
+  .progress__bar :is(.grey, .uncertain) {
+    border-color: rgb(187, 199, 214);
+    transform: rotate(130.5deg); // 72.5% => 130.5deg
+  }
+
+  .progress__bar :is(.green, .validated) {
+    border-color: rgb(46, 204, 113);
+    transform: rotate(155.25deg); //86.25% => 155.25deg
+  }
+
+  .progress__bar :is(.grass, .totally--validated) {
+    border-color: rgb(153, 224, 75);
+    transform: rotate(180deg); //100% => 180deg
+  }
+
+
   .progress__bar {
     .red {
       z-index: 1000;
@@ -87,63 +103,49 @@
     .orange {
       z-index: 800;
     }
-  }
 
+    .invalided {
+      z-index: 700;
+    }
 
-  .progress__bar .invalided {
-    z-index: 700;
-  }
+    .grey {
+      z-index: 600;
+    }
 
-  .progress__bar .grey {
-    border-color: rgb(187, 199, 214);
-    transform: rotate(130.5deg);
-    z-index: 600;
-  }
+    .uncertain {
+      z-index: 500;
+    }
 
-  .progress__bar .uncertain {
-    border-color: rgb(187, 199, 214);
-    transform: rotate(130.5deg); // 72.5% => 130.5deg
-    z-index: 500;
-  }
+    .green {
+      z-index: $z-index-4;
+    }
 
-  .progress__bar .green {
-    border-color: rgba(46, 204, 113, 1);
-    transform: rotate(155.25deg);
-    z-index: $z-index-4;
-  }
+    .validated {
+      z-index: $z-index-3;
+    }
 
-  .progress__bar .validated {
-    border-color: rgb(46, 204, 113);
-    transform: rotate(155.25deg); //86.25% => 155.25deg
-    z-index: $z-index-3;
-  }
+    .grass {
+      z-index: $z-index-2;
+    }
 
-  .progress__bar .grass {
-    border-color: rgba(153, 224, 75, 2);
-    transform: rotate(180deg);
-    z-index: $z-index-2;
-  }
+    .totally--validated {
+      z-index: $z-index-1;
+    }
 
-  .progress__bar .totally--validated {
-    border-color: rgb(153, 224, 75);
-    transform: rotate(180deg); //100% => 180deg
-    z-index: $z-index-1;
   }
 
   .bar__threshold {
     width: 2em;
-  }
 
-  .bar__threshold .two {
-    margin-left: 148px;
+    .two {
+      margin-left: 148px;
+    }
   }
-
 
 
   /* COMPASS
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 .needle__circle {
-    //position:absolute;
     top: -1.2em;
     left: 8.9em;
     width:$unit-8;
