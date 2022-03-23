@@ -529,8 +529,5 @@
       "prefix": "app",
       "style": "scss"
     }
-  },
-  "cli": {
-    "analytics": false
   }
 }

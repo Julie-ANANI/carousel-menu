@@ -490,38 +490,46 @@ export class ResponseService {
    * @param averageFinalScore (LikertScaleChart)
    */
   public static getLikertScaleGraphicScore (averageFinalScore: number) {
-    //todo ju to comment and range code
 
-    /* This multiplier is to have the value in percentage*/
-    const multiplyPercentage = 20;
+    /* BASE VALUE
+ –––––––––––––––––––––––––––––––––––––––––––––––––– */
     const numberOfCategories = 5;
     // let interval = (5-threshold)/numberOfCategories
 
-    //It's for calculate for the progress_bar old design of likert-scale
+    /*This scale is the starting point for our 0 score. It represents the failure rate of innovations that is specific to the UMI data.
+    The score below this scale is considered as null*/
+    //const threshold = 2.25;
+
+    /* PROGRESS BAR DESIGN LINE
+ –––––––––––––––––––––––––––––––––––––––––––––––––– */
+    const multiplyPercentage = 20; // This multiplier is to have the value in percentage because the score are on 5
+
+    /*    It's obsolete solution*/
+    /* This value is defined by which number we want to divide our score*/
+    /* The percentage is rounded because the pointer goes over either 0 or 100 because the bar is rounded */
+    let percentage: number = (averageFinalScore * multiplyPercentage); // will give margin percentage for the pointer of marker
+
+    //It's for calculate for the progress_bar old design or use case of likert-scale
     let scorePercentage: string = (averageFinalScore * multiplyPercentage).toString() +'%';
+
     if (averageFinalScore === 0 ) {
       scorePercentage = (1).toString() +'%';
     } else if (averageFinalScore === numberOfCategories){
       scorePercentage = (97).toString() +'%';
     }
 
+    /* PROGRESS BAR DESIGN COMPASS
+ –––––––––––––––––––––––––––––––––––––––––––––––––– */
+    const multiplyDegree = 180; // 360/2 = 180deg
 
-    const multiplyDegree = 180; //360/2 = 180deg
-   // 58.75/100 * 180 = 105.75deg
+    let scoreOfHundred = averageFinalScore * multiplyPercentage //multiply pqr 20 pour note sur 100
 
-    //multiply pqr 20 pour note sur 100
-    let scoreOfHundred = averageFinalScore * multiplyPercentage
-    //divise sur 100
-    scoreOfHundred = scoreOfHundred / 100;
+    scoreOfHundred = scoreOfHundred / 100; // divise sur 100 for pourcentage deg
 
-    //It's for calculate for the compass new design of likert-scale
-    let scoreRotate: string = ((scoreOfHundred) * multiplyDegree).toString() + 'deg';
+    let scoreRotate: string = ((scoreOfHundred) * multiplyDegree).toString() + 'deg'; // score final deg
 
-    // Step 1 constitution of index color
-    /*This scale is the starting point for our 0 score. It represents the failure rate of innovations that is specific to the UMI data.
-    The score below this scale is considered as null*/
-    //const threshold = 2.25;
 
+    // Step Constitution of index color
     let index = 0;
     const score = averageFinalScore
 
@@ -537,17 +545,14 @@ export class ResponseService {
       index = 4;
     }
 
-/*    It's obsolete solution*/
-    /* This value is defined by which number we want to divide our score*/
-    /* The percentage is rounded because the pointer goes over either 0 or 100 because the bar is rounded */
-    let percentage: number = (averageFinalScore * multiplyPercentage); // will give margin percentage for the pointer of marker
+
     return {
       name: colorsAndNames[index].name,
       color: colorsAndNames[index].color,
       score: averageFinalScore,
-      scorePercent: scorePercentage.toString(),
-      scoreRotate: scoreRotate.toString(),
-      percentage : percentage > 5 ? (percentage - 5) : percentage,
+      scorePercent: scorePercentage.toString(), // example 0%
+      scoreRotate: scoreRotate.toString(),  // example 0deg
+      percentage : percentage > 5 ? (percentage - 5) : percentage,  // example  0
       index: index,
     };
   };
