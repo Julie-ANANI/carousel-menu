@@ -582,6 +582,10 @@
 
       <!-- upload overlay -->
       <div *ngIf="displayUploadOverlay('addMedias')">
+        <div class="modal active">
+          <div class="modal-overlay"></div>
+          <div class="modal-container">
+            <div class="modal-body">
         <!-- image -->
                     <div *ngIf="isEditable" class="bg-white box-shadow">
                       <app-shared-upload-zone-photo
@@ -600,6 +604,10 @@
                     </div>
         </div>
         <!-- /video -->
+            </div>
+          </div>
+          <button class="modal-close"></button>
+        </div>
       </div>
       <!-- /upload overlay -->
 
