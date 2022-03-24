@@ -16,21 +16,21 @@
     .fa-user {
 
       &.user__one {
-        font-size: 50px;
+        font-size: 25px;
         color: $page-color;
-        margin: -16px 23px 0px 2px;
+        margin: -8px 10px 0px 2px;
         z-index: $z-index-1;
       }
 
       &.user__two {
-        font-size: 47px;
+        font-size: 23.5px;
         margin: -0.2em 0em 0em -0.5em;
         z-index: $z-index-1;
       }
 
       &.user__three {
-        font-size: 37px;
-        margin: -2.3px -42px 7px -0.5px;
+        font-size: 18.5px;
+        margin: 0.69px -18px 7px -0.5px;
         z-index: $z-index-0;
       }
 
