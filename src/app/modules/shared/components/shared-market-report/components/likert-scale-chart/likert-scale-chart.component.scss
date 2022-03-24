@@ -81,12 +81,12 @@
   }
 
   .progress__bar :is(.green, .validated) {
-    border-color: rgb(46, 204, 113);
+    border-color: rgb(153, 224, 75);
     transform: rotate(155.25deg); //86.25% => 155.25deg
   }
 
   .progress__bar :is(.grass, .totally--validated) {
-    border-color: rgb(153, 224, 75);
+    border-color: rgb(46, 204, 113);
     transform: rotate(180deg); //100% => 180deg
   }
 
