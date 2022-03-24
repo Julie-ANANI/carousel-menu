@@ -3,6 +3,11 @@
 
 // styles that are related to the upload zone photo/video.
 
+file-drop.media-card {
+  width: 200px;
+  min-height: 120px !important;
+}
+
 .upload-video-zone, file-drop.drop-container {
   border: $border-width-lg dashed $border-default-color;
   position: relative;

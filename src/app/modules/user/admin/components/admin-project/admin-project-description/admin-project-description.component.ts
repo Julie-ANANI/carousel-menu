@@ -24,8 +24,7 @@ type modalType = 'NEW_SECTION' | 'DELETE_SECTION' | 'NOTIFY_TEAM' | '';
 interface Toggle {
   title: boolean;
   summary: boolean;
-  addMedias: boolean;
-  [property: string]: boolean;
+  addMedias?: boolean;
 }
 
 @Component({
@@ -81,6 +80,12 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
   private _showSuggestion: Toggle = {
     title: false,
     summary: false
+  };
+
+  private _showMediaCard: Toggle = {
+    title: false,
+    summary: false,
+    addMedias: false
   };
 
   private _togglePreviewMode: Toggle = {
@@ -599,6 +604,10 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
 
   get showSuggestion(): Toggle {
     return this._showSuggestion;
+  }
+
+  get showMediaCard(): Toggle {
+    return this._showMediaCard;
   }
 
   ngOnDestroy(): void {

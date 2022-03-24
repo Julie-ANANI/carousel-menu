@@ -3,7 +3,7 @@
   "version": "2.13.20-RC1",
   "license": "MIT",
   "scripts": {
-    "serve": "ng serve -c=local",
+    "serve": "ng serve umi -c=local",
     "serve:dynergie": "ng serve dynergie -c=local",
     "serve:multivalente": "ng serve multivalente -c=local",
     "build": "ng build",

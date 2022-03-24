@@ -557,6 +557,19 @@
               </button>
               <!-- /edit-preview button -->
             </div>
+            <div *ngIf="isEditable && !getPadPreviewMode('addMedias')">
+              Edit Mode
+              <file-drop class="drop-container media-card text-center">
+                <div class="icon-container is-overlay is-blue">
+          <span class="tooltip" data-tooltip="Delete tooltip">
+            <i class="icon icon-plus"></i>
+          </span>
+                </div>
+              </file-drop>
+            </div>
+            <div *ngIf="getPadPreviewMode('addMedias')">
+              View Mode
+            </div>
 <!--            <div *ngIf="isEditable" class="bg-white box-shadow">-->
 <!--              <app-shared-upload-zone-photo-->
 <!--                [uri]="'/innovation/'+innovation._id+'/innovationCard/'+activeInnovCard._id+'/media/image'"-->
