@@ -559,8 +559,8 @@
             </div>
             <!-- edit mode -->
             <div *ngIf="isEditable && !getPadPreviewMode('addMedias')">
-              <file-drop class="drop-container media-card text-center">
-                <div class="icon-container is-overlay is-blue">
+              <file-drop class="drop-container media-card text-center" (click)="displayUploadOverlay('addMedias')">
+                <div class="icon-container is-overlay">
                   <span class="tooltip" data-tooltip="Delete tooltip">
                     <i class="icon icon-plus"></i>
                   </span>
@@ -571,7 +571,7 @@
 
             <!-- view mode -->
             <div *ngIf="getPadPreviewMode('addMedias')">
-<!--              View Mode-->
+              View Mode
             </div>
             <!-- /view mode -->
           </div>
@@ -581,16 +581,16 @@
 
 
       <!-- upload overlay -->
-<!--      <div>
-        &lt;!&ndash; image &ndash;&gt;
+      <div *ngIf="displayUploadOverlay('addMedias')">
+        <!-- image -->
                     <div *ngIf="isEditable" class="bg-white box-shadow">
                       <app-shared-upload-zone-photo
                         [uri]="'/innovation/'+innovation._id+'/innovationCard/'+activeInnovCard._id+'/media/image'"
                         (cbFn)="uploadImage($event)">
                       </app-shared-upload-zone-photo>
                     </div>
-        &lt;!&ndash; /image &ndash;&gt;
-        &lt;!&ndash; video &ndash;&gt;
+        <!-- /image -->
+        <!-- video -->
         <div style="padding-top: 45px" class="section-suggestion">
                     <div *ngIf="isEditable" class="bg-white box-shadow">
                       <app-shared-upload-zone-video
@@ -599,8 +599,8 @@
                       </app-shared-upload-zone-video>
                     </div>
         </div>
-        &lt;!&ndash; /video &ndash;&gt;
-      </div>-->
+        <!-- /video -->
+      </div>
       <!-- /upload overlay -->
 
 

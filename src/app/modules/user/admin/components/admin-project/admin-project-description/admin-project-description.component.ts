@@ -87,6 +87,12 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
     summary: true
   };
 
+  private _displayUploadOverlay: Toggle = {
+    title: false,
+    summary: false,
+    addMedias: true
+  }
+
   private _isSavingMedia = false;
 
   private _isEditableComment = false;
@@ -505,6 +511,10 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
 
   public getPadPreviewMode(value: string) {
     return this._togglePreviewMode[value];
+  }
+
+  public displayUploadOverlay(title: string) {
+    return this._displayUploadOverlay['addMedias'] = !this._displayUploadOverlay['addMedias'];
   }
 
   public isNotMainMedia(media: any): boolean {
