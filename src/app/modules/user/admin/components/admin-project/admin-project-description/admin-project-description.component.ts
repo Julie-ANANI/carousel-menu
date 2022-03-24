@@ -82,12 +82,6 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
     summary: false
   };
 
-  private _showMediaCard: Toggle = {
-    title: false,
-    summary: false,
-    addMedias: false
-  };
-
   private _togglePreviewMode: Toggle = {
     title: true,
     summary: true
@@ -606,9 +600,6 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
     return this._showSuggestion;
   }
 
-  get showMediaCard(): Toggle {
-    return this._showMediaCard;
-  }
 
   ngOnDestroy(): void {
     this._ngUnsubscribe.next();
