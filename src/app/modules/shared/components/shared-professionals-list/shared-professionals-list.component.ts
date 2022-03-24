@@ -78,8 +78,6 @@ export class SharedProfessionalsListComponent {
 
   private _isDeleting = false;
 
-  private _isLoading = false;
-
   private _isSelectAll = false;
 
   private _countriesSelected: Array<any> = [];
@@ -722,10 +720,6 @@ export class SharedProfessionalsListComponent {
 
   set isShowModal(value: boolean) {
     this._isShowModal = value;
-  }
-
-  get isLoading(): boolean {
-    return this._isLoading;
   }
 
   get isFiltersSidebar(): boolean {
