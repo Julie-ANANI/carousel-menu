@@ -148,7 +148,7 @@ export class SharedProfessionalsListComponent {
           : null,
       _columns: [
         {
-          _attrs: ['ambassador.is'],
+          _attrs: ['member'],
           _name: 'Member',
           _type: 'MULTI-IMAGE-CHOICES',
           _isSearchable: this.canAccess(['searchBy', 'member']),
@@ -302,6 +302,7 @@ export class SharedProfessionalsListComponent {
   }
 
   public onClickEdit(value: Professional) {
+    this._resetSidebarVariables('professional')
     this._resetSidebarVariables('tags');
     this._resetSidebarVariables('filters');
     this._professionalsService
@@ -539,6 +540,10 @@ export class SharedProfessionalsListComponent {
     index?: number,
     total?: number
   ) {
+    // If company is empty we remove field before saving
+    if(value.company && !value.company.domain) {
+      delete value.company;
+    }
     this._professionalsService
       .save(value._id, value)
       .pipe(first())
