@@ -24,6 +24,7 @@ type modalType = 'NEW_SECTION' | 'DELETE_SECTION' | 'NOTIFY_TEAM' | '';
 interface Toggle {
   title: boolean;
   summary: boolean;
+  addMedias: boolean;
   [property: string]: boolean;
 }
 
@@ -216,7 +217,8 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
 
     this._togglePreviewMode = {
       title: true,
-      summary: true
+      summary: true,
+      addMedias: true
     };
 
     for (let i = 0; i < this.activeInnovCard.sections.length; i++) {

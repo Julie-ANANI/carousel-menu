@@ -537,32 +537,44 @@
         <!-- image -->
         <div class="section-content">
           <div class="form-group">
-            <div class="title-wrapper">
+            <div class="d-flex align-center flex-wrap-wrap title-wrapper">
               <label class="form-label" id="project-media-href">
                 <span class="shape is-rounded bg-draft text-white">
                   {{ activeInnovCard.sections && activeInnovCard.sections.length + 3 || 4 }}
                 </span>
                 Add medias
               </label>
+              <!-- edit-preview button -->
+              <button
+                *ngIf="isEditable"
+                [attr.data-tooltip]="!(getPadPreviewMode('addMedias'))? 'Preview':'Edit'"
+                (click)="padPreviewModeOnChange('addMedias')"
+                class="button tooltip is-circled is-action is-outlined text-no-underline is-info is-xs text-sm op-text text-meta m-left-15"
+                type="button">
+                <i class="fas fa-pencil-alt"
+                   *ngIf="getPadPreviewMode('addMedias')"></i>
+                <i class="fas fa-eye" *ngIf="!getPadPreviewMode('addMedias')"></i>
+              </button>
+              <!-- /edit-preview button -->
             </div>
-            <div *ngIf="isEditable" class="bg-white box-shadow">
-              <app-shared-upload-zone-photo
-                [uri]="'/innovation/'+innovation._id+'/innovationCard/'+activeInnovCard._id+'/media/image'"
-                (cbFn)="uploadImage($event)">
-              </app-shared-upload-zone-photo>
-            </div>
+<!--            <div *ngIf="isEditable" class="bg-white box-shadow">-->
+<!--              <app-shared-upload-zone-photo-->
+<!--                [uri]="'/innovation/'+innovation._id+'/innovationCard/'+activeInnovCard._id+'/media/image'"-->
+<!--                (cbFn)="uploadImage($event)">-->
+<!--              </app-shared-upload-zone-photo>-->
+<!--            </div>-->
           </div>
         </div>
         <!-- /image -->
 
         <!-- video -->
         <div style="padding-top: 45px" class="section-suggestion">
-          <div *ngIf="isEditable" class="bg-white box-shadow">
-            <app-shared-upload-zone-video
-              (cbFn)="uploadVideo($event)"
-              [isUploading]="isUploadingVideo">
-            </app-shared-upload-zone-video>
-          </div>
+<!--          <div *ngIf="isEditable" class="bg-white box-shadow">-->
+<!--            <app-shared-upload-zone-video-->
+<!--              (cbFn)="uploadVideo($event)"-->
+<!--              [isUploading]="isUploadingVideo">-->
+<!--            </app-shared-upload-zone-video>-->
+<!--          </div>-->
         </div>
         <!-- /video -->
 
