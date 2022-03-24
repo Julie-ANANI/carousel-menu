@@ -583,7 +583,7 @@
       <!-- upload overlay -->
       <div *ngIf="displayUploadOverlay('addMedias')">
         <div class="modal active">
-          <div class="modal-overlay"></div>
+          <div class="modal-overlay" (click)="displayUploadOverlay('addMedias')"></div>
           <div class="modal-container">
             <div class="modal-body">
         <!-- image -->
@@ -606,7 +606,7 @@
         <!-- /video -->
             </div>
           </div>
-          <button class="modal-close"></button>
+          <button class="modal-close" (click)="displayUploadOverlay('addMedias')"></button>
         </div>
       </div>
       <!-- /upload overlay -->
