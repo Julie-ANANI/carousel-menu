@@ -38,10 +38,6 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
     return this._notificationJobs;
   }
 
-  get isFetchingJobs(): boolean {
-    return this._isFetchingJobs;
-  }
-
   get isSendingNotification(): boolean {
     return this._isSendingNotification;
   }

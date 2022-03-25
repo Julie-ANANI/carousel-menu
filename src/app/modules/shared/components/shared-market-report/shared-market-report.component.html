@@ -15,11 +15,11 @@
   <div
     *ngIf="innovation.status === 'DONE' || previewMode || (innovation.status !== 'EDITING' && adminSide)"
     style="background-color: #F5F5F5">
-    <div class="container fluid grid-2xl animate-fade is-5">
+    <div class="container fluid">
       <div class="pws-wrapper">
 
         <!-- sidebar -->
-        <aside style="max-width: 297px" class="sidebar-wrapper">
+        <aside class="sidebar-wrapper">
           <umius-sidebar-inline [(template)]="leftSidebarTemplateValue">
             <ng-container *ngIf="displayFilters; else displayLoader">
               <app-sidebar-filter-answers
