@@ -56,7 +56,7 @@
               <!-- project status is on DONE addmin side - notif document button -->
               <button
                 *ngIf="innovation.status === 'DONE' && adminSide"
-                (click)="openNotifModal()"
+                (click)="openModal($event, 'NOTIFY_DOCUMENTS')"
                 class="button is-outlined m-auto"
                 type="button">
                 Send availability of documents mail
