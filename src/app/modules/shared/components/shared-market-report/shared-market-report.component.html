@@ -51,22 +51,35 @@
 
           <!-- synthesis reporting lang -->
           <ng-container *ngIf="!areAnswersLoading && adminSide">
-            <div class="d-flex flex-d-row align-center justify-end dropdown w-full m-top-15 is-right">
+            <div class="d-flex align-center justify-end flex-wrap-wrap dropdown w-full m-top-15 is-right">
+
+              <!-- project status is on DONE addmin side - notif document button -->
+              <button
+                *ngIf="innovation.status === 'DONE' && adminSide"
+                (click)="openNotifModal()"
+                class="button m-auto"
+                type="button">
+                Send availability of documents mail
+              </button>
+              <!-- /project status is on DONE addmin side - notif document button -->
+
+              <div class="lang-selector">
               <span class="text-13 m-right-4">
                 {{ 'MARKET_REPORT.RESTITUTION_LANG' | translateIn: reportingLang }}
               </span>
-              <a class="button dropdown-toggle has-no-min-width is-info is-outlined" tabindex="0">
-                {{ 'COMMON.LANG.' + reportingLang | uppercase | translateIn: reportingLang }}
-                <i class="icon icon-caret"></i>
-              </a>
-              <ul class="menu">
-                <li (click)="setNewSelectedLang('fr')" *ngIf="reportingLang === 'en'" class="menu-item">
-                  {{ 'COMMON.LANG.FR' | translateIn: reportingLang }}
-                </li>
-                <li (click)="setNewSelectedLang('en')" *ngIf="reportingLang === 'fr'" class="menu-item">
-                  {{ 'COMMON.LANG.EN' | translateIn: reportingLang }}
-                </li>
-              </ul>
+                <a class="button dropdown-toggle has-no-min-width is-info is-outlined" tabindex="0">
+                  {{ 'COMMON.LANG.' + reportingLang | uppercase | translateIn: reportingLang }}
+                  <i class="icon icon-caret"></i>
+                </a>
+                <ul class="menu">
+                  <li (click)="setNewSelectedLang('fr')" *ngIf="reportingLang === 'en'" class="menu-item">
+                    {{ 'COMMON.LANG.FR' | translateIn: reportingLang }}
+                  </li>
+                  <li (click)="setNewSelectedLang('en')" *ngIf="reportingLang === 'fr'" class="menu-item">
+                    {{ 'COMMON.LANG.EN' | translateIn: reportingLang }}
+                  </li>
+                </ul>
+              </div>
             </div>
           </ng-container>
           <!-- /synthesis reporting lang -->
@@ -123,13 +136,15 @@
           <!-- /origin comment and professional responses -->
 
           <!-- map -->
-          <section class="p-top-15" id="map" [hidden]="areAnswersLoading || questions.length === 0"> <!-- do not replace hidden with ngIf -->
+          <section class="p-top-15" id="map" [hidden]="areAnswersLoading || questions.length === 0">
+            <!-- do not replace hidden with ngIf -->
             <app-shared-worldmap [countriesData]="answersByCountries"></app-shared-worldmap>
           </section>
           <!-- /map -->
 
           <!-- professionals -->
-          <section class="p-bottom-50" id="professionals" *ngIf="answersOrigins && !areAnswersLoading && answers && questions.length > 0">
+          <section class="p-bottom-50" id="professionals"
+                   *ngIf="answersOrigins && !areAnswersLoading && answers && questions.length > 0">
 
             <div *ngIf="filteredAnswers.length" class="text-center p-top-25">
               <button
@@ -146,7 +161,8 @@
               <div class="card-wrapper card-3">
                 <div *ngFor="let answer of filteredAnswers" class="card is-card-3 relative">
                   <div (click)="filterPro(answer, $event)" class="icon-container text-alert absolute">
-                    <span class="tooltip" [attr.data-tooltip]="'MARKET_REPORT.TOOLTIP_HIDE_PROFESSIONAL' | translateIn: reportingLang">
+                    <span class="tooltip"
+                          [attr.data-tooltip]="'MARKET_REPORT.TOOLTIP_HIDE_PROFESSIONAL' | translateIn: reportingLang">
                       <i class="fas fa-eye-slash" aria-hidden="true"></i>
                     </span>
                   </div>
