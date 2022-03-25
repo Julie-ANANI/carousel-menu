@@ -618,6 +618,10 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy, OnChanges
     );
   }
 
+  openNotifModal() {
+    this._showModal = true;
+  }
+
   updateNewPro(value: any) {
     const proToUpdate = this._answers.find((item) => item._id === value._id);
     proToUpdate.professional = !proToUpdate.professional
