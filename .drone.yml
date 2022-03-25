@@ -1,12 +1,18 @@
 kind: pipeline
 name: default
+type: docker
 
 ## UMI development steps -
 steps:
 - name: baseimage
   image: plugins/docker
+  environment:
+    NPM_READONLY_TOKEN:
+      from_secret: npm_ro_token
   settings:
     repo: unitedmotionideas/frontbase
+    build_args_from_env:
+      - NPM_READONLY_TOKEN
     target: baseimage
     dockerfile: ./Dockerfile.image
     build_args:
@@ -63,9 +69,14 @@ steps:
 ## This will build the base image. The base image for the front is the same for all instances
 - name: baseimageProd
   image: plugins/docker
+  environment:
+    NPM_READONLY_TOKEN:
+      from_secret: npm_ro_token
   settings:
     auto_tag: true
     repo: unitedmotionideas/frontbase
+    build_args_from_env:
+      - NPM_READONLY_TOKEN
     target: baseimage
     dockerfile: ./Dockerfile.image
     build_args:
