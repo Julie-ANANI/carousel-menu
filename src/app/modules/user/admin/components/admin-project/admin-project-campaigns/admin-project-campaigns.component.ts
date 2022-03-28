@@ -44,9 +44,9 @@ import {UmiusSidebarInterface} from '@umius/umi-common-component';
         query(':enter', style({opacity: 0}), {optional: true}),
         query(
           ':enter',
-          stagger('300ms', [
+          stagger('200ms', [
             animate(
-              '300ms ease-in-out',
+              '200ms ease-in-out',
               keyframes([
                 style({opacity: 0, transform: 'translateX(-20%)', offset: 0}),
                 style({opacity: 1, transform: 'translateX(0)', offset: 1.0}),
@@ -196,7 +196,7 @@ export class AdminProjectCampaignsComponent implements OnInit, OnDestroy {
           },
           (err: HttpErrorResponse) => {
             this._translateNotificationsService.error(
-              'ERROR.ERROR',
+              'Campaign Add Error...',
               ErrorFrontService.getErrorKey(err.error)
             );
             this._isAddingCampaign = false;
@@ -252,7 +252,7 @@ export class AdminProjectCampaignsComponent implements OnInit, OnDestroy {
         },
         (err: HttpErrorResponse) => {
           this._translateNotificationsService.error(
-            'ERROR.ERROR',
+            'Campaign Update Error...',
             ErrorFrontService.getErrorKey(err.error)
           );
           this._selectCampaign = null;
@@ -281,12 +281,17 @@ export class AdminProjectCampaignsComponent implements OnInit, OnDestroy {
         },
         (err: HttpErrorResponse) => {
           this._translateNotificationsService.error(
-            'ERROR.ERROR',
+            'Campaign Stats Error...',
             ErrorFrontService.getErrorKey(err.error)
           );
           console.error(err);
         }
       );
+  }
+
+  public closeModal(event: Event) {
+    event.preventDefault();
+    this._activateModal = false;
   }
 
   /***
@@ -301,7 +306,7 @@ export class AdminProjectCampaignsComponent implements OnInit, OnDestroy {
   }
 
   /***
-   * clicks on the Confirm button of the Delete modal.
+   * clicks on the Confirm button of to Delete modal.
    */
   public onConfirmDelete() {
     this._campaignService
@@ -322,7 +327,7 @@ export class AdminProjectCampaignsComponent implements OnInit, OnDestroy {
         },
         (err: HttpErrorResponse) => {
           this._translateNotificationsService.error(
-            'ERROR.ERROR',
+            'Campaign Delete Error...',
             ErrorFrontService.getErrorKey(err.error)
           );
           this._selectCampaign = null;
