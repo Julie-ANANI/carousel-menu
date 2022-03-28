@@ -524,6 +524,14 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
     return true;
   }
 
+ /* public isPortrait(media: UmiusMediaInterface): void {
+    const width: number = media.cloudinary.width;
+    const height: number = media.cloudinary.height;
+    const smth = 4/3;
+    console.log(typeof (width / height));
+    // return (media.cloudinary.width / media.cloudinary.height) < 4/3;
+  }*/
+
   padPreviewModeOnChange(title: string) {
     this._togglePreviewMode[title] = !this._togglePreviewMode[title];
   }
