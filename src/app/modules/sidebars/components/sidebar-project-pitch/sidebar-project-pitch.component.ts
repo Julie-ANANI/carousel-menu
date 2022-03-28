@@ -202,7 +202,7 @@ export class SidebarProjectPitchComponent implements OnInit, OnChanges, OnDestro
   }
 
   /***
-   * to get the Image or Video source for the respective media.
+   * to get the Image or Video source for the respective media. TODO
    * @param media
    * @param type
    */

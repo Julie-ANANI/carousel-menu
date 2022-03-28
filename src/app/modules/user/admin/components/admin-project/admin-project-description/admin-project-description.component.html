@@ -614,55 +614,61 @@
 
       <!-- medias display -->
 
-      <!-- test -->
-      <div *ngIf="activeInnovCard.media.length" style="padding: 8px; width: 40%; height: 400px; display: grid; grid-template-columns: repeat(3, 1fr);
-      grid-template-rows: 60% 35% 5%; gap: 8px; background-color: white; place-items: center; overflow: hidden; margin-bottom: 32px;">
+      <!-- test vertical main media FLEXBOX -->
+      <div *ngIf="activeInnovCard.media.length" style="padding: 8px; width: auto; height: 440px; display: flex; flex-wrap: wrap; flex-direction: column; gap: 8px; background-color: white; align-content: flex-start; overflow: hidden; margin-bottom: 32px;">
 
-        <div style="grid-column: span 3; width: 100%; height: 100%; object-fit: cover;">
-          <figure style="width: 100%; height: 100%; object-fit: cover; background-color: #ccc; display: flex; place-content: center;">
-            <img style="width: auto; height: 100%; object-fit: cover;" src="https://images.unsplash.com/photo-1429041966141-44d228a42775?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80">
+        <div style="width: 290px; height: 100%; object-fit: cover;">
+          <figure style="width: 100%; height: 100%; object-fit: cover; display: flex; place-content: center; background-color: #ccc">
+            <img style="width: 100%; height: 100%; object-fit: cover;" src="https://images.unsplash.com/photo-1526546334624-2afe5b01088d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=3399&q=80">
           </figure>
         </div>
-        <div style="width: 100%; height: 100%; object-fit: cover; padding-bottom: 8px;">
-          <figure style="width: 100%; height: 100%; object-fit: cover; background-color: #ccc; display: flex; place-content: center;">
+        <div style="width: 160px; height: 136px; object-fit: cover;">
+          <figure style="width: 160px; height: 120px; object-fit: cover; background-color: #ccc; display: flex; place-content: center;">
+            <img style="width: 100%; height: 100%; object-fit: cover;" src="https://images.unsplash.com/photo-1429041966141-44d228a42775?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80">
+          </figure>
+          <div style="font-size: 10px; height: 16px; align-self: end">
+            <span>Set as main media</span>
+          </div>
+        </div>
+        <div style="width: 160px; height: 136px; object-fit: cover;">
+          <figure style="width: 160px; height: 120px; object-fit: cover; background-color: #ccc; display: flex; place-content: center;">
             <img style="width: 100%; height: 100%; object-fit: cover;" src="https://images.unsplash.com/photo-1501594907352-04cda38ebc29?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2232&q=80">
           </figure>
-          <div style="grid-row: 3">
+          <div style="font-size: 10px; height: 16px">
             <span>Set as main media</span>
           </div>
         </div>
-        <div style="width: 100%; height: 100%; object-fit: cover; padding-bottom: 8px;">
-          <figure style="width: 100%; height: 100%; object-fit: cover; display: flex; place-content: center; background-color: #ccc">
-            <img style="width: auto; height: 100%; object-fit: cover;" src="https://images.unsplash.com/photo-1526546334624-2afe5b01088d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=3399&q=80">
+        <div style="width: 160px; height: 136px; object-fit: cover;">
+          <figure style="width: 160px; height: 120px; object-fit: cover; display: flex; place-content: center; background-color: #ccc">
+            <img style="width: 100%; height: 100%; object-fit: cover;" src="https://images.unsplash.com/photo-1526546334624-2afe5b01088d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=3399&q=80">
           </figure>
-          <div style="grid-row: 3">
+          <div style="font-size: 10px; height: 16px">
             <span>Set as main media</span>
           </div>
         </div>
-        <div style="width: 100%; height: 100%; object-fit: cover; padding-bottom: 8px;">
-          <figure style="width: 100%; height: 100%; object-fit: cover; background-color: #ccc; display: flex; flex-direction: column; place-content: center;">
-            <img style="width: 100%; height: auto; object-fit: cover;" src="https://images.unsplash.com/photo-1429041966141-44d228a42775?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80">
+        <div style="width: 160px; height: 136px; object-fit: cover;">
+          <figure style="width: 160px; height: 120px; object-fit: cover; background-color: #ccc; display: flex; place-content: center;">
+            <img style="width: 100%; height: 100%; object-fit: cover;" src="https://images.unsplash.com/photo-1501594907352-04cda38ebc29?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2232&q=80">
           </figure>
-          <div style="grid-row: 3">
+          <div style="font-size: 10px; height: 16px">
             <span>Set as main media</span>
           </div>
         </div>
-
       </div>
 
-      <!-- /test -->
+      <!-- /test vertical main media FLEXBOX -->
+
 
       <!-- real one -->
       <div
-        *ngIf="activeInnovCard.media.length" style="padding: 16px; width: 40%; height: 400px; display: grid; grid-template-columns: repeat(3, 1fr);
-      grid-template-rows: 60% 35% 5%; gap: 8px; background-color: white; place-items: center; overflow: hidden;">
+        *ngIf="activeInnovCard.media.length" style="padding: 8px; width: 512px; height: auto; display: flex; flex-wrap: wrap; gap: 8px; background-color: white; place-items: center; overflow: hidden; box-sizing: border-box">
 
         <!-- principal media -->
-        <div *ngIf="activeInnovCard.principalMedia" class="text-center" style="grid-column: span 3; width: 100%; height: 100%; object-fit: cover;">
+        <div *ngIf="activeInnovCard.principalMedia" class="text-center" style="width: 100%; height: 290px; object-fit: cover;">
 
           <!-- if type === 'PHOTO' -->
           <figure *ngIf="activeInnovCard.principalMedia['type'] && activeInnovCard.principalMedia['type'] === 'PHOTO'
-          && mediaSrc(activeInnovCard.principalMedia, 'IMAGE')" style="width: 100%; height: 100%;" style="width: 100%; height: 100%; object-fit: cover; background-color: #ccc; display: flex; place-content: center;">
+          && mediaSrc(activeInnovCard.principalMedia, 'IMAGE')" style="width: 100%; height: 100%; object-fit: cover; background-color: #ccc; display: flex; place-content: center;">
             <img
               style="cursor: pointer; width: 100%; height: 100%; object-fit: cover;"
               (click)="mediaToShow(mediaSrc(activeInnovCard.principalMedia, 'IMAGE'))"
@@ -677,8 +683,6 @@
             *ngIf="activeInnovCard.principalMedia['type'] && activeInnovCard.principalMedia['type'] === 'VIDEO'
             && mediaSrc(activeInnovCard.principalMedia, 'VIDEO')"
             [src]="mediaSrc(activeInnovCard.principalMedia, 'VIDEO')" >
-<!--            height="159"-->
-<!--            width="240">-->
           </iframe>
           <!-- /if type === 'VIDEO' -->
 
@@ -704,18 +708,16 @@
           <ng-container *ngFor="let media of activeInnovCard.media; let i=index;">
             <div
               *ngIf="media._id !== (activeInnovCard.principalMedia && activeInnovCard.principalMedia._id)"
-              class="text-center" style="width: 100%; height: 100%; object-fit: cover; padding-bottom: 8px">
+              class="text-center" style="width: 160px; height: 136px; object-fit: cover; padding-bottom: 8px">
 
               <!-- if type === 'PHOTO' -->
-              <figure *ngIf="media['type'] && media['type'] === 'PHOTO' && mediaSrc(media, 'IMAGE')"  style="width: 100%; height: 100%;" style="width: 100%; height: 100%; object-fit: cover; background-color: #ccc; display: flex; place-content: center;">
+              <figure *ngIf="media['type'] && media['type'] === 'PHOTO' && mediaSrc(media, 'IMAGE')"  style="width: 160px; height: 120px; object-fit: cover; background-color: #ccc; display: flex; place-content: center;">
                 <img
                   style="cursor: pointer; width: 100%; height: 100%; object-fit: cover;"
                   (click)="mediaToShow(mediaSrc(media, 'IMAGE'))"
                   [src]="mediaSrc(media, 'IMAGE')"
                   alt=" "
                   class="img-responsive" >
-<!--                  height="159"-->
-<!--                  width="240">-->
               </figure>
               <!-- /if type === 'PHOTO' -->
 
@@ -729,11 +731,12 @@
               <!-- /if type === 'VIDEO' -->
 
               <!-- set principal -->
-              <div *ngIf="isNotMainMedia(media) && isEditable" class="text-sm p-top-1"  style="grid-row: 3;">
+              <div *ngIf="isNotMainMedia(media) && isEditable" class="text-sm p-top-1 text-left"  style="grid-row: 3;">
                 <span
                   (click)="onSetPrincipal(media)"
                   [ngClass]="isSavingMedia ? 'text-disabled' : 'c-hand text-hover-underline'"
                   class="text-primary"
+                  style="height: 16px"
                   [id]="'btn-principal-media-'+i">
                   Set as main media
                 </span>

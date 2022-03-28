@@ -74,14 +74,24 @@ export class MediaFrontService {
    * @param height - custom height
    * @param options ex: ['c_fill', 'f_auto']
    */
-  public static imageSrc(media: UmiusMediaInterface, width = '240', height = '159', options?: Array<string>): string {
-    let _prefix = `https://res.cloudinary.com/umi/image/upload/c_fill,f_auto,g_center,h_${height},q_auto,w_${width}/`;
+  public static imageSrc(media: UmiusMediaInterface, width?: string, height?: string, options?: Array<string>): string {
+    let _prefix = `https://res.cloudinary.com/umi/image/upload/c_fill,f_auto,g_center`;
     const _suffix = '.jpg';
 
     if (options && options.length > 0) {
       _prefix = `https://res.cloudinary.com/umi/image/upload/`;
-      _prefix += options.join(',') + `,h_${height},w_${width}/`;
+      _prefix += options.join(',');
     }
+
+    if (!!width) {
+      _prefix += `,w_${width}`;
+    }
+
+    if (!!height) {
+      _prefix += `,h_${height}`;
+    }
+
+    _prefix += '/';
 
     return media && media.cloudinary && media.cloudinary.public_id ? _prefix + media.cloudinary.public_id + _suffix : '';
   }
