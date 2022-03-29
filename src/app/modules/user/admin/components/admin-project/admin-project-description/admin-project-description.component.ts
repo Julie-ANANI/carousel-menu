@@ -56,6 +56,12 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
 
   private _showModal = false;
 
+  private _displayUploadOverlay = false;
+
+  private _editedMediaIndex: any = undefined;
+
+  private _isBeingEdited = false;
+
   private _modalType: modalType = '';
 
   private _newSection: InnovCardSection = <InnovCardSection>{};
@@ -87,11 +93,11 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
     summary: true
   };
 
-  private _displayUploadOverlay: Toggle = {
+/*  private _displayUploadOverlay: Toggle = {
     title: false,
     summary: false,
     addMedias: true
-  }
+  };*/
 
   private _isSavingMedia = false;
 
@@ -349,6 +355,18 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
     this._innovationFrontService.setCardCommentNotifyChanges(true);
   }
 
+  public toggleDisplayUploadOverlay() {
+    this._displayUploadOverlay = !this._displayUploadOverlay;
+  }
+
+  public setEditedMediaIndex(index: any) {
+    this._editedMediaIndex = index;
+  }
+
+  public editMedias() {
+    this._isBeingEdited = !this._isBeingEdited;
+  }
+
   public openModal(event: Event, type: modalType, index?: number) {
     event.preventDefault();
     this._modalType = type;
@@ -414,12 +432,20 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
   }
 
   public uploadImage(media: UmiusMediaInterface): void {
-    this.activeInnovCard.media.push(media);
-    if (!this._innovation.innovationCards[this._activeCardIndex].principalMedia) {
-      this._innovation.innovationCards[this._activeCardIndex].principalMedia = media;
-      this.onSetPrincipal(media);
+
+    if (this._editedMediaIndex !== undefined) {
+      this.activeInnovCard.media[this._editedMediaIndex] = media;
+    } else {
+      this.activeInnovCard.media.push(media);
+      if (!this._innovation.innovationCards[this._activeCardIndex].principalMedia) {
+        this._innovation.innovationCards[this._activeCardIndex].principalMedia = media;
+        this.onSetPrincipal(media);
+      }
     }
+
     this._setInnovation();
+    this._translateNotificationsService.success('Success', 'The media has been uploaded.');
+    this.toggleDisplayUploadOverlay();
   }
 
   public uploadVideo(video: UmiusVideoInterface): void {
@@ -513,10 +539,6 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
     return this._togglePreviewMode[value];
   }
 
-  public displayUploadOverlay(title: string) {
-    return this._displayUploadOverlay['addMedias'] = !this._displayUploadOverlay['addMedias'];
-  }
-
   public isNotMainMedia(media: any): boolean {
     if (this.activeInnovCard.principalMedia && this.activeInnovCard.principalMedia._id && media && media['_id']) {
       return this.activeInnovCard.principalMedia._id !== media['_id'];
@@ -524,16 +546,9 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
     return true;
   }
 
- /* public isPortrait(media: UmiusMediaInterface): void {
-    const width: number = media.cloudinary.width;
-    const height: number = media.cloudinary.height;
-    const smth = 4/3;
-    console.log(typeof (width / height));
-    // return (media.cloudinary.width / media.cloudinary.height) < 4/3;
-  }*/
-
   padPreviewModeOnChange(title: string) {
     this._togglePreviewMode[title] = !this._togglePreviewMode[title];
+    this._isBeingEdited = !this._isBeingEdited;
   }
 
   mediaToShow(mediaSrc: any) {
@@ -562,6 +577,10 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
 
   set showModal(value: boolean) {
     this._showModal = value;
+  }
+
+  get displayUploadOverlay(): boolean {
+    return this._displayUploadOverlay;
   }
 
   get modalType(): modalType {
@@ -605,6 +624,9 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
     this._modalMedia = value;
   }
 
+  get editedMediaIndex(): any {
+    return this._editedMediaIndex;
+  }
 
   get selectedMedia(): UmiusModalMedia {
     return this._selectedMedia;
@@ -618,6 +640,9 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
     return this._showSuggestion;
   }
 
+  get isBeingEdited(): boolean {
+    return this._isBeingEdited;
+  }
 
   ngOnDestroy(): void {
     this._ngUnsubscribe.next();

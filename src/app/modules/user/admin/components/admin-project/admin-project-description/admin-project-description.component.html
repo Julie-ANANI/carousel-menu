@@ -547,32 +547,17 @@
               <!-- edit-preview button -->
               <button
                 *ngIf="isEditable"
-                [attr.data-tooltip]="!(getPadPreviewMode('addMedias'))? 'Preview':'Edit'"
-                (click)="padPreviewModeOnChange('addMedias')"
-                class="button tooltip is-circled is-action is-outlined text-no-underline is-info is-xs text-sm op-text text-meta m-left-15"
+                [attr.data-tooltip]="!(isBeingEdited)? 'Preview':'Edit'"
+                (click)="editMedias()"
+                class="button tooltip is-circled is-action is-outlined text-no-underline is-info is-xs text-sm op-text text-meta m-left-15 c-hand"
                 type="button">
                 <i class="fas fa-pencil-alt"
-                   *ngIf="getPadPreviewMode('addMedias')"></i>
-                <i class="fas fa-eye" *ngIf="!getPadPreviewMode('addMedias')"></i>
+                   *ngIf="!isBeingEdited"></i>
+                <i class="fas fa-eye" *ngIf="isBeingEdited"></i>
               </button>
               <!-- /edit-preview button -->
             </div>
-            <!-- edit mode -->
-            <div *ngIf="isEditable && !getPadPreviewMode('addMedias')">
-              <file-drop class="drop-container media-card text-center" (click)="displayUploadOverlay('addMedias')">
-                <div class="icon-container is-overlay">
-                  <span class="tooltip" data-tooltip="Delete tooltip">
-                    <i class="icon icon-plus"></i>
-                  </span>
-                </div>
-              </file-drop>
-            </div>
-            <!-- /edit mode -->
 
-            <!-- view mode -->
-            <div *ngIf="getPadPreviewMode('addMedias')">
-            </div>
-            <!-- /view mode -->
           </div>
         </div>
       </div>
@@ -580,9 +565,9 @@
 
 
       <!-- upload overlay -->
-      <div *ngIf="displayUploadOverlay('addMedias')">
+      <div *ngIf="displayUploadOverlay">
         <div class="modal active">
-          <div class="modal-overlay" (click)="displayUploadOverlay('addMedias')"></div>
+          <div class="modal-overlay" (click)="toggleDisplayUploadOverlay()"></div>
           <div class="modal-container">
             <div class="modal-body">
         <!-- image -->
@@ -605,7 +590,7 @@
         <!-- /video -->
             </div>
           </div>
-          <button class="modal-close" (click)="displayUploadOverlay('addMedias')"></button>
+          <button class="modal-close" (click)="toggleDisplayUploadOverlay()"></button>
         </div>
       </div>
       <!-- /upload overlay -->
@@ -614,57 +599,155 @@
 
       <!-- medias display -->
 
-      <!-- test vertical main media FLEXBOX -->
-      <div *ngIf="activeInnovCard.media.length" style="padding: 8px; width: auto; height: 440px; display: flex; flex-wrap: wrap; flex-direction: column; gap: 8px; background-color: white; align-content: flex-start; overflow: hidden; margin-bottom: 32px;">
-        <div>{{(activeInnovCard.principalMedia.cloudinary.width / activeInnovCard.principalMedia.cloudinary.height)}}</div>
-        <div style="width: 290px; height: 100%; object-fit: cover;">
-          <figure style="width: 100%; height: 100%; object-fit: cover; display: flex; place-content: center; background-color: #ccc">
-            <img style="width: 100%; height: 100%; object-fit: cover;" src="https://images.unsplash.com/photo-1526546334624-2afe5b01088d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=3399&q=80">
-          </figure>
-        </div>
-        <div style="width: 160px; height: 136px; object-fit: cover;">
-          <figure style="width: 160px; height: 120px; object-fit: cover; background-color: #ccc; display: flex; place-content: center;">
-            <img style="width: 100%; height: 100%; object-fit: cover;" src="https://images.unsplash.com/photo-1429041966141-44d228a42775?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80">
-          </figure>
-          <div style="font-size: 10px; height: 16px; align-self: end">
-            <span>Set as main media</span>
-          </div>
-        </div>
-        <div style="width: 160px; height: 136px; object-fit: cover;">
-          <figure style="width: 160px; height: 120px; object-fit: cover; background-color: #ccc; display: flex; place-content: center;">
-            <img style="width: 100%; height: 100%; object-fit: cover;" src="https://images.unsplash.com/photo-1501594907352-04cda38ebc29?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2232&q=80">
-          </figure>
-          <div style="font-size: 10px; height: 16px">
-            <span>Set as main media</span>
-          </div>
-        </div>
-        <div style="width: 160px; height: 136px; object-fit: cover;">
-          <figure style="width: 160px; height: 120px; object-fit: cover; display: flex; place-content: center; background-color: #ccc">
-            <img style="width: 100%; height: 100%; object-fit: cover;" src="https://images.unsplash.com/photo-1526546334624-2afe5b01088d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=3399&q=80">
-          </figure>
-          <div style="font-size: 10px; height: 16px">
-            <span>Set as main media</span>
-          </div>
-        </div>
-        <div style="width: 160px; height: 136px; object-fit: cover;">
-          <figure style="width: 160px; height: 120px; object-fit: cover; background-color: #ccc; display: flex; place-content: center;">
-            <img style="width: 100%; height: 100%; object-fit: cover;" src="https://images.unsplash.com/photo-1501594907352-04cda38ebc29?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2232&q=80">
-          </figure>
-          <div style="font-size: 10px; height: 16px">
-            <span>Set as main media</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- /test vertical main media FLEXBOX -->
-
-
-      <!-- real one -->
+      <!-- portrait display -->
       <div
-        *ngIf="activeInnovCard.media.length" style="padding: 8px; width: 512px; height: auto; display: flex; flex-wrap: wrap; gap: 8px; background-color: white; place-items: center; overflow: hidden; box-sizing: border-box">
+        *ngIf="activeInnovCard.media.length && (activeInnovCard.principalMedia.cloudinary.width / activeInnovCard.principalMedia.cloudinary.height) < 4/3" style="padding: 8px; width: auto; height: 440px; display: flex; flex-wrap: wrap; flex-direction: column; gap: 8px; background-color: white; align-content: flex-start; margin-bottom: 32px; align-items: flex-start;">
 
         <!-- principal media -->
-        <div *ngIf="activeInnovCard.principalMedia" class="text-center" style="width: 100%; height: 290px; object-fit: cover;">
+        <div *ngIf="activeInnovCard.principalMedia" class="text-center" style="width: 290px; height: 100%; object-fit: cover; position: relative;">
+
+          <div *ngIf="isBeingEdited" class="icon-container is-overlay is-primary" (click)="toggleDisplayUploadOverlay()" style="position: absolute; top: 0; right: 0; float: right; top: 0; right: 0; background-color: white;">
+            <span class="tooltip" data-tooltip="Edit media">
+              <i class="icon icon-edit"></i>
+            </span>
+          </div>
+
+          <!-- if type === 'PHOTO' -->
+          <figure *ngIf="activeInnovCard.principalMedia['type'] && activeInnovCard.principalMedia['type'] === 'PHOTO'
+          && mediaSrc(activeInnovCard.principalMedia, 'IMAGE')" style="width: 100%; height: 100%; object-fit: cover; background-color: #ccc; display: flex; place-content: center;">
+            <img
+              style="cursor: pointer; width: 100%; height: 100%; object-fit: cover;"
+              (click)="mediaToShow(mediaSrc(activeInnovCard.principalMedia, 'IMAGE'))"
+              [src]="mediaSrc(activeInnovCard.principalMedia, 'IMAGE').replace(',h_159', '').replace(',w_240', '')"
+              alt=" "
+              class="img-responsive">
+          </figure>
+          <!-- /if type === 'PHOTO' -->
+
+          <!-- if type === 'VIDEO' -->
+          <iframe
+            *ngIf="activeInnovCard.principalMedia['type'] && activeInnovCard.principalMedia['type'] === 'VIDEO'
+            && mediaSrc(activeInnovCard.principalMedia, 'VIDEO')"
+            [src]="mediaSrc(activeInnovCard.principalMedia, 'VIDEO')" >
+          </iframe>
+          <!-- /if type === 'VIDEO' -->
+
+          <!--          <span class="text-sm p-top-1">Main media</span>-->
+
+          <!-- delete button -->
+          <!--<div *ngIf="isEditable" class="text-sm p-top-1">
+            <span
+              (click)="onDeleteMedia(activeInnovCard.principalMedia)"
+              [ngClass]="isSavingMedia ? 'text-disabled' : 'c-hand text-hover-underline'"
+              class="text-alert"
+              [id]="'btn-delete-principal-media'">
+              Delete media
+            </span>
+          </div>-->
+          <!-- /delete button -->
+
+        </div>
+        <!-- /principal media -->
+
+        <!-- secondary medias -->
+        <ng-container *ngIf="activeInnovCard.media.length > 0">
+          <ng-container *ngFor="let media of activeInnovCard.media; let i=index;">
+            <div
+              *ngIf="media._id !== (activeInnovCard.principalMedia && activeInnovCard.principalMedia._id)"
+              class="text-center" style="width: 160px; height: 136px; object-fit: cover; padding-bottom: 8px; position: relative;">
+
+              <div *ngIf="isBeingEdited" style="position: absolute; top: 0; right: 0; float: right; top: 0; right: 0;">
+                <div class="icon-container is-overlay" (click)="toggleDisplayUploadOverlay()" style="background-color: white; margin-right: 4px">
+                <span class="tooltip" data-tooltip="Edit media" (click)="setEditedMediaIndex(i)">
+                  <i class="icon icon-edit"></i>
+                </span>
+                </div>
+                <div class="icon-container is-overlay" (click)="onDeleteMedia(media)" style="background-color: white;">
+                <span class="tooltip" data-tooltip="Delete media">
+                  <i class="icon icon-delete" style="color: #c93a2a"></i>
+                </span>
+                </div>
+              </div>
+
+              <!-- if type === 'PHOTO' -->
+              <figure *ngIf="media['type'] && media['type'] === 'PHOTO' && mediaSrc(media, 'IMAGE')"  style="width: 160px; height: 120px; object-fit: cover; background-color: #ccc; display: flex; place-content: center;">
+                <img
+                  style="cursor: pointer; width: 100%; height: 100%; object-fit: cover;"
+                  (click)="mediaToShow(mediaSrc(media, 'IMAGE'))"
+                  [src]="mediaSrc(media, 'IMAGE')"
+                  alt=" "
+                  class="img-responsive" >
+              </figure>
+              <!-- /if type === 'PHOTO' -->
+
+              <!-- if type === 'VIDEO' -->
+              <iframe
+                *ngIf="media['type'] && media['type'] === 'VIDEO' && mediaSrc(media, 'VIDEO')"
+                [src]="mediaSrc(media, 'VIDEO')" >
+                <!--                height="159"-->
+                <!--                width="240">-->
+              </iframe>
+              <!-- /if type === 'VIDEO' -->
+
+              <!-- set principal -->
+              <div *ngIf="isNotMainMedia(media) && isEditable" class="text-sm p-top-1 text-left"  style="grid-row: 3;">
+                <span
+                  (click)="onSetPrincipal(media)"
+                  [ngClass]="isSavingMedia ? 'text-disabled' : 'c-hand text-hover-underline'"
+                  class="text-primary"
+                  style="height: 16px"
+                  [id]="'btn-principal-media-'+i">
+                  Set as main media
+                </span>
+              </div>
+              <!-- /set principal -->
+
+              <!-- delete button -->
+              <!--        <div
+                        *ngIf="isEditable && (mediaSrc(media, 'VIDEO') || mediaSrc(media, 'IMAGE'))"
+                        class="text-sm p-top-1">
+                          <span
+                            (click)="onDeleteMedia(media)"
+                            [ngClass]="isSavingMedia ? 'text-disabled' : 'c-hand text-hover-underline'"
+                            class="text-alert"
+                            [id]="'btn-delete-media-'+i">
+                            Delete media
+                          </span>
+                      </div>-->
+              <!-- /delete button -->
+
+            </div>
+          </ng-container>
+        </ng-container>
+        <!-- /secondary medias -->
+
+        <!-- new media card -->
+        <div *ngIf="isBeingEdited" style="padding-bottom: 16px">
+          <file-drop class="drop-container media-card text-center" (click)="toggleDisplayUploadOverlay()">
+            <div class="icon-container is-overlay">
+                  <span class="tooltip" data-tooltip="Add new media" (click)="setEditedMediaIndex(undefined)">
+                    <i class="icon icon-plus"></i>
+                  </span>
+            </div>
+          </file-drop>
+        </div>
+        <!-- /new media card -->
+
+      </div>
+      <!-- /portrait display -->
+
+      <!-- landscape display -->
+      <div
+        *ngIf="activeInnovCard.media.length && (activeInnovCard.principalMedia.cloudinary.width / activeInnovCard.principalMedia.cloudinary.height) > 4/3" style="padding: 8px; width: 512px; height: auto; display: flex; flex-wrap: wrap; gap: 8px; background-color: white; place-items: center; box-sizing: border-box">
+
+        <!-- principal media -->
+        <div *ngIf="activeInnovCard.principalMedia" class="text-center" style="width: 100%; height: 290px; object-fit: cover; position: relative;">
+
+          <div *ngIf="isBeingEdited" class="icon-container is-overlay is-primary" (click)="toggleDisplayUploadOverlay()" style="position: absolute; top: 0; right: 0; float: right; top: 0; right: 0; background-color: white;">
+            <span class="tooltip" data-tooltip="Edit media">
+              <i class="icon icon-edit"></i>
+            </span>
+          </div>
 
           <!-- if type === 'PHOTO' -->
           <figure *ngIf="activeInnovCard.principalMedia['type'] && activeInnovCard.principalMedia['type'] === 'PHOTO'
@@ -708,7 +791,20 @@
           <ng-container *ngFor="let media of activeInnovCard.media; let i=index;">
             <div
               *ngIf="media._id !== (activeInnovCard.principalMedia && activeInnovCard.principalMedia._id)"
-              class="text-center" style="width: 160px; height: 136px; object-fit: cover; padding-bottom: 8px">
+              class="text-center" style="width: 160px; height: 136px; object-fit: cover; padding-bottom: 8px; position: relative;">
+
+            <div *ngIf="isBeingEdited" style="position: absolute; top: 0; right: 0; float: right; top: 0; right: 0;">
+              <div class="icon-container is-overlay" (click)="toggleDisplayUploadOverlay()" style="background-color: white; margin-right: 4px">
+                <span class="tooltip" data-tooltip="Edit media" (click)="setEditedMediaIndex(i)">
+                  <i class="icon icon-edit"></i>
+                </span>
+              </div>
+              <div class="icon-container is-overlay" (click)="onDeleteMedia(media)" style="background-color: white;">
+                <span class="tooltip" data-tooltip="Delete media">
+                  <i class="icon icon-delete" style="color: #c93a2a"></i>
+                </span>
+              </div>
+            </div>
 
               <!-- if type === 'PHOTO' -->
               <figure *ngIf="media['type'] && media['type'] === 'PHOTO' && mediaSrc(media, 'IMAGE')"  style="width: 160px; height: 120px; object-fit: cover; background-color: #ccc; display: flex; place-content: center;">
@@ -744,7 +840,7 @@
               <!-- /set principal -->
 
               <!-- delete button -->
-          <!--    <div
+      <!--        <div
                 *ngIf="isEditable && (mediaSrc(media, 'VIDEO') || mediaSrc(media, 'IMAGE'))"
                 class="text-sm p-top-1">
                   <span
@@ -762,19 +858,21 @@
         </ng-container>
         <!-- /secondary medias -->
 
-        <!-- edit mode -->
-        <div *ngIf="isEditable && !getPadPreviewMode('addMedias')" style="padding-bottom: 16px">
-          <file-drop class="drop-container media-card text-center" (click)="displayUploadOverlay('addMedias')">
-            <div class="icon-container is-overlay">
+        <!-- new media card -->
+        <div *ngIf="isBeingEdited" style="padding-bottom: 16px">
+          <file-drop class="drop-container media-card text-center" (click)="toggleDisplayUploadOverlay()">
+            <div class="icon-container is-overlay" (click)="setEditedMediaIndex(undefined)">
                   <span class="tooltip" data-tooltip="Add new media">
                     <i class="icon icon-plus"></i>
                   </span>
             </div>
           </file-drop>
         </div>
-        <!-- /edit mode -->
+        <!-- /new media card -->
 
       </div>
+      <!-- /landscape display -->
+
       <!-- /medias display -->
 
     </section>
