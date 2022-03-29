@@ -56,6 +56,7 @@ export class UserFormComponent implements OnInit {
    */
   @Input() set pro(value: Professional) {
     if (value) {
+      this._isProfessional = true;
       this._selectedProject = null;
       value.country = this.getCountryName(value.country);
       this._pro = value;
@@ -240,6 +241,7 @@ export class UserFormComponent implements OnInit {
           });
       }
       this._tags = this._pro.tags;
+      this._userForm.reset();
       this._userForm.patchValue(this._pro);
       this._proKeywords = null;
       this._professionalService.isShielded(this._pro._id)

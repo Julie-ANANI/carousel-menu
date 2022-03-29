@@ -24,8 +24,8 @@ export class EnterpriseService {
     return this._http.post<UmiusEnterpriseInterface>(`/enterprise/`, enterprise);
   }
 
-  public all(config?: { [header: string]: string | string[] }): Observable<any> {
-    return this._http.get(`/enterprise/all`, {params: config});
+  public search(config?: { [header: string]: string | string[] }): Observable<any> {
+    return this._http.get(`/enterprise/search`, {params: config});
   }
 
   public get(id?: string, config?: { [header: string]: string | string[] }): Observable<any> {

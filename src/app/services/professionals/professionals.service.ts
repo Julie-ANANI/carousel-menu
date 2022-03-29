@@ -5,6 +5,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Professional } from '../../models/professional';
+import {UmiusConfigInterface} from "@umius/umi-common-component";
 import {CacheType} from '../../models/cache';
 
 @Injectable({ providedIn: 'root' })
@@ -28,6 +29,10 @@ export class ProfessionalsService {
 
   public getAll(config: { [header: string]: string | string[]; }, cache: CacheType = ''): Observable<any> {
     return this._http.get('/professional/', { params: config, headers: new HttpHeaders().set('cache', cache) });
+  }
+
+  public search(config: UmiusConfigInterface): Observable<any> {
+    return this._http.get('/professional/search', { params: config });
   }
 
   public remove(professionalId: string): Observable<any> {
