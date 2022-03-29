@@ -45,7 +45,7 @@ export const MARKET_REPORT = {
 
   'MESSAGE': {
     'SUBMITTED': 'Votre innovation est en cours de validation. Nous revenons vers vous rapidement !',
-    'EDITING': 'Sur cette page, vous retrouverez les conclusions et les statistiques de votre test marché, une fois lancé.',
+    'EDITING': 'Sur cette page, vous retrouverez les conclusions et les statistiques de votre Test Marché, une fois lancé.',
     'REVIEWING': 'Nous vous avons suggéré des modifications du projet par email. Une fois fait, soumettez-le de nouveau.',
     'EVALUATING': 'Nous collectons les feedbacks des professionnels du marché. Revenez bientôt !'
   },
