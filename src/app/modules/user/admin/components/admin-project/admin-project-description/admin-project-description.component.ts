@@ -60,7 +60,7 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
 
   private _editedMediaIndex: any = undefined;
 
-  private _isMediaAjusted: string = '100%';
+  private _isMediaAjusted = '100%';
 
   private _isBeingEdited = false;
 
