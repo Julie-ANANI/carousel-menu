@@ -484,7 +484,7 @@ export class MissionQuestionService {
 
   /**
    * return the new option for the attitudeMeasure = 'agreement' | 'frequency' | 'satisfaction' | 'use'| 'quality'
-   * | 'relevance' | 'importance' | 'interest' |'criticality;
+   * | 'relevance' | 'importance' | 'interest' |'criticality | 'likelihood';
    * @param question,
    * @param measureOptions
    */

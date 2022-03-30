@@ -196,5 +196,26 @@
       "en": "Very critical",
       "fr": "Très critique"
     }
+  ],
+  "likelihood": [{
+    "en": "Almost never true",
+    "fr": "Toujours faux"
+  },
+    {
+      "en": "Usually not true",
+      "fr": "Souvent faux"
+    },
+    {
+      "en": "Occasionally true",
+      "fr": "Occasionnellement vrai"
+    },
+    {
+      "en": "Usually true",
+      "fr": "Souvent vrai"
+    },
+    {
+      "en": "Always true",
+      "fr": "Toujours vrai"
+    }
   ]
 }
