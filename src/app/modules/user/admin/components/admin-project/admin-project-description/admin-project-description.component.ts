@@ -365,13 +365,14 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
     this._editedMediaIndex = index;
   }
 
-  public adjustMedia() {
+  public adjustMedia(media: UmiusMediaInterface) {
     if (this._isMediaAjusted === '100%') {
       this._isMediaAjusted = 'auto';
+      // media.display = 'adjust';
     } else {
       this._isMediaAjusted = '100%';
+      // media.display = 'crop';
     }
-    console.log('ajusted:', this._isMediaAjusted);
   }
 
   public editMedias() {

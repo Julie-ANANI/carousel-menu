@@ -46,6 +46,7 @@ export class InnovCard extends Model {
   advantages?: Array<{ text: string }>;
   operatorComment?: InnovCardComment;
 
+
   /**
    * a card can can have more sections of type OTHER
    * but only one for rest type.
