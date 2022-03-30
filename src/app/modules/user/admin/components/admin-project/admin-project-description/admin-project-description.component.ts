@@ -60,6 +60,8 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
 
   private _editedMediaIndex: any = undefined;
 
+  private _isMediaAjusted: string = '100%';
+
   private _isBeingEdited = false;
 
   private _modalType: modalType = '';
@@ -363,6 +365,15 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
     this._editedMediaIndex = index;
   }
 
+  public adjustMedia() {
+    if (this._isMediaAjusted === '100%') {
+      this._isMediaAjusted = 'auto';
+    } else {
+      this._isMediaAjusted = '100%';
+    }
+    console.log('ajusted:', this._isMediaAjusted);
+  }
+
   public editMedias() {
     this._isBeingEdited = !this._isBeingEdited;
   }
@@ -642,6 +653,10 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
 
   get isBeingEdited(): boolean {
     return this._isBeingEdited;
+  }
+
+  get isMediaAjusted(): string {
+    return this._isMediaAjusted;
   }
 
   ngOnDestroy(): void {

@@ -562,7 +562,18 @@
         </div>
       </div>
 
-
+      <!-- set main media display -->
+        <div *ngIf="isBeingEdited" style="display: flex; flex-direction: row; margin-bottom: 1rem;">
+          <div>
+            <input type="radio" id="crop" name="radios" value="crop" (change)="adjustMedia()" checked>
+            <label for="crop" class="m-left-2 m-right-40">Crop main media</label>
+          </div>
+          <div>
+            <input type="radio" id="adjust" name="radios" value="adjust" (change)="adjustMedia()">
+            <label for="adjust" class="m-left-2">Adjust main media</label>
+          </div>
+        </div>
+      <!-- /set main media display -->
 
       <!-- upload overlay -->
       <div *ngIf="displayUploadOverlay">
@@ -616,7 +627,8 @@
           <figure *ngIf="activeInnovCard.principalMedia['type'] && activeInnovCard.principalMedia['type'] === 'PHOTO'
           && mediaSrc(activeInnovCard.principalMedia, 'IMAGE')" style="width: 100%; height: 100%; object-fit: cover; background-color: #ccc; display: flex; place-content: center;">
             <img
-              style="cursor: pointer; width: 100%; height: 100%; object-fit: cover;"
+              style="cursor: pointer; height: 100%; object-fit: cover;"
+              [ngStyle]="{'width': isMediaAjusted}"
               (click)="mediaToShow(mediaSrc(activeInnovCard.principalMedia, 'IMAGE'))"
               [src]="mediaSrc(activeInnovCard.principalMedia, 'IMAGE').replace(',h_159', '').replace(',w_240', '')"
               alt=" "
@@ -690,7 +702,7 @@
               <!-- /if type === 'VIDEO' -->
 
               <!-- set principal -->
-              <div *ngIf="isNotMainMedia(media) && isEditable" class="text-sm p-top-1 text-left"  style="grid-row: 3;">
+              <div *ngIf="isNotMainMedia(media) && isBeingEdited" class="text-sm p-top-1 text-left"  style="grid-row: 3;">
                 <span
                   (click)="onSetPrincipal(media)"
                   [ngClass]="isSavingMedia ? 'text-disabled' : 'c-hand text-hover-underline'"
@@ -753,7 +765,8 @@
           <figure *ngIf="activeInnovCard.principalMedia['type'] && activeInnovCard.principalMedia['type'] === 'PHOTO'
           && mediaSrc(activeInnovCard.principalMedia, 'IMAGE')" style="width: 100%; height: 100%; object-fit: cover; background-color: #ccc; display: flex; place-content: center;">
             <img
-              style="cursor: pointer; width: 100%; height: 100%; object-fit: cover;"
+              style="cursor: pointer; height: 100%; object-fit: cover;"
+              [ngStyle]="{'width': isMediaAjusted}"
               (click)="mediaToShow(mediaSrc(activeInnovCard.principalMedia, 'IMAGE'))"
               [src]="mediaSrc(activeInnovCard.principalMedia, 'IMAGE').replace(',h_159', '').replace(',w_240', '')"
               alt=" "
@@ -827,7 +840,7 @@
               <!-- /if type === 'VIDEO' -->
 
               <!-- set principal -->
-              <div *ngIf="isNotMainMedia(media) && isEditable" class="text-sm p-top-1 text-left"  style="grid-row: 3;">
+              <div *ngIf="isNotMainMedia(media) && isBeingEdited" class="text-sm p-top-1 text-left"  style="grid-row: 3;">
                 <span
                   (click)="onSetPrincipal(media)"
                   [ngClass]="isSavingMedia ? 'text-disabled' : 'c-hand text-hover-underline'"
