@@ -30,7 +30,7 @@ export class ApiUrlInterceptor implements HttpInterceptor {
     // for the time being
     if (environment.local) {
       newParameters = {
-        url: environment.apiUrl + req.url,
+        url: 'http://192.168.1.34:9080/auth/api' + req.url,
         withCredentials: true,
       };
     } else {
@@ -57,7 +57,7 @@ export class ApiUrlInterceptor implements HttpInterceptor {
     const jwToken = this._cookieService.get('jwToken-application-front');
     if (jwToken) {
       newParameters.headers = req.headers
-        .append('Authorization', jwToken);
+        .append('Authorisation', jwToken);
     }
   }
 
