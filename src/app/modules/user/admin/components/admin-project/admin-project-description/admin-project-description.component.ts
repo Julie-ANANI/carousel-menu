@@ -474,6 +474,8 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
         } else {
           this._setInnovation();
         }
+        this._translateNotificationsService.success('Success', 'The media has been uploaded.');
+        this.toggleDisplayUploadOverlay();
       }, (err: HttpErrorResponse) => {
         this._isUploadingVideo = false;
         this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
