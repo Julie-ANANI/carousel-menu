@@ -699,6 +699,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
           console.error(err);
         });
     } else {
+      this._isSaving = false;
       this._translateNotificationsService.error('ERROR.ERROR', 'COMMON.INVALID.EMAIL');
     }
   }
