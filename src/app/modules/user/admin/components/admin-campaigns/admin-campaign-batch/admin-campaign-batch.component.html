@@ -1,7 +1,9 @@
-<app-admin-stats-banner (updateStats)="loadStats()"
-                        [updateBtn]="true"
-                        [config]="statsConfig">
+<app-admin-stats-banner
+  (updateStats)="loadStats()"
+  [updateBtn]="true"
+  [config]="statsConfig">
 </app-admin-stats-banner>
+
 <div class="container grid-2xl fluid" id="admin-campaign-batch">
   <div class="column col-sm-12 col-11 col-mx-auto">
 
@@ -11,31 +13,34 @@
     <section *ngIf="!batchesTable.length && !isLoading" class="p-top-30 p-bottom-30">
 
       <!-- note -->
-      <div class="error-wrapper p-bottom-30 flex-centered">
-
-        <div [ngClass]=" innovationStatus ? 'complete' : 'incomplete' " class="shape is-circled is-sm">
-          <i class="fas fa-check"></i>
+      <div class="p-bottom-40 flex-centered">
+        <div class="d-flex align-center">
+          <div [ngClass]="innovationStatus ? 'bg-success' : 'bg-alert'" class="shape is-circled is-sm text-white">
+            <i [ngClass]="innovationStatus ? 'fa-check' : 'fa-times'" class="fas"></i>
+          </div>
+          <span class="text-medium text-draft text-md m-left-1 m-right-20">Project validation</span>
         </div>
-        <span class="text-medium text-draft text-md m-left-1">Project Validation</span>
-
-        <div [ngClass]=" quiz ? 'complete' : 'incomplete' " class="shape is-circled is-left is-sm">
-          <i class="fas fa-check"></i>
+        <div class="d-flex align-center">
+          <div [ngClass]="quiz ? 'bg-success' : 'bg-alert'" class="shape is-circled is-sm text-white">
+            <i [ngClass]="quiz ? 'fa-check' : 'fa-times'" class="fas"></i>
+          </div>
+          <span class="text-medium text-draft text-md m-left-1 m-right-20">Quiz</span>
         </div>
-        <span class="text-medium text-draft text-md m-left-1">Quiz</span>
-
-        <div [ngClass]=" templatesStatus ? 'complete' : 'incomplete' " class="shape is-circled is-left is-sm">
-          <i class="fas fa-check"></i>
+        <div class="d-flex align-center">
+          <div [ngClass]="templatesStatus ? 'bg-success' : 'bg-alert'" class="shape is-circled is-sm text-white">
+            <i [ngClass]="templatesStatus ? 'fa-check' : 'fa-times'" class="fas"></i>
+          </div>
+          <span class="text-medium text-draft text-md m-left-1 m-right-20">Workflows</span>
         </div>
-        <span class="text-medium text-draft text-md m-left-1">Workflows</span>
-
       </div>
       <!-- /note -->
 
       <!-- bot -->
-      <div *ngIf="autoBatchStatus && (canAccess(['autoBatch']) || canAccess(['create']))" class="p-top-20">
-        <app-message-template [widthMax]="'473px'">
-          <div class="toggle-wrapper p-bottom-10">
-            <div class="form-group relative">
+      <ng-container *ngIf="autoBatchStatus && (canAccess(['autoBatch']) || canAccess(['create']))">
+        <app-message-template widthMax="473px">
+
+          <div class="d-flex justify-center">
+            <div class="form-group relative m-no-bottom">
               <label class="form-switch" for="auto-batch">
                 <input
                   (change)="onSwitchAutoBatch($event)"
@@ -48,17 +53,20 @@
               </label>
             </div>
           </div>
+
           <!-- new batch -->
-          <button
-            (click)="activateSidebar('NEW_BATCH')"
-            *ngIf="canAccess(['create'])"
-            class="button is-outlined is-sm centered"
-            id="btn-manually">
-            Schedule emails manually
-          </button>
+          <ng-container *ngIf="canAccess(['create'])">
+            <button
+              (click)="activateSidebar('NEW_BATCH')"
+              class="button is-outlined is-sm is-white m-top-20"
+              id="btn-manually">
+              Schedule emails manually
+            </button>
+          </ng-container>
           <!-- /new batch -->
+
         </app-message-template>
-      </div>
+      </ng-container>
       <!-- /bot -->
 
     </section>
@@ -72,7 +80,7 @@
         *ngIf="canAccess(['autoBatch']) || canAccess(['create'])"
         [ngClass]="{'text-right': !canAccess(['autoBatch']),
         'flex-between': canAccess(['autoBatch']) && canAccess(['create']) }"
-        class="m-bottom-30 animate-fade is-7">
+        class="m-bottom-10">
 
         <!-- autobatch / to send -->
         <div class="d-flex align-center m-bottom-15 m-right-25">

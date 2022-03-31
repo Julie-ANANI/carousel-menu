@@ -2,52 +2,6 @@
 
 #admin-campaign-batch {
 
-  .toggle-wrapper {
-    display: flex;
-    justify-content: center;
-
-    .form-group {
-      margin-bottom: 0;
-    }
-
-  }
-
-  .icons.is-white {
-    top: 7px;
-    right: -30px;
-  }
-
-  .error-wrapper {
-    display: flex;
-    align-items: center;
-
-    .is-left {
-      margin-left: $unit-5;
-    }
-
-    .incomplete {
-      background-color: $alert-color;
-      border-color: $alert-color;
-
-      .fa-check {
-        visibility: hidden;
-      }
-
-    }
-
-    .complete {
-      background-color: $success-color;
-      border-color: $success-color;
-
-      .fa-check {
-        visibility: visible;
-        color: $white-color;
-      }
-
-    }
-
-  }
-
   .card {
     background: transparent;
     border: none;
