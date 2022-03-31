@@ -132,6 +132,7 @@ export class AdminProjectCampaignsComponent implements OnInit, OnDestroy {
         (response: Response) => {
           this._isLoading = false;
           this._campaigns = (response && response.result) || [];
+          this._campaigns = CommonService.sortByCompare(this._campaigns, 'title');
           this._setAllCampaigns();
         },
         (err: HttpErrorResponse) => {

@@ -30,6 +30,11 @@ export class CommonService extends UmiusCommonService {
     super(_platformId, _domSanitize)
   }
 
+  public static sortByCompare(value: Array<any> = [], property: string): Array<any> {
+    if (!value.length || !property) return value;
+    return value.sort((a, b) => a[property].localeCompare(b[property]));
+  }
+
   /**
    * will check the LinkedIn url has https://www. or not, if no then
    * add and return the full url.

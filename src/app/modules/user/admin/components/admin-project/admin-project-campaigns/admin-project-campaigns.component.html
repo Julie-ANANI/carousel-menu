@@ -23,7 +23,7 @@
 
       <!-- section campaigns -->
       <section [@listAnimation]="campaigns.length" style="margin-bottom: -30px; margin-right: -20px;">
-        <div class="card-3">
+        <div class="card-responsive">
           <div *ngFor="let campaign of campaigns; let i = index" class="card relative text-center">
 
             <div style="top: 0; left: 0" class="absolute">
@@ -66,16 +66,18 @@
                 <ng-container *ngIf="!!quizURL('fr', campaign)">
                   <span
                     (click)="copyQuizLink('fr', campaign)"
-                    class="text-meta text-hover-underline c-hand text-sm text-medium m-left-h m-right-h">
-                  Copy FR quiz link
+                    data-tooltip="Click to copy Fr quiz link to clipboard"
+                    class="text-meta c-default tooltip is-multiline text-sm text-medium m-left-h m-right-h">
+                  FR quiz link
                 </span>
                 </ng-container>
                 <ng-container *ngIf="!!quizURL('en', campaign)">
                   |
                   <span
                     (click)="copyQuizLink('en', campaign)"
-                    class="text-meta text-hover-underline c-hand text-sm text-medium m-left-h m-right-h">
-                  Copy EN quiz link
+                    data-tooltip="Click to copy En quiz link to clipboard"
+                    class="text-meta c-default tooltip is-multiline text-sm text-medium m-left-h m-right-h">
+                  EN quiz link
                 </span>
                 </ng-container>
               </div>
