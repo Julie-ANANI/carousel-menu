@@ -88,7 +88,7 @@ export class AuthService {
   }
 
   public login(user: User): Observable<User> {
-    return this._http.post('http://192.168.1.34:9080/auth/login', user.toJSON())
+    return this._http.post('http://192.168.20.26:9080/auth/login', user.toJSON())
       .pipe(
         map((res: any) => {
           this._setAuthenticatedTo(res.isAuthenticated);

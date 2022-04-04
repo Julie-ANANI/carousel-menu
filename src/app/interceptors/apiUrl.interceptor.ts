@@ -1,15 +1,16 @@
-import {Inject, Injectable, PLATFORM_ID} from '@angular/core';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
-import {isPlatformServer} from '@angular/common';
-import {CookieService} from 'ngx-cookie';
+import { isPlatformServer } from '@angular/common';
+import { CookieService } from 'ngx-cookie';
 
 @Injectable()
 export class ApiUrlInterceptor implements HttpInterceptor {
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
-              private _cookieService: CookieService) {}
+              private _cookieService: CookieService) {
+  }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     if (req.url.indexOf('http') === -1) { // Si ce n'est pas une URL
@@ -28,20 +29,42 @@ export class ApiUrlInterceptor implements HttpInterceptor {
     let newParameters: any = {}
 
     // for the time being
-    if (environment.local) {
-      newParameters = {
-        url: 'http://192.168.1.34:9080/auth/api' + req.url,
-        withCredentials: true,
-      };
-    } else {
-      newParameters = {
-        url: environment.apiUrl + req.url,
-        withCredentials: true,
-      };
-    }
+    // if (environment.local) {
+    //   newParameters = {
+    //     url: 'http://192.168.20.26:9080/auth/api' + req.url,
+    //     withCredentials: true,
+    //   };
+    // } else {
+    //   newParameters = {
+    //     url: environment.apiUrl + req.url,
+    //     withCredentials: true,
+    //   };
+    // }
+    const apiUrl = ApiUrlInterceptor._setApiUrl(req);
+    console.log(apiUrl);
+    newParameters = {
+      url: apiUrl,
+      withCredentials: true,
+    };
     this._setCookie(newParameters, req);
     this._setJwtoken(newParameters, req);
     return req.clone(newParameters);
+  }
+
+  /**
+   * check req.url and method
+   * set correct api gateway-url
+   * @param req
+   * @private
+   */
+  private static _setApiUrl(req: HttpRequest<any>): string {
+    if (req.url && req.url === '/login' && req.method && req.method === 'POST') {
+      return environment.apiUrl + '/auth/login';
+    }
+    if (req.url && req.url === '/user' && req.method && req.method === 'POST') {
+      return environment.apiUrl + '/auth/register';
+    }
+    return environment.apiUrl + '/v3/api' + req.url;
   }
 
   /**
@@ -53,7 +76,7 @@ export class ApiUrlInterceptor implements HttpInterceptor {
    * @param req
    * @private
    */
-  private _setJwtoken(newParameters: any, req: HttpRequest<any>){
+  private _setJwtoken(newParameters: any, req: HttpRequest<any>) {
     const jwToken = this._cookieService.get('jwToken-application-front');
     if (jwToken) {
       newParameters.headers = req.headers
