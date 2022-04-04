@@ -139,6 +139,7 @@ export class AuthService {
           this._setAdminTo(res.adminLevel);
           this._setConfirmedTo(res.isConfirmed);
           this._setEtherpadAccessesTo(res.etherpad);
+          this._setJwToken('');
           this._cookieService.removeAll();
           this._redirectUrl = '';
           this._user = null;

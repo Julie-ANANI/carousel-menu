@@ -64,7 +64,7 @@ export class ApiUrlInterceptor implements HttpInterceptor {
     if (req.url && req.url === '/user' && req.method && req.method === 'POST') {
       return environment.apiUrl + '/auth/register';
     }
-    return environment.apiUrl + '/v3/api' + req.url;
+    return environment.apiUrl + '/auth/api' + req.url;
   }
 
   /**
