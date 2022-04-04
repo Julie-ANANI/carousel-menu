@@ -366,6 +366,7 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
   }
 
   public toggleDisplayMediaSlider(action?: string, index?: number) {
+    console.log('all medias', this.activeInnovCard.media);
     if (action && index) {
       this.slideMedia('showSelected', index);
     }

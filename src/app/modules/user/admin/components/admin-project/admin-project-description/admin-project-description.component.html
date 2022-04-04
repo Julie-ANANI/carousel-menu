@@ -962,18 +962,19 @@
       <!-- /medias display -->
 
           <!-- slider -->
-<!--          <ng-container *ngFor="let media of activeInnovCard.media; let i = index;">
-            <img (click)="toggleDisplayMediaSlider('showSelected', i)" [src]="mediaSrc(media, 'IMAGE')" width="160px" style="height: 120px !important">
-          </ng-container>-->
-
           <div *ngIf="displayMediaSlider" style="background: rgba(58,66,77,0.96); width: 100vw; height: 100vh; position: fixed; top: 0; left: 0; right: 0; bottom: 0; display: flex; place-items: center; z-index: 6">
             <div class="icon-container is-lg is-overlay controllers" (click)="slideMedia('showPrevious')" style="z-index: 100;">
               <i class="icon icon-arrow-left" style="border: none"></i>
             </div>
             <div style="height: 90%; width: 80%; margin: auto; display: flex; place-content: center; flex-direction: column">
               <div style="justify-content: center;display: flex;height: 90%;width: 100%;">
-                <img *ngIf="(activeInnovCard.media[slideToShow].cloudinary.width / activeInnovCard.media[slideToShow].cloudinary.height) < 4/3" [src]=activeInnovCard.media[slideToShow].url style="height: 100%; width: auto; object-fit: contain">
-                <img *ngIf="(activeInnovCard.media[slideToShow].cloudinary.width / activeInnovCard.media[slideToShow].cloudinary.height) > 4/3" [src]=activeInnovCard.media[slideToShow].url style="height: auto; width: 100%;object-fit: contain">
+                <iframe
+                  *ngIf="activeInnovCard.media[slideToShow].type === 'VIDEO'"
+                  [src]="mediaSrc(activeInnovCard.media[slideToShow], 'VIDEO')"
+                  style="height: auto; width: 100%; object-fit: contain; border: none">
+                </iframe>
+                <img *ngIf="activeInnovCard.media[slideToShow].type === 'PHOTO' && (activeInnovCard.media[slideToShow].cloudinary.width / activeInnovCard.media[slideToShow].cloudinary.height) < 4/3" [src]=activeInnovCard.media[slideToShow].url style="height: 100%; width: auto; object-fit: contain">
+                <img *ngIf="activeInnovCard.media[slideToShow].type === 'PHOTO' && (activeInnovCard.media[slideToShow].cloudinary.width / activeInnovCard.media[slideToShow].cloudinary.height) > 4/3" [src]=activeInnovCard.media[slideToShow].url style="height: auto; width: 100%;object-fit: contain">
               </div>
               <p style="margin-bottom: 0;text-align: center;color: white;padding-top: 32px;">{{slideToShow +1}}/{{activeInnovCard.media.length}}</p>
             </div>
