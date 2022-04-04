@@ -327,14 +327,13 @@
       <!-- /default case -->
 
       <!-- likert scale case -->
-      <div *ngSwitchCase="'likert-scale'" class="flex-between" id="likert-scale">
+      <div *ngSwitchCase="'likert-scale'" class="flex-between text-dark" id="likert-scale">
 
         <!--not edit mode -->
         <ng-container *ngIf="fullAnswer.answers[question.identifier] && !editMode">
           <div class="c-hand"
             *ngFor="let option of question.options"
-            [ngClass]="{'text-normal': editMode,
-            'text-dark': option.identifier !== fullAnswer.answers[question.identifier]}">
+            [ngClass]="{'text-normal': editMode}">
             {{ optionLabel(option.identifier) }}
           </div>
         </ng-container>
@@ -345,8 +344,7 @@
           <div class="c-hand"
             (click)="selectOption($event, option)"
             *ngFor="let option of question.options"
-            [ngClass]="{'text-normal': editMode,
-            'text-dark': option.identifier !== fullAnswer.answers[question.identifier]}">
+            [ngClass]="{'text-normal': editMode}">
             {{ optionLabel(option.identifier) }}
           </div>
         </ng-container>
