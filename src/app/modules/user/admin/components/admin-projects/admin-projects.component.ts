@@ -21,7 +21,6 @@ import { MissionService } from '../../../../../services/mission/mission.service'
 import { MissionFrontService } from '../../../../../services/mission/mission-front.service';
 import {
   Column,
-  RollbackConfig,
   Table,
   UmiusConfigInterface,
   UmiusConfigService,
@@ -34,22 +33,6 @@ import {
 })
 
 export class AdminProjectsComponent implements OnInit {
-
-  get canImport(): boolean {
-    return this._canImport;
-  }
-
-  get selectedInnovationId(): string {
-    return this._selectedInnovationId;
-  }
-
-  get showModalDone(): boolean {
-    return this._showModalDone;
-  }
-
-  set showModalDone(value: boolean) {
-    this._showModalDone = value;
-  }
 
   private _projects: Array<any> = [];
 
@@ -64,8 +47,6 @@ export class AdminProjectsComponent implements OnInit {
     search: '{}',
     sort: '{"created":-1}'
   };
-
-  private _rollback: RollbackConfig = <RollbackConfig>{};
 
   private _operators: Array<User> = [];
 
@@ -945,8 +926,19 @@ export class AdminProjectsComponent implements OnInit {
     return this._authService.userId;
   }
 
+  get canImport(): boolean {
+    return this._canImport;
+  }
 
-  get rollback(): RollbackConfig {
-    return this._rollback;
+  get selectedInnovationId(): string {
+    return this._selectedInnovationId;
+  }
+
+  get showModalDone(): boolean {
+    return this._showModalDone;
+  }
+
+  set showModalDone(value: boolean) {
+    this._showModalDone = value;
   }
 }
