@@ -39,25 +39,32 @@
             <!-- heading / view like client / objective / activity -->
             <div class="m-right-15 m-bottom-15">
               <h1 class="title is-4 text-white m-bottom-1" *ngIf="project.name">{{ project.name }}</h1>
-              <div class="d-flex align-center flex-wrap-wrap m-bottom-1">
-                <h2 class="title is-6 text-white m-bottom-1" *ngIf="innovTitle">{{ title }}</h2>
-                <a *ngIf="quizLink" class="button is-link text-white is-xs" (click)="openQuiz($event)">
-                  Open quiz
-                  <i class="fas fa-external-link-alt m-left-2"></i>
-                </a>
+              <div class="d-flex flex-d-column align-flex-start m-bottom-1">
+                <h2 class="title is-6 text-white m-bottom-1" *ngIf="innovTitle">{{ innovTitle }}</h2>
+                <div class="quick-quiz-operation">
+                  <a *ngIf="quizLink" class="button is-link text-white is-xs p-no-left"
+                     style="min-width: auto;"
+                     (click)="openQuiz($event)">
+                    Open quiz
+                    <i class="fas fa-external-link-alt m-left-2"></i>
+                  </a>
 
-                <a *ngIf="quizLink" class="button is-link text-white is-xs" (click)="onCopyQuizLink($event)">
-                  Copy quiz link
-                  <i class="far fa-copy m-left-2"></i>
-                </a>
+                  <a *ngIf="quizLink" class="button is-link text-white is-xs p-no-left"
+                     style="min-width: auto;"
+                     (click)="onCopyQuizLink($event)">
+                    Copy quiz link
+                    <i class="far fa-copy m-left-2"></i>
+                  </a>
 
-                <a
-                  [routerLink]="['/user/projects/', project._id]"
-                  class="button is-link text-white is-xs"
-                  target="_blank">
-                  View like client
-                  <i class="far fa-eye m-left-2"></i>
-                </a>
+                  <a
+                    [routerLink]="['/user/projects/', project._id]"
+                    style="min-width: auto;"
+                    class="button is-link text-white is-xs p-no-left"
+                    target="_blank">
+                    View like client
+                    <i class="far fa-eye m-left-2"></i>
+                  </a>
+                </div>
               </div>
 
               <!-- mission objective / activity -->
