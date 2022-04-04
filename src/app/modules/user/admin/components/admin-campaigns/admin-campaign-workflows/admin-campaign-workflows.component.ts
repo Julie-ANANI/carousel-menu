@@ -73,6 +73,10 @@ export class AdminCampaignWorkflowsComponent implements OnInit {
     }
   }
 
+  public closeModal() {
+    this._modalImport = false;
+  }
+
   private _initCampaign() {
     this._getAllTemplates();
     this._getAllSignatures();

@@ -4,11 +4,11 @@
     <!-- select / import / test workflow -->
     <div
       *ngIf="canAccess(['import']) || canAccess(['test'])"
-      class="p-bottom-10 form-group flex-centered flex-wrap-wrap animate-fade is-7">
+      class="p-bottom-10 form-group flex-centered flex-wrap-wrap">
 
       <label
         *ngIf="canAccess(['import'])"
-        class="form-label m-bottom-20 m-right-10"
+        class="form-label text-sm m-bottom-20 m-right-10"
         for="workflows">
         Select the workflow
       </label>
@@ -31,6 +31,7 @@
         [disabled]="isImporting"
         class="button is-sm is-primary m-right-25 m-bottom-20"
         type="button">
+        <i class="fas fa-file-upload icon-left"></i>
         <ng-container *ngIf="isImporting; else textImport">
           importing the workflow...
         </ng-container>
@@ -47,6 +48,7 @@
         [disabled]="isTesting"
         class="button is-sm is-outlined is-primary m-bottom-20"
         type="button">
+        <i class="fas fa-paper-plane icon-left"></i>
         <ng-container *ngIf="isTesting; else textTest">
           testing the workflow...
         </ng-container>
@@ -60,8 +62,8 @@
     <!-- /select / import / test workflow -->
 
     <!-- no campaign -->
-    <div *ngIf="!availableScenarios.length" class="p-top-20 animate-fade is-7">
-      <app-message-template [widthMax]="'354px'">
+    <div *ngIf="!availableScenarios.length" class="p-top-20">
+      <app-message-template widthMax="354px">
         Don't have any workflow?
         <span *ngIf="canAccess(['import'])">
           <br>
@@ -72,16 +74,16 @@
     <!-- /no campaign -->
 
     <!-- campaign -->
-    <div *ngIf="availableScenarios.length">
+    <ng-container *ngIf="availableScenarios.length">
 
-      <div *ngIf="modifiedScenarios.length === 0" class="text-sm text-alert text-medium animate-fade is-7">
+      <div *ngIf="modifiedScenarios.length === 0" class="text-sm text-alert text-medium">
         You must have at least one workflow with all the modified emails.
       </div>
 
       <div
         *ngFor="let scenario of availableScenarios; let i=index;"
         [ngStyle]="{ 'animation-duration': ((i+1) * 200) + 'ms' }"
-        class="p-top-30 animate-slide slide-down">
+        class="p-bottom-30 animate-slide slide-down">
         <app-admin-edit-workflow
           (defaultScenarioChange)="setDefaultScenario($event)"
           (deletedScenario)="removeScenario($event)"
@@ -96,7 +98,7 @@
         </app-admin-edit-workflow>
       </div>
 
-    </div>
+    </ng-container>
     <!-- /campaign -->
 
   </div>
@@ -104,12 +106,12 @@
 
 
 <!-- modal to ask for the confirmation if importing the same template -->
-<umius-modal *ngIf="canAccess(['import'])" [(showModal)]="modalImport" [title]="'Import Board'">
+<umius-modal *ngIf="canAccess(['import'])" [(showModal)]="modalImport" title="Import Board">
 
   <section class="modal-body">{{ modalContent | translate }}</section>
 
   <footer class="modal-footer">
-    <button [disabled]="isImporting" class="button modal-cancel" type="button">Cancel</button>
+    <button (click)="closeModal()" [disabled]="isImporting" class="button modal-cancel" type="button">Cancel</button>
     <button
       (click)="onClickConfirm()"
       [disabled]="isImporting"
