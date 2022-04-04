@@ -333,6 +333,7 @@ export class AuthService {
 
   set isConfirmed(confirmed: boolean) {
     this._confirmed = confirmed;
+    this._setConfirmedTo(confirmed);
   }
 
   get redirectUrl(): string {
