@@ -102,8 +102,12 @@ export class CommonService extends UmiusCommonService {
   /**
    *
    * @param lang - en | fr
+   * @param onlyDate
    */
-  public static dateFormat(lang: string): string {
+  public static dateFormat(lang: string, onlyDate = false): string {
+    if (onlyDate) {
+      return lang === 'fr' ? 'dd/MM/y' : 'y/MM/dd';
+    }
     return lang === 'fr' ? 'dd/MM/y HH:mm' : 'y/MM/dd HH:mm';
   }
 

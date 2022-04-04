@@ -7,6 +7,7 @@ import { SynthesisListComponent } from './synthesis-list.component';
 
 import { MessageTemplateModule } from '../../../../utility/messages/message-template/message-template.module';
 import {SynthesisListRoutingModule} from './synthesis-list-routing.module';
+import {CommonPipeModule} from '../../../../../pipe/common/commonPipe.module';
 
 @NgModule({
   imports: [
@@ -14,7 +15,8 @@ import {SynthesisListRoutingModule} from './synthesis-list-routing.module';
     TranslateModule,
     RouterModule,
     MessageTemplateModule,
-    SynthesisListRoutingModule
+    SynthesisListRoutingModule,
+    CommonPipeModule
   ],
   declarations: [
     SynthesisListComponent
