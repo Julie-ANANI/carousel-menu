@@ -71,6 +71,7 @@ export class AccountComponent implements OnInit {
   private formDataOnChange() {
     this._formData.valueChanges.pipe(distinctUntilChanged()).subscribe((input: any) => {
       this._toSave = JSON.stringify(input) !== JSON.stringify(this._originalUserData);
+      console.log(this._toSave);
     });
   }
 

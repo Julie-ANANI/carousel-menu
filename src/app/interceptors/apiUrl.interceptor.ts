@@ -26,46 +26,20 @@ export class ApiUrlInterceptor implements HttpInterceptor {
    * @private
    */
   private _setAppV3Url(req: HttpRequest<any>): HttpRequest<any> {
-    let newParameters: any = {}
-
-    // for the time being
-    // if (environment.local) {
-    //   newParameters = {
-    //     url: 'http://192.168.20.26:9080/auth/api' + req.url,
-    //     withCredentials: true,
-    //   };
-    // } else {
-    //   newParameters = {
-    //     url: environment.apiUrl + req.url,
-    //     withCredentials: true,
-    //   };
-    // }
-    const apiUrl = ApiUrlInterceptor._setApiUrl(req);
-    console.log(apiUrl);
-    newParameters = {
-      url: apiUrl,
-      withCredentials: true,
-    };
+    let newParameters: any = {};
+    if (req.url && req.url === '/login' && req.method && req.method === 'POST') {
+      newParameters.url = environment.apiUrl + '/auth/login';
+    } else if (req.url && req.url === '/user' && req.method && req.method === 'POST') {
+      newParameters.url = environment.apiUrl + '/auth/register';
+    } else {
+      // only for auth-route: we set up JWT
+      newParameters.url = environment.apiUrl + '/auth/api' + req.url;
+      this._setJwtoken(newParameters, req);
+    }
     this._setCookie(newParameters, req);
-    this._setJwtoken(newParameters, req);
     return req.clone(newParameters);
   }
 
-  /**
-   * check req.url and method
-   * set correct api gateway-url
-   * @param req
-   * @private
-   */
-  private static _setApiUrl(req: HttpRequest<any>): string {
-    if (req.url && req.url === '/login' && req.method && req.method === 'POST') {
-      return environment.apiUrl + '/auth/login';
-    }
-    if (req.url && req.url === '/user' && req.method && req.method === 'POST') {
-      return environment.apiUrl + '/auth/register';
-    }
-    return environment.apiUrl + '/auth/api' + req.url;
-  }
 
   /**
    * set a json web token, and save it in cookie, there are userId + user Role
