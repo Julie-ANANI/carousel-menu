@@ -60,6 +60,8 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
 
   private _displayUploadOverlay = false;
 
+  private _mediaType: string;
+
   private _displayMediaSlider = false;
 
   private _editedMediaIndex: any = undefined;
@@ -361,8 +363,9 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
     this._innovationFrontService.setCardCommentNotifyChanges(true);
   }
 
-  public toggleDisplayUploadOverlay() {
+  public toggleDisplayUploadOverlay(type?: string) {
     this._displayUploadOverlay = !this._displayUploadOverlay;
+    this._mediaType = type;
   }
 
   public toggleDisplayMediaSlider(action?: string, index?: number) {
@@ -636,6 +639,10 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
 
   get slideToShow(): number {
     return this._slideToShow;
+  }
+
+  get mediaType(): string {
+    return this._mediaType;
   }
 
   get modalType(): modalType {
