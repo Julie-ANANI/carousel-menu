@@ -256,9 +256,11 @@
 
 <!-- modal to delete account -->
 <umius-modal [(showModal)]="modalDelete" [title]="'COMMON.MODAL.TITLE_DELETE'">
-  {{ 'MY_ACCOUNT.DELETE_MODAL.TITLE' | translate }}
-  <br><br>
-  {{ 'MY_ACCOUNT.DELETE_MODAL.CONTENT' | translate }}
+  <div class="modal-body">
+    {{ 'MY_ACCOUNT.DELETE_MODAL.TITLE' | translate }}
+    <br><br>
+    {{ 'MY_ACCOUNT.DELETE_MODAL.CONTENT' | translate }}
+  </div>
   <div class="modal-footer">
     <button class="button is-sm modal-cancel">{{ 'COMMON.BUTTON.CANCEL' | translate }}</button>
     <button class="button is-sm" (click)="onClickSubmit($event)">{{ 'COMMON.BUTTON.CONFIRM' | translate }}</button>
