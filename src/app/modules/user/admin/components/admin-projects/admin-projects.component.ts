@@ -19,7 +19,14 @@ import { ObjectivesPrincipal } from '../../../../../models/static-data/missionOb
 import { MissionTemplate } from '../../../../../models/mission';
 import { MissionService } from '../../../../../services/mission/mission.service';
 import { MissionFrontService } from '../../../../../services/mission/mission-front.service';
-import {Column, Table, UmiusConfigInterface, UmiusConfigService, UmiusLocalStorageService} from '@umius/umi-common-component';
+import {
+  Column,
+  RollbackConfig,
+  Table,
+  UmiusConfigInterface,
+  UmiusConfigService,
+  UmiusLocalStorageService
+} from '@umius/umi-common-component';
 
 @Component({
   templateUrl: './admin-projects.component.html',
@@ -57,6 +64,8 @@ export class AdminProjectsComponent implements OnInit {
     search: '{}',
     sort: '{"created":-1}'
   };
+
+  private _rollback: RollbackConfig = <RollbackConfig>{};
 
   private _operators: Array<User> = [];
 
@@ -826,9 +835,10 @@ export class AdminProjectsComponent implements OnInit {
             const saveObject = {
               status: newStatus
             };
-            this._updateInnovation('The project has been updated.', saveObject, context._id);
+            this._updateInnovation(saveObject, context._id, 'status');
           }
         } else {
+          this._rollbackValue(context._id, 'status');
           this._translateNotificationsService.error('Project Status Error...', 'This project status is already Done. ' +
             'It could not be updated.');
         }
@@ -838,7 +848,7 @@ export class AdminProjectsComponent implements OnInit {
         const missionObject = {
           type: value.toUpperCase()
         };
-        this._updateMission(missionObject, context.mission._id);
+        this._updateMission(missionObject, context.mission._id, context._id, 'mission.type');
         break;
 
       case 'owner.firstName':
@@ -846,24 +856,36 @@ export class AdminProjectsComponent implements OnInit {
           owner: value
         };
         if (ownerObject.owner && ownerObject.owner._id) {
-          this._updateInnovation('The project has been updated.', ownerObject, context._id);
+          this._updateInnovation(ownerObject, context._id, 'owner.firstName');
         }
     }
+  }
+
+  private _rollbackValue(projectId: string, field: string) {
+    const displayProject = this._projects.find(inno => inno._id === projectId);
+    const originalProject = this._initialProjects.find(inno => inno._id === projectId);
+    if (displayProject && originalProject) {
+      displayProject[field] = originalProject[field];
+    }
+    this._changeDetectorRef.markForCheck();
   }
 
   /**
    *
    * @param missionObj
    * @param missionId
+   * @param projectId
+   * @param field
    * @param notifyMessage
    * @private
    */
-  private _updateMission(missionObj: any, missionId: string, notifyMessage = 'The project has been updated.') {
+  private _updateMission(missionObj: any, missionId: string, projectId: string, field: string, notifyMessage = 'The project has been updated.', ) {
     this._missionService.save(missionId, missionObj).pipe(first()).subscribe(() => {
       this._translateNotificationsService.success('Mission Save Success...', notifyMessage);
-      }, (err: HttpErrorResponse) => {
+    }, (err: HttpErrorResponse) => {
       this._translateNotificationsService.error('Mission Save Error...', ErrorFrontService.getErrorKey(err.error));
       console.error(err);
+      this._rollbackValue(projectId, field);
     });
   }
 
@@ -872,14 +894,16 @@ export class AdminProjectsComponent implements OnInit {
    * @param notifyMessage
    * @param saveObject
    * @param _innovationId
+   * @param field
    * @private
    */
-  private _updateInnovation(notifyMessage = 'The project has been updated.', saveObject: any, _innovationId: string) {
+  private _updateInnovation(saveObject: any, _innovationId: string, field: string, notifyMessage = 'The project has been updated.',) {
     this._innovationService.save(_innovationId, saveObject).pipe(first()).subscribe(() => {
       this._translateNotificationsService.success('Project Save Success...', notifyMessage);
-      }, (err: HttpErrorResponse) => {
+    }, (err: HttpErrorResponse) => {
       this._translateNotificationsService.error('Project Save Error...', ErrorFrontService.getErrorKey(err.error));
       console.error(err);
+      this._rollbackValue(_innovationId, field);
     });
   }
 
@@ -921,4 +945,8 @@ export class AdminProjectsComponent implements OnInit {
     return this._authService.userId;
   }
 
+
+  get rollback(): RollbackConfig {
+    return this._rollback;
+  }
 }
