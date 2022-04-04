@@ -2,6 +2,36 @@
 
 #admin-project-description {
 
+  .controllers {
+    color: white;
+    width: 47px;
+    height: 44px;
+    border-radius: 50%;
+    border: none;
+    background-color: transparent;
+    margin: 5%;
+    padding-right: 2px;
+
+    &:hover {
+      background-color: rgba(10, 10, 10, 0.3);
+      color: white;
+      transition: ease .5s;
+    }
+  }
+
+  .slider-close-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    border-radius: 50%;
+  }
+
+  .slider-close-btn:hover {
+    background-color: rgba(10, 10, 10, 0.3);
+    color: white;
+    transition: ease .5s;
+  }
+
   .set-main-overlay {
     opacity: 0;
     transition: opacity .5s ease;

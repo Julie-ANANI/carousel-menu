@@ -609,10 +609,10 @@
 
       <!-- medias display -->
 
-      <div *ngIf="!isBeingEdited && (activeInnovCard.principalMedia.cloudinary.width / activeInnovCard.principalMedia.cloudinary.height) > 4/3" class="icon-container is-lg is-overlay" style="left: 483px; position: relative; background-color: #4F5D6B; top: 45px; z-index: 3;">
+      <div *ngIf="!isBeingEdited && (activeInnovCard.principalMedia.cloudinary.width / activeInnovCard.principalMedia.cloudinary.height) > 4/3" (click)="toggleDisplayMediaSlider()" class="icon-container is-lg is-overlay" style="left: 483px; position: relative; background-color: #4F5D6B; top: 45px; z-index: 3;">
         <i class="icon icon-search" style="color: white;"></i>
       </div>
-      <div *ngIf="!isBeingEdited && (activeInnovCard.principalMedia.cloudinary.width / activeInnovCard.principalMedia.cloudinary.height) < 4/3" class="icon-container is-lg is-overlay" style="left: 445px; position: relative; background-color: #4F5D6B; top: 45px; z-index: 3;">
+      <div *ngIf="!isBeingEdited && (activeInnovCard.principalMedia.cloudinary.width / activeInnovCard.principalMedia.cloudinary.height) < 4/3" (click)="toggleDisplayMediaSlider()" class="icon-container is-lg is-overlay" style="left: 445px; position: relative; background-color: #4F5D6B; top: 45px; z-index: 3;">
         <i class="icon icon-search" style="color: white;"></i>
       </div>
       <!-- portrait display -->
@@ -676,7 +676,7 @@
               <figure *ngIf="media['type'] && mediaSrc(media, 'IMAGE')" style="width: 160px; height: 120px; object-fit: cover; background-color: #ececec; display: flex; place-content: center;">
                 <img
                   style="cursor: pointer; width: 100%; height: 100%; object-fit: cover;"
-                  (click)="mediaToShow(mediaSrc(media, 'IMAGE'))"
+                  (click)="toggleDisplayMediaSlider('showSelected', i)"
                   [src]="mediaSrc(media, 'IMAGE')"
                   alt=" "
                   class="img-responsive" >
@@ -732,7 +732,7 @@
               <figure *ngIf="media['type'] && mediaSrc(media, 'IMAGE')" style="width: 160px; height: 120px; object-fit: cover; background-color: #ececec; display: flex; place-content: center;">
                 <img
                   style="cursor: pointer; width: 100%; height: 100%; object-fit: cover;"
-                  (click)="mediaToShow(mediaSrc(media, 'IMAGE'))"
+                  (click)="toggleDisplayMediaSlider('showSelected', i)"
                   [src]="mediaSrc(media, 'IMAGE')"
                   alt=" "
                   class="img-responsive" >
@@ -842,7 +842,7 @@
               <figure *ngIf="media['type'] === 'PHOTO' && mediaSrc(media, 'IMAGE')"  style="width: 160px; height: 120px; object-fit: cover; background-color: #ccc; display: flex; place-content: center;">
                 <img
                   style="cursor: pointer; width: 100%; height: 100%; object-fit: cover;"
-                  (click)="mediaToShow(mediaSrc(media, 'IMAGE'))"
+                  (click)="toggleDisplayMediaSlider('showSelected', i)"
                   [src]="mediaSrc(media, 'IMAGE')"
                   alt=" "
                   class="img-responsive" >
@@ -898,7 +898,7 @@
               <figure *ngIf="media['type'] === 'PHOTO' && mediaSrc(media, 'IMAGE')"  style="width: 160px; height: 120px; object-fit: cover; background-color: #ccc; display: flex; place-content: center;">
                 <img
                   style="cursor: pointer; width: 100%; height: 100%; object-fit: cover;"
-                  (click)="mediaToShow(mediaSrc(media, 'IMAGE'))"
+                  (click)="toggleDisplayMediaSlider('showSelected', i)"
                   [src]="mediaSrc(media, 'IMAGE')"
                   alt=" "
                   class="img-responsive" >
@@ -950,16 +950,40 @@
       <!-- see more btn -->
       <ngContainer *ngIf="!isBeingEdited && activeInnovCard.media.length > 4 && (activeInnovCard.principalMedia.cloudinary.width / activeInnovCard.principalMedia.cloudinary.height) > 4/3" >
         <div style="margin: -12px 0 0 387px">
-          <button class="button is-primary is-xs">See more</button>
+          <button (click)="toggleDisplayMediaSlider()" class="button is-primary is-xs">See more</button>
         </div>
       </ngContainer>
       <ngContainer *ngIf="!isBeingEdited && activeInnovCard.media.length > 4 && (activeInnovCard.principalMedia.cloudinary.width / activeInnovCard.principalMedia.cloudinary.height) < 4/3" >
         <div style="margin: -12px 0 0 349px">
-          <button class="button is-primary is-xs">See more</button>
+          <button (click)="toggleDisplayMediaSlider()" class="button is-primary is-xs">See more</button>
         </div>
       </ngContainer>
       <!-- /see more btn -->
       <!-- /medias display -->
+
+          <!-- slider -->
+<!--          <ng-container *ngFor="let media of activeInnovCard.media; let i = index;">
+            <img (click)="toggleDisplayMediaSlider('showSelected', i)" [src]="mediaSrc(media, 'IMAGE')" width="160px" style="height: 120px !important">
+          </ng-container>-->
+
+          <div *ngIf="displayMediaSlider" style="background: rgba(58,66,77,0.96); width: 100vw; height: 100vh; position: fixed; top: 0; left: 0; right: 0; bottom: 0; display: flex; place-items: center; z-index: 6">
+            <div class="icon-container is-lg is-overlay controllers" (click)="slideMedia('showPrevious')" style="z-index: 100;">
+              <i class="icon icon-arrow-left" style="border: none"></i>
+            </div>
+            <div style="height: 90%; width: 80%; margin: auto; display: flex; place-content: center; flex-direction: column">
+              <div style="justify-content: center;display: flex;height: 90%;width: 100%;">
+                <img *ngIf="(activeInnovCard.media[slideToShow].cloudinary.width / activeInnovCard.media[slideToShow].cloudinary.height) < 4/3" [src]=activeInnovCard.media[slideToShow].url style="height: 100%; width: auto; object-fit: contain">
+                <img *ngIf="(activeInnovCard.media[slideToShow].cloudinary.width / activeInnovCard.media[slideToShow].cloudinary.height) > 4/3" [src]=activeInnovCard.media[slideToShow].url style="height: auto; width: 100%;object-fit: contain">
+              </div>
+              <p style="margin-bottom: 0;text-align: center;color: white;padding-top: 32px;">{{slideToShow +1}}/{{activeInnovCard.media.length}}</p>
+            </div>
+            <div class="icon-container is-lg is-overlay controllers" (click)="slideMedia( 'showNext')" style="z-index: 10;">
+              <i class="icon icon-arrow-right"></i>
+            </div>
+            <button class="modal-close slider-close-btn" (click)="toggleDisplayMediaSlider('closeSlider')"></button>
+          </div>
+          <!-- /slider -->
+
         </div>
       </div>
     </section>
@@ -1089,5 +1113,5 @@
 <!-- /modal to add New section | Delete section -->
 
 <!-- modal to view image -->
-<!--<umius-modal [(showModal)]="modalMedia" [medias]="[selectedMedia]"></umius-modal>-->
+<!--<umius-modal [(showModal)]="modalMedia" [medias]="[selectedMedia]" style="width: auto"></umius-modal>-->
 <!-- /modal to view image-->

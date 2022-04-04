@@ -13,6 +13,7 @@ export class MediaService {
    * @param formData
    */
   public upload(uri: string, formData: FormData): Observable<any> {
+    console.log('http;', this._http);
     return this._http.post<any>(uri, formData);
   }
 

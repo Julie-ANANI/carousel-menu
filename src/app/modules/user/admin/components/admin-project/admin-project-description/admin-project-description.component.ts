@@ -56,7 +56,11 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
 
   private _showModal = false;
 
+  private _slideToShow: number = 0;
+
   private _displayUploadOverlay = false;
+
+  private _displayMediaSlider = false;
 
   private _editedMediaIndex: any = undefined;
 
@@ -361,6 +365,16 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
     this._displayUploadOverlay = !this._displayUploadOverlay;
   }
 
+  public toggleDisplayMediaSlider(action?: string, index?: number) {
+    if (action && index) {
+      this.slideMedia('showSelected', index);
+    }
+    if (action === 'closeSlider') {
+      this._slideToShow = 0;
+    }
+    this._displayMediaSlider = !this._displayMediaSlider;
+  }
+
   public setEditedMediaIndex(index: any) {
     this._editedMediaIndex = index;
   }
@@ -372,6 +386,24 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
     } else {
       this._isMediaAjusted = '100%';
       // media.display = 'crop';
+    }
+  }
+
+  public slideMedia(action: string, index?: number) {
+    if (action === 'showSelected') {
+      this._slideToShow = index;
+    } else if (action === 'showPrevious') {
+      if (!this.activeInnovCard.media[this._slideToShow-1]) {
+        this._slideToShow = this.activeInnovCard.media.length-1;
+      } else {
+        this._slideToShow = this._slideToShow -1;
+      }
+    } else if (action === 'showNext') {
+      if (!this.activeInnovCard.media[this._slideToShow + 1]) {
+        this._slideToShow = 0;
+      } else {
+        this._slideToShow = this._slideToShow + 1;
+      }
     }
   }
 
@@ -595,6 +627,14 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
 
   get displayUploadOverlay(): boolean {
     return this._displayUploadOverlay;
+  }
+
+  get displayMediaSlider(): boolean {
+    return this._displayMediaSlider;
+  }
+
+  get slideToShow(): number {
+    return this._slideToShow;
   }
 
   get modalType(): modalType {
