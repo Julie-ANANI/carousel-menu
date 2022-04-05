@@ -35,13 +35,17 @@
               </ng-container>
 
               <ng-container *ngIf="editInstanceDomain">
-                <label class="form-label" for="roles-list">New role:</label>
-                <select name="roles-list" id="roles-list" (change)="setRole($event)">
-                  <option>Select a role</option>
-                  <option *ngFor="let role of roles" [ngValue]="role">
-                    {{role.name}}
-                  </option>
-                </select>
+                <div class="form-group d-flex align-center">
+                  <label class="form-label" for="roles-list">New role:</label>
+                  <select class="form-select is-sm m-left-15"
+                          name="roles-list"
+                          id="roles-list"
+                          formControlName="roles">
+                    <option *ngFor="let role of roles" [value]="role.name">
+                      {{ role.name }}
+                    </option>
+                  </select>
+                </div>
               </ng-container>
             </div>
           </ng-container>
@@ -66,8 +70,8 @@
         <div class="operator-wrapper">
           <label class="form-label">
             <span>{{getLoginAttempts()}}</span>
-            <a *ngIf="!!user['attempts']" (click)="resetLoginAttempts($event)">
-              <ng-container *ngIf="!isSelf && adminLevel()"><i class="fas fa-redo"></i></ng-container>
+            <a *ngIf="!!user.attempts" (click)="resetLoginAttempts($event)">
+              <ng-container *ngIf="!isSelf && adminLevel()"><i class="fas fa-redo m-left-2"></i></ng-container>
             </a>
           </label>
         </div>

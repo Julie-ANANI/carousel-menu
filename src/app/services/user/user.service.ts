@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { User } from '../../models/user.model';
 import { Tag } from '../../models/tag';
 import { environment } from '../../../environments/environment';
 import {UmiusConfigInterface} from '@umius/umi-common-component';
+import { CacheType } from "../../models/cache";
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
@@ -76,8 +77,10 @@ export class UserService {
 
   public getAll(config?: {
     [header: string]: string | string[];
-  }): Observable<Array<User>> {
-    return this._http.get<Array<User>>('/user', { params: config });
+  }, cache: CacheType = 'reset'): Observable<Array<User>> {
+    return this._http.get<Array<User>>('/user', {
+      params: config,
+      headers: new HttpHeaders().set('cache', cache)});
   }
 
   public getCommercials(config?: UmiusConfigInterface): Observable<Array<User>> {

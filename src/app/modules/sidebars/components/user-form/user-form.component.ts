@@ -1,4 +1,12 @@
-import { Component, EventEmitter, Inject, Input, OnInit, Output, PLATFORM_ID } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Inject,
+  Input,
+  OnInit,
+  Output,
+  PLATFORM_ID
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
@@ -10,7 +18,7 @@ import { Campaign } from '../../../../models/campaign';
 import { AutocompleteService } from '../../../../services/autocomplete/autocomplete.service';
 import { AuthService } from '../../../../services/auth/auth.service';
 import { UserService } from '../../../../services/user/user.service';
-import {distinctUntilChanged, first} from 'rxjs/operators';
+import { distinctUntilChanged, first } from 'rxjs/operators';
 import { Clearbit } from '../../../../models/clearbit';
 import { Tag } from '../../../../models/tag';
 import { QuizService } from '../../../../services/quiz/quiz.service';
@@ -18,17 +26,17 @@ import { isPlatformBrowser } from '@angular/common';
 import { countries } from '../../../../models/static-data/country';
 import { SearchService } from '../../../../services/search/search.service';
 import { ProfessionalsService } from '../../../../services/professionals/professionals.service';
-import {ErrorFrontService} from '../../../../services/error/error-front.service';
-import {RolesService} from '../../../../services/roles/roles.service';
-import {EnterpriseService} from '../../../../services/enterprise/enterprise.service';
-import {emailRegEx} from '../../../../utils/regex';
-import {UmiusEnterpriseInterface} from '@umius/umi-common-component';
-import {CommonService} from '../../../../services/common/common.service';
+import { ErrorFrontService } from '../../../../services/error/error-front.service';
+import { RolesService } from '../../../../services/roles/roles.service';
+import { EnterpriseService } from '../../../../services/enterprise/enterprise.service';
+import { emailRegEx } from '../../../../utils/regex';
+import { UmiusEnterpriseInterface } from '@umius/umi-common-component';
+import { CommonService } from '../../../../services/common/common.service';
 
 @Component({
   selector: 'app-user-form',
   templateUrl: './user-form.component.html',
-  styleUrls: ['./user-form.component.scss']
+  styleUrls: ['./user-form.component.scss'],
 })
 
 export class UserFormComponent implements OnInit {
@@ -72,6 +80,7 @@ export class UserFormComponent implements OnInit {
      For type 'editUser', put the data into the attribute user and patch it to the formData
   */
   @Input() set user(value: User) {
+    console.log(value);
     if (value) {
       this._selectedProject = null;
       value.country = this.getCountryName(value.country);
@@ -255,11 +264,13 @@ export class UserFormComponent implements OnInit {
 
 
   private loadEditUser() {
+    console.log(this._user);
     if (this._user) {
       this._isSelf = this._authService.userId === this._user.id;
       this._userForm.patchValue(this._user);
       this._company = this._user.company;
       this.loadInnovations();
+      console.log(this._userForm);
     }
   }
 
@@ -283,6 +294,7 @@ export class UserFormComponent implements OnInit {
   }
 
   public setRole(event: Event) {
+    console.log(event);
     this._userForm.get('roles').setValue(event.target['value']);
   }
 
@@ -298,6 +310,7 @@ export class UserFormComponent implements OnInit {
         const user = new User(this._userForm.value);
         // TODO we have to correct the problem of user.id || user._id
         user.id = this._user.id || this._user._id;
+        console.log(this._user);
         this.finalUserData.emit(user);
       } else if (this._isProfessional && this._type === 'professional') {
         const pro = this._userForm.value;
@@ -474,17 +487,18 @@ export class UserFormComponent implements OnInit {
   }
 
   public resetLoginAttempts(event: Event) {
-    event.preventDefault();
+    // event.preventDefault();
     const userId = this._user.id || this._user._id;
     this.userService.resetLoginAttempts(userId).pipe(first()).subscribe(result => {
-      this.user = result;
+      this._user = result;
+      this.finalUserData.emit(this._user);
       }, err => {
       this.translateNotificationsService.error('ERROR.ERROR', err.message);
     });
   }
 
   public getLoginAttempts(): string {
-    return `${!!this.user['attempts'] ? this.user['attempts'] : '0'} failed login attempt${!!this.user['attempts'] && this.user['attempts'] === 1 ? '' : 's'}`;
+    return `${!!this.user.attempts ? this.user.attempts : '0'} failed login attempt${!!this.user.attempts && this.user.attempts === 1 ? '' : 's'}`;
   }
 
   get isSuperAdmin(): boolean {

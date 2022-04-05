@@ -27,7 +27,7 @@ export class ApiUrlInterceptor implements HttpInterceptor {
    */
   private _setAppV3Url(req: HttpRequest<any>): HttpRequest<any> {
     let newParameters: any = {};
-    if (req.url && req.url === '/login' && req.method && req.method === 'POST') {
+    if (req.url && req.url === '/auth/login' && req.method && req.method === 'POST') {
       newParameters.url = environment.apiUrl + '/auth/login';
     } else if (req.url && req.url === '/user' && req.method && req.method === 'POST') {
       newParameters.url = environment.apiUrl + '/auth/register';

@@ -23,6 +23,7 @@ export class User extends Model {
   private _provider: string;
   private _preferences: boolean;
   private _access?: {adminSide?: object};
+  private _attempts?: number;
 
   constructor(user?: any) {
     super(user);
@@ -207,4 +208,12 @@ export class User extends Model {
     this._access = value;
   }
 
+
+  get attempts(): number {
+    return this._attempts;
+  }
+
+  set attempts(value: number) {
+    this._attempts = value;
+  }
 }

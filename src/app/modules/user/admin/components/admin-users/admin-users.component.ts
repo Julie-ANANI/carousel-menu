@@ -170,6 +170,7 @@ export class AdminUsersComponent implements OnInit {
 
   public onClickEdit(value: User) {
     this._selectedUser = value;
+    console.log(value);
     this._sidebarValue = {
       animate_state: 'active',
       type: 'editUser',
@@ -252,6 +253,9 @@ export class AdminUsersComponent implements OnInit {
 
   set sidebarValue(value: UmiusSidebarInterface) {
     this._sidebarValue = value;
+    if (this._sidebarValue.animate_state === 'inactive') {
+      this._selectedUser = null;
+    }
   }
 
   get sidebarValue(): UmiusSidebarInterface {
