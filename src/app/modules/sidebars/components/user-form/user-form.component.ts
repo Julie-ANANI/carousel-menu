@@ -80,7 +80,6 @@ export class UserFormComponent implements OnInit {
      For type 'editUser', put the data into the attribute user and patch it to the formData
   */
   @Input() set user(value: User) {
-    console.log(value);
     if (value) {
       this._selectedProject = null;
       value.country = this.getCountryName(value.country);
@@ -264,13 +263,11 @@ export class UserFormComponent implements OnInit {
 
 
   private loadEditUser() {
-    console.log(this._user);
     if (this._user) {
       this._isSelf = this._authService.userId === this._user.id;
       this._userForm.patchValue(this._user);
       this._company = this._user.company;
       this.loadInnovations();
-      console.log(this._userForm);
     }
   }
 
@@ -294,7 +291,6 @@ export class UserFormComponent implements OnInit {
   }
 
   public setRole(event: Event) {
-    console.log(event);
     this._userForm.get('roles').setValue(event.target['value']);
   }
 
@@ -310,7 +306,7 @@ export class UserFormComponent implements OnInit {
         const user = new User(this._userForm.value);
         // TODO we have to correct the problem of user.id || user._id
         user.id = this._user.id || this._user._id;
-        console.log(this._user);
+        this._editInstanceDomain = false;
         this.finalUserData.emit(user);
       } else if (this._isProfessional && this._type === 'professional') {
         const pro = this._userForm.value;

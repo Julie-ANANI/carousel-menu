@@ -5,7 +5,7 @@ export const environment = {
   etherpadUrl: 'http://localhost:9001',
   clientUrl: 'http://localhost:4200',
   // If you don't want to launch apisix at local, just change the url in apiUrl.interceptors
-  apiUrl: 'http://192.168.1.34:9080',
+  apiUrl: 'http://192.168.1.32:9080',
   companyName: 'United Motion Ideas (local)',
   companyShortName: 'UMI',
   domain: 'umi',
