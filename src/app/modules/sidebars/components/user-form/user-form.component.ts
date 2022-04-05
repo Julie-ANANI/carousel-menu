@@ -298,6 +298,7 @@ export class UserFormComponent implements OnInit {
         const user = new User(this._userForm.value);
         // TODO we have to correct the problem of user.id || user._id
         user.id = this._user.id || this._user._id;
+        this._editInstanceDomain = false;
         this.finalUserData.emit(user);
       } else if (this._isProfessional && this._type === 'professional') {
         const pro = this._userForm.value;
@@ -467,7 +468,6 @@ export class UserFormComponent implements OnInit {
       }, error => {
         console.log(error);
         const key = ErrorFrontService.getErrorKey(error.error);
-        console.log(key);
         this.translateNotificationsService.error('ERROR.ERROR', key);
       });
     }
@@ -478,6 +478,7 @@ export class UserFormComponent implements OnInit {
     const userId = this._user.id || this._user._id;
     this.userService.resetLoginAttempts(userId).pipe(first()).subscribe(result => {
       this.user = result;
+      this.finalUserData.emit(this._user);
       }, err => {
       this.translateNotificationsService.error('ERROR.ERROR', err.message);
     });

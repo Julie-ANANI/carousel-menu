@@ -35,13 +35,17 @@
               </ng-container>
 
               <ng-container *ngIf="editInstanceDomain">
-                <label class="form-label" for="roles-list">New role:</label>
-                <select name="roles-list" id="roles-list" (change)="setRole($event)">
-                  <option>Select a role</option>
-                  <option *ngFor="let role of roles" [ngValue]="role">
-                    {{role.name}}
-                  </option>
-                </select>
+                <div class="form-group d-flex align-center">
+                  <label class="form-label" for="roles-list" style="width: fit-content">New role:</label>
+                  <select class="form-select is-sm5 m-left-10" style="width: auto"
+                          id="roles-list"
+                          formControlName="roles"
+                          name="roles-list">
+                    <option *ngFor="let role of roles" [value]="role.name">
+                      {{ role.name }}
+                    </option>
+                  </select>
+                </div>
               </ng-container>
             </div>
           </ng-container>
