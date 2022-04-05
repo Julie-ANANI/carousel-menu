@@ -16,6 +16,7 @@ import {NotificationService} from '../../../../../../services/notification/notif
 import {NotificationJob} from '../../../../../../models/notification';
 import {isPlatformBrowser} from '@angular/common';
 import {UmiusConfigInterface, UmiusMediaInterface, UmiusModalMedia, UmiusVideoInterface} from '@umius/umi-common-component';
+import {MediaService} from '../../../../../../services/media/media.service';
 
 const he = require('he');
 
@@ -56,7 +57,7 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
 
   private _showModal = false;
 
-  private _slideToShow: number = 0;
+  private _slideToShow = 0;
 
   private _displayUploadOverlay = false;
 
@@ -64,7 +65,7 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
 
   private _editedMediaIndex: any = undefined;
 
-  private _isMediaAjusted = '100%';
+  private _isMediaAdjusted = false;
 
   private _isBeingEdited = false;
 
@@ -99,12 +100,6 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
     summary: true
   };
 
-/*  private _displayUploadOverlay: Toggle = {
-    title: false,
-    summary: false,
-    addMedias: true
-  };*/
-
   private _isSavingMedia = false;
 
   private _isEditableComment = false;
@@ -120,6 +115,7 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
   private _notificationJobs: Array<NotificationJob> = [];
 
   private _isFetchingJobs = true;
+  isMediaAjusted: any;
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _innovationFrontService: InnovationFrontService,
@@ -127,7 +123,8 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
               private _notificationService: NotificationService,
               private _etherpadFrontService: EtherpadFrontService,
               private _rolesFrontService: RolesFrontService,
-              private _translateNotificationsService: TranslateNotificationsService) {
+              private _translateNotificationsService: TranslateNotificationsService,
+              private _mediaService: MediaService) {
   }
 
   ngOnInit() {
@@ -380,13 +377,11 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
     this._editedMediaIndex = index;
   }
 
-  public adjustMedia(media: UmiusMediaInterface) {
-    if (this._isMediaAjusted === '100%') {
-      this._isMediaAjusted = 'auto';
-      // media.display = 'adjust';
-    } else {
-      this._isMediaAjusted = '100%';
-      // media.display = 'crop';
+  public adjustMedia(media: UmiusMediaInterface, action: string) {
+    if (action === 'crop') {
+      this._isMediaAdjusted = false;
+    } else if (action === 'adjust') {
+      this._isMediaAdjusted = true;
     }
   }
 
@@ -410,6 +405,12 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
 
   public editMedias() {
     this._isBeingEdited = !this._isBeingEdited;
+    this.activeInnovCard.principalMedia.isMediaAdjusted = this._isMediaAdjusted;
+    if (!this._isBeingEdited && this.activeInnovCard.principalMedia) {
+      this._mediaService.update(this.activeInnovCard.principalMedia.id, this.activeInnovCard.principalMedia).subscribe((data: any) => {
+      }, (err: HttpErrorResponse) => {});
+    }
+    this._isMediaAdjusted = false;
   }
 
   public openModal(event: Event, type: modalType, index?: number) {
@@ -533,6 +534,7 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
           console.error(err);
         });
     }
+    this._isMediaAdjusted = false;
   }
 
   private _setInnovation() {
@@ -699,8 +701,8 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
     return this._isBeingEdited;
   }
 
-  get isMediaAjusted(): string {
-    return this._isMediaAjusted;
+  get isMediaAdjusted(): boolean {
+    return this._isMediaAdjusted;
   }
 
   ngOnDestroy(): void {

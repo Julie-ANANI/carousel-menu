@@ -564,11 +564,11 @@
       <!-- set main media display -->
         <div *ngIf="isBeingEdited && activeInnovCard.principalMedia['type'] === 'PHOTO'" style="display: flex; flex-direction: row; margin-bottom: 1rem;">
           <div>
-            <input type="radio" id="crop" name="radios" value="crop" (change)="adjustMedia(activeInnovCard.principalMedia)" checked>
+            <input type="radio" id="crop" name="radios" value="crop" (change)="adjustMedia(activeInnovCard.principalMedia, 'crop')" [checked]=!isMediaAdjusted>
             <label for="crop" class="m-left-2 m-right-40">Crop main media</label>
           </div>
           <div>
-            <input type="radio" id="adjust" name="radios" value="adjust" (change)="adjustMedia(activeInnovCard.principalMedia)">
+            <input type="radio" id="adjust" name="radios" value="adjust" (change)="adjustMedia(activeInnovCard.principalMedia, 'adjust')" [checked]="isMediaAdjusted">
             <label for="adjust" class="m-left-2">Adjust main media</label>
           </div>
         </div>
@@ -617,7 +617,7 @@
       </div>
       <!-- portrait display -->
       <div
-        *ngIf="activeInnovCard.media.length && (activeInnovCard.principalMedia.cloudinary.width / activeInnovCard.principalMedia.cloudinary.height) < 4/3" style="padding: 16px; width: auto; height: 408px; display: flex; flex-wrap: wrap; flex-direction: column; gap: 8px; background-color: white; align-content: flex-start; align-items: flex-start;">
+        *ngIf="activeInnovCard.media.length && (activeInnovCard.principalMedia.cloudinary.width / activeInnovCard.principalMedia.cloudinary.height) < 4/3" style="padding: 16px; width: auto; height: 408px; display: flex; flex-flow: column wrap; gap: 8px; background-color: white; align-content: flex-start; align-items: flex-start;">
 
         <!-- principal media -->
         <div *ngIf="activeInnovCard.principalMedia" class="text-center" style="width: 290px; height: 100%; object-fit: cover; position: relative;">
@@ -633,7 +633,7 @@
           && mediaSrc(activeInnovCard.principalMedia, 'IMAGE')" style="width: 100%; height: 100%; object-fit: cover; background-color: #ececec; display: flex; place-content: center;">
             <img
               style="cursor: pointer; height: 100%; object-fit: cover;"
-              [ngStyle]="{'width': isMediaAjusted}"
+              [ngStyle]="{'width': activeInnovCard.principalMedia.isMediaAdjusted || isMediaAdjusted ? !isMediaAdjusted && isBeingEdited ? '100%' : 'auto' : '100%'}"
               (click)="mediaToShow(mediaSrc(activeInnovCard.principalMedia, 'IMAGE'))"
               [src]="mediaSrc(activeInnovCard.principalMedia, 'IMAGE').replace(',h_159', '').replace(',w_240', '')"
               alt=" "
@@ -799,7 +799,7 @@
           && mediaSrc(activeInnovCard.principalMedia, 'IMAGE')" style="width: 100%; height: 100%; object-fit: cover; background-color: #ccc; display: flex; place-content: center;">
             <img
               style="cursor: pointer; height: 100%; object-fit: cover;"
-              [ngStyle]="{'width': isMediaAjusted}"
+              [ngStyle]="{'width': activeInnovCard.principalMedia.isMediaAdjusted || isMediaAdjusted ? !isMediaAdjusted && isBeingEdited ? '100%' : 'auto' : '100%'}"
               (click)="mediaToShow(mediaSrc(activeInnovCard.principalMedia, 'IMAGE'))"
               [src]="mediaSrc(activeInnovCard.principalMedia, 'IMAGE').replace(',h_159', '').replace(',w_240', '')"
               alt=" "
