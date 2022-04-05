@@ -10,14 +10,7 @@
 
           <div class="d-flex align-center m-bottom-10">
             <div class="form-group d-flex align-center">
-              <label class="form-label" for="sidebar-signature-language">{{ 'COMMON.LABEL.LANGUAGE' | translate }}:</label>
-              <select class="form-select is-sm m-left-15"
-                      formControlName="language"
-                      id="sidebar-signature-language">
-                <option *ngFor="let language of languages" [value]="language.type">
-                  {{ language.alias }}
-                </option>
-              </select>
+              <label class="form-label">{{ 'COMMON.LABEL.LANGUAGE' | translate }}: {{form?.get('language')?.value}}</label>
             </div>
           </div>
 
