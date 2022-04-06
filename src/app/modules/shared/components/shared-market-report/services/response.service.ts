@@ -494,6 +494,9 @@ export class ResponseService {
     /* BASE VALUE
  –––––––––––––––––––––––––––––––––––––––––––––––––– */
     const numberOfCategories = 5;
+    const hundredTruncated = 98; // to design css avoids overflow of the cursor
+    const multiplyPercentage = 20; // This multiplier is to have the value in percentage because the score are on 5
+    //const multiplyScoreOfTwenty = 4; //score of 5 on 20
     // let interval = (5-threshold)/numberOfCategories
 
     /*This scale is the starting point for our 0 score. It represents the failure rate of innovations that is specific to the UMI data.
@@ -502,12 +505,14 @@ export class ResponseService {
 
     /* PROGRESS BAR DESIGN LINE
  –––––––––––––––––––––––––––––––––––––––––––––––––– */
-    const multiplyPercentage = 20; // This multiplier is to have the value in percentage because the score are on 5
-
-    /*    It's obsolete solution*/
+    /* It's for bar result */
     /* This value is defined by which number we want to divide our score*/
     /* The percentage is rounded because the pointer goes over either 0 or 100 because the bar is rounded */
-    let percentage: number = (averageFinalScore * multiplyPercentage); // will give margin percentage for the pointer of marker
+    let scoreTwenty = averageFinalScore * multiplyPercentage
+    let percentage: number = scoreTwenty; // will give margin percentage for the pointer of marker
+    //note sur 20 => 5*4
+    let scoreBarPercentage = ((scoreTwenty) * hundredTruncated) / multiplyPercentage; //This is for the case of bars of equal gauges
+    const barIndex = ((scoreTwenty) - (scoreTwenty) % (numberOfCategories -1)) / (numberOfCategories -1);  //This is for the case of bars of equal gauges
 
     //It's for calculate for the progress_bar old design or use case of likert-scale
     let scorePercentage: string = (averageFinalScore * multiplyPercentage).toString() +'%';
@@ -522,8 +527,7 @@ export class ResponseService {
  –––––––––––––––––––––––––––––––––––––––––––––––––– */
     const multiplyDegree = 180; // 360/2 = 180deg
 
-    let scoreOfHundred = averageFinalScore * multiplyPercentage //multiply pqr 20 pour note sur 100
-
+    let scoreOfHundred = averageFinalScore * multiplyPercentage //multiply by 20 for note on 100
     scoreOfHundred = scoreOfHundred / 100; // divise sur 100 for pourcentage deg
 
     let scoreRotate: string = ((scoreOfHundred) * multiplyDegree).toString() + 'deg'; // score final deg
@@ -551,9 +555,11 @@ export class ResponseService {
       color: colorsAndNames[index].color,
       score: averageFinalScore,
       scorePercent: scorePercentage.toString(), // example 0%
-      scoreRotate: scoreRotate.toString(),  // example 0deg
       percentage : percentage > 5 ? (percentage - 5) : percentage,  // example  0
+      scoreBarPercent : scoreBarPercentage, // exqmple 0
+      scoreRotate: scoreRotate.toString(),  // example 0deg
       index: index,
+      barIndex: barIndex,
     };
   };
 
