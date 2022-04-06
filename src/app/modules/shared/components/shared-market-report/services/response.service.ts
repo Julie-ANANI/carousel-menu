@@ -14,6 +14,13 @@ import {LikertScaleChart} from '../../../../../models/executive-report';
 import {UmiusMultilingInterface} from '@umius/umi-common-component';
 import colorsAndNames from '../../../../../../../assets/json/likert-scale_executive-report.json';
 
+export const likertScaleThresholds = {
+  first: 2.25,
+  second: 2.93,
+  third: 3.63,
+  forth: 4.31
+}
+
 @Injectable({ providedIn: 'root' })
 export class ResponseService {
 
@@ -494,9 +501,8 @@ export class ResponseService {
     /* BASE VALUE
  –––––––––––––––––––––––––––––––––––––––––––––––––– */
     const numberOfCategories = 5;
-    const hundredTruncated = 98; // to design css avoids overflow of the cursor
     const multiplyPercentage = 20; // This multiplier is to have the value in percentage because the score are on 5
-    //const multiplyScoreOfTwenty = 4; //score of 5 on 20
+
     // let interval = (5-threshold)/numberOfCategories
 
     /*This scale is the starting point for our 0 score. It represents the failure rate of innovations that is specific to the UMI data.
@@ -508,11 +514,7 @@ export class ResponseService {
     /* It's for bar result */
     /* This value is defined by which number we want to divide our score*/
     /* The percentage is rounded because the pointer goes over either 0 or 100 because the bar is rounded */
-    let scoreTwenty = averageFinalScore * multiplyPercentage
-    let percentage: number = scoreTwenty; // will give margin percentage for the pointer of marker
-    //note sur 20 => 5*4
-    let scoreBarPercentage = ((scoreTwenty) * hundredTruncated) / multiplyPercentage; //This is for the case of bars of equal gauges
-    const barIndex = ((scoreTwenty) - (scoreTwenty) % (numberOfCategories -1)) / (numberOfCategories -1);  //This is for the case of bars of equal gauges
+    let percentage = 0; // will give margin percentage for the pointer of marker
 
     //It's for calculate for the progress_bar old design or use case of likert-scale
     let scorePercentage: string = (averageFinalScore * multiplyPercentage).toString() +'%';
@@ -536,17 +538,29 @@ export class ResponseService {
     // Step Constitution of index color
     let index = 0;
     const score = averageFinalScore
+    const multiplyBy = 10;
 
-    if (score < 2.25) { //totally invalidated
+    /**
+     * we are adding 20, 40, 60, 80 because total bar is of 100, and we have divided it in 5 parts
+     * so each part = 20 and based on the score we find out in which part it comes and calculate the
+     * percentage.
+     */
+
+    if (score < likertScaleThresholds.first) { //totally invalidated
       index = 0;
-    } else if (2.25 <= score && score < 2.93) { // invalidated
+      percentage = score * multiplyBy;
+    } else if (likertScaleThresholds.first <= score && score < likertScaleThresholds.second) { // invalidated
       index = 1;
-    } else if (2.93 <= score && score < 3.63) { // uncertain
+      percentage = ((score - likertScaleThresholds.first) * multiplyBy) + 20;
+    } else if (2.93 <= likertScaleThresholds.second && score < likertScaleThresholds.third) { // uncertain
       index = 2;
-    } else if (3.63 <= score && score < 4.31) { // validated
+      percentage = ((score - likertScaleThresholds.second) * multiplyBy) + 40;
+    } else if (3.63 <= likertScaleThresholds.third && score < likertScaleThresholds.forth) { // validated
       index = 3;
-    } else if (4.31 <= score ) { // totally validated
+      percentage = ((score - likertScaleThresholds.third) * multiplyBy) + 60;
+    } else if (4.31 <= likertScaleThresholds.forth ) { // totally validated
       index = 4;
+      percentage = ((score - likertScaleThresholds.forth) * multiplyBy) + 80;
     }
 
 
@@ -555,11 +569,9 @@ export class ResponseService {
       color: colorsAndNames[index].color,
       score: averageFinalScore,
       scorePercent: scorePercentage.toString(), // example 0%
-      percentage : percentage > 5 ? (percentage - 5) : percentage,  // example  0
-      scoreBarPercent : scoreBarPercentage, // exqmple 0
+      percentage : percentage,  // example  0
       scoreRotate: scoreRotate.toString(),  // example 0deg
-      index: index,
-      barIndex: barIndex,
+      index: index
     };
   };
 

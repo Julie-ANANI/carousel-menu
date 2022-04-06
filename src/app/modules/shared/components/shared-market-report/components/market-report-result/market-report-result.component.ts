@@ -6,7 +6,7 @@ import {PageScrollService} from 'ngx-page-scroll-core';
 import {DOCUMENT} from '@angular/common';
 import {MissionFrontService} from '../../../../../../services/mission/mission-front.service';
 import {Answer} from '../../../../../../models/answer';
-import {ResponseService} from '../../services/response.service';
+import {likertScaleThresholds, ResponseService} from '../../services/response.service';
 import {InnovationService} from '../../../../../../services/innovation/innovation.service';
 import {TranslateNotificationsService} from '../../../../../../services/translate-notifications/translate-notifications.service';
 import {HttpErrorResponse} from '@angular/common/http';
@@ -208,19 +208,19 @@ export class MarketReportResultComponent implements OnInit {
     this._label.right = this._scale.percentage >= 85 ? (99 - this._scale.percentage) + '%' : '';
     this._label.margin = (this._scale.percentage >= 30 && this._scale.percentage <= 85) ? '-5%' : '';
 
-    if (this._scale.score < 2.25) {
+    if (this._scale.score < likertScaleThresholds.first) {
       this._label.color = 'color-1';
       this._label.label = 'MARKET_REPORT.RESULT.' + this._mission?.template?.methodology + '.BAR.LABEL_A';
-    } else if (this._scale.score >= 2.25 && this._scale.score < 2.9375) {
+    } else if (this._scale.score >= likertScaleThresholds.first && this._scale.score < likertScaleThresholds.second) {
       this._label.color = 'color-2';
       this._label.label = 'MARKET_REPORT.RESULT.' + this._mission?.template?.methodology + '.BAR.LABEL_B';
-    } else if (this._scale.score >= 2.9375 && this._scale.score < 3.635) {
+    } else if (this._scale.score >= likertScaleThresholds.second && this._scale.score < likertScaleThresholds.third) {
       this._label.color = 'color-3';
       this._label.label = 'MARKET_REPORT.RESULT.' + this._mission?.template?.methodology + '.BAR.LABEL_C';
-    } else if (this._scale.score >= 3.635 && this._scale.score < 4.3125) {
+    } else if (this._scale.score >= likertScaleThresholds.third && this._scale.score < likertScaleThresholds.forth) {
       this._label.color = 'color-4';
       this._label.label = 'MARKET_REPORT.RESULT.' + this._mission?.template?.methodology + '.BAR.LABEL_D';
-    } else if (this._scale.score >= 4.3125) {
+    } else if (this._scale.score >= likertScaleThresholds.forth) {
       this._label.color = 'color-5';
       this._label.label = 'MARKET_REPORT.RESULT.' + this._mission?.template?.methodology + '.BAR.LABEL_E';
     }
