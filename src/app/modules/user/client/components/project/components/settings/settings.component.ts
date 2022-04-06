@@ -22,6 +22,7 @@ import {isPlatformBrowser} from '@angular/common';
 import {UserFrontService} from '../../../../../../../services/user/user-front.service';
 import * as moment from 'moment';
 import {CommonService} from '../../../../../../../services/common/common.service';
+import {MissionQuestionService} from '../../../../../../../services/mission/mission-question.service';
 
 interface Section {
   name: string;
@@ -37,6 +38,14 @@ interface Section {
 })
 
 export class SettingsComponent implements OnInit, OnDestroy {
+
+  get templateComplementary(): Array<MissionQuestion> {
+    return this._templateComplementary;
+  }
+
+  set templateComplementary(value: Array<MissionQuestion>) {
+    this._templateComplementary = value;
+  }
 
   private _innovation: Innovation = <Innovation>{};
 
@@ -88,12 +97,15 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
   private _getCollaborators = true;
 
+  private _templateComplementary: Array<MissionQuestion> = []
+
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _authService: AuthService,
               private _commonService: CommonService,
               private _translateService: TranslateService,
               private _innovationService: InnovationService,
               private _missionService: MissionService,
+              private _missionQuestionService: MissionQuestionService,
               private _translateNotificationsService: TranslateNotificationsService,
               private _innovationFrontService: InnovationFrontService) {
   }
@@ -106,6 +118,8 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
       if (<Mission>this._innovation.mission && (<Mission>this._innovation.mission)._id) {
         this._mission = <Mission>this._innovation.mission;
+        this._initComplementary();
+
         if (this._mission.milestoneDates.length > 1) {
           this._mission.milestoneDates = MissionFrontService.sortMilestoneDates(this._mission.milestoneDates);
         }
@@ -118,6 +132,13 @@ export class SettingsComponent implements OnInit, OnDestroy {
       this._getPendingCollaborators();
       this._initSections();
     });
+  }
+
+  private _initComplementary() {
+    this._templateComplementary = this.hasMissionTemplate &&
+      MissionFrontService.combineComplementaryObjectives(this._mission.template.sections)
+        .filter((_ques) => !!this.objectiveName(_ques) && this._missionQuestionService.isTaggedQuestion(_ques.identifier))
+      || [];
   }
 
   /**
@@ -272,7 +293,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
           case 'SECONDARY_OBJECTIVE':
             section.isVisible = !!this._mission.objectiveComment || !!(this._mission.objective.comment)
               || !!(this._mission.objective.secondary && this._mission.objective.secondary.length)
-              || this.templateComplementary.length > 0
+              || this._templateComplementary.length > 0
               || ((this.hasMissionTemplate || this.isOldObjective) && this.isEditable);
             section.isEditable = this.isEditable;
             break;
@@ -929,12 +950,6 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
   get isEditable(): boolean {
     return !!this._innovation.status && (this._innovation.status === 'EDITING' || this._innovation.status === 'SUBMITTED');
-  }
-
-  get templateComplementary(): Array<MissionQuestion> {
-    return this.hasMissionTemplate
-      && MissionFrontService.combineComplementaryObjectives(this._mission.template.sections)
-        .filter((_objective) => !!this.objectiveName(_objective)) || [];
   }
 
   get definedTemplate(): MissionTemplate {
