@@ -605,12 +605,13 @@
 
       <!-- medias display -->
       <!-- container layout -->
-          <div *ngIf="activeInnovCard.media.length" [ngStyle]=mainContainerStyle style="padding: 16px; display: flex; flex-wrap: wrap; gap: 8px; background-color: white; position: relative;">
+          <div *ngIf="activeInnovCard.media.length" [ngStyle]=mainContainerStyle style="padding: 16px; display: flex; flex-wrap: wrap; gap: 8px; position: relative;">
 
-            <!-- test zoom btn -->
+            <!-- zoom btn -->
             <div *ngIf="!isBeingEdited" (click)="toggleDisplayMediaSlider()" class="icon-container is-lg is-overlay" style="position: absolute; right: 0;  top: 0; background-color: #4F5D6B; z-index: 3;">
               <i class="icon icon-search" style="color: white;"></i>
             </div>
+            <!-- /zoom button -->
 
         <!-- main media -->
         <div *ngIf="activeInnovCard.principalMedia" class="text-center" [ngStyle]=mainMediaContainerStyle style="object-fit: cover; position: relative;">
@@ -647,7 +648,7 @@
         <!-- /main media -->
 
         <!-- secondary medias -->
-        <ng-container *ngIf="activeInnovCard.media.length > 0">
+         <div *ngIf="activeInnovCard.media.length > 0" style="display: flex; flex-wrap: wrap; gap: 8px;" [ngStyle]="secondaryContainerStyle">
           <ng-container *ngFor="let media of mediaFilter; let i=index;" >
             <div
               *ngIf="media._id !== (activeInnovCard.principalMedia && activeInnovCard.principalMedia._id)"
@@ -702,27 +703,34 @@
 
             </div>
           </ng-container>
-        </ng-container>
-        <!-- /secondary medias -->
-
-        <!-- new media card -->
-        <div *ngIf="isBeingEdited">
-          <file-drop class="drop-container media-card text-center" (click)="toggleDisplayUploadOverlay()">
-            <div class="icon-container is-overlay">
+           <!-- new media card -->
+           <div *ngIf="isBeingEdited">
+             <file-drop class="drop-container media-card text-center" (click)="toggleDisplayUploadOverlay()">
+               <div class="icon-container is-overlay">
                   <span class="tooltip" data-tooltip="Add new media" (click)="setEditedMediaIndex(undefined)">
                     <i class="icon icon-plus"></i>
                   </span>
+               </div>
+             </file-drop>
+           </div>
+           <!-- /new media card -->
+          </div>
+        <!-- /secondary medias -->
+
+        <!-- see more btn -->
+        <ngContainer *ngIf="!isBeingEdited" >
+            <div style="position: absolute; bottom: -12px; right: 16px">
+              <button (click)="toggleDisplayMediaSlider()" class="button is-primary is-xs">See more</button>
             </div>
-          </file-drop>
-        </div>
-        <!-- /new media card -->
+          </ngContainer>
+        <!-- /see more btn -->
 
       </div>
       <!-- /container layout -->
 
 
       <!-- see more btn -->
-      <ngContainer *ngIf="!isBeingEdited && activeInnovCard.media.length > 4 && (activeInnovCard.principalMedia.cloudinary.width / activeInnovCard.principalMedia.cloudinary.height) > 4/3" >
+ <!--     <ngContainer *ngIf="!isBeingEdited && activeInnovCard.media.length > 4 && (activeInnovCard.principalMedia.cloudinary.width / activeInnovCard.principalMedia.cloudinary.height) > 4/3" >
         <div style="margin: -12px 0 0 387px">
           <button (click)="toggleDisplayMediaSlider()" class="button is-primary is-xs">See more</button>
         </div>
@@ -731,7 +739,7 @@
         <div style="margin: -12px 0 0 349px">
           <button (click)="toggleDisplayMediaSlider()" class="button is-primary is-xs">See more</button>
         </div>
-      </ngContainer>
+      </ngContainer>-->
       <!-- /see more btn -->
       <!-- /medias display -->
 

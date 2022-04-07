@@ -76,6 +76,8 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
 
   private _mainMediaContainerStyle: any;
 
+  private _secondaryContainerStyle: any;
+
   private _isBeingEdited = false;
 
   private _modalType: modalType = '';
@@ -108,12 +110,6 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
     title: true,
     summary: true
   };
-
-/*  private _displayUploadOverlay: Toggle = {
-    title: false,
-    summary: false,
-    addMedias: true
-  };*/
 
   private _isSavingMedia = false;
 
@@ -160,14 +156,17 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
     if (this.activeInnovCard.principalMedia) {
       if ((this.activeInnovCard.principalMedia.cloudinary.width / this.activeInnovCard.principalMedia.cloudinary.height) < 4/3) {
         this._mainContainerStyle = {
-          width: 'auto',
+          width: 'fit-content',
           height: '408px',
-          'flex-direction': 'column',
           'align-content': 'flex-start',
           'align-items': 'flex-start'
         };
         this._mainMediaContainerStyle = {
           width: '290px',
+          height: '100%'
+        };
+        this._secondaryContainerStyle = {
+          'flex-direction': 'column',
           height: '100%'
         };
       } else if ((this.activeInnovCard.principalMedia.cloudinary.width / this.activeInnovCard.principalMedia.cloudinary.height) > 4/3) {
@@ -181,8 +180,15 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
           width: '100%',
           height: '290px'
         };
+        this._secondaryContainerStyle = {
+          'flex-direction': 'row',
+          width: '100%'
+        };
       }
     };
+    if (!this._isBeingEdited) {
+      this._mainContainerStyle['background-color'] = 'white';
+    }
 
     this._mediaFitler = this.activeInnovCard.media.slice(0, 4);
   }
@@ -566,14 +572,17 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
 
     if ((media.cloudinary.width / media.cloudinary.height) < 4/3) {
       this._mainContainerStyle = {
-        width: 'auto',
+        width: 'fit-content',
         height: '408px',
-        'flex-direction': 'column',
         'align-content': 'flex-start',
-        'align-items': 'flex-start'
+        'align-items': 'flex-start',
       };
       this._mainMediaContainerStyle = {
         width: '290px',
+        height: '100%'
+      };
+      this._secondaryContainerStyle = {
+        'flex-direction': 'column',
         height: '100%'
       };
     } else if ((media.cloudinary.width / media.cloudinary.height) > 4/3) {
@@ -581,12 +590,21 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
         width: '528px',
         height: 'auto',
         'place-items': 'center',
-        'box-sizing': 'border-box'
+        'box-sizing': 'border-box',
       };
       this._mainMediaContainerStyle = {
         width: '100%',
         height: '290px'
       };
+      this._secondaryContainerStyle = {
+        'flex-direction': 'row',
+        width: '100%'
+      };
+    }
+    if (!this._isBeingEdited) {
+      this._mainContainerStyle['background-color'] = 'white';
+    } else {
+      this._mainContainerStyle['background-color'] = 'none';
     }
 
     if (!this._isSavingMedia) {
@@ -720,6 +738,10 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
 
   get mainMediaContainerStyle(): any {
     return this._mainMediaContainerStyle;
+  }
+
+  get secondaryContainerStyle(): any {
+    return this._secondaryContainerStyle;
   }
 
   get mediaType(): string {
