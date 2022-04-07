@@ -551,11 +551,11 @@ export class InnovationFrontService {
    * in the component that changes are to be saved or not for the innovation.
    * @param value
    */
-  public setNotifyChanges(value: {key: string, state: boolean}) {
+  public setNotifyChanges(value: {key: string, state: boolean, autoSave?: boolean}) {
     this._saveNotifySubject.next(value);
   }
 
-  public getNotifyChanges(): Subject<{key: string, state: boolean}> {
+  public getNotifyChanges(): Subject<{key: string, state: boolean, autoSave?: boolean}> {
     return this._saveNotifySubject;
   }
 
