@@ -22,6 +22,8 @@ export class SharedUploadZonePhotoComponent {
 
   @Input() uri = '';
 
+  @Input() mediaId: string = null;
+
   @Output() cbFn: EventEmitter<any> = new EventEmitter<any>();
 
   @ViewChild('fileInput',  { read: ElementRef, static: true }) fileInput: any;
@@ -75,7 +77,13 @@ export class SharedUploadZonePhotoComponent {
         if (this.uploadCloudinary) {
           const _formData = new FormData();
           _formData.append('file', file, file.name);
-          this._mediaService.upload(this.uri, _formData).pipe(first()).subscribe((data: any) => {
+          let promise = null;
+          if (this.mediaId) {
+            promise = this._mediaService.replace(_formData, this.mediaId).pipe(first());
+          } else {
+            promise = this._mediaService.upload(this.uri, _formData).pipe(first());
+          }
+          promise.subscribe((data: any) => {
             // Sanitized image returned from backend.
             this.cbFn.emit(data);
             this._isUploading = false;

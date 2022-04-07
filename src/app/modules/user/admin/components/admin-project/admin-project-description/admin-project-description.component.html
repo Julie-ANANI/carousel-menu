@@ -533,8 +533,6 @@
       class="section-wrapper has-border p-no-bottom">
 
       <div class="section-body" style="flex-direction: row">
-
-        <!-- image -->
         <div class="section-content">
           <div class="form-group">
             <div class="d-flex align-center flex-wrap-wrap title-wrapper">
@@ -544,15 +542,15 @@
                 </span>
                 Add medias
               </label>
+
               <!-- edit-preview button -->
               <button
                 *ngIf="isEditable"
-                [attr.data-tooltip]="!(isBeingEdited)? 'Preview':'Edit'"
+                [attr.data-tooltip]="(isBeingEdited)? 'Preview':'Edit'"
                 (click)="editMedias()"
                 class="button tooltip is-circled is-action is-outlined text-no-underline is-info is-xs text-sm op-text text-meta m-left-15 c-hand"
                 type="button">
-                <i class="fas fa-pencil-alt"
-                   *ngIf="!isBeingEdited"></i>
+                <i class="fas fa-pencil-alt" *ngIf="!isBeingEdited"></i>
                 <i class="fas fa-eye" *ngIf="isBeingEdited"></i>
               </button>
               <!-- /edit-preview button -->
@@ -560,8 +558,7 @@
 
             </div>
 
-
-      <!-- set main media display -->
+      <!-- set main media display // choose between 'cropped' or 'adjusted' -->
         <div *ngIf="isBeingEdited && activeInnovCard.principalMedia['type'] === 'PHOTO'" style="display: flex; flex-direction: row; margin-bottom: 1rem;">
           <div>
             <input type="radio" id="crop" name="radios" value="crop" (change)="adjustMedia(activeInnovCard.principalMedia)" checked>
@@ -580,32 +577,31 @@
           <div class="modal-overlay" (click)="toggleDisplayUploadOverlay()"></div>
           <div class="modal-container">
             <div class="modal-body">
-        <!-- image -->
-                    <div *ngIf="isEditable" class="bg-white box-shadow">
-                      <app-shared-upload-zone-photo
-                        [uri]="'/innovation/'+innovation._id+'/innovationCard/'+activeInnovCard._id+'/media/image'"
-                        (cbFn)="uploadImage($event)">
-                      </app-shared-upload-zone-photo>
-                    </div>
-        <!-- /image -->
-        <!-- video -->
-        <div *ngIf="!activeInnovCard.principalMedia || mediaType === 'main'" style="padding-top: 45px" class="section-suggestion">
-                    <div *ngIf="isEditable" class="bg-white box-shadow">
-                      <app-shared-upload-zone-video
-                        (cbFn)="uploadVideo($event)"
-                        [isUploading]="isUploadingVideo">
-                      </app-shared-upload-zone-video>
-                    </div>
-        </div>
-        <!-- /video -->
+              <!-- image -->
+              <div *ngIf="isEditable" class="bg-white box-shadow">
+                <app-shared-upload-zone-photo
+                  [mediaId]="editedMediaId"
+                  [uri]="'/innovation/'+innovation._id+'/innovationCard/'+activeInnovCard._id+'/media/image'"
+                  (cbFn)="uploadImage($event)">
+                </app-shared-upload-zone-photo>
+              </div>
+               <!-- /image -->
+              <!-- video -->
+              <div *ngIf="!activeInnovCard.principalMedia || mediaType === 'main'" style="padding-top: 45px" class="section-suggestion">
+                <div *ngIf="isEditable" class="bg-white box-shadow">
+                  <app-shared-upload-zone-video
+                    (cbFn)="uploadVideo($event)"
+                    [isUploading]="isUploadingVideo">
+                  </app-shared-upload-zone-video>
+                </div>
+              </div>
+              <!-- /video -->
             </div>
           </div>
           <button class="modal-close" (click)="toggleDisplayUploadOverlay()"></button>
         </div>
       </div>
       <!-- /upload overlay -->
-
-
 
       <!-- medias display -->
 
@@ -616,17 +612,18 @@
       <div *ngIf="!isBeingEdited && (activeInnovCard.principalMedia.cloudinary.width / activeInnovCard.principalMedia.cloudinary.height) < 4/3" (click)="toggleDisplayMediaSlider()" class="icon-container is-lg is-overlay" style="left: 445px; position: relative; background-color: #4F5D6B; top: 45px; z-index: 3;">
         <i class="icon icon-search" style="color: white;"></i>
       </div>
-          <!-- main media format -->
+      <!-- main media format -->
 
-      <!-- portrait display -->
-      <div
-        *ngIf="activeInnovCard.media.length && (activeInnovCard.principalMedia.cloudinary.width / activeInnovCard.principalMedia.cloudinary.height) < 4/3" style="padding: 16px; width: auto; height: 408px; display: flex; flex-wrap: wrap; flex-direction: column; gap: 8px; background-color: white; align-content: flex-start; align-items: flex-start;">
+      <!-- portrait layout -->
+<!--      <div-->
+<!--        *ngIf="activeInnovCard.media.length && (activeInnovCard.principalMedia.cloudinary.width / activeInnovCard.principalMedia.cloudinary.height) < 4/3" style="padding: 16px; width: auto; height: 408px; display: flex; flex-wrap: wrap; flex-direction: column; gap: 8px; background-color: white; align-content: flex-start; align-items: flex-start;">-->
+          <div *ngIf="activeInnovCard.media.length" [ngStyle]=mainContainerStyle style="padding: 16px; display: flex; flex-wrap: wrap; gap: 8px; background-color: white;">
 
-        <!-- principal media -->
-        <div *ngIf="activeInnovCard.principalMedia" class="text-center" style="width: 290px; height: 100%; object-fit: cover; position: relative;">
+        <!-- main media -->
+        <div *ngIf="activeInnovCard.principalMedia" class="text-center" [ngStyle]=mainMediaContainerStyle style="object-fit: cover; position: relative;">
 
           <!-- edit button -->
-          <div *ngIf="isBeingEdited" class="icon-container is-overlay is-primary" (click)="toggleDisplayUploadOverlay('main')" style="position: absolute; top: 0; right: 0; float: right; top: 0; right: 0; background-color: white;">
+          <div *ngIf="isBeingEdited" class="icon-container is-overlay is-primary" (click)="toggleDisplayUploadOverlay(activeInnovCard.principalMedia.id, 'main')" style="position: absolute; top: 0; right: 0; float: right; background-color: white;">
             <span class="tooltip" data-tooltip="Edit media">
               <i class="icon icon-edit"></i>
             </span>
@@ -654,11 +651,11 @@
           </iframe>
           <!-- /if type === 'VIDEO' -->
         </div>
-        <!-- /principal media -->
+        <!-- /main media -->
 
         <!-- secondary medias -->
         <!-- no filter -->
-        <ng-container *ngIf="activeInnovCard.media.length > 0 && isBeingEdited">
+      <!--  <ng-container *ngIf="activeInnovCard.media.length > 0 && isBeingEdited">
           <ng-container *ngFor="let media of activeInnovCard.media; let i=index;">
             <div
               *ngIf="media._id !== (activeInnovCard.principalMedia && activeInnovCard.principalMedia._id)"
@@ -677,7 +674,7 @@
                 </div>
               </div>
 
-              <!-- if type === 'PHOTO' -->
+              &lt;!&ndash; if type === 'PHOTO' &ndash;&gt;
               <figure *ngIf="media['type'] && mediaSrc(media, 'IMAGE')" style="width: 160px; height: 120px; object-fit: cover; background-color: #ececec; display: flex; place-content: center;">
                 <img
                   style="cursor: pointer; width: 100%; height: 100%; object-fit: cover;"
@@ -686,17 +683,17 @@
                   alt=" "
                   class="img-responsive" >
               </figure>
-              <!-- /if type === 'PHOTO' -->
+              &lt;!&ndash; /if type === 'PHOTO' &ndash;&gt;
 
-              <!-- if type === 'VIDEO' -->
-        <!--      <iframe
+              &lt;!&ndash; if type === 'VIDEO' &ndash;&gt;
+        &lt;!&ndash;      <iframe
                 *ngIf="media['type'] === 'VIDEO' && mediaSrc(media, 'VIDEO')"
                 [src]="mediaSrc(media, 'VIDEO')"  height="120px" width="160px"
               style="border: none">
-              </iframe>-->
-              <!-- /if type === 'VIDEO' -->
+              </iframe>&ndash;&gt;
+              &lt;!&ndash; /if type === 'VIDEO' &ndash;&gt;
 
-              <!-- set principal -->
+              &lt;!&ndash; set principal &ndash;&gt;
               <div *ngIf="isNotMainMedia(media) && isBeingEdited && media['type'] !== 'VIDEO' " class="text-sm text-left set-main-overlay" style="width: 100%; height: 100%; position: absolute; top: 0; left: 0;">
                 <span
                   (click)="onSetPrincipal(media)"
@@ -707,21 +704,23 @@
                   Set as main media
                 </span>
               </div>
-              <!-- /set principal -->
+              &lt;!&ndash; /set principal &ndash;&gt;
 
             </div>
           </ng-container>
-        </ng-container>
+        </ng-container>-->
         <!-- /no filter -->
+
         <!-- filter -->
-        <ng-container *ngIf="activeInnovCard.media.length > 0 && !isBeingEdited">
-          <ng-container *ngFor="let media of activeInnovCard.media | slice:0:4; let i=index;">
+        <ng-container *ngIf="activeInnovCard.media.length > 0">
+          <ng-container *ngFor="let media of mediaFilter; let i=index;" >
             <div
               *ngIf="media._id !== (activeInnovCard.principalMedia && activeInnovCard.principalMedia._id)"
               class="text-center" style="width: 160px; height: 120px; object-fit: cover; position: relative;">
 
+              <!-- edit and delete buttons -->
               <div *ngIf="isBeingEdited" style="position: absolute; top: 0; right: 0; float: right; z-index: 2">
-                <div class="icon-container is-overlay" (click)="toggleDisplayUploadOverlay('secondary')" style="background-color: white; margin-right: 4px">
+                <div class="icon-container is-overlay" (click)="toggleDisplayUploadOverlay(media.id, 'secondary')" style="background-color: white; margin-right: 4px">
                 <span class="tooltip" data-tooltip="Edit media" (click)="setEditedMediaIndex(i)">
                   <i class="icon icon-edit"></i>
                 </span>
@@ -732,6 +731,7 @@
                 </span>
                 </div>
               </div>
+              <!-- /edit and delete buttons -->
 
               <!-- if type === 'PHOTO' -->
               <figure *ngIf="media['type'] && mediaSrc(media, 'IMAGE')" style="width: 160px; height: 120px; object-fit: cover; background-color: #ececec; display: flex; place-content: center;">
@@ -769,6 +769,7 @@
           </ng-container>
         </ng-container>
         <!-- /filter -->
+
         <!-- /secondary medias -->
 
         <!-- new media card -->
@@ -784,13 +785,15 @@
         <!-- /new media card -->
 
       </div>
-      <!-- /portrait display -->
+      <!-- /portrait layout -->
 
-      <!-- landscape display -->
-      <div
-        *ngIf="activeInnovCard.media.length && (activeInnovCard.principalMedia.cloudinary.width / activeInnovCard.principalMedia.cloudinary.height) > 4/3" style="padding: 16px; width: 528px; height: auto; display: flex; flex-wrap: wrap; gap: 8px; background-color: white; place-items: center; box-sizing: border-box">
+      <!-- landscape layout -->
+          <!--<div
+            *ngIf="activeInnovCard.media.length && (activeInnovCard.principalMedia.cloudinary.width / activeInnovCard.principalMedia.cloudinary.height) > 4/3" style="padding: 16px; width: 528px; height: auto; display: flex; flex-wrap: wrap; gap: 8px; background-color: white; place-items: center; box-sizing: border-box">-->
+<!--
+        <div *ngIf="activeInnovCard.media.length" [ngStyle]=mainContainerStyle style="padding: 16px; display: flex; flex-wrap: wrap; gap: 8px; background-color: white;">
 
-        <!-- principal media -->
+        &lt;!&ndash; principal media &ndash;&gt;
         <div *ngIf="activeInnovCard.principalMedia" class="text-center" style="width: 100%; height: 290px; object-fit: cover; position: relative;">
 
           <div *ngIf="isBeingEdited" class="icon-container is-overlay is-primary" (click)="toggleDisplayUploadOverlay('main')" style="position: absolute; top: 0; right: 0; float: right; top: 0; right: 0; background-color: white;">
@@ -799,7 +802,7 @@
             </span>
           </div>
 
-          <!-- if type === 'PHOTO' -->
+          &lt;!&ndash; if type === 'PHOTO' &ndash;&gt;
           <figure *ngIf="activeInnovCard.principalMedia['type'] === 'PHOTO'
           && mediaSrc(activeInnovCard.principalMedia, 'IMAGE')" style="width: 100%; height: 100%; object-fit: cover; background-color: #ccc; display: flex; place-content: center;">
             <img
@@ -810,20 +813,20 @@
               alt=" "
               class="img-responsive">
           </figure>
-          <!-- /if type === 'PHOTO' -->
+          &lt;!&ndash; /if type === 'PHOTO' &ndash;&gt;
 
-          <!-- if type === 'VIDEO' -->
+          &lt;!&ndash; if type === 'VIDEO' &ndash;&gt;
           <iframe
             *ngIf="activeInnovCard.principalMedia['type'] === 'VIDEO'
             && mediaSrc(activeInnovCard.principalMedia, 'VIDEO')"
             [src]="mediaSrc(activeInnovCard.principalMedia, 'VIDEO')" >
           </iframe>
-          <!-- /if type === 'VIDEO' -->
+          &lt;!&ndash; /if type === 'VIDEO' &ndash;&gt;
         </div>
-        <!-- /principal media -->
+        &lt;!&ndash; /principal media &ndash;&gt;
 
-        <!-- secondary medias -->
-        <!-- filter -->
+        &lt;!&ndash; secondary medias &ndash;&gt;
+        &lt;!&ndash; filter &ndash;&gt;
         <ng-container *ngIf="activeInnovCard.media.length > 0 && !isBeingEdited">
           <ng-container *ngFor="let media of activeInnovCard.media | slice:0:4; let i=index;">
             <div
@@ -843,7 +846,7 @@
               </div>
             </div>
 
-              <!-- if type === 'PHOTO' -->
+              &lt;!&ndash; if type === 'PHOTO' &ndash;&gt;
               <figure *ngIf="media['type'] === 'PHOTO' && mediaSrc(media, 'IMAGE')"  style="width: 160px; height: 120px; object-fit: cover; background-color: #ccc; display: flex; place-content: center;">
                 <img
                   style="cursor: pointer; width: 100%; height: 100%; object-fit: cover;"
@@ -852,17 +855,17 @@
                   alt=" "
                   class="img-responsive" >
               </figure>
-              <!-- /if type === 'PHOTO' -->
+              &lt;!&ndash; /if type === 'PHOTO' &ndash;&gt;
 
-              <!-- if type === 'VIDEO' -->
-           <!--   <iframe
+              &lt;!&ndash; if type === 'VIDEO' &ndash;&gt;
+           &lt;!&ndash;   <iframe
                 *ngIf="media['type'] === 'VIDEO' && mediaSrc(media, 'VIDEO')"
                 [src]="mediaSrc(media, 'VIDEO')"  height="120px" width="160px"
               style="border: none">
-              </iframe>-->
-              <!-- /if type === 'VIDEO' -->
+              </iframe>&ndash;&gt;
+              &lt;!&ndash; /if type === 'VIDEO' &ndash;&gt;
 
-              <!-- set principal -->
+              &lt;!&ndash; set principal &ndash;&gt;
               <div *ngIf="isNotMainMedia(media) && isBeingEdited && media['type'] !== 'VIDEO' " class="text-sm text-left set-main-overlay" style="width: 100%; height: 100%; position: absolute; top: 0; left: 0;">
                 <span
                   (click)="onSetPrincipal(media)"
@@ -873,13 +876,13 @@
                   Set as main media
                 </span>
               </div>
-              <!-- /set principal -->
+              &lt;!&ndash; /set principal &ndash;&gt;
 
             </div>
           </ng-container>
         </ng-container>
-        <!-- /filter -->
-        <!-- no filter -->
+        &lt;!&ndash; /filter &ndash;&gt;
+        &lt;!&ndash; no filter &ndash;&gt;
         <ng-container *ngIf="activeInnovCard.media.length > 0 && isBeingEdited">
           <ng-container *ngFor="let media of activeInnovCard.media; let i=index;">
             <div
@@ -899,7 +902,7 @@
                 </div>
               </div>
 
-              <!-- if type === 'PHOTO' -->
+              &lt;!&ndash; if type === 'PHOTO' &ndash;&gt;
               <figure *ngIf="media['type'] === 'PHOTO' && mediaSrc(media, 'IMAGE')"  style="width: 160px; height: 120px; object-fit: cover; background-color: #ccc; display: flex; place-content: center;">
                 <img
                   style="cursor: pointer; width: 100%; height: 100%; object-fit: cover;"
@@ -908,17 +911,17 @@
                   alt=" "
                   class="img-responsive" >
               </figure>
-              <!-- /if type === 'PHOTO' -->
+              &lt;!&ndash; /if type === 'PHOTO' &ndash;&gt;
 
-              <!-- if type === 'VIDEO' -->
-          <!--    <iframe
+              &lt;!&ndash; if type === 'VIDEO' &ndash;&gt;
+          &lt;!&ndash;    <iframe
                 *ngIf="media['type'] === 'VIDEO' && mediaSrc(media, 'VIDEO')"
                 [src]="mediaSrc(media, 'VIDEO')"  height="120px" width="160px"
                 style="border: none">
-              </iframe>-->
-              <!-- /if type === 'VIDEO' -->
+              </iframe>&ndash;&gt;
+              &lt;!&ndash; /if type === 'VIDEO' &ndash;&gt;
 
-              <!-- set principal -->
+              &lt;!&ndash; set principal &ndash;&gt;
               <div *ngIf="isNotMainMedia(media) && isBeingEdited && media['type'] !== 'VIDEO' " class="text-sm text-left set-main-overlay" style="width: 100%; height: 100%; position: absolute; top: 0; left: 0;">
                 <span
                   (click)="onSetPrincipal(media)"
@@ -929,15 +932,15 @@
                   Set as main media
                 </span>
               </div>
-              <!-- /set principal -->
+              &lt;!&ndash; /set principal &ndash;&gt;
 
             </div>
           </ng-container>
         </ng-container>
-        <!-- /no filter -->
-        <!-- /secondary medias -->
+        &lt;!&ndash; /no filter &ndash;&gt;
+        &lt;!&ndash; /secondary medias &ndash;&gt;
 
-        <!-- new media card -->
+        &lt;!&ndash; new media card &ndash;&gt;
         <div *ngIf="isBeingEdited">
           <file-drop class="drop-container media-card text-center" (click)="toggleDisplayUploadOverlay()">
             <div class="icon-container is-overlay" (click)="setEditedMediaIndex(undefined)">
@@ -947,10 +950,11 @@
             </div>
           </file-drop>
         </div>
-        <!-- /new media card -->
-      <!-- /landscape display -->
+        &lt;!&ndash; /new media card &ndash;&gt;
+      &lt;!&ndash; /landscape layout &ndash;&gt;
 
       </div>
+-->
 
       <!-- see more btn -->
       <ngContainer *ngIf="!isBeingEdited && activeInnovCard.media.length > 4 && (activeInnovCard.principalMedia.cloudinary.width / activeInnovCard.principalMedia.cloudinary.height) > 4/3" >

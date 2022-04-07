@@ -58,6 +58,8 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
 
   private _slideToShow: number = 0;
 
+  private _mediaFitler: any[];
+
   private _displayUploadOverlay = false;
 
   private _mediaType: string;
@@ -66,7 +68,13 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
 
   private _editedMediaIndex: any = undefined;
 
+  private _editedMediaId: string = null;
+
   private _isMediaAjusted = '100%';
+
+  private _mainContainerStyle: any;
+
+  private _mainMediaContainerStyle: any;
 
   private _isBeingEdited = false;
 
@@ -149,7 +157,24 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
       }
     });
 
+/*    if (this.activeInnovCard.principalMedia) {
+      if ((this.activeInnovCard.principalMedia.cloudinary.width / this.activeInnovCard.principalMedia.cloudinary.height) < 4/3) {
+        this._mainContainerStyle = {
+          width: 'auto',
+          height: '408px',
+          'flex-direction': 'column',
+          'align-content': 'flex-start'
+        };
+      } else if ((this.activeInnovCard.principalMedia.cloudinary.width / this.activeInnovCard.principalMedia.cloudinary.height) > 4/3) {
+        this._mainContainerStyle = {
+          width: '528px',
+          height: 'auto',
+          'place-items': 'center',
+        };
+      }
+    };*/
 
+    this._mediaFitler = this.activeInnovCard.media.slice(0, 4);
   }
 
   private _getAllJobs() {
@@ -363,9 +388,10 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
     this._innovationFrontService.setCardCommentNotifyChanges(true);
   }
 
-  public toggleDisplayUploadOverlay(type?: string) {
+  public toggleDisplayUploadOverlay(id?: string, type?: string) {
     this._displayUploadOverlay = !this._displayUploadOverlay;
     this._mediaType = type;
+    this._editedMediaId = id;
   }
 
   public toggleDisplayMediaSlider(action?: string, index?: number) {
@@ -413,6 +439,11 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
 
   public editMedias() {
     this._isBeingEdited = !this._isBeingEdited;
+    if (this._isBeingEdited) {
+      this._mediaFitler = this.activeInnovCard.media;
+    } else {
+      this._mediaFitler = this.activeInnovCard.media.slice(0, 4);
+    }
   }
 
   public openModal(event: Event, type: modalType, index?: number) {
@@ -494,6 +525,8 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
     this._setInnovation();
     this._translateNotificationsService.success('Success', 'The media has been uploaded.');
     this.toggleDisplayUploadOverlay();
+
+
   }
 
   public uploadVideo(video: UmiusVideoInterface): void {
@@ -520,6 +553,30 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
   }
 
   public onSetPrincipal(media: UmiusMediaInterface) {
+
+    if ((media.cloudinary.width / media.cloudinary.height) < 4/3) {
+      this._mainContainerStyle = {
+        width: 'auto',
+        height: '408px',
+        'flex-direction': 'column',
+        'align-content': 'flex-start'
+      };
+      this._mainMediaContainerStyle = {
+        width: '100%',
+        height: '290px'
+      }
+    } else if ((media.cloudinary.width / media.cloudinary.height) > 4/3) {
+      this._mainContainerStyle = {
+        width: '528px',
+        height: 'auto',
+        'place-items': 'center',
+      };
+      this._mainMediaContainerStyle = {
+        width: '100%',
+        height: '290px'
+      }
+    }
+
     if (!this._isSavingMedia) {
       this._isSavingMedia = true;
       this._innovationService.setPrincipalMediaOfInnovationCard(this._innovation._id, this.activeInnovCard._id, media._id)
@@ -637,8 +694,20 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
     return this._displayMediaSlider;
   }
 
+  get mediaFilter(): Array<UmiusMediaInterface> {
+    return this._mediaFitler;
+  }
+
   get slideToShow(): number {
     return this._slideToShow;
+  }
+
+  get mainContainerStyle(): any {
+    return this._mainContainerStyle;
+  }
+
+  get mainMediaContainerStyle(): any {
+    return this._mainMediaContainerStyle;
   }
 
   get mediaType(): string {
@@ -688,6 +757,10 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
 
   get editedMediaIndex(): any {
     return this._editedMediaIndex;
+  }
+
+  get editedMediaId(): string {
+    return this._editedMediaId;
   }
 
   get selectedMedia(): UmiusModalMedia {
