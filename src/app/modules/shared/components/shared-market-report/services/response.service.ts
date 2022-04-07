@@ -221,7 +221,7 @@ export class ResponseService {
           answers: filteredAnswers,
           absolutePercentage: '0%',
           relativePercentage: '0%',
-          color: question.controlType === 'checkbox' ? '#FFB300' : q.color,
+          color: question.controlType === 'checkbox' ? '#FFB300' : ( question.controlType === 'likert-scale' ? '#00B0FF' : q.color),
           count: filteredAnswers.length,
           positive: q.positive,
           identifier: q.identifier
