@@ -159,7 +159,8 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
           width: 'fit-content',
           height: '408px',
           'align-content': 'flex-start',
-          'align-items': 'flex-start'
+          'align-items': 'flex-start',
+          'background-color': 'white'
         };
         this._mainMediaContainerStyle = {
           width: '290px',
@@ -174,7 +175,8 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
           width: '528px',
           height: 'auto',
           'place-items': 'center',
-          'box-sizing': 'border-box'
+          'box-sizing': 'border-box',
+          'background-color': 'white'
         };
         this._mainMediaContainerStyle = {
           width: '100%',
@@ -186,9 +188,7 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
         };
       }
     };
-    if (!this._isBeingEdited) {
-      this._mainContainerStyle['background-color'] = 'white';
-    }
+
 
     this._mediaFitler = this.activeInnovCard.media.slice(0, 4);
   }
@@ -457,8 +457,10 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
     this._isBeingEdited = !this._isBeingEdited;
     if (this._isBeingEdited) {
       this._mediaFitler = this.activeInnovCard.media;
+      this._mainContainerStyle['background-color'] = 'transparent';
     } else {
       this._mediaFitler = this.activeInnovCard.media.slice(0, 4);
+      this._mainContainerStyle['background-color'] = 'white';
     }
   }
 
@@ -600,11 +602,6 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
         'flex-direction': 'row',
         width: '100%'
       };
-    }
-    if (!this._isBeingEdited) {
-      this._mainContainerStyle['background-color'] = 'white';
-    } else {
-      this._mainContainerStyle['background-color'] = 'none';
     }
 
     if (!this._isSavingMedia) {
