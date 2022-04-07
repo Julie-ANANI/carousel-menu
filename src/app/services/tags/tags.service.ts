@@ -28,7 +28,7 @@ export class TagsService {
   }
 
   public getAttachments(type: string): Observable<{result: Array<any>, _metadata: any}> {
-    return this._http.get<{result: Array<Tag>, _metadata: any}>('/tags/attachments' + (type ? '?type=' + type : ''));
+    return this._http.get<{result: Array<Tag>, _metadata: any}>('/authorized/access/tags/attachments' + (type ? '?type=' + type : ''));
   }
 
   public remove(tagId: string): Observable<any> {
@@ -67,7 +67,7 @@ export class TagsService {
   }
 
   public getSimilarTags(tagId: string): Observable<any> {
-    return this._http.get<Array<Tag>>('/tags/' + tagId + '/match');
+    return this._http.get<Array<Tag>>('/authorized/access/tags/' + tagId + '/match');
   }
 
   public exportTags(): void {

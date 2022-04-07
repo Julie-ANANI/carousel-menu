@@ -5,7 +5,7 @@ import {CollaborativeComment, Reply} from '../../models/collaborative-comment';
 import {Etherpad} from '../../models/etherpad';
 import {Session} from '../../models/session';
 
-const BASE_PATH = '/etherpad';
+const BASE_PATH = '/authorized/access/etherpad';
 
 @Injectable({providedIn: 'root'})
 export class EtherpadService {

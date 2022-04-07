@@ -12,7 +12,7 @@ export class AnswerService {
   constructor(private _http: HttpClient) { }
 
   public create(answerObj: Answer): Observable<any> {
-    return this._http.post('/answer', answerObj);
+    return this._http.post('/authorized/access/answer', answerObj);
   }
 
   public get(id: string): Observable<Answer> {
@@ -20,11 +20,11 @@ export class AnswerService {
   }
 
   public getAll(config: {[header: string]: string | string[]}): Observable<{result: Array<Answer>, _metadata: any}> {
-    return this._http.get<{result: Array<Answer>, _metadata: any}>('/answer/', {params: config});
+    return this._http.get<{result: Array<Answer>, _metadata: any}>('/authorized/access/answer/', {params: config});
   }
 
   public getSectorAnswer(tags: Array<string>): Observable<{result: Array<Answer>, _metadata: any}> {
-    return this._http.get<{result: Array<Answer>, _metadata: any}>('/answer/sectors', {params: {tags: tags}});
+    return this._http.get<{result: Array<Answer>, _metadata: any}>('/authorized/access/answer/sectors', {params: {tags: tags}});
   }
 
   public remove(answerId: string): Observable<any> {
@@ -122,7 +122,7 @@ export class AnswerService {
   }
 
   public exportAsPDF(innovationId: string, lang: string) {
-    return `${environment.apiUrl}/reporting/job/answers/${innovationId}?lang=${lang}&print=1`;
+    return `${environment.apiUrl}/authorized/access/reporting/job/answers/${innovationId}?lang=${lang}&print=1`;
   }
 
 }

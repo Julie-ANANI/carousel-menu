@@ -9,7 +9,7 @@ export class DeliverableService {
   constructor(private _http: HttpClient) { }
 
   public registerJob(ownerId: string, innovationId: string, jobType: string): Observable<Job> {
-    return this._http.post<Job>(`/deliverable/registerJob`, {owner: ownerId, innovationId: innovationId, jobType: jobType});
+    return this._http.post<Job>(`/authorize/access/deliverable/registerJob`, {owner: ownerId, innovationId: innovationId, jobType: jobType});
   }
 
   public getReportDeliverableStatus(reportId: string): Observable<any> {

@@ -88,7 +88,7 @@ export class AuthService {
   }
 
   public login(user: User): Observable<User> {
-    return this._http.post('/auth/login', user.toJSON())
+    return this._http.post('/authorized/access/auth/login', user.toJSON())
       .pipe(
         map((res: any) => {
           this._setAuthenticatedTo(res.isAuthenticated);

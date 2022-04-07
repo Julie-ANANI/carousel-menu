@@ -8,7 +8,7 @@ export class IndexService {
   constructor(private _http: HttpClient) { }
 
   public getWholeSet(config: { type: string, fields?: Array<string>, filterBy?: any }): Observable<any> {
-    return this._http.post('/index/getWholeSet', { query: config });
+    return this._http.post('/authorized/access/index/getWholeSet', { query: config });
   }
 
   public loadIndex(resourceType: string): Observable<any> {

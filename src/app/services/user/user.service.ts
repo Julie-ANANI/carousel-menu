@@ -28,7 +28,7 @@ export class UserService {
   }
 
   public create(user: User): Observable<any> {
-    return this._http.post('/user', user.toJSON());
+    return this._http.post('/authorized/access/user', user.toJSON());
   }
 
   public changePassword(data: {

@@ -52,11 +52,11 @@ export class AdvSearchService {
   }
 
   public getCommunityInnovations(config: {[header: string]: string | string[]}): Observable<any> {
-    return this._http.get(`${this._base}/getCommunityInnovations`, {params: config});
+    return this._http.get(`${this._base}/authorized/access/getCommunityInnovations`, {params: config});
   }
 
   public getCommunityMembers(config: {[header: string]: string | string[]}): Observable<any> {
-    return this._http.get(`${this._base}/getCommunityMembers`, {params: config});
+    return this._http.get(`${this._base}/authorized/access/getCommunityMembers`, {params: config});
   }
 
 }

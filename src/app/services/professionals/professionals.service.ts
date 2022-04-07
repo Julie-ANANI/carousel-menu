@@ -138,7 +138,7 @@ export class ProfessionalsService {
   public createAmbassadors(
     professionalArray: Array<Professional>
   ): Observable<any> {
-    return this._http.post(`/professional/ambassador/create`, {
+    return this._http.post(`/authorized/access/professional/ambassador/create`, {
       professionals: professionalArray,
     });
   }
