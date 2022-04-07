@@ -160,7 +160,8 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
           height: '408px',
           'align-content': 'flex-start',
           'align-items': 'flex-start',
-          'background-color': 'white'
+          'background-color': 'white',
+          'row-gap': '8px'
         };
         this._mainMediaContainerStyle = {
           width: '290px',
@@ -168,7 +169,8 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
         };
         this._secondaryContainerStyle = {
           'flex-direction': 'column',
-          height: '100%'
+          height: '100%',
+          'margin-left': '8px'
         };
       } else if ((this.activeInnovCard.principalMedia.cloudinary.width / this.activeInnovCard.principalMedia.cloudinary.height) > 4/3) {
         this._mainContainerStyle = {
@@ -176,7 +178,8 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
           height: 'auto',
           'place-items': 'center',
           'box-sizing': 'border-box',
-          'background-color': 'white'
+          'background-color': 'white',
+          'column-gap': '8px'
         };
         this._mainMediaContainerStyle = {
           width: '100%',
@@ -184,7 +187,8 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
         };
         this._secondaryContainerStyle = {
           'flex-direction': 'row',
-          width: '100%'
+          width: '100%',
+          'margin-top': '8px'
         };
       }
     };
@@ -578,6 +582,7 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
         height: '408px',
         'align-content': 'flex-start',
         'align-items': 'flex-start',
+        'row-gap': '8px'
       };
       this._mainMediaContainerStyle = {
         width: '290px',
@@ -585,7 +590,8 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
       };
       this._secondaryContainerStyle = {
         'flex-direction': 'column',
-        height: '100%'
+        height: '100%',
+        'margin-left': '8px'
       };
     } else if ((media.cloudinary.width / media.cloudinary.height) > 4/3) {
       this._mainContainerStyle = {
@@ -593,6 +599,7 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
         height: 'auto',
         'place-items': 'center',
         'box-sizing': 'border-box',
+        'column-gap': '8px'
       };
       this._mainMediaContainerStyle = {
         width: '100%',
@@ -600,7 +607,8 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
       };
       this._secondaryContainerStyle = {
         'flex-direction': 'row',
-        width: '100%'
+        width: '100%',
+        'margin-top': '8px'
       };
     }
 

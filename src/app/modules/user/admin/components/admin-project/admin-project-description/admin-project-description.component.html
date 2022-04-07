@@ -605,7 +605,7 @@
 
       <!-- medias display -->
       <!-- container layout -->
-          <div *ngIf="activeInnovCard.media.length" [ngStyle]=mainContainerStyle style="padding: 16px; display: flex; flex-wrap: wrap; gap: 8px; position: relative;">
+          <div *ngIf="activeInnovCard.media.length" [ngStyle]=mainContainerStyle style="padding: 16px; display: flex; flex-wrap: wrap; position: relative;">
 
             <!-- zoom button -->
             <div *ngIf="!isBeingEdited" (click)="toggleDisplayMediaSlider()" class="icon-container is-lg is-overlay" style="position: absolute; right: 0;  top: 0; background-color: #4F5D6B; z-index: 3;">
