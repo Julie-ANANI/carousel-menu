@@ -62,6 +62,7 @@
             (keyup)="textColor('name')"
             [ngModel] = "getLikertText(label) | uppercase | translate"
             (ngModelChange)="changeValueLabel($event)"
+            [attr.placeholder]="'ADMIN_EXECUTIVE_REPORT.LIKERT-SCALE_SECTION.RESULT' | translate"
             maxlength="20"
             class="form-input">
 

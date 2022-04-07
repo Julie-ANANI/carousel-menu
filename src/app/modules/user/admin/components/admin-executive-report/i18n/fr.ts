@@ -95,7 +95,8 @@ export const ADMIN_EXECUTIVE_REPORT = {
   },
 
   'LIKERT-SCALE_SECTION': {
-    'LEGEND': 'Legend',
+    'RESULT': 'Résultat',
+    'LEGEND': 'Légende',
     'TOTALLY_INVALIDATED': 'TOTALEMENT INVALIDÉ',
     'INVALIDED': 'INVALIDÉ',
     'UNCERTAIN': 'INCERTAIN',
