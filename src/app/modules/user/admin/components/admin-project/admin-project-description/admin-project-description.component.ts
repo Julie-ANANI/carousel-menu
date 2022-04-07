@@ -157,22 +157,32 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
       }
     });
 
-/*    if (this.activeInnovCard.principalMedia) {
+    if (this.activeInnovCard.principalMedia) {
       if ((this.activeInnovCard.principalMedia.cloudinary.width / this.activeInnovCard.principalMedia.cloudinary.height) < 4/3) {
         this._mainContainerStyle = {
           width: 'auto',
           height: '408px',
           'flex-direction': 'column',
-          'align-content': 'flex-start'
+          'align-content': 'flex-start',
+          'align-items': 'flex-start'
+        };
+        this._mainMediaContainerStyle = {
+          width: '290px',
+          height: '100%'
         };
       } else if ((this.activeInnovCard.principalMedia.cloudinary.width / this.activeInnovCard.principalMedia.cloudinary.height) > 4/3) {
         this._mainContainerStyle = {
           width: '528px',
           height: 'auto',
           'place-items': 'center',
+          'box-sizing': 'border-box'
+        };
+        this._mainMediaContainerStyle = {
+          width: '100%',
+          height: '290px'
         };
       }
-    };*/
+    };
 
     this._mediaFitler = this.activeInnovCard.media.slice(0, 4);
   }
@@ -559,22 +569,24 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
         width: 'auto',
         height: '408px',
         'flex-direction': 'column',
-        'align-content': 'flex-start'
+        'align-content': 'flex-start',
+        'align-items': 'flex-start'
       };
       this._mainMediaContainerStyle = {
-        width: '100%',
-        height: '290px'
-      }
+        width: '290px',
+        height: '100%'
+      };
     } else if ((media.cloudinary.width / media.cloudinary.height) > 4/3) {
       this._mainContainerStyle = {
         width: '528px',
         height: 'auto',
         'place-items': 'center',
+        'box-sizing': 'border-box'
       };
       this._mainMediaContainerStyle = {
         width: '100%',
         height: '290px'
-      }
+      };
     }
 
     if (!this._isSavingMedia) {
