@@ -21,8 +21,8 @@ export const PROJECT_PITCH = {
 
   'MODAL': {
     'HEADING_SUBMIT': 'Soumission du projet',
-    'SUBMIT_TEXT': 'En cliquant sur “Confirmer”, vous donnez votre accord pour communiquer votre questionnaire aux professionnels ' +
-      'ciblés et autorisez UMI à diffuser, anonymement, sur ces réseaux :'
+    'SUBMIT_TEXT': 'En cliquant sur « confirmer », vous autorisez UMI à diffuser votre questionnaire, anonymement,' +
+      ' sur les canaux les plus adaptés pour collecter les feedbacks de votre Test Marché.'
   },
 
   'POPOVER': {

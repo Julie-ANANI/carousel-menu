@@ -69,16 +69,16 @@ export class SharedImportAnswersComponent implements OnInit {
         .pipe(first())
         .subscribe(
           () => {
-            this._onImportFinished();
+            this.onImportFinished();
             this._translateNotificationsService.success('Success', `Answers imported`);
           },
           (err: HttpErrorResponse) => {
-            this._onImportFinished();
+            this.onImportFinished();
             this._translateNotificationsService.error('Importing Error...', ErrorFrontService.getErrorKey(err.error));
           }
         );
     }
-    this._onImportFinished();
+    this.onImportFinished();
   }
 
   public onClickSeeMore() {
@@ -90,12 +90,13 @@ export class SharedImportAnswersComponent implements OnInit {
 
   public closeModal(event: Event) {
     event.preventDefault();
-    this._onImportFinished();
+    this.onImportFinished();
   }
 
-  private _onImportFinished() {
+   onImportFinished() {
     this.importFinished.emit()
     this._importingErrors = null;
+    this._slicedErrors = null;
     this._importingInfos = null;
     this._errorsModal = false;
   }

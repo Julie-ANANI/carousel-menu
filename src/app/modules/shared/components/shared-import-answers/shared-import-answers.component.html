@@ -69,7 +69,7 @@
 </div>
 
 <!-- errors modal -->
-<umius-modal [(showModal)]="errorsModal" [title]="'Import errors'">
+<umius-modal [(showModal)]="errorsModal" [title]="'Import errors'" (close)="onImportFinished()">
 
   <section *ngIf="importingErrors && slicedErrors" class="modal-body max-height-365">
     <ng-container *ngIf="importingErrors.length">

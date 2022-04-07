@@ -17,7 +17,6 @@ import {HttpErrorResponse} from '@angular/common/http';
 import {TranslateNotificationsService} from '../../../../../../../../../services/translate-notifications/translate-notifications.service';
 import {ErrorFrontService} from '../../../../../../../../../services/error/error-front.service';
 import {Preset} from '../../../../../../../../../models/preset';
-import {MissionService} from '../../../../../../../../../services/mission/mission.service';
 import {CollaborativeComment} from '../../../../../../../../../models/collaborative-comment';
 import {EtherpadFrontService} from '../../../../../../../../../services/etherpad/etherpad-front.service';
 import {isPlatformBrowser} from '@angular/common';
@@ -36,7 +35,6 @@ export class PitchComponent implements OnInit, OnDestroy {
 
   private _ngUnsubscribe: Subject<any> = new Subject();
   private _activeCardIndex = 0;
-  private _activeSectionCode = '';
   private _toBeSaved = false;
   private _isUploadingVideo = false;
   private _innovation: Innovation = <Innovation>{};
@@ -67,7 +65,6 @@ export class PitchComponent implements OnInit, OnDestroy {
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _etherpadService: EtherpadService,
               private _innovationService: InnovationService,
-              private _missionService: MissionService,
               private _translateService: TranslateService,
               private _etherpadFrontService: EtherpadFrontService,
               private _translateNotificationsService: TranslateNotificationsService,
@@ -336,16 +333,6 @@ export class PitchComponent implements OnInit, OnDestroy {
     }
   }
 
-  /***
-   * when the user toggles the authorisation value.
-   * @param event
-   * @param type
-   */
-  public onChangeAuthorisation(event: Event, type: string) {
-    this._mission.externalDiffusion[type] = ((event.target) as HTMLInputElement).checked;
-    this._updateMission();
-  }
-
   public onChangesToBeSaved(value: boolean) {
     this._toBeSaved = value;
   }
@@ -538,23 +525,6 @@ export class PitchComponent implements OnInit, OnDestroy {
       && this.activeInnovCard.media && this.activeInnovCard.media[0]) {
       this._setMainMedia(this.activeInnovCard.media[0]);
     }
-  }
-
-  /***
-   * this updates the mission object external diffusion.
-   * @private
-   */
-  private _updateMission() {
-    this._missionService.save(
-      this._mission._id,
-      {externalDiffusion: this._mission.externalDiffusion}).pipe(first()).subscribe((mission) => {
-    }, (err: HttpErrorResponse) => {
-      console.error(err);
-    });
-  }
-
-  get activeSectionCode(): string {
-    return this._activeSectionCode;
   }
 
   get isUploadingVideo(): boolean {

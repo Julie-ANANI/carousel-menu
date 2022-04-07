@@ -301,18 +301,8 @@
       {{ 'PROJECT_PITCH.MODAL.HEADING_SUBMIT' | translate }}
     </h2>
 
-    <div *ngIf="mission.externalDiffusion" class="mxw-650 authorise-wrapper form-group">
+    <div class="mxw-650 authorise-wrapper form-group">
       <p>{{ 'PROJECT_PITCH.MODAL.SUBMIT_TEXT' | translate }}</p>
-      <div *ngFor="let diffusion of authorisation">
-        <label class="form-checkbox">
-          <input
-            (change)="onChangeAuthorisation($event, diffusion.toLowerCase())"
-            [checked]="mission.externalDiffusion[diffusion.toLowerCase()]"
-            [id]="diffusion.toLowerCase()"
-            type="checkbox">
-          <i class="form-icon"></i> {{ 'PROJECT_SETTINGS.' + diffusion | translate }}
-        </label>
-      </div>
     </div>
 
   </section>
