@@ -19,7 +19,6 @@ import { Filter } from './models/filter';
 import { Question } from '../../../../models/question';
 import { Tag } from '../../../../models/tag';
 import { Innovation } from '../../../../models/innovation';
-import { environment } from '../../../../../environments/environment';
 import { Clearbit } from '../../../../models/clearbit';
 import { AuthService } from '../../../../services/auth/auth.service';
 import { ResponseService } from './services/response.service';
@@ -53,6 +52,10 @@ type ModalType = 'NOTIFY_DOCUMENTS' | '';
   styleUrls: ['./shared-market-report.component.scss'],
 })
 export class SharedMarketReportComponent implements OnInit, OnDestroy, OnChanges {
+
+  get timeout(): any {
+    return this._timeout;
+  }
 
   get toSaveMissionResult(): boolean {
     return this._toSaveMissionResult;
@@ -88,10 +91,9 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy, OnChanges
     if (value && value._id) {
       this._innovation = value;
       this._innovation.marketReport = this._innovation.marketReport || {};
-      this._isOwner =
-        this._authService.userId ===
-          (this._innovation.owner && this._innovation.owner.id) ||
-        this._authService.adminLevel > 3;
+      this._isOwner = this._authService.userId === (this._innovation.owner && this._innovation.owner.id)
+        || this._authService.adminLevel > 3;
+      console.log(this._innovation.marketReport);
     }
   }
 
@@ -139,8 +141,6 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy, OnChanges
 
   private _toBeSaved = false;
 
-  private _isMainDomain = environment.domain === 'umi';
-
   private _reportingLang = '';
 
   public areAnswersLoading = true;
@@ -157,6 +157,8 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy, OnChanges
 
   private _toSaveMissionResult = false;
 
+  private _timeout: any = null;
+
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _translateService: TranslateService,
               private _answerService: AnswerService,
@@ -171,23 +173,20 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy, OnChanges
               private _tagFiltersService: TagsFiltersService,
               private _sharedWorldMapService: WorldmapService,
               private _socketService: SocketService,
-              private _worldmapFiltersService: WorldmapFiltersService) { }
+              private _worldmapFiltersService: WorldmapFiltersService) {
+  }
 
   ngOnInit() {
-    this.reportingLang =
-      this._innovation.settings.reportingLang ||
-      this._translateService.currentLang;
+    this._reportingLang = this._innovation.settings.reportingLang || this._translateService.currentLang;
     this._filterService.reset();
 
-    this._innovationFrontService
-      .getNotifyChanges()
-      .pipe(takeUntil(this._ngUnsubscribe))
-      .subscribe((value) => {
-        if (value.key === 'marketReportResult') {
-          this._toSaveMissionResult = value.state;
-        }
-        this._toBeSaved = !!(value && value.state);
-      });
+    this._innovationFrontService.getNotifyChanges().pipe(takeUntil(this._ngUnsubscribe)).subscribe((value) => {
+      console.log(value);
+      if (value.key === 'marketReportResult') {
+        this._toSaveMissionResult = value.state;
+      }
+      this._toBeSaved = !!(value && value.state);
+    });
 
     this._missionQuestionService.missionTemplate().pipe(takeUntil(this._ngUnsubscribe)).subscribe((value) => {
       if (value && value.entry && value.entry.length) {
@@ -197,17 +196,11 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy, OnChanges
       }
     });
 
-    this._socketService
-      .getTagsUpdatedForPro(this.innovation._id)
-      .pipe(takeUntil(this._ngUnsubscribe))
-      .subscribe(
-        (data: any) => {
-          this._realTimeUpdateTags(JSON.parse(data));
-        },
-        (error) => {
-          console.error(error);
-        }
-      );
+    this._socketService.getTagsUpdatedForPro(this.innovation._id).pipe(takeUntil(this._ngUnsubscribe)).subscribe((data: any) => {
+      this._realTimeUpdateTags(JSON.parse(data));
+      },(error) => {
+      console.error(error);
+    });
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -215,26 +208,31 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy, OnChanges
     if (!!currentItem && !currentItem.previousValue) {
       this._initializeReport();
     } else {
-      this._questions = InnovationFrontService.questionsList(this._innovation);
+      this._initQuestions();
     }
+  }
+
+  private _emitUpdatedInnovation() {
+    this._innovationFrontService.setInnovation(this._innovation);
   }
 
   public onNotifyDocuments(event: Event) {
     event.preventDefault();
 
-    if (!this._isSendingNotification) {
+    if (!this._isSendingNotification && !this.triggerDocuments()) {
       this._isSendingNotification = true;
       this._notificationService.registerJob(this._innovation, 'TRIGGER_DOWNLOAD_DOCUMENTS')
         .pipe(first()).subscribe((res) => {
-        this.closeModal(event);
-        this._translateNotificationsService.success('Notification Job Success', res.message);
-        this._isSendingNotification = false;
-        this._innovation.notifications.push('TRIGGER_DOWNLOAD_DOCUMENTS');
-      }, (err: HttpErrorResponse) => {
-        this._isSendingNotification = false;
-        this._translateNotificationsService.error('Error', ErrorFrontService.getErrorKey(err.error));
-        console.error(err);
-      });
+          this.closeModal(event);
+          this._translateNotificationsService.success('Notification Job Success', res.message);
+          this._isSendingNotification = false;
+          this._innovation.notifications.push('TRIGGER_DOWNLOAD_DOCUMENTS');
+          this._emitUpdatedInnovation();
+          }, (err: HttpErrorResponse) => {
+          this._isSendingNotification = false;
+          this._translateNotificationsService.error('Notification Error...', ErrorFrontService.getErrorKey(err.error));
+          console.error(err);
+        });
     }
   }
 
@@ -255,30 +253,26 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy, OnChanges
   }
 
   public canAccess(path: Array<string>) {
-    return this._rolesFrontService.hasAccessAdminSide(
-      this.accessPath.concat(path)
-    );
+    return this._rolesFrontService.hasAccessAdminSide(this.accessPath.concat(path));
+  }
+
+  private _initQuestions() {
+    this._questions = InnovationFrontService.questionsList(this._innovation);
   }
 
   /***
    * This function is calling all the initial functions.
    */
   private _initializeReport() {
-    this._anonymousAnswers = !!(
-      this._innovation._metadata &&
-      this._innovation._metadata.campaign &&
-      this._innovation._metadata.campaign.anonymous_answers
-    );
+    this._anonymousAnswers = !!(this._innovation._metadata && this._innovation._metadata.campaign
+      && this._innovation._metadata.campaign.anonymous_answers);
 
     this._getAnswers();
 
     // this is to check, if the admin make the synthesis available before the status is Done.
-    this._previewMode = this._innovation.previewMode
-      ? this._innovation.previewMode
-      : false;
-
+    this._previewMode = this._innovation.previewMode ? this._innovation.previewMode : false;
     this._worldmapFiltersService.reset();
-    this._questions = InnovationFrontService.questionsList(this._innovation);
+    this._initQuestions();
   }
 
   _realTimeUpdateTags(data: any) {
@@ -295,30 +289,23 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy, OnChanges
    */
   private _getAnswers() {
     if (isPlatformBrowser(this._platformId)) {
-      this._answerService
-        .getInnovationValidAnswers(this._innovation._id, this._anonymousAnswers, 'reset')
-        .pipe(first())
-        .subscribe(
-          (response) => {
-            this._processAnswers(response.answers);
-            this._processFilterAnswers();
-            this._processAnswersCompanies(response.answers);
-            this._processAnswersCountries(response.answers);
-            this._processAnswersTags(response.answers);
-            this._processAnswersQuestion(response.answers);
-            this.areAnswersLoading = false;
-            setTimeout(() => (this.displayFilters = true), 500);
-          },
-          (err: HttpErrorResponse) => {
-            this.areAnswersLoading = false;
-            this.displayFilters = true;
-            this._translateNotificationsService.error(
-              'ERROR.ERROR',
-              ErrorFrontService.getErrorKey(err.error)
-            );
-            console.error(err);
-          }
-        );
+      this._answerService.getInnovationValidAnswers(this._innovation._id, this._anonymousAnswers, 'reset')
+        .pipe(first()).subscribe((response) => {
+          console.log(response);
+          this._processAnswers(response.answers);
+          this._processFilterAnswers();
+          this._processAnswersCompanies(response.answers);
+          this._processAnswersCountries(response.answers);
+          this._processAnswersTags(response.answers);
+          this._processAnswersQuestion(response.answers);
+          this.areAnswersLoading = false;
+          this._timeout = setTimeout(() => (this.displayFilters = true), 500);
+          }, (err: HttpErrorResponse) => {
+          this.areAnswersLoading = false;
+          this.displayFilters = true;
+          this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
+          console.error(err);
+        });
     }
   }
 
@@ -333,39 +320,24 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy, OnChanges
   private _processFilterAnswers() {
     this._filteredAnswers = this._answers;
     this._updateAnswersToShow();
-
-    this._filterService.filtersUpdate
-      .pipe(takeUntil(this._ngUnsubscribe))
-      .subscribe(() => this._updateAnswersToShow());
+    this._filterService.filtersUpdate.pipe(takeUntil(this._ngUnsubscribe)).subscribe(() => this._updateAnswersToShow());
   }
 
   private _processAnswersCompanies(answers: any) {
     this._companies = answers
-      .map(
-        (answer: any) =>
-          answer.company || {
-            name: answer.professional.company,
-          }
-      )
+      .map((answer: any) => answer.company || {name: answer.professional.company})
       .filter(function (item: any, pos: any, self: any) {
-        return (
-          self.findIndex((subitem: Clearbit) => subitem.name === item.name) ===
-          pos
-        );
+        return (self.findIndex((subitem: Clearbit) => subitem.name === item.name) === pos);
       });
   }
 
   private _processAnswersCountries(answers: any) {
     this._countries = answers.reduce((acc: any[], answer: any) => {
-      if (
-        !!answer.country &&
-        !!answer.country.flag &&
-        acc.indexOf(answer.country.flag) === -1
-      ) {
+      if (!!answer.country && !!answer.country.flag && acc.indexOf(answer.country.flag) === -1) {
         acc.push(answer.country.flag);
       }
       return acc;
-    }, []);
+      }, []);
   }
 
   /*
@@ -381,9 +353,7 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy, OnChanges
       return acc;
     }, {} as { [id: string]: Tag });
 
-    this._tagFiltersService.tagsList = Object.keys(tagsDict).map(
-      (k) => tagsDict[k]
-    );
+    this._tagFiltersService.tagsList = Object.keys(tagsDict).map((k) => tagsDict[k]);
   }
 
   /*
@@ -436,22 +406,9 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy, OnChanges
   }
 
   /***
-   * This function saves the comment of the operator.
-   * @param event
-   * @param {string} ob
-   */
-  public saveOperatorComment(event: { content: string }, ob: string) {
-    this._innovation.marketReport[ob] = { conclusion: event.content };
-    this._innovationFrontService.setNotifyChanges({
-      key: 'marketReport',
-      state: true,
-    });
-  }
-
-  /***
    * This function saves changes of any question of the operator (piechart colors, title, subtitle)
    *
-   * updated on 17th June, 2021
+   * updated on 17th June 2021
    * @param question
    */
   public saveQuestion(question: Question) {
@@ -516,6 +473,7 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy, OnChanges
 
   public saveInnovation(event: Event) {
     event.preventDefault();
+
     const objToSave = {
       marketReport: this._innovation.marketReport,
       settings: this._innovation.settings
@@ -533,15 +491,14 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy, OnChanges
       objToSave['preset'] = this._innovation.preset;
     }
 
-
-    this._innovationService.save(this._innovation._id, objToSave).pipe(first()).subscribe((innovation) => {
-      this._innovationFrontService.setInnovation(innovation);
+    this._innovationService.save(this._innovation._id, objToSave).pipe(first()).subscribe((_) => {
+      // this._innovationFrontService.setInnovation(innovation);
+      this._translateNotificationsService.success('Success', 'The synthesis has been saved.');
       this._toBeSaved = false;
       this._toSaveTemplate = false;
       this._toSaveMissionResult = false;
-      this._translateNotificationsService.success('Success', 'The synthesis has been saved.');
       }, (err: HttpErrorResponse) => {
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
+        this._translateNotificationsService.error('Project Saving Error...', ErrorFrontService.getErrorKey(err.error));
         console.error(err);
       });
   }
@@ -573,7 +530,7 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy, OnChanges
 
   public setNewSelectedLang(value: string) {
     this._reportingLang = value;
-    this.innovation.settings.reportingLang = this.reportingLang;
+    this._innovation.settings.reportingLang = this._reportingLang;
     this._innovationFrontService.setNotifyChanges({
       key: 'settings',
       state: true,
@@ -733,10 +690,6 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy, OnChanges
 
   get toBeSaved(): boolean {
     return this._toBeSaved;
-  }
-
-  get isMainDomain(): boolean {
-    return this._isMainDomain;
   }
 
   get reportingLang(): string {

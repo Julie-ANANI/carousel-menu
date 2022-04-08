@@ -109,14 +109,16 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-
     this._isEditable = this.canAccess(['edit', 'description']);
+    this._innovation = this._innovationFrontService.innovation().value;
+    this._getAllJobs();
 
     this._innovationFrontService.innovation().pipe(takeUntil(this._ngUnsubscribe)).subscribe((innovation) => {
-      this._innovation = innovation || <Innovation>{};
-      this._isEditableComment = this._isEditable && (this._innovation.status === 'SUBMITTED' || this._innovation.status === 'EDITING');
-      this._initToggle();
-      this._getAllJobs();
+      if (innovation && innovation._id) {
+        this._innovation = innovation;
+        this._isEditableComment = this._isEditable && (this._innovation.status === 'SUBMITTED' || this._innovation.status === 'EDITING');
+        this._initToggle();
+      }
     });
 
     this._innovationFrontService.activeCardIndex().pipe(takeUntil(this._ngUnsubscribe)).subscribe((index) => {
@@ -124,8 +126,6 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
         this._activeCardIndex = index;
       }
     });
-
-
   }
 
   private _getAllJobs() {
@@ -144,7 +144,6 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
       this._notificationService.getAllJobs(config).pipe(first()).subscribe((response) => {
         this._notificationJobs = response && response.result || [];
       }, (err: HttpErrorResponse) => {
-        this._translateNotificationsService.error('Notification Jobs Error', ErrorFrontService.getErrorKey(err.error));
         console.error(err);
       });
     }
@@ -168,7 +167,7 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
           this._notificationJobs.unshift(res.job);
           }, (err: HttpErrorResponse) => {
           this._isSendingNotification = false;
-          this._translateNotificationsService.error('Error', ErrorFrontService.getErrorKey(err.error));
+          this._translateNotificationsService.error('Notification Error...', ErrorFrontService.getErrorKey(err.error));
           console.error(err);
         });
     }
@@ -408,7 +407,7 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
       this._innovation.innovationCards[this._activeCardIndex].principalMedia = media;
       this.onSetPrincipal(media);
     }
-    this._setInnovation();
+    this._emitUpdatedInnovation();
   }
 
   public uploadVideo(video: UmiusVideoInterface): void {
@@ -419,15 +418,14 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
       .subscribe((res) => {
         this._isUploadingVideo = false;
         this.activeInnovCard.media.push(res);
-
         if (!this._innovation.innovationCards[this._activeCardIndex].principalMedia) {
           this.onSetPrincipal(res);
         } else {
-          this._setInnovation();
+          this._emitUpdatedInnovation();
         }
       }, (err: HttpErrorResponse) => {
         this._isUploadingVideo = false;
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
+        this._translateNotificationsService.error('Media Uploading Error...', ErrorFrontService.getErrorKey(err.error));
         console.error(err);
       });
   }
@@ -441,17 +439,17 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
           this._isSavingMedia = false;
           this.activeInnovCard.principalMedia = media;
           this._innovation.innovationCards[this._activeCardIndex].principalMedia = media;
-          this._setInnovation();
+          this._emitUpdatedInnovation();
           this._translateNotificationsService.success('Success', 'The media has been set as a principal media.');
         }, (err: HttpErrorResponse) => {
-          this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
+          this._translateNotificationsService.error('Principal Media Error...', ErrorFrontService.getErrorKey(err.error));
           this._isSavingMedia = false;
           console.error(err);
         });
     }
   }
 
-  private _setInnovation() {
+  private _emitUpdatedInnovation() {
     this._innovationFrontService.setInnovation(this._innovation);
   }
 
@@ -463,12 +461,12 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
         .subscribe(() => {
           this.activeInnovCard.media = this.activeInnovCard.media.filter((_media) => _media._id !== media._id);
           this._innovation.innovationCards[this._activeCardIndex].media = this.activeInnovCard.media;
-          this._setInnovation();
+          this._emitUpdatedInnovation();
           this._isSavingMedia = false;
           this._verifyPrincipal(media);
           this._translateNotificationsService.success('Success', 'The media has been deleted.');
         }, (err: HttpErrorResponse) => {
-          this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
+          this._translateNotificationsService.error('Media Deleting Error...', ErrorFrontService.getErrorKey(err.error));
           this._isSavingMedia = false;
           console.error(err);
         });
@@ -483,7 +481,7 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
   private _verifyPrincipal(deleteMedia: UmiusMediaInterface) {
     if (this.activeInnovCard.media.length === 0 && this.activeInnovCard.principalMedia && this.activeInnovCard.principalMedia._id) {
       this._innovation.innovationCards[this._activeCardIndex].principalMedia = null;
-      this._setInnovation();
+      this._emitUpdatedInnovation();
     } else if (this.activeInnovCard.principalMedia && this.activeInnovCard.principalMedia._id === deleteMedia._id
       && this.activeInnovCard.media && this.activeInnovCard.media[0]) {
       this.onSetPrincipal(this.activeInnovCard.media[0]);
@@ -581,7 +579,6 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
   set modalMedia(value: boolean) {
     this._modalMedia = value;
   }
-
 
   get selectedMedia(): UmiusModalMedia {
     return this._selectedMedia;

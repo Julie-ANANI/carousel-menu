@@ -21,7 +21,6 @@ import FileSaver from 'file-saver';
 import { DeliverableService } from '../../../../../../services/deliverable/deliverable.service';
 import { Job, JobType } from '../../../../../../models/job';
 import { RolesFrontService } from '../../../../../../services/roles/roles-front.service';
-import { ActivatedRoute } from '@angular/router';
 import { SocketService } from '../../../../../../services/socket/socket.service';
 import { Subject } from 'rxjs';
 import { AuthService } from '../../../../../../services/auth/auth.service';
@@ -86,12 +85,12 @@ export class AdminProjectStoryboardComponent implements OnInit, OnDestroy {
   private _ngUnsubscribe: Subject<any> = new Subject<any>();
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
-              private _activatedRoute: ActivatedRoute,
               private _translateService: TranslateService,
               private _executiveReportService: ExecutiveReportService,
               private _commonService: CommonService,
               private _answerService: AnswerService,
               private _rolesFrontService: RolesFrontService,
+              private _innovationFrontService: InnovationFrontService,
               private _executiveReportFrontService: ExecutiveReportFrontService,
               private _innovationService: InnovationService,
               private _responseService: ResponseService,
@@ -102,8 +101,7 @@ export class AdminProjectStoryboardComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     if (isPlatformBrowser(this._platformId)) {
-
-      this._innovation = this._activatedRoute.snapshot.parent.parent.data['innovation'];
+      this._innovation = this._innovationFrontService.innovation().value;
       this._questions = InnovationFrontService.questionsList(this._innovation);
 
       if (typeof this._innovation === 'undefined' || (this._innovation && !this._innovation._id)) {
@@ -165,7 +163,7 @@ export class AdminProjectStoryboardComponent implements OnInit, OnDestroy {
       this._setPrincipalMediaBoolean();
     }, (err: HttpErrorResponse) => {
       this._isChargingReport = false;
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
+      this._translateNotificationsService.error('Report Fetching Error...', ErrorFrontService.getErrorKey(err.error));
       console.error(err);
     });
     this._realtimeUpdate(this._innovation.executiveReportId);
@@ -217,7 +215,7 @@ export class AdminProjectStoryboardComponent implements OnInit, OnDestroy {
       this._getAnswers();
     } else {
       this._isChargingReport = false;
-      this._translateNotificationsService.error('ERROR.ERROR', 'ADMIN_STORYBOARD.NO_QUESTIONS_MSG');
+      this._translateNotificationsService.error('Error...', 'ADMIN_STORYBOARD.NO_QUESTIONS_MSG');
     }
 
   }
@@ -232,7 +230,7 @@ export class AdminProjectStoryboardComponent implements OnInit, OnDestroy {
         this._setReportSections(answers);
       }, (err: HttpErrorResponse) => {
         this._isChargingReport = false;
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
+        this._translateNotificationsService.error('Answers Fetching Error...', ErrorFrontService.getErrorKey(err.error));
         console.error(err);
       });
   }
@@ -366,7 +364,7 @@ export class AdminProjectStoryboardComponent implements OnInit, OnDestroy {
         this._setPrincipalMediaBoolean();
       }, (err: HttpErrorResponse) => {
         this._isChargingReport = false;
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
+        this._translateNotificationsService.error('Report Creating Error...', ErrorFrontService.getErrorKey(err.error));
         console.error(err);
       });
   }
@@ -376,7 +374,7 @@ export class AdminProjectStoryboardComponent implements OnInit, OnDestroy {
       this._createExecutiveReport();
     }, (err: HttpErrorResponse) => {
       this._isChargingReport = false;
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
+      this._translateNotificationsService.error('Report Resetting Error...', ErrorFrontService.getErrorKey(err.error));
       console.error(err);
     });
   }
@@ -429,7 +427,7 @@ export class AdminProjectStoryboardComponent implements OnInit, OnDestroy {
           this.closeModal();
           this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.JOB.VIDEO');
         }, (err: HttpErrorResponse) => {
-          this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
+          this._translateNotificationsService.error('Video Generating Error...', ErrorFrontService.getErrorKey(err.error));
           this._isGeneratingVideo = false;
           console.error(err);
         });
@@ -447,7 +445,7 @@ export class AdminProjectStoryboardComponent implements OnInit, OnDestroy {
         FileSaver.saveAs(blob, filename);
         this._isGeneratingReport = false;
       }, (err: HttpErrorResponse) => {
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
+        this._translateNotificationsService.error('Pdf Generating Error...', ErrorFrontService.getErrorKey(err.error));
         this._isGeneratingReport = false;
         console.error(err);
       });
@@ -469,7 +467,7 @@ export class AdminProjectStoryboardComponent implements OnInit, OnDestroy {
         this._toBeSaved = false;
         this._translateNotificationsService.success('ERROR.SUCCESS', 'ADMIN_EXECUTIVE_REPORT.SAVE');
       }, (err: HttpErrorResponse) => {
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
+        this._translateNotificationsService.error('Report Updating Error...', ErrorFrontService.getErrorKey(err.error));
         console.error(err);
       });
     }

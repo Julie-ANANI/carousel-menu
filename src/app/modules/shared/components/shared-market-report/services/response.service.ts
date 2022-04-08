@@ -537,8 +537,7 @@ export class ResponseService {
 
     // Step Constitution of index color
     let index = 0;
-    const score = averageFinalScore
-    const multiplyBy = 10;
+    const score = averageFinalScore;
 
     /**
      * we are adding 20, 40, 60, 80 because total bar is of 100, and we have divided it in 5 parts
@@ -548,21 +547,20 @@ export class ResponseService {
 
     if (score < likertScaleThresholds.first) { //totally invalidated
       index = 0;
-      percentage = score * multiplyBy;
+      percentage = (score / likertScaleThresholds.first) * multiplyPercentage;
     } else if (likertScaleThresholds.first <= score && score < likertScaleThresholds.second) { // invalidated
       index = 1;
-      percentage = ((score - likertScaleThresholds.first) * multiplyBy) + 20;
+      percentage = ((score - likertScaleThresholds.first) * multiplyPercentage) + 20;
     } else if (2.93 <= likertScaleThresholds.second && score < likertScaleThresholds.third) { // uncertain
       index = 2;
-      percentage = ((score - likertScaleThresholds.second) * multiplyBy) + 40;
+      percentage = ((score - likertScaleThresholds.second) * multiplyPercentage) + 40;
     } else if (3.63 <= likertScaleThresholds.third && score < likertScaleThresholds.forth) { // validated
       index = 3;
-      percentage = ((score - likertScaleThresholds.third) * multiplyBy) + 60;
-    } else if (4.31 <= likertScaleThresholds.forth ) { // totally validated
+      percentage = ((score - likertScaleThresholds.third) * multiplyPercentage) + 60;
+    } else if (4.31 <= likertScaleThresholds.forth) { // totally validated
       index = 4;
-      percentage = ((score - likertScaleThresholds.forth) * multiplyBy) + 80;
+      percentage = ((score / 5) * 100);
     }
-
 
     return {
       name: colorsAndNames[index].name,

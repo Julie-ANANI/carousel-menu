@@ -60,11 +60,9 @@ export class SharedProjectSettingsComponent implements OnInit, OnDestroy {
     this.innovationFrontService.innovation().pipe(takeUntil(this._ngUnsubscribe)).subscribe((innovation) => {
       if (innovation && innovation._id) {
         this._innovation = innovation;
-        if (this._innovation._id) {
-          this.getCommentSections();
-          this._canEdit = this._innovation.status === 'EDITING';
-          this._setTargetCountries();
-        }
+        this.getCommentSections();
+        this._canEdit = this._innovation.status === 'EDITING';
+        this._setTargetCountries();
       }
     });
   }

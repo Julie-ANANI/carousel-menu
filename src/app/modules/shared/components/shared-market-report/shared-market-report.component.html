@@ -1,7 +1,7 @@
 <div class="shared-market-report" id="shared-market-report">
 
   <!-- project status not submitted admin side -->
-  <ng-container *ngIf="innovation.status === 'EDITING' && adminSide">
+  <ng-container *ngIf="innovation.status === 'EDITING' && adminSide && !previewMode">
     <div class="p-top-50 p-bottom-30 p-left-15 p-right-15">
       <app-message-template widthMax="337px">
         The client hasn't submitted the project yet. You will be able to edit the market report after
@@ -53,15 +53,15 @@
           <ng-container *ngIf="!areAnswersLoading && adminSide">
             <div class="d-flex align-center justify-end flex-wrap-wrap dropdown w-full m-top-15 is-right">
 
-              <!-- project status is on DONE addmin side - notif document button -->
+              <!-- project status is on DONE admin side - notif document button -->
               <button
-                *ngIf="innovation.status === 'DONE' && adminSide"
+                *ngIf="innovation.status === 'DONE' && adminSide && !triggerDocuments()"
                 (click)="openModal($event, 'NOTIFY_DOCUMENTS')"
                 class="button is-outlined m-auto"
                 type="button">
                 Send availability of documents mail
               </button>
-              <!-- /project status is on DONE addmin side - notif document button -->
+              <!-- /project status is on DONE admin side - notif document button -->
 
               <div class="lang-selector">
               <span class="text-13 m-right-4">
@@ -85,33 +85,37 @@
           <!-- /synthesis reporting lang -->
 
           <!-- key learning section  -->
-          <ng-container *ngIf="!!innovation?.marketReport?.keyLearning?.conclusion">
-            <section [ngClass]="{ 'p-top-50': !reportShared }" id="key-learnings">
-              <app-question-section
-                [reportingLang]="reportingLang"
-                (questionChanged)="saveQuestion($event)"
-                [innovation]="innovation"
-                [questionReceived]="displayFixedQuestion({ identifier: 'keyLearning', subtitle: { en: '', fr: '' },
-                title: { en: 'Key learnings', fr: 'Connaissances clés' } })"
-                [readonly]="!canAccess(['edit', 'umiWord'])"
-                [hideAnswers]="true">
-              </app-question-section>
-            </section>
+          <ng-container *ngIf="!areAnswersLoading">
+            <ng-container *ngIf="!!innovation?.marketReport?.keyLearning?.conclusion">
+              <section [ngClass]="{ 'p-top-50': !reportShared }" id="key-learnings">
+                <app-question-section
+                  [reportingLang]="reportingLang"
+                  (questionChanged)="saveQuestion($event)"
+                  [innovation]="innovation"
+                  [questionReceived]="displayFixedQuestion({ identifier: 'keyLearning', subtitle: { en: '', fr: '' },
+                  title: { en: 'Key learnings', fr: 'Connaissances clés' } })"
+                  [readonly]="!canAccess(['edit', 'umiWord'])"
+                  [hideAnswers]="true">
+                </app-question-section>
+              </section>
+            </ng-container>
           </ng-container>
           <!-- /key learning section -->
 
           <!-- dynamic result -->
-          <ng-container *ngIf="(innovation.mission | mission:'hasMissionTemplate') &&
-          !innovation?.marketReport?.keyLearning?.conclusion">
-            <div class="p-top-50" id="result">
-              <app-market-report-result
-                [isEditable]="canAccess(['edit', 'result'])"
-                [reportingLang]="reportingLang"
-                [innovation]="innovation"
-                [answers]="answers"
-                [scrollTo]="'#'+(questions.length?questions[0].identifier:'')">
-              </app-market-report-result>
-            </div>
+          <ng-container *ngIf="!areAnswersLoading">
+            <ng-container *ngIf="(innovation.mission | mission:'hasMissionTemplate') &&
+            !innovation?.marketReport?.keyLearning?.conclusion">
+              <div class="p-top-50" id="result">
+                <app-market-report-result
+                  [isEditable]="canAccess(['edit', 'result'])"
+                  [reportingLang]="reportingLang"
+                  [innovation]="innovation"
+                  [answers]="answers"
+                  [scrollTo]="'#'+(questions.length?questions[0].identifier:'')">
+                </app-market-report-result>
+              </div>
+            </ng-container>
           </ng-container>
           <!-- /dynamic result -->
 
@@ -126,7 +130,8 @@
                 [answers]="filteredAnswers"
                 [innovation]="innovation"
                 [originAnswers]="answersOrigins"
-                [questionReceived]="displayFixedQuestion({ identifier: 'professionals', subtitle: { en: 'professionals', fr: 'professionnels' },
+                [questionReceived]="displayFixedQuestion({ identifier: 'professionals', subtitle:
+                { en: 'professionals', fr: 'professionnels' },
                 title: { en: 'Origin of responses', fr: 'Origine des réponses' }, controlType: 'textarea' })"
                 [readonly]="!canAccess(['edit', 'umiWord'])"
                 [hideAnswers]="true">
@@ -135,9 +140,8 @@
           </ng-container>
           <!-- /origin comment and professional responses -->
 
-          <!-- map -->
+          <!-- map do not replace hidden with ngIf -->
           <section class="p-top-15" id="map" [hidden]="areAnswersLoading || questions.length === 0">
-            <!-- do not replace hidden with ngIf -->
             <app-shared-worldmap [countriesData]="answersByCountries"></app-shared-worldmap>
           </section>
           <!-- /map -->

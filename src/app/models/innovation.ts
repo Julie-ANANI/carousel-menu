@@ -193,7 +193,7 @@ export interface Innovation {
   readonly campaigns?: Array<Campaign>;
   readonly principalMedia?: UmiusMediaInterface;
   readonly quizId?: string;
-  readonly stats?: InnovationStats;
+  stats?: InnovationStats;
   readonly reviewing?: any;
   readonly launched?: Date;
   readonly created?: Date;
