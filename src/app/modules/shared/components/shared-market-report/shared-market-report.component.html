@@ -175,9 +175,9 @@
           <!-- other question sections -->
           <section *ngFor="let question of questions; trackBy: trackQuestions" class="p-bottom-50" id="questions">
             <app-question-section
+              *ngIf="!areAnswersLoading"
               [reportingLang]="reportingLang"
               (questionChanged)="saveQuestion($event)"
-              *ngIf="!areAnswersLoading"
               (modalAnswerChange)="seeAnswer($event)"
               [answers]="filteredAnswers"
               [canEditQuestionTags]="canAccess(['edit', 'questionTags'])"
@@ -216,54 +216,6 @@
   <!-- /project status done or preview mode or not editing -->
 
 </div>
-
-<!-- modal -->
-<umius-modal [(showModal)]="showModal">
-
-  <section class="modal-body">
-
-    <h2 [ngSwitch]="{ 'color': '4C4C4C' }" class="title is-4 text-center text-bold m-bottom-30">
-      <ng-container *ngIf="modalType === 'NOTIFY_DOCUMENTS'">Send availability of documents mail</ng-container>
-    </h2>
-
-    <div [ngSwitch]="modalType">
-
-      <!-- ask validation -->
-      <div *ngSwitchCase="'NOTIFY_DOCUMENTS'">
-        You are about to send an email to the Market Test project team. This email can only be sent once. Continue?
-      </div>
-      <!-- /ask validation -->
-
-    </div>
-
-  </section>
-
-  <footer [ngSwitch]="modalType" class="modal-footer justify-center">
-
-    <button
-      (click)="closeModal($event)"
-      [id]="'btn-cancel'"
-      class="button modal-cancel"
-      type="button">
-      Cancel
-    </button>
-
-    <!-- ask validation -->
-    <button
-      (click)="onNotifyDocuments($event)"
-      *ngSwitchCase="'NOTIFY_DOCUMENTS'"
-      [disabled]="isSendingNotification"
-      class="button "
-      id="btn-modal-confirm-notify-documents"
-      type="button">
-      Confirm
-    </button>
-    <!-- /ask validation -->
-
-  </footer>
-
-</umius-modal>
-<!-- /modal -->
 
 <!-- save button -->
 <div *ngIf="toBeSaved" class="save-wrapper">

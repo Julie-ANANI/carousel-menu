@@ -39,12 +39,8 @@ import { Professional } from '../../../../models/professional';
 import {MissionFrontService} from '../../../../services/mission/mission-front.service';
 import {Mission} from '../../../../models/mission';
 import {MissionQuestionService} from '../../../../services/mission/mission-question.service';
-import {NotificationTrigger} from '../../../../models/notification';
-import {NotificationService} from '../../../../services/notification/notification.service';
 import {ExecutiveReport} from '../../../../models/executive-report';
 import {UmiusSidebarInterface} from '@umius/umi-common-component';
-
-type ModalType = 'NOTIFY_DOCUMENTS' | '';
 
 @Component({
   selector: 'app-shared-market-report',
@@ -59,22 +55,6 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy, OnChanges
 
   get toSaveMissionResult(): boolean {
     return this._toSaveMissionResult;
-  }
-
-  get modalType(): ModalType {
-    return this._modalType;
-  }
-
-  get showModal(): boolean {
-    return this._showModal;
-  }
-
-  set showModal(value: boolean) {
-    this._showModal = value;
-  }
-
-  get isSendingNotification(): boolean {
-    return this._isSendingNotification;
   }
 
   @Input() accessPath: Array<string> = [];
@@ -149,12 +129,6 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy, OnChanges
 
   private _toSaveTemplate = false;
 
-  private _isSendingNotification = false;
-
-  private _showModal = false;
-
-  private _modalType: ModalType = '';
-
   private _toSaveMissionResult = false;
 
   private _timeout: any = null;
@@ -164,7 +138,6 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy, OnChanges
               private _answerService: AnswerService,
               private _translateNotificationsService: TranslateNotificationsService,
               private _innovationService: InnovationService,
-              private _notificationService: NotificationService,
               private _authService: AuthService,
               private _rolesFrontService: RolesFrontService,
               private _missionQuestionService: MissionQuestionService,
@@ -210,46 +183,6 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy, OnChanges
     } else {
       this._initQuestions();
     }
-  }
-
-  private _emitUpdatedInnovation() {
-    this._innovationFrontService.setInnovation(this._innovation);
-  }
-
-  public onNotifyDocuments(event: Event) {
-    event.preventDefault();
-
-    if (!this._isSendingNotification && !this.triggerDocuments()) {
-      this._isSendingNotification = true;
-      this._notificationService.registerJob(this._innovation, 'TRIGGER_DOWNLOAD_DOCUMENTS')
-        .pipe(first()).subscribe((res) => {
-          this.closeModal(event);
-          this._translateNotificationsService.success('Notification Job Success', res.message);
-          this._isSendingNotification = false;
-          this._innovation.notifications.push('TRIGGER_DOWNLOAD_DOCUMENTS');
-          this._emitUpdatedInnovation();
-          }, (err: HttpErrorResponse) => {
-          this._isSendingNotification = false;
-          this._translateNotificationsService.error('Notification Error...', ErrorFrontService.getErrorKey(err.error));
-          console.error(err);
-        });
-    }
-  }
-
-  public triggerDocuments(): boolean {
-    return this._innovation.notifications.some((notification:  NotificationTrigger) => notification === 'TRIGGER_DOWNLOAD_DOCUMENTS');
-  }
-
-  public openModal(event: Event, type: ModalType) {
-    event.preventDefault();
-    this._modalType = type;
-    this._showModal = true;
-  }
-
-  public closeModal(event: Event) {
-    event.preventDefault();
-    this._showModal = false;
-    this._modalType = '';
   }
 
   public canAccess(path: Array<string>) {
