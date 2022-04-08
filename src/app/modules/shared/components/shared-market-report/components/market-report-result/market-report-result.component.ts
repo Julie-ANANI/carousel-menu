@@ -110,13 +110,15 @@ export class MarketReportResultComponent implements OnInit {
   }
 
   @Input() set innovation(value: Innovation) {
-    this._innovation = value;
-    if (this._innovation.mission && (<Mission>this._innovation.mission)._id) {
-      this._mission = (<Mission>this._innovation.mission);
-      this._essentialQuestions = MissionFrontService.essentialQuestions(MissionFrontService.totalTemplateQuestions(this._mission.template));
-      this._toBeSaved = false;
-      this._reInitVariables();
-      this._initData();
+    if (value && value._id) {
+      this._innovation = value;
+      if (this._innovation.mission && (<Mission>this._innovation.mission)._id) {
+        this._mission = (<Mission>this._innovation.mission);
+        this._essentialQuestions = MissionFrontService.essentialQuestions(MissionFrontService.totalTemplateQuestions(this._mission.template));
+        this._toBeSaved = false;
+        this._reInitVariables();
+        this._initData();
+      }
     }
   }
 
@@ -167,7 +169,7 @@ export class MarketReportResultComponent implements OnInit {
               private _innovationService: InnovationService,
               private _translateNotificationsService: TranslateNotificationsService,
               private _innovationFrontService: InnovationFrontService,
-              private _pageScrollService: PageScrollService,) { }
+              private _pageScrollService: PageScrollService) { }
 
   ngOnInit(): void {
   }
@@ -204,8 +206,8 @@ export class MarketReportResultComponent implements OnInit {
    * @private
    */
   private _setLabel() {
-    this._label.left = this._scale.percentage < 85 ? this._scale.percentage + '%' : '';
-    this._label.right = this._scale.percentage >= 85 ? (99 - this._scale.percentage) + '%' : '';
+    this._label.left = this._scale.percentage < 50 ? this._scale.percentage + '%' : '';
+    this._label.right = this._scale.percentage >= 50 ? (99 - this._scale.percentage) + '%' : '';
     this._label.margin = (this._scale.percentage >= 30 && this._scale.percentage <= 85) ? '-5%' : '';
 
     if (this._scale.score < likertScaleThresholds.first) {
@@ -353,12 +355,11 @@ export class MarketReportResultComponent implements OnInit {
       const objToSave = {};
       objToSave['missionResult'] = this._mission.result;
 
-      this._innovationService.save(this._innovation._id, objToSave).subscribe((innovation) => {
-        this._innovationFrontService.setInnovation(innovation);
+      this._innovationService.save(this._innovation._id, objToSave).subscribe((_) => {
         this._toBeSaved = false;
         this._translateNotificationsService.success('Success', 'The result has been saved.');
       }, (err: HttpErrorResponse) => {
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
+        this._translateNotificationsService.error('Project Saving Error...', ErrorFrontService.getErrorKey(err.error));
         this._toBeSaved = true;
         console.error(err);
       });

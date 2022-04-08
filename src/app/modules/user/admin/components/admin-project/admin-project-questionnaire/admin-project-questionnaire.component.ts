@@ -4,7 +4,6 @@ import { PresetService } from '../../../../../../services/preset/preset.service'
 import { TranslateNotificationsService } from '../../../../../../services/translate-notifications/translate-notifications.service';
 import { InnovationService } from '../../../../../../services/innovation/innovation.service';
 import { Innovation } from '../../../../../../models/innovation';
-import { environment } from '../../../../../../../environments/environment';
 import { Preset } from '../../../../../../models/preset';
 import { Observable, Subject } from 'rxjs';
 import { RolesFrontService } from '../../../../../../services/roles/roles-front.service';
@@ -51,12 +50,20 @@ export class AdminProjectQuestionnaireComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     if (isPlatformBrowser(this._platformId)) {
+      this._innovation = this._innovationFrontService.innovation().value;
+      this._setQuizLink();
+
       this._innovationFrontService.innovation().pipe(takeUntil(this._ngUnsubscribe)).subscribe((innovation) => {
-        this._innovation = innovation || <Innovation>{};
-        this._mission = <Mission>this._innovation.mission || <Mission>{};
-        this._cardsLanguages = this._innovation.innovationCards.map((card) => card.lang);
-        this._setQuizLink();
-        this._setSectionsNames();
+        if (innovation && innovation._id) {
+          this._innovation = innovation;
+
+          if (this._innovation.mission && (<Mission>this._innovation.mission)._id) {
+            this._mission = <Mission>this._innovation.mission;
+          }
+
+          this._cardsLanguages = this._innovation.innovationCards.map((card) => card.lang);
+          this._setSectionsNames();
+        }
       });
     }
   }
@@ -70,9 +77,7 @@ export class AdminProjectQuestionnaireComponent implements OnInit, OnDestroy {
   }
 
   private _setQuizLink() {
-    if (this._innovation.quizId && Array.isArray(this._innovation.campaigns) && this._innovation.campaigns.length > 0) {
-      this._quizLink = `${environment.quizUrl}/quiz/${this._innovation.quizId}/${this._innovation.campaigns[0]._id}` || '';
-    }
+    this._quizLink = InnovationFrontService.quizLink(this._innovation);
   }
 
   private _setSectionsNames() {
@@ -107,8 +112,6 @@ export class AdminProjectQuestionnaireComponent implements OnInit, OnDestroy {
       }
     });
 
-
-
     if (!this.hasMissionTemplate) {
       const sectionsNb = frenchTitles.length > englishTitles.length ? frenchTitles.length : englishTitles.length;
       if (sectionsNb > 2 || customSection) {
@@ -135,14 +138,13 @@ export class AdminProjectQuestionnaireComponent implements OnInit, OnDestroy {
   }
 
   private _saveInnovation() {
-    this._innovationService.save(this._innovation._id, {preset: this._innovation.preset}).subscribe((innovation: Innovation) => {
-      this._innovation = innovation;
-      this._setQuizLink();
-      this._translateNotificationsService.success('Success', 'The preset is updated.');
-    }, (err: HttpErrorResponse) => {
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
-      console.error(err);
-    });
+    this._innovationService.save(this._innovation._id, {preset: this._innovation.preset})
+      .pipe(first()).subscribe((_) => {
+        this._translateNotificationsService.success('Success', 'The preset is updated.');
+        }, (err: HttpErrorResponse) => {
+        this._translateNotificationsService.error('Project Saving Error...', ErrorFrontService.getErrorKey(err.error));
+        console.error(err);
+      });
   }
 
   /***
@@ -153,12 +155,10 @@ export class AdminProjectQuestionnaireComponent implements OnInit, OnDestroy {
     event.preventDefault();
 
     this._innovationService.createQuiz(this._innovation._id).pipe(first()).subscribe((innovation: Innovation) => {
-      this._innovation = innovation;
-      this._innovationFrontService.setInnovation(innovation);
       this._setQuizLink();
       this._translateNotificationsService.success('Success', 'The quiz is generated.');
     }, (err: HttpErrorResponse) => {
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
+      this._translateNotificationsService.error('Quiz Generating Error...', ErrorFrontService.getErrorKey(err.error));
       console.error(err);
     });
   }
@@ -186,7 +186,7 @@ export class AdminProjectQuestionnaireComponent implements OnInit, OnDestroy {
     this._presetService.get(event._id).pipe(first()).subscribe((preset) => {
       this._chosenPreset = preset;
     }, (err: HttpErrorResponse) => {
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
+      this._translateNotificationsService.error('Preset Error...', ErrorFrontService.getErrorKey(err.error));
       console.error(err);
     });
   }

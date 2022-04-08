@@ -18,7 +18,6 @@ import { MissionService } from '../../../../../../services/mission/mission.servi
 import { Mission } from '../../../../../../models/mission';
 import { environment } from '../../../../../../../environments/environment';
 import { ErrorFrontService } from '../../../../../../services/error/error-front.service';
-import { Response } from "../../../../../../models/response";
 import {NotificationService} from '../../../../../../services/notification/notification.service';
 import {NotificationTrigger} from '../../../../../../models/notification';
 
@@ -99,19 +98,18 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this._innovationFrontService.innovation().pipe(takeUntil(this._ngUnsubscribe)).subscribe((innovation) => {
-      this._project = innovation || <Innovation>{};
-      if(!this._allCampaigns.length){
-        this.getAllCampaigns();
+      if (innovation && innovation._id) {
+        this._project = innovation;
+        this.setPageTitle();
+        this._setActiveCardIndex();
+        this._quizPreviewLink = `${environment.quizUrl}/quiz/${this._project._id}/preview`;
       }
-      this.setPageTitle();
-      this._setActiveCardIndex();
-      this._quizPreviewLink = `${environment.quizUrl}/quiz/${this._project._id}/preview`;
     });
 
     // Cards text has already been saved by another user
     this._socketService.getProjectFieldUpdates(this._project._id, 'innovationCards')
       .pipe(takeUntil(this._ngUnsubscribe))
-      .subscribe((update: any) => {
+      .subscribe((_) => {
         // We keep our changes to be saved except innovationCards
         this._toBeSaved = this._toBeSaved.replace(/(innovationCards[,]?)/g, '');
       }, (error) => {
@@ -163,14 +161,14 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
       this._isSendingNotification = true;
       this._notificationService.registerJob(this._project, 'TRIGGER_ASK_VALIDATE_PROJECT')
         .pipe(first()).subscribe((res) => {
-        this.closeModal();
-        this._translateNotificationsService.success('Success', res.message);
-        this._isSendingNotification = false;
         this._project.notifications.push('TRIGGER_ASK_VALIDATE_PROJECT');
-        this._setInnovation();
+        this._emitUpdatedInnovation();
+        this._translateNotificationsService.success('Success', res.message);
+        this.closeModal();
+        this._isSendingNotification = false;
       }, (err: HttpErrorResponse) => {
         this._isSendingNotification = false;
-        this._translateNotificationsService.error('Error', ErrorFrontService.getErrorKey(err.error));
+        this._translateNotificationsService.error('Notification Error', ErrorFrontService.getErrorKey(err.error));
         console.error(err);
       });
     }
@@ -180,22 +178,8 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
     return this._project.notifications.some((notification:  NotificationTrigger) => notification === 'TRIGGER_ASK_VALIDATE_PROJECT');
   }
 
-  private _setInnovation() {
+  private _emitUpdatedInnovation() {
     this._innovationFrontService.setInnovation(this._project);
-  }
-
-  /**
-   *
-   * @private
-   */
-  private getAllCampaigns() {
-    this._innovationService.campaigns(this._project._id).pipe(first()).subscribe((response: Response) => {
-      this._allCampaigns = response && response.result || [];
-      this._campaignFrontService.setAllCampaigns(this._allCampaigns);
-    }, (err: HttpErrorResponse) => {
-      this._translateNotificationsService.error('Campaigns Fetching Error...', ErrorFrontService.getErrorKey(err.error));
-      console.error(err);
-    });
   }
 
   public setCampaign(campaign: Campaign) {
@@ -295,6 +279,7 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
 
     if (!this._isSaving && (this._toBeSaved || this._toBeSavedComment)) {
       if (this._activeTab === 'questionnaire') {
+
         if (this._toBeSaved.indexOf('mission') !== -1) {
           this._isSaving = true;
           this._saveMission({template: (<Mission>this._project.mission).template});
@@ -302,6 +287,7 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
           this._isSaving = true;
           this._saveProject({preset: this._project.preset});
         }
+
       } else {
         this._isSaving = true;
         const fields = this._toBeSaved.split(',');
@@ -332,11 +318,9 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
   private _saveMission(missionObj: { [P in keyof Mission]?: Mission[P]; }) {
     const id = this._project.mission && (<Mission>this._project.mission)._id;
     if (!!id) {
-      this._missionService.save(id, missionObj).pipe(first()).subscribe((mission) => {
-        this._project.mission = mission;
+      this._missionService.save(id, missionObj).pipe(first()).subscribe((_) => {
         this._isSaving = false;
         this._toBeSaved = '';
-        this._setInnovation();
         this._translateNotificationsService.success('Success', 'The project has been updated.');
       }, (err: HttpErrorResponse) => {
         this._translateNotificationsService.error('Project Saving Error...', ErrorFrontService.getErrorKey(err.error));
@@ -348,10 +332,9 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
 
   private _saveProject(objToSave: any) {
     this._innovationService.save(this._project._id, objToSave).pipe(first()).subscribe(() => {
+      this._translateNotificationsService.success('Success', 'The project has been updated.');
       this._isSaving = false;
       this._toBeSaved = '';
-      this._setInnovation();
-      this._translateNotificationsService.success('Success', 'The project has been updated.');
     }, (err: HttpErrorResponse) => {
       this._isSaving = false;
       this._translateNotificationsService.error('Project Saving Error...', ErrorFrontService.getErrorKey(err.error));
@@ -362,15 +345,16 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
   private _saveComment() {
     return new Promise((resolve, reject) => {
       if (this._toBeSavedComment) {
-        this._innovationService.saveInnovationCardComment(this._project._id, this.activeCard._id,
-          this.activeCard.operatorComment).pipe(first()).subscribe((_) => {
-          this._isSaving = false;
-          this._toBeSavedComment = false;
-          this._translateNotificationsService.success('Success', 'The comments/suggestions have been updated.');
-          resolve(true);
-        }, (err: HttpErrorResponse) => {
-          reject(err);
-        });
+        this._innovationService.saveInnovationCardComment(this._project._id, this.activeCard._id, this.activeCard.operatorComment)
+          .pipe(first()).subscribe((_) => {
+            this._emitUpdatedInnovation();
+            this._isSaving = false;
+            this._toBeSavedComment = false;
+            this._translateNotificationsService.success('Success', 'The comments/suggestions have been updated.');
+            resolve(true);
+            }, (err: HttpErrorResponse) => {
+            reject(err);
+          });
       } else {
         resolve(true);
       }
@@ -396,7 +380,7 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
       const _card = new InnovCard({lang: _lang});
       this._innovationService.createInnovationCard(this._project._id, _card).pipe(first()).subscribe((card) => {
         this._project.innovationCards.push(card);
-        this._setInnovation();
+        this._emitUpdatedInnovation();
         this._isAddingCard = false;
         this._translateNotificationsService.success('Success',
           `The project has been added in the ${_lang === 'fr' ? 'French' : 'English'} language.`);
@@ -417,7 +401,7 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
       this._isDeletingCard = true;
       this._innovationService.removeInnovationCard(this._project._id, this._cardToDelete._id).pipe(first()).subscribe(() => {
         this._project.innovationCards = this._project.innovationCards.filter((value) => value._id !== this._cardToDelete._id);
-        this._setInnovation();
+        this._emitUpdatedInnovation();
         this._isDeletingCard = false;
         this._translateNotificationsService.success('Success',
           `The project has been deleted in the ${this._cardToDelete.lang === 'fr' ? 'French' : 'English'} language.`);

@@ -31,7 +31,6 @@ import { ClientProject } from '../../../../../../models/client-project';
 import { UserService } from '../../../../../../services/user/user.service';
 import { Response } from '../../../../../../models/response';
 import { ClientProjectService } from '../../../../../../services/client-project/client-project.service';
-import { environment } from '../../../../../../../environments/environment';
 import { CommonService } from '../../../../../../services/common/common.service';
 import { Tag } from '../../../../../../models/tag';
 import { TranslateService } from '@ngx-translate/core';
@@ -43,9 +42,10 @@ import { Community } from '../../../../../../models/community';
 import { ErrorFrontService } from '../../../../../../services/error/error-front.service';
 import { Blacklist, BlacklistDomain } from '../../../../../../models/blacklist';
 import { AnswerService } from '../../../../../../services/answer/answer.service';
-import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import {UmiusSidebarInterface} from '@umius/umi-common-component';
+import {ActivatedRoute} from '@angular/router';
+import {CacheType} from '../../../../../../models/cache';
 
 export interface UserSuggestion {
   name: string;
@@ -79,7 +79,10 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
 
   private _isAddMilestone = false;
 
-  private _milestoneForm: FormGroup;
+  private _milestoneForm: FormGroup = this._formBuilder.group({
+    name: ['', [Validators.required]],
+    dueDate: ['', [Validators.required]],
+  });
 
   private _commercials: Array<User> = [];
 
@@ -89,15 +92,11 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
 
   private _newOwner: UserSuggestion = <UserSuggestion>{};
 
-  /*private _missionObjectives: Array<Objective> = ObjectivesPrincipal;*/
-
   private _quizLink = '';
-
-  private _quizUrlCopied = false;
 
   private _sidebarValue: UmiusSidebarInterface = <UmiusSidebarInterface>{};
 
-  private _dateFormat = this.currentLang === 'en' ? 'y/MM/dd' : 'dd/MM/y';
+  private _dateFormat = CommonService.dateFormat(this.currentLang, true);
 
   private _innovationStatus: Array<InnovationStatus> = [
     'EDITING',
@@ -139,76 +138,62 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
 
   private _showModalDone = false;
 
-  constructor(
-    @Inject(PLATFORM_ID) protected _platformId: Object,
-    private _answerService: AnswerService,
-    private _activatedRoute: ActivatedRoute,
-    private _rolesFrontService: RolesFrontService,
-    private _missionService: MissionService,
-    private _dashboardService: DashboardService,
-    private _innovationService: InnovationService,
-    private _userService: UserService,
-    private _commonService: CommonService,
-    private _translateService: TranslateService,
-    private _clientProjectService: ClientProjectService,
-    private _translateNotificationsService: TranslateNotificationsService,
-    private _innovationFrontService: InnovationFrontService,
-    private _statsReferentsService: StatsReferentsService,
-    private _formBuilder: FormBuilder,
-  ) {
+  constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
+              private _answerService: AnswerService,
+              private _rolesFrontService: RolesFrontService,
+              private _activatedRoute: ActivatedRoute,
+              private _missionService: MissionService,
+              private _dashboardService: DashboardService,
+              private _innovationService: InnovationService,
+              private _userService: UserService,
+              private _translateService: TranslateService,
+              private _clientProjectService: ClientProjectService,
+              private _translateNotificationsService: TranslateNotificationsService,
+              private _innovationFrontService: InnovationFrontService,
+              private _statsReferentsService: StatsReferentsService,
+              private _formBuilder: FormBuilder) {
   }
 
   ngOnInit() {
     if (isPlatformBrowser(this._platformId)) {
-      this._milestoneForm = this._formBuilder.group({
-        name: ['', [Validators.required]],
-        dueDate: ['', [Validators.required]],
-      });
-      this._isLoading = false;
+      this._innovation = this._innovationFrontService.innovation().value;
+      this._initFields();
       this._getValidAnswers();
       this._getOperators();
       this._getCommercials();
+      this._getStats();
+      this._quizLink = InnovationFrontService.quizLink(this._innovation);
+      this._isLoading = false;
 
-      this.getInnovation().then((innovation: Innovation) => {
-        if (innovation) {
-
-          if(this.canAccess(['view', 'stats'])) {
-            this._statsReferentsService
-              .get()
-              .subscribe((referents) => this._setStats(referents.innovations));
-          }
-          this._setQuizLink();
+      this._innovationFrontService.innovation().pipe(takeUntil(this._ngUnsubscribe)).subscribe((innovation) => {
+        if (innovation && innovation._id) {
+          this._innovation = innovation;
+          this._initFields();
         }
       });
     }
   }
 
-  getInnovation() {
-    return new Promise((resolve, reject) => {
-      this._innovationFrontService
-        .innovation()
-        .pipe(takeUntil(this._ngUnsubscribe))
-        .subscribe((innovation) => {
-          this._innovation = innovation || <Innovation>{};
-          if (!!innovation.mission) {
-            this._mission = <Mission>innovation.mission;
-            this._missionTeam = this._mission.team.map((user: User) => user.id);
-            this.initRoadmap();
-          }
+  private _initFields() {
+    if (!!this._innovation.mission) {
+      this._mission = <Mission>this._innovation.mission;
+      this._missionTeam = this._mission.team.map((user: User) => user.id);
+      this.initRoadmap();
+    }
 
-          if (!!innovation.clientProject) {
-            this._clientProject = <ClientProject>innovation.clientProject;
-          }
+    if (!!this._innovation.clientProject) {
+      this._clientProject = <ClientProject>this._innovation.clientProject;
+    }
+  }
 
-          this._statsReferentsService.get()
-            .subscribe((referents) => this._setStats(referents.innovations));
-
-          resolve(innovation);
-        }, error => {
-          console.error(error);
-          reject(error);
-        });
-    });
+  private _getStats(cache: CacheType = '') {
+    if(this.canAccess(['view', 'stats'])) {
+      this._statsReferentsService.get(cache).pipe(first()).subscribe((referents) => {
+        this._setStats(referents.innovations);
+      }, (err: HttpErrorResponse) => {
+        console.error(err);
+      });
+    }
   }
 
   private initRoadmap(){
@@ -218,17 +203,17 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
 
   private _getValidAnswers() {
     if (isPlatformBrowser(this._platformId)) {
-      const innovation = this._activatedRoute.snapshot.parent.parent.data['innovation'];
-
-      if (innovation && innovation._id) {
-        this._answerService.getInnovationValidAnswers(innovation._id).pipe(first()).subscribe((response) => {
-          this._canDeactivateFollowUp = !(response && response.answers &&
-            response.answers.filter((_answer) => !!(_answer.followUp && _answer.followUp.date)).length);
-        }, (err: HttpErrorResponse) => {
-          this._canDeactivateFollowUp = false;
-          console.error(err);
-        });
-      }
+      this._activatedRoute.parent.params.subscribe((params) => {
+        if (params && params.projectId) {
+          this._answerService.getInnovationValidAnswers(params.projectId).pipe(first()).subscribe((response) => {
+            this._canDeactivateFollowUp = !(response && response.answers &&
+              response.answers.filter((_answer) => !!(_answer.followUp && _answer.followUp.date)).length);
+          }, (err: HttpErrorResponse) => {
+            this._canDeactivateFollowUp = false;
+            console.error(err);
+          });
+        }
+      });
     }
   }
 
@@ -241,7 +226,7 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
           this._commercials = response.result;
         },
         (err: HttpErrorResponse) => {
-          this._translateNotificationsService.error('Commercial Error...', ErrorFrontService.getErrorKey(err.error));
+          this._translateNotificationsService.error('Commercial Fetching Error...', ErrorFrontService.getErrorKey(err.error));
           console.error(err);
         }
       );
@@ -256,22 +241,10 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
           this._operators = response.result;
         },
         (err: HttpErrorResponse) => {
-          this._translateNotificationsService.error('Operator Error...', ErrorFrontService.getErrorKey(err.error));
+          this._translateNotificationsService.error('Operators Fetching Error...', ErrorFrontService.getErrorKey(err.error));
           console.error(err);
         }
       );
-  }
-
-  private _setQuizLink() {
-    if (
-      this._innovation.quizId &&
-      Array.isArray(this._innovation.campaigns) &&
-      this._innovation.campaigns.length > 0
-    ) {
-      this._quizLink =
-        `${environment.quizUrl}/quiz/${this._innovation.quizId}/${this._innovation.campaigns[0]._id}` ||
-        '';
-    }
   }
 
   private _setStats(referents: {
@@ -446,27 +419,23 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
     return this._rolesFrontService.hasAccessAdminSide(_default.concat(path));
   }
 
+  private _emitUpdatedInnovation() {
+    this._innovationFrontService.setInnovation(this._innovation);
+  }
+
   /***
    * this is to update the banner stats.
    */
   public onClickUpdateStats() {
-    this._innovationService
-      .updateStats(this._innovation._id)
-      .pipe(first())
-      .subscribe(
-        (innovation: Innovation) => {
-          this._innovation = innovation;
-          this._innovationFrontService.setInnovation(this._innovation);
-          this._translateNotificationsService.success(
-            'Success',
-            'The stats have been updated.'
-          );
-        },
-        (err: HttpErrorResponse) => {
-          this._translateNotificationsService.error('Stats Error...', ErrorFrontService.getErrorKey(err.error));
-          console.error(err);
-        }
-      );
+    this._innovationService.updateStats(this._innovation._id).pipe(first()).subscribe((innovation: Innovation) => {
+      this._innovation.stats = innovation.stats;
+      this._emitUpdatedInnovation();
+      this._getStats('reset');
+      this._translateNotificationsService.success('Success', 'The stats have been updated.');
+    },(err: HttpErrorResponse) => {
+      this._translateNotificationsService.error('Stats Updating Error...', ErrorFrontService.getErrorKey(err.error));
+      console.error(err);
+    });
   }
 
   public onMissionTypeChange(type: MissionType) {
@@ -502,11 +471,11 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
       .save(this._mission._id, missionObj)
       .pipe(first())
       .subscribe(
-        (mission) => {
+        (_) => {
           this._translateNotificationsService.success('Success', notifyMessage);
         },
         (err: HttpErrorResponse) => {
-          this._translateNotificationsService.error('Mission Error...', ErrorFrontService.getErrorKey(err.error));
+          this._translateNotificationsService.error('Mission Updating Error...', ErrorFrontService.getErrorKey(err.error));
           console.error(err);
         }
       );
@@ -550,11 +519,10 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
       .pipe(first())
       .subscribe(
         () => {
-          this._innovationFrontService.setInnovation(this._innovation);
           this._translateNotificationsService.success('Success', notifyMessage);
         },
         (err: HttpErrorResponse) => {
-          this._translateNotificationsService.error('Project Error...', ErrorFrontService.getErrorKey(err.error));
+          this._translateNotificationsService.error('Project Updating Error...', ErrorFrontService.getErrorKey(err.error));
           console.error(err);
         }
       );
@@ -573,12 +541,15 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
     // Ugly hack: commercial needs to be an _id to be saved on the back-end
     const tmpProject: any = this._clientProject;
     tmpProject.commercial = tmpProject.commercial._id;
+
     this._clientProjectService
       .save(this._clientProject._id, tmpProject)
       .pipe(first())
       .subscribe(
         (clientProject: ClientProject) => {
           this._clientProject = clientProject;
+          this._innovation.clientProject = this._clientProject;
+          this._emitUpdatedInnovation();
           this._translateNotificationsService.success('Success', notifyMessage);
         },
         (err: HttpErrorResponse) => {
@@ -637,8 +608,6 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
    * @param value
    */
   public publishCommunity(value: Community) {
-    event.preventDefault();
-
     if (!this._isPublishingCommunity) {
       this._isPublishingCommunity = true;
 
@@ -649,11 +618,10 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
           (response) => {
             this._isPublishingCommunity = false;
             this._showModal = false;
-
             if (!!response) {
               this._innovation.published = response.published;
               this._innovation.community = response.community;
-              this._innovationFrontService.setInnovation(this._innovation);
+              this._emitUpdatedInnovation();
               this._translateNotificationsService.success(
                 'Success',
                 'The project has been published to the Community.'
@@ -696,47 +664,6 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
       this._saveProject('The owner has been updated.', {
         owner: this._innovation.owner,
       });
-    }
-  }
-
-  /**
-   * Only client is allowed to update the objective.
-   * commented on 8th June, 2021
-   */
-
-  /*public onMainObjectiveChange(objective: string) {
-    const _index = this._missionObjectives.findIndex(
-      (value) => value['en']['label'] === objective
-    );
-    if (_index !== -1) {
-      if (!this._mission.objective) {
-        this._mission.objective = {
-          principal: {},
-          secondary: [],
-          comment: '',
-        };
-      }
-
-      this._mission.objective.principal = {
-        en: this._missionObjectives[_index].en.label,
-        fr: this._missionObjectives[_index].fr.label,
-      };
-
-      this._saveMission(
-        { objective: this._mission.objective },
-        'The main objective has been updated.'
-      );
-    }
-  }*/
-
-  public onCopyQuizLink(event: Event) {
-    event.preventDefault();
-    if (this._quizLink) {
-      this._commonService.copyToClipboard(this._quizLink);
-      this._quizUrlCopied = true;
-      setTimeout(() => {
-        this._quizUrlCopied = false;
-      }, 8000);
     }
   }
 
@@ -925,10 +852,6 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
     return MissionFrontService.objectiveName(value, this.currentLang);
   }
 
-  /*get missionObjectives(): Array<Objective> {
-    return this._missionObjectives;
-  }*/
-
   addMilestone(event: Event) {
     event.preventDefault();
     this._isAddMilestone = true;
@@ -1014,10 +937,6 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
 
   get quizLink(): string {
     return this._quizLink;
-  }
-
-  get quizUrlCopied(): boolean {
-    return this._quizUrlCopied;
   }
 
   get sidebarValue(): UmiusSidebarInterface {

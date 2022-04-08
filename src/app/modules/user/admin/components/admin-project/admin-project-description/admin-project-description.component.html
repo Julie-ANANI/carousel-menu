@@ -53,7 +53,7 @@
 
                 <!-- edit-preview button -->
                 <button
-                  *ngIf=" isEditable"
+                  *ngIf="isEditable"
                   [attr.data-tooltip]="!(getPadPreviewMode(i.toString()))? 'Preview':'Edit'"
                   (click)="padPreviewModeOnChange(i.toString())"
                   class="button tooltip is-circled is-outlined text-no-underline m-right-15 is-xs text-sm"

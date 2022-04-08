@@ -31,6 +31,7 @@ import {UmiusCompanyInterface} from '@umius/umi-common-component/models/company'
   styleUrls: ['./admin-project-collection.component.scss'],
 })
 export class AdminProjectCollectionComponent implements OnInit, OnDestroy {
+
   private _isLoading = true;
 
   private _innovation: Innovation = <Innovation>{};
@@ -65,8 +66,6 @@ export class AdminProjectCollectionComponent implements OnInit, OnDestroy {
 
   private _ngUnsubscribe: Subject<any> = new Subject<any>();
 
-  private _socketListening = false;
-
   private _targetWarnings = 0;
 
   private _accessPath: Array<string> = ['projects', 'project', 'campaigns', 'campaign', 'search'];
@@ -79,57 +78,46 @@ export class AdminProjectCollectionComponent implements OnInit, OnDestroy {
     return CampaignFrontService.answerStat(answers, type, searchKey);
   }
 
-  constructor(
-    @Inject(PLATFORM_ID) protected _platformId: Object,
-    private _configService: UmiusConfigService,
-    private _translateNotificationsService: TranslateNotificationsService,
-    private _answerService: AnswerService,
-    private _rolesFrontService: RolesFrontService,
-    private _socketService: SocketService,
-    private _innovationFrontService: InnovationFrontService
-  ) {
+  constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
+              private _configService: UmiusConfigService,
+              private _translateNotificationsService: TranslateNotificationsService,
+              private _answerService: AnswerService,
+              private _rolesFrontService: RolesFrontService,
+              private _socketService: SocketService,
+              private _innovationFrontService: InnovationFrontService) {
   }
 
   ngOnInit() {
     if (isPlatformBrowser(this._platformId)) {
-      this._isLoading = false;
+      this._innovation = this._innovationFrontService.innovation().value;
       this._initVariables(this._answers, -1);
+      this._getAnswers();
+      this._initQuestions();
+      this._answerSocket();
+      this._isLoading = false;
 
-      this._innovationFrontService
-        .innovation()
-        .pipe(takeUntil(this._ngUnsubscribe))
-        .subscribe((innovation) => {
+      this._innovationFrontService.innovation().pipe(takeUntil(this._ngUnsubscribe)).subscribe((innovation) => {
+        if (innovation && innovation._id) {
           this._innovation = innovation || <Innovation>{};
-          this._getAnswers();
           this._initQuestions();
-          this._excludedCompanies =
-            this._innovation &&
-            this._innovation.settings &&
-            this._innovation.settings.companies &&
-            this._innovation.settings.companies.exclude;
+          this._excludedCompanies = this._innovation && this._innovation.settings && this._innovation.settings.companies
+            && this._innovation.settings.companies.exclude;
+        }
+      });
+    }
+  }
 
-          // Listen to the updates only the first time we retrieve the innovation
-          if (!this._socketListening) {
-            this._socketService
-              .getAnswersUpdates(this._innovation._id)
-              .pipe(takeUntil(this._ngUnsubscribe))
-              .subscribe(
-                (update: any) => {
-                  const answer = update.data;
-                  answer._id = answer.id;
-                  const index = this._answers.findIndex(
-                    (a) => a._id.toString() === answer._id.toString()
-                  );
-                  this._answers[index] = answer;
-                  this._initAnswers();
-                },
-                (error) => {
-                  console.error(error);
-                }
-              );
-            this._socketListening = true;
-          }
-        });
+  private _answerSocket() {
+    if (this._innovation && this._innovation._id) {
+      this._socketService.getAnswersUpdates(this._innovation._id).pipe(takeUntil(this._ngUnsubscribe)).subscribe((update: any) => {
+        const answer = update.data;
+        answer._id = answer.id;
+        const index = this._answers.findIndex((a) => a._id.toString() === answer._id.toString());
+        this._answers[index] = answer;
+        this._initAnswers();
+      }, (error: HttpErrorResponse) => {
+        console.error(error);
+      });
     }
   }
 
@@ -160,7 +148,7 @@ export class AdminProjectCollectionComponent implements OnInit, OnDestroy {
           this._initAnswers();
         },
         (err: HttpErrorResponse) => {
-          this._translateNotificationsService.error('Answers Error...', ErrorFrontService.getErrorKey(err.error));
+          this._translateNotificationsService.error('Answers Fetching Error...', ErrorFrontService.getErrorKey(err.error));
           console.error(err);
         }
       );
@@ -458,7 +446,7 @@ export class AdminProjectCollectionComponent implements OnInit, OnDestroy {
             }
           },
           (err: HttpErrorResponse) => {
-            this._translateNotificationsService.error('Answer Update Error...', ErrorFrontService.getErrorKey(err.error));
+            this._translateNotificationsService.error('Answer Updating Error...', ErrorFrontService.getErrorKey(err.error));
             console.error(err);
           }
         );
@@ -495,11 +483,9 @@ export class AdminProjectCollectionComponent implements OnInit, OnDestroy {
    */
   updateOneAnswer(answer: Answer) {
     // Search for the answer
-    console.log(answer);
     const idx = this._answers.findIndex(ans => {
       return ans._id === answer._id;
     });
-    console.log(idx);
     if (idx > -1) {
       this._answers[idx] = answer;
     }

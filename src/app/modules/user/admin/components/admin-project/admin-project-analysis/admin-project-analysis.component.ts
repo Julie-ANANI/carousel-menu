@@ -1,8 +1,6 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Innovation } from '../../../../../../models/innovation';
 import { InnovationFrontService } from '../../../../../../services/innovation/innovation-front.service';
-import { takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
 import { RouteFrontService } from '../../../../../../services/route/route-front.service';
 import { TranslateTitleService } from '../../../../../../services/title/title.service';
 import { RolesFrontService } from '../../../../../../services/roles/roles-front.service';
@@ -18,7 +16,7 @@ interface Tab {
   templateUrl: './admin-project-analysis.component.html',
 })
 
-export class AdminProjectAnalysisComponent implements OnInit, OnDestroy {
+export class AdminProjectAnalysisComponent implements OnInit {
 
   private _tabs: Array<Tab> = [
     {key: 'synthesis', name: 'Synthesis', route: 'synthesis'},
@@ -30,8 +28,6 @@ export class AdminProjectAnalysisComponent implements OnInit, OnDestroy {
 
   private _activeTab = this._routeFrontService.activeTab(8, 7);
 
-  private _ngUnsubscribe: Subject<any> = new Subject<any>();
-
   constructor(private _innovationFrontService: InnovationFrontService,
               private _routeFrontService: RouteFrontService,
               private _rolesFrontService: RolesFrontService,
@@ -39,10 +35,8 @@ export class AdminProjectAnalysisComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this._innovationFrontService.innovation().pipe(takeUntil(this._ngUnsubscribe)).subscribe((innovation) => {
-      this._project = innovation || <Innovation>{};
-      this._setPageTitle();
-    });
+    this._project = this._innovationFrontService.innovation().value;
+    this._setPageTitle();
   }
 
   private _setPageTitle(tab?: string) {
@@ -67,11 +61,6 @@ export class AdminProjectAnalysisComponent implements OnInit, OnDestroy {
 
   get project(): Innovation {
     return this._project;
-  }
-
-  ngOnDestroy(): void {
-    this._ngUnsubscribe.next();
-    this._ngUnsubscribe.complete();
   }
 
 }

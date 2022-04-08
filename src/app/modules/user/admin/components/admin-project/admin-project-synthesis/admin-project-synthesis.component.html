@@ -1,7 +1,7 @@
-<div *ngIf="canAccess()" id="admin-project-synthesis">
+<div [hidden]="!canAccess()" id="admin-project-synthesis">
   <app-shared-market-report
-    [accessPath]="accessPath"
     [adminSide]="true"
+    [accessPath]="accessPath"
     [executiveReport]="report"
     [project]="innovation">
   </app-shared-market-report>
