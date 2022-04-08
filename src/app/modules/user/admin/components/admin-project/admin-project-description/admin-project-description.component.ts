@@ -16,6 +16,7 @@ import {NotificationService} from '../../../../../../services/notification/notif
 import {NotificationJob} from '../../../../../../models/notification';
 import {isPlatformBrowser} from '@angular/common';
 import {UmiusConfigInterface, UmiusMediaInterface, UmiusModalMedia, UmiusVideoInterface} from '@umius/umi-common-component';
+import {MediaService} from '../../../../../../services/media/media.service';
 
 const he = require('he');
 
@@ -70,7 +71,7 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
 
   private _editedMediaId: string = null;
 
-  private _isMediaAjusted = '100%';
+  private _isMediaAdjusted = false;
 
   private _mainContainerStyle: any;
 
@@ -133,7 +134,8 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
               private _notificationService: NotificationService,
               private _etherpadFrontService: EtherpadFrontService,
               private _rolesFrontService: RolesFrontService,
-              private _translateNotificationsService: TranslateNotificationsService) {
+              private _translateNotificationsService: TranslateNotificationsService,
+              private _mediaService: MediaService) {
   }
 
   ngOnInit() {
@@ -425,13 +427,11 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
     this._editedMediaIndex = index;
   }
 
-  public adjustMedia(media: UmiusMediaInterface) {
-    if (this._isMediaAjusted === '100%') {
-      this._isMediaAjusted = 'auto';
-      // media.display = 'adjust';
-    } else {
-      this._isMediaAjusted = '100%';
-      // media.display = 'crop';
+  public adjustMedia(media: UmiusMediaInterface, action: string) {
+    if (action === 'crop') {
+      this._isMediaAdjusted = false;
+    } else if (action === 'adjust') {
+      this._isMediaAdjusted = true;
     }
   }
 
@@ -463,6 +463,15 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
 
   public editMedias() {
     this._isBeingEdited = !this._isBeingEdited;
+    this.activeInnovCard.principalMedia.isMediaAdjusted = this._isMediaAdjusted;
+    if (!this._isBeingEdited && this.activeInnovCard.principalMedia) {
+      this._mediaService.update(this.activeInnovCard.principalMedia.id, this.activeInnovCard.principalMedia).subscribe((data: any) => {
+        console.log(data);
+      }, (err: HttpErrorResponse) => {
+        console.error(err);
+      });
+    }
+    this._isMediaAdjusted = false;
     this._updateMediaFilter();
   }
 
@@ -818,8 +827,8 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
     return this._isBeingEdited;
   }
 
-  get isMediaAjusted(): string {
-    return this._isMediaAjusted;
+  get isMediaAdjusted(): boolean {
+    return this._isMediaAdjusted;
   }
 
   ngOnDestroy(): void {
