@@ -40,6 +40,17 @@ export class LikertScaleChartComponent implements OnInit, OnDestroy {
     averageFinalScore?: number
   };
 
+  private _likertScaleLabels = [ 'TOTALLY_INVALIDATED', 'INVALIDED', 'UNCERTAIN', 'VALIDATED', 'TOTALLY_VALIDATED']
+  private _likertScaleColors = [
+    `rgba(234,88,88,0.3)`,
+    `rgba(248,148,36,0.3)`,
+    `rgba(187,199,214,0.3)`,
+    `rgba(153,224,75,0.3)`,
+    `rgba(46,204,113,0.3)`
+  ]
+
+  private _gauge: { labels: any[]; delimiters: any[]; threshold: number; colors: any[] } = null;
+
   private _createChart() {
     this._dataService.getAnswers(this.question).pipe(takeUntil(this._ngUnsubscribe)).subscribe((answers: Array<Answer>) => {
       this._stackedChart = ResponseService.likertScaleChartData(answers, this.question, this.reportingLang);
@@ -50,7 +61,26 @@ export class LikertScaleChartComponent implements OnInit, OnDestroy {
       this._content.score = this._graphics.score;
       this._content.visibility = true;
       this._content.scoreRotate = this._graphics.scoreRotate;
-      });
+
+      // Full opacity in chart for score
+      const index = this._likertScaleLabels.findIndex(label => label === this._content.name)
+      this._likertScaleColors[index] = this._likertScaleColors[index].replace((0.3).toString(), '1')
+
+      const gauge = {
+        threshold: 2.25,
+        colors: this._likertScaleColors,
+        labels: this._likertScaleLabels,
+        delimiters: []
+      }
+
+      // Computing 4 delimiters values for 5 arcs. This is based on a given likert scale formula.
+      const interval = (5 - gauge.threshold) / 4;
+      const part = (100 / this._likertScaleLabels.length);
+      for (let i = 0; i < this._likertScaleLabels.length - 1; i++) {
+        gauge.delimiters.push((gauge.threshold + interval * i) * part);
+      }
+      this._gauge = gauge;
+    });
   }
 
 
@@ -91,6 +121,9 @@ export class LikertScaleChartComponent implements OnInit, OnDestroy {
     return this._content;
   }
 
+  get gauge(): { labels: any[]; delimiters: any[]; threshold: number; colors: any[] } {
+    return this._gauge;
+  }
 
   ngOnDestroy(): void {
     this._ngUnsubscribe.next();

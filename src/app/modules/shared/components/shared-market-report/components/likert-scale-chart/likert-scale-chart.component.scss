@@ -41,55 +41,6 @@
 
   /* PROGRESS BAR
   –––––––––––––––––––––––––––––––––––––––––––––––––– */
-  .progress__bar {
-    height: 150px;
-    mask-type: alpha;
-    -webkit-mask: radial-gradient(at 50% 100%, #0000 53%, #2E6188 58%);
-    z-index: $z-index-1;
-  }
-
-  .progress__bar .fill {
-    top: 100%;
-    left: 0;
-    width: inherit;
-    height: inherit;
-    border: 30px solid;
-    border-top: none;
-    border-bottom-left-radius: 150px;
-    border-bottom-right-radius: 150px;
-    transform-origin: 50% 0;
-  }
-
-  //si c'est la couleur resulat affiche normal else appliaue brightness
-  .progress__bar .totally--invalidated, .invalided, .uncertain, .validated, .totally--validated {
-    filter: brightness(70%);
-  }
-
-  .progress__bar :is(.red, .totally--invalidated) {
-    border-color: rgb(234, 88, 88);
-    transform: rotate(81deg); // 45% => 81deg
-  }
-
-  .progress__bar :is(.orange, .invalided) {
-    border-color: rgb(248, 148, 36);
-    transform: rotate(105.75deg); // 58.75% => 105.75deg  58.75/100 * 180 = 105.75deg
-  }
-
-  .progress__bar :is(.grey, .uncertain) {
-    border-color: rgb(187, 199, 214);
-    transform: rotate(130.5deg); // 72.5% => 130.5deg
-  }
-
-  .progress__bar :is(.green, .validated) {
-    border-color: rgb(153, 224, 75);
-    transform: rotate(155.25deg); //86.25% => 155.25deg
-  }
-
-  .progress__bar :is(.grass, .totally--validated) {
-    border-color: rgb(46, 204, 113);
-    transform: rotate(180deg); //100% => 180deg
-  }
-
 
   .progress__bar {
     .red {
@@ -142,40 +93,11 @@
     }
   }
 
-
-  /* COMPASS
-–––––––––––––––––––––––––––––––––––––––––––––––––– */
-.needle__circle {
-    top: -1.2em;
-    left: 8.9em;
-    width:$unit-8;
-    height : $unit-8;
-    background-color:white;
-    border-radius:50%;
-    z-index: $z-index-0;
-  }
-
-  .compass__needle::after {
-    content: '';
-    width: 60%;
-    height: 6%;
-    position: absolute;
-    top: -0.14em;
-    left: -2.3em;
-    transform: translateX(0px) rotate(0deg) translateY(0px);
-    border-bottom: $unit-1 solid transparent;
-    border-top: $unit-1 solid transparent;
-    border-left: $unit-9 solid transparent;
-    border-right: 127px solid white;
-    transform-origin: 8%;
-    z-index: $z-index-0;
-  }
-
   /* SCORE
   –––––––––––––––––––––––––––––––––––––––––––––––––– */
   .average__text {
     left: 43%;
-    top: 90%;
+    top: 65%;
     width: fit-content;
   }
 

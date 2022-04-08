@@ -1,33 +1,25 @@
-<div class="popover m-left-4" *ngIf="options">
-  <div class="d-flex align-center"
-       [ngStyle]="{ 'background-color': needleColor, 'width': '10px', 'height': '20px'}"></div>
-  <div class="popover-container">
-    <div class="card align-center">
-      <span class="text-bold">{{ title }}</span>
-      <div class="chart m-top-40" [ngStyle]="{'height': (height) + 'px'}" [ngClass]="{'reverted': negative}">
+<div class="relative" *ngIf="options" [ngClass]="{'popover m-left-4': isPopover}">
+  <div *ngIf="isPopover" class="d-flex align-center"
+       [ngStyle]="{ 'background-color': indicatorColor, 'width': '10px', 'height': '20px'}">
+  </div>
+  <div [ngClass]="{'popover-container bg-white': isPopover}">
+    <div class="align-center" [ngClass]="{'card': isPopover}">
+      <!-- Title should be put in ng-content -->
+      <ng-content></ng-content>
+      <div [ngStyle]="{'height': (height) + 'px'}"
+           [ngClass]="{'reverted': negative, 'chart': isPopover, 'm-top-40': isPopover}">
         <rg-gauge-chart [canvasWidth]="width"
                         [needleValue]="needleValue"
                         [centralLabel]="''"
                         [options]="options">
         </rg-gauge-chart>
       </div>
-      <div class="legend text-sm w-full" [ngStyle]="{'margin-top': (height / 2 + 30) + 'px'}">
+      <div *ngIf="showValue" class="text-medium text-sm"> {{ needleValueText }} </div>
+      <div *ngIf="showLegend" class="legend text-sm w-full" [ngStyle]="{'margin-top': (height / 2 + 30) + 'px'}">
         <ul [ngClass]="{'reverted-legend': negative}">
-          <li>
-            <div [ngStyle]="{ 'background-color': veryLow }" class="square"></div>
-            <span class="m-left-20">{{ delimitersLabels[0] }}</span>
-          </li>
-          <li>
-            <div [ngStyle]="{ 'background-color': low }" class="square"></div>
-            <span class="m-left-20">{{ delimitersLabels[1] }}</span>
-          </li>
-          <li>
-            <div [ngStyle]="{ 'background-color': mean }" class="square"></div>
-            <span class="m-left-20">{{ delimitersLabels[2] }}</span>
-          </li>
-          <li>
-            <div [ngStyle]="{ 'background-color': high }" class="square"></div>
-            <span class="m-left-20">{{ delimitersLabels[3] }}</span>
+          <li *ngFor="let label of delimitersLabels; let i = index">
+            <div [ngStyle]="{ 'background-color': colors[i] }" class="square"></div>
+            <span class="m-left-20">{{ label }}</span>
           </li>
         </ul>
       </div>

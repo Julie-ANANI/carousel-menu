@@ -12,7 +12,7 @@ import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
 })
 export class GaugeChartComponent implements OnChanges {
 
-  @Input() title = '';
+  @Input() isPopover = false;
 
   // A negative chart will go from good values (green) to bad values (red)
   // A positive chart will go from bad values (red) to good values (green)
@@ -24,6 +24,9 @@ export class GaugeChartComponent implements OnChanges {
    */
   @Input() average = 50;
   @Input() needleValue = 50;
+  @Input() needleValueText: string = '';
+  @Input() showValue = false;
+  @Input() showLegend = true;
 
   @Input() delimitersLabels = [
     'Very low',
@@ -35,62 +38,65 @@ export class GaugeChartComponent implements OnChanges {
   // Style
   @Input() width = 200;
   @Input() height = 140;
-  @Input() veryLow = '#EA5858';
-  @Input() low = '#F89424';
-  @Input() mean = '#99E04B';
-  @Input() high = '#2ECC71';
+  @Input() colors = ['#EA5858', '#F89424', '#99E04B', '#2ECC71'];
+  @Input() needleColor: string = null;
 
   // Standard [5,33,50,66,100] gauge delimiters for unified displaying
-  private _numberOfDelimiters = 3; // low, mean, high
-  private _badDelimiter = 5;
   private _standardAverage = 50;
   private _standardMax = 100;
-  private _standardLowerDelimiter = this._standardAverage - (this._standardMax / this._numberOfDelimiters) / 2;
-  private _standardUpperDelimiter = this._standardAverage + (this._standardMax / this._numberOfDelimiters) / 2;
+  private _indicatorColor = '';
 
-  private _needleColor = this.mean;
+  @Input() delimiters = [
+    5,
+    this._standardAverage - (this._standardMax / 3) / 2,
+    this._standardAverage + (this._standardMax / 3) / 2
+  ];
+
+  private _options: any;
 
   ngOnChanges(changes: SimpleChanges) {
     // We force display of needle when value is 0
     if (!this.needleValue) {
       this.needleValue = 0.0001;
     }
+
+    if(!this.needleColor) {
+      this._changeIndicatorColor();
+    }
     // We change needle value to fit standard delimiters
     this.needleValue = this.needleValue * 50 / this.average;
     if (this.negative) {
       this.needleValue = 100 - this.needleValue;
     }
-    this._changeIndicatorColor();
+
     this._options = {
       hasNeedle: true,
       outerNeedle: false,
-      needleColor: '#4F5D6B',
+      needleColor: this.needleColor || '#4F5D6B',
       needleStartValue: 0,
-      arcColors: [this.veryLow, this.low, this.mean, this.high],
-      arcDelimiters: [this._badDelimiter, this._standardLowerDelimiter, this._standardUpperDelimiter],
-      rangeLabelFontSize: 15
+      arcColors: this.colors,
+      arcDelimiters: this.delimiters,
+      rangeLabelFontSize: 16
     };
   }
 
   private _changeIndicatorColor() {
-    if (this.needleValue <= this._badDelimiter) {
-      this._needleColor = this.veryLow;
-    } else if (this.needleValue <= this._standardLowerDelimiter) {
-      this._needleColor = this.low;
-    } else if (this.needleValue <= this._standardUpperDelimiter) {
-      this._needleColor = this.mean;
+    if (this.needleValue <= this.delimiters[0]) {
+      this._indicatorColor = this.colors[0];
+    } else if (this.needleValue <= this.delimiters[1]) {
+      this._indicatorColor = this.colors[1]
+    } else if (this.needleValue <= this.delimiters[2]) {
+      this._indicatorColor = this.colors[2];
     } else {
-      this._needleColor = this.high;
+      this._indicatorColor = this.colors[3];
     }
   }
 
-  get needleColor(): string {
-    return this._needleColor;
-  }
-
-  private _options: any;
-
   get options(): any {
     return this._options;
+  }
+
+  get indicatorColor(): string {
+    return this._indicatorColor;
   }
 }
