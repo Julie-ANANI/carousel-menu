@@ -52,17 +52,6 @@
           <!-- synthesis reporting lang -->
           <ng-container *ngIf="!areAnswersLoading && adminSide">
             <div class="d-flex align-center justify-end flex-wrap-wrap dropdown w-full m-top-15 is-right">
-
-              <!-- project status is on DONE addmin side - notif document button -->
-              <button
-                *ngIf="innovation.status === 'DONE' && adminSide"
-                (click)="openModal($event, 'NOTIFY_DOCUMENTS')"
-                class="button is-outlined m-auto"
-                type="button">
-                Send availability of documents mail
-              </button>
-              <!-- /project status is on DONE addmin side - notif document button -->
-
               <div class="lang-selector">
               <span class="text-13 m-right-4">
                 {{ 'MARKET_REPORT.RESTITUTION_LANG' | translateIn: reportingLang }}
