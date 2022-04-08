@@ -28,14 +28,18 @@ export class ApiUrlInterceptor implements HttpInterceptor {
   private _setAppV3Url(req: HttpRequest<any>): HttpRequest<any> {
     let newParameters: any = {};
     // When the route is for unauth(Don't need to add JWT)
-    console.log(req.url.indexOf('authorized/access')===-1);
-    if (req.url && req.url.indexOf('authorized/access') === -1) {
-      newParameters.url = environment.apiUrl + '/api/access' + req.url;
+    if (environment.local) {
+      newParameters.url = environment.apiUrl + req.url.replace('/authorized/access', '');
       this._setJwtoken(newParameters, req);
     } else {
-      newParameters.url = environment.apiUrl + req.url;
+      // APISIX gateway activated
+      if (req.url && req.url.indexOf('/authorized/access') === -1) {
+        newParameters.url = environment.apiUrl + '/api/access' + req.url;
+        this._setJwtoken(newParameters, req);
+      } else {
+        newParameters.url = environment.apiUrl + req.url;
+      }
     }
-    console.log(newParameters.url);
     this._setCookie(newParameters, req);
     return req.clone(newParameters);
   }
