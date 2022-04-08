@@ -453,13 +453,17 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
     }
   }
 
-  public editMedias() {
-    this._isBeingEdited = !this._isBeingEdited;
+  private _updateMediaFilter() {
     if (this._isBeingEdited) {
       this._mediaFitler = this.activeInnovCard.media;
     } else {
       this._mediaFitler = this.activeInnovCard.media.slice(0, 4);
     }
+  }
+
+  public editMedias() {
+    this._isBeingEdited = !this._isBeingEdited;
+    this._updateMediaFilter();
   }
 
   public openModal(event: Event, type: modalType, index?: number) {
@@ -638,6 +642,7 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
           this.activeInnovCard.media = this.activeInnovCard.media.filter((_media) => _media._id !== media._id);
           this._innovation.innovationCards[this._activeCardIndex].media = this.activeInnovCard.media;
           this._setInnovation();
+          this._updateMediaFilter(); // Mise à jour de la liste des medias filtrées
           this._isSavingMedia = false;
           this._verifyPrincipal(media);
           this._translateNotificationsService.success('Success', 'The media has been deleted.');
