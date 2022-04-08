@@ -169,7 +169,7 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
           'flex-direction': 'column',
           height: '100%'
         };
-      } else if ((this.activeInnovCard.principalMedia.cloudinary.width / this.activeInnovCard.principalMedia.cloudinary.height) > 4/3) {
+      } else {
         this._mainContainerStyle = {
           width: '528px',
           height: 'auto',
