@@ -37,6 +37,10 @@ interface Tab {
 
 export class AdminProjectComponent implements OnInit, OnDestroy {
 
+  get timeout(): any {
+    return this._timeout;
+  }
+
   private _project: Innovation = <Innovation>{};
 
   private _fetchingError = false;
@@ -93,7 +97,7 @@ export class AdminProjectComponent implements OnInit, OnDestroy {
 
   private _allCampaigns: Array<Campaign> = [];
 
-  timeout: any = null;
+  private _timeout: any = null;
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _activatedRoute: ActivatedRoute,
@@ -426,7 +430,7 @@ export class AdminProjectComponent implements OnInit, OnDestroy {
         this._project._id
       }/preparation/${paths}`;
     }
-    this.timeout = setTimeout(() => {
+    this._timeout = setTimeout(() => {
       this._router.navigate([route]);
     }, 0);
   }
@@ -528,8 +532,8 @@ export class AdminProjectComponent implements OnInit, OnDestroy {
     this._ngUnsubscribe.next();
     this._ngUnsubscribe.complete();
 
-    if (!!this.timeout) {
-      clearTimeout(this.timeout);
+    if (!!this._timeout) {
+      clearTimeout(this._timeout);
     }
   }
 
