@@ -73,7 +73,6 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy, OnChanges
       this._innovation.marketReport = this._innovation.marketReport || {};
       this._isOwner = this._authService.userId === (this._innovation.owner && this._innovation.owner.id)
         || this._authService.adminLevel > 3;
-      console.log(this._innovation.marketReport);
     }
   }
 
@@ -154,7 +153,6 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy, OnChanges
     this._filterService.reset();
 
     this._innovationFrontService.getNotifyChanges().pipe(takeUntil(this._ngUnsubscribe)).subscribe((value) => {
-      console.log(value);
       if (value.key === 'marketReportResult') {
         this._toSaveMissionResult = value.state;
       }
@@ -224,7 +222,6 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy, OnChanges
     if (isPlatformBrowser(this._platformId)) {
       this._answerService.getInnovationValidAnswers(this._innovation._id, this._anonymousAnswers, 'reset')
         .pipe(first()).subscribe((response) => {
-          console.log(response);
           this._processAnswers(response.answers);
           this._processFilterAnswers();
           this._processAnswersCompanies(response.answers);
@@ -425,7 +422,6 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy, OnChanges
     }
 
     this._innovationService.save(this._innovation._id, objToSave).pipe(first()).subscribe((_) => {
-      // this._innovationFrontService.setInnovation(innovation);
       this._translateNotificationsService.success('Success', 'The synthesis has been saved.');
       this._toBeSaved = false;
       this._toSaveTemplate = false;

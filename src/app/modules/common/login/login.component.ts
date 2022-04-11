@@ -140,7 +140,6 @@ export class LoginComponent implements OnInit {
         this._nbTentatives -= 1;
         this._displayLoading = false;
         const key = ErrorFrontService.getErrorKey(error.error);
-        console.log(key);
         this._translateNotificationsService.error('ERROR.ERROR', key);
         this._formData.get('password').reset();
       });

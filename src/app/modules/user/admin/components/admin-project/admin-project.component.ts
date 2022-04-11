@@ -125,8 +125,6 @@ export class AdminProjectComponent implements OnInit, OnDestroy {
         this._isLoading = false;
 
         this._socketService.getProjectUpdates(this._project._id).pipe(takeUntil(this._ngUnsubscribe)).subscribe((update: any) => {
-          console.log('_realTimeUpdate: project');
-          console.log(update);
           this._realTimeUpdate('project', update);
           }, (error) => {
           console.error(error);
@@ -136,8 +134,6 @@ export class AdminProjectComponent implements OnInit, OnDestroy {
           this._socketService.getMissionUpdates(this._project.mission._id)
             .pipe(takeUntil(this._ngUnsubscribe))
             .subscribe((update: any) => {
-              console.log('_realTimeUpdate: mission');
-              console.log(update);
               this._realTimeUpdate('mission', update);
             }, (error) => {
               console.error(error);
@@ -268,7 +264,6 @@ export class AdminProjectComponent implements OnInit, OnDestroy {
   }
 
   private _emitUpdatedInnovation() {
-    console.log(JSON.parse(JSON.stringify(this._project)));
     this._innovationFrontService.setInnovation(JSON.parse(JSON.stringify(this._project)));
   }
 

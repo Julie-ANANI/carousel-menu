@@ -1,4 +1,4 @@
-import {Component, Inject, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Inject, Input, OnInit, Output} from '@angular/core';
 import {Innovation} from '../../../../../../models/innovation';
 import {Mission, MissionQuestion, MissionResultItem} from '../../../../../../models/mission';
 import {InnovationFrontService} from '../../../../../../services/innovation/innovation-front.service';
@@ -7,10 +7,6 @@ import {DOCUMENT} from '@angular/common';
 import {MissionFrontService} from '../../../../../../services/mission/mission-front.service';
 import {Answer} from '../../../../../../models/answer';
 import {likertScaleThresholds, ResponseService} from '../../services/response.service';
-import {InnovationService} from '../../../../../../services/innovation/innovation.service';
-import {TranslateNotificationsService} from '../../../../../../services/translate-notifications/translate-notifications.service';
-import {HttpErrorResponse} from '@angular/common/http';
-import {ErrorFrontService} from '../../../../../../services/error/error-front.service';
 
 type toggleType = 'abstract' | 'addItem' | 'editItem';
 
@@ -115,7 +111,6 @@ export class MarketReportResultComponent implements OnInit {
       if (this._innovation.mission && (<Mission>this._innovation.mission)._id) {
         this._mission = (<Mission>this._innovation.mission);
         this._essentialQuestions = MissionFrontService.essentialQuestions(MissionFrontService.totalTemplateQuestions(this._mission.template));
-        this._toBeSaved = false;
         this._reInitVariables();
         this._initData();
       }
@@ -132,6 +127,8 @@ export class MarketReportResultComponent implements OnInit {
   @Input() reportingLang = 'en';
 
   @Input() isEditable = false;
+
+  @Output() saveInnovation: EventEmitter<Event> = new EventEmitter<Event>();
 
   private _canEdit: Toggle = <Toggle>{}
 
@@ -166,8 +163,6 @@ export class MarketReportResultComponent implements OnInit {
   private _addItemIndex = 0;
 
   constructor(@Inject(DOCUMENT) private _document: Document,
-              private _innovationService: InnovationService,
-              private _translateNotificationsService: TranslateNotificationsService,
               private _innovationFrontService: InnovationFrontService,
               private _pageScrollService: PageScrollService) { }
 
@@ -247,8 +242,10 @@ export class MarketReportResultComponent implements OnInit {
   }
 
   private _reInitVariables() {
+    this._toBeSaved = false;
+    this._canEdit = <Toggle>{};
     this._items = [];
-    this._resultItems = this._mission?.result?.items || [];
+    this._resultItems = (this._mission && this._mission.result && this._mission.result.items) || [];
     this._addItemIndex = this._resultItems.length;
   }
 
@@ -346,7 +343,7 @@ export class MarketReportResultComponent implements OnInit {
     }
 
     if (!this._canEdit[btn]) {
-      this._saveResult();
+      this._saveResult(event);
     }
   }
 
@@ -354,19 +351,9 @@ export class MarketReportResultComponent implements OnInit {
    * call the back to save the mission result.
    * @private
    */
-  private _saveResult() {
+  private _saveResult(event: Event) {
     if (this._toBeSaved) {
-      const objToSave = {};
-      objToSave['missionResult'] = this._mission.result;
-
-      this._innovationService.save(this._innovation._id, objToSave).subscribe((_) => {
-        this._toBeSaved = false;
-        this._translateNotificationsService.success('Success', 'The result has been saved.');
-      }, (err: HttpErrorResponse) => {
-        this._translateNotificationsService.error('Project Saving Error...', ErrorFrontService.getErrorKey(err.error));
-        this._toBeSaved = true;
-        console.error(err);
-      });
+      this.saveInnovation.emit(event);
     }
   }
 
