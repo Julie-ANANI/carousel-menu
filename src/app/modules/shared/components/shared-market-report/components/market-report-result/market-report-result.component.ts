@@ -278,6 +278,10 @@ export class MarketReportResultComponent implements OnInit {
           this._showSeeMore = true;
           break;
 
+        case 'OPTIMIZING_VALUE':
+          this._showSeeMore = true;
+          break;
+
         case 'VALIDATING_INTEREST':
           ques1 = this._getQuestion('ExistenceOfNeeds');
           ques2 = this._getQuestion('CritOfNeeds');
