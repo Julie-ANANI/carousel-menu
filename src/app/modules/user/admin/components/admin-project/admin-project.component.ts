@@ -201,7 +201,11 @@ export class AdminProjectComponent implements OnInit, OnDestroy {
 
       if (object === 'project') {
         isUpdated = true;
-        this._project[field] = update.data[field];
+        if (!!update.data['missionResult']) {
+          this._project.mission['result'] = update.data['missionResult'];
+        } else {
+          this._project[field] = update.data[field];
+        }
       }
 
       if (object === 'mission') {
