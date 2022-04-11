@@ -24,6 +24,7 @@
           *ngIf="canAccess(['edit', 'validateProject'])"
           class="button is-danger is-outlined is-sm m-right-20"
           id="btn-revision-project">
+          <i class="fas fa-exclamation icon-left"></i>
           Ask for project revision
         </button>
         <!-- /revision -->
@@ -32,8 +33,9 @@
         <button
           (click)="onValidateProject($event)"
           *ngIf="canAccess(['edit', 'validateProject'])"
-          class="button is-primary is-sm"
+          class="button is-primary"
           id="btn-validate-project">
+          <i class="fas fa-check icon-left"></i>
           Validate project
         </button>
         <!-- /validate -->
@@ -449,7 +451,8 @@
                     <div>
                       <button
                         (click)="addMilestone($event)"
-                        class="button is-primary is-circled is-xs"><i class="fas fa-plus"></i></button>
+                        data-tooltip="Add milestone"
+                        class="button is-primary is-circled is-xs tooltip"><i class="fas fa-plus"></i></button>
                     </div>
                   </ng-container>
                 </div>

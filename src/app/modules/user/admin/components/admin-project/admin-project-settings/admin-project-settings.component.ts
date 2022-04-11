@@ -894,8 +894,8 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
 
   openQuiz($event: Event) {
     $event.preventDefault();
-    if (this.quizLink) {
-      window.open(this.quizLink, '_blank');
+    if (this._quizLink) {
+      window.open(this._quizLink, '_blank');
     }
   }
 
