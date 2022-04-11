@@ -37,6 +37,22 @@ interface Tab {
 
 export class AdminProjectComponent implements OnInit, OnDestroy {
 
+  get hasMissionObjective(): boolean {
+    return this._hasMissionObjective;
+  }
+
+  get hasMissionTemplate(): boolean {
+    return this._hasMissionTemplate;
+  }
+
+  get objectiveName(): string {
+    return this._objectiveName;
+  }
+
+  get mission(): Mission {
+    return this._mission;
+  }
+
   get timeout(): any {
     return this._timeout;
   }
@@ -99,6 +115,14 @@ export class AdminProjectComponent implements OnInit, OnDestroy {
 
   private _timeout: any = null;
 
+  private _mission: Mission = <Mission>{};
+
+  private _objectiveName = '';
+
+  private _hasMissionTemplate = false;
+
+  private _hasMissionObjective = false;
+
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _activatedRoute: ActivatedRoute,
               private _translateService: TranslateService,
@@ -122,8 +146,8 @@ export class AdminProjectComponent implements OnInit, OnDestroy {
       this._initSubTabs();
 
       if (this._project && this._project._id) {
+        this._initVariables();
         this._verifyFollowUpTab();
-        this._setInnoTitle();
         this._getAllCampaigns();
         this._quizLink = InnovationFrontService.quizLink(this._project);
         this._isLoading = false;
@@ -150,8 +174,17 @@ export class AdminProjectComponent implements OnInit, OnDestroy {
     }
   }
 
+  private _initVariables() {
+    this._setInnoTitle();
+    this._mission = <Mission>this._project.mission;
+    this._hasMissionTemplate = MissionFrontService.hasMissionTemplate(this._mission);
+    this._objectiveName = MissionFrontService.objectiveName(this._mission.template, this._currentLang);
+    this._hasMissionObjective = this._mission.objective && this._mission.objective.principal && this._mission.objective.principal['en']
+      && this._mission.objective.principal['en'] !== 'Other';
+  }
+
   /**
-   * for the new projects we hide the Follow Up tab.
+   * for the new projects we hide the Follow-Up tab.
    * @private
    */
   private _verifyFollowUpTab() {
@@ -217,6 +250,7 @@ export class AdminProjectComponent implements OnInit, OnDestroy {
     if (isUpdated) {
       this._setInnoTitle();
       this._emitUpdatedInnovation();
+      this._initVariables();
     }
   }
 
@@ -379,10 +413,6 @@ export class AdminProjectComponent implements OnInit, OnDestroy {
     this._innovTitle = InnovationFrontService.currentLangInnovationCard(this._project, this._currentLang, 'TITLE');
   }
 
-  public objectiveName(lang = this.currentLang): string {
-    return MissionFrontService.objectiveName(this.mission.template, lang);
-  }
-
   public setPageTitle(isCampaignTabs: boolean, path: string) {
     if (isCampaignTabs) {
       this._translateTitleService.setTitle(`${path.toUpperCase()}
@@ -435,25 +465,8 @@ export class AdminProjectComponent implements OnInit, OnDestroy {
     }, 0);
   }
 
-  get title(): string {
-    return this._innovTitle ? this._innovTitle : this._project.name;
-  }
-
-  get mission(): Mission {
-    return this._project.mission && (<Mission>this._project.mission)._id ? <Mission>this._project.mission : <Mission>{};
-  }
-
-  get hasMissionObjective(): boolean {
-    return this.mission.objective && this.mission.objective.principal && this.mission.objective.principal['en']
-      && this.mission.objective.principal['en'] !== 'Other';
-  }
-
-  get hasMissionTemplate(): boolean {
-    return this.mission.template && this.mission.template.entry && this.mission.template.entry.length > 0;
-  }
-
   get iconClass(): string {
-    return MissionFrontService.objectiveInfo(<Mission>this.mission, 'FONT_AWESOME_ICON');
+    return MissionFrontService.objectiveInfo(<Mission>this._mission, 'FONT_AWESOME_ICON');
   }
 
   get canImport(): boolean {
