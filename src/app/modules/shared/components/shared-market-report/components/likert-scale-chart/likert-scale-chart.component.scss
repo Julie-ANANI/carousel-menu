@@ -42,54 +42,11 @@
   /* PROGRESS BAR
   –––––––––––––––––––––––––––––––––––––––––––––––––– */
 
-  .progress__bar {
-    .red {
-      z-index: 1000;
-    }
-
-    .totally--invalidated {
-      z-index: 900;
-    }
-
-    .orange {
-      z-index: 800;
-    }
-
-    .invalided {
-      z-index: 700;
-    }
-
-    .grey {
-      z-index: 600;
-    }
-
-    .uncertain {
-      z-index: 500;
-    }
-
-    .green {
-      z-index: $z-index-4;
-    }
-
-    .validated {
-      z-index: $z-index-3;
-    }
-
-    .grass {
-      z-index: $z-index-2;
-    }
-
-    .totally--validated {
-      z-index: $z-index-1;
-    }
-
-  }
-
   .bar__threshold {
-    width: 2em;
+    width: 215px;
 
-    .two {
-      margin-left: 148px;
+    > div {
+      width: 100px;
     }
   }
 

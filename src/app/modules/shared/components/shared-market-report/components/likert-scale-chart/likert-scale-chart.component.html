@@ -6,27 +6,24 @@
     <div class="fa-user user__three absolute"></div>
   </div>
 
-  <div *ngIf="stackedChart && stackedChart.likertScaleChart">
+  <div class="d-flex justify-center flex-d-column align-center" *ngIf="stackedChart && stackedChart.likertScaleChart">
 
-    <span [ngStyle]="{ 'color': 'white', 'background-color': color }" class="chart__name d-inline-block m-bottom-20 text-20
-    text-medium justify-center align-center w-180">
-      {{ ('MARKET_REPORT.LIKERT-SCALE_SECTION.' + label) | uppercase| translate }}
-    </span>
-
-    <div class="relative">
-      <div (mouseover)="isShowResult=true" (mouseout)="isShowResult=false">
-        <app-gauge-chart class="d-flex align-center"
-                         needleColor="white"
-                         [width]="300"
-                         [showLegend]="false"
-                         [average]="gauge.threshold"
-                         [colors]="gauge.colors"
-                         [delimiters]="gauge.delimiters"
-                         [delimitersLabels]="gauge.labels"
-                         [needleValue]="stackedChart.averageFinalScore"
-                         [needleValueText]="stackedChart.averageFinalScore +  ' / 5'">
-        </app-gauge-chart>
-      </div>
+    <div class="relative" (mouseover)="isShowResult=true" (mouseout)="isShowResult=false">
+      <app-gauge-chart class="d-flex align-center"
+                       needleColor="white"
+                       [nbArcs]="5"
+                       [width]="300"
+                       [showLegend]="false"
+                       [average]="gauge.average"
+                       [colors]="gauge.colors"
+                       [delimiters]="gauge.delimiters" [delimitersLabels]="gauge.labels"
+                       [needleValue]="stackedChart.averageFinalScore"
+                       [needleValueText]="stackedChart.averageFinalScore +  ' / 5'">
+          <span [ngStyle]="{ 'color': 'white', 'background-color': color }" class="d-inline-block m-bottom-20 text-20
+          text-medium justify-center align-center w-180">
+            {{ ('MARKET_REPORT.LIKERT-SCALE_SECTION.' + label) | uppercase| translate }}
+          </span>
+      </app-gauge-chart>
     </div>
 
     <div class=" average average__evaluation text-medium text-sm"
@@ -34,9 +31,13 @@
       <div class="average__text absolute">{{ stackedChart.averageFinalScore }} /5</div>
     </div>
 
-    <div class="bar__threshold d-flex m-top-2 text-xs align-center">
-      <div class="one">{{ ('MARKET_REPORT.LIKERT-SCALE_SECTION.TOTALLY_INVALIDATED') | uppercase| translate }}</div>
-      <div class="two">{{ ('MARKET_REPORT.LIKERT-SCALE_SECTION.TOTALLY_VALIDATED') | uppercase| translate }}</div>
+    <div class="bar__threshold d-flex m-top-2 text-xs align-center flex-between">
+      <div class="text-left">
+        {{ ('MARKET_REPORT.LIKERT-SCALE_SECTION.TOTALLY_INVALIDATED') | uppercase| translate | titlecase }}
+      </div>
+      <div class="text-right">
+        {{ ('MARKET_REPORT.LIKERT-SCALE_SECTION.TOTALLY_VALIDATED') | uppercase| translate | titlecase }}
+      </div>
     </div>
 
   </div>

@@ -1,7 +1,5 @@
 <div class="relative" *ngIf="options" [ngClass]="{'popover m-left-4': isPopover}">
-  <div *ngIf="isPopover" class="d-flex align-center"
-       [ngStyle]="{ 'background-color': indicatorColor, 'width': '10px', 'height': '20px'}">
-  </div>
+  <div *ngIf="isPopover" class="d-flex align-center" [ngStyle]="{ 'background-color': indicatorColor, 'width': '10px', 'height': '20px'}"></div>
   <div [ngClass]="{'popover-container bg-white': isPopover}">
     <div class="align-center" [ngClass]="{'card': isPopover}">
       <!-- Title should be put in ng-content -->

@@ -205,19 +205,21 @@ export class MarketReportResultComponent implements OnInit {
     this._label.right = this._scale.percentage >= 50 ? (99 - this._scale.percentage) + '%' : '';
     this._label.margin = (this._scale.percentage >= 30 && this._scale.percentage <= 85) ? '-5%' : '';
 
-    if (this._scale.score < likertScaleThresholds.first) {
+    const thresholds = likertScaleThresholds(2.25, 5);
+
+    if (this._scale.score < thresholds[0]) {
       this._label.color = 'color-1';
       this._label.label = 'MARKET_REPORT.RESULT.' + this._mission?.template?.methodology + '.BAR.LABEL_A';
-    } else if (this._scale.score >= likertScaleThresholds.first && this._scale.score < likertScaleThresholds.second) {
+    } else if (this._scale.score >= thresholds[0] && this._scale.score < thresholds[2]) {
       this._label.color = 'color-2';
       this._label.label = 'MARKET_REPORT.RESULT.' + this._mission?.template?.methodology + '.BAR.LABEL_B';
-    } else if (this._scale.score >= likertScaleThresholds.second && this._scale.score < likertScaleThresholds.third) {
+    } else if (this._scale.score >= thresholds[2] && this._scale.score < thresholds[3]) {
       this._label.color = 'color-3';
       this._label.label = 'MARKET_REPORT.RESULT.' + this._mission?.template?.methodology + '.BAR.LABEL_C';
-    } else if (this._scale.score >= likertScaleThresholds.third && this._scale.score < likertScaleThresholds.forth) {
+    } else if (this._scale.score >= thresholds[3] && this._scale.score < thresholds[4]) {
       this._label.color = 'color-4';
       this._label.label = 'MARKET_REPORT.RESULT.' + this._mission?.template?.methodology + '.BAR.LABEL_D';
-    } else if (this._scale.score >= likertScaleThresholds.forth) {
+    } else if (this._scale.score >= thresholds[4]) {
       this._label.color = 'color-5';
       this._label.label = 'MARKET_REPORT.RESULT.' + this._mission?.template?.methodology + '.BAR.LABEL_E';
     }
