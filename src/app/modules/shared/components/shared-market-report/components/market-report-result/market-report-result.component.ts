@@ -210,16 +210,16 @@ export class MarketReportResultComponent implements OnInit {
     if (this._scale.score < thresholds[0]) {
       this._label.color = 'color-1';
       this._label.label = 'MARKET_REPORT.RESULT.' + this._mission?.template?.methodology + '.BAR.LABEL_A';
-    } else if (this._scale.score >= thresholds[0] && this._scale.score < thresholds[2]) {
+    } else if (thresholds[0] <= this._scale.score && this._scale.score < thresholds[1]) {
       this._label.color = 'color-2';
       this._label.label = 'MARKET_REPORT.RESULT.' + this._mission?.template?.methodology + '.BAR.LABEL_B';
-    } else if (this._scale.score >= thresholds[2] && this._scale.score < thresholds[3]) {
+    } else if (thresholds[1] <= this._scale.score && this._scale.score < thresholds[2]) {
       this._label.color = 'color-3';
       this._label.label = 'MARKET_REPORT.RESULT.' + this._mission?.template?.methodology + '.BAR.LABEL_C';
-    } else if (this._scale.score >= thresholds[3] && this._scale.score < thresholds[4]) {
+    } else if (thresholds[2] <= this._scale.score && this._scale.score < thresholds[3]) {
       this._label.color = 'color-4';
       this._label.label = 'MARKET_REPORT.RESULT.' + this._mission?.template?.methodology + '.BAR.LABEL_D';
-    } else if (this._scale.score >= thresholds[4]) {
+    } else {
       this._label.color = 'color-5';
       this._label.label = 'MARKET_REPORT.RESULT.' + this._mission?.template?.methodology + '.BAR.LABEL_E';
     }
