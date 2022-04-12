@@ -44,7 +44,8 @@ export class TypeLikertScaleComponent implements OnInit, OnDestroy {
   private _content: SectionLikertScale = {
     name: this._colorsAndNames[2].name,
     legend: '',
-    color: this._colorsAndNames[2].color
+    color: this._colorsAndNames[2].color,
+    visibility: true
   };
 
   constructor (private _translateService: TranslateService ) {}

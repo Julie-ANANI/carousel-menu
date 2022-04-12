@@ -29,7 +29,8 @@ export class LikertScaleChartComponent implements OnInit, OnDestroy {
 
   private _content: SectionLikertScale = {
     name: '',  // example totally  invalided
-    color: '',   // example #EA5858
+    color: '',   // example #EA5858,
+    visibility: false
   };
 
   /* Retrieves data for the progress bar averageFinalScore
@@ -47,6 +48,7 @@ export class LikertScaleChartComponent implements OnInit, OnDestroy {
       this._content.name = this._graphics.name;
       this._content.color = this._graphics.color;
       this._content.score = this._graphics.score;
+      this._content.visibility = true;
       this._content.scoreRotate = this._graphics.scoreRotate;
       });
   }

@@ -120,7 +120,7 @@ export interface SectionLikertScale {
   percentage?:number;
   scorePercentage?:string;
   scoreRotate?:string;
-  visibility?:boolean;
+  visibility:boolean;
 }
 
 export interface LikertScaleChart {
