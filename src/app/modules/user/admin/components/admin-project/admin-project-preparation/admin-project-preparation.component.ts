@@ -136,6 +136,9 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
 
     this._innovationFrontService.getNotifyChanges().pipe(takeUntil(this._ngUnsubscribe)).subscribe((save) => {
       this._toBeSaved = this._toBeSaved ? this._toBeSaved + ',' + save.key : save.key;
+      if(save.autoSave) {
+        this.onSave(new Event(''))
+      }
     });
 
     this._innovationFrontService.getCardCommentNotifyChanges()

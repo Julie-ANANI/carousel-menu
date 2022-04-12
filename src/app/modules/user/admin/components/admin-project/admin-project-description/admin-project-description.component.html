@@ -109,16 +109,15 @@
             </div>
             <!-- /label / actions -->
 
-            <div *ngIf="isEditable && !getPadPreviewMode(i.toString())">
-              <app-shared-editors
-                [isEditable]="isEditable"
-                (textChange)="onContentChange($event, 'sections', i)"
-                [text]="section.content"
-                [innovationId]="innovation._id"
-                [elementId]="section.etherpadElementId || section.type.toLowerCase()+'-'+i + 1 + '-' + currentLang"
-                [type]="'pitch'">
-              </app-shared-editors>
-            </div>
+            <app-shared-editors
+              [hidden]="!isEditable || getPadPreviewMode(i.toString())"
+              [isEditable]="isEditable"
+              (textChange)="onContentChange($event, 'sections', i)"
+              [text]="section.content"
+              [innovationId]="innovation._id"
+              [elementId]="section.etherpadElementId || section.type.toLowerCase()+'-'+i + 1 + '-' + currentLang"
+              [type]="'pitch'">
+            </app-shared-editors>
 
             <ng-container *ngIf="getPadPreviewMode(i.toString())">
               <div [innerHTML]="activeInnovCard.sections[i].content | cleanHtml" class="pad-preview-mode"></div>
@@ -294,17 +293,16 @@
 
             </div>
 
-            <ng-container *ngIf="isEditable && !getPadPreviewMode('title')">
-              <app-shared-editors
-                id="project-title"
-                (textChange)="onContentChange($event, 'title')"
-                [text]="activeInnovCard.title"
-                [innovationId]="innovation._id"
-                [elementId]="'title-' + currentLang"
-                type="pitch"
-                [isEditable]="isEditable">
-              </app-shared-editors>
-            </ng-container>
+            <app-shared-editors
+              [hidden]="!isEditable || getPadPreviewMode('title')"
+              id="project-title"
+              (textChange)="onContentChange($event, 'title')"
+              [text]="activeInnovCard.title"
+              [innovationId]="innovation._id"
+              [elementId]="'title-' + currentLang"
+              type="pitch"
+              [isEditable]="isEditable">
+            </app-shared-editors>
 
             <ng-container *ngIf="getPadPreviewMode('title')">
               <div [innerHTML]="activeInnovCard.title | cleanHtml" class="pad-preview-mode"></div>
@@ -463,17 +461,16 @@
 
             </div>
 
-            <ng-container *ngIf="isEditable && !getPadPreviewMode('summary')">
-              <app-shared-editors
-                id="project-summary"
-                (textChange)="onContentChange($event, 'summary')"
-                [text]="activeInnovCard.summary"
-                [innovationId]="innovation._id"
-                [elementId]="'summary-' + currentLang"
-                type="summary"
-                [isEditable]="isEditable">
-              </app-shared-editors>
-            </ng-container>
+            <app-shared-editors
+              [hidden]="!isEditable || getPadPreviewMode('summary')"
+              id="project-summary"
+              (textChange)="onContentChange($event, 'summary')"
+              [text]="activeInnovCard.summary"
+              [innovationId]="innovation._id"
+              [elementId]="'summary-' + currentLang"
+              type="summary"
+              [isEditable]="isEditable">
+            </app-shared-editors>
 
             <ng-container *ngIf="getPadPreviewMode('summary')">
               <div [innerHTML]="activeInnovCard.summary | cleanHtml" class="pad-preview-mode"></div>

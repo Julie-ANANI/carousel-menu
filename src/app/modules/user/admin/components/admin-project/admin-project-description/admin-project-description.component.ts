@@ -58,6 +58,8 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
 
   private _deleteSectionIndex: number = null;
 
+  private _contentChanged = true;
+
   private _toggleComment: Toggle = {
     title: false,
     summary: false
@@ -116,6 +118,7 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
     this._innovationFrontService.innovation().pipe(takeUntil(this._ngUnsubscribe)).subscribe((innovation) => {
       if (innovation && innovation._id) {
         this._innovation = innovation;
+        this._contentChanged = false;
         this._isEditableComment = this._isEditable && (this._innovation.status === 'SUBMITTED' || this._innovation.status === 'EDITING');
         this._initToggle();
       }
@@ -321,6 +324,7 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
           this.activeInnovCard.lang);
     }
     this.updateInnovation();
+    this._contentChanged = true;
   }
 
   public toggleVisibility(event: Event, index: number) {
@@ -329,8 +333,8 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
     this.updateInnovation();
   }
 
-  public updateInnovation() {
-    this._innovationFrontService.setNotifyChanges({key: 'innovationCards', state: true});
+  public updateInnovation(autoSave = false) {
+    this._innovationFrontService.setNotifyChanges({key: 'innovationCards', state: true, autoSave});
   }
 
   public updateComment() {
@@ -509,6 +513,9 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
 
   padPreviewModeOnChange(title: string) {
     this._togglePreviewMode[title] = !this._togglePreviewMode[title];
+    if(this._togglePreviewMode[title] && this._contentChanged){
+      this.updateInnovation(true)
+    }
   }
 
   mediaToShow(mediaSrc: any) {
