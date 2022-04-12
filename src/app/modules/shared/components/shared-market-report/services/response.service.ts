@@ -14,7 +14,7 @@ import {LikertScaleChart} from '../../../../../models/executive-report';
 import {UmiusMultilingInterface} from '@umius/umi-common-component';
 import colorsAndNames from '../../../../../../../assets/json/likert-scale_executive-report.json';
 
-export const likertScaleThresholds = function(threshold, nbCategories: number) {
+export const likertScaleThresholds = function(threshold: number, nbCategories: number) {
   const likertScaleThresholds = []
   const interval = (nbCategories - threshold) / (nbCategories - 1);
   for (let i = 0; i < nbCategories - 1; i++) {
