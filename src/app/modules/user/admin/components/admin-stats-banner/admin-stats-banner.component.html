@@ -17,11 +17,13 @@
 
       <div class="d-hide">
         <ng-template #gaugeChartComponent>
-          <app-gauge-chart class="d-flex align-center" *ngIf="content.value !== 'NA'" [average]="content.gauge.referent"
-                           [title]="content.gauge.title"
+          <app-gauge-chart class="d-flex align-center" *ngIf="content.value !== 'NA'"
+                           [isPopover]="true"
+                           [average]="content.gauge.referent"
                            [negative]="content.gauge.negative"
                            [delimitersLabels]="content.gauge.delimitersLabels"
                            [needleValue]="stringToNumber(content.value)">
+            <span class="text-bold">{{ content.gauge.title }}</span>
           </app-gauge-chart>
         </ng-template>
       </div>

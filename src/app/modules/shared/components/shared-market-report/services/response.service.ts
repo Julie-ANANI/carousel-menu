@@ -14,11 +14,13 @@ import {LikertScaleChart} from '../../../../../models/executive-report';
 import {UmiusMultilingInterface} from '@umius/umi-common-component';
 import colorsAndNames from '../../../../../../../assets/json/likert-scale_executive-report.json';
 
-export const likertScaleThresholds = {
-  first: 2.25,
-  second: 2.93,
-  third: 3.63,
-  forth: 4.31
+export const likertScaleThresholds = function(threshold, nbCategories: number) {
+  const likertScaleThresholds = []
+  const interval = (nbCategories - threshold) / (nbCategories - 1);
+  for (let i = 0; i < nbCategories - 1; i++) {
+    likertScaleThresholds.push(threshold + interval * i);
+  }
+  return likertScaleThresholds;
 }
 
 @Injectable({ providedIn: 'root' })
@@ -545,19 +547,21 @@ export class ResponseService {
      * percentage.
      */
 
-    if (score < likertScaleThresholds.first) { //totally invalidated
+    const thresholds = likertScaleThresholds(2.25, 5);
+
+    if (score < thresholds[0]) { //totally invalidated
       index = 0;
-      percentage = (score / likertScaleThresholds.first) * multiplyPercentage;
-    } else if (likertScaleThresholds.first <= score && score < likertScaleThresholds.second) { // invalidated
+      percentage = score / thresholds[0] * multiplyPercentage;
+    } else if (thresholds[0] <= score && score < thresholds[1]) { // invalidated
       index = 1;
-      percentage = ((score - likertScaleThresholds.first) * multiplyPercentage) + 20;
-    } else if (2.93 <= likertScaleThresholds.second && score < likertScaleThresholds.third) { // uncertain
+      percentage = ((score - thresholds[0]) * multiplyPercentage) + 20;
+    } else if (thresholds[1] <= score && score < thresholds[2]) { // uncertain
       index = 2;
-      percentage = ((score - likertScaleThresholds.second) * multiplyPercentage) + 40;
-    } else if (3.63 <= likertScaleThresholds.third && score < likertScaleThresholds.forth) { // validated
+      percentage = ((score - thresholds[1]) * multiplyPercentage) + 40;
+    } else if (thresholds[2] <= score && score < thresholds[3]) { // validated
       index = 3;
-      percentage = ((score - likertScaleThresholds.third) * multiplyPercentage) + 60;
-    } else if (4.31 <= likertScaleThresholds.forth) { // totally validated
+      percentage = ((score - thresholds[2]) * multiplyPercentage) + 60;
+    } else { // totally validated
       index = 4;
       percentage = ((score / 5) * 100);
     }

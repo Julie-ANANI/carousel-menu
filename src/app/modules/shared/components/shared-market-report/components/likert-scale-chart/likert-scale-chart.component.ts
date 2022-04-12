@@ -1,8 +1,8 @@
-import {Component, Input, OnInit, OnDestroy} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {takeUntil} from 'rxjs/operators';
 import {Answer} from '../../../../../../models/answer';
-import {ResponseService} from '../../services/response.service';
+import {likertScaleThresholds, ResponseService} from '../../services/response.service';
 import {DataService} from '../../services/data.service';
 import {Question} from '../../../../../../models/question';
 import {Subject} from 'rxjs';
@@ -40,17 +40,39 @@ export class LikertScaleChartComponent implements OnInit, OnDestroy {
     averageFinalScore?: number
   };
 
+  private _likertScaleLabels = [ 'TOTALLY_INVALIDATED', 'INVALIDED', 'UNCERTAIN', 'VALIDATED', 'TOTALLY_VALIDATED']
+  private _likertScaleColors = [
+    `rgba(234,88,88,0.3)`,
+    `rgba(248,148,36,0.3)`,
+    `rgba(187,199,214,0.3)`,
+    `rgba(153,224,75,0.3)`,
+    `rgba(46,204,113,0.3)`
+  ]
+
+  private _gauge: { labels: any[]; delimiters: any[]; average: number; colors: any[] } = null;
+
   private _createChart() {
     this._dataService.getAnswers(this.question).pipe(takeUntil(this._ngUnsubscribe)).subscribe((answers: Array<Answer>) => {
       this._stackedChart = ResponseService.likertScaleChartData(answers, this.question, this.reportingLang);
 
+      // Get likert scale score
       this._graphics = ResponseService.getLikertScaleGraphicScore(this._stackedChart.averageFinalScore);
       this._content.name = this._graphics.name;
       this._content.color = this._graphics.color;
       this._content.score = this._graphics.score;
       this._content.visibility = true;
-      this._content.scoreRotate = this._graphics.scoreRotate;
-      });
+
+      // Full opacity in chart for likert scale score
+      const index = this._likertScaleLabels.findIndex(label => label === this._content.name)
+      this._likertScaleColors[index] = this._likertScaleColors[index].replace((0.3).toString(), '1')
+
+      this._gauge = {
+        average: 2.5,
+        colors: this._likertScaleColors,
+        labels: this._likertScaleLabels,
+        delimiters: likertScaleThresholds(2.25, 5)
+      };
+    });
   }
 
 
@@ -91,6 +113,9 @@ export class LikertScaleChartComponent implements OnInit, OnDestroy {
     return this._content;
   }
 
+  get gauge(): { labels: any[]; delimiters: any[]; average: number; colors: any[] } {
+    return this._gauge;
+  }
 
   ngOnDestroy(): void {
     this._ngUnsubscribe.next();
