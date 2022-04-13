@@ -38,6 +38,8 @@ import {MessageTemplate2Module} from '../../../../utility/messages/message-templ
 import {LangEntryPipeModule} from '../../../../../pipe/lang-entry/langEntryPipe.module';
 import {ModalModule, SidebarFullModule, TableModule} from '@umius/umi-common-component';
 import {MissionPipeModule} from '../../../../../pipe/mission/missionPipe.module';
+import {MissionQuestionPipeModule} from '../../../../../pipe/mission-question/missionQuestionPipe.module';
+import {UserPipeModule} from '../../../../../pipe/user/userPipe.module';
 
 @NgModule({
   imports: [
@@ -70,7 +72,9 @@ import {MissionPipeModule} from '../../../../../pipe/mission/missionPipe.module'
     ModalModule,
     TableModule,
     SidebarFullModule,
-    MissionPipeModule
+    MissionPipeModule,
+    MissionQuestionPipeModule,
+    UserPipeModule
   ],
   declarations: [
     ProjectComponent,

@@ -80,23 +80,20 @@ export class ProjectComponent implements OnInit, OnDestroy {
       });
 
       this._initCurrentTab();
+    }
+  }
 
-      this._innovationFrontService.innovation().pipe(takeUntil(this._ngUnsubscribe)).subscribe((innovation) => {
-        if (innovation && innovation._id) {
-          this._innovation = innovation;
-          this._verifyFollowUp();
-          this._initPageTitle();
+  private _initData() {
+    this._verifyFollowUp();
+    this._initPageTitle();
 
-          if (!!<Mission>this._innovation.mission && (<Mission>this._innovation.mission)._id) {
-            this._mission = <Mission>this._innovation.mission;
+    if (!!<Mission>this._innovation.mission && (<Mission>this._innovation.mission)._id) {
+      this._mission = <Mission>this._innovation.mission;
 
-            if (!MissionFrontService.hasMissionTemplate(this._mission)) {
-              this._iconClass = MissionFrontService.objectiveInfo(<Mission>this._mission, 'FONT_AWESOME_ICON');
-            }
+      if (!MissionFrontService.hasMissionTemplate(this._mission)) {
+        this._iconClass = MissionFrontService.objectiveInfo(<Mission>this._mission, 'FONT_AWESOME_ICON');
+      }
 
-          }
-        }
-      });
     }
   }
 
@@ -164,14 +161,25 @@ export class ProjectComponent implements OnInit, OnDestroy {
       }
 
       if (object === 'mission') {
+        if (!!update.data[field]['template']) {
+          this._innovation.mission['template'] = update.data[field]['template'];
+        }
+        if (!!update.data[field]['comment']) {
+          this._innovation.mission['objectiveComment'] = update.data[field]['comment'];
+        }
         this._innovation.mission[field] = update.data[field];
         isUpdated = true;
       }
     });
 
     if (isUpdated) {
-      this._innovationFrontService.setInnovation(JSON.parse(JSON.stringify(this._innovation)));
+      this._emitUpdatedInnovation();
+      this._initData();
     }
+  }
+
+  private _emitUpdatedInnovation() {
+    this._innovationFrontService.setInnovation(JSON.parse(JSON.stringify(this._innovation)));
   }
 
   /***
@@ -195,7 +203,9 @@ export class ProjectComponent implements OnInit, OnDestroy {
   private _getInnovation(projectId: string) {
     if (isPlatformBrowser(this._platformId)) {
       this._innovationService.get(projectId).pipe(first()).subscribe((innovation: Innovation) => {
-        this._innovationFrontService.setInnovation(innovation);
+        this._innovation = innovation;
+        this._emitUpdatedInnovation();
+        this._initData();
         if (!this._authService.user) {
           this._authService.initializeSession().pipe(first()).subscribe();
         }

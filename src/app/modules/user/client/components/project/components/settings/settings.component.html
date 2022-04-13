@@ -61,8 +61,8 @@
               <!-- PRINCIPAL_OBJECTIVE -->
               <div *ngSwitchCase="'PRINCIPAL_OBJECTIVE'">
                 <div class="text-md">
-                  <ng-container *ngIf="hasMissionTemplate; else oldPrincipal">
-                    {{ objectiveName(mission.template) }}
+                  <ng-container *ngIf="mission | mission:'hasMissionTemplate'; else oldPrincipal">
+                    {{ mission | mission:'objectiveName' }}
                   </ng-container>
                   <ng-template #oldPrincipal>
                     {{ mission.objective.principal[currentLang] }}
@@ -74,14 +74,14 @@
               <!-- SECONDARY_OBJECTIVE -->
               <div *ngSwitchCase="'SECONDARY_OBJECTIVE'">
 
-                <ng-container *ngIf="hasMissionTemplate || !!mission.objective.secondary.length">
+                <ng-container *ngIf="(mission | mission:'hasMissionTemplate') || !!mission.objective.secondary.length">
 
                   <!-- template -->
-                  <div *ngIf="templateComplementary.length > 0; else oldSecondary;" class="p-bottom-15">
+                  <div *ngIf="!!templateComplementary.length; else oldSecondary;" class="p-bottom-15">
                     <div
                       *ngFor="let objective of templateComplementary; let i = index;"
                       class="text-md p-bottom-2">
-                      {{i + 1}}. {{ objectiveName(objective) }}
+                      {{i + 1}}. {{ objective | missionQuestion:'objectiveName' }}
                     </div>
                   </div>
                   <!-- /template -->
@@ -169,7 +169,7 @@
               <!-- OWNER -->
               <div *ngSwitchCase="'OWNER'">
                 <div class="flex-wrap-wrap text-md flex-start">
-                  <span class="text-bold">{{ fullName(innovation.owner) }}</span>
+                  <span class="text-bold">{{ innovation.owner | user:'fullName' }}</span>
                   <ng-container *ngIf="!!(innovation.owner.company && innovation.owner.company.name)">
                     <span>&nbsp;•&nbsp;</span>
                     <span>{{ innovation.owner.company.name }}</span>
@@ -228,9 +228,9 @@
               <!-- OPERATOR -->
               <div *ngSwitchCase="'OPERATOR'">
 
-                <ng-container *ngIf="!!fullName(innovation.operator)">
+                <ng-container *ngIf="!!(innovation.operator | user:'fullName')">
                   <div class="flex-wrap-wrap text-md flex-start">
-                    <span class="text-bold">{{ fullName(innovation.operator) }}</span>
+                    <span class="text-bold">{{ innovation.operator | user:'fullName' }}</span>
                     <ng-container *ngIf="!!innovation.operator.phone">
                       <span>&nbsp;•&nbsp;</span>
                       <span>{{ innovation.operator.phone }}</span>
@@ -242,7 +242,7 @@
                   </div>
                 </ng-container>
 
-                <ng-container *ngIf="!fullName(innovation.operator)">
+                <ng-container *ngIf="!(innovation.operator | user:'fullName')">
                   <div class="text-md">{{ 'PROJECT_SETTINGS.NOT_ASSIGNED' | translate }}</div>
                 </ng-container>
 
@@ -252,9 +252,9 @@
               <!-- COMMERCIAL -->
               <div *ngSwitchCase="'COMMERCIAL'">
 
-                <ng-container *ngIf="!!fullName(clientProject.commercial)">
+                <ng-container *ngIf="!!(clientProject.commercial | user:'fullName')">
                   <div class="flex-wrap-wrap text-md flex-start">
-                    <span class="text-bold">{{ fullName(clientProject.commercial) }}</span>
+                    <span class="text-bold">{{ clientProject.commercial | user:'fullName' }}</span>
                     <ng-container *ngIf="!!clientProject.commercial.phone">
                       <span>&nbsp;•&nbsp;</span>
                       <span>{{ clientProject.commercial.phone }}</span>
@@ -266,7 +266,7 @@
                   </div>
                 </ng-container>
 
-                <ng-container *ngIf="!fullName(clientProject.commercial)">
+                <ng-container *ngIf="!(clientProject.commercial | user:'fullName')">
                   <div class="text-md">{{ 'PROJECT_SETTINGS.NOT_ASSIGNED' | translate }}</div>
                 </ng-container>
 
@@ -353,7 +353,8 @@
   *ngIf="activeModalSection.name && showModal"
   [(showModal)]="showModal"
   closeBtnClass="text-white"
-  [maxWidth]="activeModalSection.name === 'PRINCIPAL_OBJECTIVE' ? hasMissionTemplate ? '95%' : '963px' :
+  [maxWidth]="activeModalSection.name === 'PRINCIPAL_OBJECTIVE' ? (mission | mission:'hasMissionTemplate')
+  ? '95%' : '963px' :
   activeModalSection.name === 'SECONDARY_OBJECTIVE' ? '920px' : '640px'">
 
   <!-- body -->
@@ -363,7 +364,8 @@
     class="modal-body p-bottom-40">
 
     <!-- heading -->
-    <ng-container *ngIf="!(activeModalSection.name === 'PRINCIPAL_OBJECTIVE' && hasMissionTemplate)">
+    <ng-container
+      *ngIf="!(activeModalSection.name === 'PRINCIPAL_OBJECTIVE' && (mission | mission:'hasMissionTemplate') )">
       <h2 class="title is-4 text-white text-center text-bold m-bottom-50">
         {{ 'PROJECT_SETTINGS.HEADING.' + activeModalSection.name | translate }}
       </h2>
@@ -385,10 +387,10 @@
 
     <!-- SECONDARY_OBJECTIVE -->
     <ng-container *ngSwitchCase="'SECONDARY_OBJECTIVE'">
-      <ng-container *ngIf="hasMissionTemplate || isOldObjective">
+      <ng-container *ngIf="(mission | mission:'hasMissionTemplate')  || isOldObjective">
 
         <!-- template -->
-        <ng-container *ngIf="hasMissionTemplate; else oldSecondary;">
+        <ng-container *ngIf="(mission | mission:'hasMissionTemplate') ; else oldSecondary;">
           <div *ngIf="isFetchingTemplates" class="loading is-white"></div>
           <ng-container *ngIf="!isFetchingTemplates">
             <app-market-test-objectives-complementary
@@ -396,7 +398,7 @@
               [(objectiveComment)]="selectedValue['comment']"
               [selectedSectionsObjectives]="selectedValue['sections']"
               [templateSections]="definedTemplate.sections"
-              [template]="'TEMPLATE_2'">
+              template="TEMPLATE_2">
             </app-market-test-objectives-complementary>
           </ng-container>
         </ng-container>
@@ -464,7 +466,7 @@
     <ng-container *ngSwitchCase="'PRINCIPAL_OBJECTIVE'">
 
       <!-- template -->
-      <ng-container *ngIf="hasMissionTemplate; else oldPrincipalObjectives">
+      <ng-container *ngIf="(mission | mission:'hasMissionTemplate'); else oldPrincipalObjectives">
         <div *ngIf="isFetchingTemplates" class="loading is-white"></div>
         <ng-container *ngIf="!isFetchingTemplates">
           <app-market-test-objectives
@@ -520,8 +522,8 @@
     <!-- /COLLABORATORS -->
 
     <!-- checkbox for SECONDARY_OBJECTIVE | PRINCIPAL_OBJECTIVE -->
-    <ng-container *ngIf="!isFetchingTemplates && hasMissionTemplate && (activeModalSection.name ===
-    'PRINCIPAL_OBJECTIVE' || activeModalSection.name === 'SECONDARY_OBJECTIVE')">
+    <ng-container *ngIf="!isFetchingTemplates && (mission | mission:'hasMissionTemplate')
+    && (activeModalSection.name === 'PRINCIPAL_OBJECTIVE' || activeModalSection.name === 'SECONDARY_OBJECTIVE')">
       <div class="p-top-40 m-left-auto m-right-auto mxw-600">
         <label class="form-checkbox p-left-30">
           <input

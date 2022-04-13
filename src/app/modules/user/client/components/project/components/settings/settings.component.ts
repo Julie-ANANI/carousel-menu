@@ -19,7 +19,6 @@ import {User} from '../../../../../../../models/user.model';
 import {InnovCard} from '../../../../../../../models/innov-card';
 import {MissionFrontService} from '../../../../../../../services/mission/mission-front.service';
 import {isPlatformBrowser} from '@angular/common';
-import {UserFrontService} from '../../../../../../../services/user/user-front.service';
 import * as moment from 'moment';
 import {CommonService} from '../../../../../../../services/common/common.service';
 import {MissionQuestionService} from '../../../../../../../services/mission/mission-question.service';
@@ -111,27 +110,31 @@ export class SettingsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this._initValues();
+    if (isPlatformBrowser(this._platformId)) {
+      this._initValues();
 
-    this._innovationFrontService.innovation().pipe(takeUntil(this._ngUnsubscribe)).subscribe((innovation) => {
-      this._innovation = innovation || <Innovation>{};
+      this._innovationFrontService.innovation().pipe(takeUntil(this._ngUnsubscribe)).subscribe((innovation) => {
+        if (innovation && innovation._id) {
+          this._innovation = innovation;
 
-      if (<Mission>this._innovation.mission && (<Mission>this._innovation.mission)._id) {
-        this._mission = <Mission>this._innovation.mission;
-        this._initComplementary();
+          if (<Mission>this._innovation.mission && (<Mission>this._innovation.mission)._id) {
+            this._mission = <Mission>this._innovation.mission;
+            this._initComplementary();
 
-        if (this._mission.milestoneDates.length > 1) {
-          this._mission.milestoneDates = MissionFrontService.sortMilestoneDates(this._mission.milestoneDates);
+            if (this._mission.milestoneDates.length > 1) {
+              this._mission.milestoneDates = MissionFrontService.sortMilestoneDates(this._mission.milestoneDates);
+            }
+          }
+
+          if (<ClientProject>this._innovation.clientProject && (<ClientProject>this._innovation.clientProject)._id) {
+            this._clientProject = <ClientProject>this._innovation.clientProject;
+          }
+
+          this._getPendingCollaborators();
+          this._initSections();
         }
-      }
-
-      if (<ClientProject>this._innovation.clientProject && (<ClientProject>this._innovation.clientProject)._id) {
-        this._clientProject = <ClientProject>this._innovation.clientProject;
-      }
-
-      this._getPendingCollaborators();
-      this._initSections();
-    });
+      });
+    }
   }
 
   private _initComplementary() {
@@ -176,17 +179,15 @@ export class SettingsComponent implements OnInit, OnDestroy {
   private _getPendingCollaborators() {
     if (this._innovation._id && isPlatformBrowser(this._platformId) && this._getCollaborators) {
       this._getCollaborators = false;
-      this._innovationService.getPendingCollaborators(this._innovation._id)
-        .pipe(first())
-        .subscribe((response) => {
-          if (response && response.result && response.result.length) {
-            this._pendingCollaborators = response.result.map((_res) => _res.invitee_email);
-          }
-          }, (err: HttpErrorResponse) => {
-          this._getCollaborators = true;
-          this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
-          console.error(err);
-        });
+
+      this._innovationService.getPendingCollaborators(this._innovation._id).pipe(first()).subscribe((response) => {
+        if (response && response.result && response.result.length) {
+          this._pendingCollaborators = response.result.map((_res) => _res.invitee_email);
+        }
+        }, (err: HttpErrorResponse) => {
+        this._getCollaborators = true;
+        console.error(err);
+      });
     }
   }
 
@@ -220,14 +221,6 @@ export class SettingsComponent implements OnInit, OnDestroy {
       return _template._id === (this._mission.template && this._mission.template._id);
     });
     this._definedTemplate = template.length ? template[0] : <MissionTemplate>{};
-  }
-
-  /**
-   * name of the Commercial | Operator | Owner
-   * @param user
-   */
-  public fullName(user: User): string {
-    return UserFrontService.fullName(user);
   }
 
   /**
@@ -375,7 +368,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
   }
 
   /***
-   * when the user clicks the delete button. It opens the delete modal.
+   * when the user clicks the delete button. It opens to delete modal.
    * @param event
    * @param section
    * @param value
@@ -624,9 +617,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
    * @private
    */
   private _updateTemplate(data: any) {
-    this._missionService.updateTemplate(this._mission._id, data).pipe(first()).subscribe((innovation) => {
-      this._innovation.mission = innovation.mission;
-      this._innovationFrontService.setInnovation(this._innovation);
+    this._missionService.updateTemplate(this._mission._id, data).pipe(first()).subscribe((_) => {
       this.closeModal();
       this._initDefinedTemplate();
       this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.SAVED_TEXT');
@@ -661,9 +652,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
    * @private
    */
   private _updateMission(missionObj: { [P in keyof Mission]?: Mission[P]; }) {
-    this._missionService.save(this._mission._id, missionObj).pipe(first()).subscribe((mission) => {
-      this._innovation.mission = mission;
-      this._innovationFrontService.setInnovation(this._innovation);
+    this._missionService.save(this._mission._id, missionObj).pipe(first()).subscribe((_) => {
       this.closeModal();
       this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.SAVED_TEXT');
     }, (err: HttpErrorResponse) => {
@@ -674,9 +663,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
   }
 
   private _updateMainObjective(objective: any) {
-    this._missionService.updateMainObjective(this._mission._id, objective).pipe(first()).subscribe((innovation) => {
-      this._innovation.mission = innovation.mission;
-      this._innovationFrontService.setInnovation(this._innovation);
+    this._missionService.updateMainObjective(this._mission._id, objective).pipe(first()).subscribe((_) => {
       this.closeModal();
       this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.SAVED_TEXT');
     }, (err: HttpErrorResponse) => {
@@ -699,7 +686,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
           if (collaborator.usersAdded.length) {
             this._innovation.collaborators = this._innovation.collaborators.concat(collaborator.usersAdded);
-            this._innovationFrontService.setInnovation(this._innovation);
+            this._emitUpdatedInnovation();
             this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.COLLABORATORS_ADDED');
           }
 
@@ -754,7 +741,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
   /***
    * when the user selects the restitution date from the date-picker in the modal.
-   * updated on 3rd June, 2021
+   * updated on 3rd June 2021
    * @param event
    */
   public onChangeRestitutionDate(event: IMyDateModel) {
@@ -768,6 +755,10 @@ export class SettingsComponent implements OnInit, OnDestroy {
     if (this._activeModalSection.isEditable) {
       this._selectedValue = event;
     }
+  }
+
+  private _emitUpdatedInnovation() {
+    this._innovationFrontService.setInnovation(JSON.parse(JSON.stringify(this._innovation)));
   }
 
   private _removePendingCollaborator() {
@@ -796,7 +787,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
       .pipe(first())
       .subscribe((collaborators: Array<User>) => {
         this._innovation.collaborators = collaborators;
-        this._innovationFrontService.setInnovation(this._innovation);
+        this._emitUpdatedInnovation();
         this.closeModal();
         this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.COLLABORATOR_DELETED');
       }, (err: HttpErrorResponse) => {
@@ -815,7 +806,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
     if (this._innovation.innovationCards.length > 1) {
       this._innovationService.removeInnovationCard(this._innovation._id, card._id).pipe(first()).subscribe(() => {
         this._innovation.innovationCards = this._innovation.innovationCards.filter((value) => value._id !== card._id);
-        this._innovationFrontService.setInnovation(this._innovation);
+        this._emitUpdatedInnovation();
         this.closeModal();
         this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.SAVED_TEXT');
       }, (err: HttpErrorResponse) => {
@@ -966,7 +957,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
   }
 
   get hasMissionTemplate(): boolean {
-    return !!(this._mission.template && this._mission.template.entry && this._mission.template.entry.length);
+    return MissionFrontService.hasMissionTemplate(this._mission);
   }
 
   get isOldObjective(): boolean {
