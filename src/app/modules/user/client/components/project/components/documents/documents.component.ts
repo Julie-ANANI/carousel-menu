@@ -33,6 +33,10 @@ interface Document {
 
 export class DocumentsComponent implements OnInit, OnDestroy {
 
+  get isOwner(): boolean {
+    return this._isOwner;
+  }
+
   get ownerConsent(): boolean {
     return this._ownerConsent;
   }
@@ -84,6 +88,8 @@ export class DocumentsComponent implements OnInit, OnDestroy {
 
   private _ownerConsent = false;
 
+  private _isOwner = false;
+
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _innovationFrontService: InnovationFrontService,
               private _authService: AuthService,
@@ -97,12 +103,20 @@ export class DocumentsComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this._innovationFrontService.innovation().pipe(takeUntil(this._ngUnsubscribe)).subscribe((innovation) => {
-      this._innovation = innovation || <Innovation>{};
-      this._initDocuments();
-      this._anonymousXLSX = !!(this._innovation._metadata && this._innovation._metadata.campaign
-        && this._innovation._metadata.campaign.anonymous_answers);
-      this._verifyOwnerConsent();
+      if (innovation && innovation._id) {
+        this._innovation = innovation;
+        this._initDocuments();
+        this._anonymousXLSX = !!(this._innovation._metadata && this._innovation._metadata.campaign
+          && this._innovation._metadata.campaign.anonymous_answers);
+        this._verifyOwnerConsent();
+        this._verifyOwner();
+      }
     });
+  }
+
+  private _verifyOwner() {
+    this._isOwner = this._authService.isAdmin || (this._innovation.owner && (this.user.id === this._innovation.owner.id ||
+      this._innovation.collaborators.findIndex(col => col.id === this.user.id) > -1));
   }
 
   private _verifyOwnerConsent() {
@@ -166,16 +180,15 @@ export class DocumentsComponent implements OnInit, OnDestroy {
    */
   public toggleConsent(event: Event) {
     event.preventDefault();
-    if (this.isOwner) {
+    if (this._isOwner) {
       this._innovation.ownerConsent.value = !!(event.target as HTMLInputElement).checked;
-      this._innovationService.saveConsent(this._innovation._id, this._innovation.ownerConsent).pipe(first())
-        .subscribe((_) => {
-          this._verifyOwnerConsent();
+      this._innovationService.saveConsent(this._innovation._id, this._innovation.ownerConsent).pipe(first()).subscribe((_) => {
+        this._verifyOwnerConsent();
         }, (err: HttpErrorResponse) => {
-          this._innovation.ownerConsent.value = !this._innovation.ownerConsent.value;
-          this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
-          console.error(err);
-        });
+        this._innovation.ownerConsent.value = !this._innovation.ownerConsent.value;
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
+        console.error(err);
+      });
     }
   }
 
@@ -185,7 +198,7 @@ export class DocumentsComponent implements OnInit, OnDestroy {
    */
   public onClickShare(event: Event) {
     event.preventDefault();
-    if (!this._isLinkCopied && this.isOwner && this._ownerConsent) {
+    if (!this._isLinkCopied && this._isOwner && this._ownerConsent) {
       this._isGeneratingLink = true;
       this._innovationService.shareSynthesis(this._innovation._id).pipe(first()).subscribe((share) => {
         this._commonService.copyToClipboard(this._shareService.generateShareSynthesisUrl(share));
@@ -207,7 +220,7 @@ export class DocumentsComponent implements OnInit, OnDestroy {
    */
   public onClickXLSX(event: Event) {
     event.preventDefault();
-    if (!this._isGeneratingXLSX && this.isOwner && this._ownerConsent) {
+    if (!this._isGeneratingXLSX && this._isOwner && this._ownerConsent) {
       this._isGeneratingXLSX = true;
       const url = this._answerService.getExportUrl(this._innovation._id, true, this.userLang, this._anonymousXLSX);
       this._timeout = setTimeout(() => {
@@ -222,7 +235,7 @@ export class DocumentsComponent implements OnInit, OnDestroy {
    */
   public onClickPDF(event: Event) {
     event.preventDefault();
-    if (!this._isGeneratingPDF && this.isOwner && this._ownerConsent) {
+    if (!this._isGeneratingPDF && this._isOwner && this._ownerConsent) {
       this._isGeneratingPDF = true;
       const url = this._answerService.exportAsPDF(this._innovation._id, this.userLang);
       this._timeout = setTimeout(() => {
@@ -237,7 +250,7 @@ export class DocumentsComponent implements OnInit, OnDestroy {
    */
   public onClickReport(event: Event) {
     event.preventDefault();
-    if (!this._isGeneratingReport && this.isOwner && this._ownerConsent) {
+    if (!this._isGeneratingReport && this._isOwner && this._ownerConsent) {
       this._isGeneratingReport = true;
       const filename = this._innovation.name ? `UMI Executive report -
       ${this._innovation.name.slice(0, Math.min(13, this._innovation.name.length))}.pdf` : 'innovation_umi.pdf';
@@ -259,20 +272,11 @@ export class DocumentsComponent implements OnInit, OnDestroy {
    */
   public onClickContact(event: Event) {
     event.preventDefault();
-    if (this.isOwner && this._ownerConsent) {
+    if (this._isOwner && this._ownerConsent) {
       const clientProject = <ClientProject>this._innovation.clientProject;
       const email = clientProject && clientProject.commercial && clientProject.commercial.email || environment.commercialContact;
       window.open(ContactFrontService.commercialVideo(this._innovation, email, this.userLang), '_blank');
     }
-  }
-
-  /**
-   * This should return true also for the collaborators
-   */
-  get isOwner(): boolean {
-    return this._authService.isAdmin ||
-      (this._innovation.owner && (this.user.id === this._innovation.owner.id ||
-        this._innovation.collaborators.findIndex(col => col.id === this.user.id) > -1));
   }
 
   get user(): User {
