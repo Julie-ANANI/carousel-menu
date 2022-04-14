@@ -24,8 +24,10 @@ export class SynthesisComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this._innovationFrontService.innovation().pipe(takeUntil(this._ngUnsubscribe)).subscribe((innovation) => {
-      this._innovation = innovation || <Innovation>{};
-      this._previewMode = !!this._innovation.previewMode;
+      if (innovation && innovation._id) {
+        this._innovation = innovation;
+        this._previewMode = !!this._innovation.previewMode;
+      }
     });
   }
 
