@@ -2,7 +2,7 @@
 
   <!-- banner project message  -->
   <ng-container *ngIf="showBanner">
-    <app-utility-banner [(showBanner)]="showBanner" [background]="banner.background" [position]="'relative'">
+    <app-utility-banner [(showBanner)]="showBanner" [background]="banner.background" position="relative">
       {{ banner.message | translate }}
     </app-utility-banner>
   </ng-container>
@@ -150,7 +150,7 @@
 
   <!-- body -->
   <section class="modal-body p-bottom-40">
-    <h2 [ngSwitch]="{ 'color': '4C4C4C' }" class="title is-4 text-center text-bold m-bottom-50">
+    <h2 style="color: #4C4C4C" class="title is-4 text-center text-bold m-bottom-50">
       {{ 'PROJECT_SETUP.ADD_PROJECT_MODAL.HEADING' | translate }}
     </h2>
     <div class="mxw-550 m-right-auto m-left-auto">

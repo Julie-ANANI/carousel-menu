@@ -4,12 +4,7 @@ import {PitchHelpFields} from '../../../../../../../../../models/static-data/pro
 import {InnovationFrontService} from '../../../../../../../../../services/innovation/innovation-front.service';
 import {first, takeUntil} from 'rxjs/operators';
 import {MissionFrontService} from '../../../../../../../../../services/mission/mission-front.service';
-import {
-  Mission,
-  MissionQuestion,
-  MissionQuestionOption,
-  MissionTemplateSection
-} from '../../../../../../../../../models/mission';
+import {Mission} from '../../../../../../../../../models/mission';
 import {Subject} from 'rxjs';
 import {CardComment, CardSectionTypes, InnovCard, InnovCardSection} from '../../../../../../../../../models/innov-card';
 import {InnovationService} from '../../../../../../../../../services/innovation/innovation.service';
@@ -22,7 +17,6 @@ import {EtherpadFrontService} from '../../../../../../../../../services/etherpad
 import {isPlatformBrowser} from '@angular/common';
 import {EtherpadService} from '../../../../../../../../../services/etherpad/etherpad.service';
 import {MediaFrontService} from '../../../../../../../../../services/media/media-front.service';
-import {MissionQuestionService} from '../../../../../../../../../services/mission/mission-question.service';
 import {TranslateService} from '@ngx-translate/core';
 import {UmiusMediaInterface, UmiusModalMedia, UmiusSidebarInterface, UmiusVideoInterface} from '@umius/umi-common-component';
 
@@ -34,28 +28,43 @@ import {UmiusMediaInterface, UmiusModalMedia, UmiusSidebarInterface, UmiusVideoI
 export class PitchComponent implements OnInit, OnDestroy {
 
   private _ngUnsubscribe: Subject<any> = new Subject();
+
   private _activeCardIndex = 0;
+
   private _toBeSaved = false;
+
   private _isUploadingVideo = false;
+
   private _innovation: Innovation = <Innovation>{};
+
   private _activeSectionIndex = 0;
+
   private _sidebarValue: UmiusSidebarInterface = {
     animate_state: 'inactive'
   };
+
   private _isSaving = false;
+
   private _cardContent: any = '';
+
   private _activeSection: InnovCardSection = <InnovCardSection>{};
+
   private _sections: Array<InnovCardSection> = [];
+
   private _isRequesting = false;
+
   private _isSubmitting = false;
 
   private _showModal = false;
 
   private _isSendingMessage = false;
+
   private _preset: Preset = <Preset>{};
+
   private _newMessage = false;
+
   private _mission: Mission = <Mission>{};
-  private _authorisation: Array<string> = ['SOCIAL', 'UMI', 'COMMUNITY'];
+
   private _currentSectionComments: CollaborativeComment[] = [];
 
   private _modalMedia = false;
@@ -73,15 +82,20 @@ export class PitchComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this._innovationFrontService.innovation().pipe(takeUntil(this._ngUnsubscribe)).subscribe((innovation) => {
-      this._innovation = innovation;
-      if (this._innovation.preset) {
-        this._preset = this._innovation.preset;
+      if (innovation && innovation._id) {
+        this._innovation = innovation;
+
+        if (this._innovation.preset) {
+          this._preset = this._innovation.preset;
+        }
+
+        if (this._innovation.mission && (<Mission>this._innovation.mission)._id) {
+          this._mission = <Mission>this._innovation.mission;
+        }
+
+        this._initDefaultSections();
+        this._fetchCommentsOfSections();
       }
-      if (this._innovation.mission) {
-        this._mission = <Mission>this._innovation.mission;
-      }
-      this._initDefaultSections();
-      this._fetchCommentsOfSections();
     });
 
     this._innovationFrontService.activeCardIndex().pipe(takeUntil(this._ngUnsubscribe)).subscribe((cardIndex) => {
@@ -172,7 +186,7 @@ export class PitchComponent implements OnInit, OnDestroy {
 
   private _getPadAllComments() {
     this._etherpadService.getAllCommentsOfPad(
-      this.innovation._id,
+      this._innovation._id,
       this._etherpadFrontService.buildPadID('pitch', this._activeSection.etherpadElementId))
       .pipe(first())
       .subscribe((result) => {
@@ -184,18 +198,6 @@ export class PitchComponent implements OnInit, OnDestroy {
 
   public mediaSrc(media: UmiusMediaInterface) {
     return MediaFrontService.getMedia(media);
-  }
-
-  public sectionName(value: MissionTemplateSection): string {
-    return MissionQuestionService.entryInfo(value, this.activeInnovCard.lang)['name'];
-  }
-
-  public questionName(value: MissionQuestion): string {
-    return MissionQuestionService.entryInfo(value, this.activeInnovCard.lang)['label'];
-  }
-
-  public questionOptionName(value: MissionQuestionOption): string {
-    return MissionQuestionService.entryInfo(value, this.activeInnovCard.lang)['label'];
   }
 
   public onRequestProofreading(event: Event) {
@@ -432,9 +434,8 @@ export class PitchComponent implements OnInit, OnDestroy {
         message = 'ERROR.PROJECT.UPDATED_TEXT';
         break;
     }
-    this._innovationService.save(this._innovation._id, saveObject).pipe(first()).subscribe((innovation) => {
-      this._innovation.innovationCards = innovation.innovationCards;
-      this._innovationFrontService.setInnovation(this._innovation);
+
+    this._innovationService.save(this._innovation._id, saveObject).pipe(first()).subscribe((_) => {
       this._resetVariables();
       this._translateNotificationsService.success('ERROR.SUCCESS', message);
     }, (err: HttpErrorResponse) => {
@@ -457,6 +458,10 @@ export class PitchComponent implements OnInit, OnDestroy {
     this._isSendingMessage = false;
   }
 
+  private _emitUpdatedInnovation() {
+    this._innovationFrontService.setInnovation(JSON.parse(JSON.stringify(this._innovation)));
+  }
+
   private _uploadVideo(video: UmiusVideoInterface) {
     this._isUploadingVideo = true;
     this._innovationService.addNewMediaVideoToInnovationCard(this._innovation._id, this.activeInnovCard._id, video)
@@ -474,7 +479,7 @@ export class PitchComponent implements OnInit, OnDestroy {
           this._resetVariables();
         }
 
-        this._innovationFrontService.setInnovation(this._innovation);
+        this._emitUpdatedInnovation();
       }, (err: HttpErrorResponse) => {
         this._isUploadingVideo = false;
         this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
@@ -520,7 +525,7 @@ export class PitchComponent implements OnInit, OnDestroy {
   private _verifyPrincipal(deleteMedia: UmiusMediaInterface) {
     if (this.activeInnovCard.media.length === 0 && this.activeInnovCard.principalMedia && this.activeInnovCard.principalMedia._id) {
       this._innovation.innovationCards[this._activeCardIndex].principalMedia = null;
-      this._innovationFrontService.setInnovation(this._innovation);
+      this._emitUpdatedInnovation();
     } else if (this.activeInnovCard.principalMedia && this.activeInnovCard.principalMedia._id === deleteMedia._id
       && this.activeInnovCard.media && this.activeInnovCard.media[0]) {
       this._setMainMedia(this.activeInnovCard.media[0]);
@@ -531,11 +536,9 @@ export class PitchComponent implements OnInit, OnDestroy {
     return this._isUploadingVideo;
   }
 
-
   get selectedMedia(): UmiusModalMedia {
     return this._selectedMedia;
   }
-
 
   set modalMedia(value: boolean) {
     this._modalMedia = value;
@@ -552,13 +555,6 @@ export class PitchComponent implements OnInit, OnDestroy {
 
   get isEditable(): boolean {
     return this._innovation.status && (this._innovation.status === 'EDITING' || this._innovation.status === 'SUBMITTED');
-  }
-
-  /**
-   * return true if the mission has template in it.
-   */
-  get hasMissionTemplate(): boolean {
-    return MissionFrontService.hasMissionTemplate(this.mission);
   }
 
   get currentSectionComments(): any[] {
@@ -615,26 +611,21 @@ export class PitchComponent implements OnInit, OnDestroy {
     return this._cardContent;
   }
 
-
   get activeSection(): InnovCardSection {
     return this._activeSection;
   }
-
 
   get sections(): Array<InnovCardSection> {
     return this._sections;
   }
 
-
   get isRequesting(): boolean {
     return this._isRequesting;
   }
 
-
   get isSubmitting(): boolean {
     return this._isSubmitting;
   }
-
 
   get showModal(): boolean {
     return this._showModal;
@@ -644,33 +635,25 @@ export class PitchComponent implements OnInit, OnDestroy {
     this._showModal = value;
   }
 
-
   get isSendingMessage(): boolean {
     return this._isSendingMessage;
   }
-
 
   get preset(): Preset {
     return this._preset;
   }
 
-
   get newMessage(): boolean {
     return this._newMessage;
   }
 
-
   get mission(): Mission {
     return this._mission;
-  }
-
-
-  get authorisation(): Array<string> {
-    return this._authorisation;
   }
 
   ngOnDestroy(): void {
     this._ngUnsubscribe.next();
     this._ngUnsubscribe.complete();
   }
+
 }

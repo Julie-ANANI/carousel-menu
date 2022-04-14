@@ -40,6 +40,7 @@ import {ModalModule, SidebarFullModule, TableModule} from '@umius/umi-common-com
 import {MissionPipeModule} from '../../../../../pipe/mission/missionPipe.module';
 import {MissionQuestionPipeModule} from '../../../../../pipe/mission-question/missionQuestionPipe.module';
 import {UserPipeModule} from '../../../../../pipe/user/userPipe.module';
+import {CommonPipeModule} from '../../../../../pipe/common/commonPipe.module';
 
 @NgModule({
   imports: [
@@ -74,7 +75,8 @@ import {UserPipeModule} from '../../../../../pipe/user/userPipe.module';
     SidebarFullModule,
     MissionPipeModule,
     MissionQuestionPipeModule,
-    UserPipeModule
+    UserPipeModule,
+    CommonPipeModule
   ],
   declarations: [
     ProjectComponent,
