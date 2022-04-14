@@ -106,8 +106,7 @@ export class DocumentsComponent implements OnInit, OnDestroy {
       if (innovation && innovation._id) {
         this._innovation = innovation;
         this._initDocuments();
-        this._anonymousXLSX = !!(this._innovation._metadata && this._innovation._metadata.campaign
-          && this._innovation._metadata.campaign.anonymous_answers);
+        this._anonymousXLSX = InnovationFrontService.hasAnonymousAnswers(this._innovation);
         this._verifyOwnerConsent();
         this._verifyOwner();
       }
