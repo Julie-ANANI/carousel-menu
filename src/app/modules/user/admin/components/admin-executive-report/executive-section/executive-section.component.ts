@@ -223,6 +223,8 @@ export class ExecutiveSectionComponent {
   /***
    * available for the question type === 'radio' || 'checkbox'.
    * @private
+   * updated by Wei WANG
+   * Note: cancel auto-complete in input when we select progress-bar
    */
   private _setBarData() {
     if (this._section.questionIdentifier === `quesCustom_${this.sectionIndex}`) {
@@ -230,10 +232,8 @@ export class ExecutiveSectionComponent {
       this._section.content = this._executiveReportFrontService.barSection([], this.reportLang);
     } else {
       const question: Question | MissionQuestion = this._getQuestion(this._section.questionIdentifier);
-      const answers: Array<Answer> = this._responseService.answersToShow(this.answers, question);
-      const barsData: Array<BarData> = ResponseService.barsData(question, answers);
       this._section.title = MissionQuestionService.label(question, 'title', this.reportLang);
-      this._section.content = this._executiveReportFrontService.barSection(barsData, this.reportLang);
+      this._section.content = this._executiveReportFrontService.barSection([], this.reportLang);
     }
   }
 

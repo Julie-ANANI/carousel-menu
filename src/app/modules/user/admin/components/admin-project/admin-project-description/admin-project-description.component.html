@@ -1,15 +1,15 @@
-<div class="container fluid grid-2xl" id="admin-project-description">
+<div class="container fluid" id="admin-project-description">
   <div class="column col-sm-12 col-11 col-mx-auto p-top-30 p-bottom-30">
 
     <!-- notify team -->
-    <ng-container *ngIf="innovation.status === 'EDITING'">
+    <ng-container>
       <div class="text-center m-bottom-30">
         <button
           (click)="openModal($event, 'NOTIFY_TEAM')"
           [disabled]="isSendingNotification"
-          class="button  is-outlined"
+          class="button is-outlined"
           id="btn-notify-team">
-          Notify project team
+          <i class="fas fa-bell icon-left"></i> Notify project team
         </button>
       </div>
     </ng-container>
@@ -18,26 +18,27 @@
     <!-- sections dynamic -->
     <section
       *ngFor="let section of activeInnovCard.sections; let i=index;"
+      [ngClass]="{'has-border': i > 0}"
       [ngStyle]="{ 'animation-duration': ((i + 1) * 110) + 'ms' }"
-      class="animate-slide slide-down section-wrapper has-border">
-      <div class="section-body flex-d-column"
-           [ngClass]="{'flex-d-column': !showComment[i.toString(10)] && !showSuggestion[i.toString(10)]}">
+      class="animate-slide slide-down section-wrapper">
+      <div
+        [ngClass]="{'flex-d-column': !showComment[i.toString(10)] && !showSuggestion[i.toString(10)]}"
+        class="section-body flex-d-column">
 
         <!-- content -->
         <div class="section-content">
           <div class="form-group">
 
             <!-- label / actions -->
-            <div [ngStyle]="{'margin-bottom': isEditable ? '10px' : '11px'}" class="d-flex align-center flex-wrap-wrap">
+            <div class="d-flex align-center flex-wrap-wrap m-bottom-15">
 
               <div class="d-flex align-center flex-wrap-wrap title-wrapper m-no-bottom" style="min-width: 100%">
 
                 <label
-                  [id]="section.type.toUpperCase()+'-'+i + 1+'href'"
                   [for]="section.type+i"
-                  [ngClass]="innovation.innovationCards.length > 1 && isEditable ? 'm-right-10' : 'm-right-30'"
-                  class="form-label">
-                  <span class="shape is-rounded bg-draft text-white">{{ i + 1 }}</span>
+                  [id]="section.type.toUpperCase()+'-'+i + 1+'href'"
+                  class="form-label m-right-20">
+                  <span class="shape is-rounded bg-draft text-sm text-white">{{ i + 1 }}</span>
                   <ng-container *ngIf="!isEditable">{{ section.title }}</ng-container>
                   <ng-container *ngIf="isEditable">
                     <input
@@ -52,56 +53,55 @@
 
                 <!-- edit-preview button -->
                 <button
-                  *ngIf=" isEditable"
+                  *ngIf="isEditable"
                   [attr.data-tooltip]="!(getPadPreviewMode(i.toString()))? 'Preview':'Edit'"
                   (click)="padPreviewModeOnChange(i.toString())"
-                  class="button tooltip is-circled is-action is-outlined text-no-underline is-info
-                  m-right-15 is-xs text-sm op-text text-meta"
+                  class="button tooltip is-circled is-outlined text-no-underline m-right-15 is-xs text-sm"
                   type="button">
-                  <i class="fas fa-pencil-alt"
-                     *ngIf="getPadPreviewMode(i.toString())"></i>
-                  <i class="fas fa-eye" *ngIf="!getPadPreviewMode(i.toString())"></i>
+                  <i *ngIf="getPadPreviewMode(i.toString())" class="fas fa-pencil-alt"></i>
+                  <i *ngIf="!getPadPreviewMode(i.toString())" class="fas fa-eye"></i>
                 </button>
                 <!-- /edit-preview button -->
 
                 <div class="d-flex align-center justify-center m-left-auto">
-                  <a class="button is-link is-xs p-1 m-no" style="min-width: unset"
-                     (click)="onShowComment($event,  i.toString(10))"
-                     [ngClass]="{'is-draft': !showComment[i.toString(10)],
-                        'is-warning': showComment[i.toString(10)]}">Comment</a>
 
-                  <a class="button is-link is-xs m-left-15 p-1 m-no" style="min-width: unset"
-                     (click)="onShowSuggestion($event,  i.toString(10))"
-                     [ngClass]="{'is-draft': !showSuggestion[i.toString(10)],
-                        'is-warning': showSuggestion[i.toString(10)]}">Suggestion</a>
+                  <a
+                    (click)="onShowComment($event,  i.toString(10))"
+                    [ngClass]="{'is-draft': !showComment[i.toString(10)]}"
+                    class="button is-link text-medium is-sm p-1 m-no has-no-min-width">
+                    Comment
+                  </a>
+
+                  <a
+                    (click)="onShowSuggestion($event,  i.toString(10))"
+                    [ngClass]="{'is-draft': !showSuggestion[i.toString(10)]}"
+                    class="button is-link text-medium is-sm p-1 m-no has-no-min-width">
+                    Suggestion
+                  </a>
+
                   <!-- visibility -->
                   <div
                     *ngIf="isEditable"
                     (click)="toggleVisibility($event, i)"
                     [ngClass]="{'m-right-15': section.type === 'OTHER'}"
                     class="icon-container is-overlay">
-                <span class="tooltip" [attr.data-tooltip]="section.visibility ? 'Hide section' : 'Unhide section'">
-                  <i [ngClass]="section.visibility ? 'fas fa-eye' : 'fas fa-eye-slash'" class="text-alert"></i>
-                </span>
+                    <span [attr.data-tooltip]="section.visibility ? 'Hide section' : 'Un-hide section'" class="tooltip">
+                      <i [ngClass]="section.visibility ? 'fas fa-eye' : 'fas fa-eye-slash'" class="text-alert"></i>
+                    </span>
                   </div>
                   <!-- /visibility -->
 
                   <!-- delete -->
                   <div
-                    *ngIf="isEditable && section.type === 'OTHER'"
                     (click)="openModal($event, 'DELETE_SECTION', i)"
+                    *ngIf="isEditable && section.type === 'OTHER'"
                     class="icon-container is-overlay">
-                <span class="tooltip" data-tooltip="Delete section">
-                  <i class="text-alert icon icon-delete"></i>
-                </span>
+                    <span class="tooltip" data-tooltip="Delete section">
+                      <i class="text-alert icon icon-delete"></i>
+                    </span>
                   </div>
                   <!-- /delete -->
 
-                  <!--                  <div class="label is-primary is-sm tooltip"-->
-                  <!--                       data-tooltip="comment & suggestion"-->
-                  <!--                       style="cursor: pointer"-->
-                  <!--                       (click)="onToggleCommentSuggestion($event, i.toString(10))">UMI-->
-                  <!--                  </div>-->
                 </div>
 
               </div>
@@ -109,110 +109,124 @@
             </div>
             <!-- /label / actions -->
 
+            <app-shared-editors
+              [hidden]="!isEditable || getPadPreviewMode(i.toString())"
+              [isEditable]="isEditable"
+              (textChange)="onContentChange($event, 'sections', i)"
+              [text]="section.content"
+              [innovationId]="innovation._id"
+              [elementId]="section.etherpadElementId || section.type.toLowerCase()+'-'+i + 1 + '-' + currentLang"
+              [type]="'pitch'">
+            </app-shared-editors>
 
-            <div *ngIf="isEditable && !getPadPreviewMode(i.toString())">
-              <app-shared-editors
-                [isEditable]="isEditable"
-                (textChange)="onContentChange($event, 'sections', i)"
-                [text]="section.content"
-                [innovationId]="innovation._id"
-                [elementId]="section.etherpadElementId || section.type.toLowerCase()+'-'+i + 1 + '-' + currentLang"
-                [type]="'pitch'">
-              </app-shared-editors>
-            </div>
+            <ng-container *ngIf="getPadPreviewMode(i.toString())">
+              <div [innerHTML]="activeInnovCard.sections[i].content | cleanHtml" class="pad-preview-mode"></div>
+            </ng-container>
 
-            <div *ngIf="getPadPreviewMode(i.toString())"
-                 class="width-100 mce-tinymce pad-preview-mode text-15"
-                 [innerHTML]="activeInnovCard.sections[i].content | cleanHtml">
-            </div>
-
-            <p *ngIf="!isEditable" [innerHTML]="section.content" class="text-15"></p>
+            <ng-container *ngIf="!isEditable">
+              <p [innerHTML]="section.content" class="text-15"></p>
+            </ng-container>
 
           </div>
         </div>
         <!-- /content -->
 
         <!-- suggestion / comments -->
-        <div class="section-suggestion">
+        <div *ngIf="showComment[i.toString(10)] || showSuggestion[i.toString(10)]" class="section-suggestion">
 
           <!-- comment -->
-          <div class="m-bottom-25"
-               *ngIf="showComment[i.toString(10)]"
-               [id]="section.type.toUpperCase()+'-'+i + 1+'href-comment'">
-            <div class="d-flex align-center">
-              <div
-                (click)="onToggleComment($event, i.toString(10))"
-                class="icon-container is-sm is-overlay m-right-1">
-                <i
-                  [ngClass]="toggleComment[i.toString(10)] ? 'icon icon-arrow-up' : 'icon icon-arrow-down'"
-                  class="c-hand text-primary text-15">
-                </i>
+          <ng-container *ngIf="showComment[i.toString(10)]">
+            <div [id]="section.type.toUpperCase()+'-'+i + 1+'href-comment'" class="m-bottom-20">
+
+              <!-- toggle button -->
+              <div (click)="onToggleComment($event, i.toString(10))" class="d-inline-flex align-center c-hand">
+                <div class="icon-container is-sm is-overlay m-right-1">
+                  <i
+                    [ngClass]="toggleComment[i.toString(10)] ? 'icon icon-arrow-up' : 'icon icon-arrow-down'"
+                    class="text-primary">
+                  </i>
+                </div>
+                <span class="text-medium">Comment</span>
               </div>
-              <span (click)="onToggleComment($event, i.toString(10))" class="spec-text-op">Comment</span>
+              <!-- /toggle button -->
+
+              <!-- text -->
+              <div class="m-top-20">
+
+                <div
+                  [hidden]="!isEditableComment"
+                  [ngClass]="{'is-hidden': !toggleComment[i.toString(10)]}"
+                  class="box-shadow">
+                  <app-shared-editor-tinymce
+                    (onTextChange)="onCommentChange($event, 'sections', 'comment', i,
+                    section.type, section.etherpadElementId)"
+                    [data]="zoneData('sections', 'comment', section.type, section.etherpadElementId)"
+                    [id]="section.type.toLowerCase()+'-'+i + 1+'-comment'">
+                  </app-shared-editor-tinymce>
+                </div>
+
+                <ng-container *ngIf="!isEditableComment">
+                  <div [ngClass]="{'is-hidden': !toggleComment[i.toString(10)]}" class="comment-text">
+                    <p
+                      [innerHTML]="zoneData('sections', 'comment', section.type, section.etherpadElementId)">
+                    </p>
+                  </div>
+                </ng-container>
+
+              </div>
+              <!-- /text -->
+
             </div>
-            <div class="m-top-20">
-              <div
-                [hidden]="!isEditableComment"
-                [ngClass]="{'is-hidden': !toggleComment[i.toString(10)]}"
-                class="box-shadow">
-                <app-shared-editor-tinymce
-                  (onTextChange)="onCommentChange($event, 'sections', 'comment', i,
-                  section.type, section.etherpadElementId)"
-                  [data]="zoneData('sections', 'comment', section.type, section.etherpadElementId)"
-                  [id]="section.type.toLowerCase()+'-'+i + 1+'-comment'">
-                </app-shared-editor-tinymce>
-              </div>
-              <div
-                *ngIf="!isEditableComment"
-                [ngClass]="{'is-hidden': !toggleComment[i.toString(10)]}"
-                class="message">
-                <p
-                  [innerHTML]="zoneData('sections', 'comment', section.type, section.etherpadElementId)"
-                  class="message-body">
-                </p>
-              </div>
-            </div>
-          </div>
+          </ng-container>
           <!-- /comment -->
 
           <!-- suggestion -->
-          <div *ngIf="showSuggestion[i.toString(10)]">
-            <div class="d-flex align-center">
-              <div
-                (click)="onToggleSuggestion($event, i.toString(10))"
-                class="icon-container is-sm is-overlay m-right-1">
-                <i
-                  [ngClass]="toggleSuggestion[i.toString(10)] ? 'icon icon-arrow-up' : 'icon icon-arrow-down'"
-                  class="c-hand text-primary text-15">
-                </i>
+          <ng-container *ngIf="showSuggestion[i.toString(10)]">
+            <div [id]="section.type.toUpperCase()+'-'+i + 1+'href-suggestion'">
+
+              <!-- toggle button -->
+              <div (click)="onToggleSuggestion($event, i.toString(10))" class="d-inline-flex align-center c-hand">
+                <div class="icon-container is-sm is-overlay m-right-1">
+                  <i
+                    [ngClass]="toggleSuggestion[i.toString(10)] ? 'icon icon-arrow-up' : 'icon icon-arrow-down'"
+                    class="text-primary">
+                  </i>
+                </div>
+                <span class="text-medium">Suggestion</span>
               </div>
-              <span (click)="onToggleSuggestion($event, i.toString(10))" class="spec-text-op">Suggestion</span>
+              <!-- /toggle button -->
+
+              <!-- text -->
+              <div class="m-top-20">
+
+                <div
+                  [hidden]="!isEditableComment"
+                  [ngClass]="{'is-hidden': !toggleSuggestion[i.toString(10)]}"
+                  class="box-shadow">
+                  <app-shared-editors
+                    (textChange)="onCommentChange($event, 'sections', 'suggestion', i,
+                    section.type, section.etherpadElementId)"
+                    [isEditable]="isEditableComment"
+                    [text]="zoneData('sections', 'suggestion', section.type, section.etherpadElementId)"
+                    [innovationId]="innovation._id"
+                    [elementId]="section.etherpadElementId || section.type.toLowerCase()+'-'+i + 1 + '-' + currentLang"
+                    type="suggestion">
+                  </app-shared-editors>
+                </div>
+
+                <ng-container *ngIf="!isEditableComment">
+                  <div [ngClass]="{'is-hidden': !toggleSuggestion[i.toString(10)]}" class="comment-text">
+                    <p
+                      [innerHTML]="zoneData('sections', 'suggestion', section.type, section.etherpadElementId)">
+                    </p>
+                  </div>
+                </ng-container>
+
+              </div>
+              <!-- /text -->
+
             </div>
-            <div class="m-top-20">
-              <div
-                *ngIf="isEditableComment"
-                [ngClass]="{'is-hidden': !toggleSuggestion[i.toString(10)]}">
-                <app-shared-editors
-                  [isEditable]="isEditableComment"
-                  (textChange)="onCommentChange($event, 'sections', 'suggestion', i,
-                  section.type, section.etherpadElementId)"
-                  [text]="zoneData('sections', 'suggestion', section.type, section.etherpadElementId)"
-                  [innovationId]="innovation._id"
-                  [elementId]="section.etherpadElementId || section.type.toLowerCase()+'-'+i + 1 + '-' + currentLang"
-                  [type]="'suggestion'">
-                </app-shared-editors>
-              </div>
-              <div
-                *ngIf="!isEditableComment"
-                [ngClass]="{'is-hidden': !toggleSuggestion[i.toString(10)]}"
-                class="message">
-                <p
-                  [innerHTML]="zoneData('sections', 'suggestion', section.type, section.etherpadElementId)"
-                  class="message-body">
-                </p>
-              </div>
-            </div>
-          </div>
+          </ng-container>
           <!-- /suggestion -->
 
         </div>
@@ -223,22 +237,19 @@
     <!-- /sections dynamic -->
 
     <!-- add new section -->
-    <section *ngIf="isEditable" class="section-wrapper text-center has-border p-bottom-50">
+    <section *ngIf="isEditable" class="text-center section__add">
       <button
         (click)="openModal($event, 'NEW_SECTION')"
-        class="button is-primary is-lg"
+        class="button is-info is-lg"
         type="button">
-        Add new section
+        <i class="fas fa-plus-circle icon-left text-lg"></i> Add a new section
       </button>
     </section>
     <!-- /add new section -->
 
     <!-- section title -->
-    <section
-      style="animation-duration: 100ms"
-      class="animate-slide slide-down section-wrapper p-top-20">
-      <div class="section-body"
-           [ngClass]="{'flex-d-column': !showComment['title'] && !showSuggestion['title']}">
+    <section class="animate-slide slide-down section-wrapper" style="animation-duration: 100ms">
+      <div [ngClass]="{'flex-d-column': !showComment['title'] && !showSuggestion['title']}" class="section-body">
 
         <!-- content -->
         <div class="section-content">
@@ -246,131 +257,155 @@
 
             <div class="d-flex align-center flex-wrap-wrap title-wrapper" style="min-width: 100%">
 
-              <label
-                id="project-title-href"
-                [ngClass]="{'m-right-10': innovation.innovationCards.length > 1 && isEditable}"
-                class="form-label"
-                for="project-title">
-                <span class="shape is-rounded bg-draft text-white">{{activeInnovCard.sections.length + 1}}</span>Title
+              <label class="form-label m-right-20" for="project-title" id="project-title-href">
+                <span class="shape is-rounded bg-draft text-sm text-white">
+                  {{activeInnovCard.sections.length + 1}}
+                </span>
+                Title
               </label>
 
               <!-- edit-preview button -->
               <button
-                *ngIf=" isEditable"
-                [attr.data-tooltip]="!(getPadPreviewMode('title'))? 'Preview':'Edit'"
                 (click)="padPreviewModeOnChange('title')"
-                class="button tooltip is-circled is-action is-outlined text-no-underline is-info is-xs text-sm op-text text-meta m-left-20"
+                *ngIf="isEditable"
+                [attr.data-tooltip]="!(getPadPreviewMode('title'))? 'Preview':'Edit'"
+                class="button tooltip is-circled is-outlined text-no-underline m-right-15 is-xs text-sm"
                 type="button">
-                <i class="fas fa-pencil-alt"
-                   *ngIf="getPadPreviewMode('title')"></i>
-                <i class="fas fa-eye" *ngIf="!getPadPreviewMode('title')"></i>
+                <i *ngIf="getPadPreviewMode('title')" class="fas fa-pencil-alt"></i>
+                <i *ngIf="!getPadPreviewMode('title')" class="fas fa-eye"></i>
               </button>
+              <!-- edit-preview button -->
 
               <div class="d-flex justify-start align-center m-left-auto">
-                <a class="button is-link is-xs p-1 m-no" style="min-width: unset"
-                        (click)="onShowComment($event,  'title')"
-                        [ngClass]="{'is-draft': !showComment['title'],
-                        'is-primary': showComment['title']}">Comment</a>
-
-                <a class="button is-link is-xs m-left-15 p-1 m-no" style="min-width: unset"
-                        (click)="onShowSuggestion($event,  'title')"
-                        [ngClass]="{'is-draft': !showSuggestion['title'],
-                        'is-primary': showSuggestion['title']}">Suggestion</a>
+                <a
+                  (click)="onShowComment($event,  'title')"
+                  [ngClass]="{'is-draft': !showComment['title']}"
+                  class="button is-link text-medium is-sm p-1 m-no has-no-min-width">
+                  Comment
+                </a>
+                <a
+                  (click)="onShowSuggestion($event,  'title')"
+                  [ngClass]="{'is-draft': !showSuggestion['title']}"
+                  class="button is-link text-medium is-sm p-1 m-no has-no-min-width">
+                  Suggestion
+                </a>
               </div>
-
-              <!-- /edit-preview button -->
-
-              <!--              <div class="label is-primary is-sm tooltip m-left-auto"-->
-              <!--                   data-tooltip="comment & suggestion"-->
-              <!--                   style="cursor: pointer"-->
-              <!--                   (click)="onToggleCommentSuggestion($event, 'title')">UMI-->
-              <!--              </div>-->
 
             </div>
 
             <app-shared-editors
+              [hidden]="!isEditable || getPadPreviewMode('title')"
               id="project-title"
-              *ngIf="isEditable && !getPadPreviewMode('title')"
               (textChange)="onContentChange($event, 'title')"
               [text]="activeInnovCard.title"
               [innovationId]="innovation._id"
               [elementId]="'title-' + currentLang"
-              [type]="'pitch'"
+              type="pitch"
               [isEditable]="isEditable">
             </app-shared-editors>
 
-            <div *ngIf="getPadPreviewMode('title')"
-                 class="width-100 mce-tinymce pad-preview-mode text-15" [innerHTML]="activeInnovCard.title | cleanHtml">
-            </div>
+            <ng-container *ngIf="getPadPreviewMode('title')">
+              <div [innerHTML]="activeInnovCard.title | cleanHtml" class="pad-preview-mode"></div>
+            </ng-container>
 
-            <p *ngIf="!isEditable" [innerHTML]="activeInnovCard.title" class="text-15"></p>
+            <ng-container *ngIf="!isEditable">
+              <p [innerHTML]="activeInnovCard.title" class="text-15"></p>
+            </ng-container>
 
           </div>
         </div>
         <!-- /content -->
 
         <!-- suggestion / comments -->
-        <div class="section-suggestion">
+        <div *ngIf="showComment['title'] || showSuggestion['title']" class="section-suggestion">
 
           <!-- comment -->
-          <div class="m-bottom-25"
-               *ngIf="showComment['title']"
-               [id]="'project-title-href-comment'">
-            <div class="d-flex align-center">
-              <div (click)="onToggleComment($event, 'title')" class="icon-container is-sm is-overlay m-right-1">
-                <i
-                  [ngClass]="toggleComment.title ? 'icon icon-arrow-up' : 'icon icon-arrow-down'"
-                  class="c-hand text-primary text-15">
-                </i>
+          <ng-container *ngIf="showComment['title']">
+            <div [id]="'project-title-href-comment'" class="m-bottom-20">
+
+              <!-- toggle button -->
+              <div (click)="onToggleComment($event, 'title')" class="d-inline-flex align-center c-hand">
+                <div class="icon-container is-sm is-overlay m-right-1">
+                  <i
+                    [ngClass]="toggleComment['title'] ? 'icon icon-arrow-up' : 'icon icon-arrow-down'"
+                    class="text-primary">
+                  </i>
+                </div>
+                <span class="text-medium">Comment</span>
               </div>
-              <span (click)="onToggleComment($event, 'title')" class="spec-text-op">Comment</span>
+              <!-- /toggle button -->
+
+              <!-- text -->
+              <div class="m-top-20">
+
+                <div
+                  [hidden]="!isEditableComment"
+                  [ngClass]="{'is-hidden': !toggleComment['title']}"
+                  class="box-shadow">
+                  <app-shared-editor-tinymce
+                    (onTextChange)="onCommentChange($event, 'title', 'comment')"
+                    [data]="zoneData('title', 'comment')"
+                    id="title-comment">
+                  </app-shared-editor-tinymce>
+                </div>
+
+                <ng-container *ngIf="!isEditableComment">
+                  <div [ngClass]="{'is-hidden': !toggleComment.title}" class="comment-text">
+                    <p [innerHTML]="zoneData('title', 'comment')"></p>
+                  </div>
+                </ng-container>
+
+              </div>
+              <!-- /text -->
+
             </div>
-            <div class="m-top-20">
-              <div [hidden]="!isEditableComment" [ngClass]="{'is-hidden': !toggleComment.title}" class="box-shadow">
-                <app-shared-editor-tinymce
-                  (onTextChange)="onCommentChange($event, 'title', 'comment')"
-                  [data]="zoneData('title', 'comment')"
-                  id="title-comment">
-                </app-shared-editor-tinymce>
-              </div>
-              <div *ngIf="!isEditableComment" [ngClass]="{'is-hidden': !toggleComment.title}" class="message">
-                <p [innerHTML]="zoneData('title', 'comment')" class="message-body"></p>
-              </div>
-            </div>
-          </div>
+          </ng-container>
           <!-- /comment -->
 
           <!-- suggestion -->
-          <div
-            *ngIf="showSuggestion['title']"
-            [id]="'project-title-href-suggestion'">
-            <div class="d-flex align-center">
-              <div
-                (click)="onToggleSuggestion($event, 'title')"
-                class="icon-container is-sm is-overlay m-right-1">
-                <i
-                  [ngClass]="toggleSuggestion.title ? 'icon icon-arrow-up' : 'icon icon-arrow-down'"
-                  class="c-hand text-primary text-15">
-                </i>
+          <ng-container *ngIf="showSuggestion['title']">
+            <div [id]="'project-title-href-suggestion'">
+
+              <!-- toggle button -->
+              <div (click)="onToggleSuggestion($event, 'title')" class="d-inline-flex align-center c-hand">
+                <div class="icon-container is-sm is-overlay m-right-1">
+                  <i
+                    [ngClass]="toggleSuggestion['title'] ? 'icon icon-arrow-up' : 'icon icon-arrow-down'"
+                    class="text-primary">
+                  </i>
+                </div>
+                <span class="text-medium">Suggestion</span>
               </div>
-              <span (click)="onToggleSuggestion($event, 'title')" class="spec-text-op">Suggestion</span>
+              <!-- /toggle button -->
+
+              <!-- text -->
+              <div class="m-top-20">
+
+                <div
+                  [hidden]="!isEditableComment"
+                  [ngClass]="{'is-hidden': !toggleSuggestion['title']}"
+                  class="box-shadow">
+                  <app-shared-editors
+                    [isEditable]="isEditableComment"
+                    (textChange)="onCommentChange($event, 'title', 'suggestion')"
+                    [text]="zoneData('title', 'suggestion')"
+                    [innovationId]="innovation._id"
+                    [elementId]="'title-' + currentLang"
+                    type="suggestion">
+                  </app-shared-editors>
+                </div>
+
+                <ng-container *ngIf="!isEditableComment">
+                  <div [ngClass]="{'is-hidden': !toggleSuggestion.title}" class="comment-text">
+                    <p [innerHTML]="zoneData('title', 'suggestion')"></p>
+                  </div>
+                </ng-container>
+
+              </div>
+              <!-- /text -->
+
             </div>
-            <div class="m-top-20">
-              <div *ngIf="isEditableComment" [ngClass]="{'is-hidden': !toggleSuggestion.title}">
-                <app-shared-editors
-                  [isEditable]="isEditableComment"
-                  (textChange)="onCommentChange($event, 'title', 'suggestion')"
-                  [text]="zoneData('title', 'suggestion')"
-                  [innovationId]="innovation._id"
-                  [elementId]="'title-' + currentLang"
-                  [type]="'suggestion'">
-                </app-shared-editors>
-              </div>
-              <div *ngIf="!isEditableComment" [ngClass]="{'is-hidden': !toggleSuggestion.title}" class="message">
-                <p [innerHTML]="zoneData('title', 'suggestion')" class="message-body"></p>
-              </div>
-            </div>
-          </div>
+          </ng-container>
           <!-- /suggestion -->
 
         </div>
@@ -381,9 +416,8 @@
     <!-- /section title -->
 
     <!-- section summary -->
-    <section style="animation-duration: 220ms" class="animate-slide slide-down has-border section-wrapper">
-      <div class="section-body"
-           [ngClass]="{'flex-d-column': !showComment['summary'] && !showSuggestion['summary']}">
+    <section class="animate-slide slide-down section-wrapper has-border" style="animation-duration: 220ms">
+      <div [ngClass]="{'flex-d-column': !showComment['summary'] && !showSuggestion['summary']}" class="section-body">
 
         <!-- content -->
         <div class="section-content">
@@ -391,153 +425,176 @@
 
             <div class="d-flex align-center flex-wrap-wrap title-wrapper" style="min-width: 100%">
 
-              <label
-                id="project-summary-href"
-                [ngClass]="{'m-right-10': innovation.innovationCards.length > 1 && isEditable}"
-                class="form-label"
-                for="project-summary">
-                <span class="shape is-rounded bg-draft text-white">{{activeInnovCard.sections.length + 2}}</span>Summary
+              <label class="form-label m-right-20" for="project-title" id="project-summary-href">
+                <span class="shape is-rounded bg-draft text-sm text-white">
+                  {{activeInnovCard.sections.length + 2}}
+                </span>
+                Summary
               </label>
 
               <!-- edit-preview button -->
               <button
+                (click)="padPreviewModeOnChange('summary')"
                 *ngIf="isEditable"
                 [attr.data-tooltip]="!(getPadPreviewMode('summary'))? 'Preview':'Edit'"
-                (click)="padPreviewModeOnChange('summary')"
-                class="button tooltip is-circled is-action is-outlined text-no-underline is-info is-xs text-sm op-text text-meta m-left-15"
+                class="button tooltip is-circled is-outlined text-no-underline m-right-15 is-xs text-sm"
                 type="button">
-                <i class="fas fa-pencil-alt"
-                   *ngIf="getPadPreviewMode('summary')"></i>
-                <i class="fas fa-eye" *ngIf="!getPadPreviewMode('summary')"></i>
+                <i *ngIf="getPadPreviewMode('summary')" class="fas fa-pencil-alt"></i>
+                <i *ngIf="!getPadPreviewMode('summary')" class="fas fa-eye"></i>
               </button>
-              <!-- /edit-preview button -->
+              <!-- edit-preview button -->
 
               <div class="d-flex justify-start align-center m-left-auto">
-                <a class="button is-link is-xs p-1 m-no" style="min-width: unset"
-                        (click)="onShowComment($event,  'summary')"
-                        [ngClass]="{'is-draft': !showComment['summary'],
-                        'is-primary': showComment['summary']}">Comment</a>
-
-                <a class="button is-link is-xs m-left-15 p-1 m-no" style="min-width: unset"
-                        (click)="onShowSuggestion($event,  'summary')"
-                        [ngClass]="{'is-draft': !showSuggestion['summary'],
-                        'is-primary': showSuggestion['summary']}">Suggestion</a>
+                <a
+                  (click)="onShowComment($event,  'summary')"
+                  [ngClass]="{'is-draft': !showComment['summary']}"
+                  class="button is-link text-medium is-sm p-1 m-no has-no-min-width">
+                  Comment
+                </a>
+                <a
+                  (click)="onShowSuggestion($event,  'summary')"
+                  [ngClass]="{'is-draft': !showSuggestion['summary']}"
+                  class="button is-link text-medium is-sm p-1 m-no has-no-min-width">
+                  Suggestion
+                </a>
               </div>
 
-              <!--              <div class="label is-primary is-sm tooltip m-left-auto"-->
-              <!--                   data-tooltip="comment & suggestion"-->
-              <!--                   style="cursor: pointer"-->
-              <!--                   (click)="onToggleCommentSuggestion($event, 'summary')">UMI-->
-              <!--              </div>-->
             </div>
 
-          </div>
-
-          <div *ngIf="isEditable && !getPadPreviewMode('summary')" class="text-15">
             <app-shared-editors
+              [hidden]="!isEditable || getPadPreviewMode('summary')"
               id="project-summary"
               (textChange)="onContentChange($event, 'summary')"
               [text]="activeInnovCard.summary"
               [innovationId]="innovation._id"
               [elementId]="'summary-' + currentLang"
-              [isEditable]="isEditable"
-              [type]="'pitch'">
+              type="summary"
+              [isEditable]="isEditable">
             </app-shared-editors>
+
+            <ng-container *ngIf="getPadPreviewMode('summary')">
+              <div [innerHTML]="activeInnovCard.summary | cleanHtml" class="pad-preview-mode"></div>
+            </ng-container>
+
+            <ng-container *ngIf="!isEditable">
+              <p [innerHTML]="activeInnovCard.summary" class="text-15"></p>
+            </ng-container>
+
           </div>
-
-          <div *ngIf="getPadPreviewMode('summary')"
-               class="width-100 mce-tinymce pad-preview-mode text-15"
-               [innerHTML]="activeInnovCard.summary | cleanHtml">
-          </div>
-
-          <p *ngIf="!isEditable" [innerHTML]="activeInnovCard.summary" class="text-15"></p>
-
         </div>
         <!-- /content -->
 
         <!-- suggestion / comments -->
-        <div class="section-suggestion">
+        <div *ngIf="showComment['summary'] || showSuggestion['summary']" class="section-suggestion">
 
           <!-- comment -->
-          <div class="m-bottom-25"
-               *ngIf="showComment['summary']"
-               [id]="'project-summary-href-comment'">
-            <div class="d-flex align-center">
-              <div
-                (click)="onToggleComment($event, 'summary')"
-                class="icon-container is-sm is-overlay m-right-1">
-                <i
-                  [ngClass]="toggleComment.summary ? 'icon icon-arrow-up' : 'icon icon-arrow-down'"
-                  class="c-hand text-primary text-15">
-                </i>
+          <ng-container *ngIf="showComment['summary']">
+            <div [id]="'project-summary-href-comment'" class="m-bottom-20">
+
+              <!-- toggle button -->
+              <div (click)="onToggleComment($event, 'summary')" class="d-inline-flex align-center c-hand">
+                <div class="icon-container is-sm is-overlay m-right-1">
+                  <i
+                    [ngClass]="toggleComment['summary'] ? 'icon icon-arrow-up' : 'icon icon-arrow-down'"
+                    class="text-primary">
+                  </i>
+                </div>
+                <span class="text-medium">Comment</span>
               </div>
-              <span (click)="onToggleComment($event, 'summary')" class="spec-text-op">Comment</span>
+              <!-- /toggle button -->
+
+              <!-- text -->
+              <div class="m-top-20">
+
+                <div
+                  [hidden]="!isEditableComment"
+                  [ngClass]="{'is-hidden': !toggleComment['summary']}"
+                  class="box-shadow">
+                  <app-shared-editor-tinymce
+                    (onTextChange)="onCommentChange($event, 'summary', 'comment')"
+                    [data]="zoneData('summary', 'comment')"
+                    id="summary-comment">
+                  </app-shared-editor-tinymce>
+                </div>
+
+                <ng-container *ngIf="!isEditableComment">
+                  <div [ngClass]="{'is-hidden': !toggleComment.summary}" class="comment-text">
+                    <p [innerHTML]="zoneData('summary', 'comment')"></p>
+                  </div>
+                </ng-container>
+
+              </div>
+              <!-- /text -->
+
             </div>
-            <div class="m-top-20">
-              <div [hidden]="!isEditableComment" [ngClass]="{'is-hidden': !toggleComment.summary}" class="box-shadow">
-                <app-shared-editor-tinymce
-                  (onTextChange)="onCommentChange($event, 'summary', 'comment')"
-                  [data]="zoneData('summary', 'comment')"
-                  id="summary-comment">
-                </app-shared-editor-tinymce>
-              </div>
-              <div *ngIf="!isEditableComment" [ngClass]="{'is-hidden': !toggleComment.summary}" class="message">
-                <p [innerHTML]="zoneData('summary', 'comment')" class="message-body"></p>
-              </div>
-            </div>
-          </div>
+          </ng-container>
           <!-- /comment -->
 
           <!-- suggestion -->
-          <div [id]="'project-summary-href-suggestion'"
-          *ngIf="showSuggestion['summary']">
-            <div class="d-flex align-center">
-              <div
-                (click)="onToggleSuggestion($event, 'summary')"
-                class="icon-container is-sm is-overlay m-right-1">
-                <i
-                  [ngClass]="toggleSuggestion.summary ? 'icon icon-arrow-up' : 'icon icon-arrow-down'"
-                  class="c-hand text-primary text-15">
-                </i>
+          <ng-container *ngIf="showSuggestion['summary']">
+            <div [id]="'project-summary-href-suggestion'">
+
+              <!-- toggle button -->
+              <div (click)="onToggleSuggestion($event, 'summary')" class="d-inline-flex align-center c-hand">
+                <div class="icon-container is-sm is-overlay m-right-1">
+                  <i
+                    [ngClass]="toggleSuggestion['summary'] ? 'icon icon-arrow-up' : 'icon icon-arrow-down'"
+                    class="text-primary">
+                  </i>
+                </div>
+                <span class="text-medium">Suggestion</span>
               </div>
-              <span (click)="onToggleSuggestion($event, 'summary')" class="spec-text-op">Suggestion</span>
+              <!-- /toggle button -->
+
+              <!-- text -->
+              <div class="m-top-20">
+
+                <div
+                  [hidden]="!isEditableComment"
+                  [ngClass]="{'is-hidden': !toggleSuggestion['summary']}"
+                  class="box-shadow">
+                  <app-shared-editors
+                    [isEditable]="isEditableComment"
+                    (textChange)="onCommentChange($event, 'summary', 'suggestion')"
+                    [text]="zoneData('summary', 'suggestion')"
+                    [innovationId]="innovation._id"
+                    [elementId]="'summary-' + currentLang"
+                    type="suggestion">
+                  </app-shared-editors>
+                </div>
+
+                <ng-container *ngIf="!isEditableComment">
+                  <div [ngClass]="{'is-hidden': !toggleSuggestion.summary}" class="comment-text">
+                    <p [innerHTML]="zoneData('summary', 'suggestion')"></p>
+                  </div>
+                </ng-container>
+
+              </div>
+              <!-- /text -->
+
             </div>
-            <div class="m-top-20">
-              <div *ngIf="isEditableComment" [ngClass]="{'is-hidden': !toggleSuggestion.summary}">
-                <app-shared-editors
-                  [isEditable]="isEditableComment"
-                  (textChange)="onCommentChange($event, 'summary', 'suggestion')"
-                  [text]="zoneData('summary', 'suggestion')"
-                  [innovationId]="innovation._id"
-                  [elementId]="'summary-' + currentLang"
-                  [type]="'suggestion'">
-                </app-shared-editors>
-              </div>
-              <div *ngIf="!isEditableComment" [ngClass]="{'is-hidden': !toggleSuggestion.summary}" class="message">
-                <p [innerHTML]="zoneData('summary', 'suggestion')" class="message-body"></p>
-              </div>
-            </div>
-          </div>
+          </ng-container>
           <!-- /suggestion -->
+
         </div>
+        <!-- /suggestion / comments -->
 
       </div>
-      <!-- /suggestion / comments -->
     </section>
     <!-- /section summary -->
 
     <!-- section media -->
     <section
-      id="project-media"
       [ngStyle]="{ 'animation-duration': ((activeInnovCard.sections.length) * 110) + 'ms' }"
-      class="section-wrapper has-border p-no-bottom">
+      class="section-wrapper has-border p-no-bottom"
+      id="project-media">
 
       <div class="section-body" style="flex-direction: row">
         <div class="section-content">
           <div class="form-group">
             <div class="d-flex align-center flex-wrap-wrap title-wrapper">
               <label class="form-label" id="project-media-href">
-                <span class="shape is-rounded bg-draft text-white">
+                <span class="shape is-rounded bg-draft text-sm text-white">
                   {{ activeInnovCard.sections && activeInnovCard.sections.length + 3 || 4 }}
                 </span>
                 Add medias

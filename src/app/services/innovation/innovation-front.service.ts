@@ -17,6 +17,7 @@ import {MediaFrontService} from '../media/media-front.service';
 import {Mission, MissionQuestion, MissionTemplate} from '../../models/mission';
 import {MissionFrontService} from '../mission/mission-front.service';
 import {UmiusMediaInterface} from '@umius/umi-common-component';
+import {environment} from '../../../environments/environment';
 
 export interface Values {
   settingPercentage?: number;
@@ -122,6 +123,24 @@ export class InnovationFrontService {
 
     return src === '' ? defaultSrc : src;
 
+  }
+
+  /**
+   * return true or false to show answers anonymously.
+   * @param innovation
+   */
+  public static hasAnonymousAnswers(innovation: Innovation): boolean {
+    return !!(innovation && innovation._metadata && innovation._metadata.campaign
+      && innovation._metadata.campaign.anonymous_answers);
+  }
+
+  /**
+   * generates the quiz link for the innovation
+   * @param innovation
+   */
+  public static quizLink(innovation: Innovation): string {
+    if (!innovation && !innovation.quizId && !innovation.campaigns.length) return '';
+    return `${environment.quizUrl}/quiz/${innovation.quizId}/${innovation.campaigns[0]._id}`
   }
 
   /**
@@ -545,11 +564,11 @@ export class InnovationFrontService {
    * in the component that changes are to be saved or not for the innovation.
    * @param value
    */
-  public setNotifyChanges(value: {key: string, state: boolean}) {
+  public setNotifyChanges(value: {key: string, state: boolean, autoSave?: boolean}) {
     this._saveNotifySubject.next(value);
   }
 
-  public getNotifyChanges(): Subject<{key: string, state: boolean}> {
+  public getNotifyChanges(): Subject<{key: string, state: boolean, autoSave?: boolean}> {
     return this._saveNotifySubject;
   }
 

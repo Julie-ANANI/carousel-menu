@@ -21,7 +21,8 @@ export const ERROR = {
   500: {
     NOT_FOUND: 'Désolé, nous ne trouvons pas les données.',
     UNKNOWN_ERROR: 'Il y a eu quelques problèmes techniques pour finaliser cette demande. Veuillez réessayer.',
-    DB_ERROR: 'Nous rencontrons des problèmes lors de la récupération des données dans la base de données.'
+    DB_ERROR: 'Nous rencontrons des problèmes lors de la récupération des données dans la base de données.',
+    SAVE_ERROR: 'Nous rencontrons des problèmes lors de la sauvegarde des données dans la base de données.'
   },
 
   504: {

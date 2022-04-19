@@ -3,6 +3,10 @@
 
 .shared-market-report {
 
+  .pws-wrapper .sidebar-wrapper {
+    max-width: 297px;
+  }
+
   .content-wrapper {
 
     .title.is-main {
@@ -184,19 +188,23 @@
 
 }
 
-@media screen and (max-width: $size-lg) {
+@media screen {
 
-  .shared-market-report {
+  @media (max-width: $size-lg) {
 
-    .content-wrapper {
+    .shared-market-report {
 
-      .content-body {
-        justify-content: unset;
-        flex-direction: column;
+      .content-wrapper {
 
-        .stats-wrapper {
-          width: 100%;
-          border-radius: 6px;
+        .content-body {
+          justify-content: unset;
+          flex-direction: column;
+
+          .stats-wrapper {
+            width: 100%;
+            border-radius: 6px;
+          }
+
         }
 
       }

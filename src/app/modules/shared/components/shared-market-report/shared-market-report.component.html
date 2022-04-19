@@ -1,7 +1,7 @@
 <div class="shared-market-report" id="shared-market-report">
 
   <!-- project status not submitted admin side -->
-  <ng-container *ngIf="innovation.status === 'EDITING' && adminSide">
+  <ng-container *ngIf="innovation.status === 'EDITING' && adminSide && !previewMode">
     <div class="p-top-50 p-bottom-30 p-left-15 p-right-15">
       <app-message-template widthMax="337px">
         The client hasn't submitted the project yet. You will be able to edit the market report after
@@ -15,11 +15,11 @@
   <div
     *ngIf="innovation.status === 'DONE' || previewMode || (innovation.status !== 'EDITING' && adminSide)"
     style="background-color: #F5F5F5">
-    <div class="container fluid grid-2xl animate-fade is-5">
+    <div class="container fluid">
       <div class="pws-wrapper">
 
         <!-- sidebar -->
-        <aside style="max-width: 297px" class="sidebar-wrapper">
+        <aside class="sidebar-wrapper">
           <umius-sidebar-inline [(template)]="leftSidebarTemplateValue">
             <ng-container *ngIf="displayFilters; else displayLoader">
               <app-sidebar-filter-answers
@@ -51,54 +51,61 @@
 
           <!-- synthesis reporting lang -->
           <ng-container *ngIf="!areAnswersLoading && adminSide">
-            <div class="d-flex flex-d-row align-center justify-end dropdown w-full m-top-15 is-right">
+            <div class="d-flex align-center justify-end flex-wrap-wrap dropdown w-full m-top-15 is-right">
+              <div class="lang-selector">
               <span class="text-13 m-right-4">
                 {{ 'MARKET_REPORT.RESTITUTION_LANG' | translateIn: reportingLang }}
               </span>
-              <a class="button dropdown-toggle has-no-min-width is-info is-outlined" tabindex="0">
-                {{ 'COMMON.LANG.' + reportingLang | uppercase | translateIn: reportingLang }}
-                <i class="icon icon-caret"></i>
-              </a>
-              <ul class="menu">
-                <li (click)="setNewSelectedLang('fr')" *ngIf="reportingLang === 'en'" class="menu-item">
-                  {{ 'COMMON.LANG.FR' | translateIn: reportingLang }}
-                </li>
-                <li (click)="setNewSelectedLang('en')" *ngIf="reportingLang === 'fr'" class="menu-item">
-                  {{ 'COMMON.LANG.EN' | translateIn: reportingLang }}
-                </li>
-              </ul>
+                <a class="button dropdown-toggle has-no-min-width is-info is-outlined" tabindex="0">
+                  {{ 'COMMON.LANG.' + reportingLang | uppercase | translateIn: reportingLang }}
+                  <i class="icon icon-caret"></i>
+                </a>
+                <ul class="menu">
+                  <li (click)="setNewSelectedLang('fr')" *ngIf="reportingLang === 'en'" class="menu-item">
+                    {{ 'COMMON.LANG.FR' | translateIn: reportingLang }}
+                  </li>
+                  <li (click)="setNewSelectedLang('en')" *ngIf="reportingLang === 'fr'" class="menu-item">
+                    {{ 'COMMON.LANG.EN' | translateIn: reportingLang }}
+                  </li>
+                </ul>
+              </div>
             </div>
           </ng-container>
           <!-- /synthesis reporting lang -->
 
           <!-- key learning section  -->
-          <ng-container *ngIf="!!innovation?.marketReport?.keyLearning?.conclusion">
-            <section [ngClass]="{ 'p-top-50': !reportShared }" id="key-learnings">
-              <app-question-section
-                [reportingLang]="reportingLang"
-                (questionChanged)="saveQuestion($event)"
-                [innovation]="innovation"
-                [questionReceived]="displayFixedQuestion({ identifier: 'keyLearning', subtitle: { en: '', fr: '' },
-                title: { en: 'Key learnings', fr: 'Connaissances clés' } })"
-                [readonly]="!canAccess(['edit', 'umiWord'])"
-                [hideAnswers]="true">
-              </app-question-section>
-            </section>
+          <ng-container *ngIf="!areAnswersLoading">
+            <ng-container *ngIf="!!innovation?.marketReport?.keyLearning?.conclusion">
+              <section [ngClass]="{ 'p-top-50': !reportShared }" id="key-learnings">
+                <app-question-section
+                  [reportingLang]="reportingLang"
+                  (questionChanged)="saveQuestion($event)"
+                  [innovation]="innovation"
+                  [questionReceived]="displayFixedQuestion({ identifier: 'keyLearning', subtitle: { en: '', fr: '' },
+                  title: { en: 'Key learnings', fr: 'Connaissances clés' } })"
+                  [readonly]="!canAccess(['edit', 'umiWord'])"
+                  [hideAnswers]="true">
+                </app-question-section>
+              </section>
+            </ng-container>
           </ng-container>
           <!-- /key learning section -->
 
           <!-- dynamic result -->
-          <ng-container *ngIf="(innovation.mission | mission:'hasMissionTemplate') &&
-          !innovation?.marketReport?.keyLearning?.conclusion">
-            <div class="p-top-50" id="result">
-              <app-market-report-result
-                [isEditable]="canAccess(['edit', 'result'])"
-                [reportingLang]="reportingLang"
-                [innovation]="innovation"
-                [answers]="answers"
-                [scrollTo]="'#'+(questions.length?questions[0].identifier:'')">
-              </app-market-report-result>
-            </div>
+          <ng-container *ngIf="!areAnswersLoading">
+            <ng-container *ngIf="(innovation.mission | mission:'hasMissionTemplate') &&
+            !innovation?.marketReport?.keyLearning?.conclusion">
+              <div class="p-top-50" id="result">
+                <app-market-report-result
+                  (saveInnovation)="saveInnovation($event)"
+                  [isEditable]="canAccess(['edit', 'result'])"
+                  [reportingLang]="reportingLang"
+                  [innovation]="innovation"
+                  [answers]="answers"
+                  [scrollTo]="'#'+(questions.length?questions[0].identifier:'')">
+                </app-market-report-result>
+              </div>
+            </ng-container>
           </ng-container>
           <!-- /dynamic result -->
 
@@ -113,7 +120,8 @@
                 [answers]="filteredAnswers"
                 [innovation]="innovation"
                 [originAnswers]="answersOrigins"
-                [questionReceived]="displayFixedQuestion({ identifier: 'professionals', subtitle: { en: 'professionals', fr: 'professionnels' },
+                [questionReceived]="displayFixedQuestion({ identifier: 'professionals', subtitle:
+                { en: 'professionals', fr: 'professionnels' },
                 title: { en: 'Origin of responses', fr: 'Origine des réponses' }, controlType: 'textarea' })"
                 [readonly]="!canAccess(['edit', 'umiWord'])"
                 [hideAnswers]="true">
@@ -122,14 +130,15 @@
           </ng-container>
           <!-- /origin comment and professional responses -->
 
-          <!-- map -->
-          <section class="p-top-15" id="map" [hidden]="areAnswersLoading || questions.length === 0"> <!-- do not replace hidden with ngIf -->
+          <!-- map do not replace hidden with ngIf -->
+          <section class="p-top-15" id="map" [hidden]="areAnswersLoading || questions.length === 0">
             <app-shared-worldmap [countriesData]="answersByCountries"></app-shared-worldmap>
           </section>
           <!-- /map -->
 
           <!-- professionals -->
-          <section class="p-bottom-50" id="professionals" *ngIf="answersOrigins && !areAnswersLoading && answers && questions.length > 0">
+          <section class="p-bottom-50" id="professionals"
+                   *ngIf="answersOrigins && !areAnswersLoading && answers && questions.length > 0">
 
             <div *ngIf="filteredAnswers.length" class="text-center p-top-25">
               <button
@@ -146,7 +155,8 @@
               <div class="card-wrapper card-3">
                 <div *ngFor="let answer of filteredAnswers" class="card is-card-3 relative">
                   <div (click)="filterPro(answer, $event)" class="icon-container text-alert absolute">
-                    <span class="tooltip" [attr.data-tooltip]="'MARKET_REPORT.TOOLTIP_HIDE_PROFESSIONAL' | translateIn: reportingLang">
+                    <span class="tooltip"
+                          [attr.data-tooltip]="'MARKET_REPORT.TOOLTIP_HIDE_PROFESSIONAL' | translateIn: reportingLang">
                       <i class="fas fa-eye-slash" aria-hidden="true"></i>
                     </span>
                   </div>
@@ -166,9 +176,9 @@
           <!-- other question sections -->
           <section *ngFor="let question of questions; trackBy: trackQuestions" class="p-bottom-50" id="questions">
             <app-question-section
+              *ngIf="!areAnswersLoading"
               [reportingLang]="reportingLang"
               (questionChanged)="saveQuestion($event)"
-              *ngIf="!areAnswersLoading"
               (modalAnswerChange)="seeAnswer($event)"
               [answers]="filteredAnswers"
               [canEditQuestionTags]="canAccess(['edit', 'questionTags'])"
@@ -207,54 +217,6 @@
   <!-- /project status done or preview mode or not editing -->
 
 </div>
-
-<!-- modal -->
-<umius-modal [(showModal)]="showModal">
-
-  <section class="modal-body">
-
-    <h2 [ngSwitch]="{ 'color': '4C4C4C' }" class="title is-4 text-center text-bold m-bottom-30">
-      <ng-container *ngIf="modalType === 'NOTIFY_DOCUMENTS'">Send availability of documents mail</ng-container>
-    </h2>
-
-    <div [ngSwitch]="modalType">
-
-      <!-- ask validation -->
-      <div *ngSwitchCase="'NOTIFY_DOCUMENTS'">
-        You are about to send an email to the Market Test project team. This email can only be sent once. Continue?
-      </div>
-      <!-- /ask validation -->
-
-    </div>
-
-  </section>
-
-  <footer [ngSwitch]="modalType" class="modal-footer justify-center">
-
-    <button
-      (click)="closeModal($event)"
-      [id]="'btn-cancel'"
-      class="button modal-cancel"
-      type="button">
-      Cancel
-    </button>
-
-    <!-- ask validation -->
-    <button
-      (click)="onNotifyDocuments($event)"
-      *ngSwitchCase="'NOTIFY_DOCUMENTS'"
-      [disabled]="isSendingNotification"
-      class="button "
-      id="btn-modal-confirm-notify-documents"
-      type="button">
-      Confirm
-    </button>
-    <!-- /ask validation -->
-
-  </footer>
-
-</umius-modal>
-<!-- /modal -->
 
 <!-- save button -->
 <div *ngIf="toBeSaved" class="save-wrapper">

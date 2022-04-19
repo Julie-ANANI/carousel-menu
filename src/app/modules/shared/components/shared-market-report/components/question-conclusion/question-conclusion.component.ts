@@ -84,11 +84,11 @@ export class QuestionConclusionComponent implements OnInit {
   }
 
   public onChangeTitle(value: string) {
-    if (this.hasMissionTemplate) {
-      this._missionQuestionService.changeQuestionEntry(value, this.reportingLang, <MissionQuestion>this._question, 'title');
-    } else if (this._question && !!(<Question>this._question).title) {
+    if (!!this._question && !!(<Question>this._question).title) {
       (<Question>this._question).title[this.reportingLang] = value;
       this._emit();
+    } else if (this.hasMissionTemplate) {
+      this._missionQuestionService.changeQuestionEntry(value, this.reportingLang, <MissionQuestion>this._question, 'title');
     }
   }
 

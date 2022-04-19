@@ -1,4 +1,4 @@
-<div [hidden]="isLoading" class="animate-fade is-5" id="admin-project-collection">
+<div [hidden]="isLoading" id="admin-project-collection">
 
   <!-- stats banner -->
   <section>
@@ -7,10 +7,9 @@
   <!-- /stats banner -->
 
   <!-- content -->
-  <div class="container grid-2xl fluid p-top-30 p-bottom-30">
+  <div class="container fluid p-top-30 p-bottom-30">
     <div class="column col-sm-12 col-11 col-mx-auto">
 
-      <!--<div>There are {{targetWarnings}} off-target answers here...</div>-->
       <!-- action buttons -->
       <section *ngIf="canAccess(['import']) || canAccess(['export'])" class="text-right m-bottom-15">
 
@@ -26,7 +25,7 @@
               (click)="openImportModal()"
               *ngIf="selectedCampaign"
               [hidden]="true"/>
-            {{ isImportingAnswers ? 'importing...' : 'Import' }}
+            <i class="fas fa-file-upload icon-left"></i> {{ isImportingAnswers ? 'importing...' : 'Import' }}
           </label>
         </span>
         <!-- /import -->
@@ -39,23 +38,10 @@
             [disabled]="!selectedCampaign"
             class="button is-primary is-sm m-bottom-15"
             id="btn-export-answers">
-            Export
+            <i class="fas fa-file-download icon-left"></i> Export
           </button>
         </span>
         <!-- /export -->
-
-        <!-- modal to import -->
-        <umius-modal [(showModal)]="isImportingAnswers" [title]="'Import Board'">
-
-          <section class="modal-body">
-            <app-shared-import-answers
-              (importFinished)="isImportingAnswers=false"
-              [accessPath]="accessPath"
-              [campaign]="selectedCampaign">
-            </app-shared-import-answers>
-          </section>
-        </umius-modal>
-        <!-- /modal to import -->
 
       </section>
       <!-- /action buttons -->
@@ -77,6 +63,20 @@
   <!-- /content -->
 
 </div>
+
+<!-- modal to import -->
+<ng-container *ngIf="!!canAccess(['import'])">
+  <umius-modal [(showModal)]="isImportingAnswers" title="Import Board">
+    <section class="modal-body">
+      <app-shared-import-answers
+        (importFinished)="isImportingAnswers=false"
+        [accessPath]="accessPath"
+        [campaign]="selectedCampaign">
+      </app-shared-import-answers>
+    </section>
+  </umius-modal>
+</ng-container>
+<!-- /modal to import -->
 
 <!-- sidebar insight preview -->
 <umius-sidebar-full

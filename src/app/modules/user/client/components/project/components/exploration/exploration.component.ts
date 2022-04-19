@@ -69,12 +69,14 @@ export class ExplorationComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this._initTable();
+
     this._innovationFrontService.innovation().pipe(takeUntil(this._ngUnsubscribe)).subscribe((innovation) => {
-      this._innovation = innovation || <Innovation>{};
-      this._getAnswers();
-      this._questions = InnovationFrontService.questionsList(this._innovation);
-      this._anonymousAnswers = this._innovation._metadata && this._innovation._metadata.campaign
-        && this._innovation._metadata.campaign.anonymous_answers;
+      if (innovation && innovation._id) {
+        this._innovation = innovation;
+        this._questions = InnovationFrontService.questionsList(this._innovation);
+        this._anonymousAnswers = InnovationFrontService.hasAnonymousAnswers(this._innovation);
+        this._getAnswers();
+      }
     });
   }
 
@@ -115,6 +117,7 @@ export class ExplorationComponent implements OnInit, OnDestroy {
         _content: answers,
         _total: total,
         _clickIndex: 1,
+        _isNoMinHeight: total < 10,
         _isLocal: true,
         _isPaginable: true,
         _paginationTemplate: 'TEMPLATE_1',
@@ -130,6 +133,7 @@ export class ExplorationComponent implements OnInit, OnDestroy {
         _clickIndex: 1,
         _isLocal: true,
         _isPaginable: true,
+        _isNoMinHeight: total < 10,
         _paginationTemplate: 'TEMPLATE_1',
         _columns: [
           {_attrs: ['professional.displayName'], _name: 'TABLE.HEADING.NAME', _type: 'TEXT'},
@@ -148,15 +152,6 @@ export class ExplorationComponent implements OnInit, OnDestroy {
       title: 'SIDEBAR.TITLE.INSIGHT',
       size: '726px'
     };
-  }
-
-  public percentage(value1: number, value2: number): number {
-    if (value2 === 0 || value2 === undefined) {
-      return 0;
-    } else {
-      const percentage = (value2 / value1) * 100;
-      return percentage === Infinity ? 0 : Math.floor(percentage);
-    }
   }
 
   get countries() {

@@ -252,6 +252,9 @@ export class AdminUsersComponent implements OnInit {
 
   set sidebarValue(value: UmiusSidebarInterface) {
     this._sidebarValue = value;
+    if(this._sidebarValue.animate_state === 'inactive'){
+      this._selectedUser = null;
+    }
   }
 
   get sidebarValue(): UmiusSidebarInterface {

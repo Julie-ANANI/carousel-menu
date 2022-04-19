@@ -24,7 +24,8 @@
 
               <p class="text text-meta text-medium">
                 {{ 'SHARE.SYNTHESIS_LIST.SHARED_TEXT.A' | translate }} {{ report.owner.firstName + " " + report.owner.lastName }}
-                {{ 'SHARE.SYNTHESIS_LIST.SHARED_TEXT.B' | translate }} {{ report.date | date:dateFormat }}
+                {{ 'SHARE.SYNTHESIS_LIST.SHARED_TEXT.B' | translate }}
+                {{ report.date | common:'dateFormat':translateService.currentLang }}
               </p>
 
             </div>

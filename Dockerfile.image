@@ -3,10 +3,13 @@ FROM node:12.22-alpine AS baseimage
 ARG APP_NAME
 ARG ENV_NAME
 ARG VERSION
+ARG NPM_READONLY_TOKEN
 
 RUN echo "!!!!!! Building front@${VERSION} with 'ng build ${APP_NAME} -c=${ENV_NAME}' !!!!!!"
 
 WORKDIR /var/web
+
+ENV NPM_READONLY_TOKEN="${NPM_READONLY_TOKEN}"
 
 # Update this image
 RUN apk update
@@ -18,7 +21,7 @@ RUN npm install -g typings
 RUN npm install pm2 -g
 
 ADD package.json /var/web/package.json
-ADD .npmrc /var/web/.npmrc
+RUN echo "//registry.npmjs.org/:_authToken=$NPM_READONLY_TOKEN" > .npmrc
 RUN npm config set loglevel warn
 RUN npm install
 

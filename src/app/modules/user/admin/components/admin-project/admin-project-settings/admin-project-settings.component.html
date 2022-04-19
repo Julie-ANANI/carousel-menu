@@ -1,4 +1,4 @@
-<div [hidden]="isLoading" class="animate-fade is-5" id="admin-project-settings">
+<div [hidden]="isLoading" id="admin-project-settings">
 
   <!-- stats banner -->
   <section>
@@ -24,6 +24,7 @@
           *ngIf="canAccess(['edit', 'validateProject'])"
           class="button is-danger is-outlined is-sm m-right-20"
           id="btn-revision-project">
+          <i class="fas fa-exclamation icon-left"></i>
           Ask for project revision
         </button>
         <!-- /revision -->
@@ -32,8 +33,9 @@
         <button
           (click)="onValidateProject($event)"
           *ngIf="canAccess(['edit', 'validateProject'])"
-          class="button is-primary is-sm"
+          class="button is-primary"
           id="btn-validate-project">
+          <i class="fas fa-check icon-left"></i>
           Validate project
         </button>
         <!-- /validate -->
@@ -84,7 +86,7 @@
             <div *ngIf="canAccess(['view', 'secondaryObjective'])" class="content">
               <label for="admin-project-domain">Secondary Objectives</label>
               <span class="is-text">
-                <ng-container *ngIf="(hasMissionTemplate || !!mission.objective.secondary.length); else noSecObj">
+                <ng-container *ngIf="(hasMissionTemplate || !!mission.objective?.secondary.length); else noSecObj">
                   <ng-container *ngIf="templateComplementary.length > 0; else oldSecondary;">
                     <ng-container *ngFor="let objective of templateComplementary">
                       <span class="label is-rounded is-sm"
@@ -178,7 +180,7 @@
               <div class="dropdown is-right">
 
                 <a class="button dropdown-toggle text-dark is-link" tabindex="0">
-                  Members ({{ mission.team.length }}) <i class="icon icon-caret"></i>
+                  Members ({{ mission.team?.length }}) <i class="icon icon-caret"></i>
                 </a>
 
                 <ul *ngIf="canAccess(['edit', 'missionTeam'])" class="menu is-md">
@@ -196,10 +198,10 @@
                 </ul>
 
                 <ul *ngIf="!canAccess(['edit', 'missionTeam'])" class="menu is-md">
-                  <ng-container *ngIf="mission.team.length > 0">
+                  <ng-container *ngIf="mission.team?.length > 0">
                     <li *ngFor="let member of mission.team" class="menu-item c-default">{{ name(member) }}</li>
                   </ng-container>
-                  <li *ngIf="mission.team.length === 0" class="menu-item c-default">No members</li>
+                  <li *ngIf="mission.team?.length === 0" class="menu-item c-default">No members</li>
                 </ul>
 
               </div>
@@ -207,7 +209,7 @@
             </div>
             <!-- /mission team -->
 
-            <div *ngIf="mission.team.length > 0 && canAccess(['edit', 'missionTeam'])" class="content">
+            <div *ngIf="mission.team?.length > 0 && canAccess(['edit', 'missionTeam'])" class="content">
               <div class="mission-members-container">
                   <span class="label is-rounded is-sm" *ngFor="let member of mission.team">{{name(member)}}
                     <i class="fas fa-times icon-right" (click)="onChangeMissionTeam(member)"></i>
@@ -449,7 +451,8 @@
                     <div>
                       <button
                         (click)="addMilestone($event)"
-                        class="button is-primary is-circled is-xs"><i class="fas fa-plus"></i></button>
+                        data-tooltip="Add milestone"
+                        class="button is-primary is-circled is-xs tooltip"><i class="fas fa-plus"></i></button>
                     </div>
                   </ng-container>
                 </div>

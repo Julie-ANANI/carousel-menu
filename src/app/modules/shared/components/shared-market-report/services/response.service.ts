@@ -14,6 +14,15 @@ import {LikertScaleChart} from '../../../../../models/executive-report';
 import {UmiusMultilingInterface} from '@umius/umi-common-component';
 import colorsAndNames from '../../../../../../../assets/json/likert-scale_executive-report.json';
 
+export const likertScaleThresholds = function(threshold: number, nbCategories: number) {
+  const likertScaleThresholds = []
+  const interval = (nbCategories - threshold) / (nbCategories - 1);
+  for (let i = 0; i < nbCategories - 1; i++) {
+    likertScaleThresholds.push(threshold + interval * i);
+  }
+  return likertScaleThresholds;
+}
+
 @Injectable({ providedIn: 'root' })
 export class ResponseService {
 
@@ -214,7 +223,7 @@ export class ResponseService {
           answers: filteredAnswers,
           absolutePercentage: '0%',
           relativePercentage: '0%',
-          color: question.controlType === 'checkbox' ? '#FFB300' : q.color,
+          color: question.controlType === 'checkbox' ? '#FFB300' : ( question.controlType === 'likert-scale' ? '#00B0FF' : q.color),
           count: filteredAnswers.length,
           positive: q.positive,
           identifier: q.identifier
@@ -491,49 +500,80 @@ export class ResponseService {
    */
   public static getLikertScaleGraphicScore (averageFinalScore: number) {
 
-    /* This multiplier is to have the value in percentage*/
-    const multiply = 20;
+    /* BASE VALUE
+ –––––––––––––––––––––––––––––––––––––––––––––––––– */
     const numberOfCategories = 5;
+    const multiplyPercentage = 20; // This multiplier is to have the value in percentage because the score are on 5
+
     // let interval = (5-threshold)/numberOfCategories
 
-    let scorePercentage: string = (averageFinalScore * multiply).toString() +'%';
+    /*This scale is the starting point for our 0 score. It represents the failure rate of innovations that is specific to the UMI data.
+    The score below this scale is considered as null*/
+    //const threshold = 2.25;
+
+    /* PROGRESS BAR DESIGN LINE
+ –––––––––––––––––––––––––––––––––––––––––––––––––– */
+    /* It's for bar result */
+    /* This value is defined by which number we want to divide our score*/
+    /* The percentage is rounded because the pointer goes over either 0 or 100 because the bar is rounded */
+    let percentage = 0; // will give margin percentage for the pointer of marker
+
+    //It's for calculate for the progress_bar old design or use case of likert-scale
+    let scorePercentage: string = (averageFinalScore * multiplyPercentage).toString() +'%';
+
     if (averageFinalScore === 0 ) {
       scorePercentage = (1).toString() +'%';
     } else if (averageFinalScore === numberOfCategories){
       scorePercentage = (97).toString() +'%';
     }
 
-    // Step 1 constitution of index color
-    /*This scale is the starting point for our 0 score. It represents the failure rate of innovations that is specific to the UMI data.
-    The score below this scale is considered as null*/
-    //const threshold = 2.25;
+    /* PROGRESS BAR DESIGN COMPASS
+ –––––––––––––––––––––––––––––––––––––––––––––––––– */
+    const multiplyDegree = 180; // 360/2 = 180deg
 
+    let scoreOfHundred = averageFinalScore * multiplyPercentage //multiply by 20 for note on 100
+    scoreOfHundred = scoreOfHundred / 100; // divise sur 100 for pourcentage deg
+
+    let scoreRotate: string = ((scoreOfHundred) * multiplyDegree).toString() + 'deg'; // score final deg
+
+
+    // Step Constitution of index color
     let index = 0;
-    const score = averageFinalScore
+    const score = averageFinalScore;
 
-    if (score < 2.25) { //totally invalidated
+    /**
+     * we are adding 20, 40, 60, 80 because total bar is of 100, and we have divided it in 5 parts
+     * so each part = 20 and based on the score we find out in which part it comes and calculate the
+     * percentage.
+     */
+
+    const thresholds = likertScaleThresholds(2.25, 5);
+
+    if (score < thresholds[0]) { //totally invalidated
       index = 0;
-    } else if (2.25 <= score && score < 2.93) { // invalidated
+      percentage = score / thresholds[0] * multiplyPercentage;
+    } else if (thresholds[0] <= score && score < thresholds[1]) { // invalidated
       index = 1;
-    } else if (2.93 <= score && score < 3.63) { // uncertain
+      percentage = ((score - thresholds[0]) * multiplyPercentage) + 20;
+    } else if (thresholds[1] <= score && score < thresholds[2]) { // uncertain
       index = 2;
-    } else if (3.63 <= score && score < 4.31) { // validated
+      percentage = ((score - thresholds[1]) * multiplyPercentage) + 40;
+    } else if (thresholds[2] <= score && score < thresholds[3]) { // validated
       index = 3;
-    } else if (4.31 <= score ) { // totally validated
+      percentage = ((score - thresholds[2]) * multiplyPercentage) + 60;
+    } else { // totally validated
       index = 4;
+      percentage = ((score / 5) * 100);
     }
 
-/*    It's obsolete solution*/
-    /* This value is defined by which number we want to divide our score*/
-    /* The percentage is rounded because the pointer goes over either 0 or 100 because the bar is rounded */
-    let percentage: number = (averageFinalScore * multiply); // will give margin percentage for the pointer of marker
     return {
       name: colorsAndNames[index].name,
       color: colorsAndNames[index].color,
       score: averageFinalScore,
-      scorePercent: scorePercentage.toString(),
-      percentage : percentage > 5 ? (percentage - 5) : percentage,
-      index: index,
+      scorePercent: scorePercentage.toString(), // example 0%
+      percentage : percentage,  // example  0
+      scoreRotate: scoreRotate.toString(),  // example 0deg
+      index: index
     };
   };
 

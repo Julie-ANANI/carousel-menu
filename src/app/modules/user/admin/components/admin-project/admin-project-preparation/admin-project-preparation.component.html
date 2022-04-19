@@ -2,13 +2,13 @@
 
   <!-- section header -->
   <section class="bg-white sticky header-wrapper">
-    <div class="container fluid grid-2xl">
+    <div class="container fluid">
       <div class="column col-sm-12 col-11 p-top-1 col-mx-auto relative">
 
         <!-- tabs -->
         <ul class="tab">
           <ng-container *ngFor="let tab of showCampaignTabs ? campaignTabs : defaultTabs">
-            <li *ngIf="canAccessTab(tab)" class="tab-item">
+            <li *ngIf="canAccessTab(tab)" class="tab-item m-right-10">
               <a
                 (click)="navigateTo(tab)"
                 [routerLink]="routeToNavigate(tab)"

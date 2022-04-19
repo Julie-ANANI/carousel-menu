@@ -10,7 +10,7 @@ export type MissionQuestionType = 'checkbox' | 'radio' | 'stars' | 'textarea' | 
 export type MissionQuestionParameterType = 'color' | 'date' |'datetime-local' | 'email' | 'month' | 'number'
   | 'password' | 'tel' | 'text' | 'time' | 'url' | 'week' | '';
 export type AttitudeMeasureType = 'agreement' | 'frequency' | 'satisfaction' | 'use'| 'quality' | 'relevance' | 'importance'
-  | 'interest' |'criticality' ;
+  | 'interest' |'criticality' | 'adoptability' ;
 export type MissionMethodologyType = 'DETECTING_MARKET' | 'VALIDATING_MARKET' | 'SOURCING_SOLUTIONS'
   | 'IDENTIFYING_RECEPTIVE' | 'VALIDATING_INTEREST' | 'OPTIMIZING_VALUE';
 

@@ -36,16 +36,12 @@ export class AdminProjectSynthesisComponent implements OnInit, OnDestroy {
               private _rolesFrontService: RolesFrontService) { }
 
   ngOnInit(): void {
+    this._innovation = this._innovationFrontService.innovation().value;
+    this._getReport(this._innovation?.executiveReportId);
+
     this._innovationFrontService.innovation().pipe(takeUntil(this._ngUnsubscribe)).subscribe((innovation) => {
-      if (!this._innovation._id) {
-        this._innovation = innovation || <Innovation>{};
-        this._getReport(innovation.executiveReportId);
-      } else {
-        this._innovation.marketReport = innovation.marketReport;
-        this._innovation.preset = innovation.preset;
-        this._innovation.settings.reportingLang = innovation.settings.reportingLang;
-        this._innovation.mission = innovation.mission;
-        this._innovation = JSON.parse(JSON.stringify(this._innovation));
+      if (innovation && innovation._id) {
+        this._innovation = innovation;
       }
     });
   }
@@ -55,7 +51,7 @@ export class AdminProjectSynthesisComponent implements OnInit, OnDestroy {
       this._executiveReportService.get(id).pipe(first()).subscribe((response) => {
         this._report = response;
       }, (err: HttpErrorResponse) => {
-        this._translateNotificationsService.error('Error', ErrorFrontService.getErrorKey(err.error));
+        this._translateNotificationsService.error('Report Fetching Error...', ErrorFrontService.getErrorKey(err.error));
         console.error(err);
       });
     }

@@ -484,7 +484,7 @@ export class MissionQuestionService {
 
   /**
    * return the new option for the attitudeMeasure = 'agreement' | 'frequency' | 'satisfaction' | 'use'| 'quality'
-   * | 'relevance' | 'importance' | 'interest' |'criticality;
+   * | 'relevance' | 'importance' | 'interest' |'criticality | 'adoptability';
    * @param question,
    * @param measureOptions
    */
@@ -754,7 +754,6 @@ export class MissionQuestionService {
       const index = section.entry.findIndex((_entry) => _entry.lang === lang);
       if (index !== -1) {
         section.entry[index].name = newValue;
-        console.log(section);
         this._emitTemplate();
       }
     }

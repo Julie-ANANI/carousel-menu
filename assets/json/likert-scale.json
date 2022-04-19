@@ -196,5 +196,26 @@
       "en": "Very critical",
       "fr": "Très critique"
     }
+  ],
+  "adoptability": [{
+    "en": "Definitely not",
+    "fr": "Pas du tout"
+  },
+    {
+      "en": "Probably not",
+      "fr": "Probablement pas"
+    },
+    {
+      "en": "Maybe",
+      "fr": "Peut-être"
+    },
+    {
+      "en": "Probably",
+      "fr": "Probablement"
+    },
+    {
+      "en": "Definitely",
+      "fr": "Sans aucun doute"
+    }
   ]
 }

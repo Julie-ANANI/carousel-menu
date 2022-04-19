@@ -143,7 +143,7 @@ export class AdminCampaignProsComponent implements OnInit {
   private _getProfessionals() {
     if (isPlatformBrowser(this._platformId)) {
       this._professionalsService
-        .getAll(this._config)
+        .getAll(this._config, 'reset')
         .pipe(first())
         .subscribe(
           (response: Response) => {

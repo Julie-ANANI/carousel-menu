@@ -112,24 +112,30 @@ export class SetupComponent implements OnInit, OnDestroy, CanComponentDeactivate
     });
 
     this._innovationFrontService.innovation().pipe(takeUntil(this._ngUnsubscribe)).subscribe((innovation) => {
-      this._innovation = innovation || <Innovation>{};
-      this._previewLink = `${environment.quizUrl}/quiz/${innovation._id}/preview`;
-      this._initBanner();
-      this._initInnovCard();
-      this._hasDropdownLang = this._activeInnovCard.lang && this._innovation.innovationCards && this._innovation.innovationCards.length > 1;
-      this._canAddCard = this._activeInnovCard.lang && this._innovation.innovationCards && this._innovation.innovationCards.length === 1
-        && (this._innovation.status === 'EDITING' || this._innovation.status === 'SUBMITTED');
-      this._quizExample = MissionFrontService.objectiveInfo(<Mission>this._innovation.mission,
-        'HELP_QUIZ', this._activeInnovCard.lang);
+      if (innovation && innovation._id) {
+        this._innovation = innovation;
+        this._previewLink = `${environment.quizUrl}/quiz/${innovation._id}/preview`;
+        this._initBanner();
+        this._initInnovCard();
+
+        this._hasDropdownLang = this._activeInnovCard.lang && this._innovation.innovationCards
+          && this._innovation.innovationCards.length > 1;
+
+        this._canAddCard = this._activeInnovCard.lang && this._innovation.innovationCards
+          && this._innovation.innovationCards.length === 1
+          && (this._innovation.status === 'EDITING' || this._innovation.status === 'SUBMITTED');
+
+        this._quizExample = MissionFrontService.objectiveInfo(<Mission>this._innovation.mission,
+          'HELP_QUIZ', this._activeInnovCard.lang);
+      }
     });
 
-    this._innovationFrontService.getNotifyChanges()
-      .pipe(takeUntil(this._ngUnsubscribe)).subscribe((response) => {
-        this._saveChanges = response;
-        if (response && response.key === 'settings') {
-          this._activeSaveBadge = response && response.state;
-        }
-      });
+    this._innovationFrontService.getNotifyChanges().pipe(takeUntil(this._ngUnsubscribe)).subscribe((response) => {
+      this._saveChanges = response;
+      if (response && response.key === 'settings') {
+        this._activeSaveBadge = response && response.state;
+      }
+    });
   }
 
   @HostListener('window:scroll', [])
@@ -201,6 +207,10 @@ export class SetupComponent implements OnInit, OnDestroy, CanComponentDeactivate
     }
   }
 
+  private _emitUpdatedInnovation() {
+    this._innovationFrontService.setInnovation(JSON.parse(JSON.stringify(this._innovation)));
+  }
+
   /***
    * this is to create the new innovationCard and push it to the innovation.
    * @param event
@@ -215,7 +225,7 @@ export class SetupComponent implements OnInit, OnDestroy, CanComponentDeactivate
       this._innovationService.createInnovationCard(this._innovation._id, _card).pipe(first()).subscribe((card) => {
         this._isBannerViewed = true;
         this._innovation.innovationCards.push(card);
-        this._innovationFrontService.setInnovation(this._innovation);
+        this._emitUpdatedInnovation();
         this._isAddingCard = false;
         this.closeModal();
         this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.SAVED_TEXT');

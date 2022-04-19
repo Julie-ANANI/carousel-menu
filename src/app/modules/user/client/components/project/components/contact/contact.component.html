@@ -12,7 +12,13 @@
     <ng-container *ngIf="!showFollowUp; else followUp">
       <div class="p-top-100">
         <app-message-template-2 [animation]="true">
-          <h2 class="title is-6 text-center">{{ message() }}</h2>
+          <h2 class="title is-6 text-center">
+            {{ currentLang === 'fr' ?
+            'Dès la première réponse collectée, vous pourrez être présenté.e aux professionnels ' +
+            'fin d’approfondir les échanges.'
+            : 'Once the first response is collected, you can be introduced to the professionals ' +
+            'in order to continue and deepen the discussion.' }}
+          </h2>
         </app-message-template-2>
       </div>
     </ng-container>

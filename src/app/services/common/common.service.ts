@@ -30,6 +30,11 @@ export class CommonService extends UmiusCommonService {
     super(_platformId, _domSanitize)
   }
 
+  public static sortByCompare(value: Array<any> = [], property: string): Array<any> {
+    if (!value.length || !property) return value;
+    return value.sort((a, b) => a[property].localeCompare(b[property]));
+  }
+
   /**
    * will check the LinkedIn url has https://www. or not, if no then
    * add and return the full url.
@@ -97,8 +102,12 @@ export class CommonService extends UmiusCommonService {
   /**
    *
    * @param lang - en | fr
+   * @param onlyDate
    */
-  public static dateFormat(lang: string): string {
+  public static dateFormat(lang: string, onlyDate = false): string {
+    if (onlyDate) {
+      return lang === 'fr' ? 'dd/MM/y' : 'y/MM/dd';
+    }
     return lang === 'fr' ? 'dd/MM/y HH:mm' : 'y/MM/dd HH:mm';
   }
 

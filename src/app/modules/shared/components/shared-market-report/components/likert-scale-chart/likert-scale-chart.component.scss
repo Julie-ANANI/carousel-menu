@@ -1,65 +1,36 @@
 @import "~@umius/umi-style-framework/scss/variables";
 
-// Container //
+/* CONTAINER
+  –––––––––––––––––––––––––––––––––––––––––––––––––– */
 .chart__likert_scale {
-  display: flex;
-  flex-direction: column;
   justify-items: center;
-  justify-content: center;
-  width: 300px;
   height: 250px;
+  margin-bottom: $unit-16;
+  z-index: $z-index-2;
 
-
-  // Name of result chart //
-  .chart__name{
-    display: inline-block;
-    font-size: 25px;
-    font-weight: $font-weight-bold;
-    width:184px;
-    justify-content: center;
-    justify-items: center;
-    align-items: center;
-    margin-bottom: 40px;
-  }
-
-
-  // Icons //
-
-  //Icons for marker//
-  .icon-container {
-
-    .icon-location::before,::after {
-      border: 2px solid currentColor;
-      font-size: 40px;
-      color: white;
-      left: -5.5px;
-    }
-  }
-
+  /* ICONS
+   –––––––––––––––––––––––––––––––––––––––––––––––––– */
   .fas.icon-container {
-    margin: 0 0 1em 8.5em;
-    position: relative;
+    margin: 0 0 1em 9.5em;
 
     .fa-user {
 
       &.user__one {
-        font-size: 50px;
+        font-size: 25px;
+        color: $page-color;
+        margin: -8px 10px 0px 2px;
         z-index: $z-index-1;
-        color: #2E6188;
-        margin: -16px 23px 0px 2px;;
       }
 
       &.user__two {
-        position: absolute;
-        font-size: 47px;
+        font-size: 23.5px;
         margin: -0.2em 0em 0em -0.5em;
         z-index: $z-index-1;
       }
 
       &.user__three {
-        position: absolute;
-        font-size: 37px;
-        margin: -2.3px -42px 7px -0.5px;
+        font-size: 18.5px;
+        margin: 0.69px -18px 7px -0.5px;
         z-index: $z-index-0;
       }
 
@@ -68,73 +39,23 @@
   }
 
 
-  // Progress bar //
-  .progress__bar {
-    background: linear-gradient(to right, rgba(234, 88, 88, 0.5) 45%, rgba(248, 148, 36, 0.5) 45% 58.75%,
-    rgba(187, 199, 214, 0.5) 58.75% 72.5%, rgba(46, 204, 113, 0.5) 72.5% 86.25%, rgba(153, 224, 75, 0.5) 86.25%);
-    border-radius: 20px;
-    justify-content: center;
-    justify-items: center;
-    height: 20px;
-    z-index: $z-index-0;
+  /* PROGRESS BAR
+  –––––––––––––––––––––––––––––––––––––––––––––––––– */
 
-    .totally--invalidated {
-      background: linear-gradient(to right, rgba(234, 88, 88, 1) 45%, rgba(248, 148, 36, 0.5) 45% 58.75%,
-      rgba(187, 199, 214, 0.5) 58.75% 72.5%, rgba(46, 204, 113, 0.5) 72.5% 86.25%, rgba(153, 224, 75, 0.5) 86.25%);
-      z-index: $z-index-1;
-    }
+  .bar__threshold {
+    width: 215px;
 
-    &.invalided {
-      background: linear-gradient(to right, rgba(234, 88, 88, 0.5) 45%, rgba(248, 148, 36, 1) 45% 58.75%,
-      rgba(187, 199, 214, 0.5) 58.75% 72.5%, rgba(46, 204, 113, 0.5) 72.5% 86.25%, rgba(153, 224, 75, 0.5) 86.25%);
-      z-index: $z-index-1;
-    }
-
-    &.uncertain {
-      background: linear-gradient(to right, rgba(234, 88, 88, 0.5) 45%, rgba(248, 148, 36, 0.5) 45% 58.75%,
-      rgba(187, 199, 214, 1) 58.75% 72.5%, rgba(46, 204, 113, 0.5) 72.5% 86.25%, rgba(153, 224, 75, 0.5) 86.25%);
-      z-index: $z-index-1;
-    }
-
-      &.validated {
-        background: linear-gradient(to right, rgba(234, 88, 88, 0.5) 45%, rgba(248, 148, 36, 0.5) 45% 58.75%,
-        rgba(187, 199, 214, 0.5) 58.75% 72.5%, rgba(46, 204, 113, 1) 72.5% 86.25%, rgba(153, 224, 75, 0.5) 86.25%);
-        z-index: $z-index-1;
-      }
-
-      &.totally--validated {
-        background: linear-gradient(to right, rgba(234, 88, 88, 0.5) 45%, rgba(248, 148, 36, 0.5) 45% 58.75%,
-        rgba(187, 199, 214, 0.5) 58.75% 72.5%, rgba(46, 204, 113, 0.5) 72.5% 86.25%, rgba(153, 224, 75, 1) 86.25%);
-        z-index: $z-index-1;
-      }
-    }
-
-
-  // Container marker //
-  .progress__bar__marker {
-    position: absolute;
-    text-align: center;
-    top: -39px;
-
-    .marker__pointer {
-      background-color: white;
-      width: 2px;
-      height: 23px;
-      z-index: $z-index-3;
-      margin: 4px 0  0 3px;
+    > div {
+      width: 100px;
     }
   }
 
-  // score //
-  .average__evaluation {
-    font-weight: $font-weight-medium;
-    font-size: $font-size-sm;
-
-    .average__text {
-      position: absolute;
-      width: fit-content;
-    }
-
+  /* SCORE
+  –––––––––––––––––––––––––––––––––––––––––––––––––– */
+  .average__text {
+    left: 43%;
+    top: 65%;
+    width: fit-content;
   }
 
 }

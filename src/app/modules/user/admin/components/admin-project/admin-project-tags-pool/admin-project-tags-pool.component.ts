@@ -1,22 +1,21 @@
-import { Component, Inject, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { TagsService } from '../../../../../../services/tags/tags.service';
 import { TranslateNotificationsService } from '../../../../../../services/translate-notifications/translate-notifications.service';
 import { Innovation } from '../../../../../../models/innovation';
 import { Tag } from '../../../../../../models/tag';
-import { first, takeUntil } from 'rxjs/operators';
+import { first } from 'rxjs/operators';
 import { isPlatformBrowser } from '@angular/common';
 import { RolesFrontService } from '../../../../../../services/roles/roles-front.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorFrontService } from '../../../../../../services/error/error-front.service';
 import { InnovationFrontService } from '../../../../../../services/innovation/innovation-front.service';
-import { Subject } from 'rxjs';
 import {Table, UmiusConfigInterface, UmiusConfigService, UmiusSidebarInterface} from '@umius/umi-common-component';
 
 @Component({
   templateUrl: 'admin-project-tags-pool.component.html',
 })
 
-export class AdminProjectTagsPoolComponent implements OnInit, OnDestroy {
+export class AdminProjectTagsPoolComponent implements OnInit {
 
   private _localConfig: UmiusConfigInterface = {
     fields: '',
@@ -44,8 +43,6 @@ export class AdminProjectTagsPoolComponent implements OnInit, OnDestroy {
 
   private _isEditable = false;
 
-  private _ngUnsubscribe: Subject<any> = new Subject<any>();
-
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _configService: UmiusConfigService,
               private _rolesFrontService: RolesFrontService,
@@ -55,14 +52,10 @@ export class AdminProjectTagsPoolComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     if (isPlatformBrowser(this._platformId)) {
+      this._innovation = this._innovationFrontService.innovation().value;
       this._isLoading = false;
       this._initializeTable();
-
-      this._innovationFrontService.innovation().pipe(takeUntil(this._ngUnsubscribe)).subscribe((innovation) => {
-        this._innovation = innovation || <Innovation>{};
-        this._getTagsFromPool();
-      });
-
+      this._getTagsFromPool();
     }
   }
 
@@ -110,7 +103,7 @@ export class AdminProjectTagsPoolComponent implements OnInit, OnDestroy {
       this._initializeTable();
     }, (err: HttpErrorResponse) => {
       this._fetchingError = true;
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
+      this._translateNotificationsService.error('Tags Fetching Error...', ErrorFrontService.getErrorKey(err.error));
       console.error(err);
     });
   }
@@ -151,9 +144,9 @@ export class AdminProjectTagsPoolComponent implements OnInit, OnDestroy {
           }
         }, (err: HttpErrorResponse) => {
           if (this._tags.length > 0 && this._tags.find((existTag) => existTag.originalTagId === tag._id)) {
-            this._translateNotificationsService.error('Error', 'The tag is already exists.');
+            this._translateNotificationsService.error('Tag Adding Error...', 'The tag is already exists.');
           } else {
-            this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
+            this._translateNotificationsService.error('Tag Adding Error...', ErrorFrontService.getErrorKey(err.error));
           }
         });
       });
@@ -168,7 +161,7 @@ export class AdminProjectTagsPoolComponent implements OnInit, OnDestroy {
           this._getTagsFromPool();
         }
       }, (err: HttpErrorResponse) => {
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
+        this._translateNotificationsService.error('Tag Deleting Error...', ErrorFrontService.getErrorKey(err.error));
         console.error(err);
       });
     });
@@ -189,7 +182,7 @@ export class AdminProjectTagsPoolComponent implements OnInit, OnDestroy {
       this._getTagsFromPool();
       this._translateNotificationsService.success('Success' , 'The tag is updated.');
     }, (err: HttpErrorResponse) => {
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
+      this._translateNotificationsService.error('Tag Updating Error...', ErrorFrontService.getErrorKey(err.error));
       console.error(err);
     });
   }
@@ -236,11 +229,6 @@ export class AdminProjectTagsPoolComponent implements OnInit, OnDestroy {
 
   get isEditable(): boolean {
     return this._isEditable;
-  }
-
-  ngOnDestroy(): void {
-    this._ngUnsubscribe.next();
-    this._ngUnsubscribe.complete();
   }
 
 }

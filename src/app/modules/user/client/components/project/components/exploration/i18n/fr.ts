@@ -3,7 +3,7 @@ export const EXPLORATION = {
 
   'MESSAGE': {
     'SUBMITTED': 'Votre projet est en cours de validation. Nous revenons vers vous rapidement !',
-    'EDITING': 'Une fois votre test marché lancé, vous pourrez consulter sur cette page, en temps réel, les avis des professionnels.',
+    'EDITING': 'Une fois votre Test Marché lancé, vous pourrez consulter sur cette page, en temps réel, les avis des professionnels.',
     'REVIEWING': 'Nous vous avons suggéré des modifications du projet par email. Une fois fait, soumettez-le de nouveau.'
   },
 

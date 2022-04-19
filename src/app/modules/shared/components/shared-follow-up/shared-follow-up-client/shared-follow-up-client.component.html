@@ -38,12 +38,12 @@
   <!-- start contact process -->
   <ng-container *ngIf="startContactProcess">
     <ng-container [ngSwitch]="contactFields[currentStep]">
-      <div class="container fluid grid-2xl">
+      <div class="container fluid">
         <div class="pws-wrapper">
 
           <!-- sidebar -->
           <ng-container *ngSwitchCase="'STEP_SELECT'">
-            <aside style="max-width: 285px" class="sidebar-wrapper">
+            <aside class="sidebar-wrapper">
               <umius-sidebar-inline [(template)]="sidebarTemplate">
                 <app-sidebar-filter-answers
                   (selectedAnswers)="updateAnswers($event)"
@@ -108,7 +108,7 @@
             <!-- /step intro -->
 
             <!-- step select -->
-            <div [hidden]="contactFields[currentStep] !== 'STEP_SELECT'" class="p-top-30">
+            <div [hidden]="contactFields[currentStep] !== 'STEP_SELECT'" class="p-top-30 m-right-30">
               <umius-table
                 (editRow)="seeAnswer($event)"
                 (selectRows)="rowsSelected($event)"

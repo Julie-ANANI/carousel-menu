@@ -14,7 +14,6 @@ import { MissionFrontService } from '../../../../../services/mission/mission-fro
 import { SocketService } from '../../../../../services/socket/socket.service';
 import { AuthService } from '../../../../../services/auth/auth.service';
 import {RouteFrontService} from '../../../../../services/route/route-front.service';
-import {CommonService} from '../../../../../services/common/common.service';
 import { TranslateNotificationsService } from "../../../../../services/translate-notifications/translate-notifications.service";
 import { ErrorFrontService } from "../../../../../services/error/error-front.service";
 
@@ -36,10 +35,6 @@ export class ProjectComponent implements OnInit, OnDestroy {
     return this._iconClass;
   }
 
-  get objectiveName(): string {
-    return this._objectiveName;
-  }
-
   private _innovation: Innovation = <Innovation>{};
 
   private _mission: Mission = <Mission>{};
@@ -56,18 +51,13 @@ export class ProjectComponent implements OnInit, OnDestroy {
 
   private _updateTime: number;
 
-  private _socketListening = false;
-
   private _openModal = false;
-
-  private _objectiveName = '';
 
   private _iconClass = '';
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _activatedRoute: ActivatedRoute,
               private _routeFrontService: RouteFrontService,
-              private _commonService: CommonService,
               private _translateTitleService: TranslateTitleService,
               private _innovationService: InnovationService,
               private _translateNotificationsService: TranslateNotificationsService,
@@ -79,24 +69,32 @@ export class ProjectComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    if (isPlatformBrowser(this._platformId)) {
+      this._setTabs();
+      this._initPageTitle();
+
+      this._activatedRoute.params.subscribe((params) => {
+        if (params['projectId']) {
+          this._getInnovation(params['projectId']);
+        }
+      });
+
+      this._initCurrentTab();
+    }
+  }
+
+  private _initData() {
+    this._verifyFollowUp();
     this._initPageTitle();
-    this._setTabs();
 
-    this._activatedRoute.params.subscribe((params) => {
-      if (params['projectId']) {
-        this._getInnovation(params['projectId']);
+    if (!!<Mission>this._innovation.mission && (<Mission>this._innovation.mission)._id) {
+      this._mission = <Mission>this._innovation.mission;
+
+      if (!MissionFrontService.hasMissionTemplate(this._mission)) {
+        this._iconClass = MissionFrontService.objectiveInfo(<Mission>this._mission, 'FONT_AWESOME_ICON');
       }
-    });
 
-    this._initCurrentTab();
-
-    this._innovationFrontService.innovation().pipe(takeUntil(this._ngUnsubscribe)).subscribe((innovation) => {
-      this._innovation = innovation || <Innovation>{};
-      this._verifyFollowUp();
-      this._mission = <Mission>this._innovation.mission || <Mission>{};
-      this._initValues();
-      this._socket();
-    });
+    }
   }
 
   private _setTabs() {
@@ -114,22 +112,17 @@ export class ProjectComponent implements OnInit, OnDestroy {
    * @private
    */
   private _socket() {
-    if (!this._socketListening && this._innovation._id) {
-      this._socketService.getMissionUpdates(this._mission._id).pipe(takeUntil(this._ngUnsubscribe)).subscribe((update: any) => {
-        this._realTimeUpdate('mission', update);
-        }, (error) => {
-        console.error(error);
-      });
+    this._socketService.getMissionUpdates(this._mission._id).pipe(takeUntil(this._ngUnsubscribe)).subscribe((update: any) => {
+      this._realTimeUpdate('mission', update);
+    }, (error) => {
+      console.error(error);
+    });
 
-      this._socketService.getProjectUpdates(this._innovation._id)
-        .pipe(takeUntil(this._ngUnsubscribe)).subscribe((update: any) => {
-          this._realTimeUpdate('project', update);
-          }, (error) => {
-          console.error(error);
-        });
-
-      this._socketListening = true;
-    }
+    this._socketService.getProjectUpdates(this._innovation._id).pipe(takeUntil(this._ngUnsubscribe)).subscribe((update: any) => {
+      this._realTimeUpdate('project', update);
+    }, (error) => {
+      console.error(error);
+    });
   }
 
   private _verifyFollowUp() {
@@ -153,18 +146,40 @@ export class ProjectComponent implements OnInit, OnDestroy {
   }
 
   private _realTimeUpdate(object: string, update: any) {
+    let isUpdated = false;
+
     if (update.userId !== this._authService.userId) {
       this._showBanner = update.userName;
       this._updateTime = Date.now();
     }
+
     Object.keys(update.data).forEach((field: string) => {
+
       if (object === 'project') {
         this._innovation[field] = update.data[field];
-      } else {
-        this._mission[field] = update.data[field];
+        isUpdated = true;
+      }
+
+      if (object === 'mission') {
+        if (!!update.data[field]['template']) {
+          this._innovation.mission['template'] = update.data[field]['template'];
+        }
+        if (!!update.data[field]['comment']) {
+          this._innovation.mission['objectiveComment'] = update.data[field]['comment'];
+        }
+        this._innovation.mission[field] = update.data[field];
+        isUpdated = true;
       }
     });
-    this._innovationFrontService.setInnovation(this._innovation);
+
+    if (isUpdated) {
+      this._emitUpdatedInnovation();
+      this._initData();
+    }
+  }
+
+  private _emitUpdatedInnovation() {
+    this._innovationFrontService.setInnovation(JSON.parse(JSON.stringify(this._innovation)));
   }
 
   /***
@@ -180,18 +195,6 @@ export class ProjectComponent implements OnInit, OnDestroy {
     }
   }
 
-  /**
-   * will initialize the variables here.
-   * @private
-   */
-  private _initValues() {
-    this._objectiveName = MissionFrontService.objectiveName(this._mission.template, this.currentLang);
-
-    if (!MissionFrontService.hasMissionTemplate(this._mission.template)) {
-      this._iconClass = MissionFrontService.objectiveInfo(<Mission>this._mission, 'FONT_AWESOME_ICON');
-    }
-  }
-
   /***
    * we are getting the innovation from the api.
    * @param projectId
@@ -200,12 +203,13 @@ export class ProjectComponent implements OnInit, OnDestroy {
   private _getInnovation(projectId: string) {
     if (isPlatformBrowser(this._platformId)) {
       this._innovationService.get(projectId).pipe(first()).subscribe((innovation: Innovation) => {
-        this._innovationFrontService.setInnovation(innovation);
-        this._initPageTitle();
+        this._innovation = innovation;
+        this._emitUpdatedInnovation();
+        this._initData();
         if (!this._authService.user) {
-          this._authService.initializeSession().pipe(first()).subscribe(() => {
-          });
+          this._authService.initializeSession().pipe(first()).subscribe();
         }
+        this._socket();
       }, (err: HttpErrorResponse) => {
         console.error(err);
         this._fetchingError = true;
@@ -240,10 +244,6 @@ export class ProjectComponent implements OnInit, OnDestroy {
 
   get currentLang(): string {
     return this._translateService.currentLang;
-  }
-
-  get dateFormat(): string {
-    return this._commonService.dateFormat();
   }
 
   get tabs(): Array<Tab> {

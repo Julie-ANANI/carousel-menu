@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Mission, MissionQuestion, MissionTemplate } from '../../models/mission';
 import { Observable } from 'rxjs';
 import { Innovation } from '../../models/innovation';
 import { Response } from '../../models/response';
-import {UmiusConfigInterface, UmiusMultilingInterface} from '@umius/umi-common-component';
+import { UmiusConfigInterface, UmiusMultilingInterface } from '@umius/umi-common-component';
+import { CacheType } from "../../models/cache";
 
 @Injectable({providedIn: 'root'})
 export class MissionService {
@@ -15,9 +16,14 @@ export class MissionService {
   /**
    * will return the list of all the questions.
    * @param config
+   * @param cache
    */
-  public getAllQuestions(config?: UmiusConfigInterface): Observable<Response> {
-    return this._http.get<Response>('/mission/questions/all', {params: config});
+  public getAllQuestions(config?: UmiusConfigInterface, cache: CacheType = 'reset'): Observable<Response> {
+    return this._http.get<Response>('/mission/questions/all',
+      {
+        params: config,
+        headers: new HttpHeaders().set('cache', cache)
+      });
   }
 
   /**

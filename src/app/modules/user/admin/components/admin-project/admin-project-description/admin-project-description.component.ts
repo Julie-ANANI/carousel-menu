@@ -25,7 +25,7 @@ type modalType = 'NEW_SECTION' | 'DELETE_SECTION' | 'NOTIFY_TEAM' | '';
 interface Toggle {
   title: boolean;
   summary: boolean;
-  addMedias?: boolean;
+  [property: string]: boolean;
 }
 
 @Component({
@@ -37,10 +37,6 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
 
   get notificationJobs(): Array<NotificationJob> {
     return this._notificationJobs;
-  }
-
-  get isFetchingJobs(): boolean {
-    return this._isFetchingJobs;
   }
 
   get isSendingNotification(): boolean {
@@ -86,6 +82,8 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
   private _newSection: InnovCardSection = <InnovCardSection>{};
 
   private _deleteSectionIndex: number = null;
+
+  private _contentChanged = true;
 
   private _toggleComment: Toggle = {
     title: false,
@@ -139,14 +137,17 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-
     this._isEditable = this.canAccess(['edit', 'description']);
+    this._innovation = this._innovationFrontService.innovation().value;
+    this._getAllJobs();
 
     this._innovationFrontService.innovation().pipe(takeUntil(this._ngUnsubscribe)).subscribe((innovation) => {
-      this._innovation = innovation || <Innovation>{};
-      this._isEditableComment = this._isEditable && (this._innovation.status === 'SUBMITTED' || this._innovation.status === 'EDITING');
-      this._initToggle();
-      this._getAllJobs();
+      if (innovation && innovation._id) {
+        this._innovation = innovation;
+        this._contentChanged = false;
+        this._isEditableComment = this._isEditable && (this._innovation.status === 'SUBMITTED' || this._innovation.status === 'EDITING');
+        this._initToggle();
+      }
     });
 
     this._innovationFrontService.activeCardIndex().pipe(takeUntil(this._ngUnsubscribe)).subscribe((index) => {
@@ -187,7 +188,7 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
           width: '100%'
         };
       }
-    };
+    }
     if (!this._isBeingEdited) {
       this._mainContainerStyle['background-color'] = 'white';
     }
@@ -211,7 +212,6 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
       this._notificationService.getAllJobs(config).pipe(first()).subscribe((response) => {
         this._notificationJobs = response && response.result || [];
       }, (err: HttpErrorResponse) => {
-        this._translateNotificationsService.error('Notification Jobs Error', ErrorFrontService.getErrorKey(err.error));
         console.error(err);
       });
     }
@@ -235,7 +235,7 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
           this._notificationJobs.unshift(res.job);
           }, (err: HttpErrorResponse) => {
           this._isSendingNotification = false;
-          this._translateNotificationsService.error('Error', ErrorFrontService.getErrorKey(err.error));
+          this._translateNotificationsService.error('Notification Error...', ErrorFrontService.getErrorKey(err.error));
           console.error(err);
         });
     }
@@ -279,8 +279,7 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
 
     this._togglePreviewMode = {
       title: true,
-      summary: true,
-      addMedias: true
+      summary: true
     };
 
     for (let i = 0; i < this.activeInnovCard.sections.length; i++) {
@@ -390,6 +389,7 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
           this.activeInnovCard.lang);
     }
     this.updateInnovation();
+    this._contentChanged = true;
   }
 
   public toggleVisibility(event: Event, index: number) {
@@ -398,8 +398,8 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
     this.updateInnovation();
   }
 
-  public updateInnovation() {
-    this._innovationFrontService.setNotifyChanges({key: 'innovationCards', state: true});
+  public updateInnovation(autoSave = false) {
+    this._innovationFrontService.setNotifyChanges({key: 'innovationCards', state: true, autoSave});
   }
 
   public updateComment() {
@@ -551,11 +551,9 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
       }
     }
 
-    this._setInnovation();
+    this._emitUpdatedInnovation();
     this._translateNotificationsService.success('Success', 'The media has been uploaded.');
     this.toggleDisplayUploadOverlay();
-
-
   }
 
   public uploadVideo(video: UmiusVideoInterface): void {
@@ -566,17 +564,16 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
       .subscribe((res) => {
         this._isUploadingVideo = false;
         this.activeInnovCard.media.push(res);
-
         if (!this._innovation.innovationCards[this._activeCardIndex].principalMedia) {
           this.onSetPrincipal(res);
         } else {
-          this._setInnovation();
+          this._emitUpdatedInnovation();
         }
         this._translateNotificationsService.success('Success', 'The media has been uploaded.');
         this.toggleDisplayUploadOverlay();
       }, (err: HttpErrorResponse) => {
         this._isUploadingVideo = false;
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
+        this._translateNotificationsService.error('Media Uploading Error...', ErrorFrontService.getErrorKey(err.error));
         console.error(err);
       });
   }
@@ -628,17 +625,17 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
           this._isSavingMedia = false;
           this.activeInnovCard.principalMedia = media;
           this._innovation.innovationCards[this._activeCardIndex].principalMedia = media;
-          this._setInnovation();
+          this._emitUpdatedInnovation();
           this._translateNotificationsService.success('Success', 'The media has been set as a principal media.');
         }, (err: HttpErrorResponse) => {
-          this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
+          this._translateNotificationsService.error('Principal Media Error...', ErrorFrontService.getErrorKey(err.error));
           this._isSavingMedia = false;
           console.error(err);
         });
     }
   }
 
-  private _setInnovation() {
+  private _emitUpdatedInnovation() {
     this._innovationFrontService.setInnovation(this._innovation);
   }
 
@@ -650,13 +647,13 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
         .subscribe(() => {
           this.activeInnovCard.media = this.activeInnovCard.media.filter((_media) => _media._id !== media._id);
           this._innovation.innovationCards[this._activeCardIndex].media = this.activeInnovCard.media;
-          this._setInnovation();
+          this._emitUpdatedInnovation();
           this._updateMediaFilter(); // Mise à jour de la liste des medias filtrées
           this._isSavingMedia = false;
           this._verifyPrincipal(media);
           this._translateNotificationsService.success('Success', 'The media has been deleted.');
         }, (err: HttpErrorResponse) => {
-          this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
+          this._translateNotificationsService.error('Media Deleting Error...', ErrorFrontService.getErrorKey(err.error));
           this._isSavingMedia = false;
           console.error(err);
         });
@@ -671,7 +668,7 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
   private _verifyPrincipal(deleteMedia: UmiusMediaInterface) {
     if (this.activeInnovCard.media.length === 0 && this.activeInnovCard.principalMedia && this.activeInnovCard.principalMedia._id) {
       this._innovation.innovationCards[this._activeCardIndex].principalMedia = null;
-      this._setInnovation();
+      this._emitUpdatedInnovation();
     } else if (this.activeInnovCard.principalMedia && this.activeInnovCard.principalMedia._id === deleteMedia._id
       && this.activeInnovCard.media && this.activeInnovCard.media[0]) {
       this.onSetPrincipal(this.activeInnovCard.media[0]);
@@ -700,6 +697,9 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
   padPreviewModeOnChange(title: string) {
     this._togglePreviewMode[title] = !this._togglePreviewMode[title];
     this._isBeingEdited = !this._isBeingEdited;
+    if(this._togglePreviewMode[title] && this._contentChanged){
+      this.updateInnovation(true)
+    }
   }
 
   mediaToShow(mediaSrc: any) {

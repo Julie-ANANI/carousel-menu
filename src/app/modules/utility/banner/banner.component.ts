@@ -26,7 +26,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
       <div
         [ngClass]="background"
         [ngStyle]="{'position': position}"
-        class="banner animate-fade is-7"
+        class="banner"
         id="banner">
         <div class="m-right-15">
           <ng-content></ng-content>

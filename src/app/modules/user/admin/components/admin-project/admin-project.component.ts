@@ -17,8 +17,6 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Subject } from 'rxjs';
 import { CampaignFrontService } from '../../../../../services/campaign/campaign-front.service';
 import { AuthService } from '../../../../../services/auth/auth.service';
-import { InnovCard } from '../../../../../models/innov-card';
-import { environment } from '../../../../../../environments/environment';
 import { CommonService } from '../../../../../services/common/common.service';
 import { Response } from '../../../../../models/response';
 import { Campaign } from '../../../../../models/campaign';
@@ -38,6 +36,26 @@ interface Tab {
 })
 
 export class AdminProjectComponent implements OnInit, OnDestroy {
+
+  get hasMissionObjective(): boolean {
+    return this._hasMissionObjective;
+  }
+
+  get hasMissionTemplate(): boolean {
+    return this._hasMissionTemplate;
+  }
+
+  get objectiveName(): string {
+    return this._objectiveName;
+  }
+
+  get mission(): Mission {
+    return this._mission;
+  }
+
+  get timeout(): any {
+    return this._timeout;
+  }
 
   private _project: Innovation = <Innovation>{};
 
@@ -95,6 +113,16 @@ export class AdminProjectComponent implements OnInit, OnDestroy {
 
   private _allCampaigns: Array<Campaign> = [];
 
+  private _timeout: any = null;
+
+  private _mission: Mission = <Mission>{};
+
+  private _objectiveName = '';
+
+  private _hasMissionTemplate = false;
+
+  private _hasMissionObjective = false;
+
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _activatedRoute: ActivatedRoute,
               private _translateService: TranslateService,
@@ -108,30 +136,27 @@ export class AdminProjectComponent implements OnInit, OnDestroy {
               private _authService: AuthService,
               private _commonService: CommonService,
               private _socketService: SocketService) {
-    this._project = this._activatedRoute.snapshot.data['innovation'];
-    this._verifyFollowUpTab();
-    this._setInnoTitle();
-    this._setInnovation();
-    this._setQuizLink();
   }
 
   ngOnInit() {
     if (isPlatformBrowser(this._platformId)) {
+      this._project = this._activatedRoute.snapshot.data['innovation'];
+      this._initPageTitle();
+      this._emitUpdatedInnovation();
       this._initSubTabs();
 
-      this.getAllCampaigns();
-
-      if (this._project && !!this._project._id) {
-        this._initPageTitle();
+      if (this._project && this._project._id) {
+        this._initVariables();
+        this._verifyFollowUpTab();
+        this._getAllCampaigns();
+        this._quizLink = InnovationFrontService.quizLink(this._project);
         this._isLoading = false;
 
-        this._socketService.getProjectUpdates(this._project._id)
-          .pipe(takeUntil(this._ngUnsubscribe))
-          .subscribe((update: any) => {
-            this._realTimeUpdate('project', update);
+        this._socketService.getProjectUpdates(this._project._id).pipe(takeUntil(this._ngUnsubscribe)).subscribe((update: any) => {
+          this._realTimeUpdate('project', update);
           }, (error) => {
-            console.error(error);
-          });
+          console.error(error);
+        });
 
         if (this._project.mission && typeof this._project.mission !== 'string' && this._project.mission._id) {
           this._socketService.getMissionUpdates(this._project.mission._id)
@@ -149,8 +174,17 @@ export class AdminProjectComponent implements OnInit, OnDestroy {
     }
   }
 
+  private _initVariables() {
+    this._setInnoTitle();
+    this._mission = <Mission>this._project.mission;
+    this._hasMissionTemplate = MissionFrontService.hasMissionTemplate(this._mission);
+    this._objectiveName = MissionFrontService.objectiveName(this._mission.template, this._currentLang);
+    this._hasMissionObjective = this._mission.objective && this._mission.objective.principal && this._mission.objective.principal['en']
+      && this._mission.objective.principal['en'] !== 'Other';
+  }
+
   /**
-   * for the new projects we hide the Follow Up tab.
+   * for the new projects we hide the Follow-Up tab.
    * @private
    */
   private _verifyFollowUpTab() {
@@ -180,43 +214,43 @@ export class AdminProjectComponent implements OnInit, OnDestroy {
   }
 
   private _realTimeUpdate(object: string, update: any) {
+    let isUpdated = false;
 
     if (update.userId !== this._authService.userId) {
       this._showBanner = update.userName;
       this._updateTime = Date.now();
     }
 
-    this._setInnoTitle();
-    this._operatorComments(update);
-
     Object.keys(update.data).forEach((field: string) => {
-
       /**
        * here we are checking the field because when we update the innovation some time we update the other object to
        * in the back so to have the proper updated object here we check the field and try to have field name different
        * from the object field name.
        */
       if (field === 'missionTemplate') {
+        isUpdated = true;
         this._project.mission['template'] = update.data[field];
-      } else if (object === 'project') {
-        this._project[field] = update.data[field];
-      } else {
+      }
+
+      if (object === 'project') {
+        isUpdated = true;
+        if (!!update.data['missionResult']) {
+          this._project.mission['result'] = update.data['missionResult'];
+        } else {
+          this._project[field] = update.data[field];
+        }
+      }
+
+      if (object === 'mission') {
+        isUpdated = true;
         this._project.mission[field] = update.data[field];
       }
     });
 
-    this._setInnovation();
-  }
-
-  /**
-   * todo this is temporary solution. Abhishek is looking into better solution.
-   * @private
-   */
-  private _operatorComments(update: any) {
-    if (update && update.data && update.data['innovationCards'] && update.data['innovationCards'].length) {
-      update.data['innovationCards'].forEach((card: InnovCard, index: number) => {
-        card.operatorComment = this._project.innovationCards[index].operatorComment;
-      });
+    if (isUpdated) {
+      this._setInnoTitle();
+      this._emitUpdatedInnovation();
+      this._initVariables();
     }
   }
 
@@ -233,8 +267,8 @@ export class AdminProjectComponent implements OnInit, OnDestroy {
 
   private _setPageTitle() {
     if (this._activatedTab && this._project.name) {
-      this._translateTitleService.setTitle(this._activatedTab.slice(0, 1).toUpperCase()
-        + this._activatedTab.slice(1) + ' | ' + this._project.name);
+      this._translateTitleService.setTitle(this._activatedTab.slice(0, 1).toUpperCase() + this._activatedTab.slice(1)
+        + ' | ' + this._project.name);
     } else {
       this._translateTitleService.setTitle('Project');
     }
@@ -267,8 +301,8 @@ export class AdminProjectComponent implements OnInit, OnDestroy {
     }
   }
 
-  private _setInnovation() {
-    this._innovationFrontService.setInnovation(this._project);
+  private _emitUpdatedInnovation() {
+    this._innovationFrontService.setInnovation(JSON.parse(JSON.stringify(this._project)));
   }
 
   private _resetModals() {
@@ -294,9 +328,10 @@ export class AdminProjectComponent implements OnInit, OnDestroy {
    *
    * @private
    */
-  private getAllCampaigns() {
+  private _getAllCampaigns() {
     this._innovationService.campaigns(this._project._id).pipe(first()).subscribe((response: Response) => {
       this._allCampaigns = response && response.result || [];
+      this._allCampaigns = CommonService.sortByCompare(this._allCampaigns, 'title');
       this._campaignFrontService.setAllCampaigns(this._allCampaigns);
     }, (err: HttpErrorResponse) => {
       this._translateNotificationsService.error('Campaigns Fetching Error...', ErrorFrontService.getErrorKey(err.error));
@@ -307,11 +342,11 @@ export class AdminProjectComponent implements OnInit, OnDestroy {
   public onClickImportFollowUp(event: Event) {
     event.preventDefault();
     this._innovationService.updateFollowUpEmails(this._project._id).pipe(first()).subscribe((result: Innovation) => {
-      this._project.followUpEmails = result.followUpEmails;
-      this._setInnovation();
       this._translateNotificationsService.success('Success', 'The e-mails have been imported into the project.');
+      this._project.followUpEmails = result.followUpEmails;
+      this._emitUpdatedInnovation();
     }, (err: HttpErrorResponse) => {
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
+      this._translateNotificationsService.error('Follow-up Updating Error...', ErrorFrontService.getErrorKey(err.error));
       console.error(err);
     });
   }
@@ -349,18 +384,6 @@ export class AdminProjectComponent implements OnInit, OnDestroy {
     this.closeModal();
   }
 
-  private _setQuizLink() {
-    if (
-      this._project.quizId &&
-      Array.isArray(this._project.campaigns) &&
-      this._project.campaigns.length > 0
-    ) {
-      this._quizLink =
-        `${environment.quizUrl}/quiz/${this._project.quizId}/${this._project.campaigns[0]._id}` ||
-        '';
-    }
-  }
-
   openQuiz($event: Event) {
     $event.preventDefault();
     if (this.quizLink) {
@@ -390,11 +413,7 @@ export class AdminProjectComponent implements OnInit, OnDestroy {
     this._innovTitle = InnovationFrontService.currentLangInnovationCard(this._project, this._currentLang, 'TITLE');
   }
 
-  public objectiveName(lang = this.currentLang): string {
-    return MissionFrontService.objectiveName(this.mission.template, lang);
-  }
-
-  setPageTitle(isCampaignTabs: boolean, path: string) {
+  public setPageTitle(isCampaignTabs: boolean, path: string) {
     if (isCampaignTabs) {
       this._translateTitleService.setTitle(`${path.toUpperCase()}
       | Campaign | Campaigns | Preparation | ${this._project.name}`);
@@ -441,30 +460,13 @@ export class AdminProjectComponent implements OnInit, OnDestroy {
         this._project._id
       }/preparation/${paths}`;
     }
-    setTimeout(() => {
+    this._timeout = setTimeout(() => {
       this._router.navigate([route]);
     }, 0);
   }
 
-  get title(): string {
-    return this._innovTitle ? this._innovTitle : this._project.name;
-  }
-
-  get mission(): Mission {
-    return this._project.mission && (<Mission>this._project.mission)._id ? <Mission>this._project.mission : <Mission>{};
-  }
-
-  get hasMissionObjective(): boolean {
-    return this.mission.objective && this.mission.objective.principal && this.mission.objective.principal['en']
-      && this.mission.objective.principal['en'] !== 'Other';
-  }
-
-  get hasMissionTemplate(): boolean {
-    return this.mission.template && this.mission.template.entry && this.mission.template.entry.length > 0;
-  }
-
   get iconClass(): string {
-    return MissionFrontService.objectiveInfo(<Mission>this.mission, 'FONT_AWESOME_ICON');
+    return MissionFrontService.objectiveInfo(<Mission>this._mission, 'FONT_AWESOME_ICON');
   }
 
   get canImport(): boolean {
@@ -542,6 +544,10 @@ export class AdminProjectComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this._ngUnsubscribe.next();
     this._ngUnsubscribe.complete();
+
+    if (!!this._timeout) {
+      clearTimeout(this._timeout);
+    }
   }
 
 }

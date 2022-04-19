@@ -89,7 +89,7 @@
                     <ng-container *ngIf="(item.isFilled && ((!canEdit.addItem && !canEdit.editItem) ||
                     itemIndex !== i))">
                       <div
-                        class="bg-draft text-white text-center text-medium flex-centered br-3 p-10 relative"
+                        class="bg-draft text-white text-center text-medium flex-centered br-3 p-10 relative text-break"
                         style="height: 56px; width: 390px;">
                         {{ item.content }}
                         <ng-container *ngIf="isEditable">
@@ -150,7 +150,9 @@
                 <!-- show item -->
                 <ng-container *ngIf="(item.isFilled && ((!canEdit.addItem && !canEdit.editItem) || itemIndex !== i))">
                   <div style="width: 232px;" class="d-flex m-bottom-2">
-                    <p class="text-medium m-right-10 text-lg m-no flex-full">{{ item.title }}</p>
+                    <p class="text-medium m-right-10 text-lg m-no flex-full" style="max-width: 220px; overflow-x: scroll">
+                      {{ item.title }}
+                    </p>
                     <ng-container *ngIf="isEditable">
                       <ng-container
                         *ngTemplateOutlet="editItemBtn;context:{value: {index: i, btn: 'editItem'}}">
@@ -158,7 +160,7 @@
                     </ng-container>
                   </div>
                   <div
-                    class="bg-draft text-white text-center text-medium flex-centered br-3 p-10"
+                    class="bg-draft text-white text-center text-medium flex-centered br-3 p-10 text-break"
                     style="height: 100px; width: 232px;">
                     {{ item.content }}
                   </div>
@@ -228,7 +230,7 @@
                       </ng-container>
                     </div>
                     <div
-                      class="bg-draft text-white text-center text-medium flex-centered br-3"
+                      class="bg-draft text-white text-center text-medium flex-centered br-3 text-break"
                       style="min-height: 42px;">
                       {{ item.content }}
                     </div>

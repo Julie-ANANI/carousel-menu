@@ -37,6 +37,10 @@ import {SharedFollowUpModule} from '../../../../shared/components/shared-follow-
 import {MessageTemplate2Module} from '../../../../utility/messages/message-template-2/message-template-2.module';
 import {LangEntryPipeModule} from '../../../../../pipe/lang-entry/langEntryPipe.module';
 import {ModalModule, SidebarFullModule, TableModule} from '@umius/umi-common-component';
+import {MissionPipeModule} from '../../../../../pipe/mission/missionPipe.module';
+import {MissionQuestionPipeModule} from '../../../../../pipe/mission-question/missionQuestionPipe.module';
+import {UserPipeModule} from '../../../../../pipe/user/userPipe.module';
+import {CommonPipeModule} from '../../../../../pipe/common/commonPipe.module';
 
 @NgModule({
   imports: [
@@ -68,7 +72,11 @@ import {ModalModule, SidebarFullModule, TableModule} from '@umius/umi-common-com
     LangEntryPipeModule,
     ModalModule,
     TableModule,
-    SidebarFullModule
+    SidebarFullModule,
+    MissionPipeModule,
+    MissionQuestionPipeModule,
+    UserPipeModule,
+    CommonPipeModule
   ],
   declarations: [
     ProjectComponent,

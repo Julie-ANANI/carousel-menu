@@ -3,7 +3,7 @@ import {Picto, picto} from '../../../../../../models/static-data/picto';
 
 @Component({
   selector: 'app-bluesquare',
-  templateUrl: 'bluesquare.component.html',
+  templateUrl: 'bluesquare.component.html'
 })
 
 export class BluesquareComponent {
@@ -15,7 +15,6 @@ export class BluesquareComponent {
   @Input() percentage: number = null;
 
   @Input() readonly = true;
-
   @Output() subtitleChanged = new EventEmitter<string>();
 
   private _editSubtitle = false;

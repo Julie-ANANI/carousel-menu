@@ -21,7 +21,8 @@ export const ERROR = {
   500: {
     NOT_FOUND: 'Sorry, we can\'t find the data.',
     UNKNOWN_ERROR: 'There were some technical issues to carry out this request. Please try again.',
-    DB_ERROR: 'We are having trouble while fetching the data in the database.'
+    DB_ERROR: 'We are having trouble while fetching the data in the database.',
+    SAVE_ERROR: 'We are having trouble while saving the data in the database.'
   },
 
   504: {

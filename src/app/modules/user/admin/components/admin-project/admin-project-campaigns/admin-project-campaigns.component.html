@@ -1,4 +1,4 @@
-<div [hidden]="!canAccess()" class="container fluid grid-2xl" id="admin-project-campaigns">
+<div [hidden]="!canAccess()" class="container fluid" id="admin-project-campaigns">
   <div class="column col-sm-12 col-11 col-mx-auto">
 
     <!-- error message while fetching -->
@@ -6,7 +6,7 @@
     <!-- /error message while fetching -->
 
     <!-- no fetching error -->
-    <div [hidden]="fetchingError && !isLoading" class="p-top-30 p-bottom-30">
+    <div [hidden]="fetchingError && !isLoading" class="p-top-30 p-bottom-50">
 
       <!-- section add campaign -->
       <section *ngIf="canAccess(['add'])" class="text-right p-bottom-50">
@@ -16,67 +16,81 @@
           class="button is-shadowed is-sm"
           id="btn-add-campaign"
           type="button">
-          {{ isAddingCampaign ? 'is adding...' : 'Add Campaign' }}
+          <i class="fas fa-plus-circle icon-left"></i> {{ isAddingCampaign ? 'is adding...' : 'Add a new campaign' }}
         </button>
       </section>
       <!-- /section add campaign -->
 
       <!-- section campaigns -->
-      <section [@listAnimation]="campaigns.length" style="margin-bottom: -30px">
-        <div *ngFor="let campaign of campaigns; let i = index" class="card-wrapper">
-          <div class="card-content">
+      <section [@listAnimation]="campaigns.length" style="margin-bottom: -30px; margin-right: -20px;">
+        <div class="card-responsive">
+          <div *ngFor="let campaign of campaigns; let i = index" class="card relative text-center">
 
-            <div class="d-flex align-center">
-              <a
-                (click)="onNavigation(campaign)"
-                [routerLink]="route(campaign._id)"
-                routerLinkActive="active">
-                {{ campaign.title }}
-              </a>
-              <div *ngIf="campaign.type === 'COMMUNITY'" class="label is-sm text-bold is-success m-left-10">
+            <div style="top: 0; left: 0" class="absolute">
+              <div *ngIf="campaign.type === 'COMMUNITY'" class="label is-sm text-bold is-success">
                 {{ campaign.type }}
               </div>
-              <div *ngIf="!!campaign.rgpd" class="label is-sm text-bold is-success m-left-10">
+              <div *ngIf="!!campaign.rgpd" class="label is-sm text-bold is-warning">
                 GDPR MODE ON
-              </div>
-              <div
-                *ngIf="canAccess(['edit'])"
-                class="text-link text-sm m-left-20 m-top-1"
-                (click)="onEditCampaign($event, campaign)">
-                {{ 'CAMPAIGNS.EDIT_BUTTON' | translate }}
               </div>
             </div>
 
-            <div class="d-flex text-meta text-medium text-sm m-top-2 align-center">
+            <div class="card-header p-top-50">
+              <a
+                (click)="onNavigation(campaign)"
+                [routerLink]="route(campaign._id)"
+                class="card-title text-hover-underline"
+                routerLinkActive="active">
+                {{ campaign.title }}
+              </a>
+            </div>
 
-              <span>{{ stats(campaign, 'nbFirstTierMails') }} Good email(s)</span>
+            <!-- edit button -->
+            <ng-container *ngIf="canAccess(['edit'])">
+              <button
+                (click)="onEditCampaign($event, campaign)"
+                class="button tooltip is-circled absolute is-outlined is-xs text-sm"
+                data-tooltip="Edit campaign"
+                style="top: 5px; right: 5px;"
+                type="button">
+                <i class="fas fa-pencil-alt"></i>
+              </button>
+            </ng-container>
+            <!-- /edit button -->
 
-              <ng-container *ngIf="canAccess(['campaign', 'batch', 'quiz'])">
+            <div class="card-body">
+
+              {{ stats(campaign, 'nbFirstTierMails') }} Good email(s)
+
+              <div *ngIf="canAccess(['campaign', 'batch', 'quiz'])" class="m-top-15">
                 <ng-container *ngIf="!!quizURL('fr', campaign)">
-                  |
-                  <span (click)="copyQuizLink('fr', campaign)" class="text-link text-secondary m-left-h m-right-h">
-                  Copy FR quiz link
+                  <span
+                    (click)="copyQuizLink('fr', campaign)"
+                    data-tooltip="Click to copy Fr quiz link to clipboard"
+                    class="text-meta c-default tooltip is-multiline text-sm text-medium m-left-h m-right-h">
+                  FR quiz link
                 </span>
                 </ng-container>
                 <ng-container *ngIf="!!quizURL('en', campaign)">
                   |
-                  <span (click)="copyQuizLink('en', campaign)" class="text-link text-secondary m-left-h m-right-h">
-                  Copy EN quiz link
+                  <span
+                    (click)="copyQuizLink('en', campaign)"
+                    data-tooltip="Click to copy En quiz link to clipboard"
+                    class="text-meta c-default tooltip is-multiline text-sm text-medium m-left-h m-right-h">
+                  EN quiz link
                 </span>
                 </ng-container>
-              </ng-container>
+              </div>
 
-              <ng-container *ngIf="canAccess(['delete'])">
-                |
-                <span (click)="onDelete($event, campaign)" class="text-link text-alert m-left-h">
-                  Delete
-                </span>
-              </ng-container>
+            </div>
 
+            <div *ngIf="canAccess(['delete'])" class="card-footer">
+              <button (click)="onDelete($event, campaign)" class="button is-link is-danger">Delete</button>
             </div>
 
           </div>
         </div>
+
       </section>
       <!-- /section campaigns -->
 
@@ -98,7 +112,7 @@
   </section>
 
   <footer class="modal-footer">
-    <button class="button modal-cancel">Cancel</button>
+    <button (click)="closeModal($event)" class="button modal-cancel">Cancel</button>
     <button (click)="onConfirmDelete()" class="button is-primary">Confirm</button>
   </footer>
 

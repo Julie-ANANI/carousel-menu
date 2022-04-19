@@ -67,9 +67,9 @@ export class MarketTestObjectivesComplementaryComponent {
     this.templateSectionsChange.emit(this.selectedSectionsObjectives);
   }
 
-  public isChecked(value: MissionQuestion, sectionIndex: number): boolean {
-    if (this.selectedSectionsObjectives.length && this.selectedSectionsObjectives[sectionIndex]) {
-      return this.selectedSectionsObjectives[sectionIndex].questions.some((objective: MissionQuestion) => {
+  public isChecked(value: MissionQuestion): boolean {
+    if (this.selectedSectionsObjectives.length) {
+      return MissionFrontService.combineComplementaryObjectives(this.selectedSectionsObjectives).some((objective: MissionQuestion) => {
         return objective._id === value._id;
       });
     }

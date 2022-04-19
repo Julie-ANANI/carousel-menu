@@ -8,7 +8,6 @@ import { TranslateService } from '@ngx-translate/core';
 import { TranslateTitleService } from '../../../../../services/title/title.service';
 import { InnovationFrontService } from '../../../../../services/innovation/innovation-front.service';
 import { HttpErrorResponse } from "@angular/common/http";
-import { ErrorFrontService } from "../../../../../services/error/error-front.service";
 
 @Component({
   templateUrl: './synthesis-list.component.html',
@@ -35,10 +34,8 @@ export class SynthesisListComponent implements OnInit, OnDestroy {
                private _userService: UserService,
                private _innovationService: InnovationService,
                private _translateNotificationsService: TranslateNotificationsService,
-               private _translateService: TranslateService) {
-
+               public translateService: TranslateService) {
     this._translateTitleService.setTitle('COMMON.PAGE_TITLE.SHARED_REPORTS');
-
   }
 
   ngOnInit() {
@@ -74,10 +71,8 @@ export class SynthesisListComponent implements OnInit, OnDestroy {
         };
 
         this._totalReports.push(report);
-
         }, (err: HttpErrorResponse) => {
         console.log(err);
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
       })
       );
     });
@@ -119,10 +114,6 @@ export class SynthesisListComponent implements OnInit, OnDestroy {
     this._subscriptions.forEach((sub) => {
       sub.unsubscribe();
     });
-  }
-
-  get dateFormat(): string {
-    return this._translateService.currentLang === 'fr' ? 'dd/MM/y' : 'y/MM/dd';
   }
 
   get totalReports(): any {

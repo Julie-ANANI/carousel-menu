@@ -85,6 +85,10 @@ export class AdminEditWorkflowComponent {
   constructor() {
   }
 
+  public closeModal() {
+    this._modalDelete = false;
+  }
+
   private _initTable() {
     const steps: any = {
       FIRST: {step: 'FIRST', num: '01 - '},

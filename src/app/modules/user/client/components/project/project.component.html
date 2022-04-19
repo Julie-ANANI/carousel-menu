@@ -10,8 +10,8 @@
   <ng-container *ngIf="!fetchingError">
 
     <!-- banner project message  -->
-    <app-utility-banner [(showBanner)]="!!showBanner" [background]="'bg-progress'" [position]="'relative'">
-      <span class="text-normal">
+    <app-utility-banner [(showBanner)]="!!showBanner" background="bg-highlight" position="relative">
+      <span class="text-white">
         This project has been updated by
         <span class="text-medium">{{ showBanner }}</span>
         at
@@ -22,7 +22,7 @@
 
     <!-- header -->
     <section class="p-top-25 main__bg-color">
-      <div class="container fluid grid-2xl">
+      <div class="container fluid">
         <div class="column col-sm-12 col-11 col-mx-auto">
 
           <!-- heading -->
@@ -36,10 +36,11 @@
           <ng-container *ngIf="!!mission.objective || !!mission.template">
 
             <!-- use cases on 1st June, 2021 -->
-            <ng-container *ngIf="!!(mission.template && mission.template.entry && mission.template.entry.length);
-            else oldObjective">
+            <ng-container *ngIf="mission | mission:'hasMissionTemplate'; else oldObjective">
               <div class="flex-centered flex-d-column p-bottom-40">
-                <h3 class="op-8 text-lg text-normal text-white m-bottom-2">{{ objectiveName }}</h3>
+                <h3 class="op-8 text-lg text-normal text-white m-bottom-2">
+                  {{ mission | mission:'objectiveName' }}
+                </h3>
                 <button
                   (click)="showModal($event)"
                   class="button is-link text-sm p-no text-underline"
@@ -102,11 +103,11 @@
 
 <!-- modal methodology -->
 <ng-container *ngIf="!fetchingError && !!mission.template">
-  <umius-modal [maxWidth]="'1024px'" [(showModal)]="openModal">
+  <umius-modal maxWidth="1024px" [(showModal)]="openModal">
     <section class="modal-body p-no br-6">
       <app-market-test-methodology
         [methodology]="mission.template.methodology"
-        [title]="objectiveName">
+        [title]="mission | mission:'objectiveName'">
       </app-market-test-methodology>
     </section>
   </umius-modal>

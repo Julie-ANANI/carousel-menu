@@ -1,3 +1,5 @@
+@import "~@umius/umi-style-framework/scss/variables";
+
 .pws-wrapper {
   display: flex;
 
@@ -9,6 +11,18 @@
     flex: 1;
     padding-left: 35px;
     padding-right: 35px;
+  }
+
+}
+
+@media screen {
+
+  @media (min-width: 1441px) {
+
+    .pws-wrapper .sidebar-wrapper {
+      max-width: 330px;
+    }
+
   }
 
 }

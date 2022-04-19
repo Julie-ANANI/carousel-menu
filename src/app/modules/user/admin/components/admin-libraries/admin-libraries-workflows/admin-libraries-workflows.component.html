@@ -90,10 +90,10 @@
       <select
         class="form-select is-shadowed"
         id="add-workflow-signature"
-        [ngModel]="scenarioSignature.name"
+        #select_signature
+        [ngModel]="select_signature"
         (ngModelChange)="changeScenarioSignature($event)"
         [ngModelOptions]="{standalone: true}">
-        <option [ngValue]="undefined" selected>Select one signature</option>
         <option *ngFor="let signature of signatures" [ngValue]="signature">
           {{ signature.name }}
         </option>
@@ -108,7 +108,7 @@
 
     <button
       (click)="onClickConfirm()"
-      [disabled]="!newScenarioName || isAdding"
+      [disabled]="!newScenarioName || isAdding || (!scenarioSignature.name)"
       class="button is-primary"
       type="button">
       <ng-container *ngIf="isAdding; else textAdd">

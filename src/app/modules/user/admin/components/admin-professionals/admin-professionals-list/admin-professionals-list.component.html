@@ -1,4 +1,4 @@
-<div *ngIf="canAccess()" class="container fluid grid-2xl" id="admin-professionals">
+<div *ngIf="canAccess()" class="container fluid" id="admin-professionals">
   <div class="column col-sm-12 col-11 col-mx-auto">
 
     <!-- error message while fetching -->
@@ -10,7 +10,7 @@
       <app-shared-professionals-list
         [(config)]="config"
         [accessPath]="['professionals']"
-        [tableSelector]="'admin-pros-limit'"
+        tableSelector="'admin-pros-limit'"
         [total]="total"
         [professionals]="professionals">
       </app-shared-professionals-list>

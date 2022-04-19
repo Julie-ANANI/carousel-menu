@@ -15,6 +15,10 @@ import {Answer} from '../../../../../../../models/answer';
 })
 export class ContactComponent implements OnInit, OnDestroy {
 
+  get currentLang(): string {
+    return this._translateService.currentLang;
+  }
+
   get validAnswers(): Array<Answer> {
     return this._validAnswers;
   }
@@ -58,13 +62,6 @@ export class ContactComponent implements OnInit, OnDestroy {
         console.error(err);
       });
     }
-  }
-
-  public message(): string {
-    return this._translateService.currentLang === 'fr'
-      ? 'Dès la première réponse collectée, vous pourrez être présenté.e aux professionnels afin d’approfondir les échanges.'
-      : 'Once the first response is collected, you can be introduced to the professionals in order to continue and ' +
-      'deepen the discussion.';
   }
 
   get isFetching(): boolean {

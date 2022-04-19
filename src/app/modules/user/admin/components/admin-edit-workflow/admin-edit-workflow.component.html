@@ -1,33 +1,33 @@
 <div id="admin-edit-workflow">
 
   <!-- header -->
-  <div class="header-wrapper">
+  <div class="d-flex align-center flex-wrap-wrap text-md m-bottom-20">
 
     <div>{{ campaignScenario.name }} -</div>
 
-    <div *ngIf="inCampaign && defaultScenario === campaignScenario.name" class="m-left-10">
+    <div *ngIf="inCampaign && defaultScenario === campaignScenario.name" class="m-left-10 m-right-2">
       By default
     </div>
 
     <div
       (click)="setDefaultScenario()"
       *ngIf="inCampaign && defaultScenario !== campaignScenario.name && isEditable"
-      class="m-left-10">
+      class="m-left-10 m-right-2">
       Use by default
     </div>
 
     <div
       *ngIf="innovationCardLanguages && innovationCardLanguages.indexOf('en') !== -1"
-      [ngClass]="inCampaign && isModifiedEn ? 'complete' : 'incomplete'"
-      class="shape is-circled m-left-2">
-      <i [ngClass]="{'font-size': '10px'}" class="fas fa-check"></i>
+      [ngClass]="inCampaign && isModifiedEn ? 'bg-success' : 'bg-alert'"
+      class="shape is-circled is-sm text-white m-left-2">
+      <i [ngClass]="inCampaign && isModifiedEn ? 'fa-check' : 'fa-times'" class="fas"></i>
     </div>
 
     <div
-      class="text-link m-left-1"
-      *ngIf="innovationCardLanguages && innovationCardLanguages.indexOf('en') !== -1"
       (click)="changeLanguage('en')"
-      [ngClass]="{ 'active': language === 'en' }">
+      *ngIf="innovationCardLanguages && innovationCardLanguages.indexOf('en') !== -1"
+      [ngClass]="{ 'text-primary': language === 'en', 'text-meta': language !== 'en' }"
+      class="m-left-1 text-medium c-hand text-hover-underline">
       English
     </div>
 
@@ -36,16 +36,16 @@
 
     <div
       *ngIf="innovationCardLanguages && innovationCardLanguages.indexOf('fr') !== -1"
-      [ngClass]="inCampaign && isModifiedFr ? 'complete' : 'incomplete'"
-      class="shape is-circled m-left-2">
-      <i [ngClass]="{'font-size': '10px'}" class="fas fa-check"></i>
+      [ngClass]="inCampaign && isModifiedFr ? 'bg-success' : 'bg-alert'"
+      class="shape is-circled is-sm text-white m-left-2">
+      <i [ngClass]="inCampaign && isModifiedFr ? 'fa-check' : 'fa-times'" class="fas"></i>
     </div>
 
     <div
-      *ngIf="innovationCardLanguages && innovationCardLanguages.indexOf('fr') !== -1"
       (click)="changeLanguage('fr')"
-      [ngClass]="{ 'active': language === 'fr' }"
-      class="text-link m-left-1">
+      *ngIf="innovationCardLanguages && innovationCardLanguages.indexOf('fr') !== -1"
+      [ngClass]="{ 'text-primary': language === 'fr', 'text-meta': language !== 'fr' }"
+      class="m-left-1 text-medium c-hand text-hover-underline">
       French
     </div>
 
@@ -56,7 +56,7 @@
       <span data-tooltip="Delete workflow" class="tooltip">
         <img
           src="https://res.cloudinary.com/umi/image/upload/app/default-images/pictos/picto-delete-danger.svg"
-          alt="">
+          alt="Delete picto">
       </span>
     </div>
 
@@ -75,14 +75,14 @@
 
 
 <!-- modal to delete the scenario -->
-<umius-modal *ngIf="isDeletable" [(showModal)]="modalDelete" [title]="'Delete Board'">
+<umius-modal *ngIf="isDeletable" [(showModal)]="modalDelete" title="Delete Board">
 
   <section class="modal-body">
     Do you really want to delete this workflow? This action is irreversible.
   </section>
 
   <footer class="modal-footer">
-    <button class="button modal-cancel">Cancel</button>
+    <button (click)="closeModal()" class="button modal-cancel">Cancel</button>
     <button
       (click)="deleteScenario()"
       class="button is-primary"
