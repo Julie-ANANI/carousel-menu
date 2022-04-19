@@ -150,7 +150,7 @@
                 <!-- show item -->
                 <ng-container *ngIf="(item.isFilled && ((!canEdit.addItem && !canEdit.editItem) || itemIndex !== i))">
                   <div style="width: 232px;" class="d-flex m-bottom-2">
-                    <p class="text-medium m-right-10 text-lg m-no flex-full" style="max-width: 220px; overflow-x: scroll">
+                    <p class="text-medium m-right-10 text-lg m-no flex-full text-break" style="max-width: 220px">
                       {{ item.title }}
                     </p>
                     <ng-container *ngIf="isEditable">
@@ -328,7 +328,7 @@
     (click)="itemIndex = value.index; onToggle($event, value['btn'])"
     data-tooltip="Edit item"
     [id]="'btn-edit-item'"
-    class="button is-circled is-xs tooltip">
+    class="button is-circled is-xs tooltip m-top-auto">
     <i class="fas fa-pencil-alt"></i>
   </button>
 </ng-template>
