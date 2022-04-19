@@ -389,7 +389,7 @@
     <!-- /textarea -->
 
     <!-- checkbox || radio -->
-    <ng-container *ngIf="question.controlType === 'checkbox' || question.controlType === 'radio'">
+    <ng-container *ngIf="question.controlType === 'checkbox' || question.controlType === 'radio' || question.controlType === 'likert-scale'">
 
       <!-- type 'MARKET_REPORT' -->
       <a *ngIf="templateType === 'MARKET_REPORT'" [href]="'#'+question.identifier" pageScroll>
@@ -458,7 +458,7 @@
 
     <!-- rest types -->
     <div *ngIf="question.controlType !== 'textarea' && question.controlType !== 'checkbox'
-    && question.controlType !== 'radio'" class="scroll-wrapper">
+     && question.controlType !== 'likert-scale'&& question.controlType !== 'radio'" class="scroll-wrapper">
       <a [href]="'#' + question.identifier" pageScroll>
         <i class="icon icon-arrow-right"></i> {{ questionTitle(question) | FormatText }}
       </a>
