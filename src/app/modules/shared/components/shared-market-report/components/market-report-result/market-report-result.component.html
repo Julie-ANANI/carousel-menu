@@ -150,7 +150,9 @@
                 <!-- show item -->
                 <ng-container *ngIf="(item.isFilled && ((!canEdit.addItem && !canEdit.editItem) || itemIndex !== i))">
                   <div style="width: 232px;" class="d-flex m-bottom-2">
-                    <p class="text-medium m-right-10 text-lg m-no flex-full">{{ item.title }}</p>
+                    <p class="text-medium m-right-10 text-lg m-no flex-full" style="max-width: 220px; overflow-x: scroll">
+                      {{ item.title }}
+                    </p>
                     <ng-container *ngIf="isEditable">
                       <ng-container
                         *ngTemplateOutlet="editItemBtn;context:{value: {index: i, btn: 'editItem'}}">
