@@ -531,7 +531,7 @@ export const COMMON = {
     'IMPORTANCE': 'Importance',
     'INTEREST': 'Interest',
     'CRITICALITY': 'Criticality',
-    'LIKELIHOOD': 'Likelihood'
+    'ADOPTABILITY': 'Adoptability'
   },
 
 

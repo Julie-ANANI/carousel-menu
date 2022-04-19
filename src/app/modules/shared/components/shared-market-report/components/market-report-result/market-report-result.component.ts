@@ -207,6 +207,10 @@ export class MarketReportResultComponent implements OnInit {
 
     const thresholds = likertScaleThresholds(2.25, 5);
 
+    // To help chloé debug
+    // TODO remove before MEP
+    console.log(this._scale.score)
+
     if (this._scale.score < thresholds[0]) {
       this._label.color = 'color-1';
       this._label.label = 'MARKET_REPORT.RESULT.' + this._mission?.template?.methodology + '.BAR.LABEL_A';

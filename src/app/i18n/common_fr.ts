@@ -527,7 +527,7 @@ export const COMMON = {
     'IMPORTANCE': 'Important',
     'INTEREST': 'Intérêt',
     'CRITICALITY': 'Criticité',
-    'LIKELIHOOD': 'Probabilité'
+    'ADOPTABILITY': 'Adoptabilité'
   },
 
 };

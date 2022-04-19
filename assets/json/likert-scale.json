@@ -197,25 +197,25 @@
       "fr": "Très critique"
     }
   ],
-  "likelihood": [{
-    "en": "Almost never true",
-    "fr": "Toujours faux"
+  "adoptability": [{
+    "en": "Definitely not",
+    "fr": "Pas du tout"
   },
     {
-      "en": "Usually not true",
-      "fr": "Souvent faux"
+      "en": "Probably not",
+      "fr": "Probablement pas"
     },
     {
-      "en": "Occasionally true",
-      "fr": "Occasionnellement vrai"
+      "en": "Maybe",
+      "fr": "Peut-être"
     },
     {
-      "en": "Usually true",
-      "fr": "Souvent vrai"
+      "en": "Probably",
+      "fr": "Probablement"
     },
     {
-      "en": "Always true",
-      "fr": "Toujours vrai"
+      "en": "Definitely",
+      "fr": "Sans aucun doute"
     }
   ]
 }
