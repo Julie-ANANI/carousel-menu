@@ -593,7 +593,7 @@
         <div class="section-content">
           <div class="form-group">
             <div class="d-flex align-center flex-wrap-wrap title-wrapper">
-              <label class="form-label" id="project-media-href">
+              <label class="form-label m-right-20" id="project-media-href">
                 <span class="shape is-rounded bg-draft text-sm text-white">
                   {{ activeInnovCard.sections && activeInnovCard.sections.length + 3 || 4 }}
                 </span>
@@ -605,7 +605,7 @@
                 *ngIf="isEditable"
                 [attr.data-tooltip]="(isBeingEdited)? 'Preview':'Edit'"
                 (click)="editMedias()"
-                class="button tooltip is-circled is-action is-outlined text-no-underline is-info is-xs text-sm op-text text-meta m-left-15 c-hand"
+                class="button tooltip is-circled is-outlined text-no-underline m-right-15 is-xs text-sm ng-star-inserted"
                 type="button">
                 <i class="fas fa-pencil-alt" *ngIf="!isBeingEdited"></i>
                 <i class="fas fa-eye" *ngIf="isBeingEdited"></i>
