@@ -106,9 +106,11 @@ export class MissionService {
   /**
    * will return all the use cases templates we have defined for a mission.
    * @param config
+   * @param cache
    */
-  public getAllTemplates(config?: UmiusConfigInterface): Observable<Response> {
-    return this._http.get<Response>('/mission/templates/all', {params: config});
+  public getAllTemplates(config?: UmiusConfigInterface, cache: CacheType = 'reset'): Observable<Response> {
+    return this._http.get<Response>('/mission/templates/all',
+      {params: config, headers: new HttpHeaders().set('cache', cache)});
   }
 
   public create(missionObj: Mission): Observable<Mission> {
