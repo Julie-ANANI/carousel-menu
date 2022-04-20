@@ -30,6 +30,7 @@ RUN npm install
 RUN rm -f /var/web/.npmrc
 
 ADD src /var/web/src
+ADD .sentryclirc /var/web/.sentryclirc
 ADD assets /var/web/assets
 ADD server.ts /var/web/server.ts
 ADD angular.json /var/web/angular.json
