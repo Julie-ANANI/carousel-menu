@@ -14,6 +14,7 @@ import {Md5} from 'ts-md5/dist/md5';
 import {EtherpadAccesses} from '../../models/etherpad-accesses';
 
 const AUTH_SESSION_KEY = makeStateKey('authSession');
+const JWT_KEY = 'jwToken-application-front-' + environment.env;
 
 @Injectable({providedIn: 'root'})
 export class AuthService {
@@ -208,7 +209,7 @@ export class AuthService {
 
   private _setJwToken(jwt: string): void {
     if (isPlatformBrowser(this._platformId)) {
-      this._cookieService.put('jwToken-application-front', jwt, this._cookieOptions);
+      this._cookieService.put(JWT_KEY, jwt, this._cookieOptions);
     }
   }
 

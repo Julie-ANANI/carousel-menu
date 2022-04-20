@@ -6,6 +6,7 @@ export const environment = {
   companyName: 'United Motion Ideas',
   clientUrl: 'https://umicli.umi.us',
   companyShortName: 'UMI',
+  env: 'prod',
   domain: 'umi',
   quizUrl: 'https://quiz.umi.us',
   companyURL: 'https://www.umi.us',

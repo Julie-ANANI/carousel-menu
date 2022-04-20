@@ -7,6 +7,7 @@
 export const environment = {
   local: true,
   production: false,
+  env: '',
   apiUrl: '',
   etherpadUrl: '',
   clientUrl: '',
