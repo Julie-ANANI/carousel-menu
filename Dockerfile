@@ -14,8 +14,6 @@ RUN npx browserslist --update-db
 RUN echo build ${APP_NAME} -c=${ENV_NAME}
 RUN node --max-old-space-size=11266 ./node_modules/@angular/cli/bin/ng build --progress --prod --aot ${APP_NAME} -c=${ENV_NAME}
 
-RUN ls dist/browser/*.js.map
-
 # upload source-map to sentry
 RUN if [ $VERSION != "latest" ]; then npm install @sentry/cli; fi
 RUN if [ $VERSION != "latest" ]; then ./node_modules/.bin/sentry-cli releases new ${VERSION}; fi
