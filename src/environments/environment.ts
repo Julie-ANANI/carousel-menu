@@ -8,6 +8,7 @@ export const environment = {
   local: true,
   production: false,
   apiUrl: '',
+  env: '',
   etherpadUrl: '',
   clientUrl: '',
   apiGatewayUrl: '',

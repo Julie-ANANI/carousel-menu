@@ -1,6 +1,7 @@
 export const environment = {
   local: false,
   production: true,
+  env: 'demo',
   apiUrl: 'https://demo.umi.us/api',
   etherpadUrl: 'https://etherpad-demo.umi.us',
   clientUrl: 'https://umicli-demo.umi.us',

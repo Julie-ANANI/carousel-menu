@@ -1,15 +1,16 @@
-import {Inject, Injectable, PLATFORM_ID} from '@angular/core';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
-import {isPlatformServer} from '@angular/common';
-import {CookieService} from 'ngx-cookie';
+import { isPlatformServer } from '@angular/common';
+import { CookieService } from 'ngx-cookie';
 
 @Injectable()
 export class ApiUrlInterceptor implements HttpInterceptor {
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
-              private _cookieService: CookieService) {}
+              private _cookieService: CookieService) {
+  }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     if (req.url.indexOf('http') === -1) { // Si ce n'est pas une URL
@@ -53,8 +54,8 @@ export class ApiUrlInterceptor implements HttpInterceptor {
    * @param req
    * @private
    */
-  private _setJwtoken(newParameters: any, req: HttpRequest<any>){
-    const jwToken = this._cookieService.get('jwToken-application-front');
+  private _setJwtoken(newParameters: any, req: HttpRequest<any>) {
+    const jwToken = this._cookieService.get('jwToken-application-front-' + environment.env);
     if (jwToken) {
       newParameters.headers = req.headers
         .append('Authorization', jwToken);
