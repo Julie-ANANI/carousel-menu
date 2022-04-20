@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 import { MissionQuestionService } from '../../../../../../services/mission/mission-question.service';
 import { HttpErrorResponse } from "@angular/common/http";
 import {Table, UmiusConfigInterface, UmiusLocalStorageService} from '@umius/umi-common-component';
+import { Response } from '../../../../../../models/response';
 
 @Component({
   selector: 'app-admin-use-cases-library',
@@ -77,9 +78,8 @@ export class AdminUseCasesLibraryComponent implements OnInit {
    */
   private _getAllTemplates() {
     if (isPlatformBrowser(this._platformId)) {
-      this._missionService.getAllTemplates(this._config).pipe(first()).subscribe((response) => {
+      this._missionService.getAllTemplates(this._config).pipe(first()).subscribe((response: Response) => {
         this._templates = response && response.result || [];
-        this._localStorageService.setItem('missionTemplates', JSON.stringify(response));
         this._missionQuestionService.setAllTemplates(JSON.parse(JSON.stringify(this._templates)));
         this._total = response && response._metadata && response._metadata.totalCount || 0;
         this._prepareTemplates();

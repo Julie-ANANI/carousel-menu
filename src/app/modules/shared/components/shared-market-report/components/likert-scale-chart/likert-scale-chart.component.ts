@@ -10,6 +10,15 @@ import _ from 'lodash';
 import {MissionQuestionService} from '../../../../../../services/mission/mission-question.service';
 import {SectionLikertScale} from '../../../../../../models/executive-report';
 
+const defaultLikertScaleColors = [
+  `rgba(234,88,88,0.3)`,
+  `rgba(248,148,36,0.3)`,
+  `rgba(187,199,214,0.3)`,
+  `rgba(153,224,75,0.3)`,
+  `rgba(46,204,113,0.3)`
+]
+
+const likertScaleLabels = [ 'TOTALLY_INVALIDATED', 'INVALIDED', 'UNCERTAIN', 'VALIDATED', 'TOTALLY_VALIDATED'];
 
 @Component({
   selector: 'app-likert-scale-chart',
@@ -40,15 +49,6 @@ export class LikertScaleChartComponent implements OnInit, OnDestroy {
     averageFinalScore?: number
   };
 
-  private _likertScaleLabels = [ 'TOTALLY_INVALIDATED', 'INVALIDED', 'UNCERTAIN', 'VALIDATED', 'TOTALLY_VALIDATED']
-  private _likertScaleColors = [
-    `rgba(234,88,88,0.3)`,
-    `rgba(248,148,36,0.3)`,
-    `rgba(187,199,214,0.3)`,
-    `rgba(153,224,75,0.3)`,
-    `rgba(46,204,113,0.3)`
-  ]
-
   private _gauge: { labels: any[]; delimiters: any[]; average: number; colors: any[] } = null;
 
   private _createChart() {
@@ -63,13 +63,14 @@ export class LikertScaleChartComponent implements OnInit, OnDestroy {
       this._content.visibility = true;
 
       // Full opacity in chart for likert scale score
-      const index = this._likertScaleLabels.findIndex(label => label === this._content.name)
-      this._likertScaleColors[index] = this._likertScaleColors[index].replace((0.3).toString(), '1')
+      const likertScaleColors = [...defaultLikertScaleColors];
+      const index = likertScaleLabels.findIndex(label => label === this._content.name)
+      likertScaleColors[index] = likertScaleColors[index].replace((0.3).toString(), '1')
 
       this._gauge = {
         average: 2.5,
-        colors: this._likertScaleColors,
-        labels: this._likertScaleLabels,
+        colors: likertScaleColors,
+        labels: likertScaleLabels,
         delimiters: likertScaleThresholds(2.25, 5)
       };
     });

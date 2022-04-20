@@ -112,7 +112,6 @@ export class MissionService {
     return this._http.get<Response>('/mission/templates/all',
       {params: config, headers: new HttpHeaders().set('cache', cache)});
   }
-
   public create(missionObj: Mission): Observable<Mission> {
     return this._http.post<Mission>('/mission', missionObj);
   }

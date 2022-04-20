@@ -17,7 +17,7 @@
                        [average]="gauge.average"
                        [colors]="gauge.colors"
                        [delimiters]="gauge.delimiters" [delimitersLabels]="gauge.labels"
-                       [needleValue]="stackedChart.averageFinalScore"
+                       [needleValue]="stackedChart.averageFinalScore || 0"
                        [needleValueText]="stackedChart.averageFinalScore +  ' / 5'">
           <span [ngStyle]="{ 'color': 'white', 'background-color': color }" class="d-inline-block m-bottom-20 text-20
           text-medium justify-center align-center w-180">
