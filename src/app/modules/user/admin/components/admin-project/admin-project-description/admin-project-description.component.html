@@ -616,13 +616,13 @@
             </div>
 
       <!-- set main media display // choose between 'cropped' or 'adjusted' -->
-        <div *ngIf="isBeingEdited && activeInnovCard.principalMedia['type'] === 'PHOTO'" style="display: flex; flex-direction: row; margin-bottom: 1rem;">
+        <div *ngIf="isBeingEdited && activeInnovCard.principalMedia && activeInnovCard.principalMedia['type'] === 'PHOTO'" style="display: flex; flex-direction: row; margin-bottom: 1rem;">
           <div>
-            <input type="radio" id="crop" name="radios" value="crop" (change)="adjustMedia(activeInnovCard.principalMedia)" checked>
+            <input type="radio" id="crop" name="radios" value="crop" (change)="adjustMedia(activeInnovCard.principalMedia, 'crop')" checked>
             <label for="crop" class="m-left-2 m-right-40">Crop main media</label>
           </div>
           <div>
-            <input type="radio" id="adjust" name="radios" value="adjust" (change)="adjustMedia(activeInnovCard.principalMedia)">
+            <input type="radio" id="adjust" name="radios" value="adjust" (change)="adjustMedia(activeInnovCard.principalMedia, 'adjust')">
             <label for="adjust" class="m-left-2">Adjust main media</label>
           </div>
         </div>
@@ -662,7 +662,7 @@
 
       <!-- medias display -->
       <!-- container layout -->
-          <div *ngIf="activeInnovCard.media.length" [ngStyle]=mainContainerStyle style="padding: 16px; display: flex; flex-wrap: wrap; gap: 8px; position: relative;">
+          <div *ngIf="activeInnovCard.media.length" [ngStyle]=mainContainerStyle style="padding: 16px; display: flex; flex-wrap: wrap; position: relative;">
 
             <!-- zoom btn -->
             <div *ngIf="!isBeingEdited" (click)="toggleDisplayMediaSlider()" class="icon-container is-lg is-overlay" style="position: absolute; right: 0;  top: 0; background-color: #4F5D6B; z-index: 3;">
@@ -687,7 +687,7 @@
             <img
               style="cursor: pointer; height: 100%; object-fit: cover;"
               [ngStyle]="{'width': activeInnovCard.principalMedia.isMediaAdjusted || isMediaAdjusted ? !isMediaAdjusted && isBeingEdited ? '100%' : 'auto' : '100%'}"
-              (click)="mediaToShow(mediaSrc(activeInnovCard.principalMedia, 'IMAGE'))"
+              (click)="toggleDisplayMediaSlider('showSelected', 0)"
               [src]="mediaSrc(activeInnovCard.principalMedia, 'IMAGE').replace(',h_159', '').replace(',w_240', '')"
               alt=" "
               class="img-responsive">
@@ -698,6 +698,7 @@
           <iframe
             *ngIf="activeInnovCard.principalMedia['type'] === 'VIDEO'
             && mediaSrc(activeInnovCard.principalMedia, 'VIDEO')"
+            style="width: 100%; height: 100%; object-fit: cover; border: none;"
             [src]="mediaSrc(activeInnovCard.principalMedia, 'VIDEO')" >
           </iframe>
           <!-- /if type === 'VIDEO' -->
@@ -775,7 +776,7 @@
         <!-- /secondary medias -->
 
         <!-- see more btn -->
-        <ngContainer *ngIf="!isBeingEdited" >
+        <ngContainer *ngIf="!isBeingEdited && activeInnovCard.media.length > 4" >
             <div style="position: absolute; bottom: -12px; right: 16px">
               <button (click)="toggleDisplayMediaSlider()" class="button is-primary is-xs">See more</button>
             </div>
@@ -784,6 +785,18 @@
 
       </div>
       <!-- /container layout -->
+
+          <!-- new media card -->
+          <div *ngIf="isBeingEdited && activeInnovCard.media.length === 0">
+            <file-drop class="drop-container media-card text-center" (click)="toggleDisplayUploadOverlay()">
+              <div class="icon-container is-overlay">
+                  <span class="tooltip" data-tooltip="Add new media" (click)="setEditedMediaIndex(undefined)">
+                    <i class="icon icon-plus"></i>
+                  </span>
+              </div>
+            </file-drop>
+          </div>
+          <!-- /new media card -->
 
 
       <!-- see more btn -->

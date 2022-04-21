@@ -157,12 +157,13 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
     });
 
     if (this.activeInnovCard.principalMedia) {
-      if ((this.activeInnovCard.principalMedia.cloudinary.width / this.activeInnovCard.principalMedia.cloudinary.height) < 4/3) {
+      if (this.activeInnovCard.principalMedia.type !== 'VIDEO' && (this.activeInnovCard.principalMedia.cloudinary.width / this.activeInnovCard.principalMedia.cloudinary.height) < 4/3) {
         this._mainContainerStyle = {
           width: 'fit-content',
           height: '408px',
           'align-content': 'flex-start',
-          'align-items': 'flex-start'
+          'align-items': 'flex-start',
+          'row-gap': '8px'
         };
         this._mainMediaContainerStyle = {
           width: '290px',
@@ -170,14 +171,16 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
         };
         this._secondaryContainerStyle = {
           'flex-direction': 'column',
-          height: '100%'
+          height: '100%',
+          'padding-left': '8px'
         };
-      } else {
+      } else if (this.activeInnovCard.principalMedia.type === 'VIDEO' || (this.activeInnovCard.principalMedia.cloudinary.width / this.activeInnovCard.principalMedia.cloudinary.height) > 4/3) {
         this._mainContainerStyle = {
           width: '528px',
           height: 'auto',
           'place-items': 'center',
-          'box-sizing': 'border-box'
+          'box-sizing': 'border-box',
+          'column-gap': '8px'
         };
         this._mainMediaContainerStyle = {
           width: '100%',
@@ -185,13 +188,15 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
         };
         this._secondaryContainerStyle = {
           'flex-direction': 'row',
-          width: '100%'
+          width: '100%',
+          'padding-top': '8px'
         };
       }
+      if (!this._isBeingEdited) {
+        this._mainContainerStyle['background-color'] = 'white';
+      }
     }
-    if (!this._isBeingEdited) {
-      this._mainContainerStyle['background-color'] = 'white';
-    }
+
 
     this._mediaFitler = this.activeInnovCard.media.slice(0, 4);
   }
@@ -413,7 +418,6 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
   }
 
   public toggleDisplayMediaSlider(action?: string, index?: number) {
-    console.log('all medias', this.activeInnovCard.media);
     if (action && index) {
       this.slideMedia('showSelected', index);
     }
@@ -463,16 +467,23 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
 
   public editMedias() {
     this._isBeingEdited = !this._isBeingEdited;
-    this.activeInnovCard.principalMedia.isMediaAdjusted = this._isMediaAdjusted;
-    if (!this._isBeingEdited && this.activeInnovCard.principalMedia) {
-      this._mediaService.update(this.activeInnovCard.principalMedia.id, this.activeInnovCard.principalMedia).subscribe((data: any) => {
-        console.log(data);
-      }, (err: HttpErrorResponse) => {
-        console.error(err);
-      });
+    if (this.activeInnovCard.principalMedia) {
+      this.activeInnovCard.principalMedia.isMediaAdjusted = this._isMediaAdjusted;
+      if (!this._isBeingEdited && this.activeInnovCard.principalMedia) {
+        this._mediaService.update(this.activeInnovCard.principalMedia.id, this.activeInnovCard.principalMedia).subscribe((data: any) => {
+          console.log(data);
+        }, (err: HttpErrorResponse) => {
+          console.error(err);
+        });
+      }
+      this._isMediaAdjusted = false;
+      this._updateMediaFilter();
+      if (!this._isBeingEdited) {
+        this._mainContainerStyle['background-color'] = 'white';
+      } else {
+        this._mainContainerStyle['background-color'] = 'none';
+      }
     }
-    this._isMediaAdjusted = false;
-    this._updateMediaFilter();
   }
 
   public openModal(event: Event, type: modalType, index?: number) {
@@ -579,13 +590,13 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
   }
 
   public onSetPrincipal(media: UmiusMediaInterface) {
-
-    if ((media.cloudinary.width / media.cloudinary.height) < 4/3) {
+    if (media.type !== 'VIDEO' && (media.cloudinary.width / media.cloudinary.height) < 4/3) {
       this._mainContainerStyle = {
         width: 'fit-content',
         height: '408px',
         'align-content': 'flex-start',
         'align-items': 'flex-start',
+        'row-gap': '8px'
       };
       this._mainMediaContainerStyle = {
         width: '290px',
@@ -593,14 +604,16 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
       };
       this._secondaryContainerStyle = {
         'flex-direction': 'column',
-        height: '100%'
+        height: '100%',
+        'padding-left': '8px'
       };
-    } else if ((media.cloudinary.width / media.cloudinary.height) > 4/3) {
+    } else if (media.type === 'VIDEO' || (media.cloudinary.width / media.cloudinary.height) > 4/3) {
       this._mainContainerStyle = {
         width: '528px',
         height: 'auto',
         'place-items': 'center',
         'box-sizing': 'border-box',
+        'column-gap': '8px'
       };
       this._mainMediaContainerStyle = {
         width: '100%',
@@ -608,13 +621,9 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
       };
       this._secondaryContainerStyle = {
         'flex-direction': 'row',
-        width: '100%'
+        width: '100%',
+        'padding-top': '8px'
       };
-    }
-    if (!this._isBeingEdited) {
-      this._mainContainerStyle['background-color'] = 'white';
-    } else {
-      this._mainContainerStyle['background-color'] = 'none';
     }
 
     if (!this._isSavingMedia) {

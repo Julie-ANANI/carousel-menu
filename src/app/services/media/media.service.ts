@@ -18,13 +18,13 @@ export class MediaService {
   }
 
   public replace(formData: FormData, mediaId: string): Observable<any> {
-    const uri = `/media/${mediaId}`;
+    const uri = `/media/${mediaId}/replace`;
     return this._http.put<any>(uri, formData);
   }
 
   public update(mediaId: string, media: UmiusMediaInterface): Observable<any> {
     console.log('sent media', media);
-    const uri = `/media/${mediaId}`;
+    const uri = `/media/${mediaId}/update`;
     return this._http.put<any>(uri, media);
   }
 
