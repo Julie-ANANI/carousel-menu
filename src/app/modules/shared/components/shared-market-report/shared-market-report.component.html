@@ -92,7 +92,7 @@
           <!-- /key learning section -->
 
           <!-- dynamic result -->
-          <ng-container *ngIf="!areAnswersLoading">
+          <ng-container *ngIf="!areAnswersLoading && !isHidden">
             <ng-container *ngIf="(innovation.mission | mission:'hasMissionTemplate') &&
             !innovation?.marketReport?.keyLearning?.conclusion">
               <div class="p-top-50" id="result">

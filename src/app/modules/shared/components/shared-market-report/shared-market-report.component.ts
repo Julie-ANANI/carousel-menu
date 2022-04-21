@@ -41,6 +41,8 @@ import {Mission} from '../../../../models/mission';
 import {MissionQuestionService} from '../../../../services/mission/mission-question.service';
 import {ExecutiveReport} from '../../../../models/executive-report';
 import {UmiusSidebarInterface} from '@umius/umi-common-component';
+import * as moment from "moment";
+
 
 @Component({
   selector: 'app-shared-market-report',
@@ -73,6 +75,7 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy, OnChanges
       this._innovation.marketReport = this._innovation.marketReport || {};
       this._isOwner = this._authService.userId === (this._innovation.owner && this._innovation.owner.id)
         || this._authService.adminLevel > 3;
+      this._compareCreationDate(this._innovation);
     }
   }
 
@@ -132,6 +135,8 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy, OnChanges
 
   private _timeout: any = null;
 
+  private _isHidden = false;
+
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _translateService: TranslateService,
               private _answerService: AnswerService,
@@ -173,6 +178,16 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy, OnChanges
       console.error(error);
     });
   }
+
+  private _compareCreationDate(innovation: Innovation) {
+    const mepAt = new Date('2022-04-20');
+    let createdAt: any = innovation.created;
+    if (createdAt){
+      createdAt = new Date(moment(createdAt).format("YYYY-MM-DD"));
+    }
+    this._isHidden = createdAt && createdAt < mepAt;
+  }
+
 
   ngOnChanges(changes: SimpleChanges) {
     const currentItem: SimpleChange = changes.project;
@@ -627,6 +642,11 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy, OnChanges
 
   set reportingLang(value: string) {
     this._reportingLang = value;
+  }
+
+
+  get isHidden(): boolean {
+    return this._isHidden;
   }
 
   ngOnDestroy(): void {
