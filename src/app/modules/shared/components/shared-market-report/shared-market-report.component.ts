@@ -36,11 +36,11 @@ import { ErrorFrontService } from '../../../../services/error/error-front.servic
 import { emptyHtmlRegex } from '../../../../utils/regex';
 import { SocketService } from '../../../../services/socket/socket.service';
 import { Professional } from '../../../../models/professional';
-import {MissionFrontService} from '../../../../services/mission/mission-front.service';
-import {Mission} from '../../../../models/mission';
-import {MissionQuestionService} from '../../../../services/mission/mission-question.service';
-import {ExecutiveReport} from '../../../../models/executive-report';
-import {UmiusSidebarInterface} from '@umius/umi-common-component';
+import { MissionFrontService } from '../../../../services/mission/mission-front.service';
+import { Mission } from '../../../../models/mission';
+import { MissionQuestionService } from '../../../../services/mission/mission-question.service';
+import { ExecutiveReport } from '../../../../models/executive-report';
+import { UmiusSidebarInterface } from '@umius/umi-common-component';
 import * as moment from "moment";
 
 
@@ -174,7 +174,7 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy, OnChanges
 
     this._socketService.getTagsUpdatedForPro(this.innovation._id).pipe(takeUntil(this._ngUnsubscribe)).subscribe((data: any) => {
       this._realTimeUpdateTags(JSON.parse(data));
-      },(error) => {
+    }, (error) => {
       console.error(error);
     });
   }
@@ -182,10 +182,14 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy, OnChanges
   private _compareCreationDate(innovation: Innovation) {
     const mepAt = new Date('2022-04-20');
     let createdAt: any = innovation.created;
-    if (createdAt){
+    if (createdAt) {
       createdAt = new Date(moment(createdAt).format("YYYY-MM-DD"));
     }
-    this._isHidden = createdAt && createdAt < mepAt;
+    if (innovation._id === '6194e992b960f83f3ddadfa2') {
+      this._isHidden = false;
+    } else {
+      this._isHidden = (createdAt && createdAt < mepAt)
+    }
   }
 
 
@@ -237,20 +241,20 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy, OnChanges
     if (isPlatformBrowser(this._platformId)) {
       this._answerService.getInnovationValidAnswers(this._innovation._id, this._anonymousAnswers, 'reset')
         .pipe(first()).subscribe((response) => {
-          this._processAnswers(response.answers);
-          this._processFilterAnswers();
-          this._processAnswersCompanies(response.answers);
-          this._processAnswersCountries(response.answers);
-          this._processAnswersTags(response.answers);
-          this._processAnswersQuestion(response.answers);
-          this.areAnswersLoading = false;
-          this._timeout = setTimeout(() => (this.displayFilters = true), 500);
-          }, (err: HttpErrorResponse) => {
-          this.areAnswersLoading = false;
-          this.displayFilters = true;
-          this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
-          console.error(err);
-        });
+        this._processAnswers(response.answers);
+        this._processFilterAnswers();
+        this._processAnswersCompanies(response.answers);
+        this._processAnswersCountries(response.answers);
+        this._processAnswersTags(response.answers);
+        this._processAnswersQuestion(response.answers);
+        this.areAnswersLoading = false;
+        this._timeout = setTimeout(() => (this.displayFilters = true), 500);
+      }, (err: HttpErrorResponse) => {
+        this.areAnswersLoading = false;
+        this.displayFilters = true;
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
+        console.error(err);
+      });
     }
   }
 
@@ -282,7 +286,7 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy, OnChanges
         acc.push(answer.country.flag);
       }
       return acc;
-      }, []);
+    }, []);
   }
 
   /*
@@ -340,7 +344,7 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy, OnChanges
         flag = answer.professional.country;
       }
       if (flag) {
-          addAnswer(flag);
+        addAnswer(flag);
       }
       return flag;
     });
@@ -441,10 +445,10 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy, OnChanges
       this._toBeSaved = false;
       this._toSaveTemplate = false;
       this._toSaveMissionResult = false;
-      }, (err: HttpErrorResponse) => {
-        this._translateNotificationsService.error('Project Saving Error...', ErrorFrontService.getErrorKey(err.error));
-        console.error(err);
-      });
+    }, (err: HttpErrorResponse) => {
+      this._translateNotificationsService.error('Project Saving Error...', ErrorFrontService.getErrorKey(err.error));
+      console.error(err);
+    });
   }
 
   public displayFixedQuestion(question: any) {
@@ -535,7 +539,7 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy, OnChanges
       proToUpdate.company.name = value.newPro.company;
     }
     if (value.newPro.country) {
-      proToUpdate.country = { flag: value.newPro.country.flag };
+      proToUpdate.country = {flag: value.newPro.country.flag};
     }
   }
 
