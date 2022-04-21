@@ -186,6 +186,7 @@ export class SharedMarketReportComponent implements OnInit, OnDestroy, OnChanges
       createdAt = new Date(moment(createdAt).format("YYYY-MM-DD"));
     }
     this._isHidden = createdAt && createdAt < mepAt;
+    this._isHidden = innovation._id !== '6261195b68352c8efe8f0ace';
   }
 
 
