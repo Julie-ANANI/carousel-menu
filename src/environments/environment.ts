@@ -9,6 +9,7 @@ export const environment = {
   production: false,
   env: '',
   apiUrl: '',
+  env: '',
   etherpadUrl: '',
   clientUrl: '',
   apiGatewayUrl: '',

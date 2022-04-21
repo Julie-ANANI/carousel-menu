@@ -3,6 +3,7 @@
 export const environment = {
   local: false,
   production: false,
+  env: 'dev',
   apiUrl: 'https://dev.umi.us/api', // 'http://umiapplication:3000/api'
   etherpadUrl: 'https://etherpad-dev.umi.us',
   /**
