@@ -14,7 +14,6 @@ export const environment = {
   companyName: 'United Motion Ideas (dev)',
   companyShortName: 'UMI',
   domain: 'umi',
-  env: 'dev',
   quizUrl: 'https://quizdev.umi.us',
   companyURL: 'https://www.umi.us',
   logoURL: 'https://res.cloudinary.com/umi/image/upload/app/default-images/company-logo/logo-umi-animated-2020.gif',
