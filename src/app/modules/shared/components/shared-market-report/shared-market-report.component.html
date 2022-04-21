@@ -73,28 +73,9 @@
           </ng-container>
           <!-- /synthesis reporting lang -->
 
-          <!-- key learning section  -->
-          <ng-container *ngIf="!areAnswersLoading">
-            <ng-container *ngIf="!!innovation?.marketReport?.keyLearning?.conclusion">
-              <section [ngClass]="{ 'p-top-50': !reportShared }" id="key-learnings">
-                <app-question-section
-                  [reportingLang]="reportingLang"
-                  (questionChanged)="saveQuestion($event)"
-                  [innovation]="innovation"
-                  [questionReceived]="displayFixedQuestion({ identifier: 'keyLearning', subtitle: { en: '', fr: '' },
-                  title: { en: 'Key learnings', fr: 'Connaissances clés' } })"
-                  [readonly]="!canAccess(['edit', 'umiWord'])"
-                  [hideAnswers]="true">
-                </app-question-section>
-              </section>
-            </ng-container>
-          </ng-container>
-          <!-- /key learning section -->
-
-          <!-- dynamic result -->
+          <!-- dynamic result we will display this for Maxim'project + project created after 20/04/2022-->
           <ng-container *ngIf="!areAnswersLoading && !isHidden">
-            <ng-container *ngIf="(innovation.mission | mission:'hasMissionTemplate') &&
-            !innovation?.marketReport?.keyLearning?.conclusion">
+            <ng-container *ngIf="(innovation.mission | mission:'hasMissionTemplate')">
               <div class="p-top-50" id="result">
                 <app-market-report-result
                   (saveInnovation)="saveInnovation($event)"
@@ -108,6 +89,24 @@
             </ng-container>
           </ng-container>
           <!-- /dynamic result -->
+
+          <!-- key learning section  -->
+          <ng-container *ngIf="showSection(innovation.marketReport?.keyLearning?.conclusion) && isHidden">
+            <section
+              [ngClass]="{ 'p-top-50': !reportShared }"
+              id="'key-learnings'">
+              <app-question-section
+                [reportingLang]="reportingLang"
+                (questionChanged)="saveQuestion($event)"
+                [innovation]="innovation"
+                [questionReceived]="displayFixedQuestion({ identifier: 'keyLearning', subtitle: { en: '', fr: '' },
+                title: { en: 'Key learnings', fr: 'Connaissances clés' } })"
+                [readonly]="!canAccess(['edit', 'umiWord'])"
+                [hideAnswers]="true">
+              </app-question-section>
+            </section>
+          </ng-container>
+          <!-- /key learning section -->
 
           <!-- origin comment and professional responses -->
           <ng-container *ngIf="!areAnswersLoading && answersOrigins">
