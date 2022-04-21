@@ -478,11 +478,11 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
       }
       this._isMediaAdjusted = false;
       this._updateMediaFilter();
-      if (!this._isBeingEdited) {
-        this._mainContainerStyle['background-color'] = 'white';
-      } else {
-        this._mainContainerStyle['background-color'] = 'none';
-      }
+    }
+    if (!this._isBeingEdited) {
+      this._mainContainerStyle['background-color'] = 'white';
+    } else {
+      this._mainContainerStyle['background-color'] = 'transparent';
     }
   }
 
