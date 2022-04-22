@@ -561,6 +561,7 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
       this.activeInnovCard.media[this._editedMediaIndex] = media;
     } else {
       this.activeInnovCard.media.push(media);
+      this._updateMediaFilter();
       if (!this._innovation.innovationCards[this._activeCardIndex].principalMedia) {
         this._innovation.innovationCards[this._activeCardIndex].principalMedia = media;
         this.onSetPrincipal(media);
@@ -661,7 +662,6 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
           }
           this.activeInnovCard.principalMedia = media;
           this._emitUpdatedInnovation();
-          console.log('medias indexes', this.activeInnovCard.media, this.activeInnovCard.principalMedia);
           this._translateNotificationsService.success('Success', 'The media has been set as a principal media.');
         }, (err: HttpErrorResponse) => {
           this._translateNotificationsService.error('Principal Media Error...', ErrorFrontService.getErrorKey(err.error));
@@ -775,6 +775,7 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
   }
 
   get mediaFilter(): Array<UmiusMediaInterface> {
+    console.log('filter', this._mediaFitler);
     return this._mediaFitler;
   }
 
