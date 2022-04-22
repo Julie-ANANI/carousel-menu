@@ -749,7 +749,7 @@
               <!-- set principal -->
               <div *ngIf="isNotMainMedia(media) && isBeingEdited && media['type'] !== 'VIDEO' " class="text-sm text-left set-main-overlay" style="width: 100%; height: 100%; position: absolute; top: 0; left: 0;">
                 <span
-                  (click)="onSetPrincipal(media)"
+                  (click)="onSetPrincipal(media, i)"
                   [ngClass]="isSavingMedia ? 'text-disabled' : 'c-hand text-hover-underline'"
                   class="text-primary"
                   style="height: 22px; padding-left: 4px; width: 100%; background-color: #ececec; position: absolute; bottom: 0; right: 0; opacity: 80%"

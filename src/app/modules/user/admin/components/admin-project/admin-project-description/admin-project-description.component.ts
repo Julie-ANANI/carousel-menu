@@ -1,4 +1,4 @@
-import {Component, Inject, OnDestroy, OnInit, PLATFORM_ID} from '@angular/core';
+import {Component, Inject, OnDestroy, OnInit, PLATFORM_ID, ViewChild, ElementRef} from '@angular/core';
 import { InnovationFrontService } from '../../../../../../services/innovation/innovation-front.service';
 import { Innovation } from '../../../../../../models/innovation';
 import { Subject } from 'rxjs';
@@ -30,10 +30,11 @@ interface Toggle {
 
 @Component({
   templateUrl: './admin-project-description.component.html',
-  styleUrls: ['./admin-project-description.component.scss']
+  styleUrls: ['./admin-project-description.component.scss'],
 })
 
 export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
+  @ViewChild('slider') slider: ElementRef;
 
   get notificationJobs(): Array<NotificationJob> {
     return this._notificationJobs;
@@ -593,7 +594,7 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
       });
   }
 
-  public onSetPrincipal(media: UmiusMediaInterface) {
+  public onSetPrincipal(media: UmiusMediaInterface, index?: number) {
     if (media.type !== 'VIDEO' && (media.cloudinary.width / media.cloudinary.height) < 4/3) {
       this._mainContainerStyle = {
         width: 'fit-content',
@@ -653,9 +654,14 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
         .pipe(first())
         .subscribe(() => {
           this._isSavingMedia = false;
+          // when a secondary media is set as main media, switch their places in the medias array
+          if (index) {
+          this.activeInnovCard.media[index] = this.activeInnovCard.principalMedia;
+          this.activeInnovCard.media[0] = media;
+          }
           this.activeInnovCard.principalMedia = media;
-          this._innovation.innovationCards[this._activeCardIndex].principalMedia = media;
           this._emitUpdatedInnovation();
+          console.log('medias indexes', this.activeInnovCard.media, this.activeInnovCard.principalMedia);
           this._translateNotificationsService.success('Success', 'The media has been set as a principal media.');
         }, (err: HttpErrorResponse) => {
           this._translateNotificationsService.error('Principal Media Error...', ErrorFrontService.getErrorKey(err.error));
