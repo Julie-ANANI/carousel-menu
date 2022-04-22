@@ -1,5 +1,6 @@
 export const environment = {
   local: true,
+  env: 'local',
   production: false,
   apiUrl: 'http://localhost:3000/api',
   etherpadUrl: 'http://localhost:9001',
