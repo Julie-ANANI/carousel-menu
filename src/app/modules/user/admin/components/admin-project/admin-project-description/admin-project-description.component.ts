@@ -439,7 +439,12 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
     }
   }
 
-  public slideMedia(action: string, index?: number) {
+  public slideMedia(action: string, index?: number, event?: KeyboardEvent) {
+    if (event && event.key === 'ArrowLeft') {
+      action = 'showPrevious';
+    } else if (event && event.key === 'ArrowRight') {
+      action = 'showNext';
+    }
     if (action === 'showSelected') {
       this._slideToShow = index;
     } else if (action === 'showPrevious') {
