@@ -300,13 +300,13 @@ export class AdminProjectCollectionComponent implements OnInit, OnDestroy {
           _isSearchable: this.canAccess(['searchBy', 'name']),
           _isHidden: !this.canAccess(['tableColumns', 'name']),
           _searchTooltip: 'Utilisez "prénom,nom" pour faire des recherches de personnes',
-          _width: '320px',
+          _width: '300px',
         },
         {
           _attrs: ['country'],
           _name: 'Country',
           _type: 'COUNTRY',
-          _width: '160px',
+          _width: '130px',
           _isSearchable: this.canAccess(['searchBy', 'country']),
           _isHidden: !this.canAccess(['tableColumns', 'country']),
         },
@@ -316,7 +316,7 @@ export class AdminProjectCollectionComponent implements OnInit, OnDestroy {
           _type: 'TEXT',
           _isSearchable: this.canAccess(['searchBy', 'job']),
           _isHidden: !this.canAccess(['tableColumns', 'job']),
-          _width: '320px',
+          _width: '220px',
         },
         {
           _attrs: ['company.name'],
@@ -324,7 +324,7 @@ export class AdminProjectCollectionComponent implements OnInit, OnDestroy {
           _type: 'TEXT',
           _isSearchable: this.canAccess(['searchBy', 'company']),
           _isHidden: !this.canAccess(['tableColumns', 'company']),
-          _width: '320px',
+          _width: '260px',
         },
         {
           _attrs: ['scoreStatus'],
@@ -332,7 +332,7 @@ export class AdminProjectCollectionComponent implements OnInit, OnDestroy {
           _type: 'TEXT',
           _isSearchable: this.canAccess(['searchBy', 'validationScore']),
           _isHidden: !this.canAccess(['tableColumns', 'validationScore']),
-          _width: '180px',
+          _width: '140px',
         },
         {
           _attrs: ['updated'],
@@ -365,7 +365,7 @@ export class AdminProjectCollectionComponent implements OnInit, OnDestroy {
           _type: 'MULTI-CHOICES',
           _isSearchable: this.canAccess(['filterBy', 'status']),
           _isHidden: !this.canAccess(['tableColumns', 'status']),
-          _width: '180px',
+          _width: '140px',
           _choices: [
             {
               _name: 'VALIDATED',
