@@ -665,7 +665,7 @@
           <div *ngIf="activeInnovCard.media.length" [ngStyle]=mainContainerStyle style="padding: 16px; display: flex; flex-wrap: wrap; position: relative;">
 
             <!-- zoom btn -->
-            <div *ngIf="!isBeingEdited" (click)="toggleDisplayMediaSlider()" class="icon-container is-lg is-overlay" style="position: absolute; right: 0;  top: 0; background-color: #4F5D6B; z-index: 3;">
+            <div *ngIf="!isBeingEdited && activeInnovCard.principalMedia" (click)="toggleDisplayMediaSlider()" class="icon-container is-lg is-overlay" style="position: absolute; right: 0;  top: 0; background-color: #4F5D6B; z-index: 3;">
               <i class="icon icon-search" style="color: white;"></i>
             </div>
             <!-- /zoom button -->
@@ -698,7 +698,7 @@
           <iframe
             *ngIf="activeInnovCard.principalMedia['type'] === 'VIDEO'
             && mediaSrc(activeInnovCard.principalMedia, 'VIDEO')"
-            style="width: 100%; height: 100%; object-fit: cover; border: none;"
+            style="width: 100%; height: 100%; object-fit: cover; border: none; background-color: #ececec"
             [src]="mediaSrc(activeInnovCard.principalMedia, 'VIDEO')" >
           </iframe>
           <!-- /if type === 'VIDEO' -->
@@ -730,7 +730,7 @@
               <!-- if type === 'PHOTO' -->
               <figure *ngIf="media['type'] && mediaSrc(media, 'IMAGE')" style="width: 160px; height: 120px; object-fit: cover; background-color: #ececec; display: flex; place-content: center;">
                 <img
-                  style="cursor: pointer; width: 100%; height: 100%; object-fit: cover;"
+                  style="cursor: pointer; width: 100%; height: 100%; object-fit: cover; background-color: #ececec"
                   (click)="toggleDisplayMediaSlider('showSelected', i)"
                   [src]="mediaSrc(media, 'IMAGE')"
                   alt=" "

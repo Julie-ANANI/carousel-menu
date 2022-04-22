@@ -551,7 +551,6 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
   }
 
   public uploadImage(media: UmiusMediaInterface): void {
-
     if (this._editedMediaIndex !== undefined) {
       this.activeInnovCard.media[this._editedMediaIndex] = media;
     } else {
@@ -628,6 +627,23 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
 
     if (!this._isSavingMedia) {
       this._isSavingMedia = true;
+      // delete video if main media was a video because videos can't be secondary medias
+      if (this.activeInnovCard.principalMedia && this.activeInnovCard.principalMedia.type === 'VIDEO') {
+        const mainVideoId = this.activeInnovCard.principalMedia._id;
+        this._innovationService.deleteMediaOfInnovationCard(this._innovation._id, this.activeInnovCard._id, mainVideoId)
+          .pipe(first())
+          .subscribe(() => {
+            this.activeInnovCard.media = this.activeInnovCard.media.filter((_media) => _media._id !== mainVideoId);
+            this._innovation.innovationCards[this._activeCardIndex].media = this.activeInnovCard.media;
+            this._updateMediaFilter(); // Mise à jour de la liste des medias filtrés
+            console.log('medias left', this.activeInnovCard.media);
+            this._translateNotificationsService.success('Success', 'The video has been deleted.');
+          }, (err: HttpErrorResponse) => {
+            this._translateNotificationsService.error('Media Deleting Error...', ErrorFrontService.getErrorKey(err.error));
+            this._isSavingMedia = false;
+            console.error(err);
+          });
+      }
       this._innovationService.setPrincipalMediaOfInnovationCard(this._innovation._id, this.activeInnovCard._id, media._id)
         .pipe(first())
         .subscribe(() => {
