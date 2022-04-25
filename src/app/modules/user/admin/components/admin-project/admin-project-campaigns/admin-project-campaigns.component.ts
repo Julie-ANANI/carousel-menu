@@ -63,7 +63,7 @@ export class AdminProjectCampaignsComponent implements OnInit, OnDestroy {
 
   private _innovation: Innovation = <Innovation>{};
 
-  private _campaigns: Array<Campaign> = this._campaignFrontService.allCampaigns;
+  private _campaigns: Array<Campaign> = [];
 
   private _activateModal = false;
 
