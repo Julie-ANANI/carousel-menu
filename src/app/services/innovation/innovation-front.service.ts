@@ -139,7 +139,7 @@ export class InnovationFrontService {
    * @param innovation
    */
   public static quizLink(innovation: Innovation): string {
-    if (!innovation && !innovation.quizId && !innovation.campaigns.length) return '';
+    if (!innovation || !innovation.quizId || !innovation.campaigns.length) return '';
     return `${environment.quizUrl}/quiz/${innovation.quizId}/${innovation.campaigns[0]._id}`
   }
 
