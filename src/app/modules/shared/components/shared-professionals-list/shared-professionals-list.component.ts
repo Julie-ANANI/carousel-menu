@@ -258,21 +258,26 @@ export class SharedProfessionalsListComponent {
       _type: 'MULTI-CHOICES',
       _width: '180px',
       _isHidden: !this.canAccess(['tableColumns', 'emailConfidence']),
-      _choices: this._professionals.map((_pro) => {
-        const _choice = {
-          _name: _pro.emailConfidence ? _pro.emailConfidence.toString() : '0',
-          _alias: '--'
-        };
-        if (_pro.emailConfidence >= 90) {
-          _choice._alias = 'Good';
-          _choice['_class'] = 'label is-success';
-        } else if (_pro.emailConfidence >= 80 && _pro.emailConfidence <= 85) {
-          _choice._alias = 'Risky';
-          _choice['_class'] = 'label is-progress';
-        }
-        return _choice;
-      })
+      _choices: this._emailConfidenceChoices()
     };
+  }
+
+  private _emailConfidenceChoices(){
+    return this._professionals.map((_pro) => {
+      const _choice = {
+        _name: _pro.emailConfidence ? _pro.emailConfidence.toString() : '0',
+        _alias: '--'
+      };
+      if (_pro.emailConfidence >= 90) {
+        _choice._alias = 'Good';
+        _choice['_class'] = 'label is-success';
+      } else if (_pro.emailConfidence >= 80 && _pro.emailConfidence <= 85) {
+        _choice._alias = 'Risky';
+        _choice['_class'] = 'label is-progress';
+      }
+      _pro.emailConfidence = _pro.emailConfidence.toString();
+      return _choice;
+    })
   }
 
   public canAccess(path: Array<string>) {

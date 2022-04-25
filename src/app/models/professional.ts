@@ -35,7 +35,7 @@ export interface Professional {
   readonly personId?: string;
   readonly messages?: Array<any>;
   readonly campaigns?: Campaign[];
-  readonly emailConfidence?: number;
+  emailConfidence?: any;
   readonly urlCompany?: string;
   readonly secondEmail?: string;
   profileUrl?: string;
