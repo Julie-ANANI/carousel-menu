@@ -97,6 +97,8 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this._allCampaigns = this._campaignFrontService.allCampaigns;
+
     this._innovationFrontService.innovation().pipe(takeUntil(this._ngUnsubscribe)).subscribe((innovation) => {
       if (innovation && innovation._id) {
         this._project = innovation;
