@@ -341,7 +341,7 @@
         <!--end no editMode-->
 
         <!--editMode-->
-        <ng-container *ngIf="fullAnswer.answers[question.identifier] && editMode">
+        <ng-container *ngIf="editMode">
           <div class="c-hand"
             (click)="selectOption($event, option)"
             *ngFor="let option of question.options"
