@@ -1,8 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-
 import {AdminProjectsComponent} from './admin-projects.component';
-
 import {AdminAuthGuard} from '../../../../../guards/admin-auth-guard.service';
 import {AdminInnovationResolver} from '../../../../../resolvers/admin/admin-innovation.resolver';
 

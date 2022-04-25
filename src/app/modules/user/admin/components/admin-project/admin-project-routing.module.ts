@@ -21,6 +21,7 @@ import { CampaignResolver } from '../../../../../resolvers/campaign.resolver';
 
 import { AdminRoleGuard } from '../../../../../guards/admin-role-guard.service';
 import {AdminProjectStatisticsComponent} from './admin-project-statistics/admin-project-statistics.component';
+import { CampaignListResolver } from "../../../../../resolvers/admin/campaign-list.resolver";
 
 export const routes: Routes = [
   {
@@ -38,6 +39,7 @@ export const routes: Routes = [
         path: 'preparation',
         component: AdminProjectPreparationComponent,
         canActivate: [AdminRoleGuard],
+        resolve: { allCampaign : CampaignListResolver },
         data: { accessPath: ['projects', 'project', 'tabs', 'preparation'] },
         children: [
           {

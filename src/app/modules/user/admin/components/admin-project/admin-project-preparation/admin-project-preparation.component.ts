@@ -3,7 +3,7 @@ import { RouteFrontService } from '../../../../../../services/route/route-front.
 import { TranslateTitleService } from '../../../../../../services/title/title.service';
 import { InnovationFrontService } from '../../../../../../services/innovation/innovation-front.service';
 import { Innovation } from '../../../../../../models/innovation';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { InnovCard } from '../../../../../../models/innov-card';
 import { InnovationService } from '../../../../../../services/innovation/innovation.service';
 import { first, takeUntil } from 'rxjs/operators';
@@ -18,8 +18,8 @@ import { MissionService } from '../../../../../../services/mission/mission.servi
 import { Mission } from '../../../../../../models/mission';
 import { environment } from '../../../../../../../environments/environment';
 import { ErrorFrontService } from '../../../../../../services/error/error-front.service';
-import {NotificationService} from '../../../../../../services/notification/notification.service';
-import {NotificationTrigger} from '../../../../../../models/notification';
+import { NotificationService } from '../../../../../../services/notification/notification.service';
+import { NotificationTrigger } from '../../../../../../models/notification';
 
 @Component({
   templateUrl: './admin-project-preparation.component.html',
@@ -93,11 +93,15 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
               private _rolesFrontService: RolesFrontService,
               private _translateNotificationsService: TranslateNotificationsService,
               private _translateTitleService: TranslateTitleService,
+              private _activatedRoute: ActivatedRoute,
               private _socketService: SocketService) {
   }
 
   ngOnInit() {
-    this._allCampaigns = this._campaignFrontService.allCampaigns;
+    if (this._activatedRoute.snapshot.data['allCampaign']
+      && typeof this._activatedRoute.snapshot.data['allCampaign'] !== undefined) {
+      this._allCampaigns = this._activatedRoute.snapshot.data['allCampaign'].result || [];
+    }
 
     this._innovationFrontService.innovation().pipe(takeUntil(this._ngUnsubscribe)).subscribe((innovation) => {
       if (innovation && innovation._id) {
@@ -138,7 +142,7 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
 
     this._innovationFrontService.getNotifyChanges().pipe(takeUntil(this._ngUnsubscribe)).subscribe((save) => {
       this._toBeSaved = this._toBeSaved ? this._toBeSaved + ',' + save.key : save.key;
-      if(save.autoSave) {
+      if (save.autoSave) {
         this.onSave(new Event(''))
       }
     });
@@ -152,6 +156,7 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
     this._campaignFrontService.loadingCampaign().pipe(takeUntil(this._ngUnsubscribe)).subscribe((loading) => {
       this._isLoadingCampaign = loading;
     });
+    console.log('preparation');
   }
 
   /**
@@ -180,7 +185,7 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
   }
 
   public triggerAsk(): boolean {
-    return this._project.notifications.some((notification:  NotificationTrigger) => notification === 'TRIGGER_ASK_VALIDATE_PROJECT');
+    return this._project.notifications.some((notification: NotificationTrigger) => notification === 'TRIGGER_ASK_VALIDATE_PROJECT');
   }
 
   private _emitUpdatedInnovation() {
@@ -352,14 +357,14 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
       if (this._toBeSavedComment) {
         this._innovationService.saveInnovationCardComment(this._project._id, this.activeCard._id, this.activeCard.operatorComment)
           .pipe(first()).subscribe((_) => {
-            this._emitUpdatedInnovation();
-            this._isSaving = false;
-            this._toBeSavedComment = false;
-            this._translateNotificationsService.success('Success', 'The comments/suggestions have been updated.');
-            resolve(true);
-            }, (err: HttpErrorResponse) => {
-            reject(err);
-          });
+          this._emitUpdatedInnovation();
+          this._isSaving = false;
+          this._toBeSavedComment = false;
+          this._translateNotificationsService.success('Success', 'The comments/suggestions have been updated.');
+          resolve(true);
+        }, (err: HttpErrorResponse) => {
+          reject(err);
+        });
       } else {
         resolve(true);
       }
