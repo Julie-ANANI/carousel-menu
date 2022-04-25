@@ -38,7 +38,7 @@ export class GaugeChartComponent implements OnChanges {
   // Style
   @Input() width = 200; @Input() height = 140;
   @Input() colors = ['#EA5858', '#F89424', '#99E04B', '#2ECC71'];
-  @Input() needleColor: string = null;
+  @Input() needleColor: string;
 
   // Standard [5,33,50,66,100] gauge delimiters for unified displaying
   private _standardAverage = 50;
@@ -59,11 +59,12 @@ export class GaugeChartComponent implements OnChanges {
       this.needleValue = 0.0001;
     }
 
+    // We change needle value to fit standard delimiters
+    this.needleValue = this.needleValue * 50 / this.average;
     if(!this.needleColor) {
       this._changeIndicatorColor();
     }
-    // We change needle value to fit standard delimiters
-    this.needleValue = this.needleValue * 50 / this.average;
+
     if(this.nbArcs !== 3) this.delimiters = this.delimiters.map(d => d * (100 / this.nbArcs))
     if (this.negative) { this.needleValue = 100 - this.needleValue; }
 
