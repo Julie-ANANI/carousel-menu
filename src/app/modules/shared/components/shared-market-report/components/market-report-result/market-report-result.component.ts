@@ -180,7 +180,7 @@ export class MarketReportResultComponent implements OnInit {
 
       this._questions.forEach((_question) => {
         const {averageFinalScore} = ResponseService.likertScaleChartData(this._answers, _question, this.reportingLang);
-        const {score, percentage, index} = ResponseService.getLikertScaleGraphicScore(averageFinalScore);
+        const {score, percentage} = ResponseService.getLikertScaleGraphicScore(averageFinalScore);
         this._scale.score += score;
         this._scale.percentage += percentage;
       });
