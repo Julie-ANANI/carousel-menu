@@ -462,10 +462,16 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
     this._companiesTable = this._companiesOriginalTable;
   }
 
+  /**
+   * update patterns
+   * @param $event
+   * Updated by Wei WANG 25/04/2022
+   */
   patternsUpdate($event: any) {
     $event.value.map((text: any) => {
-      if (this._patterns.length === 0 || this._patterns.find(item => item.name === text.text) === undefined) {
-        this._patterns.push({expression: text.text, avgScore: 0});
+      const newPattern = text.expression || text.text;
+      if (this._patterns.length === 0 || this._patterns.find(item => item.expression === newPattern) === undefined) {
+        this._patterns.push({expression: newPattern, avgScore: 0});
         this.updateEnterpriseValues('patterns', this._patterns, 'Patterns');
       }
     });

@@ -90,7 +90,8 @@ export class InputListComponent {
               'COMMON.INVALID.EMAIL'
             );
           }
-        } else if (this.isDomain) {
+        }
+        else if (this.isDomain) {
           _testValue = domainRegEx;
 
           if (_testValue.test(val)) {
@@ -106,6 +107,7 @@ export class InputListComponent {
         } else {
           this._answerList.push({ text: val });
           this._answer = '';
+          console.log(this._answerList);
           this.update.emit({ value: this._answerList });
         }
       }
