@@ -115,7 +115,7 @@ export class AdminEnterpriseManagementComponent implements OnInit {
     this._isSearching = true;
     this._resultTableConfiguration._total = -1;
     this._enterpriseService
-      .get(null)
+      .search(config)
       .pipe(first())
       .subscribe(
         (enterprises: any) => {
