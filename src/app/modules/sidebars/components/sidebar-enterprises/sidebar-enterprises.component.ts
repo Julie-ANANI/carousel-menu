@@ -405,7 +405,6 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
           avgScore: 0,
         });
       });
-      console.log(this._newPatterns);
       this._saveChanges();
     }
   }
