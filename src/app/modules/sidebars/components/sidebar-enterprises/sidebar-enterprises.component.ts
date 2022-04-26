@@ -402,7 +402,7 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
       event.value.map((text) => {
         this._newPatterns.push({
           expression: text.expression,
-          avg: 0,
+          avgScore: 0,
         });
       });
       this._saveChanges();
