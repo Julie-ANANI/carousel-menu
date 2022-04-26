@@ -31,8 +31,8 @@ export class InnovationService {
     return this._http.post('/innovation', innovationObj);
   }
 
-  public get(id: string, config?: UmiusConfigInterface): Observable<Innovation> {
-    return this._http.get<Innovation>('/innovation/' + id, {params: config});
+  public get(id: string, config?: UmiusConfigInterface, cache: CacheType = 'reset'): Observable<Innovation> {
+    return this._http.get<Innovation>('/innovation/' + id, {params: config, headers: new HttpHeaders().set('cache', cache)});
   }
 
   public getAll(params: {[header: string]: string | string[]}): Observable<{result: Array<Innovation>, _metadata: any}> {
