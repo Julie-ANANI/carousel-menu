@@ -17,6 +17,7 @@
               <span> . or -</span>
             </span>
         <app-utility-input-list
+          [identifier]="'expression'"
           (update)="patternsUpdate($event)"
           [config]="patternConfig"
           [isSmall]="true"
@@ -55,6 +56,7 @@
         <span class="text is-sm">Brand</span>
         <app-utility-input-list
           style="height: 40px"
+          [identifier]="'label'"
           (update)="brandUpdate($event)"
           [isSmall]="true"
           [config]="brandConfig"
@@ -87,6 +89,7 @@
         <span class="text is-sm">Geographical Zone</span>
         <app-utility-input-list
           style="height: 40px"
+          [identifier]="'name'"
           (update)="geoZoneUpdate($event)"
           [config]="geoConfig"
           [isSmall]="true"

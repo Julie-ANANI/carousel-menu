@@ -32,6 +32,8 @@ export class InputListComponent {
 
   @Input() isDomain = false; // true: if the answerList is of domain. ex: app-sidebar-blacklist component
 
+  @Input() identifier = 'text'; // identifier in answerList, by default, 'text'
+
   @Input() set config(config: InputListConfig) {
     if (config) {
       this._placeholder = config.placeholder;
@@ -71,7 +73,7 @@ export class InputListComponent {
       }
       if (
         this._answerList.findIndex((t) => {
-          return t.text === val;
+          return t[this.identifier] === val;
         }) === -1
       ) {
         let _testValue: any;
@@ -81,7 +83,9 @@ export class InputListComponent {
           _testValue = emailRegEx;
 
           if (_testValue.test(val)) {
-            this._answerList.push({ text: val });
+            const valueToPush = {};
+            valueToPush[this.identifier] = val;
+            this._answerList.push(valueToPush);
             this._answer = '';
             this.update.emit({ value: this._answerList });
           } else {
@@ -90,11 +94,14 @@ export class InputListComponent {
               'COMMON.INVALID.EMAIL'
             );
           }
-        } else if (this.isDomain) {
+        }
+        else if (this.isDomain) {
           _testValue = domainRegEx;
 
           if (_testValue.test(val)) {
-            this._answerList.push({ text: val });
+            const valueToPush = {};
+            valueToPush[this.identifier] = val;
+            this._answerList.push(valueToPush);
             this._answer = '';
             this.update.emit({ value: this._answerList });
           } else {
@@ -104,7 +111,9 @@ export class InputListComponent {
             );
           }
         } else {
-          this._answerList.push({ text: val });
+          const valueToPush = {};
+          valueToPush[this.identifier] = val;
+          this._answerList.push(valueToPush);
           this._answer = '';
           this.update.emit({ value: this._answerList });
         }
@@ -132,15 +141,8 @@ export class InputListComponent {
   public updateProposition(event: Event, index: number, value: string) {
     event.preventDefault();
     // item element to edit can be name or text depending on input list
-    const oldValue =
-      this._answerList[index].text ||
-      this._answerList[index].name ||
-      this._answerList[index].expression ||
-      this._answerList[index].label;
-    this._answerList[index].text = value;
-    this._answerList[index].name = value;
-    this._answerList[index].expression = value;
-    this._answerList[index].label = value;
+    const oldValue = this._answerList[index][this.identifier]
+    this._answerList[index][this.identifier] = value;
     this.edit.emit({ oldTextValue: oldValue, value: this._answerList[index] });
     this.update.emit({ value: this._answerList });
     this._enableUpdate = false;
