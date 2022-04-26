@@ -9,6 +9,7 @@ export const environment = {
   companyShortName: 'SALVEO',
   domain: 'salveo',
   quizUrl: 'https://quiz.umi.us',
+  grafanaUrl: 'https://grafana.umi.us',
   companyURL: 'salveo.fr',
   logoURL: 'https://salveo.fr/wp-content/uploads/2017/06/SALVEO-Logo-2016-FR.jpg',
   logoSynthURL: 'https://salveo.fr/wp-content/uploads/2017/06/SALVEO-Logo-2016-FR.jpg',

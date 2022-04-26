@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {DomSanitizer, SafeUrl} from '@angular/platform-browser';
+import {environment} from "../../../../../environments/environment";
 
 @Component({
   selector: 'app-shared-grafana',
@@ -8,7 +9,7 @@ import {DomSanitizer, SafeUrl} from '@angular/platform-browser';
 export class SharedGrafanaComponent implements OnInit {
 
   @Input() set url(value: string) {
-    this._panelUrl = this.dom.bypassSecurityTrustResourceUrl(`http://localhost:3013/d-solo/${value}&theme=light`)
+    this._panelUrl = this.dom.bypassSecurityTrustResourceUrl(`${environment.grafanaUrl}/d-solo/${value}&theme=light`)
   };
 
   private _panelUrl: SafeUrl;

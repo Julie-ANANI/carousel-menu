@@ -9,6 +9,7 @@ export const environment = {
   companyShortName: 'BNP (demo)',
   domain: 'bnpparibas',
   quizUrl: 'http://localhost:4200',
+  grafanaUrl: 'http://localhost:3013',
   companyURL: 'https://group.bnpparibas',
   logoURL: 'https://res.cloudinary.com/umi/image/upload/v1548164448/whitelabel/bnpparibas/logo-bnp.png',
   logoSynthURL: 'https://res.cloudinary.com/umi/image/upload/v1548164448/whitelabel/bnpparibas/logo-bnp.png',

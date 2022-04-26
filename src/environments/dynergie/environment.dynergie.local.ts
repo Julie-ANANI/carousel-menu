@@ -9,6 +9,7 @@ export const environment = {
   companyShortName: 'Dynergie',
   domain: 'dynergie',
   quizUrl: 'http://localhost:4200',
+  grafanaUrl: 'http://localhost:3013',
   companyURL: 'https://www.dynergie.eu',
   logoURL: 'https://res.cloudinary.com/umi/image/upload/app/logo-dynergie.png',
   background: 'https://res.cloudinary.com/umi/image/upload/v1524662280/app/default-images/sign-background.jpg',

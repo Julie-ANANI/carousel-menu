@@ -18,6 +18,7 @@ export const environment = {
   logoURL: '',
   domain: '',
   quizUrl: '',
+  grafanaUrl: '',
   logoSynthURL: '',
   background: '',
   secureCookie: false,

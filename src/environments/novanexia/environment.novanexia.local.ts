@@ -9,6 +9,7 @@ export const environment = {
   companyShortName: 'Novanexia (local)',
   domain: 'novanexia',
   quizUrl: 'http://localhost:4200',
+  grafanaUrl: 'http://localhost:3013',
   companyURL: 'https://novanexia.fr/',
   logoURL: 'https://res.cloudinary.com/umi/image/upload/v1548164448/whitelabel/novanexia/novanexia-logo-RVB.png',
   logoSynthURL: 'https://res.cloudinary.com/umi/image/upload/v1548164448/whitelabel/novanexia/novanexia-logo-RVB.png',

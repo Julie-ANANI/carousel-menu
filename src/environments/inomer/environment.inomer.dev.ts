@@ -9,6 +9,7 @@ export const environment = {
   companyShortName: 'INOMER',
   domain: 'vendor1',
   quizUrl: 'https://quizdev.umi.us',
+  grafanaUrl: 'https://grafana-dev.umi.us',
   companyURL: 'imr.inomer.fr',
   logoURL: 'https://res.cloudinary.com/umi/image/upload/logo-inomer.png',
   logoSynthURL: 'https://res.cloudinary.com/umi/image/upload/v1529571635/whitelabel/inomer/logo-inomer-wbg.png',

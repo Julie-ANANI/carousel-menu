@@ -9,6 +9,7 @@ export const environment = {
   companyShortName: 'Multivalente',
   domain: 'multivalente',
   quizUrl: 'https://quiz.umi.us',
+  grafanaUrl: 'https://grafana.umi.us',
   companyURL: 'www.multivalente.com',
   logoURL: 'https://res.cloudinary.com/umi/image/upload/v1528460832/whitelabel/multivalente/logo-multivalente-3.png',
   logoSynthURL: 'https://res.cloudinary.com/umi/image/upload/v1529571635/whitelabel/multivalente/logo-multivalente-bg.png',

@@ -9,6 +9,7 @@ export const environment = {
   companyShortName: 'Schneider (demo)',
   domain: 'schneider',
   quizUrl: 'https://quiz.umi.us',
+  grafanaUrl: 'https://grafana.umi.us',
   companyURL: 'https://www.se.com',
   logoURL: 'https://res.cloudinary.com/umi/image/upload/v1548164448/whitelabel/schneider/schneider-logo-white.png',
   logoSynthURL: 'https://res.cloudinary.com/umi/image/upload/v1548164448/whitelabel/schneider/schneider-logo-black.png',
