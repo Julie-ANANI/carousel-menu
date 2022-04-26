@@ -140,7 +140,9 @@
           <span> . or -</span>
         </span>
         </label>
+
         <app-utility-input-list
+          [identifier]="'expression'"
           (update)="patternsUpdate($event)"
           [config]="patternConfig"
           [isEditable]="true">
@@ -181,6 +183,7 @@
       <div class="form-group">
         <label class="form-label">Brand</label>
         <app-utility-input-list
+          [identifier]="'label'"
           (update)="brandUpdate($event)"
           [config]="brandConfig"
           [isEditable]="true">
@@ -192,6 +195,7 @@
       <div class="form-group">
         <label class="form-label">Geographical Zone</label>
         <app-utility-input-list
+          [identifier]="'name'"
           (update)="geoZoneUpdate($event)"
           [config]="geoConfig"
           [isEditable]="true">

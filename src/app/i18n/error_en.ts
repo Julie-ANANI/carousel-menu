@@ -360,7 +360,8 @@ export const ERROR = {
     'PROJECT_FETCHING_ERROR': 'It could be possible because of server connection problem or we could not find the project that you are looking for.',
     'HEADING_1': 'Oups. something went wrong...',
     'FETCHING_MESSAGE_1': 'There was an error while fetching the data from the server.',
-    'SERVER_CONNECTION': 'It could be possible because of server connection problem.'
+    'SERVER_CONNECTION': 'It could be possible because of server connection problem.',
+    'PATTERNS_DUPLICATED': 'Pattern duplicated!',
   },
 
 

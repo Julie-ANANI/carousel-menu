@@ -393,8 +393,8 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
 
   geoZoneUpdate($event: any) {
     $event.value.map((text: any) => {
-      if (this._geoZones.length === 0 || this._geoZones.find(item => item.name === text.text) === undefined) {
-        this._geoZones.push({scope: 'country', name: text.text});
+      if (this._geoZones.length === 0 || this._geoZones.find(item => item.name === text.name) === undefined) {
+        this._geoZones.push({scope: 'country', name: text.name});
         this.updateEnterpriseValues('geographicalZone', this._geoZones, 'Geographical Zone');
       }
     });
@@ -402,8 +402,8 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
 
   brandUpdate($event: any) {
     $event.value.map((text: any) => {
-      if (this._brands.length === 0 || this._brands.find(item => item.label === text.text) === undefined) {
-        this._brands.push({label: text.text, url: ''});
+      if (this._brands.length === 0 || this._brands.find(item => item.label === text.label) === undefined) {
+        this._brands.push({label: text.label, url: ''});
         this.updateEnterpriseValues('brands', this._brands, 'Brand');
       }
     });
@@ -462,10 +462,16 @@ export class AdminEntrepriseBulkEditComponent implements OnInit {
     this._companiesTable = this._companiesOriginalTable;
   }
 
+  /**
+   * update patterns
+   * @param $event
+   * Updated by Wei WANG 25/04/2022
+   */
   patternsUpdate($event: any) {
     $event.value.map((text: any) => {
-      if (this._patterns.length === 0 || this._patterns.find(item => item.name === text.text) === undefined) {
-        this._patterns.push({expression: text.text, avgScore: 0});
+      const newPattern = text.expression;
+      if (this._patterns.length === 0 || this._patterns.find(item => item.expression === newPattern) === undefined) {
+        this._patterns.push({expression: newPattern, avgScore: 0});
         this.updateEnterpriseValues('patterns', this._patterns, 'Patterns');
       }
     });

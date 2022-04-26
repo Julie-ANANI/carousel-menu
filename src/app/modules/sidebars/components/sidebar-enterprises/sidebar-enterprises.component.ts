@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable, Subject } from 'rxjs';
-import {first, takeUntil} from 'rxjs/operators';
+import { first, takeUntil } from 'rxjs/operators';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { AutocompleteService } from '../../../../services/autocomplete/autocomplete.service';
 import { Clearbit } from '../../../../models/clearbit';
@@ -18,7 +18,7 @@ import {
   EnterpriseValueChains,
   Industries,
 } from '../../../../models/static-data/enterprise';
-import {EnterpriseService} from '../../../../services/enterprise/enterprise.service';
+import { EnterpriseService } from '../../../../services/enterprise/enterprise.service';
 import {
   UmiusAutoSuggestionInterface,
   UmiusEnterpriseInterface,
@@ -27,6 +27,7 @@ import {
 } from '@umius/umi-common-component';
 
 type Template = 'CREATE' | 'EDIT';
+
 
 @Component({
   selector: 'app-sidebar-enterprises',
@@ -114,7 +115,7 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
 
   private _inputGeoZone: Array<any> = [];
 
-  private _newPatterns: Array<UmiusPatternInterface> = [];
+  private _newPatterns: Array<any> = [];
 
   private _newIndustry: Array<UmiusIndustryInterface> = [];
 
@@ -337,7 +338,7 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
       const _newEnterprise: UmiusEnterpriseInterface = {
         name: this._form.get('name').value,
         topLevelDomain: this._form.get('topLevelDomain').value,
-        patterns: this.newPatterns,
+        patterns: this._newPatterns,
         parentEnterprise: this._parentEnterprise.name
           ? this._parentEnterprise['id']
           : null,
@@ -390,11 +391,16 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
     this._showModal = false;
   }
 
+  /**
+   * updated by Wei WANG 25/04/2022
+   * We add unique pattern
+   * @param event
+   */
   public patternsUpdate(event: { value: Array<any> }) {
     if (this.isEditable) {
       event.value.map((text) => {
         this._newPatterns.push({
-          expression: text.expression || text.text,
+          expression: text.expression,
           avg: 0,
         });
       });
@@ -420,7 +426,7 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
     if (this.isEditable) {
       this._newBrands = [];
       event.value.map((text) => {
-        this._newBrands.push({label: text.text || text.label, url: ''});
+        this._newBrands.push({label: text.label, url: ''});
       });
       this._saveChanges();
     }
@@ -430,7 +436,7 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
     if (this.isEditable) {
       this._newGeoZone = [];
       this._newGeoZone = event.value.map((text) => {
-        return {scope: 'country', name: text.text || text.name};
+        return {scope: 'country', name: text.name};
       });
       this._saveChanges();
     }
