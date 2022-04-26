@@ -180,19 +180,18 @@ export class MarketReportResultComponent implements OnInit {
 
       this._questions.forEach((_question) => {
         const {averageFinalScore} = ResponseService.likertScaleChartData(this._answers, _question, this.reportingLang);
-        const {score, percentage, index} = ResponseService.getLikertScaleGraphicScore(averageFinalScore);
+        const {score, percentage} = ResponseService.getLikertScaleGraphicScore(averageFinalScore);
         this._scale.score += score;
-        this._scale.index += index;
         this._scale.percentage += percentage;
       });
 
       this._scale = {
         score: this._scale.score / this._questions.length,
         percentage: this._scale.percentage / this._questions.length,
-        index: Math.floor(this._scale.index / this._questions.length),
+        index: 1 // this will be overwritten next
       }
 
-      this._setLabel();
+      this._setScaleLabelAndCursor();
     }
   }
 
@@ -200,7 +199,7 @@ export class MarketReportResultComponent implements OnInit {
    * setting the values based on the percentage and score
    * @private
    */
-  private _setLabel() {
+  private _setScaleLabelAndCursor() {
     this._label.left = this._scale.percentage < 50 ? this._scale.percentage + '%' : '';
     this._label.right = this._scale.percentage >= 50 ? (99 - this._scale.percentage) + '%' : '';
     this._label.margin = (this._scale.percentage >= 30 && this._scale.percentage <= 85) ? '-5%' : '';
@@ -208,18 +207,23 @@ export class MarketReportResultComponent implements OnInit {
     const thresholds = likertScaleThresholds(2.25, 5);
 
     if (this._scale.score < thresholds[0]) {
+      this._scale.index = 0;
       this._label.color = 'color-1';
       this._label.label = 'MARKET_REPORT.RESULT.' + this._mission?.template?.methodology + '.BAR.LABEL_A';
     } else if (thresholds[0] <= this._scale.score && this._scale.score < thresholds[1]) {
+      this._scale.index = 1;
       this._label.color = 'color-2';
       this._label.label = 'MARKET_REPORT.RESULT.' + this._mission?.template?.methodology + '.BAR.LABEL_B';
     } else if (thresholds[1] <= this._scale.score && this._scale.score < thresholds[2]) {
+      this._scale.index = 2;
       this._label.color = 'color-3';
       this._label.label = 'MARKET_REPORT.RESULT.' + this._mission?.template?.methodology + '.BAR.LABEL_C';
     } else if (thresholds[2] <= this._scale.score && this._scale.score < thresholds[3]) {
+      this._scale.index = 3;
       this._label.color = 'color-4';
       this._label.label = 'MARKET_REPORT.RESULT.' + this._mission?.template?.methodology + '.BAR.LABEL_D';
     } else {
+      this._scale.index = 4;
       this._label.color = 'color-5';
       this._label.label = 'MARKET_REPORT.RESULT.' + this._mission?.template?.methodology + '.BAR.LABEL_E';
     }
