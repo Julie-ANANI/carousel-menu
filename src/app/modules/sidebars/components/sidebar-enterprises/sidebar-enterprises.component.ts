@@ -398,14 +398,10 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
   public patternsUpdate(event: { value: Array<any> }) {
     if (this.isEditable) {
       event.value.map((text) => {
-        const newPattern = text.text;
-        const isExist = this._newPatterns.find(pattern => pattern.text === newPattern);
-        if (!isExist) {
-          this._newPatterns.push({
-            text: text.text,
-            avg: 0,
-          });
-        }
+        this._newPatterns.push({
+          expression: text.expression,
+          avg: 0,
+        });
       });
       this._saveChanges();
     }
@@ -429,7 +425,7 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
     if (this.isEditable) {
       this._newBrands = [];
       event.value.map((text) => {
-        this._newBrands.push({label: text.text || text.label, url: ''});
+        this._newBrands.push({label: text.label, url: ''});
       });
       this._saveChanges();
     }
@@ -439,7 +435,7 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
     if (this.isEditable) {
       this._newGeoZone = [];
       this._newGeoZone = event.value.map((text) => {
-        return {scope: 'country', name: text.text || text.name};
+        return {scope: 'country', name: text.name};
       });
       this._saveChanges();
     }

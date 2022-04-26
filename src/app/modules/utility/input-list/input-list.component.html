@@ -34,15 +34,15 @@
         <!-- text -->
         <div class="answer-wrapper text-sm text-dark m-right-2">
           <span (click)="clickItem.emit(answer)"
-                *ngIf="!isClickable && !(enableUpdate && i === indexNumber)">{{ answer.text || answer.name || answer.label || answer.expression}}</span>
+                *ngIf="!isClickable && !(enableUpdate && i === indexNumber)">{{ answer[identifier]}}</span>
           <a class="c-hand text-dark" *ngIf="isClickable && !(enableUpdate && i === indexNumber)"
-             (click)="clickItem.emit(answer)">{{ answer.text || answer.name || answer.label || answer.expression}}</a>
+             (click)="clickItem.emit(answer)">{{ answer[identifier]}}</a>
           <label *ngIf="enableUpdate && i === indexNumber">
             <input
               #updateAnswer
               (keyup.enter)="updateProposition($event, i, updateAnswer.value)"
               [name]="'text' + [i]"
-              [ngModel]="answerList[i].text || answerList[i].name || answerList[i].label || answerList[i].expression"
+              [ngModel]="answerList[i][identifier]"
               autocomplete="off"
               class="form-input is-sm"
               type="text">
