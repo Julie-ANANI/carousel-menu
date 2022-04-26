@@ -398,6 +398,7 @@ export class SidebarEnterprisesComponent implements OnInit, OnDestroy {
    */
   public patternsUpdate(event: { value: Array<any> }) {
     if (this.isEditable) {
+      this._newPatterns = [];
       event.value.map((text) => {
         this._newPatterns.push({
           expression: text.expression,
