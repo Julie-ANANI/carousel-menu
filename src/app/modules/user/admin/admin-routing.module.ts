@@ -52,6 +52,11 @@ const adminRoutes: Routes = [
         path: 'community',
         canActivate: [AdminAuthGuard],
         loadChildren: () => import('./components/admin-community/admin-community.module').then(m => m.AdminCommunityModule)
+      },
+      {
+        path: 'grafana',
+        canActivate: [AdminAuthGuard],
+        loadChildren: () => import('./components/admin-grafana/admin-grafana.module').then(m => m.AdminGrafanaModule)
       }
     ]
   }
