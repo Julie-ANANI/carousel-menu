@@ -79,7 +79,6 @@ export class SharedUploadZonePhotoComponent {
           _formData.append('file', file, file.name);
           let promise = null;
           if (this.mediaId) {
-            console.log('am i here?')
             promise = this._mediaService.replace(_formData, this.mediaId).pipe(first());
           } else {
             promise = this._mediaService.upload(this.uri, _formData).pipe(first());

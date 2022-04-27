@@ -31,9 +31,12 @@ export class InnovationService {
     return this._http.post('/innovation', innovationObj);
   }
 
-  public get(id: string, config?: UmiusConfigInterface): Observable<Innovation> {
-    return this._http.get<Innovation>('/innovation/' + id, {params: config});
+  public get(id: string, config?: UmiusConfigInterface , cache: CacheType = 'reset'): Observable<Innovation> {
+    return this._http.get<Innovation>('/innovation/' + id, {params: config, headers: new HttpHeaders().set('cache', cache)});
   }
+/*  public get(id: string, config?: UmiusConfigInterface): Observable<Innovation> {
+    return this._http.get<Innovation>('/innovation/' + id, {params: config});
+  }*/
 
   public getAll(params: {[header: string]: string | string[]}): Observable<{result: Array<Innovation>, _metadata: any}> {
     return this._http.get<{result: Array<Innovation>, _metadata: any}>('/innovation/', {params: params});
@@ -57,6 +60,10 @@ export class InnovationService {
 
   public addNewMediaVideoToInnovationCard(innovationId: string, innovationCardId: string, videoInfos: UmiusVideoInterface): Observable<any> {
     return this._http.post('/innovation/' + innovationId + '/innovationCard/' + innovationCardId + '/media/video', videoInfos);
+  }
+
+  public updateVideo(innovationId: string, innovationCardId: string, videoId: string, videoInfos: UmiusVideoInterface): Observable<any> {
+    return this._http.put('/innovation/' + innovationId + '/innovationCard/' + innovationCardId + '/media/video/' + videoId, videoInfos);
   }
 
   public deleteMediaOfInnovationCard(innovationId: string, innovationCardId: string, mediaId: string): Observable<any> {

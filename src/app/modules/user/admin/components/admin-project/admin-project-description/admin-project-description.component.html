@@ -665,7 +665,7 @@
           <div *ngIf="activeInnovCard.media.length" [ngStyle]=mainContainerStyle style="padding: 16px; display: flex; flex-wrap: wrap; position: relative;">
 
             <!-- zoom btn -->
-            <div *ngIf="!isBeingEdited && activeInnovCard.principalMedia" (click)="toggleDisplayMediaSlider()" class="icon-container is-lg is-overlay" style="position: absolute; right: 0;  top: 0; background-color: #4F5D6B; z-index: 3;">
+            <div *ngIf="!isBeingEdited && activeInnovCard.principalMedia" (click)="toggleDisplayMediaSlider()" class="icon-container is-lg is-overlay" style="position: absolute; right: 0;  top: 0; background-color: #4F5D6B; z-index: 1;">
               <i class="icon icon-search" style="color: white;"></i>
             </div>
             <!-- /zoom button -->
@@ -675,15 +675,14 @@
 
           <!-- edit button -->
           <div *ngIf="isBeingEdited" class="icon-container is-overlay is-primary" (click)="toggleDisplayUploadOverlay(activeInnovCard.principalMedia.id, 'main')" style="position: absolute; top: 0; right: 0; float: right; background-color: white;">
-            <span class="tooltip" data-tooltip="Edit media">
+            <span class="tooltip" data-tooltip="Edit media" (click)="setEditedMediaIndex(0)">
               <i class="icon icon-edit"></i>
             </span>
           </div>
           <!-- /edit button -->
 
           <!-- if type === 'PHOTO' -->
-          <figure *ngIf="activeInnovCard.principalMedia['type'] === 'PHOTO'
-          && mediaSrc(activeInnovCard.principalMedia, 'IMAGE')" style="width: 100%; height: 100%; object-fit: cover; background-color: #ececec; display: flex; place-content: center;">
+          <figure *ngIf="activeInnovCard.principalMedia['type'] === 'PHOTO'" style="width: 100%; height: 100%; object-fit: cover; background-color: #ececec; display: flex; place-content: center;">
             <img
               style="cursor: pointer; height: 100%; object-fit: cover;"
               [ngStyle]="{'width': activeInnovCard.principalMedia.isMediaAdjusted || isMediaAdjusted ? !isMediaAdjusted && isBeingEdited ? '100%' : 'auto' : '100%'}"
@@ -696,8 +695,7 @@
 
           <!-- if type === 'VIDEO' -->
           <iframe
-            *ngIf="activeInnovCard.principalMedia['type'] === 'VIDEO'
-            && mediaSrc(activeInnovCard.principalMedia, 'VIDEO')"
+            *ngIf="activeInnovCard.principalMedia['type'] === 'VIDEO'"
             style="width: 100%; height: 100%; object-fit: cover; border: none; background-color: #ececec"
             [src]="mediaSrc(activeInnovCard.principalMedia, 'VIDEO')" >
           </iframe>
@@ -706,7 +704,7 @@
         <!-- /main media -->
 
         <!-- secondary medias -->
-         <div *ngIf="activeInnovCard.media.length > 0" style="display: flex; flex-wrap: wrap; gap: 8px;" [ngStyle]="secondaryContainerStyle">
+         <div *ngIf="activeInnovCard.media.length > 0" style="display: flex; flex-wrap: wrap; gap: 8px" [ngStyle]="(activeInnovCard.media.length > 1) ? secondaryContainerStyle : null">
           <ng-container *ngFor="let media of mediaFilter; let i=index;" >
             <div
               *ngIf="media._id !== (activeInnovCard.principalMedia && activeInnovCard.principalMedia._id)"
@@ -728,7 +726,7 @@
               <!-- /edit and delete buttons -->
 
               <!-- if type === 'PHOTO' -->
-              <figure *ngIf="media['type'] && mediaSrc(media, 'IMAGE')" style="width: 160px; height: 120px; object-fit: cover; background-color: #ececec; display: flex; place-content: center;">
+              <figure *ngIf="media.type === 'PHOTO'" style="width: 160px; height: 120px; object-fit: cover; background-color: #ececec; display: flex; place-content: center;">
                 <img
                   style="cursor: pointer; width: 100%; height: 100%; object-fit: cover; background-color: #ececec"
                   (click)="toggleDisplayMediaSlider('showSelected', i)"
@@ -762,7 +760,7 @@
             </div>
           </ng-container>
            <!-- new media card -->
-           <div *ngIf="isBeingEdited">
+           <div *ngIf="isBeingEdited" [ngStyle]="{padding: (isBeingEdited && activeInnovCard.media.length === 1) ? (activeInnovCard.principalMedia.type === 'VIDEO' || activeInnovCard.principalMedia.cloudinary.width / activeInnovCard.principalMedia.cloudinary.height > 4/3) ? '8px 0 0 0' : '0 0 0 8px' : null}" >
              <file-drop class="drop-container media-card text-center" (click)="toggleDisplayUploadOverlay()">
                <div class="icon-container is-overlay">
                   <span class="tooltip" data-tooltip="Add new media" (click)="setEditedMediaIndex(undefined)">

@@ -157,6 +157,8 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
       }
     });
 
+    console.log('all medias', this.activeInnovCard.media, 'main', this.activeInnovCard.principalMedia)
+
     if (this.activeInnovCard.principalMedia) {
       if (this.activeInnovCard.principalMedia.type !== 'VIDEO' && (this.activeInnovCard.principalMedia.cloudinary.width / this.activeInnovCard.principalMedia.cloudinary.height) < 4/3) {
         this._mainContainerStyle = {
@@ -170,11 +172,14 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
           width: '290px',
           height: '100%'
         };
-        this._secondaryContainerStyle = {
-          'flex-direction': 'column',
-          height: '100%',
-          'padding-left': '8px'
-        };
+        if (this.activeInnovCard.media.length > 1) {
+          this._secondaryContainerStyle = {
+            //'row-gap': '8px',
+            'flex-direction': 'column',
+            height: '100%',
+            'padding-left': '8px'
+          };
+        }
       } else if (this.activeInnovCard.principalMedia.type === 'VIDEO' || (this.activeInnovCard.principalMedia.cloudinary.width / this.activeInnovCard.principalMedia.cloudinary.height) > 4/3) {
         this._mainContainerStyle = {
           width: '528px',
@@ -187,11 +192,14 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
           width: '100%',
           height: '290px'
         };
-        this._secondaryContainerStyle = {
-          'flex-direction': 'row',
-          width: '100%',
-          'padding-top': '8px'
-        };
+        if (this.activeInnovCard.media.length > 1) {
+          this._secondaryContainerStyle = {
+            //'column-gap': '8px',
+            'flex-direction': 'row',
+            width: '100%',
+            'padding-top': '8px'
+          };
+        }
       }
       if (!this._isBeingEdited) {
         this._mainContainerStyle['background-color'] = 'white';
@@ -199,7 +207,7 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
     }
 
 
-    this._mediaFitler = this.activeInnovCard.media.slice(0, 4);
+    this._mediaFitler = this.activeInnovCard.media.slice(1, 4);
   }
 
   private _getAllJobs() {
@@ -465,9 +473,9 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
 
   private _updateMediaFilter() {
     if (this._isBeingEdited) {
-      this._mediaFitler = this.activeInnovCard.media;
+      this._mediaFitler = this.activeInnovCard.media.slice(1, this.activeInnovCard.media.length);
     } else {
-      this._mediaFitler = this.activeInnovCard.media.slice(0, 4);
+      this._mediaFitler = this.activeInnovCard.media.slice(1, 4);
     }
   }
 
@@ -557,17 +565,34 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
   }
 
   public uploadImage(media: UmiusMediaInterface): void {
-    if (this._editedMediaIndex !== undefined) {
+    if (this._editedMediaIndex !== undefined) { // check if we are editing a media or not
+      if (this._editedMediaIndex === 0) { // check of the edited media is the main media
+        this.activeInnovCard.principalMedia = media;
+        this.onSetPrincipal(media);
+      }
       this.activeInnovCard.media[this._editedMediaIndex] = media;
     } else {
       this.activeInnovCard.media.push(media);
-      this._updateMediaFilter();
       if (!this._innovation.innovationCards[this._activeCardIndex].principalMedia) {
         this._innovation.innovationCards[this._activeCardIndex].principalMedia = media;
         this.onSetPrincipal(media);
       }
     }
+    if (this.activeInnovCard.principalMedia.type !== 'VIDEO' && ((this.activeInnovCard.principalMedia.cloudinary.width / this.activeInnovCard.principalMedia.cloudinary.height) < 4/3) && this.activeInnovCard.media.length > 1) {
+        this._secondaryContainerStyle = {
+          'flex-direction': 'column',
+          height: '100%',
+          'padding-left': '8px'
+        };
+    } else if (this.activeInnovCard.principalMedia.type === 'VIDEO' || ((this.activeInnovCard.principalMedia.cloudinary.width / this.activeInnovCard.principalMedia.cloudinary.height) > 4/3) && this.activeInnovCard.media.length > 1) {
+        this._secondaryContainerStyle = {
+          'flex-direction': 'row',
+          width: '100%',
+          'padding-top': '8px'
+        };
+      }
 
+    this._updateMediaFilter();
     this._emitUpdatedInnovation();
     this._translateNotificationsService.success('Success', 'The media has been uploaded.');
     this.toggleDisplayUploadOverlay();
@@ -575,17 +600,35 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
 
   public uploadVideo(video: UmiusVideoInterface): void {
     this._isUploadingVideo = true;
+    if (this._editedMediaIndex !== undefined) {
+      this._innovationService.updateVideo(this._innovation._id, this._innovation.innovationCards[this._activeCardIndex]._id, this._innovation.innovationCards[this._activeCardIndex].principalMedia.id, video).pipe(first())
+        .subscribe((res) => {
+          console.log(res)
+        }, (err: HttpErrorResponse) => {
+          this._isUploadingVideo = false;
+          this._translateNotificationsService.error('Media Uploading Error...', ErrorFrontService.getErrorKey(err.error));
+          console.error(err);
+        });
+    }
     this._innovationService.addNewMediaVideoToInnovationCard(this._innovation._id,
       this._innovation.innovationCards[this._activeCardIndex]._id, video)
       .pipe(first())
       .subscribe((res) => {
         this._isUploadingVideo = false;
-        this.activeInnovCard.media.push(res);
+        if (this._editedMediaIndex !== undefined) {
+          if (this._editedMediaIndex === 0) {
+            this.activeInnovCard.principalMedia = res;
+            this.onSetPrincipal(res);
+          }
+          this.activeInnovCard.media[this._editedMediaIndex] = res;
+        } else {
+          this.activeInnovCard.media.push(res);
+          this._updateMediaFilter();
+        }
         if (!this._innovation.innovationCards[this._activeCardIndex].principalMedia) {
           this.onSetPrincipal(res);
-        } else {
-          this._emitUpdatedInnovation();
         }
+        this._emitUpdatedInnovation();
         this._translateNotificationsService.success('Success', 'The media has been uploaded.');
         this.toggleDisplayUploadOverlay();
       }, (err: HttpErrorResponse) => {
@@ -608,11 +651,14 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
         width: '290px',
         height: '100%'
       };
-      this._secondaryContainerStyle = {
-        'flex-direction': 'column',
-        height: '100%',
-        'padding-left': '8px'
-      };
+      if (this.activeInnovCard.media.length > 1) {
+        this._secondaryContainerStyle = {
+          //'row-gap': '8px',
+          'flex-direction': 'column',
+          height: '100%',
+          'padding-left': '8px'
+        };
+      }
     } else if (media.type === 'VIDEO' || (media.cloudinary.width / media.cloudinary.height) > 4/3) {
       this._mainContainerStyle = {
         width: '528px',
@@ -625,17 +671,20 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
         width: '100%',
         height: '290px'
       };
-      this._secondaryContainerStyle = {
-        'flex-direction': 'row',
-        width: '100%',
-        'padding-top': '8px'
-      };
+      if (this.activeInnovCard.media.length > 1) {
+        this._secondaryContainerStyle = {
+          //'column-gap': '8px',
+          'flex-direction': 'row',
+          width: '100%',
+          'padding-top': '8px'
+        };
+      }
     }
 
     if (!this._isSavingMedia) {
       this._isSavingMedia = true;
       // delete video if main media was a video because videos can't be secondary medias
-      if (this.activeInnovCard.principalMedia && this.activeInnovCard.principalMedia.type === 'VIDEO') {
+      if (this.activeInnovCard.principalMedia && this.activeInnovCard.principalMedia.type === 'VIDEO' && media.type !== 'VIDEO') {
         const mainVideoId = this.activeInnovCard.principalMedia._id;
         this._innovationService.deleteMediaOfInnovationCard(this._innovation._id, this.activeInnovCard._id, mainVideoId)
           .pipe(first())
@@ -713,11 +762,17 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
 
   public mediaSrc(media: UmiusMediaInterface, type: 'IMAGE' | 'VIDEO') {
     if (media && type === 'IMAGE') {
-      return MediaFrontService.imageSrc(media);
+       if (media.url) {
+        return media.url + '?a=' + Math.floor(Math.random() * 999999).toString();
+      } else {
+        return MediaFrontService.imageSrc(media);
+      }
+      //return MediaFrontService.imageSrc(media);
     } else if (media && type === 'VIDEO') {
       return this._innovationFrontService.videoSrc(media);
     }
-  }
+}
+
 
   public getPadPreviewMode(value: string) {
     return this._togglePreviewMode[value];
@@ -775,7 +830,6 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
   }
 
   get mediaFilter(): Array<UmiusMediaInterface> {
-    console.log('filter', this._mediaFitler);
     return this._mediaFitler;
   }
 
