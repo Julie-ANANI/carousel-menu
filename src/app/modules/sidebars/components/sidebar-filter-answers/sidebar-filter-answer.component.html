@@ -83,6 +83,7 @@
       [isAddable]="false"
       [isSmall]="false"
       [isClickable]="true"
+      [identifier]="'name'"
       (clickItem)="loadFilter($event.name)"
       (remove)="deleteCustomFilter($event.value.name)"
       (edit)="updateFilter($event.value, $event.oldTextValue)"
