@@ -392,6 +392,7 @@ export class SidebarFilterAnswersComponent implements OnChanges, OnDestroy {
           this._tagService.checkAnswerTag(question.identifier, t._id, isChecked);
         });
         break;
+      case 'likert-scale':
       case 'radio':
       case 'checkbox':
         question = filterArray[0];
