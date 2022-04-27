@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Tag } from '../../models/tag';
 import { TagStats } from '../../models/tag-stats';
 import {environment} from '../../../environments/environment';
+import { CacheType } from "../../models/cache";
 
 @Injectable({providedIn: 'root'})
 export class TagsService {
@@ -47,8 +48,9 @@ export class TagsService {
     return this._http.get<Array<Tag>>('/tags/' + innovationId + '/pool');
   }
 
-  public searchTagInPool(innovationId: string, keyword: string): Observable<Array<Tag>> {
-    return this._http.get<Array<Tag>>('/tags/' + innovationId + '/pool/search', { params: {keyword: keyword }});
+  public searchTagInPool(innovationId: string, keyword: string, cache: CacheType = 'reset'): Observable<Array<Tag>> {
+    return this._http.get<Array<Tag>>('/tags/' + innovationId + '/pool/search',
+      { params: {keyword: keyword }, headers: new HttpHeaders().set('cache', cache)});
   }
 
   public addTagToPool(innovationId: string, tagId: string): Observable<any> {
