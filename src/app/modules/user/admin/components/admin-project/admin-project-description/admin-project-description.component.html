@@ -713,7 +713,7 @@
               <!-- edit and delete buttons -->
               <div *ngIf="isBeingEdited" style="position: absolute; top: 0; right: 0; float: right; z-index: 2">
                 <div class="icon-container is-overlay" (click)="toggleDisplayUploadOverlay(media.id, 'secondary')" style="background-color: white; margin-right: 4px">
-                <span class="tooltip" data-tooltip="Edit media" (click)="setEditedMediaIndex(i)">
+                <span class="tooltip" data-tooltip="Edit media" (click)="setEditedMediaIndex(i+1)">
                   <i class="icon icon-edit"></i>
                 </span>
                 </div>

@@ -565,6 +565,7 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
   }
 
   public uploadImage(media: UmiusMediaInterface): void {
+    console.log('index', this._editedMediaIndex)
     if (this._editedMediaIndex !== undefined) { // check if we are editing a media or not
       if (this._editedMediaIndex === 0) { // check of the edited media is the main media
         this.activeInnovCard.principalMedia = media;
@@ -762,12 +763,12 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
 
   public mediaSrc(media: UmiusMediaInterface, type: 'IMAGE' | 'VIDEO') {
     if (media && type === 'IMAGE') {
-       if (media.url) {
+  /*     if (media.url) {
         return media.url + '?a=' + Math.floor(Math.random() * 999999).toString();
       } else {
         return MediaFrontService.imageSrc(media);
-      }
-      //return MediaFrontService.imageSrc(media);
+      }*/
+      return MediaFrontService.imageSrc(media);
     } else if (media && type === 'VIDEO') {
       return this._innovationFrontService.videoSrc(media);
     }
