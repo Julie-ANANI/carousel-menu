@@ -300,41 +300,18 @@ export class MissionQuestionService {
   public static setOptionsColors(question: MissionQuestion): MissionQuestion {
     const nbOptions = question.options.length;
 
-
-      if (nbOptions > 4 && nbOptions <= 6 && question.controlType === 'radio') {
-            for (const indexOption in question.options) {
-              question.options[indexOption].color = colors[indexOption + 4].value;
-            }
-      } else
-       for (let i = 0; i < nbOptions; i++) {
-          question.options[i].color = colors[i % 10].value;
-       }
-
+    if (nbOptions > 4 && nbOptions <= 6 && question.controlType === 'radio') {
+      for (const indexOption in question.options) {
+        const index = parseInt(indexOption);
+        question.options[indexOption].color = colors[index + 4].value;
+      }
+    } else
+      for (let i = 0; i < nbOptions; i++) {
+        question.options[i].color = colors[i % 10].value;
+      }
 
     return question;
   }
-
-
-    /**
-     * return the options color for controlType === 'liker-scale'
-     * @param question
-     */
-  public static setOptionsColorsLikert(question: MissionQuestion): MissionQuestion {
-
-    const nbOptions = question.options.length;
-
-      if (nbOptions > 5 && question.controlType === 'likert-scale') {
-
-        for (const indexOption in question.options) {
-          question.options[indexOption].color = colors[indexOption + 5].value;
-        }
-
-        } else
-          for (let i = 0; i < nbOptions; i++) {
-            question.options[i].color = colors[i % 10].value;
-          }
-        return question;
-      }
 
   /**
    * return the options are positive answers or not for control type === 'radio'
@@ -437,7 +414,7 @@ export class MissionQuestionService {
       for (let i = 0; i < measureOptions.length; i++) {
         question.options.push(this.addOptionLikert(question, measureOptions[i]));
 
-        question = MissionQuestionService.setOptionsColorsLikert(question);
+        question = MissionQuestionService.setOptionsColors(question);
         question = MissionQuestionService.setOptionsPositiveAnswer(question);
 
       }
