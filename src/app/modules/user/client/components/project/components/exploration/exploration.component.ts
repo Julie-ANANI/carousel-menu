@@ -148,7 +148,7 @@ export class ExplorationComponent implements OnInit, OnDestroy {
   public onClickShow(answer: Answer) {
     this._modalAnswer = answer;
     this._sidebarValue = {
-      animate_state: this._sidebarValue.animate_state === 'active' ? 'inactive' : 'active',
+      animate_state: 'active',
       title: 'SIDEBAR.TITLE.INSIGHT',
       size: '726px'
     };
