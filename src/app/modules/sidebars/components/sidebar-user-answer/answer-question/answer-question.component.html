@@ -187,7 +187,9 @@
         <div *ngIf="!editMode && fullAnswer.answers[question.identifier]" class="label label-answer">
 
           <ng-container *ngIf="!showQuestionTranslation">
-            {{ fullAnswer.answers[question.identifier] }}
+            <div class="text-left" style="white-space: pre-line">
+              {{fullAnswer.answers[question.identifier]}}
+            </div>
             <button
               (click)="showQuestionTranslation = true"
               *ngIf="adminMode && (fullAnswer.used_language.toLowerCase() !== platformLang)"
