@@ -57,7 +57,7 @@ export class AnswerFrontService {
   public static qualitySort(answers: Array<Answer>): Array<Answer> {
     let _answers: Array<Answer> = [];
 
-    if (answers.length > 0) {
+    if (answers && answers.length > 0) {
       _answers = answers.sort((a, b) => {
         return b.profileQuality - a.profileQuality;
       });
@@ -73,7 +73,7 @@ export class AnswerFrontService {
    */
   public static tagsOccurrence(answers: Array<Answer>): Array<Tag> {
     let _tags: Array<Tag> = [];
-    if (answers.length > 0) {
+    if (answers && answers.length > 0) {
       answers.forEach((answer) => {
         const _answerTags = answer.tags;
         if (Array.isArray(_answerTags) && _answerTags.length) {
