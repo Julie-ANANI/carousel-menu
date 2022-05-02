@@ -12,7 +12,7 @@ export class AnswerFrontService {
   public static anonymous(answers: Array<Answer>): Array<Answer> {
     let _answers: Array<Answer> = [];
 
-    if (answers.length > 0) {
+    if (answers && answers.length > 0) {
       _answers = <Array<Answer>>answers.map( (answer) => {
         const _answer = {};
 
@@ -27,9 +27,9 @@ export class AnswerFrontService {
 
             case('professional'):
               _answer[key] = {
-                language: answer[key].language || 'en'
+                language: answer[key] && answer[key].language || 'en'
               };
-              if (answer[key]['company']) {
+              if (answer[key] && answer[key]['company']) {
                 _answer[key]['company'] = {
                   name: ''
                 };

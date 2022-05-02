@@ -27,7 +27,7 @@ describe('Component - AdminProjectsComponent', ()=>{
 
 })
 ```
-```it```: test case
+```it or test```: test case
 
 ```typescript
 it('input = empty list, output = empty list',()=>{})
