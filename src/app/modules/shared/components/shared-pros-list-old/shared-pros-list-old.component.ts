@@ -15,14 +15,13 @@ export interface SelectedProfessional extends Professional {
   styleUrls: ['./shared-pros-list-old.component.scss']
 })
 export class SharedProsListOldComponent {
+  @Input() set requestId(value: string){
+    if(value){
+      this._requestId = value;
+      console.log(value);
+    }
+  }
 
-  private _config: UmiusConfigInterface;
-  private _keywordsModal: boolean = false;
-  private _paginationConfig: UmiusPaginationInterface = {};
-  public smartSelect: any = null;
-  public editUser: {[propString: string]: boolean} = {};
-
-  @Input() public requestId: string;
   @Input() public campaign: Campaign;
   @Input() set config(value: UmiusConfigInterface) {
     this.loadPaginationConfig(value);
@@ -33,6 +32,12 @@ export class SharedProsListOldComponent {
   private _total = 0;
   private _pros: Array <SelectedProfessional>;
   private _proKeywords: Array<string> = null;
+  private _requestId = '';
+  private _config: UmiusConfigInterface;
+  private _keywordsModal: boolean = false;
+  private _paginationConfig: UmiusPaginationInterface = {};
+  public smartSelect: any = null;
+  public editUser: {[propString: string]: boolean} = {};
 
   constructor(private _searchService: SearchService) { }
 
@@ -45,7 +50,7 @@ export class SharedProsListOldComponent {
 
   loadPros(config: UmiusConfigInterface): void {
     this._config = config;
-    this._searchService.getPros(this._config, this.requestId).pipe(first()).subscribe((pros: any) => {
+    this._searchService.getPros(this._config, this._requestId).pipe(first()).subscribe((pros: any) => {
       this._pros = pros.persons;
       this._total = pros._metadata.totalCount;
     });
@@ -107,6 +112,10 @@ export class SharedProsListOldComponent {
   set keywordsModal(value: boolean) { this._keywordsModal = value; }
   get config(): UmiusConfigInterface { return this._config; }
   get paginationConfig(): UmiusPaginationInterface { return this._paginationConfig; }
+
+  get requestId(): string {
+    return this._requestId;
+  }
 
   get sortConfig(): string {
     return this._config.sort;

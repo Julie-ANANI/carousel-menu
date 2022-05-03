@@ -19,8 +19,11 @@
       <i class="fas fa-file-excel"></i> {{ 'SEARCH.EXPORT' | translate }} ({{ totalSelected }})
     </li>
   </ul>
-  <app-shared-pros-list-old [config]="config" [requestId]="request._id" (selectedProsChange)="updateSelection($event)"></app-shared-pros-list-old>
+  <div *ngIf="request && request._id">
+    <app-shared-pros-list-old [requestId]="request._id" [config]="config" (selectedProsChange)="updateSelection($event)"></app-shared-pros-list-old>
+  </div>
 </div>
+
 
 <!-- MODAL : Ajout de pros à une campagne -->
 <umius-modal [(showModal)]="addToCampaignModal" [title]="'SEARCH.CAMPAIGN.TITLE'">
