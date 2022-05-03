@@ -24,13 +24,15 @@ export class SharedSearchConfigProComponent implements OnInit {
    * @param value
    */
   @Input() set option(value: { name: string, state: number }) {
-    this._currentState = value.state;
-    this._context = value.name;
-    if (this.isJobTypo) {
-      this.initJobStates();
-      this._countStates();
+    if(value && value.name && value.state){
+      this._currentState = value.state;
+      this._context = value.name;
+      if (this.isJobTypo) {
+        this.initJobStates();
+        this._countStates();
+      }
+      this.setNextState();
     }
-    this.setNextState();
   }
 
   /**
@@ -42,15 +44,19 @@ export class SharedSearchConfigProComponent implements OnInit {
   }
 
   @Input() set jobs(jobs: Array<JobConfig>) {
-    this._jobConfigs = jobs;
-    this._jobConfigs = this._jobConfigs.map((_job) => {
-      return LangEntryService.jobEntry(_job, 'label');
-    })
-    this._currentState = this._jobFrontService.checkJobTypoState(jobs);
+    if(jobs && jobs.length){
+      this._jobConfigs = jobs;
+      this._jobConfigs = this._jobConfigs.map((_job) => {
+        return LangEntryService.jobEntry(_job, 'label');
+      })
+      this._currentState = this._jobFrontService.checkJobTypoState(jobs);
+    }
   }
 
   @Input() set filteredJobs(jobs: Array<JobConfig>) {
-    this._filteredJobsIds = jobs.map(_j => _j._id);
+    if(jobs && jobs.length){
+      this._filteredJobsIds = jobs.map(_j => _j._id);
+    }
   }
 
   /**
