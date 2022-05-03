@@ -105,6 +105,7 @@ export class AdminCampaignProsComponent implements OnInit {
   ngOnInit() {
     this._activatedRoute.data.subscribe((data) => {
       if (data['campaign']) {
+        this._campaignFrontService.setShowCampaignTabs(true);
         this._campaign = data['campaign'];
         this._campaignFrontService.setActiveCampaign(this._campaign);
         this._campaignFrontService.setActiveCampaignTab('pros');

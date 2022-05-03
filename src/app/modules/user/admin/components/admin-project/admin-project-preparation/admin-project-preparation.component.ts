@@ -1,4 +1,4 @@
-import { Component, Inject, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
+import { AfterViewChecked, ChangeDetectorRef, Component, Inject, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
 import { RouteFrontService } from '../../../../../../services/route/route-front.service';
 import { TranslateTitleService } from '../../../../../../services/title/title.service';
 import { InnovationFrontService } from '../../../../../../services/innovation/innovation-front.service';
@@ -26,7 +26,7 @@ import { NotificationTrigger } from '../../../../../../models/notification';
   styleUrls: ['./admin-project-preparation.component.scss']
 })
 
-export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
+export class AdminProjectPreparationComponent implements OnInit, AfterViewChecked, OnDestroy {
 
   get showModal(): boolean {
     return this._showModal;
@@ -93,6 +93,7 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
               private _rolesFrontService: RolesFrontService,
               private _translateNotificationsService: TranslateNotificationsService,
               private _translateTitleService: TranslateTitleService,
+              private _changeDetectorRef: ChangeDetectorRef,
               private _activatedRoute: ActivatedRoute,
               private _socketService: SocketService) {
   }
@@ -156,6 +157,10 @@ export class AdminProjectPreparationComponent implements OnInit, OnDestroy {
     this._campaignFrontService.loadingCampaign().pipe(takeUntil(this._ngUnsubscribe)).subscribe((loading) => {
       this._isLoadingCampaign = loading;
     });
+  }
+
+  ngAfterViewChecked() {
+    this._changeDetectorRef.detectChanges();
   }
 
   /**
