@@ -3,7 +3,7 @@ import { SearchService } from '../../../../services/search/search.service';
 import { Campaign } from '../../../../models/campaign';
 import { Professional } from '../../../../models/professional';
 import { first } from 'rxjs/operators';
-import {UmiusConfigInterface, UmiusPaginationInterface} from '@umius/umi-common-component';
+import { UmiusConfigInterface, UmiusPaginationInterface } from '@umius/umi-common-component';
 
 export interface SelectedProfessional extends Professional {
   isSelected: boolean;
@@ -15,26 +15,33 @@ export interface SelectedProfessional extends Professional {
   styleUrls: ['./shared-pros-list-old.component.scss']
 })
 export class SharedProsListOldComponent {
+  @Input() set requestId(value: string) {
+    if (value) {
+      this._requestId = value;
+    }
+  }
 
-  private _config: UmiusConfigInterface;
-  private _keywordsModal: boolean = false;
-  private _paginationConfig: UmiusPaginationInterface = {};
-  public smartSelect: any = null;
-  public editUser: {[propString: string]: boolean} = {};
-
-  @Input() public requestId: string;
   @Input() public campaign: Campaign;
+
   @Input() set config(value: UmiusConfigInterface) {
     this.loadPaginationConfig(value);
     this.loadPros(value);
   }
-  @Output() selectedProsChange = new EventEmitter <any>();
+
+  @Output() selectedProsChange = new EventEmitter<any>();
 
   private _total = 0;
-  private _pros: Array <SelectedProfessional>;
+  private _pros: Array<SelectedProfessional>;
   private _proKeywords: Array<string> = null;
+  private _requestId = '';
+  private _config: UmiusConfigInterface;
+  private _keywordsModal: boolean = false;
+  private _paginationConfig: UmiusPaginationInterface = {};
+  public smartSelect: any = null;
+  public editUser: { [propString: string]: boolean } = {};
 
-  constructor(private _searchService: SearchService) { }
+  constructor(private _searchService: SearchService) {
+  }
 
   loadPaginationConfig(config: UmiusConfigInterface) {
     this._paginationConfig = {
@@ -45,10 +52,14 @@ export class SharedProsListOldComponent {
 
   loadPros(config: UmiusConfigInterface): void {
     this._config = config;
-    this._searchService.getPros(this._config, this.requestId).pipe(first()).subscribe((pros: any) => {
-      this._pros = pros.persons;
-      this._total = pros._metadata.totalCount;
-    });
+    if (this._requestId) {
+      this._searchService.getPros(this._config, this._requestId).pipe(first()).subscribe((pros: any) => {
+        this._pros = pros.persons;
+        this._total = pros._metadata.totalCount;
+      }, error => {
+        console.error(error);
+      });
+    }
   }
 
   /***
@@ -100,13 +111,38 @@ export class SharedProsListOldComponent {
     }
     return this._pros ? this._pros.filter(p => p.isSelected).length : 0;
   }
-  get total() { return this._total; }
-  get pros() { return this._pros; }
-  get proKeywords(): Array<string> { return this._proKeywords; }
-  get keywordsModal(): boolean { return this._keywordsModal; }
-  set keywordsModal(value: boolean) { this._keywordsModal = value; }
-  get config(): UmiusConfigInterface { return this._config; }
-  get paginationConfig(): UmiusPaginationInterface { return this._paginationConfig; }
+
+  get total() {
+    return this._total;
+  }
+
+  get pros() {
+    return this._pros;
+  }
+
+  get proKeywords(): Array<string> {
+    return this._proKeywords;
+  }
+
+  get keywordsModal(): boolean {
+    return this._keywordsModal;
+  }
+
+  set keywordsModal(value: boolean) {
+    this._keywordsModal = value;
+  }
+
+  get config(): UmiusConfigInterface {
+    return this._config;
+  }
+
+  get paginationConfig(): UmiusPaginationInterface {
+    return this._paginationConfig;
+  }
+
+  get requestId(): string {
+    return this._requestId;
+  }
 
   get sortConfig(): string {
     return this._config.sort;

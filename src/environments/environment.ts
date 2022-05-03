@@ -7,8 +7,8 @@
 export const environment = {
   local: true,
   production: false,
-  apiUrl: '',
   env: '',
+  apiUrl: '',
   etherpadUrl: '',
   clientUrl: '',
   apiGatewayUrl: '',
@@ -18,6 +18,7 @@ export const environment = {
   logoURL: '',
   domain: '',
   quizUrl: '',
+  grafanaUrl: '',
   logoSynthURL: '',
   background: '',
   secureCookie: false,

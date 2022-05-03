@@ -6,7 +6,7 @@ import { AuthService } from '../../../../services/auth/auth.service';
 import { DownloadService } from '../../../../services/download/download.service';
 import { ProfessionalsService } from '../../../../services/professionals/professionals.service';
 import { TranslateNotificationsService } from '../../../../services/translate-notifications/translate-notifications.service';
-import {UmiusConfigInterface} from '@umius/umi-common-component';
+import { UmiusConfigInterface } from '@umius/umi-common-component';
 
 @Component({
   selector: 'app-shared-search-results',
@@ -34,26 +34,30 @@ export class SharedSearchResultsComponent implements OnInit {
               private _authService: AuthService,
               private _searchService: SearchService,
               private _notificationsService: TranslateNotificationsService,
-              private _professionalsService: ProfessionalsService) {}
+              private _professionalsService: ProfessionalsService) {
+  }
 
   ngOnInit(): void {
-    this._request = this._activatedRoute.snapshot.data['request'];
-    this._request.keywords = this._request.keywords || this._request.oldKeywords[0].original;
-    if (this.campaign) {
-      const chosenCampaign = {
-        _id: this.campaign._id,
-        name: this.campaign.title,
-        innovation: this.campaign.innovation._id
-      };
-      this.chosenCampaign = [chosenCampaign];
-    } else {
-      this.chosenCampaign = [];
+    if (this._activatedRoute.snapshot.data['request']) {
+      this._request = this._activatedRoute.snapshot.data['request'];
+      this._request.keywords = this._request.keywords || this._request.oldKeywords[0].original;
+      if (this.campaign) {
+        const chosenCampaign = {
+          _id: this.campaign._id,
+          name: this.campaign.title,
+          innovation: this.campaign.innovation._id
+        };
+        this.chosenCampaign = [chosenCampaign];
+      } else {
+        this.chosenCampaign = [];
+      }
     }
   }
 
   updateSelection(value: any) {
     this._selection = value;
   }
+
   searchMails() {
     const params: any = {
       requestId: this._request._id,
@@ -130,10 +134,28 @@ export class SharedSearchResultsComponent implements OnInit {
       DownloadService.saveCsv(result.csv, this.request.keywords);
     });
   }
-  get totalSelected () { return this._selection && this._selection.total || 0};
-  get request() { return this._request; }
-  get chosenCampaign(): Array<any> { return this._chosenCampaign; }
-  set chosenCampaign(value: Array<any>) { this._chosenCampaign = value; }
-  get addToCampaignModal () { return this._addToCampaignModal; }
-  set addToCampaignModal (value: boolean) { this._addToCampaignModal = value; }
+
+  get totalSelected() {
+    return this._selection && this._selection.total || 0
+  };
+
+  get request() {
+    return this._request;
+  }
+
+  get chosenCampaign(): Array<any> {
+    return this._chosenCampaign;
+  }
+
+  set chosenCampaign(value: Array<any>) {
+    this._chosenCampaign = value;
+  }
+
+  get addToCampaignModal() {
+    return this._addToCampaignModal;
+  }
+
+  set addToCampaignModal(value: boolean) {
+    this._addToCampaignModal = value;
+  }
 }
