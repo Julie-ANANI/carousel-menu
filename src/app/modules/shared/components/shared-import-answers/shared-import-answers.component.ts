@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {RolesFrontService} from "../../../../services/roles/roles-front.service";
 import {TranslateNotificationsService} from "../../../../services/translate-notifications/translate-notifications.service";
 import {first} from "rxjs/operators";
@@ -10,7 +10,7 @@ import {AnswerService} from "../../../../services/answer/answer.service";
   selector: 'app-shared-import-answers',
   templateUrl: './shared-import-answers.component.html'
 })
-export class SharedImportAnswersComponent implements OnInit {
+export class SharedImportAnswersComponent implements OnInit, OnDestroy {
 
   @Input() accessPath: Array<string> = [];
 
@@ -119,5 +119,9 @@ export class SharedImportAnswersComponent implements OnInit {
 
   get slicedErrors(): Array<any> {
     return this._slicedErrors;
+  }
+
+  ngOnDestroy(): void {
+    this.onImportFinished();
   }
 }
