@@ -61,12 +61,13 @@ export class GaugeChartComponent implements OnChanges {
 
     // We change needle value to fit standard delimiters
     this.needleValue = this.needleValue * 50 / this.average;
-    if(!this.needleColor) {
-      this._changeIndicatorColor();
-    }
 
     if(this.nbArcs !== 3) this.delimiters = this.delimiters.map(d => d * (100 / this.nbArcs))
     if (this.negative) { this.needleValue = 100 - this.needleValue; }
+
+    if(!this.needleColor) {
+      this._changeIndicatorColor();
+    }
 
     this._options = {
       hasNeedle: true,
