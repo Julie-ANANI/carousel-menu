@@ -65,7 +65,7 @@
 </div>
 
 <!-- modal to import -->
-<ng-container *ngIf="!!canAccess(['import'])">
+<ng-container *ngIf="!!canAccess(['import']) && isImportingAnswers">
   <umius-modal [(showModal)]="isImportingAnswers" title="Import Board">
     <section class="modal-body">
       <app-shared-import-answers
