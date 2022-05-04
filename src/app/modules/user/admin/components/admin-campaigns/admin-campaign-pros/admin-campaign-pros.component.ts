@@ -143,6 +143,25 @@ export class AdminCampaignProsComponent implements OnInit {
 
   private _getProfessionals() {
     if (isPlatformBrowser(this._platformId)) {
+      this._campaignService
+        .getPros(this._campaign._id,this._config)
+        .pipe(first())
+        .subscribe((response: Response) => {
+          this._professionals = (response && response.result) || [];
+          this._total =
+            response._metadata.totalCount || response.result.length;
+        },(err: HttpErrorResponse) => {
+          this._translateNotificationsService.error(
+            'ERROR.ERROR',
+            ErrorFrontService.getErrorKey(err.error)
+          );
+          console.error(err);
+        })
+    }
+  }
+
+  /*private _getProfessionals() {
+    if (isPlatformBrowser(this._platformId)) {
       this._professionalsService
         .getAll(this._config, 'reset')
         .pipe(first())
@@ -161,7 +180,7 @@ export class AdminCampaignProsComponent implements OnInit {
           }
         );
     }
-  }
+  }*/
 
   public setProsStatsConfig(stats: ProsStats | {}):
     Array<StatsInterface> {
