@@ -70,8 +70,8 @@ export class InnovationService {
     return this._http.delete('/innovation/' + innovationId + '/innovationCard/' + innovationCardId + '/media/' + mediaId);
   }
 
-  public setPrincipalMediaOfInnovationCard(innovationId: string, innovationCardId: string, mediaId: string): Observable<any> {
-    return this._http.put('/innovation/' + innovationId + '/innovationCard/' + innovationCardId + '/media/' + mediaId + '/principal', {});
+  public setPrincipalMediaOfInnovationCard(innovationId: string, innovationCardId: string, mediaId: string, mediaIndex?: number): Observable<any> {
+    return this._http.put('/innovation/' + innovationId + '/innovationCard/' + innovationCardId + '/media/' + mediaId + '/principal', {index: mediaIndex});
   }
 
   public removeInnovationCard(innovationId: string, innovationCardId: string): Observable<any> {

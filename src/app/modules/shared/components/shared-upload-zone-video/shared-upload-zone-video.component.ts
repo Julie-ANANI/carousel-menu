@@ -2,6 +2,11 @@ import {Component, Output, OnInit, EventEmitter, Input} from '@angular/core';
 import { videoDomainRegEx, vimeoVideoId, youtubeVideoId } from '../../../../utils/regex';
 import { environment } from '../../../../../environments/environment';
 import 'rxjs/add/operator/map';
+import {first} from "rxjs/operators";
+import {InnovationService} from '../../../../services/innovation/innovation.service';
+import {UmiusVideoInterface} from "@umius/umi-common-component";
+
+
 
 @Component({
   selector: 'app-shared-upload-zone-video',
@@ -15,6 +20,10 @@ export class SharedUploadZoneVideoComponent implements OnInit {
    */
   @Input() isUploading = false;
 
+  @Input() innovationId: string
+
+  @Input() activeInnovCardId: string
+
   @Output() public cbFn: EventEmitter<any> = new EventEmitter();
 
   private _videoUrlInput = '';
@@ -23,7 +32,8 @@ export class SharedUploadZoneVideoComponent implements OnInit {
 
   private _isWrongFormat = false;
 
-  constructor() { }
+  constructor(//private _translateNotificationsService: TranslateNotificationsService,
+              private _innovationService: InnovationService) { }
 
   ngOnInit() {
     this._videoParameters = [
@@ -40,6 +50,8 @@ export class SharedUploadZoneVideoComponent implements OnInit {
 
   addVideo(event: Event): void {
     event.preventDefault();
+
+    let video: UmiusVideoInterface = null;
 
     if (!this.isUploading) {
       this._isWrongFormat = false;
@@ -59,28 +71,37 @@ export class SharedUploadZoneVideoComponent implements OnInit {
           case 'vimeo': {
             const videoKey = vimeoVideoId.exec(givenUrl)[0]; // ID de la vidéo chez le provider
             const embeddableUrl = 'https://player.vimeo.com/video/' + videoKey + this._getUrlArgs(params);
-            this.cbFn.emit({
+            video = {
               url: givenUrl,
               public_id: videoKey,
               embeddableUrl: embeddableUrl,
               provider: 'vimeo',
               thumbnail: ''
-            });
+            };
           }
           break;
           case 'youtube': {
             const videoKey = youtubeVideoId.exec(givenUrl)[1]; // ID de la vidéo chez le provider
             const embeddableUrl = 'https://www.youtube.com/embed/' + videoKey + this._getUrlArgs(params);
-            this.cbFn.emit({
+            video = {
               url: givenUrl,
               public_id: videoKey,
               embeddableUrl: embeddableUrl,
               provider: 'youtube',
               thumbnail: 'https://i.ytimg.com/vi/' + videoKey + '/hqdefault.jpg'
-            });
+            };
           }
           break;
         }
+
+        this._innovationService.addNewMediaVideoToInnovationCard(this.innovationId,
+          this.activeInnovCardId, video)
+          .pipe(first())
+          .subscribe((file) => {
+            this.cbFn.emit(file);
+            // this.isUploading = false; // ?????
+          });
+
       } else {
         this._isWrongFormat = true;
         this.isUploading = false;

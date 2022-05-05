@@ -66,6 +66,7 @@ export class SharedUploadZonePhotoComponent {
 
 
   private uploadFile = (file: File) => {
+
     const _type = file.type.split('/');
 
     if (!this._isWrongFormat && (_type[1] === 'jpeg' || _type[1] === 'jpg')) {
@@ -73,17 +74,20 @@ export class SharedUploadZonePhotoComponent {
         this._isUploading = false;
         this._isWrongSize = true;
       } else {
-
         if (this.uploadCloudinary) {
           const _formData = new FormData();
-          _formData.append('file', file, file.name);
+          console.log('shared upload photo zone file name', file.name);
+          _formData.set('file', file, file.name);
+          console.log('something', _formData.get('file'));
           let promise = null;
           if (this.mediaId) {
+            console.log('mediaid', this.mediaId);
             promise = this._mediaService.replace(_formData, this.mediaId).pipe(first());
           } else {
             promise = this._mediaService.upload(this.uri, _formData).pipe(first());
           }
           promise.subscribe((data: any) => {
+            console.log('returned data', data)
             // Sanitized image returned from backend.
             this.cbFn.emit(data);
             this._isUploading = false;

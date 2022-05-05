@@ -639,7 +639,7 @@
                 <app-shared-upload-zone-photo
                   [mediaId]="editedMediaId"
                   [uri]="'/innovation/'+innovation._id+'/innovationCard/'+activeInnovCard._id+'/media/image'"
-                  (cbFn)="uploadImage($event)">
+                  (cbFn)="addNewMedia($event)">
                 </app-shared-upload-zone-photo>
               </div>
                <!-- /image -->
@@ -647,7 +647,9 @@
               <div *ngIf="!activeInnovCard.principalMedia || mediaType === 'main'" style="padding-top: 45px" class="section-suggestion">
                 <div *ngIf="isEditable" class="bg-white box-shadow">
                   <app-shared-upload-zone-video
-                    (cbFn)="uploadVideo($event)"
+                    (cbFn)="addNewMedia($event)"
+                    [innovationId]="innovation._id"
+                    [activeInnovCardId]="activeInnovCard._id"
                     [isUploading]="isUploadingVideo">
                   </app-shared-upload-zone-video>
                 </div>
@@ -687,7 +689,7 @@
               style="cursor: pointer; height: 100%; object-fit: cover;"
               [ngStyle]="{'width': activeInnovCard.principalMedia.isMediaAdjusted || isMediaAdjusted ? !isMediaAdjusted && isBeingEdited ? '100%' : 'auto' : '100%'}"
               (click)="toggleDisplayMediaSlider('showSelected', 0)"
-              [src]="mediaSrc(activeInnovCard.principalMedia, 'IMAGE').replace(',h_159', '').replace(',w_240', '')"
+              [src]="activeInnovCard.media[0].url + '?a=' + activeInnovCard.media[0].cloudinary.version"
               alt=" "
               class="img-responsive">
           </figure>
@@ -729,7 +731,7 @@
               <figure *ngIf="media.type === 'PHOTO'" style="width: 160px; height: 120px; object-fit: cover; background-color: #ececec; display: flex; place-content: center;">
                 <img
                   style="cursor: pointer; width: 100%; height: 100%; object-fit: cover; background-color: #ececec"
-                  (click)="toggleDisplayMediaSlider('showSelected', i)"
+                  (click)="toggleDisplayMediaSlider('showSelected', i+1)"
                   [src]="mediaSrc(media, 'IMAGE')"
                   alt=" "
                   class="img-responsive" >
@@ -747,7 +749,7 @@
               <!-- set principal -->
               <div *ngIf="isNotMainMedia(media) && isBeingEdited && media['type'] !== 'VIDEO' " class="text-sm text-left set-main-overlay" style="width: 100%; height: 100%; position: absolute; top: 0; left: 0;">
                 <span
-                  (click)="onSetPrincipal(media, i)"
+                  (click)="onSetPrincipal(media, i+1)"
                   [ngClass]="isSavingMedia ? 'text-disabled' : 'c-hand text-hover-underline'"
                   class="text-primary"
                   style="height: 22px; padding-left: 4px; width: 100%; background-color: #ececec; position: absolute; bottom: 0; right: 0; opacity: 80%"
@@ -809,8 +811,8 @@
                   [src]="mediaSrc(activeInnovCard.media[slideToShow], 'VIDEO')"
                   style="height: auto; width: 100%; object-fit: contain; border: none">
                 </video>
-                <img *ngIf="activeInnovCard.media[slideToShow].type === 'PHOTO' && (activeInnovCard.media[slideToShow].cloudinary.width / activeInnovCard.media[slideToShow].cloudinary.height) < 4/3" [src]=activeInnovCard.media[slideToShow].url style="height: 100%; width: auto; object-fit: contain">
-                <img *ngIf="activeInnovCard.media[slideToShow].type === 'PHOTO' && (activeInnovCard.media[slideToShow].cloudinary.width / activeInnovCard.media[slideToShow].cloudinary.height) > 4/3" [src]=activeInnovCard.media[slideToShow].url style="height: auto; width: 100%;object-fit: contain">
+                <img *ngIf="activeInnovCard.media[slideToShow].type === 'PHOTO' && (activeInnovCard.media[slideToShow].cloudinary.width / activeInnovCard.media[slideToShow].cloudinary.height) < 4/3" [src]="activeInnovCard.media[slideToShow].url + '?a=' + activeInnovCard.media[slideToShow].cloudinary.version" style="height: 100%; width: auto; object-fit: contain">
+                <img *ngIf="activeInnovCard.media[slideToShow].type === 'PHOTO' && (activeInnovCard.media[slideToShow].cloudinary.width / activeInnovCard.media[slideToShow].cloudinary.height) > 4/3" [src]="activeInnovCard.media[slideToShow].url + '?a=' + activeInnovCard.media[slideToShow].cloudinary.version" style="height: auto; width: 100%;object-fit: contain">
               </div>
               <p style="margin-bottom: 0;text-align: center;color: white;padding-top: 32px;">{{slideToShow +1}}/{{activeInnovCard.media.length}}</p>
             </div>
