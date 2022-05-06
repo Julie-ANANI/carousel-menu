@@ -5,6 +5,7 @@ import { TranslateNotificationsService } from '../../../../services/translate-no
 import {ErrorFrontService} from '../../../../services/error/error-front.service';
 import {first} from 'rxjs/operators';
 import {MediaService} from '../../../../services/media/media.service';
+import {InnovCard} from "../../../../models/innov-card";
 
 @Component({
   selector: 'app-shared-upload-zone-photo',
