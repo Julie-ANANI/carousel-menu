@@ -12,6 +12,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorFrontService } from '../../../../../services/error/error-front.service';
 import { MissionQuestionService } from '../../../../../services/mission/mission-question.service';
 import {MissionQuestion} from '../../../../../models/mission';
+import {KeyValue} from "@angular/common";
 
 @Component({
   selector: 'app-answer-question',
@@ -59,6 +60,11 @@ export class AnswerQuestionComponent {
   private _isAddTag = false;
 
   private _tagToAdd: Tag = <Tag>{};
+
+  orderKeyValue = (a: KeyValue<string,string>, b: KeyValue<string,string>): number => {
+    const aInt = parseInt(a.key); const bInt = parseInt(b.key);
+    return aInt < bInt ? -1 : (bInt < aInt ? 1 : 0);
+  }
 
   constructor(private _translateService: TranslateService,
               private _translateNotificationsService: TranslateNotificationsService,
