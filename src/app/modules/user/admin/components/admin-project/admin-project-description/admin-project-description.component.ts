@@ -726,24 +726,6 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
     if (!this._isSavingMedia) {
       this._isSavingMedia = true;
 
-      // delete video if main media was a video because videos can't be secondary medias
-      if (this.activeInnovCard.principalMedia && this.activeInnovCard.principalMedia.type === 'VIDEO' && media.type !== 'VIDEO') {
-        const mainVideoId = this.activeInnovCard.principalMedia._id;
-        this._innovationService.deleteMediaOfInnovationCard(this._innovation._id, this.activeInnovCard._id, mainVideoId)
-          .pipe(first())
-          .subscribe(() => {
-            this.activeInnovCard.media = this.activeInnovCard.media.filter((_media) => _media._id !== mainVideoId);
-            this._innovation.innovationCards[this._activeCardIndex].media = this.activeInnovCard.media;
-            this._updateMediaFilter(); // Mise à jour de la liste des medias filtrés
-            console.log('medias left', this.activeInnovCard.media);
-            this._translateNotificationsService.success('Success', 'The video has been deleted.');
-          }, (err: HttpErrorResponse) => {
-            this._translateNotificationsService.error('Media Deleting Error...', ErrorFrontService.getErrorKey(err.error));
-            this._isSavingMedia = false;
-            console.error(err);
-          });
-      }
-
       this._innovationService.setPrincipalMediaOfInnovationCard(this._innovation._id, this.activeInnovCard._id, media._id, index)
         .pipe(first())
         .subscribe((data: any) => {
@@ -752,9 +734,27 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
           // when a secondary media is set as main media, switch their places in the medias array
           if (index) {
             console.log('753 index', index )
-            this.activeInnovCard.media[index] = this.activeInnovCard.principalMedia;
-            console.log('756 media at edited index', this.activeInnovCard.media[index])
-            this.activeInnovCard.media[0] = media;
+            this.activeInnovCard.media[0] = media; // place new media at index 0
+            // delete video if main media was a video because videos can't be secondary medias
+            if (this.activeInnovCard.principalMedia && this.activeInnovCard.principalMedia.type === 'VIDEO' && media.type !== 'VIDEO') {
+              const mainVideoId = this.activeInnovCard.principalMedia._id;
+              this._innovationService.deleteMediaOfInnovationCard(this._innovation._id, this.activeInnovCard._id, mainVideoId)
+                .pipe(first())
+                .subscribe(() => {
+                  this.activeInnovCard.media = this.activeInnovCard.media.filter((_media) => _media._id !== mainVideoId);
+                  this._innovation.innovationCards[this._activeCardIndex].media = this.activeInnovCard.media;
+                  this._updateMediaFilter(); // Mise à jour de la liste des medias filtrés
+                  console.log('medias left', this.activeInnovCard.media);
+                  this._translateNotificationsService.success('Success', 'The video has been deleted.');
+                }, (err: HttpErrorResponse) => {
+                  this._translateNotificationsService.error('Media Deleting Error...', ErrorFrontService.getErrorKey(err.error));
+                  this._isSavingMedia = false;
+                  console.error(err);
+                });
+            } else {
+              this.activeInnovCard.media[index] = this.activeInnovCard.principalMedia;
+              console.log('756 media at edited index', this.activeInnovCard.media[index])
+            }
           }
           this.activeInnovCard.principalMedia = media;
           console.log('am i here ?:', this.activeInnovCard.media, 'main', this.activeInnovCard.principalMedia);

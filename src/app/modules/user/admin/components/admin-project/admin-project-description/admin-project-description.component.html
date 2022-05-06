@@ -740,14 +740,6 @@
               </figure>
               <!-- /if type === 'PHOTO' -->
 
-              <!-- if type === 'VIDEO' -->
-         <!--     <iframe
-                *ngIf="media['type'] === 'VIDEO' && mediaSrc(media, 'VIDEO')"
-                [src]="mediaSrc(media, 'VIDEO')"  height="120px" width="160px"
-                style="border: none">
-              </iframe>-->
-              <!-- /if type === 'VIDEO' -->
-
               <!-- set principal -->
               <div *ngIf="isNotMainMedia(media) && isBeingEdited && media['type'] !== 'VIDEO' " class="text-sm text-left set-main-overlay" style="width: 100%; height: 100%; position: absolute; top: 0; left: 0;">
                 <span
@@ -808,11 +800,11 @@
             </div>
             <div style="height: 90%; width: 80%; margin: auto; display: flex; place-content: center; flex-direction: column">
               <div style="justify-content: center;display: flex;height: 90%;width: 100%;">
-                <video
+                <iframe
                   *ngIf="activeInnovCard.media[slideToShow].type === 'VIDEO'"
-                  [src]="mediaSrc(activeInnovCard.media[slideToShow], 'VIDEO')"
-                  style="height: auto; width: 100%; object-fit: contain; border: none">
-                </video>
+                  style="height: auto; width: 100%; object-fit: contain; border: none"
+                  [src]="mediaSrc(activeInnovCard.media[slideToShow], 'VIDEO')" >
+                </iframe>
                 <img *ngIf="activeInnovCard.media[slideToShow].type === 'PHOTO' && (activeInnovCard.media[slideToShow].cloudinary.width / activeInnovCard.media[slideToShow].cloudinary.height) < 4/3" [src]="activeInnovCard.media[slideToShow].url + '?a=' + activeInnovCard.media[slideToShow].cloudinary.version" style="height: 100%; width: auto; object-fit: contain">
                 <img *ngIf="activeInnovCard.media[slideToShow].type === 'PHOTO' && (activeInnovCard.media[slideToShow].cloudinary.width / activeInnovCard.media[slideToShow].cloudinary.height) > 4/3" [src]="activeInnovCard.media[slideToShow].url + '?a=' + activeInnovCard.media[slideToShow].cloudinary.version" style="height: auto; width: 100%;object-fit: contain">
               </div>
