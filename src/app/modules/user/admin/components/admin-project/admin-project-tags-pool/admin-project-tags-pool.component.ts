@@ -10,7 +10,6 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorFrontService } from '../../../../../../services/error/error-front.service';
 import { InnovationFrontService } from '../../../../../../services/innovation/innovation-front.service';
 import {Table, UmiusConfigInterface, UmiusConfigService, UmiusSidebarInterface} from '@umius/umi-common-component';
-import { Subject } from 'rxjs';
 import {LangEntryService} from '../../../../../../services/lang-entry/lang-entry.service';
 
 @Component({
@@ -105,7 +104,7 @@ export class AdminProjectTagsPoolComponent implements OnInit {
       this._total = this._tags.length;
 
       // TODO remove this multiling
-      this._tags.forEach((_tag) => {
+      this._tags.forEach((_tag: Tag) => {
         const enIndex = LangEntryService.entryIndex(_tag.entry, 'lang', 'en');
         const frIndex = LangEntryService.entryIndex(_tag.entry, 'lang', 'fr');
         _tag.label = {

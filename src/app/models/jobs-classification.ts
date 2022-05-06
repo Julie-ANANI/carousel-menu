@@ -1,5 +1,4 @@
 import {EmailType} from "./seniority-classification";
-import {UmiusMultilingInterface} from '@umius/umi-common-component';
 
 export interface JobClassificationCategoryEntry {
   lang: string;

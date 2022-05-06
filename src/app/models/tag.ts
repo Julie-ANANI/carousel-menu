@@ -1,5 +1,5 @@
 import { TagAttachment } from './tag-attachment';
-import {Multiling} from './multiling';
+import {UmiusMultilingInterface} from "@umius/umi-common-component";
 
 /**
  * Created by juandavidcruzgomez on 28/03/2018.
@@ -30,7 +30,7 @@ export interface Tag {
   /**
    * TODO remove these because will be replaced with entry
    */
- // readonly originalLabel?: UmiusMultilingInterface;
- // label?: UmiusMultilingInterface;
- // description?: UmiusMultilingInterface;
+   readonly originalLabel?: UmiusMultilingInterface;
+   label?: UmiusMultilingInterface;
+   description?: UmiusMultilingInterface;
 }

@@ -6,9 +6,7 @@
 
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, Subject} from 'rxjs';
-import {Innovation} from '../../models/innovation';
 import {Innovation, InnovationFollowUpEmailsTemplate} from '../../models/innovation';
-import {Media} from '../../models/media';
 import {CardComment, CardSectionTypes, InnovCard, InnovCardSection} from '../../models/innov-card';
 import {ScrapeHTMLTags} from '../../pipe/pipes/ScrapeHTMLTags';
 import {Question} from '../../models/question';
