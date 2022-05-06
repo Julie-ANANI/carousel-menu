@@ -24,6 +24,10 @@ export class SharedUploadZoneVideoComponent implements OnInit {
 
   @Input() activeInnovCardId: string
 
+  @Input() mediaId: string = null;
+
+  @Input() mediaIndex: number = null;
+
   @Output() public cbFn: EventEmitter<any> = new EventEmitter();
 
   private _videoUrlInput = '';
@@ -94,13 +98,25 @@ export class SharedUploadZoneVideoComponent implements OnInit {
           break;
         }
 
-        this._innovationService.addNewMediaVideoToInnovationCard(this.innovationId,
-          this.activeInnovCardId, video)
-          .pipe(first())
-          .subscribe((file) => {
-            this.cbFn.emit(file);
-            // this.isUploading = false; // ?????
-          });
+        if (this.mediaId) {
+          this._innovationService.updateVideo(this.innovationId,
+            this.activeInnovCardId, this.mediaId, video)
+            .pipe(first())
+            .subscribe((file) => {
+              console.log('received file 104 video', file)
+              this.cbFn.emit(file);
+              this.isUploading = false;
+            });
+        } else {
+          this._innovationService.addNewMediaVideoToInnovationCard(this.innovationId,
+            this.activeInnovCardId, video)
+            .pipe(first())
+            .subscribe((file) => {
+              console.log('Im actually here')
+              this.cbFn.emit(file);
+              // this.isUploading = false; // ?????
+            });
+        }
 
       } else {
         this._isWrongFormat = true;

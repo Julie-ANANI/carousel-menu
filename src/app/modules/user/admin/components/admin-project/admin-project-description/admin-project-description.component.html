@@ -616,7 +616,7 @@
             </div>
 
       <!-- set main media display // choose between 'cropped' or 'adjusted' -->
-        <div *ngIf="isBeingEdited && activeInnovCard.principalMedia && activeInnovCard.principalMedia['type'] === 'PHOTO'" style="display: flex; flex-direction: row; margin-bottom: 1rem;">
+        <div *ngIf="isBeingEdited && activeInnovCard.principalMedia && activeInnovCard.principalMedia['type'] === 'PHOTO'" style="display: flex; flex-direction: row; margin-left: 16px;">
           <div>
             <input type="radio" id="crop" name="radios" value="crop" (change)="adjustMedia(activeInnovCard.principalMedia, 'crop')" checked>
             <label for="crop" class="m-left-2 m-right-40">Crop main media</label>
@@ -648,6 +648,8 @@
                 <div *ngIf="isEditable" class="bg-white box-shadow">
                   <app-shared-upload-zone-video
                     (cbFn)="addNewMedia($event)"
+                    [mediaId]="editedMediaId"
+                    [mediaIndex]="editedMediaIndex"
                     [innovationId]="innovation._id"
                     [activeInnovCardId]="activeInnovCard._id"
                     [isUploading]="isUploadingVideo">
