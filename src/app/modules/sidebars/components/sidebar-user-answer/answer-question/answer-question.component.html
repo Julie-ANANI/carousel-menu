@@ -277,7 +277,7 @@
         <!-- not edit mode -->
         <div *ngIf="fullAnswer.answers[question.identifier] && !editMode">
           <div
-            *ngFor="let opt of fullAnswer.answers[question.identifier] | keyvalue; let index = index"
+            *ngFor="let opt of fullAnswer.answers[question.identifier] | keyvalue: orderKeyValue; let index = index"
             [ngClass]="{'m-bottom-10': index !== (question.options && question.options.length - 1)}">
             {{index + 1}} -
             <span class="m-left-2">
