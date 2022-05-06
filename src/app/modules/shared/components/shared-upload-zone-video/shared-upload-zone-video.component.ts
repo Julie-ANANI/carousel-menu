@@ -103,7 +103,6 @@ export class SharedUploadZoneVideoComponent implements OnInit {
             this.activeInnovCardId, this.mediaId, video)
             .pipe(first())
             .subscribe((file) => {
-              console.log('received file 104 video', file)
               this.cbFn.emit(file);
               this.isUploading = false;
             });
@@ -112,7 +111,6 @@ export class SharedUploadZoneVideoComponent implements OnInit {
             this.activeInnovCardId, video)
             .pipe(first())
             .subscribe((file) => {
-              console.log('Im actually here')
               this.cbFn.emit(file);
               // this.isUploading = false; // ?????
             });

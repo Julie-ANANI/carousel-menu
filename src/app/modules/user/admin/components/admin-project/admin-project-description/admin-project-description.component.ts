@@ -157,8 +157,6 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
       }
     });
 
-    console.log('all medias', this.activeInnovCard.media, 'main', this.activeInnovCard.principalMedia)
-
     if (this.activeInnovCard.principalMedia) {
       if (this.activeInnovCard.principalMedia.type !== 'VIDEO' && (this.activeInnovCard.principalMedia.cloudinary.width / this.activeInnovCard.principalMedia.cloudinary.height) < 4/3) {
         this._mainContainerStyle = {
@@ -565,8 +563,6 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
   }
 
   public addNewMedia(uploadedMedia: UmiusMediaInterface): void {
-    console.log('is there a main media ?', this.activeInnovCard.principalMedia)
-
     if (this.activeInnovCard.principalMedia) {
       if (this._editedMediaIndex > 0) { // we are editing a secondary media
         this.activeInnovCard.media[this._editedMediaIndex] = uploadedMedia;
@@ -603,84 +599,7 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
     }
   }
 
- /* public uploadImage(media: UmiusMediaInterface): void {
-    if (this._editedMediaIndex !== undefined) { // check if we are editing a media or not
-      if (this._editedMediaIndex === 0) { // check of the edited media is the main media
-        this.activeInnovCard.principalMedia = media;
-        this.onSetPrincipal(media);
-      }
-      this.activeInnovCard.media[this._editedMediaIndex] = media;
-    } else {
-      this.activeInnovCard.media.push(media);
-      if (!this._innovation.innovationCards[this._activeCardIndex].principalMedia) {
-        this._innovation.innovationCards[this._activeCardIndex].principalMedia = media;
-        this.onSetPrincipal(media);
-      }
-    }
-    if (this.activeInnovCard.principalMedia.type !== 'VIDEO' && ((this.activeInnovCard.principalMedia.cloudinary.width / this.activeInnovCard.principalMedia.cloudinary.height) < 4/3) && this.activeInnovCard.media.length > 1) {
-        this._secondaryContainerStyle = {
-          'flex-direction': 'column',
-          height: '100%',
-          'padding-left': '8px'
-        };
-    } else if (this.activeInnovCard.principalMedia.type === 'VIDEO' || ((this.activeInnovCard.principalMedia.cloudinary.width / this.activeInnovCard.principalMedia.cloudinary.height) > 4/3) && this.activeInnovCard.media.length > 1) {
-        this._secondaryContainerStyle = {
-          'flex-direction': 'row',
-          width: '100%',
-          'padding-top': '8px'
-        };
-      }
-
-    this._updateMediaFilter();
-    this._emitUpdatedInnovation();
-    this._translateNotificationsService.success('Success', 'The media has been uploaded.');
-    this.toggleDisplayUploadOverlay();
-  }*/
-
-  /*public uploadVideo(video: UmiusVideoInterface): void {
-    this._isUploadingVideo = true;
-    if (this._editedMediaIndex !== undefined) {
-      this._innovationService.updateVideo(this._innovation._id, this._innovation.innovationCards[this._activeCardIndex]._id, this._innovation.innovationCards[this._activeCardIndex].principalMedia.id, video).pipe(first())
-        .subscribe((res) => {
-          console.log(res)
-        }, (err: HttpErrorResponse) => {
-          this._isUploadingVideo = false;
-          this._translateNotificationsService.error('Media Uploading Error...', ErrorFrontService.getErrorKey(err.error));
-          console.error(err);
-        });
-    }
-    this._innovationService.addNewMediaVideoToInnovationCard(this._innovation._id,
-      this._innovation.innovationCards[this._activeCardIndex]._id, video)
-      .pipe(first())
-      .subscribe((res) => {
-        this._isUploadingVideo = false;
-        if (this._editedMediaIndex !== undefined) {
-          if (this._editedMediaIndex === 0) {
-            this.activeInnovCard.principalMedia = res;
-            this.onSetPrincipal(res);
-          }
-          this.activeInnovCard.media[this._editedMediaIndex] = res;
-        } else {
-          this.activeInnovCard.media.push(res);
-          this._updateMediaFilter();
-        }
-        if (!this._innovation.innovationCards[this._activeCardIndex].principalMedia) {
-          this.onSetPrincipal(res);
-        }
-        this._emitUpdatedInnovation();
-        this._translateNotificationsService.success('Success', 'The media has been uploaded.');
-        this.toggleDisplayUploadOverlay();
-      }, (err: HttpErrorResponse) => {
-        this._isUploadingVideo = false;
-        this._translateNotificationsService.error('Media Uploading Error...', ErrorFrontService.getErrorKey(err.error));
-        console.error(err);
-      });
-  }
-*/
   public onSetPrincipal(media: UmiusMediaInterface, index?: number) {
-
-    console.log('media:', media, 'index:', index);
-
     if (media.type !== 'VIDEO' && (media.cloudinary.width / media.cloudinary.height) < 4/3) {
       this._mainContainerStyle = {
         width: 'fit-content',
@@ -729,11 +648,8 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
       this._innovationService.setPrincipalMediaOfInnovationCard(this._innovation._id, this.activeInnovCard._id, media._id, index)
         .pipe(first())
         .subscribe((data: any) => {
-          console.log('750 data returned from set as principal back', data, 'activeblabla media', this.activeInnovCard.media);
           this._isSavingMedia = false;
-          // when a secondary media is set as main media, switch their places in the medias array
-          if (index) {
-            console.log('753 index', index )
+          if (index) {   // when a secondary media is set as main media, switch their places in the medias array
             this.activeInnovCard.media[0] = media; // place new media at index 0
             // delete video if main media was a video because videos can't be secondary medias
             if (this.activeInnovCard.principalMedia && this.activeInnovCard.principalMedia.type === 'VIDEO' && media.type !== 'VIDEO') {
@@ -744,7 +660,6 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
                   this.activeInnovCard.media = this.activeInnovCard.media.filter((_media) => _media._id !== mainVideoId);
                   this._innovation.innovationCards[this._activeCardIndex].media = this.activeInnovCard.media;
                   this._updateMediaFilter(); // Mise à jour de la liste des medias filtrés
-                  console.log('medias left', this.activeInnovCard.media);
                   this._translateNotificationsService.success('Success', 'The video has been deleted.');
                 }, (err: HttpErrorResponse) => {
                   this._translateNotificationsService.error('Media Deleting Error...', ErrorFrontService.getErrorKey(err.error));
@@ -753,11 +668,9 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
                 });
             } else {
               this.activeInnovCard.media[index] = this.activeInnovCard.principalMedia;
-              console.log('756 media at edited index', this.activeInnovCard.media[index])
             }
           }
           this.activeInnovCard.principalMedia = media;
-          console.log('am i here ?:', this.activeInnovCard.media, 'main', this.activeInnovCard.principalMedia);
           this._updateMediaFilter();
           this._emitUpdatedInnovation();
           this._translateNotificationsService.success('Success', 'The media has been set as a principal media.');
