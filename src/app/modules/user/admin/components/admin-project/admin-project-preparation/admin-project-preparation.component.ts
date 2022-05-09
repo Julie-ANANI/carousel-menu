@@ -20,6 +20,7 @@ import { environment } from '../../../../../../../environments/environment';
 import { ErrorFrontService } from '../../../../../../services/error/error-front.service';
 import { NotificationService } from '../../../../../../services/notification/notification.service';
 import { NotificationTrigger } from '../../../../../../models/notification';
+import { lang, Language } from "../../../../../../models/static-data/language";
 
 @Component({
   templateUrl: './admin-project-preparation.component.html',
@@ -28,17 +29,9 @@ import { NotificationTrigger } from '../../../../../../models/notification';
 
 export class AdminProjectPreparationComponent implements OnInit, AfterViewChecked, OnDestroy {
 
-  get showModal(): boolean {
-    return this._showModal;
-  }
+  private _languages: Array<Language> = lang;
 
-  set showModal(value: boolean) {
-    this._showModal = value;
-  }
-
-  get isSendingNotification(): boolean {
-    return this._isSendingNotification;
-  }
+  private _innoCardlanguages: Array<Language> = [];
 
   private _defaultTabs: Array<string> = ['description', 'questionnaire', 'targeting', 'campaigns', 'statistics'];
 
@@ -110,6 +103,8 @@ export class AdminProjectPreparationComponent implements OnInit, AfterViewChecke
         this.setPageTitle();
         this._setActiveCardIndex();
         this._quizPreviewLink = `${environment.quizUrl}/quiz/${this._project._id}/preview`;
+        this.initInnoCardLanguagesList();
+        this.initLanguagesList();
       }
     });
 
@@ -161,6 +156,25 @@ export class AdminProjectPreparationComponent implements OnInit, AfterViewChecke
 
   ngAfterViewChecked() {
     this._changeDetectorRef.detectChanges();
+  }
+
+  /**
+   * initialise language list
+   * @private
+   */
+  private initLanguagesList() {
+    this._languages.map(languages => {
+      languages['checked'] = !!this._innoCardlanguages.find(lang => lang.type === languages.type);
+      languages['hidden'] = !!this._innoCardlanguages.find(lang => lang.hidden);
+    })
+  }
+
+  private initInnoCardLanguagesList() {
+    if (this._project && this._project.innovationCards && this._project.innovationCards.length) {
+      this._project.innovationCards.map(innoCard => {
+        this._innoCardlanguages.push({type: innoCard.lang, hidden: innoCard.hidden});
+      })
+    }
   }
 
   /**
@@ -266,9 +280,7 @@ export class AdminProjectPreparationComponent implements OnInit, AfterViewChecke
         break;
 
       case 'ADD_LANG':
-        if (this.canAddCard && !this._isAddingCard) {
-          this._showCardModal = true;
-        }
+        this._showCardModal = true;
         break;
 
       case 'DELETE_LANG':
@@ -387,24 +399,28 @@ export class AdminProjectPreparationComponent implements OnInit, AfterViewChecke
 
   public addInnovationCard(event: Event) {
     event.preventDefault();
+    const languagesChecked = this._languages.filter(language => language['checked']);
+    const languagesToAdd = languagesChecked.filter(language => !this._innoCardlanguages.find(lang => lang.type === language.type));
+    console.log(languagesToAdd);
 
-    if (this.canAddCard && !this._isAddingCard) {
-      this._isAddingCard = true;
-      const _lang = this.activeCard.lang === 'en' ? 'fr' : 'en';
-      const _card = new InnovCard({lang: _lang});
-      this._innovationService.createInnovationCard(this._project._id, _card).pipe(first()).subscribe((card) => {
-        this._project.innovationCards.push(card);
-        this._emitUpdatedInnovation();
-        this._isAddingCard = false;
-        this._translateNotificationsService.success('Success',
-          `The project has been added in the ${_lang === 'fr' ? 'French' : 'English'} language.`);
-        this.closeModal();
-      }, (err: HttpErrorResponse) => {
-        this._translateNotificationsService.error('Card Adding Error...', ErrorFrontService.getErrorKey(err.error));
-        this._isAddingCard = false;
-        console.error(err);
-      });
-    }
+
+    // if (this.canAddCard && !this._isAddingCard) {
+    //   this._isAddingCard = true;
+    //   const _lang = this.activeCard.lang === 'en' ? 'fr' : 'en';
+    //   const _card = new InnovCard({lang: _lang});
+    //   this._innovationService.createInnovationCard(this._project._id, _card).pipe(first()).subscribe((card) => {
+    //     this._project.innovationCards.push(card);
+    //     this._emitUpdatedInnovation();
+    //     this._isAddingCard = false;
+    //     this._translateNotificationsService.success('Success',
+    //       `The project has been added in the ${_lang === 'fr' ? 'French' : 'English'} language.`);
+    //     this.closeModal();
+    //   }, (err: HttpErrorResponse) => {
+    //     this._translateNotificationsService.error('Card Adding Error...', ErrorFrontService.getErrorKey(err.error));
+    //     this._isAddingCard = false;
+    //     console.error(err);
+    //   });
+    // }
 
   }
 
@@ -428,6 +444,10 @@ export class AdminProjectPreparationComponent implements OnInit, AfterViewChecke
       });
     }
 
+  }
+
+  disableLangCheckBox(language: Language){
+    return !!this._innoCardlanguages.find(lang => lang.type === language.type);
   }
 
   get activeCard(): InnovCard {
@@ -522,6 +542,21 @@ export class AdminProjectPreparationComponent implements OnInit, AfterViewChecke
     return this._quizPreviewLink;
   }
 
+  get showModal(): boolean {
+    return this._showModal;
+  }
+
+  set showModal(value: boolean) {
+    this._showModal = value;
+  }
+
+  get isSendingNotification(): boolean {
+    return this._isSendingNotification;
+  }
+
+  get languages(): Array<Language> {
+    return this._languages;
+  }
 
   ngOnDestroy(): void {
     this._ngUnsubscribe.next();

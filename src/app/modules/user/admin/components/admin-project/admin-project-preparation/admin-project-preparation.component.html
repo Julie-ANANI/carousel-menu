@@ -151,6 +151,19 @@
         <!-- /actions buttons -->
 
       </div>
+
+      <div class="lang-menu m-top-30">
+        <div class="column col-sm-12 col-11 col-mx-auto p-2 relative">
+          <button class="button is-link text-highlight is-sm text-no-underline"
+                  type="button"
+                  (click)="openModal($event, 'ADD_LANG')">
+            <ng-container>
+              <i class="fas fa-plus-circle icon-left"></i>
+              <span class="text-draft text-bold">Add languages</span>
+            </ng-container>
+          </button>
+        </div>
+      </div>
     </div>
   </section>
   <!-- /section header -->
@@ -220,13 +233,39 @@
   <!-- body -->
   <section class="modal-body p-bottom-40">
     <h2 style="color: #4C4C4C" class="title is-4 text-center text-bold m-bottom-50">
-      <ng-container *ngIf="modelType === 'ADD_LANG'">Add project language</ng-container>
+      <ng-container *ngIf="modelType === 'ADD_LANG'">Add project language
+      </ng-container>
       <ng-container *ngIf="modelType === 'DELETE_LANG'">Delete project language</ng-container>
     </h2>
-    <div class="mxw-550 m-right-auto m-left-auto">
+
+    <div class="d-flex justify-center mxw-550 m-right-auto m-left-auto">
       <ng-container *ngIf="modelType === 'ADD_LANG'">
-        Do you really want to add the project in {{ activeCard.lang === 'fr' ? 'English' : 'French' }} language?
+        <div class="d-flex flex-wrap-wrap">
+          <ng-container *ngFor="let language of languages">
+            <div class="form-group m-left-10" style="width: 31%; background-color: #e6e6e6">
+              <label class="form-checkbox d-flex justify-around">
+                <input type="checkbox"
+                       [disabled]="disableLangCheckBox(language)"
+                       [(ngModel)]="language['checked']">
+                <i class="form-icon m-left-2"></i><span class="m-left-15">{{language.alias}}</span>
+                <ng-container *ngIf="!language['hidden']; else hiddenEye">
+                  <button class="button is-circled is-xs m-left-auto tooltip"
+                          [attr.data-tooltip]="'This language is \n visible on client side'">
+                    <i class="fa fa-eye"></i>
+                  </button>
+                </ng-container>
+                <ng-template #hiddenEye>
+                  <button class="button is-circled is-xs m-left-auto tooltip"
+                          [attr.data-tooltip]="'This language is \n hidden on client side'">
+                    <i class="fa fa-eye-slash"></i>
+                  </button>
+                </ng-template>
+              </label>
+            </div>
+          </ng-container>
+        </div>
       </ng-container>
+
       <ng-container *ngIf="modelType === 'DELETE_LANG'">
         Do you really want to delete the project in {{ cardToDelete.lang === 'fr' ? 'French' : 'English' }} language?
       </ng-container>
@@ -242,7 +281,6 @@
 
       <button
         (click)="closeModal()"
-        [disabled]="isAddingCard"
         [id]="'btn-cancel'"
         class="button modal-cancel">
         Cancel
@@ -250,10 +288,9 @@
 
       <button
         (click)="addInnovationCard($event)"
-        [disabled]="isAddingCard"
         [id]="'btn-confirm-card'"
         class="button ">
-        {{ isAddingCard ? 'adding the language...' : 'Confirm' }}
+        {{ 'Confirm your selection' }}
       </button>
 
     </ng-container>
