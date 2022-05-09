@@ -13,6 +13,8 @@ import { InnovationFrontService } from '../../../../../../services/innovation/in
 import { isPlatformBrowser } from '@angular/common';
 import { Mission, MissionCardTitle, MissionTemplate } from '../../../../../../models/mission';
 import { ErrorFrontService } from '../../../../../../services/error/error-front.service';
+import { MissionQuestionService } from "../../../../../../services/mission/mission-question.service";
+import { lang, Language } from "../../../../../../models/static-data/language";
 
 @Component({
   templateUrl: './admin-project-questionnaire.component.html',
@@ -35,7 +37,7 @@ export class AdminProjectQuestionnaireComponent implements OnInit, OnDestroy {
 
   private _ngUnsubscribe: Subject<any> = new Subject<any>();
 
-  private _cardsLanguages: Array<string> = [];
+  private _cardsLanguages: Array<Language> = [];
 
   private _cardsSections: MissionCardTitle = <MissionCardTitle>{};
 
@@ -44,6 +46,7 @@ export class AdminProjectQuestionnaireComponent implements OnInit, OnDestroy {
               private _presetService: PresetService,
               private _rolesFrontService: RolesFrontService,
               private _innovationFrontService: InnovationFrontService,
+              private _missionQuestionService: MissionQuestionService,
               private _translateNotificationsService: TranslateNotificationsService,
               private _innovationService: InnovationService) {
   }
@@ -61,8 +64,16 @@ export class AdminProjectQuestionnaireComponent implements OnInit, OnDestroy {
             this._mission = <Mission>this._innovation.mission;
           }
 
-          this._cardsLanguages = this._innovation.innovationCards.map((card) => card.lang);
+          this._innovation.innovationCards.map((card) => {
+              const language = lang.find(l => l.type === card.lang);
+              if (language) {
+                language['hidden'] = card['hidden'];
+                this._cardsLanguages.push(language);
+              }
+            }
+          );
           this._setSectionsNames();
+          this._missionQuestionService.questionnaireLangs = this._cardsLanguages;
         }
       });
     }
@@ -131,7 +142,7 @@ export class AdminProjectQuestionnaireComponent implements OnInit, OnDestroy {
       }
     } else {
       const sectionCardToMark = this._mission.template.sections.find(s => s.type === section.type);
-      if(sectionCardToMark){
+      if (sectionCardToMark) {
         sectionCardToMark['index'] = index;
       }
     }
@@ -140,14 +151,14 @@ export class AdminProjectQuestionnaireComponent implements OnInit, OnDestroy {
   private _saveInnovation() {
     this._innovationService.save(this._innovation._id, {preset: this._innovation.preset})
       .pipe(first()).subscribe((_) => {
-        this._translateNotificationsService.success('Success', 'The preset is updated.');
-        }, (err: HttpErrorResponse) => {
-        this._translateNotificationsService.error('Project Saving Error...', ErrorFrontService.getErrorKey(err.error));
-        console.error(err);
-      });
+      this._translateNotificationsService.success('Success', 'The preset is updated.');
+    }, (err: HttpErrorResponse) => {
+      this._translateNotificationsService.error('Project Saving Error...', ErrorFrontService.getErrorKey(err.error));
+      console.error(err);
+    });
   }
 
-  getObjective(lang: string = 'en'){
+  getObjective(lang: string = 'en') {
     const entry = this.mission.template.entry.find(e => e.lang === lang);
     return entry && entry.objective || '';
   }
@@ -250,7 +261,7 @@ export class AdminProjectQuestionnaireComponent implements OnInit, OnDestroy {
     return this._sectionsNames;
   }
 
-  get cardsLanguages(): Array<string> {
+  get cardsLanguages(): Array<Language> {
     return this._cardsLanguages;
   }
 

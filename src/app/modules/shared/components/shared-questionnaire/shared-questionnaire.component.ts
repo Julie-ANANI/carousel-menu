@@ -31,13 +31,6 @@ export class SharedQuestionnaireComponent implements OnInit {
   @Input() isEditable = false;
 
   /**
-   * provide the lang of the innovation cards.
-   */
-  @Input() set questionnaireLanguages(value: Array<string>) {
-    this._missionQuestionService.questionnaireLangs = value;
-  }
-
-  /**
    * mission template
    * @param value
    */
