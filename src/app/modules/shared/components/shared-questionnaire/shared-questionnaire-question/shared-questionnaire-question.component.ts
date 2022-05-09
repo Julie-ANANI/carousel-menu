@@ -18,6 +18,7 @@ import {CommonService} from '../../../../../services/common/common.service';
   templateUrl: './shared-questionnaire-question.component.html',
   styleUrls: ['./shared-questionnaire-question.component.scss']
 })
+
 export class SharedQuestionnaireQuestionComponent implements OnInit {
 
   /**
@@ -52,6 +53,8 @@ export class SharedQuestionnaireQuestionComponent implements OnInit {
    * provide the innovation cards lang.
    */
   @Input() presetLanguages: Array<string> = [];
+
+  @Input() languageSelected = 'en';
 
   @Input() set question(value: MissionQuestion) {
     this._question = value;
