@@ -15,6 +15,7 @@ import {AdminProjectSettingsModule} from './admin-project-settings/admin-project
 import {AdminProjectCollectionModule} from './admin-project-collection/admin-project-collection.module';
 import {SharedActivityModalModule} from '../../../../shared/components/shared-activity-modal/shared-activity-modal.module';
 import {ModalModule} from '@umius/umi-common-component';
+import { AdminProjectLangsComponent } from './admin-project-langs/admin-project-langs.component';
 
 @NgModule({
   imports: [
@@ -33,7 +34,8 @@ import {ModalModule} from '@umius/umi-common-component';
     ModalModule,
   ],
   declarations: [
-    AdminProjectComponent
+    AdminProjectComponent,
+    AdminProjectLangsComponent
   ],
   exports: [
     AdminProjectComponent
