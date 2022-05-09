@@ -33,10 +33,10 @@ import {ModalModule} from '@umius/umi-common-component';
     ModalModule,
   ],
   declarations: [
-    AdminProjectComponent
+    AdminProjectComponent,
   ],
   exports: [
-    AdminProjectComponent
+    AdminProjectComponent,
   ]
 })
 
