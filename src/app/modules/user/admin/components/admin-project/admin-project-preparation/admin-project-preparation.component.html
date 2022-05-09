@@ -250,12 +250,14 @@
                 <i class="form-icon m-left-2"></i><span class="m-left-15">{{language.alias}}</span>
                 <ng-container *ngIf="!language['hidden']; else hiddenEye">
                   <button class="button is-circled is-xs m-left-auto tooltip"
+                          (click)="setVisibilityOnClientSide($event, language, false)"
                           [attr.data-tooltip]="'This language is \n visible on client side'">
                     <i class="fa fa-eye"></i>
                   </button>
                 </ng-container>
                 <ng-template #hiddenEye>
                   <button class="button is-circled is-xs m-left-auto tooltip"
+                          (click)="setVisibilityOnClientSide($event, language, true)"
                           [attr.data-tooltip]="'This language is \n hidden on client side'">
                     <i class="fa fa-eye-slash"></i>
                   </button>

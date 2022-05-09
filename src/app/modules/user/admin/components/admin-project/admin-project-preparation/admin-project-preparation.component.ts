@@ -31,7 +31,7 @@ export class AdminProjectPreparationComponent implements OnInit, AfterViewChecke
 
   private _languages: Array<Language> = lang;
 
-  private _innoCardlanguages: Array<Language> = [];
+  private _innoCardLanguages: Array<Language> = [];
 
   private _defaultTabs: Array<string> = ['description', 'questionnaire', 'targeting', 'campaigns', 'statistics'];
 
@@ -164,15 +164,19 @@ export class AdminProjectPreparationComponent implements OnInit, AfterViewChecke
    */
   private initLanguagesList() {
     this._languages.map(languages => {
-      languages['checked'] = !!this._innoCardlanguages.find(lang => lang.type === languages.type);
-      languages['hidden'] = !!this._innoCardlanguages.find(lang => lang.hidden);
+      languages['checked'] = !!this._innoCardLanguages.find(lang => lang.type === languages.type);
+      languages['hidden'] = !!this._innoCardLanguages.find(lang => lang.hidden);
     })
   }
 
+  /**
+   * init language list for languages already exist
+   * @private
+   */
   private initInnoCardLanguagesList() {
     if (this._project && this._project.innovationCards && this._project.innovationCards.length) {
       this._project.innovationCards.map(innoCard => {
-        this._innoCardlanguages.push({type: innoCard.lang, hidden: innoCard.hidden});
+        this._innoCardLanguages.push({type: innoCard.lang, hidden: innoCard.hidden});
       })
     }
   }
@@ -395,14 +399,16 @@ export class AdminProjectPreparationComponent implements OnInit, AfterViewChecke
     this._showCardModal = false;
     this._cardToDelete = <InnovCard>{};
     this._showModal = false;
+    this.initLanguagesList();
   }
 
   public addInnovationCard(event: Event) {
     event.preventDefault();
     const languagesChecked = this._languages.filter(language => language['checked']);
-    const languagesToAdd = languagesChecked.filter(language => !this._innoCardlanguages.find(lang => lang.type === language.type));
+    const languagesToAdd = languagesChecked.filter(language => !this._innoCardLanguages.find(lang => lang.type === language.type));
     console.log(languagesToAdd);
 
+    // TODO need to call service to create the innovationCard
 
     // if (this.canAddCard && !this._isAddingCard) {
     //   this._isAddingCard = true;
@@ -446,8 +452,24 @@ export class AdminProjectPreparationComponent implements OnInit, AfterViewChecke
 
   }
 
+  /**
+   * when the language is already added
+   * the checkbox should be disabled
+   * @param language
+   */
   disableLangCheckBox(language: Language){
-    return !!this._innoCardlanguages.find(lang => lang.type === language.type);
+    return !!this._innoCardLanguages.find(lang => lang.type === language.type);
+  }
+
+  /**
+   * click on bleu eye icon to decide if the language is visible for client
+   * @param $event
+   * @param language
+   * @param visibility
+   */
+  setVisibilityOnClientSide($event: Event, language: Language, visibility: boolean) {
+    $event.preventDefault();
+    language['hidden'] = !visibility;
   }
 
   get activeCard(): InnovCard {
@@ -488,6 +510,9 @@ export class AdminProjectPreparationComponent implements OnInit, AfterViewChecke
 
   set showCardModal(value: boolean) {
     this._showCardModal = value;
+    if(!this._showModal){
+      this.initLanguagesList();
+    }
   }
 
   get project(): Innovation {
