@@ -81,14 +81,115 @@
   <!-- /fields -->
 
   <!-- show media -->
-  <section
+ <!-- <section
     *ngIf="type && type === 'MEDIA' && cardContent.length > 0"
     [ngClass]="{ 'p-top-50': isEditable, 'p-top-10': !isEditable }"
-    class="d-flex flex-wrap-wrap justify-center p-bottom-50">
-    <div *ngFor="let media of cardContent" class="text-center media-wrapper animate-fade is-2">
+    class="d-flex flex-wrap-wrap justify-center p-bottom-50">-->
+    <section *ngIf="type && type === 'MEDIA' && cardContent.length > 0" [ngStyle]=mainContainerStyle style="padding: 16px; display: flex; flex-wrap: wrap; position: relative; background-color: salmon">
+
+<!--    <div *ngFor="let media of cardContent" class="text-center media-wrapper animate-fade is-2">-->
+
+      <!-- main media -->
+      <div *ngIf="cardContent[0]" class="text-center" [ngStyle]=mainMediaContainerStyle style="object-fit: cover; position: relative;">
+
+        <!-- edit button -->
+        <div class="icon-container is-overlay is-primary" style="position: absolute; top: 0; right: 0; float: right; background-color: white;">
+<!--          (click)="toggleDisplayUploadOverlay(cardContent[0].id, 'main')"-->
+            <span class="tooltip" data-tooltip="Edit media">
+<!--              (click)="setEditedMediaIndex(0)"-->
+              <i class="icon icon-edit"></i>
+            </span>
+        </div>
+        <!-- /edit button -->
+
+        <!-- if type === 'PHOTO' -->
+        <figure *ngIf="cardContent[0].type === 'PHOTO'" style="width: 100%; height: 100%; object-fit: cover; background-color: #ececec; display: flex; place-content: center;">
+          <img
+            style="cursor: pointer; height: 100%; object-fit: cover;"
+            [src]="cardContent[0].url + '?a=' + cardContent[0].cloudinary.version"
+            alt=" "
+            class="img-responsive">
+        </figure>
+<!--        [ngStyle]="{'width': cardContent[0].isMediaAdjusted || isMediaAdjusted ? !isMediaAdjusted && isBeingEdited ? '100%' : 'auto' : '100%'}"-->
+<!--        (click)="toggleDisplayMediaSlider('showSelected', 0)"-->
+        <!-- /if type === 'PHOTO' -->
+
+        <!-- if type === 'VIDEO' -->
+        <iframe
+          *ngIf="cardContent[0].type === 'VIDEO'"
+          style="width: 100%; height: 100%; object-fit: cover; border: none; background-color: #ececec"
+          [src]="mediaSrc(cardContent[0], 'VIDEO')" >
+        </iframe>
+        <!-- /if type === 'VIDEO' -->
+      </div>
+      <!-- /main media -->
+
+      <!-- secondary medias -->
+      <div *ngIf="cardContent.length > 0" style="display: flex; flex-wrap: wrap; gap: 8px" [ngStyle]="(cardContent.length > 1) ? secondaryContainerStyle : null">
+        <ng-container *ngFor="let media of mediaFilter; let i=index;" >
+          <div
+            *ngIf="media._id !== (cardContent[0] && cardContent[0]._id)"
+            class="text-center" style="width: 160px; height: 120px; object-fit: cover; position: relative;">
+
+            <!-- edit and delete buttons -->
+            <div style="position: absolute; top: 0; right: 0; float: right; z-index: 2">
+              <div class="icon-container is-overlay" (click)="toggleDisplayUploadOverlay(media.id, 'secondary')" style="background-color: white; margin-right: 4px">
+                <span class="tooltip" data-tooltip="Edit media" (click)="setEditedMediaIndex(i+1)">
+                  <i class="icon icon-edit"></i>
+                </span>
+              </div>
+              <div class="icon-container is-overlay" (click)="onDeleteMedia(media)" style="background-color: white;">
+                <span class="tooltip" data-tooltip="Delete media">
+                  <i class="icon icon-delete" style="color: #c93a2a"></i>
+                </span>
+              </div>
+            </div>
+            <!-- /edit and delete buttons -->
+
+            <!-- if type === 'PHOTO' -->
+            <figure *ngIf="media.type === 'PHOTO'" style="width: 160px; height: 120px; object-fit: cover; background-color: #ececec; display: flex; place-content: center;">
+              <img
+                style="cursor: pointer; width: 100%; height: 100%; object-fit: cover; background-color: #ececec"
+                (click)="toggleDisplayMediaSlider('showSelected', i+1)"
+                [src]="mediaSrc(media, 'IMAGE')"
+                alt=" "
+                class="img-responsive" >
+            </figure>
+            <!-- /if type === 'PHOTO' -->
+
+            <!-- set principal -->
+            <div *ngIf="isNotMainMedia(media) && media['type'] !== 'VIDEO' " class="text-sm text-left set-main-overlay" style="width: 100%; height: 100%; position: absolute; top: 0; left: 0;">
+                <span
+                  (click)="onSetPrincipal(media, i+1)"
+                  [ngClass]="isSavingMedia ? 'text-disabled' : 'c-hand text-hover-underline'"
+                  class="text-primary"
+                  style="height: 22px; padding-left: 4px; width: 100%; background-color: #ececec; position: absolute; bottom: 0; right: 0; opacity: 80%"
+                  [id]="'btn-principal-media-'+i">
+                  Set as main media
+                </span>
+            </div>
+            <!-- /set principal -->
+
+          </div>
+        </ng-container>
+        <!-- new media card -->
+        <div [ngStyle]="{padding: (isBeingEdited && cardContent.length === 1) ? (cardContent[0].type === 'VIDEO' || cardContent[0].cloudinary.width / cardContent[0].cloudinary.height > 4/3) ? '8px 0 0 0' : '0 0 0 8px' : null}" >
+          <file-drop class="drop-container media-card text-center" (click)="toggleDisplayUploadOverlay()">
+            <div class="icon-container is-overlay">
+                  <span class="tooltip" data-tooltip="Add new media" (click)="setEditedMediaIndex(undefined)">
+                    <i class="icon icon-plus"></i>
+                  </span>
+            </div>
+          </file-drop>
+        </div>
+        <!-- /new media card -->
+      </div>
+      <!-- /secondary medias -->
+
+
 
       <!-- if type === 'PHOTO' -->
-      <figure *ngIf="media['type'] && media['type'] === 'PHOTO' && mediaSrc(media, 'IMAGE')">
+      <!--<figure *ngIf="media['type'] && media['type'] === 'PHOTO' && mediaSrc(media, 'IMAGE')">
         <img
           [src]="mediaSrc(media, 'IMAGE')"
           style="cursor: pointer"
@@ -97,20 +198,20 @@
           class="img-responsive"
           height="159"
           width="180">
-      </figure>
+      </figure>-->
       <!-- /if type === 'PHOTO' -->
 
       <!-- if type === 'VIDEO' -->
-      <iframe
+    <!--  <iframe
         *ngIf="media['type'] && media['type'] === 'VIDEO' && mediaSrc(media, 'VIDEO')"
         [src]="mediaSrc(media, 'VIDEO')"
         height="119.25"
         width="180">
-      </iframe>
+      </iframe>-->
       <!-- /if type === 'VIDEO' -->
 
       <!-- set principal -->
-      <div *ngIf="isNotMainMedia(media) && isEditable" class="text-sm p-top-2">
+     <!-- <div *ngIf="isNotMainMedia(media) && isEditable" class="text-sm p-top-2">
         <span
           (click)="onSetPrincipal(media)"
           [ngClass]="isSaving ? 'text-disabled' : 'c-hand text-hover-underline'"
@@ -118,11 +219,11 @@
           id="sidebarProjectPitch-btn-principal-media">
           {{ 'SIDEBAR.PROJECT_PITCH.SET_PRINCIPAL' | translate }}
         </span>
-      </div>
+      </div>-->
       <!-- /set principal -->
 
       <!-- delete button -->
-      <div
+      <!--<div
         *ngIf="(mediaSrc(media, 'VIDEO') || mediaSrc(media, 'IMAGE')) && isEditable"
         [ngClass]="{'p-top-2': !isNotMainMedia(media)}"
         class="text-sm">
@@ -133,10 +234,10 @@
             id="sidebarProjectPitch-btn-delete-media">
             {{ 'COMMON.BUTTON.DELETE' | translate }}
           </span>
-      </div>
+      </div>-->
       <!-- /delete button -->
 
-    </div>
+<!--    </div>-->
   </section>
   <!-- /show media -->
 

@@ -120,6 +120,14 @@ export class SidebarProjectPitchComponent implements OnInit, OnChanges, OnDestro
 
   private _selectedMedia: UmiusModalMedia = <UmiusModalMedia>{};
 
+  private _mainContainerStyle: any;
+
+  private _mainMediaContainerStyle: any;
+
+  private _secondaryContainerStyle: any;
+
+  private _mediaFitler: any[];
+
   constructor(private _innovationFrontService: InnovationFrontService,
               private _etherpadFrontService: EtherpadFrontService,
               private _socketService: SocketService) {
@@ -144,6 +152,49 @@ export class SidebarProjectPitchComponent implements OnInit, OnChanges, OnDestro
       }, (error) => {
         console.error(error);
       });
+
+    if (this.cardContent[0]) {
+      if (this.cardContent[0].type !== 'VIDEO' && (this.cardContent[0].cloudinary.width / this.cardContent[0].cloudinary.height) < 4/3) {
+        this._mainContainerStyle = {
+          width: 'fit-content',
+          height: '408px',
+          'align-content': 'flex-start',
+          'align-items': 'flex-start',
+          'row-gap': '8px'
+        };
+        this._mainMediaContainerStyle = {
+          width: '290px',
+          height: '100%'
+        };
+        if (this.cardContent.length > 1) {
+          this._secondaryContainerStyle = {
+            'flex-direction': 'column',
+            height: '100%',
+            'padding-left': '8px'
+          };
+        }
+      } else if (this.cardContent[0].type === 'VIDEO' || (this.cardContent[0].cloudinary.width / this.cardContent[0].cloudinary.height) > 4/3) {
+        this._mainContainerStyle = {
+          width: '528px',
+          height: 'auto',
+          'place-items': 'center',
+          'box-sizing': 'border-box',
+          'column-gap': '8px'
+        };
+        this._mainMediaContainerStyle = {
+          width: '100%',
+          height: '290px'
+        };
+        if (this.cardContent.length > 1) {
+          this._secondaryContainerStyle = {
+            'flex-direction': 'row',
+            width: '100%',
+            'padding-top': '8px'
+          };
+        }
+      }
+      this._mediaFitler = this.cardContent.slice(1, 4);
+    }
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -426,6 +477,22 @@ export class SidebarProjectPitchComponent implements OnInit, OnChanges, OnDestro
 
   get selectedMedia(): UmiusModalMedia {
     return this._selectedMedia;
+  }
+
+  get mainContainerStyle(): any {
+    return this._mainContainerStyle;
+  }
+
+  get mainMediaContainerStyle(): any {
+    return this._mainMediaContainerStyle;
+  }
+
+  get secondaryContainerStyle(): any {
+    return this._secondaryContainerStyle;
+  }
+
+  get mediaFilter(): Array<UmiusMediaInterface> {
+    return this._mediaFitler;
   }
 
   ngOnDestroy(): void {

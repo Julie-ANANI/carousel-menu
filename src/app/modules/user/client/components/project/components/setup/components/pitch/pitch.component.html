@@ -111,7 +111,14 @@
             style="margin-left: -10px; margin-right: -15px"
             class="m-top-10 d-flex flex-wrap-wrap">-->
             <div *ngIf="activeInnovCard.media.length && section.type === 'MEDIA'" [ngStyle]= mainContainerStyle
-          style="padding: 16px; display: flex; flex-wrap: wrap; position: relative; background-color: white">
+          style="padding: 16px; display: flex; flex-wrap: wrap; position: relative; background-color: white; margin-top: 12px;">
+
+              <!-- zoom btn -->
+              <div *ngIf="activeInnovCard.principalMedia" class="icon-container is-lg is-overlay" style="position: absolute; right: 0;  top: 0; background-color: #4F5D6B; z-index: 1;">
+                <i class="icon icon-search" style="color: white;"></i>
+              </div>
+<!--              (click)="toggleDisplayMediaSlider()"-->
+              <!-- /zoom button -->
 
                      <!-- principal media -->
                     <!-- <div
@@ -197,6 +204,15 @@
                 </ng-container>
               </div>
               <!-- /secondary medias -->
+
+              <!-- see more btn -->
+              <ngContainer *ngIf="activeInnovCard.media.length > 4" >
+                <div style="position: absolute; bottom: -12px; right: 16px">
+                  <button class="button is-primary is-xs">See more</button>
+                </div>
+              </ngContainer>
+<!--              (click)="toggleDisplayMediaSlider()"-->
+              <!-- /see more btn -->
 
           </div>
           <!-- /content for section === 'MEDIA' -->

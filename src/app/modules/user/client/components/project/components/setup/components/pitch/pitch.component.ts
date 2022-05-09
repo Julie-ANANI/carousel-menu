@@ -158,7 +158,7 @@ export class PitchComponent implements OnInit, OnDestroy, AfterViewChecked {
           };
         };
         this._secondaryMedia = {
-          width: 'calc(416px/3)',
+          width: 'calc(424px/3)',
           height: '104px'
         }
       }
