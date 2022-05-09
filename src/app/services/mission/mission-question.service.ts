@@ -13,6 +13,7 @@ import { Subject } from 'rxjs/Subject';
 import { colors } from '../../utils/chartColors';
 import { replaceNumberRegex } from '../../utils/regex';
 import optionLikert from '../../../../assets/json/likert-scale.json';
+import { Language } from "../../models/static-data/language";
 
 @Injectable({providedIn: 'root'})
 export class MissionQuestionService {
@@ -53,11 +54,11 @@ export class MissionQuestionService {
     return this._taggedQuestionsTypes;
   }
 
-  get questionnaireLangs(): Array<string> {
+  get questionnaireLangs(): Array<Language> {
     return this._questionnaireLangs;
   }
 
-  set questionnaireLangs(value: Array<string>) {
+  set questionnaireLangs(value: Array<Language>) {
     this._questionnaireLangs = value;
   }
 
@@ -133,7 +134,7 @@ export class MissionQuestionService {
    */
   private _cardsSections: MissionCardTitle = <MissionCardTitle>{};
 
-  private _questionnaireLangs: Array<string> = ['en', 'fr'];
+  private _questionnaireLangs: Array<Language> = [];
 
   /**
    * for the moment we always add the entry in both languages
@@ -822,11 +823,11 @@ export class MissionQuestionService {
    */
   public questionEntry(question: MissionQuestion = <MissionQuestion>{}, lang: string): MissionQuestionEntry {
     if (this._questionnaireLangs.length) {
-      const quesLang = this._questionnaireLangs.find((_lang) => _lang === lang);
+      const quesLang = this._questionnaireLangs.find((_lang) => _lang.type === lang);
       if (!!quesLang) {
-        return MissionQuestionService.entryInfo(question, quesLang);
+        return MissionQuestionService.entryInfo(question, quesLang.type);
       } else {
-        return MissionQuestionService.entryInfo(question, this._questionnaireLangs[0]) || <MissionQuestionEntry>{};
+        return MissionQuestionService.entryInfo(question, 'en') || <MissionQuestionEntry>{};
       }
     }
 

@@ -58,25 +58,65 @@
 
       <ng-container *ngIf="hasMissionTemplate; else oldPresets">
         <div class="d-flex justify-around">
-          <div style="width: 48%">
-            {{getObjective('en')}}
+
+          <div style="width: 49%">
+            <div class="d-flex flex-d-column">
+              <div class="dropdown">
+                <a class="button dropdown-toggle is-primary is-outlined is-xs" tabindex="0">
+                  {{cardsLanguages[0].alias}} <i class="fas fa-caret-down"> </i>
+                </a>
+                <ul class="menu">
+                  <ng-container *ngFor="let lang of cardsLanguages">
+                    <li class="menu-item">
+                      <ng-container>
+                        {{lang.alias}}
+                        <i class="fa fa-eye-slash"></i>
+                      </ng-container>
+                    </li>
+                  </ng-container>
+                </ul>
+              </div>
+              <div class="form-group">
+                <label class="form-label">{{cardsLanguages[0].alias}} Objective</label>
+                <input type="text" class="form-input" [value]="getObjective('en')">
+              </div>
+            </div>
             <app-shared-questionnaire
               (templateChange)="updatePreset($event, 'TEMPLATE')"
               [cardsSections]="cardsSections"
               [isEditable]="canAccess(['edit'])"
-              [questionnaireLanguages]="cardsLanguages"
               [languageSelected]="'en'"
               [template]="mission.template">
             </app-shared-questionnaire>
           </div>
 
-          <div style="width: 50%">
-            {{getObjective('fr')}}
+          <div style="width: 49%">
+            <div class="d-flex flex-d-column">
+              <div class="dropdown">
+                <a class="button dropdown-toggle is-primary is-outlined is-xs" tabindex="0">
+                  {{cardsLanguages[1].alias}} <i class="fas fa-caret-down"> </i>
+                </a>
+                <ul class="menu">
+                  <ng-container *ngFor="let lang of cardsLanguages">
+                    <li class="menu-item">
+                      <ng-container>
+                        {{lang.alias}}
+                        <i class="fa fa-eye-slash"></i>
+                      </ng-container>
+                    </li>
+                  </ng-container>
+                </ul>
+              </div>
+              <div class="form-group">
+                <label class="form-label">{{cardsLanguages[1].alias}} Objective</label>
+                <input type="text" class="form-input" [value]="getObjective('fr')">
+              </div>
+            </div>
+
             <app-shared-questionnaire
               (templateChange)="updatePreset($event, 'TEMPLATE')"
               [cardsSections]="cardsSections"
               [isEditable]="canAccess(['edit'])"
-              [questionnaireLanguages]="cardsLanguages"
               [languageSelected]="'fr'"
               [template]="mission.template">
             </app-shared-questionnaire>

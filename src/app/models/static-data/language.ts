@@ -1,6 +1,7 @@
 export interface Language {
   type?: string;
   alias?: string;
+  [property: string]: any;
 }
 
 export const lang: Array<Language> = [
