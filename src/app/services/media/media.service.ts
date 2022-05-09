@@ -23,7 +23,6 @@ export class MediaService {
   }
 
   public update(mediaId: string, media: UmiusMediaInterface): Observable<any> {
-    console.log('sent media', media);
     const uri = `/media/${mediaId}/update`;
     return this._http.put<any>(uri, media);
   }

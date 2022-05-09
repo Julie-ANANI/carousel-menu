@@ -658,8 +658,8 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
                 .pipe(first())
                 .subscribe(() => {
                   this.activeInnovCard.media = this.activeInnovCard.media.filter((_media) => _media._id !== mainVideoId);
+                  this.activeInnovCard.media.splice(index, 1);
                   this._innovation.innovationCards[this._activeCardIndex].media = this.activeInnovCard.media;
-                  this._updateMediaFilter(); // Mise à jour de la liste des medias filtrés
                   this._translateNotificationsService.success('Success', 'The video has been deleted.');
                 }, (err: HttpErrorResponse) => {
                   this._translateNotificationsService.error('Media Deleting Error...', ErrorFrontService.getErrorKey(err.error));
