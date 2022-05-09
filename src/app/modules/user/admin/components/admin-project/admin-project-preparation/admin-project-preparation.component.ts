@@ -31,6 +31,8 @@ export class AdminProjectPreparationComponent implements OnInit, AfterViewChecke
 
   private _languages: Array<Language> = lang;
 
+  private _languagesToAdd: Array<Language> = [];
+
   private _innoCardLanguages: Array<Language> = [];
 
   private _defaultTabs: Array<string> = ['description', 'questionnaire', 'targeting', 'campaigns', 'statistics'];
@@ -159,13 +161,17 @@ export class AdminProjectPreparationComponent implements OnInit, AfterViewChecke
   }
 
   /**
-   * initialise language list
+   * initialise languagesToAdd list
    * @private
    */
   private initLanguagesList() {
+    this._languagesToAdd = [];
     this._languages.map(languages => {
-      languages['checked'] = !!this._innoCardLanguages.find(lang => lang.type === languages.type);
-      languages['hidden'] = !!this._innoCardLanguages.find(lang => lang.hidden);
+      if (!this._innoCardLanguages.find(lang => lang.type === languages.type)) {
+        languages['checked'] = false;
+        languages['hidden'] = false;
+        this._languagesToAdd.push(languages);
+      }
     })
   }
 
@@ -404,8 +410,7 @@ export class AdminProjectPreparationComponent implements OnInit, AfterViewChecke
 
   public addInnovationCard(event: Event) {
     event.preventDefault();
-    const languagesChecked = this._languages.filter(language => language['checked']);
-    const languagesToAdd = languagesChecked.filter(language => !this._innoCardLanguages.find(lang => lang.type === language.type));
+    const languagesToAdd = this._languagesToAdd.filter(language => language['checked']);
     console.log(languagesToAdd);
 
     // TODO need to call service to create the innovationCard
@@ -450,15 +455,6 @@ export class AdminProjectPreparationComponent implements OnInit, AfterViewChecke
       });
     }
 
-  }
-
-  /**
-   * when the language is already added
-   * the checkbox should be disabled
-   * @param language
-   */
-  disableLangCheckBox(language: Language){
-    return !!this._innoCardLanguages.find(lang => lang.type === language.type);
   }
 
   /**
@@ -510,7 +506,7 @@ export class AdminProjectPreparationComponent implements OnInit, AfterViewChecke
 
   set showCardModal(value: boolean) {
     this._showCardModal = value;
-    if(!this._showModal){
+    if (!this._showModal) {
       this.initLanguagesList();
     }
   }
@@ -581,6 +577,10 @@ export class AdminProjectPreparationComponent implements OnInit, AfterViewChecke
 
   get languages(): Array<Language> {
     return this._languages;
+  }
+
+  get languagesToAdd(): Array<Language> {
+    return this._languagesToAdd;
   }
 
   ngOnDestroy(): void {

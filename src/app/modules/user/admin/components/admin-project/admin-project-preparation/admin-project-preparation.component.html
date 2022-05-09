@@ -248,7 +248,7 @@
     <div class="d-flex justify-center mxw-550 m-right-auto m-left-auto">
       <ng-container *ngIf="modelType === 'ADD_LANG'">
         <div class="d-flex flex-wrap-wrap">
-          <ng-container *ngFor="let language of languages">
+          <ng-container *ngFor="let language of languagesToAdd">
 
             <!-- the whole check box body -->
             <div class="form-group m-left-10" style="width: 31%; background-color: #e6e6e6">
@@ -256,7 +256,6 @@
 
                 <!-- check box -->
                 <input type="checkbox"
-                       [disabled]="disableLangCheckBox(language)"
                        [(ngModel)]="language['checked']">
                 <!-- /check box  -->
                 <i class="form-icon m-left-2"></i>
