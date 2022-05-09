@@ -47,7 +47,7 @@ export class SharedQuestionnaireComponent implements OnInit {
     this._missionQuestionService.cardsSections = value;
   }
 
-  @Input() languageSelected = '';
+  @Input() languageSelected = 'en';
 
   @Output() templateChange: EventEmitter<MissionTemplate> = new EventEmitter<MissionTemplate>();
 
