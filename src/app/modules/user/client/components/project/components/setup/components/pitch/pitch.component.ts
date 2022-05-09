@@ -1,4 +1,4 @@
-import {Component, Inject, OnDestroy, OnInit, PLATFORM_ID} from '@angular/core';
+import {Component, Inject, OnDestroy, OnInit, AfterViewChecked, PLATFORM_ID} from '@angular/core';
 import {Innovation} from '../../../../../../../../../models/innovation';
 import {PitchHelpFields} from '../../../../../../../../../models/static-data/project-pitch';
 import {InnovationFrontService} from '../../../../../../../../../services/innovation/innovation-front.service';
@@ -25,7 +25,7 @@ import {UmiusMediaInterface, UmiusModalMedia, UmiusSidebarInterface, UmiusVideoI
   styleUrls: ['./pitch.component.scss']
 })
 
-export class PitchComponent implements OnInit, OnDestroy {
+export class PitchComponent implements OnInit, OnDestroy, AfterViewChecked {
 
   private _ngUnsubscribe: Subject<any> = new Subject();
 
@@ -69,6 +69,16 @@ export class PitchComponent implements OnInit, OnDestroy {
 
   private _modalMedia = false;
 
+  private _mainContainerStyle: any = {};
+
+  private _mainMediaContainerStyle: any = {};
+
+  private _secondaryContainerStyle: any = {};
+
+  private _secondaryMedia: any = {};
+
+  private _mediaFilter: any[];
+
   private _selectedMedia: UmiusModalMedia = <UmiusModalMedia>{};
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
@@ -102,6 +112,59 @@ export class PitchComponent implements OnInit, OnDestroy {
       this._activeCardIndex = cardIndex;
       this._initDefaultSections();
     });
+
+  }
+
+  ngAfterViewChecked() {
+    if (this.activeInnovCard.principalMedia) {
+      if (this.activeInnovCard.principalMedia.type !== 'VIDEO' && (this.activeInnovCard.principalMedia.cloudinary.width / this.activeInnovCard.principalMedia.cloudinary.height) < 4/3) {
+        this._mainContainerStyle = {
+          height: '408px',
+          'align-content': 'flex-start',
+          'align-items': 'flex-start',
+          'row-gap': '8px'
+        };
+        this._mainMediaContainerStyle = {
+          width: '272px',
+          height: '100%'
+        };
+        if (this.activeInnovCard.media.length > 1) {
+          this._secondaryContainerStyle = {
+            'flex-direction': 'column',
+            height: '100%',
+            'padding-left': '8px'
+          };
+        };
+        this._secondaryMedia = {
+          width: '160px',
+          height: '120px'
+        }
+      } else if (this.activeInnovCard.principalMedia.type === 'VIDEO' || (this.activeInnovCard.principalMedia.cloudinary.width / this.activeInnovCard.principalMedia.cloudinary.height) > 4/3) {
+        this._mainContainerStyle = {
+          height: 'auto',
+          'place-items': 'center',
+          'box-sizing': 'border-box',
+          'column-gap': '8px'
+        };
+        this._mainMediaContainerStyle = {
+          width: '100%',
+          height: '272px'
+        };
+        if (this.activeInnovCard.media.length > 1) {
+          this._secondaryContainerStyle = {
+            'flex-direction': 'row',
+            width: '100%',
+            'padding-top': '8px'
+          };
+        };
+        this._secondaryMedia = {
+          width: 'calc(416px/3)',
+          height: '104px'
+        }
+      }
+      this._mediaFilter = this.activeInnovCard.media.slice(1, 4);
+    }
+
   }
 
   public sectionCommentLabel(section: string, etherpadElementId = ''): boolean {
@@ -649,6 +712,26 @@ export class PitchComponent implements OnInit, OnDestroy {
 
   get mission(): Mission {
     return this._mission;
+  }
+
+  get mainContainerStyle(): any {
+    return this._mainContainerStyle;
+  }
+
+  get mainMediaContainerStyle(): any {
+    return this._mainMediaContainerStyle;
+  }
+
+  get secondaryContainerStyle(): any {
+    return this._secondaryContainerStyle;
+  }
+
+  get secondaryMedia(): any {
+    return this._secondaryMedia;
+  }
+
+  get mediaFilter(): Array<UmiusMediaInterface> {
+    return this._mediaFilter;
   }
 
   ngOnDestroy(): void {
