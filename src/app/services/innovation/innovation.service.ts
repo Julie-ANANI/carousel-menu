@@ -52,7 +52,7 @@ export class InnovationService {
    * @param innovationCardObj
    * @param languagesToAdd
    */
-  public createInnovationCard(innovationId: string, innovationCardObj: InnovCard, languagesToAdd: Array<Language>): Observable<InnovCard> {
+  public createInnovationCard(innovationId: string, innovationCardObj: InnovCard, languagesToAdd: Array<Language> = []): Observable<InnovCard> {
     const body = {
       innovationCardObj: innovationCardObj,
       languages: languagesToAdd

@@ -152,8 +152,11 @@
 
       </div>
 
+      <!-- languages section -->
       <div class="lang-menu m-top-30">
         <div class="column col-sm-12 col-11 col-mx-auto p-2 relative">
+
+          <!-- add languages button -->
           <button class="button is-link text-highlight is-sm text-no-underline"
                   type="button"
                   (click)="openModal($event, 'ADD_LANG')">
@@ -162,8 +165,12 @@
               <span class="text-draft text-bold">Add languages</span>
             </ng-container>
           </button>
+          <!-- /add languages button -->
+
         </div>
       </div>
+      <!-- /languages section -->
+
     </div>
   </section>
   <!-- /section header -->
@@ -242,12 +249,23 @@
       <ng-container *ngIf="modelType === 'ADD_LANG'">
         <div class="d-flex flex-wrap-wrap">
           <ng-container *ngFor="let language of languages">
+
+            <!-- the whole check box body -->
             <div class="form-group m-left-10" style="width: 31%; background-color: #e6e6e6">
               <label class="form-checkbox d-flex justify-around">
+
+                <!-- check box -->
                 <input type="checkbox"
                        [disabled]="disableLangCheckBox(language)"
                        [(ngModel)]="language['checked']">
-                <i class="form-icon m-left-2"></i><span class="m-left-15">{{language.alias}}</span>
+                <!-- /check box  -->
+                <i class="form-icon m-left-2"></i>
+
+                <!-- language content -->
+                <span class="m-left-15">{{language.alias}}</span>
+                <!-- /language content -->
+
+                <!-- bleu eye icon: visibility on client side -->
                 <ng-container *ngIf="!language['hidden']; else hiddenEye">
                   <button class="button is-circled is-xs m-left-auto tooltip"
                           (click)="setVisibilityOnClientSide($event, language, false)"
@@ -262,8 +280,12 @@
                     <i class="fa fa-eye-slash"></i>
                   </button>
                 </ng-template>
+                <!-- /bleu eye icon: visibility on client side -->
+
               </label>
             </div>
+            <!-- /the whole check box body -->
+
           </ng-container>
         </div>
       </ng-container>
