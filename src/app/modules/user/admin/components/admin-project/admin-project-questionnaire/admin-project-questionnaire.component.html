@@ -57,13 +57,32 @@
     <section *ngIf="canAccess(['view']) || canAccess(['edit'])" class="m-top-15">
 
       <ng-container *ngIf="hasMissionTemplate; else oldPresets">
-        <app-shared-questionnaire
-          (templateChange)="updatePreset($event, 'TEMPLATE')"
-          [cardsSections]="cardsSections"
-          [isEditable]="canAccess(['edit'])"
-          [questionnaireLanguages]="cardsLanguages"
-          [template]="mission.template">
-        </app-shared-questionnaire>
+        <div class="d-flex justify-around">
+          <div style="width: 48%">
+            {{getObjective('en')}}
+            <app-shared-questionnaire
+              (templateChange)="updatePreset($event, 'TEMPLATE')"
+              [cardsSections]="cardsSections"
+              [isEditable]="canAccess(['edit'])"
+              [questionnaireLanguages]="cardsLanguages"
+              [languageSelected]="'en'"
+              [template]="mission.template">
+            </app-shared-questionnaire>
+          </div>
+
+          <div style="width: 50%">
+            {{getObjective('fr')}}
+            <app-shared-questionnaire
+              (templateChange)="updatePreset($event, 'TEMPLATE')"
+              [cardsSections]="cardsSections"
+              [isEditable]="canAccess(['edit'])"
+              [questionnaireLanguages]="cardsLanguages"
+              [languageSelected]="'fr'"
+              [template]="mission.template">
+            </app-shared-questionnaire>
+          </div>
+
+        </div>
       </ng-container>
 
       <ng-template #oldPresets>

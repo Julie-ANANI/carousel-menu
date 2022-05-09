@@ -24,6 +24,7 @@ interface IdentifierError {
   exist: boolean;
 }
 
+
 @Component({
   selector: 'app-shared-questionnaire-section',
   templateUrl: './shared-questionnaire-section.component.html',
@@ -56,6 +57,8 @@ export class SharedQuestionnaireSectionComponent implements OnInit {
   @Input() set section(value: MissionTemplateSection) {
     this._section = value || <MissionTemplateSection>{};
   }
+
+  @Input() languageSelected = 'en';
 
   /**
    * do not change this as we are using this under the Library page use case.
@@ -185,8 +188,8 @@ export class SharedQuestionnaireSectionComponent implements OnInit {
       return this._section.type;
     }
 
-    if (!!this.cardsSections[this._showTitlesLang].length) {
-      const _find = this.cardsSections[this._showTitlesLang].find((_section: InnovCardSection) => {
+    if (!!this.cardsSections[this.languageSelected].length) {
+      const _find = this.cardsSections[this.languageSelected].find((_section: InnovCardSection) => {
         return (_section.title === this._section.identifier) || (_section.type === this._section.type);
       });
       return _find && _find.title ? _find.title : this._section.type;
@@ -200,7 +203,7 @@ export class SharedQuestionnaireSectionComponent implements OnInit {
     if (this._section.identifier) {
       return this._section.identifier;
     }
-    const _find = this.cardsSections[this._showTitlesLang].find((_section: InnovCardSection) => _section.type === this._section.type);
+    const _find = this.cardsSections[this.languageSelected].find((_section: InnovCardSection) => _section.type === this._section.type);
     return _find && _find.title ? _find.title : this._section.type;
   }
 
