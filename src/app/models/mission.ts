@@ -280,7 +280,7 @@ export interface  MissionMilestone {
  code: string;
  dueDate: Date;
  comment?: string;
- c
+ [property: string]: any;
 }
 
 
