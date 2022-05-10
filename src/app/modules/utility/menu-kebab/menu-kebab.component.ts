@@ -18,7 +18,7 @@ export class MenuKebabComponent {
   ];
 
   @Input() testInput: string;
-  @Input() color = '#FFFFFF';
+  @Input() color = '#97A4B1';
   @Input() textColor = '#00B0FF';
   @Input() isActive = false;
 

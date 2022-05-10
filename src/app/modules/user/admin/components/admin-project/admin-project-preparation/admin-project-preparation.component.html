@@ -74,8 +74,6 @@
 
 <!--            TODO: delete this-->
 
-            <app-menu-kebab></app-menu-kebab>
-
 
             <!-- lang change -->
             <div *ngIf="showLangDrop && activeTab === 'description'" class="dropdown is-right m-right-10">
@@ -100,6 +98,8 @@
               </ul>
             </div>
             <!-- /lang change -->
+
+
 
             <!-- quiz preview -->
             <ng-container *ngIf="activeTab === 'questionnaire' || activeTab === 'description'">
