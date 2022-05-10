@@ -1,31 +1,17 @@
-<h1>{{ user }}</h1><p>TEST OK</p>
-
 <section class="bg-white sticky header-wrapper">
   <div class="container fluid">
 
-    <div *ngIf="showLangDrop && activeTab === 'description'" class="dropdown is-right m-right-10">
-
-    <!--ngFor-->
-      <a class="button is-sm is-link dropdown-toggle" tabindex="0">
-        {{ activeCard.lang === 'fr' ? 'French' : 'English' }}<i class="fas fa-caret-down m-right-2"></i>
-      </a>
-      <!--ngFor-->
       <ul class="menu">
-        <li
-          (click)="setCardLang(card.lang)"
-          *ngFor="let card of project.innovationCards"
-          class="menu-item flex-between">
-          {{ card.lang === 'fr' ? 'French' : 'English' }}
-          <div
-            *ngIf="canEditDescription"
-            (click)="openModal($event, 'DELETE_LANG', card)"
-            [ngClass]="{'disabled': isDeletingCard}"
-            class="icon-container is-sm is-overlay">
-            <i class="icon text-alert icon-delete"></i>
-          </div>
-        </li>
+        <div [ngClass]="">
+          <li *ngFor="let label of items; let i = index">
+            <div [ngStyle]="{ 'background-color': color, 'color': textColor }"></div>
+            <span class="m-left-20">{{ label }}</span>
+          </li>
+<!--          <button *ngIf="isActive"-->
+<!--                  (click)="setCardLang(card.lang)">-->
+<!--          </button>-->
+        </div>
       </ul>
-    </div>
 
   </div>
 </section>
