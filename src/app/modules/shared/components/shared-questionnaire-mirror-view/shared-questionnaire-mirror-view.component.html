@@ -16,7 +16,10 @@
         <!-- /language name  -->
 
         <!-- icon drop down  -->
-        <i *ngIf="languagesList && languagesList.length > 2" class="fas fa-caret-down"> </i>
+        <div *ngIf="showDropDown" class="d-flex flex-d-column">
+          <i class="fas fa-caret-up" style="margin-bottom: -10px"></i>
+          <i class="fas fa-caret-down"></i>
+        </div>
         <!-- /icon drop down  -->
 
       </a>

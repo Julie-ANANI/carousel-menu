@@ -61,6 +61,7 @@
         <div [ngClass]="{'d-flex justify-around flex-wrap-wrap': !!rightMirrorLanguage}">
           <div [ngClass]="{'questionnaire-column': !!rightMirrorLanguage}">
             <app-shared-questionnaire-mirror-view
+              [showDropDown]="cardsLanguages && cardsLanguages.length > 2"
               [(languageSelected)]="leftMirrorLanguage"
               [languagesList]="cardsLanguages"
               [languagesExcludedInSelector]="[leftMirrorLanguage, rightMirrorLanguage]">
@@ -80,6 +81,7 @@
                [ngClass]="{'questionnaire-column': !!rightMirrorLanguage}">
             <div class="d-flex flex-d-column p-bottom-20">
               <app-shared-questionnaire-mirror-view
+                [showDropDown]="cardsLanguages && cardsLanguages.length > 3"
                 [(languageSelected)]="rightMirrorLanguage"
                 [languagesList]="cardsLanguages"
                 [languagesExcludedInSelector]="[leftMirrorLanguage, rightMirrorLanguage]">
