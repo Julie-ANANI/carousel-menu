@@ -15,6 +15,7 @@ import { Mission, MissionCardTitle, MissionTemplate } from '../../../../../../mo
 import { ErrorFrontService } from '../../../../../../services/error/error-front.service';
 import { MissionQuestionService } from "../../../../../../services/mission/mission-question.service";
 import { lang, Language } from "../../../../../../models/static-data/language";
+import { InnovCard } from "../../../../../../models/innov-card";
 
 @Component({
   templateUrl: './admin-project-questionnaire.component.html',
@@ -41,6 +42,10 @@ export class AdminProjectQuestionnaireComponent implements OnInit, OnDestroy {
 
   private _cardsSections: MissionCardTitle = <MissionCardTitle>{};
 
+  private _leftMirrorLanguage: Language = null;
+
+  private _rightMirrorLanguage: Language = null;
+
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _autocompleteService: AutocompleteService,
               private _presetService: PresetService,
@@ -60,23 +65,52 @@ export class AdminProjectQuestionnaireComponent implements OnInit, OnDestroy {
         if (innovation && innovation._id) {
           this._innovation = innovation;
 
+          this._cardsLanguages = [];
+
           if (this._innovation.mission && (<Mission>this._innovation.mission)._id) {
             this._mission = <Mission>this._innovation.mission;
           }
 
-          this._innovation.innovationCards.map((card) => {
-              const language = lang.find(l => l.type === card.lang);
-              if (language) {
-                language['hidden'] = card['hidden'];
-                this._cardsLanguages.push(language);
-              }
-            }
-          );
+          // this._innovation.innovationCards.map((card) => {
+          //     this.initialiseCardLanguages(card);
+          //   }
+          // );
+
+          lang.slice(10).map(language =>{
+            this.initialiseCardLanguages(language);
+          })
+
+          this.initialiseMirrorLanguages();
+
           this._setSectionsNames();
           this._missionQuestionService.questionnaireLangs = this._cardsLanguages;
         }
       });
     }
+  }
+
+  /**
+   * initialise cardLanguages list
+   * @param language
+   */
+  initialiseCardLanguages(language: any) {
+    // const language = lang.find(l => l.type === card.lang);
+    if (language) {
+      language['hidden'] = true;
+      language['status'] = 'EDITING';
+      this._cardsLanguages.push(language);
+    }
+  }
+
+  /**
+   * when there are more than 2 languages
+   * set two mirror languages or only set left mirror
+   */
+  initialiseMirrorLanguages() {
+    if (this._cardsLanguages.length > 1) {
+      this._rightMirrorLanguage = this._cardsLanguages[1];
+    }
+    this._leftMirrorLanguage = this._cardsLanguages.length && this._cardsLanguages[0] || null;
   }
 
   public canAccess(path?: Array<string>) {
@@ -214,6 +248,22 @@ export class AdminProjectQuestionnaireComponent implements OnInit, OnDestroy {
     this._showPresetModal = false;
   }
 
+  /**
+   *
+   * @param event
+   * @param lang
+   * @param mirror: which side
+   */
+  selectMirrorLanguage(event: Event, lang: Language, mirror: string) {
+    event.preventDefault();
+    console.log(lang);
+    if (mirror === 'right') {
+      this._rightMirrorLanguage = lang;
+    } else {
+      this._leftMirrorLanguage = lang;
+    }
+  }
+
   /***
    * when the users makes the changes in the existing preset or template sections.
    * @param event
@@ -273,9 +323,18 @@ export class AdminProjectQuestionnaireComponent implements OnInit, OnDestroy {
     return this._cardsSections;
   }
 
+  get leftMirrorLanguage(): Language {
+    return this._leftMirrorLanguage;
+  }
+
+  get rightMirrorLanguage(): Language {
+    return this._rightMirrorLanguage;
+  }
+
   ngOnDestroy(): void {
     this._ngUnsubscribe.next();
     this._ngUnsubscribe.complete();
   }
+
 
 }
