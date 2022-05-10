@@ -15,7 +15,7 @@ import { Mission, MissionCardTitle, MissionTemplate } from '../../../../../../mo
 import { ErrorFrontService } from '../../../../../../services/error/error-front.service';
 import { MissionQuestionService } from "../../../../../../services/mission/mission-question.service";
 import { lang, Language } from "../../../../../../models/static-data/language";
-import { InnovCard } from "../../../../../../models/innov-card";
+// import { InnovCard } from "../../../../../../models/innov-card";
 
 @Component({
   templateUrl: './admin-project-questionnaire.component.html',
