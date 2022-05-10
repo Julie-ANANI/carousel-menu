@@ -1,16 +1,16 @@
 import { Component } from '@angular/core';
-import {Innovation} from '../../../../models/innovation';
-import {RouteFrontService} from '../../../../services/route/route-front.service';
-import {InnovCard} from '../../../../models/innov-card';
-import {InnovationFrontService} from '../../../../services/innovation/innovation-front.service';
-import {RolesFrontService} from '../../../../services/roles/roles-front.service';
+import {Innovation} from '../../../models/innovation';
+import {RouteFrontService} from '../../../services/route/route-front.service';
+import {InnovCard} from '../../../models/innov-card';
+import {InnovationFrontService} from '../../../services/innovation/innovation-front.service';
+import {RolesFrontService} from '../../../services/roles/roles-front.service';
 
 @Component({
-  selector: 'app-shared-navigation-langs',
-  templateUrl: './shared-navigation-langs.component.html',
-  styleUrls: ['./shared-navigation-langs.component.scss']
+  selector: 'app-menu-kebab',
+  templateUrl: './menu-kebab.html',
+  styleUrls: ['./menu-kebab.scss']
 })
-export class SharedNavigationLangsComponent {
+export class MenuKebabComponent {
 
   private _project: Innovation = <Innovation>{};
   private _activeTab = this._routeFrontService.activeTab(8, 7);
@@ -73,6 +73,10 @@ export class SharedNavigationLangsComponent {
     return this._username;
   };
 
+  get project(): Innovation {
+    return this._project;
+  }
+
   get showLangDrop(): boolean {
     return this._project.innovationCards && this._project.innovationCards.length > 1;
   }
@@ -89,12 +93,23 @@ export class SharedNavigationLangsComponent {
     return this._project.innovationCards && this._project.innovationCards.length === 1;
   }
 
-  get project(): Innovation {
-    return this._project;
+  get isDeletingCard(): boolean {
+    return this._isDeletingCard;
   }
 
   get canEditDescription(): boolean {
     return this.canAccess(['settings', 'edit', 'description']);
   }
 
+  get modelType(): string {
+    return this._modelType;
+  }
+
+  get showModal(): boolean {
+    return this._showModal;
+  }
+
+  get showCardModal(): boolean {
+    return this._showCardModal;
+  }
 }

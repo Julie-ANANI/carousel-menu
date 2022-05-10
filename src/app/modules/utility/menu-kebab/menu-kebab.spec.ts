@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AdminProjectLangsComponent } from './admin-project-langs.component';
+import { MenuKebabComponent } from './menu-kebab.component';
 
-describe('AdminProjectLangsComponent', () => {
-  let component: AdminProjectLangsComponent;
-  let fixture: ComponentFixture<AdminProjectLangsComponent>;
+describe('SharedNavigationLangsComponent', () => {
+  let component: MenuKebabComponent;
+  let fixture: ComponentFixture<MenuKebabComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AdminProjectLangsComponent ]
+      declarations: [ MenuKebabComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AdminProjectLangsComponent);
+    fixture = TestBed.createComponent(MenuKebabComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -73,11 +73,16 @@
             <!-- /add lang -->
 
 <!--            TODO: delete this-->
+
+            <app-menu-kebab></app-menu-kebab>
+
+
             <!-- lang change -->
             <div *ngIf="showLangDrop && activeTab === 'description'" class="dropdown is-right m-right-10">
               <a class="button is-sm is-link dropdown-toggle" tabindex="0">
                 {{ activeCard.lang === 'fr' ? 'French' : 'English' }}<i class="fas fa-caret-down m-right-2"></i>
               </a>
+
               <ul class="menu">
                 <li
                   (click)="setCardLang(card.lang)"

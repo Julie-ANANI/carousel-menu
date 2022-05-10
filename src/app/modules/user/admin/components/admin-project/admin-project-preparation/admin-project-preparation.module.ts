@@ -10,6 +10,7 @@ import {AdminProjectDescriptionModule} from '../admin-project-description/admin-
 import {AdminCampaignsModule} from '../../admin-campaigns/admin-campaigns.module';
 import {AdminProjectStatisticsModule} from '../admin-project-statistics/admin-project-statistics.module';
 import {ModalModule} from '@umius/umi-common-component';
+import {MenuKebabModule} from '../../../../../utility/menu-kebab/menu-kebab.module';
 
 @NgModule({
   imports: [
@@ -21,7 +22,8 @@ import {ModalModule} from '@umius/umi-common-component';
     AdminProjectDescriptionModule,
     AdminProjectStatisticsModule,
     AdminCampaignsModule,
-    ModalModule
+    ModalModule,
+    MenuKebabModule
   ],
   declarations: [
     AdminProjectPreparationComponent
