@@ -135,7 +135,7 @@
         (click)="editMode = !editMode"
         *ngIf="isEditable || canAccess(['edit'])"
         [id]="'sharedQuestionnaireQuestion-btn-edit-section'"
-        class="icon-container is-overlay">
+        class="icon-container is-overlay" style="margin-right: -20px">
         <span
           [attr.data-tooltip]="isEditable || canAccess(['edit']) ? editMode ? 'Stop editing' : 'Edit' : 'View'"
           class="tooltip">

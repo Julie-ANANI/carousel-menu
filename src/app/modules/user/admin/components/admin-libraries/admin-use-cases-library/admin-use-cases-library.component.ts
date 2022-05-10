@@ -11,7 +11,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { Router } from '@angular/router';
 import { MissionQuestionService } from '../../../../../../services/mission/mission-question.service';
 import { HttpErrorResponse } from "@angular/common/http";
-import {Table, UmiusConfigInterface, UmiusLocalStorageService} from '@umius/umi-common-component';
+import { Table, UmiusConfigInterface } from '@umius/umi-common-component';
 import { Response } from '../../../../../../models/response';
 
 @Component({
@@ -42,23 +42,12 @@ export class AdminUseCasesLibraryComponent implements OnInit {
               private _missionQuestionService: MissionQuestionService,
               private _translateService: TranslateService,
               private _translateNotificationsService: TranslateNotificationsService,
-              private _missionService: MissionService,
-              private _localStorageService: UmiusLocalStorageService) {
+              private _missionService: MissionService) {
   }
 
   ngOnInit() {
     this._initializeTable();
-    const missionTemplates = this._localStorageService.getItem('missionTemplates');
-    if (missionTemplates) {
-      const missionTemplatesObject = JSON.parse(missionTemplates);
-      this._templates = missionTemplatesObject.result || [];
-      this._total = missionTemplatesObject._metadata.totalCount || 0;
-      this._missionQuestionService.setAllTemplates(JSON.parse(JSON.stringify(this._templates)));
-      this._prepareTemplates();
-      this._initializeTable();
-    } else {
-      this._getAllTemplates();
-    }
+    this._getAllTemplates();
   }
 
   private _prepareTemplates() {
