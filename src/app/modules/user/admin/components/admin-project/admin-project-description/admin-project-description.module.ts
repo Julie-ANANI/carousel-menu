@@ -13,6 +13,7 @@ import { CleanHtmlModule } from '../../../../../../pipe/cleanHtml/cleanHtml.modu
 import {PipeModule} from '../../../../../../pipe/pipe.module';
 import { NgxPageScrollModule } from "ngx-page-scroll";
 import {ModalModule} from '@umius/umi-common-component';
+import {SharedNavigationLangsModule} from '../../../../../shared/components/shared-navigation-langs/shared-navigation-langs.module';
 
 @NgModule({
   imports: [
@@ -28,9 +29,10 @@ import {ModalModule} from '@umius/umi-common-component';
     PipeModule,
     NgxPageScrollModule,
     ModalModule,
+    SharedNavigationLangsModule
   ],
   declarations: [
-    AdminProjectDescriptionComponent,
+    AdminProjectDescriptionComponent
   ]
 })
 

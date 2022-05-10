@@ -38,7 +38,8 @@ import { AdminProjectLangsComponent } from './admin-project-langs/admin-project-
     AdminProjectLangsComponent
   ],
   exports: [
-    AdminProjectComponent
+    AdminProjectComponent,
+    AdminProjectLangsComponent
   ]
 })
 
