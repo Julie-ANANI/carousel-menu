@@ -10,18 +10,20 @@ import { SharedPresetModule } from '../../../../../shared/components/shared-pres
 import { NguiAutoCompleteModule } from '../../../../../utility/auto-complete/auto-complete.module';
 import {SharedQuestionnaireModule} from '../../../../../shared/components/shared-questionnaire/shared-questionnaire.module';
 import {ModalModule} from '@umius/umi-common-component';
+import { SharedQuestionnaireMirrorViewModule } from "../../../../../shared/components/shared-questionnaire-mirror-view/shared-questionnaire-mirror-view.module";
 
 @NgModule({
-  imports: [
-    TranslateModule.forChild(),
-    CommonModule,
-    RouterModule,
-    SharedPresetModule,
-    FormsModule,
-    NguiAutoCompleteModule,
-    SharedQuestionnaireModule,
-    ModalModule
-  ],
+    imports: [
+        TranslateModule.forChild(),
+        CommonModule,
+        RouterModule,
+        SharedPresetModule,
+        FormsModule,
+        NguiAutoCompleteModule,
+        SharedQuestionnaireModule,
+        ModalModule,
+        SharedQuestionnaireMirrorViewModule
+    ],
   declarations: [
     AdminProjectQuestionnaireComponent,
   ]

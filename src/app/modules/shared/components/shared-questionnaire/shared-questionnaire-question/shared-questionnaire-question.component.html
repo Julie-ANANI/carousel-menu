@@ -23,7 +23,7 @@
             <option>{{ 'PRESETS.QUESTION.TYPE.' + question.controlType | translate }}</option>
           </select>
         </label>
-        <span class="m-right-20">{{ questionEntry(languageSelected).label }}</span>
+        <span class="m-right-20">{{ questionEntry().label }}</span>
         <!-- /label / type -->
 
         <!-- question type specific to template -->
@@ -258,14 +258,14 @@
         <div *ngIf="isLibraryView" class="m-bottom-15">
           <label class="form-label">{{ languageSelected === 'fr' ? 'Objectif' : 'Objective' }}</label>
           <ng-template #showObjective>
-            <p class="text-sm">{{ questionEntry(languageSelected).objective || 'NA' }}</p>
+            <p class="text-sm">{{ questionEntry().objective || 'NA' }}</p>
           </ng-template>
           <textarea
             #textAreaElement
             appTextareaAutoResize
             (change)="onChangeQuestionEntry(textAreaElement.value, languageSelected, 'objective')"
             *ngIf="canAccess(['edit', 'objective']); else showObjective"
-            [ngModel]="questionEntry(languageSelected).objective || 'NA'"
+            [ngModel]="questionEntry().objective || 'NA'"
             [id]="'question-objective-'+languageSelected"
             class="form-input"
             type="text">
@@ -277,14 +277,14 @@
         <div *ngIf="isLibraryView" class="m-bottom-15">
           <label class="form-label">{{ languageSelected === 'fr' ? 'Titre synthèse' : 'Synthesis title' }}</label>
           <ng-template #showTitle>
-            <p class="text-sm">{{ questionEntry(languageSelected).title || 'NA' }}</p>
+            <p class="text-sm">{{ questionEntry().title || 'NA' }}</p>
           </ng-template>
           <textarea
             #textAreaElement
             appTextareaAutoResize
             (change)="onChangeQuestionEntry(textAreaElement.value, languageSelected, 'title')"
             *ngIf="canAccess(['edit', 'title']); else showTitle"
-            [ngModel]="questionEntry(languageSelected).title || 'NA'"
+            [ngModel]="questionEntry().title || 'NA'"
             [id]="'question-title-'+languageSelected"
             class="form-input"
             type="text">
@@ -296,14 +296,14 @@
         <div *ngIf="isLibraryView" class="m-bottom-15">
           <label class="form-label">{{ languageSelected === 'fr' ? 'Sous-titre synthèse' : 'Synthesis subtitle' }}</label>
           <ng-template #showSubtitle>
-            <p class="text-sm">{{ questionEntry(languageSelected).subtitle || 'NA' }}</p>
+            <p class="text-sm">{{ questionEntry().subtitle || 'NA' }}</p>
           </ng-template>
           <textarea
             appTextareaAutoResize
             #textAreaElement
             (change)="onChangeQuestionEntry(textAreaElement.value, languageSelected, 'subtitle')"
             *ngIf="canAccess(['edit', 'subtitle']); else showSubtitle"
-            [ngModel]="questionEntry(languageSelected).subtitle || 'NA'"
+            [ngModel]="questionEntry().subtitle || 'NA'"
             [id]="'question-subtitle-'+languageSelected"
             class="form-input"
             type="text">
@@ -315,14 +315,14 @@
         <div class="m-bottom-15">
           <label class="form-label">Question</label>
           <ng-template #showLabel>
-            <p class="text-sm">{{ questionEntry(languageSelected).label || 'NA' }}</p>
+            <p class="text-sm">{{ questionEntry().label || 'NA' }}</p>
           </ng-template>
           <textarea
             #textAreaElement
             appTextareaAutoResize
             (change)="onChangeQuestionEntry(textAreaElement.value, languageSelected, 'label')"
             *ngIf="isEditable || canAccess(['edit', 'label']); else showLabel"
-            [ngModel]="questionEntry(languageSelected).label || 'NA'"
+            [ngModel]="questionEntry().label || 'NA'"
             [id]="'question-label-'+languageSelected"
             class="form-input"
             type="text">
@@ -334,14 +334,14 @@
         <div class="m-bottom-15">
           <label class="form-label">{{ languageSelected === 'fr' ? 'Consigne' : 'Instruction' }}</label>
           <ng-template #showInstruction>
-            <p class="text-sm">{{ questionEntry(languageSelected).instruction || 'NA' }}</p>
+            <p class="text-sm">{{ questionEntry().instruction || 'NA' }}</p>
           </ng-template>
           <textarea
             #textAreaElement
             (change)="onChangeQuestionEntry(textAreaElement.value, languageSelected, 'instruction')"
             *ngIf="isEditable || canAccess(['edit', 'instruction']); else showInstruction"
             [id]="'question-instruction-'+languageSelected"
-            [ngModel]="questionEntry(languageSelected).instruction || ''"
+            [ngModel]="questionEntry().instruction || ''"
             class="form-input"
             type="text">
           </textarea>
@@ -365,7 +365,7 @@
               class="card card-medium">
 
               <ng-template
-                #showOptionLabel>{{ optionEntry(option, languageSelected).label || 'NA' }}
+                #showOptionLabel>{{ optionEntry(option).label || 'NA' }}
               </ng-template>
 
               <!-- move option-->
@@ -400,7 +400,7 @@
                 (change)="onChangeQuestionOptionEntry(textAreaElement.value, languageSelected, optionIndex)"
                 *ngIf="question.controlType !== 'likert-scale' &&
                        (isEditable || canAccess(['edit', 'options', 'label'])); else showOptionLabel"
-                [ngModel]="optionEntry(option, languageSelected).label || 'NA'"
+                [ngModel]="optionEntry(option).label || 'NA'"
                 [id]="'option-label-'+languageSelected"
                 class="form-input"
                 type="text">
