@@ -11,6 +11,7 @@ import { SocketService } from '../../../../services/socket/socket.service';
 import { EtherpadFrontService } from '../../../../services/etherpad/etherpad-front.service';
 import { MediaFrontService } from '../../../../services/media/media-front.service';
 import {UmiusMediaInterface, UmiusModalMedia, UmiusVideoInterface} from '@umius/umi-common-component';
+// import {HttpErrorResponse} from "@angular/common/http";
 
 /***
  * It involves the edition of the Innovation Card fields.
@@ -127,6 +128,16 @@ export class SidebarProjectPitchComponent implements OnInit, OnChanges, OnDestro
   private _secondaryContainerStyle: any;
 
   private _mediaFitler: any[];
+
+  private _displayUploadOverlay = false;
+
+  private _isMediaAdjusted = false;
+
+  private _editedMediaIndex: any = undefined;
+
+  private _updateMediaFilter() {
+    this._mediaFitler = this.cardContent.slice(1, 4);
+  }
 
   constructor(private _innovationFrontService: InnovationFrontService,
               private _etherpadFrontService: EtherpadFrontService,
@@ -250,6 +261,8 @@ export class SidebarProjectPitchComponent implements OnInit, OnChanges, OnDestro
       this.isSavingChange.emit(true);
       this.saveProject.emit({type: type, content: media});
     }
+    this.toggleDisplayUploadOverlay();
+    this._updateMediaFilter();
   }
 
   /***
@@ -280,7 +293,7 @@ export class SidebarProjectPitchComponent implements OnInit, OnChanges, OnDestro
    * when the user clicks on the Set as main media button to set the media as a main media
    * @param media
    */
-  public onSetPrincipal(media: any) {
+  public onSetPrincipal(media: any, index?: number) {
     if (media && this.isNotMainMedia(media) && !this._isSaving && this.isEditable) {
       this.isSavingChange.emit(true);
       this.saveProject.emit({type: 'MAIN_MEDIA', content: <UmiusMediaInterface>media});
@@ -375,6 +388,33 @@ export class SidebarProjectPitchComponent implements OnInit, OnChanges, OnDestro
       active: true
     };
   }
+
+  public toggleDisplayUploadOverlay(id?: string, type?: string) {
+    this._displayUploadOverlay = !this._displayUploadOverlay;
+    //this._mediaType = type;
+    //this._editedMediaId = id;
+  }
+
+  public adjustMedia(media: UmiusMediaInterface, action: string) {
+    if (action === 'crop') {
+      this._isMediaAdjusted = false;
+    } else if (action === 'adjust') {
+      this._isMediaAdjusted = true;
+    }
+    this.cardContent[0].isMediaAdjusted = this._isMediaAdjusted;
+    /* if (!this._isBeingEdited && this.activeInnovCard.principalMedia) {
+       this._mediaService.update(this.activeInnovCard.principalMedia.id, this.activeInnovCard.principalMedia).subscribe((data: any) => {
+         console.log(data);
+       }, (err: HttpErrorResponse) => {
+         console.error(err);
+       });
+     }*/
+  }
+
+  public setEditedMediaIndex(index: any) {
+    this._editedMediaIndex = index;
+  }
+
 
   public help(type: string): string {
     if (this.pitchHelp && this.type) {
@@ -493,6 +533,18 @@ export class SidebarProjectPitchComponent implements OnInit, OnChanges, OnDestro
 
   get mediaFilter(): Array<UmiusMediaInterface> {
     return this._mediaFitler;
+  }
+
+  get displayUploadOverlay(): boolean {
+    return this._displayUploadOverlay;
+  }
+
+  get isMediaAdjusted(): boolean {
+    return this._isMediaAdjusted;
+  }
+
+  get editedMediaIndex(): any {
+    return this._editedMediaIndex;
   }
 
   ngOnDestroy(): void {

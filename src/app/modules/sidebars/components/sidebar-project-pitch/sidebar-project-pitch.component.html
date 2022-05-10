@@ -18,10 +18,11 @@
 
     <!-- media -->
     <div *ngSwitchCase="'MEDIA'">
-      <ng-container *ngIf="isEditable">
-
-        <!-- image -->
-        <div class="form-group p-top-30">
+      <div *ngIf="isEditable && displayUploadOverlay" style="position: absolute; background-color: rgba(58, 66, 77, 0.8); top: 0; left: 0; width: 100%; height: 150vh; z-index: 3; padding: 38px;">
+        <div style="background-color: white; border-radius: 6px; padding: 16px 32px 32px 32px;">
+          <div style="display: inline-flex; justify-content: flex-end; width: 100%; margin-top: -32px; margin-bottom: 8px"><button class="modal-close" (click)="toggleDisplayUploadOverlay()" style="color: #505D6B;"></button></div>
+          <!-- image -->
+        <div class="form-group">
           <app-shared-upload-zone-photo
             [uri]="imagePostUri"
             (cbFn)="onUploadMedia($event, 'IMAGE')">
@@ -29,21 +30,21 @@
         </div>
         <!-- /image -->
 
-        <div
+        <div *ngIf="editedMediaIndex === 0 || cardContent.length === 0"
           [attr.data-content]="'COMMON.LABEL.OR' | translate | uppercase"
           class="divider m-top-40 m-bottom-40">
         </div>
 
         <!-- video -->
-        <div class="form-group">
+        <div class="form-group" *ngIf="editedMediaIndex === 0 || cardContent.length === 0">
           <app-shared-upload-zone-video
             (cbFn)="onUploadMedia($event, 'VIDEO')"
             [isUploading]="isUploadingVideo">
           </app-shared-upload-zone-video>
         </div>
         <!-- /video -->
-
-      </ng-container>
+        </div>
+      </div>
     </div>
     <!-- /media -->
 
@@ -85,7 +86,20 @@
     *ngIf="type && type === 'MEDIA' && cardContent.length > 0"
     [ngClass]="{ 'p-top-50': isEditable, 'p-top-10': !isEditable }"
     class="d-flex flex-wrap-wrap justify-center p-bottom-50">-->
-    <section *ngIf="type && type === 'MEDIA' && cardContent.length > 0" [ngStyle]=mainContainerStyle style="padding: 16px; display: flex; flex-wrap: wrap; position: relative; background-color: salmon">
+  <!-- set main media display // choose between 'cropped' or 'adjusted' -->
+  <div *ngIf="cardContent.length > 0 && cardContent[0].type === 'PHOTO'" style="display: flex; flex-direction: row; margin-left: 16px;">
+    <div>
+      <input type="radio" id="crop" name="radios" value="crop" (change)="adjustMedia(cardContent[0], 'crop')" checked>
+      <label for="crop" class="m-left-2 m-right-40">Crop main media</label>
+    </div>
+    <div>
+      <input type="radio" id="adjust" name="radios" value="adjust" (change)="adjustMedia(cardContent[0], 'adjust')">
+      <label for="adjust" class="m-left-2">Adjust main media</label>
+    </div>
+  </div>
+  <!-- /set main media display -->
+
+    <section *ngIf="type && type === 'MEDIA' && cardContent.length > 0" [ngStyle]=mainContainerStyle style="padding: 16px; display: flex; flex-wrap: wrap; position: relative;">
 
 <!--    <div *ngFor="let media of cardContent" class="text-center media-wrapper animate-fade is-2">-->
 
@@ -93,10 +107,8 @@
       <div *ngIf="cardContent[0]" class="text-center" [ngStyle]=mainMediaContainerStyle style="object-fit: cover; position: relative;">
 
         <!-- edit button -->
-        <div class="icon-container is-overlay is-primary" style="position: absolute; top: 0; right: 0; float: right; background-color: white;">
-<!--          (click)="toggleDisplayUploadOverlay(cardContent[0].id, 'main')"-->
-            <span class="tooltip" data-tooltip="Edit media">
-<!--              (click)="setEditedMediaIndex(0)"-->
+        <div (click)="toggleDisplayUploadOverlay(cardContent[0].id, 'main')" class="icon-container is-overlay is-primary" style="position: absolute; top: 0; right: 0; float: right; background-color: white;">
+            <span (click)="setEditedMediaIndex(0)" class="tooltip" data-tooltip="Edit media">
               <i class="icon icon-edit"></i>
             </span>
         </div>
@@ -107,10 +119,10 @@
           <img
             style="cursor: pointer; height: 100%; object-fit: cover;"
             [src]="cardContent[0].url + '?a=' + cardContent[0].cloudinary.version"
+            [ngStyle]="{'width': cardContent[0].isMediaAdjusted || isMediaAdjusted ? !isMediaAdjusted ? '100%' : 'auto' : '100%'}"
             alt=" "
             class="img-responsive">
         </figure>
-<!--        [ngStyle]="{'width': cardContent[0].isMediaAdjusted || isMediaAdjusted ? !isMediaAdjusted && isBeingEdited ? '100%' : 'auto' : '100%'}"-->
 <!--        (click)="toggleDisplayMediaSlider('showSelected', 0)"-->
         <!-- /if type === 'PHOTO' -->
 
@@ -126,7 +138,7 @@
 
       <!-- secondary medias -->
       <div *ngIf="cardContent.length > 0" style="display: flex; flex-wrap: wrap; gap: 8px" [ngStyle]="(cardContent.length > 1) ? secondaryContainerStyle : null">
-        <ng-container *ngFor="let media of mediaFilter; let i=index;" >
+        <ng-container *ngFor="let media of cardContent; let i=index;" >
           <div
             *ngIf="media._id !== (cardContent[0] && cardContent[0]._id)"
             class="text-center" style="width: 160px; height: 120px; object-fit: cover; position: relative;">
@@ -150,7 +162,6 @@
             <figure *ngIf="media.type === 'PHOTO'" style="width: 160px; height: 120px; object-fit: cover; background-color: #ececec; display: flex; place-content: center;">
               <img
                 style="cursor: pointer; width: 100%; height: 100%; object-fit: cover; background-color: #ececec"
-                (click)="toggleDisplayMediaSlider('showSelected', i+1)"
                 [src]="mediaSrc(media, 'IMAGE')"
                 alt=" "
                 class="img-responsive" >
@@ -161,7 +172,7 @@
             <div *ngIf="isNotMainMedia(media) && media['type'] !== 'VIDEO' " class="text-sm text-left set-main-overlay" style="width: 100%; height: 100%; position: absolute; top: 0; left: 0;">
                 <span
                   (click)="onSetPrincipal(media, i+1)"
-                  [ngClass]="isSavingMedia ? 'text-disabled' : 'c-hand text-hover-underline'"
+                  [ngClass]="isSaving ? 'text-disabled' : 'c-hand text-hover-underline'"
                   class="text-primary"
                   style="height: 22px; padding-left: 4px; width: 100%; background-color: #ececec; position: absolute; bottom: 0; right: 0; opacity: 80%"
                   [id]="'btn-principal-media-'+i">
@@ -173,8 +184,8 @@
           </div>
         </ng-container>
         <!-- new media card -->
-        <div [ngStyle]="{padding: (isBeingEdited && cardContent.length === 1) ? (cardContent[0].type === 'VIDEO' || cardContent[0].cloudinary.width / cardContent[0].cloudinary.height > 4/3) ? '8px 0 0 0' : '0 0 0 8px' : null}" >
-          <file-drop class="drop-container media-card text-center" (click)="toggleDisplayUploadOverlay()">
+        <div [ngStyle]="{padding: (cardContent.length === 1) ? (cardContent[0].type === 'VIDEO' || cardContent[0].cloudinary.width / cardContent[0].cloudinary.height > 4/3) ? '8px 0 0 0' : '0 0 0 8px' : null}">
+          <file-drop class="drop-container media-card text-center justify-center align-center" (click)="toggleDisplayUploadOverlay()">
             <div class="icon-container is-overlay">
                   <span class="tooltip" data-tooltip="Add new media" (click)="setEditedMediaIndex(undefined)">
                     <i class="icon icon-plus"></i>
@@ -185,7 +196,6 @@
         <!-- /new media card -->
       </div>
       <!-- /secondary medias -->
-
 
 
       <!-- if type === 'PHOTO' -->
@@ -239,6 +249,18 @@
 
 <!--    </div>-->
   </section>
+
+  <!-- new media card -->
+  <div *ngIf="cardContent.length === 0">
+    <file-drop class="drop-container media-card text-center" (click)="toggleDisplayUploadOverlay()">
+      <div class="icon-container is-overlay">
+                  <span class="tooltip" data-tooltip="Add new media" (click)="setEditedMediaIndex(undefined)">
+                    <i class="icon icon-plus"></i>
+                  </span>
+      </div>
+    </file-drop>
+  </div>
+  <!-- /new media card -->
   <!-- /show media -->
 
   <!-- umi comment -->
@@ -304,5 +326,5 @@
 </div>
 
 <!-- modal to view image -->
-<umius-modal [(showModal)]="modalMedia" [medias]="[selectedMedia]"></umius-modal>
+<!--<umius-modal [(showModal)]="modalMedia" [medias]="[selectedMedia]"></umius-modal>-->
 <!-- /modal to view image-->

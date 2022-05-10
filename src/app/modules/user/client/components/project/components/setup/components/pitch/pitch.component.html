@@ -114,10 +114,9 @@
           style="padding: 16px; display: flex; flex-wrap: wrap; position: relative; background-color: white; margin-top: 12px;">
 
               <!-- zoom btn -->
-              <div *ngIf="activeInnovCard.principalMedia" class="icon-container is-lg is-overlay" style="position: absolute; right: 0;  top: 0; background-color: #4F5D6B; z-index: 1;">
+              <div *ngIf="activeInnovCard.principalMedia" (click)="toggleDisplayMediaSlider()" class="icon-container is-lg is-overlay" style="position: absolute; right: 0;  top: 0; background-color: #4F5D6B; z-index: 1;">
                 <i class="icon icon-search" style="color: white;"></i>
               </div>
-<!--              (click)="toggleDisplayMediaSlider()"-->
               <!-- /zoom button -->
 
                      <!-- principal media -->
@@ -144,10 +143,10 @@
                 <figure *ngIf="activeInnovCard.principalMedia['type'] === 'PHOTO'" style="width: 100%; height: 100%; object-fit: cover; background-color: #ececec; display: flex; place-content: center;">
                   <img
                     style="cursor: pointer; height: 100%; object-fit: cover; width: 100%"
+                    (click)="toggleDisplayMediaSlider('showSelected', 0)"
                     [src]="activeInnovCard.media[0].url + '?a=' + activeInnovCard.media[0].cloudinary.version"
                     alt=" "
                     class="img-responsive">
-<!--                  (click)="toggleDisplayMediaSlider('showSelected', 0)"-->
 <!--                  [ngStyle]="{'width': activeInnovCard.principalMedia.isMediaAdjusted || isMediaAdjusted ? !isMediaAdjusted && isBeingEdited ? '100%' : 'auto' : '100%'}"-->
                 </figure>
                 <!-- /if type === 'PHOTO' -->
@@ -194,6 +193,7 @@
                     <figure *ngIf="media.type === 'PHOTO'" style="width: 100%; height: 100%; object-fit: cover; background-color: #ececec; display: flex; place-content: center;">
                       <img
                         style="cursor: pointer; width: 100%; height: 100%; object-fit: cover; background-color: #ececec"
+                        (click)="toggleDisplayMediaSlider('showSelected', i+1)"
                         [src]="mediaSrc(media)"
                         alt=" "
                         class="img-responsive" >
@@ -207,16 +207,38 @@
 
               <!-- see more btn -->
               <ngContainer *ngIf="activeInnovCard.media.length > 4" >
-                <div style="position: absolute; bottom: -12px; right: 16px">
+                <div (click)="toggleDisplayMediaSlider()" style="position: absolute; bottom: -12px; right: 16px">
                   <button class="button is-primary is-xs">See more</button>
                 </div>
               </ngContainer>
-<!--              (click)="toggleDisplayMediaSlider()"-->
               <!-- /see more btn -->
 
           </div>
           <!-- /content for section === 'MEDIA' -->
 
+          <!-- slider -->
+          <div *ngIf="displayMediaSlider" tabindex="0" (keydown)="slideMedia(_ , _ , $event)" style="background: rgba(58,66,77,0.96); width: 100vw; height: 100vh; position: fixed; top: 0; left: 0; right: 0; bottom: 0; display: flex; place-items: center; z-index: 6">
+            <div class="icon-container is-lg is-overlay controllers" (click)="slideMedia('showPrevious')" style="z-index: 100;">
+              <i class="icon icon-arrow-left" style="border: none"></i>
+            </div>
+            <div style="height: 90%; width: 80%; margin: auto; display: flex; place-content: center; flex-direction: column">
+              <div style="justify-content: center;display: flex;height: 90%;width: 100%;">
+                <iframe
+                  *ngIf="activeInnovCard.media[slideToShow].type === 'VIDEO'"
+                  style="height: auto; width: 100%; object-fit: contain; border: none"
+                  [src]="mediaSrc(activeInnovCard.media[slideToShow])" >
+                </iframe>
+                <img *ngIf="activeInnovCard.media[slideToShow].type === 'PHOTO' && (activeInnovCard.media[slideToShow].cloudinary.width / activeInnovCard.media[slideToShow].cloudinary.height) < 4/3" [src]="activeInnovCard.media[slideToShow].url + '?a=' + activeInnovCard.media[slideToShow].cloudinary.version" style="height: 100%; width: auto; object-fit: contain">
+                <img *ngIf="activeInnovCard.media[slideToShow].type === 'PHOTO' && (activeInnovCard.media[slideToShow].cloudinary.width / activeInnovCard.media[slideToShow].cloudinary.height) > 4/3" [src]="activeInnovCard.media[slideToShow].url + '?a=' + activeInnovCard.media[slideToShow].cloudinary.version" style="height: auto; width: 100%;object-fit: contain">
+              </div>
+              <p style="margin-bottom: 0;text-align: center;color: white;padding-top: 32px;">{{slideToShow +1}}/{{activeInnovCard.media.length}}</p>
+            </div>
+            <div class="icon-container is-lg is-overlay controllers" (click)="slideMedia( 'showNext')" style="z-index: 10;">
+              <i class="icon icon-arrow-right"></i>
+            </div>
+            <button class="modal-close slider-close-btn" (click)="toggleDisplayMediaSlider('closeSlider')"></button>
+          </div>
+          <!-- /slider -->
         </div>
       </section>
       <!-- /sections -->
@@ -406,7 +428,7 @@
 
 
 <!-- sidebar to edit innovation card field -->
-<umius-sidebar-full *ngIf="activeSection.etherpadElementId" [(template)]="sidebarValue">
+<umius-sidebar-full *ngIf="activeSection.etherpadElementId" [(template)]="sidebarValue" style="z-index: 5 !important">
   <app-sidebar-project-pitch
     (saveProject)="onSaveProject($event)"
     (tobeSavedChanges)="onChangesToBeSaved($event)"

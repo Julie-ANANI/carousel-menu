@@ -81,6 +81,10 @@ export class PitchComponent implements OnInit, OnDestroy, AfterViewChecked {
 
   private _selectedMedia: UmiusModalMedia = <UmiusModalMedia>{};
 
+  private _slideToShow: number = 0;
+
+  private _displayMediaSlider = false;
+
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _etherpadService: EtherpadService,
               private _innovationService: InnovationService,
@@ -463,6 +467,40 @@ export class PitchComponent implements OnInit, OnDestroy, AfterViewChecked {
     };
   }
 
+  public toggleDisplayMediaSlider(action?: string, index?: number) {
+    if (action && index) {
+      this.slideMedia('showSelected', index);
+    }
+    if (action === 'closeSlider') {
+      this._slideToShow = 0;
+    }
+    this._displayMediaSlider = !this._displayMediaSlider;
+  }
+
+  public slideMedia(action: string, index?: number, event?: KeyboardEvent) {
+    if (event && event.key === 'ArrowLeft') {
+      action = 'showPrevious';
+    } else if (event && event.key === 'ArrowRight') {
+      action = 'showNext';
+    }
+    if (action === 'showSelected') {
+      this._slideToShow = index;
+    } else if (action === 'showPrevious') {
+      if (!this.activeInnovCard.media[this._slideToShow - 1]) {
+        this._slideToShow = this.activeInnovCard.media.length - 1;
+      } else {
+        this._slideToShow = this._slideToShow - 1;
+      }
+    } else if (action === 'showNext') {
+      if (!this.activeInnovCard.media[this._slideToShow + 1]) {
+        this._slideToShow = 0;
+      } else {
+        this._slideToShow = this._slideToShow + 1;
+      }
+    }
+  }
+
+
   private _changesToSave() {
     if (this._toBeSaved) {
       const _msg = this.activeInnovCard.lang === 'fr'
@@ -732,6 +770,14 @@ export class PitchComponent implements OnInit, OnDestroy, AfterViewChecked {
 
   get mediaFilter(): Array<UmiusMediaInterface> {
     return this._mediaFilter;
+  }
+
+  get slideToShow(): number {
+    return this._slideToShow;
+  }
+
+  get displayMediaSlider(): boolean {
+    return this._displayMediaSlider;
   }
 
   ngOnDestroy(): void {
