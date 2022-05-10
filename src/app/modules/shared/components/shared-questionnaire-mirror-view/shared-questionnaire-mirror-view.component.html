@@ -5,9 +5,8 @@
       <a class="button dropdown-toggle is-primary is-outlined is-xs p-no-left" tabindex="0">
 
         <!-- language status  -->
-        <ng-container [ngSwitch]="languageSelected['status']">
-          <i class="fas fa-check-circle text-success" *ngSwitchCase="'DONE'"></i>
-          <i class="fas fa-times-circle text-error" *ngSwitchDefault></i>
+        <ng-container *ngTemplateOutlet="langStatus;
+                             context: {$implicit:{status: languageSelected['status']}}">
         </ng-container>
         <!-- language status  -->
 
@@ -36,9 +35,8 @@
             <div class="d-flex align-center">
 
               <!-- dropdown menu - item status  -->
-              <ng-container [ngSwitch]="lang['status']">
-                <i class="fas fa-check-circle text-success" *ngSwitchCase="'DONE'"></i>
-                <i class="fas fa-times-circle text-error" *ngSwitchDefault></i>
+              <ng-container *ngTemplateOutlet="langStatus;
+                             context: {$implicit:{status: lang['status']}}">
               </ng-container>
               <!-- dropdown menu - item status  -->
 
@@ -72,5 +70,15 @@
   <!-- questionnaire part -->
   <ng-content></ng-content>
   <!-- /questionnaire part -->
+
+  <!-- template to display lang status -->
+  <ng-template #langStatus let-context>
+    <ng-container [ngSwitch]="context['status']">
+      <i class="fas fa-check-circle text-success" *ngSwitchCase="'DONE'"></i>
+      <i class="fas fa-circle text-error" *ngSwitchDefault></i>
+    </ng-container>
+  </ng-template>
+  <!-- /template to display lang status -->
+
 
 </div>
