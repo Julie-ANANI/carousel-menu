@@ -15,6 +15,7 @@ import { RolesFrontService } from '../../../../../../services/roles/roles-front.
 import { CampaignFrontService } from '../../../../../../services/campaign/campaign-front.service';
 import { AuthService } from '../../../../../../services/auth/auth.service';
 import {UmiusConfigInterface} from '@umius/umi-common-component';
+import { lang, Language } from "../../../../../../models/static-data/language";
 
 @Component({
   templateUrl: './admin-campaign-workflows.component.html',
@@ -48,7 +49,7 @@ export class AdminCampaignWorkflowsComponent implements OnInit {
 
   private _isTesting = false;
 
-  private _innovationCardLanguages: string[] = [];
+  private _innovationCardLanguages: Array<Language> = [];
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _activatedRoute: ActivatedRoute,
@@ -106,12 +107,12 @@ export class AdminCampaignWorkflowsComponent implements OnInit {
   }
 
   private _getInnovationCardLanguages() {
-    this._innovationCardLanguages = [];
-    if (this._campaign.innovation && this._campaign.innovation.innovationCards && this._campaign.innovation.innovationCards.length) {
-      this._campaign.innovation.innovationCards.map(innoCard => {
-        this._innovationCardLanguages.push(innoCard.lang);
-      });
-    }
+    this._innovationCardLanguages = lang.splice(3);
+    // if (this._campaign.innovation && this._campaign.innovation.innovationCards && this._campaign.innovation.innovationCards.length) {
+    //   this._campaign.innovation.innovationCards.map(innoCard => {
+    //     this._innovationCardLanguages.push(innoCard.lang);
+    //   });
+    // }
   }
 
   public canAccess(path?: Array<string>) {
@@ -434,7 +435,7 @@ export class AdminCampaignWorkflowsComponent implements OnInit {
     return this._isTesting;
   }
 
-  get innovationCardLanguages(): string[] {
+  get innovationCardLanguages(): Array<Language> {
     return this._innovationCardLanguages;
   }
 }
