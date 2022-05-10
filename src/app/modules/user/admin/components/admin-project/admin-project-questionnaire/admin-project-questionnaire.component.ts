@@ -76,7 +76,8 @@ export class AdminProjectQuestionnaireComponent implements OnInit, OnDestroy {
           //   }
           // );
 
-          lang.map(language =>{
+          // TODO: set real card languages
+          lang.splice(16).map(language =>{
             this.initialiseCardLanguages(language);
           })
 
@@ -93,6 +94,7 @@ export class AdminProjectQuestionnaireComponent implements OnInit, OnDestroy {
   /**
    * initialise cardLanguages list
    * @param language
+   * // TODO
    */
   initialiseCardLanguages(language: any) {
     // const language = lang.find(l => l.type === card.lang);

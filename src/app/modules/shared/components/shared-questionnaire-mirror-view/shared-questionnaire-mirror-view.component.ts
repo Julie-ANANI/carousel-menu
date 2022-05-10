@@ -8,6 +8,7 @@ import { Language } from "../../../../models/static-data/language";
 })
 
 export class SharedQuestionnaireMirrorViewComponent implements OnInit {
+  @Input() showDropDown = true;
 
   @Input() set languageSelected(value: Language){
     this._languageSelected = value;
