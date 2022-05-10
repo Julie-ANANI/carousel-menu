@@ -76,13 +76,14 @@ export class AdminProjectQuestionnaireComponent implements OnInit, OnDestroy {
           //   }
           // );
 
-          lang.slice(10).map(language =>{
+          lang.map(language =>{
             this.initialiseCardLanguages(language);
           })
 
           this.initialiseMirrorLanguages();
 
           this._setSectionsNames();
+
           this._missionQuestionService.questionnaireLangs = this._cardsLanguages;
         }
       });
@@ -325,6 +326,16 @@ export class AdminProjectQuestionnaireComponent implements OnInit, OnDestroy {
 
   get leftMirrorLanguage(): Language {
     return this._leftMirrorLanguage;
+  }
+
+
+  set leftMirrorLanguage(value: Language) {
+    this._leftMirrorLanguage = value;
+    console.log(this._leftMirrorLanguage);
+  }
+
+  set rightMirrorLanguage(value: Language) {
+    this._rightMirrorLanguage = value;
   }
 
   get rightMirrorLanguage(): Language {
