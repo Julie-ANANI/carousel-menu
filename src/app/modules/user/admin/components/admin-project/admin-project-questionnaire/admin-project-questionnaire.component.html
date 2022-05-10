@@ -57,29 +57,46 @@
     <section *ngIf="canAccess(['view']) || canAccess(['edit'])" class="m-top-15">
 
       <ng-container *ngIf="hasMissionTemplate; else oldPresets">
-        <div class="d-flex justify-around">
+        <div [ngClass]="{'d-flex justify-around flex-wrap-wrap': !!rightMirrorLanguage}">
 
-          <div style="width: 49%">
-            <div class="d-flex flex-d-column">
+          <div [ngClass]="{'questionnaire-column': !!rightMirrorLanguage}">
+            <div class="d-flex flex-d-column p-bottom-20">
               <div class="dropdown">
-                <a class="button dropdown-toggle is-primary is-outlined is-xs" tabindex="0">
-                  {{cardsLanguages[0].alias}} <i class="fas fa-caret-down"> </i>
+                <a class="button dropdown-toggle is-primary is-outlined is-xs p-no-left" tabindex="0">
+                  <ng-container [ngSwitch]="leftMirrorLanguage['status']">
+                    <i class="fas fa-check-circle text-success" *ngSwitchCase="'DONE'"></i>
+                    <i class="fas fa-times-circle text-error" *ngSwitchDefault></i>
+                  </ng-container>
+                  <span class="m-left-10">{{leftMirrorLanguage.alias}}</span>
+                  <i *ngIf="cardsLanguages && cardsLanguages.length > 2" class="fas fa-caret-down"> </i>
                 </a>
-                <ul class="menu">
+                <ul class="menu" *ngIf="cardsLanguages && cardsLanguages.length > 2">
                   <ng-container *ngFor="let lang of cardsLanguages">
-                    <li class="menu-item">
-                      <ng-container>
-                        {{lang.alias}}
-                        <i class="fa fa-eye-slash"></i>
-                      </ng-container>
+                    <li class="menu-item"
+                        *ngIf="lang.type !== rightMirrorLanguage.type && lang.type !== leftMirrorLanguage.type"
+                        (click)="selectMirrorLanguage($event, lang, 'left')">
+                      <div class="d-flex align-center">
+                        <ng-container [ngSwitch]="lang['status']">
+                          <i class="fas fa-check-circle text-success" *ngSwitchCase="'DONE'"></i>
+                          <i class="fas fa-times-circle text-error" *ngSwitchDefault></i>
+                        </ng-container>
+                        <span class="m-left-10">{{lang.alias}}</span>
+                        <ng-container>
+                          <button class="button is-circled m-left-auto is-draft is-xs tooltip is-left"
+                                  [attr.data-tooltip]="'This language \n is hidden \n on client side'"
+                                  *ngIf="lang['hidden']">
+                            <i class="fa fa-eye-slash"></i>
+                          </button>
+                        </ng-container>
+                      </div>
                     </li>
                   </ng-container>
                 </ul>
               </div>
-              <div class="form-group">
-                <label class="form-label">{{cardsLanguages[0].alias}} Objective</label>
-                <input type="text" class="form-input" [value]="getObjective('en')">
-              </div>
+              <!--              <div class="form-group">-->
+              <!--                <label class="form-label">{{leftMirrorLanguage.alias}} Objective</label>-->
+              <!--                <input type="text" class="form-input" [value]="getObjective('en')">-->
+              <!--              </div>-->
             </div>
             <app-shared-questionnaire
               (templateChange)="updatePreset($event, 'TEMPLATE')"
@@ -90,27 +107,45 @@
             </app-shared-questionnaire>
           </div>
 
-          <div style="width: 49%">
-            <div class="d-flex flex-d-column">
+          <div *ngIf="!!rightMirrorLanguage"
+               [ngClass]="{'questionnaire-column': !!rightMirrorLanguage}">
+            <div class="d-flex flex-d-column p-bottom-20">
               <div class="dropdown">
-                <a class="button dropdown-toggle is-primary is-outlined is-xs" tabindex="0">
-                  {{cardsLanguages[1].alias}} <i class="fas fa-caret-down"> </i>
+                <a class="button dropdown-toggle is-primary is-outlined is-xs p-no-left" tabindex="0">
+                  <ng-container [ngSwitch]="rightMirrorLanguage['status']">
+                    <i class="fas fa-check-circle text-success" *ngSwitchCase="'DONE'"></i>
+                    <i class="fas fa-times-circle text-error" *ngSwitchDefault></i>
+                  </ng-container>
+                  <span class="m-left-10">{{rightMirrorLanguage.alias}}</span>
+                  <i *ngIf="cardsLanguages && cardsLanguages.length > 3" class="fas fa-caret-down"> </i>
                 </a>
-                <ul class="menu">
+                <ul class="menu" *ngIf="cardsLanguages && cardsLanguages.length > 3">
                   <ng-container *ngFor="let lang of cardsLanguages">
-                    <li class="menu-item">
-                      <ng-container>
-                        {{lang.alias}}
-                        <i class="fa fa-eye-slash"></i>
-                      </ng-container>
+                    <li class="menu-item"
+                        *ngIf="lang.type !== rightMirrorLanguage.type && lang.type !== leftMirrorLanguage.type"
+                        (click)="selectMirrorLanguage($event, lang, 'right')">
+                      <div class="d-flex align-center">
+                        <ng-container [ngSwitch]="lang['status']">
+                          <i class="fas fa-check-circle text-success" *ngSwitchCase="'DONE'"></i>
+                          <i class="fas fa-times-circle text-error" *ngSwitchDefault></i>
+                        </ng-container>
+                        <span class="m-left-10">{{lang.alias}}</span>
+                        <ng-container>
+                          <button class="button is-circled m-left-auto is-draft is-xs tooltip is-left"
+                                  [attr.data-tooltip]="'This language \n is hidden \n on client side'"
+                                  *ngIf="lang['hidden']">
+                            <i class="fa fa-eye-slash"></i>
+                          </button>
+                        </ng-container>
+                      </div>
                     </li>
                   </ng-container>
                 </ul>
               </div>
-              <div class="form-group">
-                <label class="form-label">{{cardsLanguages[1].alias}} Objective</label>
-                <input type="text" class="form-input" [value]="getObjective('fr')">
-              </div>
+              <!--              <div class="form-group">-->
+              <!--                <label class="form-label">French Objective</label>-->
+              <!--                <input type="text" class="form-input" [value]="getObjective('fr')">-->
+              <!--              </div>-->
             </div>
 
             <app-shared-questionnaire
