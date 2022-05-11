@@ -15,6 +15,7 @@ import { environment } from '../../../../../../../../environments/environment';
 import { CanComponentDeactivate } from '../../../../../../../guards/can-deactivate-guard.service';
 import {RouteFrontService} from '../../../../../../../services/route/route-front.service';
 import {picto, Picto} from '../../../../../../../models/static-data/picto';
+import { lang, Language } from "../../../../../../../models/static-data/language";
 
 interface Banner {
   message: string;
@@ -70,6 +71,12 @@ export class SetupComponent implements OnInit, OnDestroy, CanComponentDeactivate
   private _activeCardIndex = 0;
 
   private _activeInnovCard: InnovCard = <InnovCard>{};
+
+  // TODO
+  private _testLanguages: Array<Language> = lang;
+
+  //TODO
+  private _languageSelected: Language = this._testLanguages[0];
 
   private _tabs: Array<Tab> = [
     { route: 'pitch', name: 'PITCH', tracking: 'gtm-edit-market-targeting' },
@@ -334,9 +341,23 @@ export class SetupComponent implements OnInit, OnDestroy, CanComponentDeactivate
     return this._activeSaveBadge;
   }
 
+
+  get languageSelected(): Language {
+    return this._languageSelected;
+  }
+
+  get testLanguages(): Array<Language> {
+    return this._testLanguages;
+  }
+
   ngOnDestroy(): void {
     this._ngUnsubscribe.next();
     this._ngUnsubscribe.complete();
   }
 
+  // TODO
+  selectLanguage(event: Event, language: Language) {
+    event.preventDefault();
+    this._languageSelected = language;
+  }
 }

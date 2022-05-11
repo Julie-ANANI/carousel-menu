@@ -112,7 +112,7 @@ export class PitchComponent implements OnInit, OnDestroy {
         this._fetchCommentsOfSections();
 
         this._testLanguages.map(language => {
-          language['checked'] = false;
+          language['checked'] = language['status'] && language['status'] !== 'EDITING';
         })
 
       }
@@ -656,7 +656,7 @@ export class PitchComponent implements OnInit, OnDestroy {
 
   set showModal(value: boolean) {
     this._showModal = value;
-    if(!value){
+    if (!value) {
       this._testLanguages.map(l => l['checked'] = false);
       this._isSelectedAll = false;
     }
@@ -698,6 +698,8 @@ export class PitchComponent implements OnInit, OnDestroy {
   }
 
   selectLanguage(language: Language) {
-    this._isSelectedAll = !this._testLanguages.find(l => {return !l['checked']});
+    this._isSelectedAll = !this._testLanguages.find(l => {
+      return !l['checked']
+    });
   }
 }

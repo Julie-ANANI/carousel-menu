@@ -48,46 +48,42 @@
             <!-- /preview -->
 
             <!-- card lang -->
-
-            <!-- if only one lang then Add card lang -->
             <ng-container *ngIf="(innovation.status === 'EDITING' || innovation.status === 'SUBMITTED') && canAddCard">
               <div class="m-bottom-15 m-right-15">
-                <button
-                  (click)="onAddCard($event)"
-                  [disabled]="isAddingCard"
-                  class="button is-link text-no-underline is-sm p-no"
-                  id="btn-add-card">
-                  <i class="fas fa-plus-circle text-lg icon-left"></i>
-                  <span class="text-hover-underline">
-                <ng-container *ngIf="activeInnovCard.lang === 'en'">
-                  {{ 'COMMON.BUTTON.ADD_LANG_FRENCH' | translate }}
-                </ng-container>
-                <ng-container *ngIf="activeInnovCard.lang === 'fr'">
-                  {{ 'COMMON.BUTTON.ADD_LANG_ENGLISH' | translate }}
-                </ng-container>
-              </span>
-                </button>
+                <div class="dropdown">
+                  <!-- language selected -->
+                  <a class="button dropdown-toggle is-primary is-outlined d-flex align-center justify-start" tabindex="0">
+                    <ng-container *ngTemplateOutlet="langStatus; context:{$implicit: languageSelected}">
+                    </ng-container>
+                     <i class="fas fa-caret-down is-sm" *ngIf="testLanguages && testLanguages.length > 1"></i>
+                  </a>
+                  <!-- /language selected -->
+
+                  <!-- available languages -->
+                  <ul class="menu">
+                    <li class="menu-item"
+                        *ngFor="let language of testLanguages"
+                        (click)="selectLanguage($event, language)">
+                      <label class="fullspace d-flex align-center">
+                          <ng-container *ngTemplateOutlet="langStatus; context:{$implicit: language}">
+                          </ng-container>
+                      </label>
+                    </li>
+                  </ul>
+                  <!-- available languages -->
+                </div>
               </div>
+
+              <!-- language status + name template -->
+              <ng-template #langStatus let-context>
+                <ng-container>
+                  <i [ngClass]="context['status'] ==='EDITING'? 'fa fa-circle text-error': 'fa fa-check-circle text-success'" class="m-right-4 is-sm"></i>
+                  {{context.alias}}
+                </ng-container>
+              </ng-template>
+              <!-- /language status + name template -->
+
             </ng-container>
-            <!-- /if only one lang then Add card lang -->
-
-            <!-- has more than 2 lang -->
-            <div *ngIf="hasDropdownLang" class="dropdown m-bottom-15 is-right">
-              <a class="button dropdown-toggle is-sm is-outlined is-info" tabindex="0">
-                {{ 'COMMON.LANG.' + activeInnovCard.lang | uppercase | translate }}
-                <i class="icon icon-right icon-caret"></i>
-              </a>
-              <ul class="menu">
-                <li (click)="onChangeLang($event)" *ngIf="activeInnovCard.lang === 'en'" class="menu-item">
-                  {{ 'COMMON.LANG.FR' | translate }}
-                </li>
-                <li (click)="onChangeLang($event)" *ngIf="activeInnovCard.lang === 'fr'" class="menu-item">
-                  {{ 'COMMON.LANG.EN' | translate }}
-                </li>
-              </ul>
-            </div>
-            <!-- /has more than 2 lang -->
-
             <!-- /card lang -->
 
           </div>
