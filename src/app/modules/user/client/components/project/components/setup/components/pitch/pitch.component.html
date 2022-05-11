@@ -308,6 +308,26 @@
 
     <div class="mxw-650 authorise-wrapper form-group">
       <p>{{ 'PROJECT_PITCH.MODAL.SUBMIT_TEXT' | translate }}</p>
+
+      <div class="languages-selection">
+        <div class="form-group">
+            <label class="form-checkbox d-flex align-center">
+              <input type="checkbox" [(ngModel)]="isSelectedAll">
+              <i class="form-icon"></i> {{'COMMON.LABEL.SELECT_ALL' | translate}}
+            </label>
+        </div>
+        <div class="form-group d-flex flex-wrap-wrap m-top-10">
+          <ng-container *ngFor="let language of testLanguages">
+            <label class="form-checkbox d-flex align-center" style="width: 33%">
+              <input type="checkbox"
+                     [(ngModel)]="language['checked']"
+                     (ngModelChange)="selectLanguage(language)">
+              <i class="form-icon"></i> {{language.alias}}
+            </label>
+          </ng-container>
+        </div>
+      </div>
+
     </div>
 
   </section>

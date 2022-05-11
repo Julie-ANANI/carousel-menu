@@ -1,24 +1,35 @@
-import {Component, Inject, OnDestroy, OnInit, PLATFORM_ID} from '@angular/core';
-import {Innovation} from '../../../../../../../../../models/innovation';
-import {PitchHelpFields} from '../../../../../../../../../models/static-data/project-pitch';
-import {InnovationFrontService} from '../../../../../../../../../services/innovation/innovation-front.service';
-import {first, takeUntil} from 'rxjs/operators';
-import {MissionFrontService} from '../../../../../../../../../services/mission/mission-front.service';
-import {Mission} from '../../../../../../../../../models/mission';
-import {Subject} from 'rxjs';
-import {CardComment, CardSectionTypes, InnovCard, InnovCardSection} from '../../../../../../../../../models/innov-card';
-import {InnovationService} from '../../../../../../../../../services/innovation/innovation.service';
-import {HttpErrorResponse} from '@angular/common/http';
-import {TranslateNotificationsService} from '../../../../../../../../../services/translate-notifications/translate-notifications.service';
-import {ErrorFrontService} from '../../../../../../../../../services/error/error-front.service';
-import {Preset} from '../../../../../../../../../models/preset';
-import {CollaborativeComment} from '../../../../../../../../../models/collaborative-comment';
-import {EtherpadFrontService} from '../../../../../../../../../services/etherpad/etherpad-front.service';
-import {isPlatformBrowser} from '@angular/common';
-import {EtherpadService} from '../../../../../../../../../services/etherpad/etherpad.service';
-import {MediaFrontService} from '../../../../../../../../../services/media/media-front.service';
-import {TranslateService} from '@ngx-translate/core';
-import {UmiusMediaInterface, UmiusModalMedia, UmiusSidebarInterface, UmiusVideoInterface} from '@umius/umi-common-component';
+import { Component, Inject, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
+import { Innovation } from '../../../../../../../../../models/innovation';
+import { PitchHelpFields } from '../../../../../../../../../models/static-data/project-pitch';
+import { InnovationFrontService } from '../../../../../../../../../services/innovation/innovation-front.service';
+import { first, takeUntil } from 'rxjs/operators';
+import { MissionFrontService } from '../../../../../../../../../services/mission/mission-front.service';
+import { Mission } from '../../../../../../../../../models/mission';
+import { Subject } from 'rxjs';
+import {
+  CardComment,
+  CardSectionTypes,
+  InnovCard,
+  InnovCardSection
+} from '../../../../../../../../../models/innov-card';
+import { InnovationService } from '../../../../../../../../../services/innovation/innovation.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { TranslateNotificationsService } from '../../../../../../../../../services/translate-notifications/translate-notifications.service';
+import { ErrorFrontService } from '../../../../../../../../../services/error/error-front.service';
+import { Preset } from '../../../../../../../../../models/preset';
+import { CollaborativeComment } from '../../../../../../../../../models/collaborative-comment';
+import { EtherpadFrontService } from '../../../../../../../../../services/etherpad/etherpad-front.service';
+import { isPlatformBrowser } from '@angular/common';
+import { EtherpadService } from '../../../../../../../../../services/etherpad/etherpad.service';
+import { MediaFrontService } from '../../../../../../../../../services/media/media-front.service';
+import { TranslateService } from '@ngx-translate/core';
+import {
+  UmiusMediaInterface,
+  UmiusModalMedia,
+  UmiusSidebarInterface,
+  UmiusVideoInterface
+} from '@umius/umi-common-component';
+import { lang, Language } from "../../../../../../../../../models/static-data/language";
 
 @Component({
   templateUrl: './pitch.component.html',
@@ -71,6 +82,10 @@ export class PitchComponent implements OnInit, OnDestroy {
 
   private _selectedMedia: UmiusModalMedia = <UmiusModalMedia>{};
 
+  private _testLanguages: Array<Language> = lang;
+
+  private _isSelectedAll = false;
+
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _etherpadService: EtherpadService,
               private _innovationService: InnovationService,
@@ -95,6 +110,11 @@ export class PitchComponent implements OnInit, OnDestroy {
 
         this._initDefaultSections();
         this._fetchCommentsOfSections();
+
+        this._testLanguages.map(language => {
+          language['checked'] = false;
+        })
+
       }
     });
 
@@ -209,6 +229,7 @@ export class PitchComponent implements OnInit, OnDestroy {
     }
   }
 
+
   public onOpenModal(event: Event) {
     event.preventDefault();
     if (this._innovation.status === 'EDITING' && !this._isSubmitting && !this._isSaving && !this._isRequesting) {
@@ -218,6 +239,8 @@ export class PitchComponent implements OnInit, OnDestroy {
 
   public onCloseModal() {
     this._showModal = false;
+    this._testLanguages.map(l => l['checked'] = false);
+    this._isSelectedAll = false;
   }
 
   public onSubmitProject(event: Event) {
@@ -633,6 +656,10 @@ export class PitchComponent implements OnInit, OnDestroy {
 
   set showModal(value: boolean) {
     this._showModal = value;
+    if(!value){
+      this._testLanguages.map(l => l['checked'] = false);
+      this._isSelectedAll = false;
+    }
   }
 
   get isSendingMessage(): boolean {
@@ -651,9 +678,26 @@ export class PitchComponent implements OnInit, OnDestroy {
     return this._mission;
   }
 
+
+  get isSelectedAll(): boolean {
+    return this._isSelectedAll;
+  }
+
+  set isSelectedAll(value: boolean) {
+    this._isSelectedAll = value;
+    this._testLanguages.map(l => l['checked'] = value);
+  }
+
+  get testLanguages(): Array<Language> {
+    return this._testLanguages;
+  }
+
   ngOnDestroy(): void {
     this._ngUnsubscribe.next();
     this._ngUnsubscribe.complete();
   }
 
+  selectLanguage(language: Language) {
+    this._isSelectedAll = !this._testLanguages.find(l => l['checked'] === false);
+  }
 }
