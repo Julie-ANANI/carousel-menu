@@ -6,20 +6,34 @@
     <ul class="tab"
         [ngStyle]="{'border-bottom': '0px'}">
       <ng-container *ngFor="let label of items">
-          <li class="tab-item m-right-10">
-            <span
-              [ngStyle]="{'font-size': '14px'}"
-              class="m-left-20">{{ label | titlecase }}
-            </span>
+          <li class="m-right-10 text-capitalize tab-item">
+            <span class="m-left-20 text-xs">{{ label }}</span>
           </li>
       </ng-container>
     </ul>
 
     <div class="m-left-20 icon-container is-xl is-overlay">
       <i class="icon icon-more-horiz is-xl"
-      [ngStyle]="{'height': '5px !important', 'width':'5px !important'}"></i>
+      [ngStyle]="{'margin-bottom':'3px'}"></i>
     </div>
+
+    <span class="text-xs text-bold"
+          [ngStyle]="{ 'color': btnViewColor}"
+    >View more</span>
     <!-- /items-->
+
+
+    <!-- add lang -->
+    <button
+      (click)="openModal($event, 'ADD_LANG')"
+      *ngIf="canAddCard && activeTab === 'description' && canEditDescription"
+      [disabled]="isAddingCard"
+      class="button is-link is-sm m-right-10"
+      id="btn-add-card">
+      <i class="fas fa-plus-circle m-right-2"></i>
+      {{ activeCard.lang === 'fr' ? 'Add english' : 'Add french' }}
+    </button>
+    <!-- /add lang -->
 
 
   </div>
