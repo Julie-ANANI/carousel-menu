@@ -135,6 +135,8 @@ export class SidebarProjectPitchComponent implements OnInit, OnChanges, OnDestro
 
   private _editedMediaIndex: any = undefined;
 
+  private _editedMediaId: string = null;
+
   private _updateMediaFilter() {
     this._mediaFitler = this.cardContent.slice(1, 4);
   }
@@ -216,6 +218,52 @@ export class SidebarProjectPitchComponent implements OnInit, OnChanges, OnDestro
       this._padID = this._etherpadFrontService.buildPadID('pitch', this.sectionId);
     }
   }
+
+
+  /*public addNewMedia(uploadedMedia: UmiusMediaInterface): void {
+    if (this.cardContent.length > 0) {
+      if (this._editedMediaIndex > 0) { // we are editing a secondary media
+        console.log(1)
+        this.cardContent[this._editedMediaIndex] = uploadedMedia;
+      } else if (this._editedMediaIndex === undefined) { // we are creating a secondary media
+        console.log(2)
+        this.cardContent.push(uploadedMedia);
+      } else if (this._editedMediaIndex === 0) {
+        console.log(3)
+        this.cardContent[0] = uploadedMedia;
+        this.onSetPrincipal(uploadedMedia);
+      }
+    } else if (!this.cardContent.length || this._editedMediaIndex === 0){  // there are no main media or the main media is being edited
+      console.log(4)
+      this.cardContent[0] = uploadedMedia;
+      this.onSetPrincipal(uploadedMedia);
+    }
+
+    console.log('medias', this.cardContent)
+
+    this._updateMediaFilter();
+    console.log('media filter', this.mediaFilter)
+    this.isSavingChange.emit(true);
+    const mediaType = (uploadedMedia.type === 'PHOTO') ? 'IMAGE' : 'VIDEO';
+    this.saveProject.emit({type: mediaType, content: uploadedMedia});
+    //this._emitUpdatedInnovation();
+    //this._translateNotificationsService.success('Success', 'The new media has been added.');
+    this.toggleDisplayUploadOverlay();
+
+    if (this.cardContent[0].type !== 'VIDEO' && ((this.cardContent[0].cloudinary.width / this.cardContent[0].cloudinary.height) < 4/3) && this.cardContent.length > 1) {
+      this._secondaryContainerStyle = {
+        'flex-direction': 'column',
+        height: '100%',
+        'padding-left': '8px'
+      };
+    } else if (this.cardContent[0].type === 'VIDEO' || ((this.cardContent[0].cloudinary.width / this.cardContent[0].cloudinary.height) > 4/3) && this.cardContent.length > 1) {
+      this._secondaryContainerStyle = {
+        'flex-direction': 'row',
+        width: '100%',
+        'padding-top': '8px'
+      };
+    }
+  }*/
 
   /***
    * when the user clicks on the Save button
@@ -392,7 +440,7 @@ export class SidebarProjectPitchComponent implements OnInit, OnChanges, OnDestro
   public toggleDisplayUploadOverlay(id?: string, type?: string) {
     this._displayUploadOverlay = !this._displayUploadOverlay;
     //this._mediaType = type;
-    //this._editedMediaId = id;
+    this._editedMediaId = id;
   }
 
   public adjustMedia(media: UmiusMediaInterface, action: string) {
@@ -545,6 +593,10 @@ export class SidebarProjectPitchComponent implements OnInit, OnChanges, OnDestro
 
   get editedMediaIndex(): any {
     return this._editedMediaIndex;
+  }
+
+  get editedMediaId(): string {
+    return this._editedMediaId;
   }
 
   ngOnDestroy(): void {

@@ -23,7 +23,12 @@
           <div style="display: inline-flex; justify-content: flex-end; width: 100%; margin-top: -32px; margin-bottom: 8px"><button class="modal-close" (click)="toggleDisplayUploadOverlay()" style="color: #505D6B;"></button></div>
           <!-- image -->
         <div class="form-group">
+        <!--  <app-shared-upload-zone-photo
+            [uri]="imagePostUri"
+            (cbFn)="onUploadMedia($event, 'IMAGE')">
+          </app-shared-upload-zone-photo>-->
           <app-shared-upload-zone-photo
+            [mediaId]="editedMediaId"
             [uri]="imagePostUri"
             (cbFn)="onUploadMedia($event, 'IMAGE')">
           </app-shared-upload-zone-photo>
