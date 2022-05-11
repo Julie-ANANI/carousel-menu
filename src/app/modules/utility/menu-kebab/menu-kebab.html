@@ -1,20 +1,24 @@
 <section class="bg-white sticky header-wrapper">
-  <div class="container fluid"
-       [ngStyle]="{ 'background-color': color, 'height': '40px'}">
+  <div class="d-flex m-top-30 align-center container fluid"
+       [ngStyle]="{'background-color': color, 'height': '40px'}">
 
     <!-- items -->
     <ul class="tab"
-        [ngStyle]="{ 'border-bottom': '0px'}">
+        [ngStyle]="{'border-bottom': '0px'}">
       <ng-container *ngFor="let label of items">
-
           <li class="tab-item m-right-10">
-            <span [ngStyle]="{'color': textColor}"
-                  class="m-left-20">{{ label | titlecase }}
+            <span
+              [ngStyle]="{'font-size': '14px'}"
+              class="m-left-20">{{ label | titlecase }}
             </span>
           </li>
-
       </ng-container>
     </ul>
+
+    <div class="m-left-20 icon-container is-xl is-overlay">
+      <i class="icon icon-more-horiz is-xl"
+      [ngStyle]="{'height': '5px !important', 'width':'5px !important'}"></i>
+    </div>
     <!-- /items-->
 
 
