@@ -5,6 +5,9 @@ import 'rxjs/add/operator/map';
 import {first} from "rxjs/operators";
 import {InnovationService} from '../../../../services/innovation/innovation.service';
 import {UmiusVideoInterface} from "@umius/umi-common-component";
+import {HttpErrorResponse} from "@angular/common/http";
+import {ErrorFrontService} from "../../../../services/error/error-front.service";
+import {TranslateNotificationsService} from "../../../../services/translate-notifications/translate-notifications.service";
 
 
 
@@ -36,7 +39,7 @@ export class SharedUploadZoneVideoComponent implements OnInit {
 
   private _isWrongFormat = false;
 
-  constructor(//private _translateNotificationsService: TranslateNotificationsService,
+  constructor(private _translateNotificationsService: TranslateNotificationsService,
               private _innovationService: InnovationService) { }
 
   ngOnInit() {
@@ -105,6 +108,9 @@ export class SharedUploadZoneVideoComponent implements OnInit {
             .subscribe((file) => {
               this.cbFn.emit(file);
               this.isUploading = false;
+            }, (err: HttpErrorResponse) => {
+              this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
+              console.error(err);
             });
         } else {
           this._innovationService.addNewMediaVideoToInnovationCard(this.innovationId,
@@ -112,7 +118,9 @@ export class SharedUploadZoneVideoComponent implements OnInit {
             .pipe(first())
             .subscribe((file) => {
               this.cbFn.emit(file);
-              // this.isUploading = false; // ?????
+            }, (err: HttpErrorResponse) => {
+              this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
+              console.error(err);
             });
         }
 
