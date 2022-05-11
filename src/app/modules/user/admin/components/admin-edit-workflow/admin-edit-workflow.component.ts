@@ -5,7 +5,6 @@ import { EmailSignature } from '../../../../../models/email-signature';
 import {Column, Table, UmiusConfigInterface, UmiusSidebarInterface} from '@umius/umi-common-component';
 import { Language } from "../../../../../models/static-data/language";
 
-
 @Component({
   selector: 'app-admin-edit-workflow',
   templateUrl: 'admin-edit-workflow.component.html',
@@ -149,6 +148,7 @@ export class AdminEditWorkflowComponent {
 
   public editEmail(email: any) {
     this._emailToEdit = email;
+    console.log(email);
     this._emailToEdit.campaignId = this.campaignId;
     this._sidebar = {
       size: '726px',
