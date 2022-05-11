@@ -1,31 +1,21 @@
 <section class="bg-white sticky header-wrapper">
-  <div class="container fluid">
+  <div class="container fluid"
+       [ngStyle]="{ 'background-color': color, 'height': '40px'}">
 
-<!--      <ul class="menu">-->
-<!--        <div [ngClass]="">-->
-<!--          <li *ngFor="let label of items; let i = index">-->
-<!--            <div [ngStyle]="{ 'background-color': color, 'color': textColor }"></div>-->
-<!--            <span class="m-left-20">{{ label }}</span>-->
-<!--          </li>-->
-<!--&lt;!&ndash;          <button *ngIf="isActive"&ndash;&gt;-->
-<!--&lt;!&ndash;                  (click)="setCardLang(card.lang)">&ndash;&gt;-->
-<!--&lt;!&ndash;          </button>&ndash;&gt;-->
-<!--        </div>-->
-<!--      </ul>-->
-
-
-    <!-- tabs -->
-    <ul class="tab">
+    <!-- items -->
+    <ul class="tab"
+        [ngStyle]="{ 'border-bottom': '0px'}">
       <ng-container *ngFor="let label of items">
 
           <li class="tab-item m-right-10">
-            <div [ngStyle]="{ 'background-color': color, 'color': textColor }"></div>
-            <span class="m-left-20">{{ label }}</span>
+            <span [ngStyle]="{'color': textColor}"
+                  class="m-left-20">{{ label | titlecase }}
+            </span>
           </li>
 
       </ng-container>
     </ul>
-    <!-- /tabs -->
+    <!-- /items-->
 
 
   </div>

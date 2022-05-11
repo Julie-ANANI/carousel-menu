@@ -12,13 +12,15 @@ import {InnovationFrontService} from '../../../services/innovation/innovation-fr
 export class MenuKebabComponent {
 
   @Input() items = [
-    'français',
-    'anglais',
-    'espagnol'
+    'french',
+    'english',
+    'spanish',
+    'german',
+    'dutch',
   ];
 
   @Input() testInput: string;
-  @Input() color = '#97A4B1';
+  @Input() color = '#EFEFEF';
   @Input() textColor = '#00B0FF';
   @Input() isActive = false;
 
