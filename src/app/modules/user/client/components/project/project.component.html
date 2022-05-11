@@ -39,7 +39,7 @@
             <ng-container *ngIf="mission | mission:'hasMissionTemplate'; else oldObjective">
               <div class="flex-centered flex-d-column p-bottom-40">
                 <h3 class="op-8 text-lg text-normal text-white m-bottom-2">
-                  {{ mission | mission:'objectiveName' }}
+                  {{ mission | mission:'objectiveName' : currentLang }}
                 </h3>
                 <button
                   (click)="showModal($event)"
