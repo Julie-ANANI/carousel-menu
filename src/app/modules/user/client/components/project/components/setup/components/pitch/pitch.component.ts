@@ -698,6 +698,6 @@ export class PitchComponent implements OnInit, OnDestroy {
   }
 
   selectLanguage(language: Language) {
-    this._isSelectedAll = !this._testLanguages.find(l => l['checked'] === false);
+    this._isSelectedAll = !this._testLanguages.find(l => {return !l['checked']});
   }
 }

@@ -306,7 +306,7 @@ export const COMMON = {
     'EXAMPLE': 'Exemple',
     'REQUEST_PROOFREADING': 'Demander une relecture',
     'REQUESTING_PROOFREADING': 'demande en cours...',
-    'VALIDATE_DEFINITIVELY': 'Valider définitivement',
+    'VALIDATE_DEFINITIVELY': 'Valider les langages définitivement',
     'VALIDATING_DEFINITIVELY': 'en cours de soumission...',
     'COMMENT': 'Commentaire',
     'SENDING_MESSAGE': 'en cours d\'envoi...',
