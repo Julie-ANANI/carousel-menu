@@ -26,7 +26,7 @@ steps:
     event:
       - push
     branch:
-      - UMI-2286_prod-multilang
+      - development
 
 - name: dockerDev
   image: plugins/docker
@@ -45,7 +45,7 @@ steps:
     event:
       - push
     branch:
-      - UMI-2286_prod-multilang
+      - development
 
 - name: rancherDev
   image: peloton/drone-rancher
@@ -63,7 +63,7 @@ steps:
     event:
       - push
     branch:
-      - UMI-2286_prod-multilang
+      - development
 
 ## UMI production steps
 ## This will build the base image. The base image for the front is the same for all instances
