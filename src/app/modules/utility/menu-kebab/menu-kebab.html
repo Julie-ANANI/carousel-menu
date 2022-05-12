@@ -1,85 +1,156 @@
 <section class="bg-white sticky header-wrapper">
-  <div class="d-flex m-top-30 align-center container fluid"
+  <div class="d-flex relative m-top-30 align-center container fluid"
        [ngStyle]="{'background-color': color, 'height': '40px'}">
 
-    <!-- items -->
-    <ul class="tab"
-        [ngStyle]="{'border-bottom': '0px'}">
-      <ng-container *ngFor="let label of items">
-          <li class="m-right-10 text-capitalize tab-item">
-            <span class="m-left-20 text-xs">{{ label }}</span>
-          </li>
-      </ng-container>
-    </ul>
-    <!-- /items-->
+    <!-- Button back-->
+    <div *ngIf="items11 && items6.length > minDelimitersOfItem && items11.length >= MaxDelimitersOfLang"
+         class="absolute m-left-20 icon-container is-xl is-overlay"
+         [ngStyle]="{'left':'-0.7em'}">
+      <i class="icon icon-arrow-left is-lg"></i>
+    </div>
+    <!-- end button back-->
 
-    <!-- Button front/back-->
-    <div class="m-left-20 icon-container is-xl is-overlay">
+
+
+    <!-- button front-->
+    <div *ngIf="items11 && items11.length > minDelimitersOfItem && items11.length >= MaxDelimitersOfLang"
+         class="m-left-20 icon-container is-xl is-overlay">
             <i class="icon icon-arrow-right"></i>
     </div>
-
-    <div class="m-left-20 icon-container is-xl is-overlay">
-            <i class="icon icon-arrow-left is-lg"></i>
-    </div>
-    <!-- end button before/after-->
+    <!-- end button front-->
 
     <!--stat 1 : max 5 items-->
     <!--menu-kebab-->
-    <div id="btn-kebab" class="m-left-20 icon-container is-xl is-overlay">
-      <i class="icon icon-more-horiz is-lg"
-      [ngStyle]="{'margin-bottom':'3px'}"></i>
-    </div>
+<!--    <div *ngIf="items11.length > 5" id="btn-kebab" class="m-left-20 icon-container is-xl is-overlay"-->
+<!--         (click)="displayOtherItems = !displayOtherItems">-->
+<!--      <i class="icon icon-more-horiz is-lg"-->
+<!--      [ngStyle]="{'margin-bottom':'3px'}"></i>-->
+<!--    </div>-->
 
 <!--    <span class="text-xs text-bold"-->
 <!--          [ngStyle]="{ 'color': btnViewColor}">View more-->
 <!--    </span>-->
-    <!--menu-kebab-->
+    <!--end menu-kebab-->
 
-    <!-- Description || Targeting || Questionnaire -->
-<!--    <div-->
-<!--      *ngIf="activeTab === 'description' || activeTab === 'targeting' || activeTab === 'questionnaire'"-->
-<!--      class="d-flex align-center animate-fade is-3" style="max-height: 40px">-->
 
-<!--      &lt;!&ndash; add lang &ndash;&gt;-->
-<!--      <button-->
-<!--        (click)="openModal($event, 'ADD_LANG')"-->
-<!--        *ngIf="canAddCard && activeTab === 'description' && canEditDescription"-->
-<!--        [disabled]="isAddingCard"-->
-<!--        class="button is-link is-sm m-right-10"-->
-<!--        id="btn-add-card">-->
-<!--        <i class="fas fa-plus-circle m-right-2"></i>-->
-<!--        {{ activeCard.lang === 'fr' ? 'Add english' : 'Add french' }}-->
-<!--      </button>-->
-<!--      &lt;!&ndash; /add lang &ndash;&gt;-->
-
-<!--      &lt;!&ndash; lang change &ndash;&gt;-->
-<!--      <div *ngIf="showLangDrop && activeTab === 'description'" class="dropdown is-right m-right-10">-->
-<!--        <a class="button is-sm is-link dropdown-toggle" tabindex="0">-->
-<!--          {{ activeCard.lang === 'fr' ? 'French' : 'English' }}<i class="fas fa-caret-down m-right-2"></i>-->
-<!--        </a>-->
-
-<!--        <ul class="menu">-->
-<!--          <li-->
-<!--            (click)="setCardLang(card.lang)"-->
-<!--            *ngFor="let card of project.innovationCards"-->
-<!--            class="menu-item flex-between">-->
-<!--            {{ card.lang === 'fr' ? 'French' : 'English' }}-->
-<!--            <div-->
-<!--              *ngIf="canEditDescription"-->
-<!--              (click)="openModal($event, 'DELETE_LANG', card)"-->
-<!--              [ngClass]="{'disabled': isDeletingCard}"-->
-<!--              class="icon-container is-sm is-overlay">-->
-<!--              <i class="icon text-alert icon-delete"></i>-->
-<!--            </div>-->
-<!--          </li>-->
-<!--        </ul>-->
-<!--      </div>-->
-<!--      &lt;!&ndash; /lang change &ndash;&gt;-->
-
-<!--    </div>-->
-<!--    &lt;!&ndash; /Description || Targeting || Questionnaire &ndash;&gt;-->
 <!--    &lt;!&ndash; end stat 1 : max 5 items&ndash;&gt;-->
 
-</div>
+
+    <!--  item display -->
+
+    <ul class="tab m-left-40"
+        [ngStyle]="{'border-bottom': '0px'}">
+        <ng-container *ngFor="let label of items11; let i = index">
+
+          <!--  item min display -->
+          <div *ngIf="i <= (minDelimitersOfItems - 1) || (((i > (minDelimitersOfItems - 1)) === displayOtherItems) === !isDisplayItems)">
+
+              <!--  item more minDelimitersOfItem and lower to maxDelimitersOfItem 5 > & 6 < 11 -->
+<!--              <div *ngIf="i > minDelimitersOfItems && (!displayOtherItems) === !isDisplayItems">-->
+
+
+
+              <li class="m-right-30 text-capitalize tab-item">
+
+
+
+                      <span class="m-left-20 text-sm">{{ label }}</span>
+
+
+
+
+                        <!--  click button view more and item more minDelimitersOfItem and more to maxDelimitersOfItem 6 > 11-->
+                        <!--  end click button view more and item more minDelimitersOfItem and more to maxDelimitersOfItem -->
+
+                              <!--  button front  -->
+                              <!--  end button front -->
+
+                              <!--  click button front and display button back  -->
+                              <!--  click button front and display end button back -->
+
+                                    <!--  item (maxDelimitersOfItem - 2) to 18 max -->
+                                    <!--  item (maxDelimitersOfItem - 2) to 18 max -->
+
+
+
+
+              </li>
+<!--              </div>-->
+              <!--  item more minDelimitersOfItem and lower to maxDelimitersOfItem -->
+          </div>
+          <!--  end item min display -->
+        </ng-container>
+    </ul>
+    <!--  end item display -->
+
+    <!--  button menu-kebab -->
+    <div *ngIf="items11.length > (minDelimitersOfItems - 1)" id="btn-kebab"
+         (click)="displayOtherItems = !displayOtherItems"
+   class="relative align-center">
+
+        <div class="m-left-20 icon-container is-xl is-overlay">
+          <i class="icon icon-more-horiz is-lg"></i>
+        </div>
+        <!--  button view more -->
+        <span class="text-xs text-bold absolute btn__view">View more</span>
+        <!--  end button view more -->
+    </div>
+    <!--  end button menu-kebab -->
+
+    <!--  button add-lang -->
+        <div
+          *ngIf="activeTab === 'description' || activeTab === 'targeting' || activeTab === 'questionnaire'"
+          class="d-flex align-center animate-fade is-3" style="max-height: 40px">
+
+          <!-- add lang -->
+          <button
+            (click)="openModal($event, 'ADD_LANG')"
+            *ngIf="canAddCard && activeTab === 'description' && canEditDescription && !displayOtherItems && items11.length > (minDelimitersOfItems - 1)"
+            [disabled]="isAddingCard"
+            class="button is-link is-sm m-left-50 p-30"
+            id="btn-add-card">
+            <i class="fas fa-plus-circle m-right-2"></i>
+            {{ activeCard.lang === 'fr' ? 'Add english' : 'Add french' }}
+          </button>
+          <!-- /add lang -->
+
+          <!-- lang change -->
+          <div *ngIf="showLangDrop && activeTab === 'description'" class="dropdown is-right m-right-10">
+            <a class="button is-sm is-link dropdown-toggle" tabindex="0">
+              {{ activeCard.lang === 'fr' ? 'French' : 'English' }}<i class="fas fa-caret-down m-right-2"></i>
+            </a>
+
+            <ul class="menu">
+              <li
+                (click)="setCardLang(card.lang)"
+                *ngFor="let card of project.innovationCards"
+                class="menu-item flex-between">
+                {{ card.lang === 'fr' ? 'French' : 'English' }}
+                <div
+                  *ngIf="canEditDescription"
+                  (click)="openModal($event, 'DELETE_LANG', card)"
+                  [ngClass]="{'disabled': isDeletingCard}"
+                  class="icon-container is-sm is-overlay">
+                  <i class="icon text-alert icon-delete"></i>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <!-- /lang change -->
+
+        </div>
+    <!--  end button add-lang -->
+
+    <!--  button view less-->
+    <span *ngIf="items11.length > minDelimitersOfItems && displayOtherItems"
+          (click)="displayOtherItems = !displayOtherItems"
+          class=" absolute text-xs text-bold"
+          [ngStyle]="{'right':'1em', 'color': btnViewColor}">View less
+    </span>
+    <!--  end button view less -->
+
+
+
+    </div>
 
 </section>

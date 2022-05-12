@@ -3,6 +3,7 @@
   height:5px;
   width:5px;
   transform: rotate(90deg);
+  margin-bottom: 2px;
 }
 
 :is(i, .icon-container, .icon-arrow-right, .icon-arrow-left) ::before {
@@ -20,4 +21,10 @@
 
 .fa-plus-circle, {
   color: #FFB300;
+}
+
+.btn__view{
+  color: #4F5D6B;
+  width: fit-content;
+  margin-top: 16px;
 }
