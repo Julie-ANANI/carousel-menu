@@ -95,16 +95,16 @@ export class MenuKebabComponent {
     this._displayOtherItems = value;
   }
 
-  get displayNoneItems(): boolean {
-    return this._displayNoneItems;
+  get isDisplayItems(): boolean {
+    return this._isDisplayItems;
   }
 
-  set displayNoneItems(value: boolean) {
-    this._displayNoneItems = value;
+  set isDisplayItems(value: boolean) {
+    this._isDisplayItems = value;
   }
 
 
-  private _displayNoneItems = false;
+  private _isDisplayItems = false;
   private _displayOtherItems = false;
 
   private _campaignTabs: Array<string> = ['search', 'history', 'pros', 'workflows', 'batch'];

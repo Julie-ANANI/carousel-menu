@@ -43,10 +43,10 @@
         <ng-container *ngFor="let label of items11; let i = index">
 
           <!--  item min display -->
-          <div *ngIf="i <= minDelimitersOfItems || (((i < middleDelimitersOfItems) === displayOtherItems) === !displayNoneItems)">
+          <div *ngIf="i <= (minDelimitersOfItems - 1) || (((i > (minDelimitersOfItems - 1)) === displayOtherItems) === !isDisplayItems)">
 
               <!--  item more minDelimitersOfItem and lower to maxDelimitersOfItem 5 > & 6 < 11 -->
-<!--              <div *ngIf="i > minDelimitersOfItems && (!displayOtherItems) === !displayNoneItems">-->
+<!--              <div *ngIf="i > minDelimitersOfItems && (!displayOtherItems) === !isDisplayItems">-->
 
 
 
@@ -84,7 +84,7 @@
     <!--  end item display -->
 
     <!--  button menu-kebab -->
-    <div *ngIf="items11.length > minDelimitersOfItems" id="btn-kebab"
+    <div *ngIf="items11.length > (minDelimitersOfItems - 1)" id="btn-kebab"
          (click)="displayOtherItems = !displayOtherItems"
    class="relative align-center">
 
@@ -105,7 +105,7 @@
           <!-- add lang -->
           <button
             (click)="openModal($event, 'ADD_LANG')"
-            *ngIf="canAddCard && activeTab === 'description' && canEditDescription && !displayOtherItems && items11.length > minDelimitersOfItems"
+            *ngIf="canAddCard && activeTab === 'description' && canEditDescription && !displayOtherItems && items11.length > (minDelimitersOfItems - 1)"
             [disabled]="isAddingCard"
             class="button is-link is-sm m-left-50 p-30"
             id="btn-add-card">
@@ -142,7 +142,8 @@
     <!--  end button add-lang -->
 
     <!--  button view less-->
-    <span *ngIf="items11.length > 5 && displayOtherItems"
+    <span *ngIf="items11.length > minDelimitersOfItems && displayOtherItems"
+          (click)="displayOtherItems = !displayOtherItems"
           class=" absolute text-xs text-bold"
           [ngStyle]="{'right':'1em', 'color': btnViewColor}">View less
     </span>
