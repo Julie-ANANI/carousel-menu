@@ -3,7 +3,7 @@
        [ngStyle]="{'background-color': color, 'height': '40px'}">
 
     <!-- Button back-->
-    <div *ngIf="items11 && items6.length > minDelimitersOfLang && items11.length >= MaxDelimitersOfLang"
+    <div *ngIf="items11 && items6.length > minDelimitersOfItem && items11.length >= MaxDelimitersOfLang"
          class="absolute m-left-20 icon-container is-xl is-overlay"
          [ngStyle]="{'left':'-0.7em'}">
       <i class="icon icon-arrow-left is-lg"></i>
@@ -15,46 +15,42 @@
         [ngStyle]="{'border-bottom': '0px'}">
       <ng-container *ngFor="let label of items11; let i = index">
         <div *ngIf="i < 12">
-          <li class="m-right-10 text-capitalize tab-item">
-            <span class="m-left-20 text-xs">{{ label }}</span>
+          <li class="m-right-30 text-capitalize tab-item">
+            <span class="m-left-20 text-sm">{{ label }}</span>
           </li>
         </div>
       </ng-container>
-
-<!--      <ng-container *ngFor="let product of products; let i = index">-->
-<!--        -->
-<!--      </ng-container>-->
     </ul>
     <!-- /items-->
 
-    <!-- Button front/back-->
-
-<!--    > -->
-    <div *ngIf="items11 && items11.length > minDelimitersOfLang && items11.length >= MaxDelimitersOfLang"
+    <!-- button front-->
+    <div *ngIf="items11 && items11.length > minDelimitersOfItem && items11.length >= MaxDelimitersOfLang"
          class="m-left-20 icon-container is-xl is-overlay">
             <i class="icon icon-arrow-right"></i>
     </div>
-    <!-- end button before/after-->
+    <!-- end button front-->
 
     <!--stat 1 : max 5 items-->
     <!--menu-kebab-->
-    <div *ngIf="items11.length > 5" id="btn-kebab" class="m-left-20 icon-container is-xl is-overlay">
+    <div *ngIf="items11.length > 5" id="btn-kebab" class="m-left-20 icon-container is-xl is-overlay"
+         (click)="displayOtherItems = !displayOtherItems">
       <i class="icon icon-more-horiz is-lg"
       [ngStyle]="{'margin-bottom':'3px'}"></i>
     </div>
 
-<!--    <span class="text-xs text-bold"-->
-<!--          [ngStyle]="{ 'color': btnViewColor}">View more-->
-<!--    </span>-->
+    <span class="text-xs text-bold"
+          [ngStyle]="{ 'color': btnViewColor}">View more
+    </span>
+    <!--end menu-kebab-->
 
-<!--   click button view more-->
+    <!-- button view less-->
     <div class="absolute" *ngIf="items11.length > 5"
          [ngStyle]="{'right':'1em'}">
       <span class="text-xs text-bold"
             [ngStyle]="{ 'color': btnViewColor}">View less
       </span>
     </div>
-    <!--menu-kebab-->
+    <!-- end button view less-->
 
     <!-- Description || Targeting || Questionnaire -->
 <!--    <div-->

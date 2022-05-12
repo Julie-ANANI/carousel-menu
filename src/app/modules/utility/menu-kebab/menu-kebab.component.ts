@@ -76,7 +76,7 @@ export class MenuKebabComponent {
   @Input() textColor = '#00B0FF';
   @Input() isActive = false;
   @Input() MaxDelimitersOfLang = 11;
-  @Input() minDelimitersOfLang = 5;
+  @Input() minDelimitersOfItem = 5;
 
   get showModal(): boolean {
     return this._showModal;
@@ -85,6 +85,16 @@ export class MenuKebabComponent {
   set showModal(value: boolean) {
     this._showModal = value;
   }
+
+  get displayOtherItems(): boolean {
+    return this._displayOtherItems;
+  }
+
+  set displayOtherItems(value: boolean) {
+    this._displayOtherItems = value;
+  }
+
+  private _displayOtherItems = false;
 
   private _campaignTabs: Array<string> = ['search', 'history', 'pros', 'workflows', 'batch'];
 
