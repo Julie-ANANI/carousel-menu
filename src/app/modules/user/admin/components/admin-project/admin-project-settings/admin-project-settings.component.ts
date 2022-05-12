@@ -46,6 +46,7 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import {UmiusSidebarInterface} from '@umius/umi-common-component';
 import {ActivatedRoute} from '@angular/router';
 import {CacheType} from '../../../../../../models/cache';
+import {InnovCard} from "../../../../../../models/innov-card";
 
 export interface UserSuggestion {
   name: string;
@@ -153,7 +154,7 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
 
   //private _projectLanguage = ['english', 'français', 'español'];
 
-  private _selectedLanguages = ['español', 'dutch'];//  = []
+  private _selectedInnovCardLanguages: InnovCard[];
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _answerService: AnswerService,
@@ -441,6 +442,11 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
     this._showModalRemoveLang = true;
   }
 
+  public canBeRemoved(){
+    // TODO check if the languages status checked make it ok to remove
+    return false;
+  }
+
   public checked(event: Event){
     event.preventDefault();
 
@@ -459,19 +465,19 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
     event.preventDefault();
     if (!this._isSaving) {
       this._isSaving = true;
+      for (const lang of this._selectedInnovCardLanguages) {
+        this._innovationService.removeInnovationCard(this.innovation._id, lang._id).pipe(first()).subscribe(() => {
+          this._translateNotificationsService.success('Project Status Success...', 'The project language has been deleted.');
+          this._isSaving = false;
+        }, (err: HttpErrorResponse) => {
+          this._isSaving = false;
+          this._translateNotificationsService.error('Project Status Error...', ErrorFrontService.getErrorKey(err.error));
+          console.error(err);
+        });
+      }
     }
-    this._innovationService.removeLanguage(this.innovation._id, this._selectedLanguages).pipe(first()).subscribe(() => {
       this.closeModal(event);
-      this._translateNotificationsService.success('Project Status Success...', 'The project status has been updated to Done.');
-      this._isSaving = false;
-    }, (err: HttpErrorResponse) => {
-      this._isSaving = false;
-      this._translateNotificationsService.error('Project Status Error...', ErrorFrontService.getErrorKey(err.error));
-      console.error(err);
-    });
-    this.closeModal(event);
-    this._translateNotificationsService.success('Project Status Success...', 'The project status has been updated to Done.');
-  }
+    }
 
   private _emitUpdatedInnovation() {
     this._innovationFrontService.setInnovation(this._innovation);
@@ -710,11 +716,11 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
   }
 
   get selectedLanguages(): any[] {
-    return this._selectedLanguages;
+    return this._selectedInnovCardLanguages;
   }
 
   get isLangSelected(): boolean{
-    return this._selectedLanguages.length>0;
+    return this._selectedInnovCardLanguages.length>0;
   }
 
 

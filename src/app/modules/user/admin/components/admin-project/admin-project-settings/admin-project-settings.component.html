@@ -55,7 +55,7 @@
           <!-- remove language -->
           <a
             (click)="onRemoveLanguages($event)"
-            *ngIf="true"
+            *ngIf="canBeRemoved"
             class="text-primary"
             id="btn-remove-language">
             <i class="fas fa-trash icon-left"></i>
