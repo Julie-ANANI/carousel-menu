@@ -756,7 +756,7 @@
             </div>
           </ng-container>
            <!-- new media card -->
-           <div *ngIf="isBeingEdited" [ngStyle]="{padding: (isBeingEdited && activeInnovCard.media.length === 1) ? (activeInnovCard.principalMedia.type === 'VIDEO' || activeInnovCard.principalMedia.cloudinary.width / activeInnovCard.principalMedia.cloudinary.height > 4/3) ? '8px 0 0 0' : '0 0 0 8px' : null}" >
+           <div *ngIf="isBeingEdited" [ngStyle]="{padding: (isBeingEdited && activeInnovCard.media && activeInnovCard.media.length === 1) ? (activeInnovCard.principalMedia.type === 'VIDEO' || activeInnovCard.principalMedia.cloudinary.width / activeInnovCard.principalMedia.cloudinary.height > 4/3) ? '8px 0 0 0' : '0 0 0 8px' : null}" >
              <file-drop class="drop-container media-card text-center" (click)="toggleDisplayUploadOverlay()">
                <div class="icon-container is-overlay">
                   <span class="tooltip" data-tooltip="Add new media" (click)="setEditedMediaIndex(undefined)">

@@ -157,6 +157,7 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
       }
     });
 
+    // depending on whether the main media is a landscape or a portrait we display a different layout
     if (this.activeInnovCard.principalMedia) {
       if (this.activeInnovCard.principalMedia.type !== 'VIDEO' && (this.activeInnovCard.principalMedia.cloudinary.width / this.activeInnovCard.principalMedia.cloudinary.height) < 4/3) {
         this._mainContainerStyle = {
@@ -418,12 +419,25 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
     this._innovationFrontService.setCardCommentNotifyChanges(true);
   }
 
+  /**
+   * this function is used to open and close the upload media modal
+   * it also stores the type and id of the media if the modal is open
+   * by clicking on a media in order to edit it
+   * @param id
+   * @param type
+   */
   public toggleDisplayUploadOverlay(id?: string, type?: string) {
     this._displayUploadOverlay = !this._displayUploadOverlay;
     this._mediaType = type;
     this._editedMediaId = id;
   }
 
+  /**
+   * this function is used to open and close the slider modal
+   * and initialize the order of the medias to be shown
+   * @param action
+   * @param index
+   */
   public toggleDisplayMediaSlider(action?: string, index?: number) {
     if (action && index) {
       this.slideMedia('showSelected', index);
@@ -452,23 +466,32 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
     } else if (event && event.key === 'ArrowRight') {
       action = 'showNext';
     }
-    if (action === 'showSelected') {
-      this._slideToShow = index;
-    } else if (action === 'showPrevious') {
-      if (!this.activeInnovCard.media[this._slideToShow-1]) {
-        this._slideToShow = this.activeInnovCard.media.length-1;
-      } else {
-        this._slideToShow = this._slideToShow -1;
-      }
-    } else if (action === 'showNext') {
-      if (!this.activeInnovCard.media[this._slideToShow + 1]) {
-        this._slideToShow = 0;
-      } else {
-        this._slideToShow = this._slideToShow + 1;
-      }
+
+    switch (action) {
+      case 'showSelected':
+        this._slideToShow = index;
+        break;
+      case 'showPrevious':
+        if (!this.activeInnovCard.media[this._slideToShow-1]) {
+          this._slideToShow = this.activeInnovCard.media.length-1;
+        } else {
+          this._slideToShow = this._slideToShow -1;
+        }
+        break;
+      case 'showNext':
+        if (!this.activeInnovCard.media[this._slideToShow + 1]) {
+          this._slideToShow = 0;
+        } else {
+          this._slideToShow = this._slideToShow + 1;
+        }
+        break;
     }
   }
 
+  /**
+   * this function is used to filter or not the secondary medias
+   * depending on the mode (edit - show all or view - show only 3)
+   */
   private _updateMediaFilter() {
     if (this._isBeingEdited) {
       this._mediaFitler = this.activeInnovCard.media.slice(1, this.activeInnovCard.media.length +1);
@@ -477,15 +500,22 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
     }
   }
 
+  /**
+   * this function is called when we close the edit mode
+   * it's used to save in the database the chosen format for the main image (cropped or adjusted)
+   * it also deletes the background color on edit mode (because of some CSS problem due to flex-column)
+   */
   public editMedias() {
     this._isBeingEdited = !this._isBeingEdited;
     if (this.activeInnovCard.principalMedia) {
-      this.activeInnovCard.principalMedia.isMediaAdjusted = this._isMediaAdjusted;
+      this.activeInnovCard.principalMedia['isMediaAdjusted'] = this._isMediaAdjusted;
       if (!this._isBeingEdited && this.activeInnovCard.principalMedia) {
         this._mediaService.update(this.activeInnovCard.principalMedia.id, this.activeInnovCard.principalMedia).subscribe((data: any) => {
           console.log(data);
+         if (this.activeInnovCard.principalMedia['isMediaAdjusted']) this._translateNotificationsService.success('Success', 'The media has been adjusted.');
         }, (err: HttpErrorResponse) => {
           console.error(err);
+          this._translateNotificationsService.error('Saving media display option error.', ErrorFrontService.getErrorKey(err.error));
         });
       }
       this._isMediaAdjusted = false;
@@ -562,18 +592,29 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
     this.updateComment();
   }
 
+  /**
+   * this is the callback function of the shared-upload-zone-photo and video
+   * it takes into account adding new medias (as main or secondaries)
+   * as well as replacing an existing one.
+   * It also changes the layout if needed when the main media is added or edited.
+   * @param uploadedMedia
+   */
   public addNewMedia(uploadedMedia: UmiusMediaInterface): void {
     if (this.activeInnovCard.principalMedia) {
-      if (this._editedMediaIndex > 0) { // we are editing a secondary media
-        this.activeInnovCard.media[this._editedMediaIndex] = uploadedMedia;
-      } else if (this._editedMediaIndex === undefined) { // we are creating a secondary media
-        this.activeInnovCard.media.push(uploadedMedia);
-      } else if (this._editedMediaIndex === 0) {
-        this.activeInnovCard.principalMedia = uploadedMedia;
-        this.activeInnovCard.media[0] = uploadedMedia;
-        this.onSetPrincipal(uploadedMedia);
+      switch (true) {
+        case (this._editedMediaIndex > 0): // we are editing a secondary media
+          this.activeInnovCard.media[this._editedMediaIndex] = uploadedMedia;
+          break;
+        case (this._editedMediaIndex === undefined): // we are adding a new secondary media
+          this.activeInnovCard.media.push(uploadedMedia);
+          break;
+        case (this._editedMediaIndex === 0): // we are editing the main media
+          this.activeInnovCard.principalMedia = uploadedMedia;
+          this.activeInnovCard.media[0] = uploadedMedia;
+          this.onSetPrincipal(uploadedMedia);
+          break;
       }
-    } else if (!this.activeInnovCard.principalMedia || this._editedMediaIndex === 0){  // there are no main media or the main media is being edited
+    } else {  // we are adding the main media
       this.activeInnovCard.principalMedia = uploadedMedia;
       this.activeInnovCard.media[0] = uploadedMedia;
       this.onSetPrincipal(uploadedMedia);
@@ -644,36 +685,19 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
 
     if (!this._isSavingMedia) {
       this._isSavingMedia = true;
-
       this._innovationService.setPrincipalMediaOfInnovationCard(this._innovation._id, this.activeInnovCard._id, media._id, index)
         .pipe(first())
         .subscribe((data: any) => {
           this._isSavingMedia = false;
-          if (index) {   // when a secondary media is set as main media, switch their places in the medias array
-            this.activeInnovCard.media[0] = media; // place new media at index 0
-            // delete video if main media was a video because videos can't be secondary medias
-            if (this.activeInnovCard.principalMedia && this.activeInnovCard.principalMedia.type === 'VIDEO' && media.type !== 'VIDEO') {
-              const mainVideoId = this.activeInnovCard.principalMedia._id;
-              this._innovationService.deleteMediaOfInnovationCard(this._innovation._id, this.activeInnovCard._id, mainVideoId)
-                .pipe(first())
-                .subscribe(() => {
-                  this.activeInnovCard.media = this.activeInnovCard.media.filter((_media) => _media._id !== mainVideoId);
-                  this.activeInnovCard.media.splice(index, 1);
-                  this._innovation.innovationCards[this._activeCardIndex].media = this.activeInnovCard.media;
-                  this._translateNotificationsService.success('Success', 'The video has been deleted.');
-                }, (err: HttpErrorResponse) => {
-                  this._translateNotificationsService.error('Media Deleting Error...', ErrorFrontService.getErrorKey(err.error));
-                  this._isSavingMedia = false;
-                  console.error(err);
-                });
-            } else {
-              this.activeInnovCard.media[index] = this.activeInnovCard.principalMedia;
-            }
-          }
+          const previousMainMedia = this.activeInnovCard.principalMedia;
+          this.activeInnovCard.media = data.innovationCards[0].media;
           this.activeInnovCard.principalMedia = media;
           this._updateMediaFilter();
           this._emitUpdatedInnovation();
           this._translateNotificationsService.success('Success', 'The media has been set as a principal media.');
+          if (previousMainMedia['type'] === 'VIDEO' && media['type'] !== 'VIDEO') {
+            this._translateNotificationsService.success('Success', 'The video has been deleted.');
+          }
         }, (err: HttpErrorResponse) => {
           this._translateNotificationsService.error('Principal Media Error...', ErrorFrontService.getErrorKey(err.error));
           this._isSavingMedia = false;
@@ -722,10 +746,17 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
     }
   }
 
+  /**
+   * this function creates the url for the src.
+   * The addition of the version at the end of the url is so we don't have a
+   * display problem when we replace a media (as it keeps the same url and id)
+   * @param media
+   * @param type
+   */
   public mediaSrc(media: UmiusMediaInterface, type: 'IMAGE' | 'VIDEO') {
     if (media && type === 'IMAGE') {
-      if (media.cloudinary.version) {
-        return media.url + '?a=' + media.cloudinary.version;
+      if (media.cloudinary && media.cloudinary['version']) {
+        return media.url + '?a=' + media.cloudinary['version'];
       } else {
         return MediaFrontService.imageSrc(media);
       }
