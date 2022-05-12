@@ -25,12 +25,7 @@ import {Mission} from '../../../models/mission';
 })
 export class MenuKebabComponent {
 
-  @Input() items = [
-    'french',
-    'english',
-    'spanish',
-    'german',
-    'dutch',
+  @Input() items5 = [
     'french',
     'english',
     'spanish',
@@ -38,10 +33,51 @@ export class MenuKebabComponent {
     'dutch',
   ];
 
+  @Input() items6 = [
+    'french',
+    'english',
+    'spanish',
+    'german',
+    'dutch',
+    'german',
+  ];
+
+  @Input() items11 = [
+    'french',
+    'english',
+    'spanish',
+    'german',
+    'dutch',
+    'french',
+    'english',
+    'spanish',
+    'german',
+    'dutch',
+    'french'
+  ];
+
+  @Input() items12 = [
+    'french',
+    'english',
+    'spanish',
+    'german',
+    'dutch',
+    'french',
+    'english',
+    'spanish',
+    'german',
+    'dutch',
+    'french',
+    'french',
+  ];
+
   @Input() color = '#EFEFEF';
   @Input() btnViewColor = '#4F5D6B';
   @Input() textColor = '#00B0FF';
   @Input() isActive = false;
+  @Input() middleDelimitersOfItems = 10;
+  @Input() maxDelimitersOfItems = 18;
+  @Input() minDelimitersOfItems = 5;
 
   get showModal(): boolean {
     return this._showModal;
@@ -50,6 +86,26 @@ export class MenuKebabComponent {
   set showModal(value: boolean) {
     this._showModal = value;
   }
+
+  get displayOtherItems(): boolean {
+    return this._displayOtherItems;
+  }
+
+  set displayOtherItems(value: boolean) {
+    this._displayOtherItems = value;
+  }
+
+  get isDisplayItems(): boolean {
+    return this._isDisplayItems;
+  }
+
+  set isDisplayItems(value: boolean) {
+    this._isDisplayItems = value;
+  }
+
+
+  private _isDisplayItems = false;
+  private _displayOtherItems = false;
 
   private _campaignTabs: Array<string> = ['search', 'history', 'pros', 'workflows', 'batch'];
 
