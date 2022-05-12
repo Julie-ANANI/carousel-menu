@@ -195,7 +195,7 @@ export class AdminProjectQuestionnaireComponent implements OnInit, OnDestroy {
     });
   }
 
-  getObjective(lang: string = 'en') {
+  getObjective(lang: string = 'en'){
     const entry = this.mission.template.entry.find(e => e.lang === lang);
     return entry && entry.objective || '';
   }

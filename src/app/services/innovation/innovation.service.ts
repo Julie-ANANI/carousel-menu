@@ -17,6 +17,7 @@ import {Response} from '../../models/response';
 import {UmiusConfigInterface, UmiusVideoInterface} from '@umius/umi-common-component';
 import {CacheType} from '../../models/cache';
 import {Consent} from '../../models/consent';
+import { Language } from "../../models/static-data/language";
 
 @Injectable({providedIn: 'root'})
 export class InnovationService {
@@ -45,8 +46,18 @@ export class InnovationService {
       {params: params, headers: new HttpHeaders().set('cache', cache)});
   }
 
-  public createInnovationCard(innovationId: string, innovationCardObj: InnovCard): Observable<InnovCard> {
-    return this._http.post<InnovCard>('/innovation/' + innovationId + '/innovationCard', innovationCardObj);
+  /**
+   * create innovation card with several languages
+   * @param innovationId
+   * @param innovationCardObj
+   * @param languagesToAdd
+   */
+  public createInnovationCard(innovationId: string, innovationCardObj: InnovCard, languagesToAdd: Array<Language> = []): Observable<Array<InnovCard>> {
+    const body = {
+      innovationCardObj: innovationCardObj,
+      languages: languagesToAdd
+    }
+    return this._http.post<Array<InnovCard>>('/innovation/' + innovationId + '/innovationCard', body);
   }
 
   public campaigns(innovationId: string): Observable<{result: Array<Campaign>}> {
