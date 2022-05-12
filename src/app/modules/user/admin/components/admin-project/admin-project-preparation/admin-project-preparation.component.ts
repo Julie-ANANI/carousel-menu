@@ -28,9 +28,7 @@ import { lang, Language } from "../../../../../../models/static-data/language";
 })
 
 export class AdminProjectPreparationComponent implements OnInit, AfterViewChecked, OnDestroy {
-
   private _languages: Array<Language> = lang;
-
   private _languagesToAdd: Array<Language> = [];
 
   private _defaultTabs: Array<string> = ['description', 'questionnaire', 'targeting', 'campaigns', 'statistics'];
@@ -305,11 +303,22 @@ export class AdminProjectPreparationComponent implements OnInit, AfterViewChecke
     }
   }
 
-  public setCardLang(value: string) {
+  getMenuClicked(lang: any) {
+    console.log(lang);
+    if (lang) {
+      this.setCardLangSelected(lang);
+    }
+  }
+
+  public setCardLangSelected(lang: string){
+    this._languageSelected = lang;
+    this._activeCardIndex = InnovationFrontService.currentLangInnovationCard(this._project, lang, 'INDEX');
+    this._setActiveCardIndex();
+  }
+
+  public setCardLang(event: Event, value: string) {
     if (this.activeCard && !(this._cardToDelete._id)) {
-      this._languageSelected = value;
-      this._activeCardIndex = InnovationFrontService.currentLangInnovationCard(this._project, value, 'INDEX');
-      this._setActiveCardIndex();
+      this.setCardLangSelected(value);
     }
   }
 
@@ -590,5 +599,4 @@ export class AdminProjectPreparationComponent implements OnInit, AfterViewChecke
     this._ngUnsubscribe.next();
     this._ngUnsubscribe.complete();
   }
-
 }

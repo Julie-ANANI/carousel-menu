@@ -32,7 +32,7 @@ import {MenuKebabModule} from '../../../../../utility/menu-kebab/menu-kebab.modu
     MenuKebabModule,
   ],
   declarations: [
-    AdminProjectDescriptionComponent
+    AdminProjectDescriptionComponent,
   ]
 })
 

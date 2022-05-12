@@ -34,14 +34,6 @@ interface Toggle {
 
 export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
 
-  get notificationJobs(): Array<NotificationJob> {
-    return this._notificationJobs;
-  }
-
-  get isSendingNotification(): boolean {
-    return this._isSendingNotification;
-  }
-
   private _innovation: Innovation = <Innovation>{};
 
   private _ngUnsubscribe: Subject<any> = new Subject<any>();
@@ -597,6 +589,14 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
 
   get showSuggestion(): Toggle {
     return this._showSuggestion;
+  }
+
+  get notificationJobs(): Array<NotificationJob> {
+    return this._notificationJobs;
+  }
+
+  get isSendingNotification(): boolean {
+    return this._isSendingNotification;
   }
 
   ngOnDestroy(): void {
