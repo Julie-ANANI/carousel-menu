@@ -33,6 +33,15 @@ export class MenuKebabComponent {
     'dutch',
   ];
 
+  @Input() items6 = [
+    'french',
+    'english',
+    'spanish',
+    'german',
+    'dutch',
+    'german',
+  ];
+
   @Input() items11 = [
     'french',
     'english',
