@@ -5,27 +5,36 @@
     <!-- items -->
     <ul class="tab"
         [ngStyle]="{'border-bottom': '0px'}">
-      <ng-container *ngFor="let label of items">
+      <ng-container *ngFor="let label of items5; let i = index">
+        <div *ngIf="i < 12">
           <li class="m-right-10 text-capitalize tab-item">
             <span class="m-left-20 text-xs">{{ label }}</span>
           </li>
+        </div>
       </ng-container>
+
+<!--      <ng-container *ngFor="let product of products; let i = index">-->
+<!--        -->
+<!--      </ng-container>-->
     </ul>
     <!-- /items-->
 
     <!-- Button front/back-->
-    <div class="m-left-20 icon-container is-xl is-overlay">
-            <i class="icon icon-arrow-right"></i>
+    <div *ngIf="items5 && items5.length > minDelimitersOfLang && items5.length < MaxDelimitersOfLang"
+      class="m-left-20 icon-container is-xl is-overlay">
+      <i class="icon icon-arrow-left is-lg"></i>
     </div>
 
-    <div class="m-left-20 icon-container is-xl is-overlay">
-            <i class="icon icon-arrow-left is-lg"></i>
+<!--    > -->
+    <div *ngIf="items5 && items5.length > minDelimitersOfLang && items5.length <= MaxDelimitersOfLang"
+         class="m-left-20 icon-container is-xl is-overlay">
+            <i class="icon icon-arrow-right"></i>
     </div>
     <!-- end button before/after-->
 
     <!--stat 1 : max 5 items-->
     <!--menu-kebab-->
-    <div id="btn-kebab" class="m-left-20 icon-container is-xl is-overlay">
+    <div *ngIf="items5.length > 5" id="btn-kebab" class="m-left-20 icon-container is-xl is-overlay">
       <i class="icon icon-more-horiz is-lg"
       [ngStyle]="{'margin-bottom':'3px'}"></i>
     </div>
@@ -33,6 +42,13 @@
 <!--    <span class="text-xs text-bold"-->
 <!--          [ngStyle]="{ 'color': btnViewColor}">View more-->
 <!--    </span>-->
+
+<!--   click button view more-->
+    <div *ngIf="items5.length > 5">
+      <span class="text-xs text-bold"
+            [ngStyle]="{ 'color': btnViewColor}">View less
+      </span>
+    </div>
     <!--menu-kebab-->
 
     <!-- Description || Targeting || Questionnaire -->

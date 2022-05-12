@@ -25,12 +25,7 @@ import {Mission} from '../../../models/mission';
 })
 export class MenuKebabComponent {
 
-  @Input() items = [
-    'french',
-    'english',
-    'spanish',
-    'german',
-    'dutch',
+  @Input() items5 = [
     'french',
     'english',
     'spanish',
@@ -38,10 +33,41 @@ export class MenuKebabComponent {
     'dutch',
   ];
 
+  @Input() items11 = [
+    'french',
+    'english',
+    'spanish',
+    'german',
+    'dutch',
+    'french',
+    'english',
+    'spanish',
+    'german',
+    'dutch',
+    'french'
+  ];
+
+  @Input() items12 = [
+    'french',
+    'english',
+    'spanish',
+    'german',
+    'dutch',
+    'french',
+    'english',
+    'spanish',
+    'german',
+    'dutch',
+    'french',
+    'french',
+  ];
+
   @Input() color = '#EFEFEF';
   @Input() btnViewColor = '#4F5D6B';
   @Input() textColor = '#00B0FF';
   @Input() isActive = false;
+  @Input() MaxDelimitersOfLang = 11;
+  @Input() minDelimitersOfLang = 5;
 
   get showModal(): boolean {
     return this._showModal;
