@@ -52,12 +52,12 @@ export class InnovationService {
    * @param innovationCardObj
    * @param languagesToAdd
    */
-  public createInnovationCard(innovationId: string, innovationCardObj: InnovCard, languagesToAdd: Array<Language> = []): Observable<InnovCard> {
+  public createInnovationCard(innovationId: string, innovationCardObj: InnovCard, languagesToAdd: Array<Language> = []): Observable<Array<InnovCard>> {
     const body = {
       innovationCardObj: innovationCardObj,
       languages: languagesToAdd
     }
-    return this._http.post<InnovCard>('/innovation/' + innovationId + '/innovationCard', body);
+    return this._http.post<Array<InnovCard>>('/innovation/' + innovationId + '/innovationCard', body);
   }
 
   public campaigns(innovationId: string): Observable<{result: Array<Campaign>}> {

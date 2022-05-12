@@ -52,4 +52,5 @@ export class InnovCard extends Model {
    */
   sections?: Array<InnovCardSection>;
   hidden: boolean;
+  status: 'WAITING' | 'EDITING'| 'DONE';
 }
