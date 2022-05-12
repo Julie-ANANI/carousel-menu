@@ -43,17 +43,17 @@ export class MenuKebabComponent {
   ];
 
   @Input() items11 = [
-    'french',
+    'french_1',
     'english',
     'spanish',
     'german',
-    'dutch',
+    'dutch_5',
     'french',
     'english',
     'spanish',
-    'german',
-    'dutch',
-    'french'
+    'german_9',
+    'dutch_10',
+    'french_11'
   ];
 
   @Input() items12 = [
@@ -79,32 +79,10 @@ export class MenuKebabComponent {
   @Input() maxDelimitersOfItems = 18;
   @Input() minDelimitersOfItems = 5;
 
-  get showModal(): boolean {
-    return this._showModal;
-  }
-
-  set showModal(value: boolean) {
-    this._showModal = value;
-  }
-
-  get displayOtherItems(): boolean {
-    return this._displayOtherItems;
-  }
-
-  set displayOtherItems(value: boolean) {
-    this._displayOtherItems = value;
-  }
-
-  get isDisplayItems(): boolean {
-    return this._isDisplayItems;
-  }
-
-  set isDisplayItems(value: boolean) {
-    this._isDisplayItems = value;
-  }
-
+  private _clickOnBack = false;
 
   private _isDisplayItems = false;
+
   private _displayOtherItems = false;
 
   private _campaignTabs: Array<string> = ['search', 'history', 'pros', 'workflows', 'batch'];
@@ -496,6 +474,38 @@ export class MenuKebabComponent {
 
   get toBeSavedComment(): boolean {
     return this._toBeSavedComment;
+  }
+
+  get showModal(): boolean {
+    return this._showModal;
+  }
+
+  set showModal(value: boolean) {
+    this._showModal = value;
+  }
+
+  get displayOtherItems(): boolean {
+    return this._displayOtherItems;
+  }
+
+  set displayOtherItems(value: boolean) {
+    this._displayOtherItems = value;
+  }
+
+  get isDisplayItems(): boolean {
+    return this._isDisplayItems;
+  }
+
+  set isDisplayItems(value: boolean) {
+    this._isDisplayItems = value;
+  }
+
+  get clickOnBack(): boolean {
+    return this._clickOnBack;
+  }
+
+  set clickOnBack(value: boolean) {
+    this._clickOnBack = value;
   }
 
   ngOnDestroy(): void {

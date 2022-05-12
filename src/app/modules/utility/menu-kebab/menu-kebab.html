@@ -11,30 +11,16 @@
     <!-- end button back-->
 
 
-
-    <!-- button front-->
-    <div *ngIf="items11 && items11.length > minDelimitersOfItem && items11.length >= MaxDelimitersOfLang"
-         class="m-left-20 icon-container is-xl is-overlay">
-            <i class="icon icon-arrow-right"></i>
-    </div>
-    <!-- end button front-->
-
-    <!--stat 1 : max 5 items-->
-    <!--menu-kebab-->
-<!--    <div *ngIf="items11.length > 5" id="btn-kebab" class="m-left-20 icon-container is-xl is-overlay"-->
-<!--         (click)="displayOtherItems = !displayOtherItems">-->
-<!--      <i class="icon icon-more-horiz is-lg"-->
-<!--      [ngStyle]="{'margin-bottom':'3px'}"></i>-->
-<!--    </div>-->
-
-<!--    <span class="text-xs text-bold"-->
-<!--          [ngStyle]="{ 'color': btnViewColor}">View more-->
-<!--    </span>-->
-    <!--end menu-kebab-->
-
-
 <!--    &lt;!&ndash; end stat 1 : max 5 items&ndash;&gt;-->
 
+
+    <!--  click button front and display button back  -->
+    <div *ngIf="items11.length >= middleDelimitersOfItems && displayOtherItems"
+         class="absolute m-left-20 icon-container is-xl is-overlay"
+         [ngStyle]="{'left':'-0.7em'}">
+      <i class="icon icon-arrow-left is-lg"></i>
+    </div>
+    <!--  click button front and display end button back -->
 
     <!--  item display -->
 
@@ -45,28 +31,16 @@
           <!--  item min display -->
           <div *ngIf="i <= (minDelimitersOfItems - 1) || (((i > (minDelimitersOfItems - 1)) === displayOtherItems) === !isDisplayItems)">
 
-              <!--  item more minDelimitersOfItem and lower to maxDelimitersOfItem 5 > & 6 < 11 -->
-<!--              <div *ngIf="i > minDelimitersOfItems && (!displayOtherItems) === !isDisplayItems">-->
-
+            <div *ngIf="(((i > (minDelimitersOfItems - 1)) === displayOtherItems) === isDisplayItems && !clickOnBack)
+            || (items11.length < 10) === clickOnBack">
 
 
               <li class="m-right-30 text-capitalize tab-item">
 
-
-
                       <span class="m-left-20 text-sm">{{ label }}</span>
-
-
-
 
                         <!--  click button view more and item more minDelimitersOfItem and more to maxDelimitersOfItem 6 > 11-->
                         <!--  end click button view more and item more minDelimitersOfItem and more to maxDelimitersOfItem -->
-
-                              <!--  button front  -->
-                              <!--  end button front -->
-
-                              <!--  click button front and display button back  -->
-                              <!--  click button front and display end button back -->
 
                                     <!--  item (maxDelimitersOfItem - 2) to 18 max -->
                                     <!--  item (maxDelimitersOfItem - 2) to 18 max -->
@@ -75,8 +49,7 @@
 
 
               </li>
-<!--              </div>-->
-              <!--  item more minDelimitersOfItem and lower to maxDelimitersOfItem -->
+            </div>
           </div>
           <!--  end item min display -->
         </ng-container>
@@ -92,7 +65,7 @@
           <i class="icon icon-more-horiz is-lg"></i>
         </div>
         <!--  button view more -->
-        <span class="text-xs text-bold absolute btn__view">View more</span>
+<!--        <span class="text-xs text-bold absolute btn__view">View more</span>-->
         <!--  end button view more -->
     </div>
     <!--  end button menu-kebab -->
@@ -140,6 +113,14 @@
 
         </div>
     <!--  end button add-lang -->
+
+    <!--  button back  -->
+    <div *ngIf="items11.length >= middleDelimitersOfItems && displayOtherItems"
+         (click)="clickOnBack = !clickOnBack"
+         class="m-left-20 icon-container is-xl is-overlay">
+      <i class="icon icon-arrow-right"></i>
+    </div>
+    <!--  end button back -->
 
     <!--  button view less-->
     <span *ngIf="items11.length > minDelimitersOfItems && displayOtherItems"
