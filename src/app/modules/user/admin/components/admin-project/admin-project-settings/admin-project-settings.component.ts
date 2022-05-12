@@ -138,6 +138,23 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
 
   private _showModalDone = false;
 
+  private _showModalRemoveLang = false;
+
+  private _isSaving = false;
+
+  private _isValid = false;
+
+  private _checked = {
+    project : false,
+    questionnaire: false,
+    workflow: false,
+    batch: false
+  };
+
+  //private _projectLanguage = ['english', 'français', 'español'];
+
+  private _selectedLanguages = ['español', 'dutch'];//  = []
+
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _answerService: AnswerService,
               private _rolesFrontService: RolesFrontService,
@@ -419,6 +436,43 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
     return this._rolesFrontService.hasAccessAdminSide(_default.concat(path));
   }
 
+  public onRemoveLanguages(event: Event) {
+    event.preventDefault();
+    this._showModalRemoveLang = true;
+  }
+
+  public checked(event: Event){
+    event.preventDefault();
+
+    const elementId: string = (event.target as Element).id;
+    this._checked[elementId] = true;
+    if (Object.values(this._checked).every(value => value)){
+      this._isValid = true;
+    }
+  }
+  public closeModal(event: Event) {
+    event.preventDefault();
+    this._showModalRemoveLang = false;
+  }
+
+  public onConfirmDeleteLang(event: Event) {
+    event.preventDefault();
+    if (!this._isSaving) {
+      this._isSaving = true;
+    }
+    this._innovationService.removeLanguage(this.innovation._id, this._selectedLanguages).pipe(first()).subscribe(() => {
+      this.closeModal(event);
+      this._translateNotificationsService.success('Project Status Success...', 'The project status has been updated to Done.');
+      this._isSaving = false;
+    }, (err: HttpErrorResponse) => {
+      this._isSaving = false;
+      this._translateNotificationsService.error('Project Status Error...', ErrorFrontService.getErrorKey(err.error));
+      console.error(err);
+    });
+    this.closeModal(event);
+    this._translateNotificationsService.success('Project Status Success...', 'The project status has been updated to Done.');
+  }
+
   private _emitUpdatedInnovation() {
     this._innovationFrontService.setInnovation(this._innovation);
   }
@@ -654,6 +708,15 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
   public selectOwner(value: UserSuggestion) {
     this._newOwner = value;
   }
+
+  get selectedLanguages(): any[] {
+    return this._selectedLanguages;
+  }
+
+  get isLangSelected(): boolean{
+    return this._selectedLanguages.length>0;
+  }
+
 
   public saveOwner(event: Event) {
     event.preventDefault();
@@ -1061,6 +1124,16 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
 
   get newOwner(): UserSuggestion {
     return this._newOwner;
+  }
+
+  get showModalRemoveLang(): boolean {
+    return this._showModalRemoveLang;
+  }
+  get isSaving(): boolean {
+    return this._isSaving;
+  }
+  get isValid(): boolean {
+    return this._isValid;
   }
 
   ngOnDestroy(): void {

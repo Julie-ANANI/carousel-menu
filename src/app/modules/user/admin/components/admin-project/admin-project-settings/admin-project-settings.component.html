@@ -52,6 +52,16 @@
 
         <!-- left content -->
         <div class="content-wrapper">
+          <!-- remove language -->
+          <a
+            (click)="onRemoveLanguages($event)"
+            *ngIf="true"
+            class="text-primary"
+            id="btn-remove-language">
+            <i class="fas fa-trash icon-left"></i>
+            Remove
+          </a>
+          <!-- /remove language -->
 
           <h6 class="text-meta">Setup</h6>
 
@@ -710,6 +720,60 @@
 </ng-container>
 <!-- /modal -->
 
+<ng-container *ngIf="showModalRemoveLang && isLangSelected">
+  <div class="modal active" >
+    <div class="modal-overlay"></div>
+    <div class="modal-container">
+    <section class="modal-body">
+      <h2 style="color: #4C4C4C" class="title is-4 text-center text-bold m-bottom-30">
+        Do you really want to delete this language ?
+      </h2>
+      <div class="content align-star">
+        <p>
+          It will delete permanently :
+        </p>
+        <br>
+        <div class="form-group float-right text-bold" style="width: 380px">
+          <label class="form-checkbox">
+            <input id="project" (change)="checked($event)" type="checkbox">
+            <i class="form-icon"></i> Project Description
+          </label>
+          <label class="form-checkbox">
+            <input id="questionnaire" (change)="checked($event)" type="checkbox">
+            <i class="form-icon"></i> Questionnaire link
+          </label>
+          <label class="form-checkbox">
+            <input id="workflow" (change)="checked($event)" type="checkbox">
+            <i class="form-icon"></i> Workflow's templates
+          </label>
+          <label class="form-checkbox">
+            <input id="batch" (change)="checked($event)" type="checkbox">
+            <i class="form-icon"></i> Batch(s) already planned
+          </label>
+        </div>
+      </div>
+    </section>
+    <footer class="modal-footer justify-center">
+      <button
+        (click)="closeModal($event)"
+        [disabled]="isSaving"
+        [id]="'btn-cancel'"
+        class="button modal-cancel"
+        type="button">
+        Cancel
+      </button>
+      <button
+        (click)="onConfirmDeleteLang($event)"
+        [disabled]="!isSaving && !isValid"
+        class="button "
+        id="btn-modal-confirm-project-done"
+        type="button">
+        Confirm
+      </button>
+    </footer>
+    </div>
+  </div>
+</ng-container>
 
 <!-- sidebar -->
 <umius-sidebar-full *ngIf="!isLoading" [(template)]="sidebarValue">
