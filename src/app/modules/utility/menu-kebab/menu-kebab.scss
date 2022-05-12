@@ -1,9 +1,15 @@
-
-:is(i,.icon-container, .icon, .icon-more-horiz) ::before {
+:is(#btn-kebab, .icon-more-horiz) ::before {
   color: #4F5D6B;
   height:5px;
   width:5px;
   transform: rotate(90deg);
+}
+
+:is(i, .icon-container, .icon-arrow-right, .icon-arrow-left) ::before {
+  color: #4F5D6B;
+  border: 3px solid #4F5D6B;
+  border-bottom: 0;
+  border-right: 0;
 }
 
 .button.is-link{

@@ -10,15 +10,12 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {InnovationService} from '../../../services/innovation/innovation.service';
 import {CampaignFrontService} from '../../../services/campaign/campaign-front.service';
 import {MissionService} from '../../../services/mission/mission.service';
-import {NotificationService} from '../../../services/notification/notification.service';
 import {TranslateNotificationsService} from '../../../services/translate-notifications/translate-notifications.service';
 import {TranslateTitleService} from '../../../services/title/title.service';
 import {SocketService} from '../../../services/socket/socket.service';
 import {first, takeUntil} from 'rxjs/operators';
-import {environment} from '../../../../environments/environment';
 import {HttpErrorResponse} from '@angular/common/http';
 import {ErrorFrontService} from '../../../services/error/error-front.service';
-import {NotificationTrigger} from '../../../models/notification';
 import {Mission} from '../../../models/mission';
 
 @Component({
@@ -29,6 +26,11 @@ import {Mission} from '../../../models/mission';
 export class MenuKebabComponent {
 
   @Input() items = [
+    'french',
+    'english',
+    'spanish',
+    'german',
+    'dutch',
     'french',
     'english',
     'spanish',
@@ -48,12 +50,6 @@ export class MenuKebabComponent {
   set showModal(value: boolean) {
     this._showModal = value;
   }
-
-  get isSendingNotification(): boolean {
-    return this._isSendingNotification;
-  }
-
-  private _defaultTabs: Array<string> = ['description', 'questionnaire', 'targeting', 'campaigns', 'statistics'];
 
   private _campaignTabs: Array<string> = ['search', 'history', 'pros', 'workflows', 'batch'];
 
@@ -85,13 +81,7 @@ export class MenuKebabComponent {
 
   private _toBeSaved = '';
 
-  private _isLoadingCampaign = false;
-
   private _toBeSavedComment = false;
-
-  private _quizPreviewLink = '';
-
-  private _isSendingNotification = false;
 
   private _showModal = false;
 
@@ -101,7 +91,6 @@ export class MenuKebabComponent {
               private _innovationService: InnovationService,
               private _campaignFrontService: CampaignFrontService,
               private _missionService: MissionService,
-              private _notificationService: NotificationService,
               private _innovationFrontService: InnovationFrontService,
               private _rolesFrontService: RolesFrontService,
               private _translateNotificationsService: TranslateNotificationsService,
@@ -122,7 +111,6 @@ export class MenuKebabComponent {
         this._project = innovation;
         this.setPageTitle();
         this._setActiveCardIndex();
-        this._quizPreviewLink = `${environment.quizUrl}/quiz/${this._project._id}/preview`;
       }
     });
 
@@ -166,56 +154,17 @@ export class MenuKebabComponent {
       .subscribe((save) => {
         this._toBeSavedComment = save;
       });
-
-    this._campaignFrontService.loadingCampaign().pipe(takeUntil(this._ngUnsubscribe)).subscribe((loading) => {
-      this._isLoadingCampaign = loading;
-    });
   }
 
   ngAfterViewChecked() {
     this._changeDetectorRef.detectChanges();
   }
 
-  /**
-   * this function is to register the notification job to send the
-   * emails to the project team toa ask for validation.
-   * @param event
-   */
-  public onAskValidation(event: Event) {
-    event.preventDefault();
-
-    if (!this._isSendingNotification) {
-      this._isSendingNotification = true;
-      this._notificationService.registerJob(this._project, 'TRIGGER_ASK_VALIDATE_PROJECT')
-        .pipe(first()).subscribe((res) => {
-        this._project.notifications.push('TRIGGER_ASK_VALIDATE_PROJECT');
-        this._emitUpdatedInnovation();
-        this._translateNotificationsService.success('Success', res.message);
-        this.closeModal();
-        this._isSendingNotification = false;
-      }, (err: HttpErrorResponse) => {
-        this._isSendingNotification = false;
-        this._translateNotificationsService.error('Notification Error', ErrorFrontService.getErrorKey(err.error));
-        console.error(err);
-      });
-    }
-  }
-
-  public triggerAsk(): boolean {
-    return this._project.notifications.some((notification: NotificationTrigger) => notification === 'TRIGGER_ASK_VALIDATE_PROJECT');
-  }
 
   private _emitUpdatedInnovation() {
     this._innovationFrontService.setInnovation(this._project);
   }
 
-  public setCampaign(campaign: Campaign) {
-    if (campaign._id !== this._selectedCampaign._id) {
-      this._isLoadingCampaign = true;
-      this._selectedCampaign = campaign;
-      this._router.navigate([this.routeToNavigate(this._activeTab)]);
-    }
-  }
 
   public setPageTitle(tab?: string) {
     this._activeTab = tab ? tab : this._activeTab;
@@ -261,11 +210,6 @@ export class MenuKebabComponent {
     } else {
       return `/user/admin/projects/project/${this._project._id}/preparation/${tab}`;
     }
-  }
-
-  public backToCampaigns() {
-    this._campaignFrontService.setShowCampaignTabs(false);
-    this._router.navigate([`/user/admin/projects/project/${this._project._id}/preparation/campaigns`]);
   }
 
   public openModal(event: Event, type: 'ADD_LANG' | 'DELETE_LANG' | 'ASK_VALIDATION', deleteCard?: InnovCard) {
@@ -398,29 +342,6 @@ export class MenuKebabComponent {
     this._showModal = false;
   }
 
-  public addInnovationCard(event: Event) {
-    event.preventDefault();
-
-    if (this.canAddCard && !this._isAddingCard) {
-      this._isAddingCard = true;
-      const _lang = this.activeCard.lang === 'en' ? 'fr' : 'en';
-      const _card = new InnovCard({lang: _lang});
-      this._innovationService.createInnovationCard(this._project._id, _card).pipe(first()).subscribe((card) => {
-        this._project.innovationCards.push(card);
-        this._emitUpdatedInnovation();
-        this._isAddingCard = false;
-        this._translateNotificationsService.success('Success',
-          `The project has been added in the ${_lang === 'fr' ? 'French' : 'English'} language.`);
-        this.closeModal();
-      }, (err: HttpErrorResponse) => {
-        this._translateNotificationsService.error('Card Adding Error...', ErrorFrontService.getErrorKey(err.error));
-        this._isAddingCard = false;
-        console.error(err);
-      });
-    }
-
-  }
-
   public deleteInnovationCard(event: Event) {
     event.preventDefault();
 
@@ -463,9 +384,6 @@ export class MenuKebabComponent {
     return this._project.innovationCards && this._project.innovationCards.length > 1;
   }
 
-  get defaultTabs(): Array<string> {
-    return this._defaultTabs;
-  }
 
   get campaignTabs(): Array<string> {
     return this._campaignTabs;
@@ -511,9 +429,6 @@ export class MenuKebabComponent {
     return this._showCampaignTabs;
   }
 
-  get selectedCampaign(): Campaign {
-    return this._selectedCampaign;
-  }
 
   get allCampaigns(): Array<Campaign> {
     return this._allCampaigns;
@@ -523,18 +438,9 @@ export class MenuKebabComponent {
     return this._toBeSaved;
   }
 
-  get isLoadingCampaign(): boolean {
-    return this._isLoadingCampaign;
-  }
-
   get toBeSavedComment(): boolean {
     return this._toBeSavedComment;
   }
-
-  get quizPreviewLink(): string {
-    return this._quizPreviewLink;
-  }
-
 
   ngOnDestroy(): void {
     this._ngUnsubscribe.next();

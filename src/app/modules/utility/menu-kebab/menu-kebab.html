@@ -11,61 +11,75 @@
           </li>
       </ng-container>
     </ul>
+    <!-- /items-->
+
+    <!-- Button front/back-->
+    <div class="m-left-20 icon-container is-xl is-overlay">
+            <i class="icon icon-arrow-right"></i>
+    </div>
 
     <div class="m-left-20 icon-container is-xl is-overlay">
-      <i class="icon icon-more-horiz is-xl"
+            <i class="icon icon-arrow-left is-lg"></i>
+    </div>
+    <!-- end button before/after-->
+
+    <!--stat 1 : max 5 items-->
+    <!--menu-kebab-->
+    <div id="btn-kebab" class="m-left-20 icon-container is-xl is-overlay">
+      <i class="icon icon-more-horiz is-lg"
       [ngStyle]="{'margin-bottom':'3px'}"></i>
     </div>
 
-    <span class="text-xs text-bold"
-          [ngStyle]="{ 'color': btnViewColor}">View more
-    </span>
-    <!-- /items-->
+<!--    <span class="text-xs text-bold"-->
+<!--          [ngStyle]="{ 'color': btnViewColor}">View more-->
+<!--    </span>-->
+    <!--menu-kebab-->
 
     <!-- Description || Targeting || Questionnaire -->
-    <div
-      *ngIf="activeTab === 'description' || activeTab === 'targeting' || activeTab === 'questionnaire'"
-      class="d-flex align-center animate-fade is-3" style="max-height: 40px">
+<!--    <div-->
+<!--      *ngIf="activeTab === 'description' || activeTab === 'targeting' || activeTab === 'questionnaire'"-->
+<!--      class="d-flex align-center animate-fade is-3" style="max-height: 40px">-->
 
-      <!-- add lang -->
-      <button
-        (click)="openModal($event, 'ADD_LANG')"
-        *ngIf="canAddCard && activeTab === 'description' && canEditDescription"
-        [disabled]="isAddingCard"
-        class="button is-link is-sm m-right-10"
-        id="btn-add-card">
-        <i class="fas fa-plus-circle m-right-2"></i>
-        {{ activeCard.lang === 'fr' ? 'Add english' : 'Add french' }}
-      </button>
-      <!-- /add lang -->
+<!--      &lt;!&ndash; add lang &ndash;&gt;-->
+<!--      <button-->
+<!--        (click)="openModal($event, 'ADD_LANG')"-->
+<!--        *ngIf="canAddCard && activeTab === 'description' && canEditDescription"-->
+<!--        [disabled]="isAddingCard"-->
+<!--        class="button is-link is-sm m-right-10"-->
+<!--        id="btn-add-card">-->
+<!--        <i class="fas fa-plus-circle m-right-2"></i>-->
+<!--        {{ activeCard.lang === 'fr' ? 'Add english' : 'Add french' }}-->
+<!--      </button>-->
+<!--      &lt;!&ndash; /add lang &ndash;&gt;-->
 
-      <!-- lang change -->
-      <div *ngIf="showLangDrop && activeTab === 'description'" class="dropdown is-right m-right-10">
-        <a class="button is-sm is-link dropdown-toggle" tabindex="0">
-          {{ activeCard.lang === 'fr' ? 'French' : 'English' }}<i class="fas fa-caret-down m-right-2"></i>
-        </a>
+<!--      &lt;!&ndash; lang change &ndash;&gt;-->
+<!--      <div *ngIf="showLangDrop && activeTab === 'description'" class="dropdown is-right m-right-10">-->
+<!--        <a class="button is-sm is-link dropdown-toggle" tabindex="0">-->
+<!--          {{ activeCard.lang === 'fr' ? 'French' : 'English' }}<i class="fas fa-caret-down m-right-2"></i>-->
+<!--        </a>-->
 
-        <ul class="menu">
-          <li
-            (click)="setCardLang(card.lang)"
-            *ngFor="let card of project.innovationCards"
-            class="menu-item flex-between">
-            {{ card.lang === 'fr' ? 'French' : 'English' }}
-            <div
-              *ngIf="canEditDescription"
-              (click)="openModal($event, 'DELETE_LANG', card)"
-              [ngClass]="{'disabled': isDeletingCard}"
-              class="icon-container is-sm is-overlay">
-              <i class="icon text-alert icon-delete"></i>
-            </div>
-          </li>
-        </ul>
-      </div>
-      <!-- /lang change -->
+<!--        <ul class="menu">-->
+<!--          <li-->
+<!--            (click)="setCardLang(card.lang)"-->
+<!--            *ngFor="let card of project.innovationCards"-->
+<!--            class="menu-item flex-between">-->
+<!--            {{ card.lang === 'fr' ? 'French' : 'English' }}-->
+<!--            <div-->
+<!--              *ngIf="canEditDescription"-->
+<!--              (click)="openModal($event, 'DELETE_LANG', card)"-->
+<!--              [ngClass]="{'disabled': isDeletingCard}"-->
+<!--              class="icon-container is-sm is-overlay">-->
+<!--              <i class="icon text-alert icon-delete"></i>-->
+<!--            </div>-->
+<!--          </li>-->
+<!--        </ul>-->
+<!--      </div>-->
+<!--      &lt;!&ndash; /lang change &ndash;&gt;-->
 
-    </div>
-    <!-- /Description || Targeting || Questionnaire -->
+<!--    </div>-->
+<!--    &lt;!&ndash; /Description || Targeting || Questionnaire &ndash;&gt;-->
+<!--    &lt;!&ndash; end stat 1 : max 5 items&ndash;&gt;-->
 
+</div>
 
-  </div>
 </section>
