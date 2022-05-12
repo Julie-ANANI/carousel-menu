@@ -75,8 +75,9 @@ export class MenuKebabComponent {
   @Input() btnViewColor = '#4F5D6B';
   @Input() textColor = '#00B0FF';
   @Input() isActive = false;
-  @Input() MaxDelimitersOfLang = 11;
-  @Input() minDelimitersOfItem = 5;
+  @Input() middleDelimitersOfItems = 11;
+  @Input() maxDelimitersOfItems = 18;
+  @Input() minDelimitersOfItems = 5;
 
   get showModal(): boolean {
     return this._showModal;
