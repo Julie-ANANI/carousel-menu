@@ -32,15 +32,6 @@
 <!--    </span>-->
     <!--end menu-kebab-->
 
-    <!-- button view less-->
-    <div class="absolute" *ngIf="items11.length > 5"
-         [ngStyle]="{'right':'1em'}">
-      <span class="text-xs text-bold"
-            [ngStyle]="{ 'color': btnViewColor}">View less
-      </span>
-    </div>
-    <!-- end button view less-->
-
 
 <!--    &lt;!&ndash; end stat 1 : max 5 items&ndash;&gt;-->
 
@@ -52,14 +43,17 @@
         <ng-container *ngFor="let label of items11; let i = index">
 
           <!--  item min display -->
-          <div *ngIf="i < minDelimitersOfItems">
-              <li class="m-right-30 text-capitalize tab-item">
-                <!--  item more minDelimitersOfItem and lower to maxDelimitersOfItem  6 < 11 -->
-<!--                <div *ngIf="i < minDelimitersOfItems">-->
-<!--                  -->
-<!--                </div>-->
+          <div *ngIf="i <= minDelimitersOfItems || (((i < middleDelimitersOfItems) === displayOtherItems) === !displayNoneItems)">
 
-                    <!--  item more minDelimitersOfItem and lower to maxDelimitersOfItem -->
+              <!--  item more minDelimitersOfItem and lower to maxDelimitersOfItem 5 > & 6 < 11 -->
+<!--              <div *ngIf="i > minDelimitersOfItems && (!displayOtherItems) === !displayNoneItems">-->
+
+
+
+              <li class="m-right-30 text-capitalize tab-item">
+
+
+
                       <span class="m-left-20 text-sm">{{ label }}</span>
 
 
@@ -71,9 +65,6 @@
                               <!--  button front  -->
                               <!--  end button front -->
 
-                              <!--  button view less-->
-                              <!--  end button view less -->
-
                               <!--  click button front and display button back  -->
                               <!--  click button front and display end button back -->
 
@@ -84,6 +75,8 @@
 
 
               </li>
+<!--              </div>-->
+              <!--  item more minDelimitersOfItem and lower to maxDelimitersOfItem -->
           </div>
           <!--  end item min display -->
         </ng-container>
@@ -93,7 +86,7 @@
     <!--  button menu-kebab -->
     <div *ngIf="items11.length > minDelimitersOfItems" id="btn-kebab"
          (click)="displayOtherItems = !displayOtherItems"
-         class="relative align-center">
+   class="relative align-center">
 
         <div class="m-left-20 icon-container is-xl is-overlay">
           <i class="icon icon-more-horiz is-lg"></i>
@@ -147,6 +140,13 @@
 
         </div>
     <!--  end button add-lang -->
+
+    <!--  button view less-->
+    <span *ngIf="items11.length > 5 && displayOtherItems"
+          class=" absolute text-xs text-bold"
+          [ngStyle]="{'right':'1em', 'color': btnViewColor}">View less
+    </span>
+    <!--  end button view less -->
 
 
 

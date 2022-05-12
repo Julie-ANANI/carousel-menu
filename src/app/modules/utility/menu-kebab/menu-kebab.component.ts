@@ -75,7 +75,7 @@ export class MenuKebabComponent {
   @Input() btnViewColor = '#4F5D6B';
   @Input() textColor = '#00B0FF';
   @Input() isActive = false;
-  @Input() middleDelimitersOfItems = 11;
+  @Input() middleDelimitersOfItems = 10;
   @Input() maxDelimitersOfItems = 18;
   @Input() minDelimitersOfItems = 5;
 
@@ -95,6 +95,16 @@ export class MenuKebabComponent {
     this._displayOtherItems = value;
   }
 
+  get displayNoneItems(): boolean {
+    return this._displayNoneItems;
+  }
+
+  set displayNoneItems(value: boolean) {
+    this._displayNoneItems = value;
+  }
+
+
+  private _displayNoneItems = false;
   private _displayOtherItems = false;
 
   private _campaignTabs: Array<string> = ['search', 'history', 'pros', 'workflows', 'batch'];
