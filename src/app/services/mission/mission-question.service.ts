@@ -978,6 +978,12 @@ export class MissionQuestionService {
     this._notifyObj.next(value);
   }
 
+  /**
+   * this function is used to add innovation card languages
+   * ['fr', 'en', 'zh', 'uk']...
+   * operation related to questionnaire page
+   * @param entry
+   */
   public setEntryLanguages(entry: Array<string>) {
     this._addEntryLang = entry;
   }
