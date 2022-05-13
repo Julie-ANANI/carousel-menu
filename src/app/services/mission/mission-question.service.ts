@@ -472,7 +472,7 @@ export class MissionQuestionService {
       return {
         identifier: id.toString(),
         positive: false,
-        entry:  this._addEntryLang.map((_lang) => {
+        entry: this._addEntryLang.map((_lang) => {
           return {
             lang: _lang,
             label: measureOptions[_lang]
@@ -759,7 +759,7 @@ export class MissionQuestionService {
     return question;
   }
 
- /***
+  /***
    * update the value of the option entry with new value.
    * @param newValue
    * @param lang
@@ -976,6 +976,10 @@ export class MissionQuestionService {
    */
   public setNotifyChanges(value: boolean) {
     this._notifyObj.next(value);
+  }
+
+  public setEntryLanguages(entry: Array<string>) {
+    this._addEntryLang = entry;
   }
 
   public notifyChanges(): Subject<boolean> {
