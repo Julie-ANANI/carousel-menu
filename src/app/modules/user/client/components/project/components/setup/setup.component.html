@@ -15,7 +15,7 @@
         <div style="min-height: 60px" class="flex-between flex-wrap-wrap">
 
           <!-- title -->
-          <h2  style="font-size: 22px" class="title m-bottom-15">
+          <h2 style="font-size: 22px" class="title m-bottom-15">
             {{ 'PROJECT_SETUP.TITLE' | translate }}
           </h2>
           <!-- /title -->
@@ -52,23 +52,26 @@
               <div class="m-bottom-15 m-right-15">
                 <div class="dropdown">
                   <!-- language selected -->
-                  <a class="button dropdown-toggle is-primary is-outlined d-flex align-center justify-start" tabindex="0">
+                  <a class="button dropdown-toggle is-primary is-outlined d-flex align-center justify-start"
+                     tabindex="0">
                     <ng-container *ngTemplateOutlet="langStatus; context:{$implicit: languageSelected}">
                     </ng-container>
-                     <i class="fas fa-caret-down is-sm" *ngIf="innoCardLanguages && innoCardLanguages.length > 1"></i>
+                    <i class="fas fa-caret-down is-sm" *ngIf="innoCardLanguages && innoCardLanguages.length > 1"></i>
                   </a>
                   <!-- /language selected -->
 
                   <!-- available languages -->
-                  <ul class="menu">
-                    <li class="menu-item"
-                        *ngFor="let language of innoCardLanguages"
-                        (click)="selectLanguage($event, language)">
-                      <label class="fullspace d-flex align-center">
+                  <ul class="menu" style="width: 350px">
+                    <ng-container *ngFor="let language of innoCardLanguages">
+                      <li class="menu-item m-bottom-10 m-top-10"
+                          *ngIf="language.type !== languageSelected.type"
+                          (click)="selectLanguage($event, language)">
+                        <label class="fullspace d-flex align-center">
                           <ng-container *ngTemplateOutlet="langStatus; context:{$implicit: language}">
                           </ng-container>
-                      </label>
-                    </li>
+                        </label>
+                      </li>
+                    </ng-container>
                   </ul>
                   <!-- available languages -->
                 </div>
@@ -76,12 +79,15 @@
 
               <!-- language status + name template -->
               <ng-template #langStatus let-context>
-                <ng-container>
+                <ng-container *ngIf="context">
                   <button class="button is-circled is-xs"
-                          [ngClass]="context?.status === 'EDITING'? 'is-danger': 'is-success'">
-                    <i style="font-size: 20px" [ngClass]="context?.status ==='EDITING'? 'fa fa-times-circle': 'fa fa-check-circle'"></i>
+                          [attr.data-tooltip]="'This language should \n be validated to contact\n the professionals'"
+                          [ngClass]="context.status === 'EDITING'? 'tooltip is-right is-danger': 'is-success'">
+                    <i style="font-size: 20px"
+                       [ngClass]="context.status ==='EDITING'? 'fa fa-times-circle': 'fa fa-check-circle'">
+                    </i>
                   </button>
-                  <span class="m-left-3 m-right-3">{{context?.alias}}</span>
+                  <span class="m-left-3 m-right-3">{{context.alias}}</span>
                 </ng-container>
               </ng-template>
               <!-- /language status + name template -->
