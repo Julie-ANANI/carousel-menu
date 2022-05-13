@@ -14,7 +14,9 @@ import { ErrorFrontService } from '../../../../../../services/error/error-front.
 import { RolesFrontService } from '../../../../../../services/roles/roles-front.service';
 import { CampaignFrontService } from '../../../../../../services/campaign/campaign-front.service';
 import { AuthService } from '../../../../../../services/auth/auth.service';
-import {UmiusConfigInterface} from '@umius/umi-common-component';
+import { UmiusConfigInterface } from '@umius/umi-common-component';
+import { EmailTemplate } from "../../../../../../models/email-template";
+import { TemplateFrontService } from "../../../../../../services/templates/template-front.service";
 
 @Component({
   templateUrl: './admin-campaign-workflows.component.html',
@@ -58,7 +60,8 @@ export class AdminCampaignWorkflowsComponent implements OnInit {
               private _templatesService: TemplatesService,
               private _rolesFrontService: RolesFrontService,
               private _authService: AuthService,
-              private _translateNotificationsService: TranslateNotificationsService) { }
+              private _translateNotificationsService: TranslateNotificationsService) {
+  }
 
   ngOnInit() {
     if (isPlatformBrowser(this._platformId)) {
@@ -113,7 +116,6 @@ export class AdminCampaignWorkflowsComponent implements OnInit {
         this._innovationCardLanguages.push(innoCard.lang);
       });
     }
-    console.log(this._innovationCardLanguages);
   }
 
   public canAccess(path?: Array<string>) {
@@ -142,7 +144,6 @@ export class AdminCampaignWorkflowsComponent implements OnInit {
       .subscribe(
         (response: Response) => {
           this._templates = (response && response.result) || [];
-          console.log(this._templates);
           if (this._templates.length > 0) {
             this._selectedTemplate = this._templates[0];
             this._verifyCampaignType();
@@ -180,13 +181,12 @@ export class AdminCampaignWorkflowsComponent implements OnInit {
   }
 
   public updateAvailableScenario(scenario: EmailScenario) {
-    // DROP
+    // empty emails in settings
     this._campaign.settings.emails = this._campaign.settings.emails.filter(
       (mail) => {
         return mail.nameWorkflow !== scenario.name;
       }
     );
-
     // on choppe l'index avant de l'enlever dans le but de le rajouter en bonne position
     // (evite le deplacement incompréhensible de l'element dans le DOM)
     const index = this._availableScenarios.findIndex((x) => {
@@ -195,16 +195,39 @@ export class AdminCampaignWorkflowsComponent implements OnInit {
     this._availableScenarios = this._availableScenarios.filter((scenar) => {
       return scenar.name !== scenario.name;
     });
-    // INSERT
-    this._campaign.settings.emails = this._campaign.settings.emails.concat(
-      scenario.emails
-    );
-    // INSERT scenario in the same place
-    this._availableScenarios.splice(index, 0, scenario);
-    if (this._availableScenarios.length === 1) {
-      this._campaign.settings.defaultWorkflow = this._availableScenarios[0].name;
+    if (scenario && scenario.emails && scenario.emails.length) {
+      this._innovationCardLanguages.map(lang => {
+        // find emails in scenario according to inno card language
+        let emailsToAdd = scenario.emails.filter(e => e.language === lang);
+        if (emailsToAdd.length > 0) {
+          // INSERT
+          this._campaign.settings.emails = this._campaign.settings.emails.concat(emailsToAdd);
+        } else {
+          // there is no emails in scenario for lang
+          // generate them
+          let emailGenerated = this._generateEmailTemplates(lang, scenario.name, scenario.emails[0].signature);
+          this._campaign.settings.emails = this._campaign.settings.emails.concat(emailGenerated);
+          scenario.emails = scenario.emails.concat(emailGenerated);
+        }
+      })
+
+      // INSERT scenario in the same place
+      this._availableScenarios.splice(index, 0, scenario);
+      if (this._availableScenarios.length === 1) {
+        this._campaign.settings.defaultWorkflow = this._availableScenarios[0].name;
+      }
+      this._saveTemplates('The workflow is added.');
+
     }
-    this._saveTemplates('The workflow is added.');
+  }
+
+  private _generateEmailTemplates(language: string, workflowName: string, scenarioSignature: EmailSignature) {
+    const emails: Array<EmailTemplate> = [];
+    const steps = ['FIRST', 'SECOND', 'THIRD', 'THANKS'];
+    steps.forEach((step: string) => {
+      emails.push(TemplateFrontService.createEmail(step, language, workflowName, scenarioSignature));
+    })
+    return emails;
   }
 
   private _generateModifiedScenarios() {
@@ -220,11 +243,9 @@ export class AdminCampaignWorkflowsComponent implements OnInit {
   }
 
   private _prepareImport(isModified: boolean) {
-    console.log(this._selectedTemplate);
     this._selectedTemplate = {
       name: this._selectedTemplate.name,
       emails: this._selectedTemplate.emails.map((m) => {
-        console.log(m);
         m.nameWorkflow = this._selectedTemplate.name;
         m.modified = isModified;
         return m;

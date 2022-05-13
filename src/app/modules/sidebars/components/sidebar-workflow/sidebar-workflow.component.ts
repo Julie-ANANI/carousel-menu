@@ -22,9 +22,13 @@ export class SidebarWorkflowComponent implements OnInit{
 
   @Input() signatures: Array<EmailSignature> = [];
 
-  @Input() inputLanguage = 'en';
+  @Input() set inputLanguage(value: string){
+    if(value){
+      this._inputLanguage = value;
+    }
+  }
 
-  @Input() id = this.inputLanguage;
+  @Input() id = 'en';
 
   @Input() innovationCardLanguages: Array<string> = [];
 
@@ -32,11 +36,12 @@ export class SidebarWorkflowComponent implements OnInit{
 
   private _toBeSaved = false;
 
+  private _inputLanguage = '';
+
   constructor() {
   }
 
   ngOnInit(): void {
-    console.log(this.emailObject);
   }
 
   public onClickSave() {
@@ -46,6 +51,11 @@ export class SidebarWorkflowComponent implements OnInit{
       this._toBeSaved = false;
     }
   }
+
+  get inputLanguage(): string {
+    return this._inputLanguage;
+  }
+
 
   public onChangeEmail(value: any) {
     this.emailObject = value;

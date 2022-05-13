@@ -11,6 +11,7 @@ import { ErrorFrontService } from "../../../../../../services/error/error-front.
 import { isPlatformBrowser } from "@angular/common";
 import { Response } from "../../../../../../models/response";
 import {UmiusConfigInterface, UmiusLocalStorageService} from '@umius/umi-common-component';
+import { TemplateFrontService } from "../../../../../../services/templates/template-front.service";
 
 @Component({
   templateUrl: 'admin-libraries-workflows.component.html',
@@ -106,19 +107,6 @@ export class AdminLibrariesWorkflowsComponent implements OnInit {
     this._modalAdd = true;
   }
 
-  private _createEmail(step: string, language: string): EmailTemplate {
-    return {
-      step: step,
-      language: language,
-      profile: 'NEW',
-      subject: `${step.toLowerCase()} mail - ${language}`,
-      content: 'content',
-      modified: false,
-      nameWorkflow: this._newScenarioName,
-      signature: this._scenarioSignature
-    }
-  }
-
   public onClickConfirm() {
     if (!this._isAdding) {
       this._isAdding = true;
@@ -126,7 +114,7 @@ export class AdminLibrariesWorkflowsComponent implements OnInit {
       const steps = ['FIRST', 'SECOND', 'THIRD', 'THANKS'];
       steps.forEach((step: string) => {
         this._workflowTemplateLanguages.forEach((language: string) => {
-          emails.push(this._createEmail(step, language));
+          emails.push(TemplateFrontService.createEmail(step, language, this._newScenarioName, this._scenarioSignature));
         });
       });
 

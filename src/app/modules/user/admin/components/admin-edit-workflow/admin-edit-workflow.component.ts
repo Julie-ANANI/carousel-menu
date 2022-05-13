@@ -12,7 +12,6 @@ import {Column, Table, UmiusConfigInterface, UmiusSidebarInterface} from '@umius
 })
 export class AdminEditWorkflowComponent {
 
-  // TODO: change to Array<Language>
   @Input() set innovationCardLanguages(value: Array<string>) {
     if (value && value.length) {
       this._innovationCardLanguages = value;
@@ -157,7 +156,6 @@ export class AdminEditWorkflowComponent {
   }
 
   public updateEmail(emailsObject: any) {
-    this._setModified();
 
     this._campaignScenario.emails = this._campaignScenario.emails.map(
       (email: EmailTemplate) => {

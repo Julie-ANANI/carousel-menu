@@ -7,13 +7,12 @@
     <div *ngIf="!noLanguage" class="language-wrapper">
       <label class="form-label">Choose language:</label>
       <ng-container *ngFor="let lang of innovationCardLanguages">
-        <div
-          (click)="changeLanguage(lang)"
+        <button
           *ngIf="innovationCardLanguages.indexOf(lang) !== -1"
           [ngClass]="{ 'text-underline': language === lang }"
-          class="text-link" >
-          {{('COMMON.LANG.' + lang.toUpperCase()) | translate}}
-        </div>
+          class="button is-link"
+          (click)="changeLanguage(lang)">
+          {{('COMMON.LANG.' + lang.toUpperCase()) | translate}}</button>
       </ng-container>
     </div>
     <!-- /language choice -->
