@@ -54,7 +54,7 @@
             (scenarioChange)="updateScenario($event)"
             [isDeletable]="canAccess(['delete'])"
             [isEditable]="canAccess(['edit'])"
-            [innovationCardLanguages]="['en', 'fr']"
+            [innovationCardLanguages]="workflowTemplateLanguages"
             [scenario]="scenario"
             [signatures]="signatures">
           </app-admin-edit-workflow>
