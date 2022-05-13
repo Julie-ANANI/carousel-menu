@@ -40,6 +40,8 @@ export class SharedEditorsComponent implements OnChanges, OnDestroy {
 
   @Input() type: PadType = 'orphan';
 
+  @Input() lang = 'en';
+
   @Output() textChange: EventEmitter<any> = new EventEmitter<any>();
 
   public limitEtherpadAccess = false;
@@ -75,7 +77,8 @@ export class SharedEditorsComponent implements OnChanges, OnDestroy {
         innovationId: this._innovationId,
         padID: this._etherpadFrontService.buildPadID(this.type, this.elementId),
         userName: UserFrontService.fullName(this.user),
-        noColors: this.isClient
+        noColors: this.isClient,
+        lang: this.lang
       };
     }
   }

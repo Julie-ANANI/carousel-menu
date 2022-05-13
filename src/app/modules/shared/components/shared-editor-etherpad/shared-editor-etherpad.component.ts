@@ -7,7 +7,6 @@ import {HttpErrorResponse} from '@angular/common/http';
 import {TranslateNotificationsService} from '../../../../services/translate-notifications/translate-notifications.service';
 import {ErrorFrontService} from '../../../../services/error/error-front.service';
 import {CommonService} from '../../../../services/common/common.service';
-import {TranslateService} from '@ngx-translate/core';
 import {UserFrontService} from '../../../../services/user/user-front.service';
 import {AuthService} from '../../../../services/auth/auth.service';
 import {EtherpadSocketService} from '../../../../services/socket/etherpad.socket.service';
@@ -58,7 +57,6 @@ export class SharedEditorEtherpadComponent implements OnInit, OnDestroy {
               private _etherpadService: EtherpadService,
               private _etherpadFrontService: EtherpadFrontService,
               private _etherpadSocketService: EtherpadSocketService,
-              private _translateService: TranslateService,
               private _authService: AuthService,
               private _translateNotificationsService: TranslateNotificationsService) {
   }
@@ -84,7 +82,7 @@ export class SharedEditorEtherpadComponent implements OnInit, OnDestroy {
         type: value.type || 'orphan',
         elementId: value.elementId,
         showChat: value.showChat || false,
-        lang: value.lang || this._translateService.currentLang || 'en',
+        lang: value.lang,
         noColors: value.noColors || false,
         userName: value.userName || 'user',
         padID: value.padID || this._etherpadFrontService.buildPadID(value.type, value.elementId),

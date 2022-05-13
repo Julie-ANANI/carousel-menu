@@ -114,6 +114,7 @@
               [isEditable]="isEditable"
               (textChange)="onContentChange($event, 'sections', i)"
               [text]="section.content"
+              [lang]="activeInnovCard.lang"
               [innovationId]="innovation._id"
               [elementId]="section.etherpadElementId || section.type.toLowerCase()+'-'+i + 1 + '-' + currentLang"
               [type]="'pitch'">
@@ -208,6 +209,7 @@
                     section.type, section.etherpadElementId)"
                     [isEditable]="isEditableComment"
                     [text]="zoneData('sections', 'suggestion', section.type, section.etherpadElementId)"
+                    [lang]="activeInnovCard.lang"
                     [innovationId]="innovation._id"
                     [elementId]="section.etherpadElementId || section.type.toLowerCase()+'-'+i + 1 + '-' + currentLang"
                     type="suggestion">
@@ -298,6 +300,7 @@
               id="project-title"
               (textChange)="onContentChange($event, 'title')"
               [text]="activeInnovCard.title"
+              [lang]="activeInnovCard.lang"
               [innovationId]="innovation._id"
               [elementId]="'title-' + currentLang"
               type="pitch"
@@ -389,6 +392,7 @@
                     [isEditable]="isEditableComment"
                     (textChange)="onCommentChange($event, 'title', 'suggestion')"
                     [text]="zoneData('title', 'suggestion')"
+                    [lang]="activeInnovCard.lang"
                     [innovationId]="innovation._id"
                     [elementId]="'title-' + currentLang"
                     type="suggestion">
@@ -466,6 +470,7 @@
               id="project-summary"
               (textChange)="onContentChange($event, 'summary')"
               [text]="activeInnovCard.summary"
+              [lang]="activeInnovCard.lang"
               [innovationId]="innovation._id"
               [elementId]="'summary-' + currentLang"
               type="summary"
@@ -557,6 +562,7 @@
                     [isEditable]="isEditableComment"
                     (textChange)="onCommentChange($event, 'summary', 'suggestion')"
                     [text]="zoneData('summary', 'suggestion')"
+                    [lang]="activeInnovCard.lang"
                     [innovationId]="innovation._id"
                     [elementId]="'summary-' + currentLang"
                     type="suggestion">
