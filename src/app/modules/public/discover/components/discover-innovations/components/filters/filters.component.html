@@ -54,6 +54,7 @@
 
 
     <!-- highlight tags -->
+    <!--TODO remove multiling-->
     <div *ngIf="highLightTags.length > 0" [@tagAnimation]="tagsUpdated" class="sector-wrapper d-flex">
       <div
         *ngFor="let tag of highLightTags"
@@ -95,6 +96,7 @@
 
     <h3 class="text-meta animate-appear">{{ 'DISCOVER.RELATED_SECTORS' | translate }}</h3>
 
+    <!--TODO remove multiling-->
     <div class="d-flex sector-wrapper">
       <div
         *ngFor="let tag of suggestedTags"
@@ -133,6 +135,7 @@
 
 
 <!-- modal tags -->
+<!--TODO remove multiling-->
 <umius-modal [(showModal)]="modalTag" maxWidth="840px" title="DISCOVER.ALL_SECTORS">
   <section class="modal-body">
     <div class="modal-tag-wrapper">

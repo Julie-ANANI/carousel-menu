@@ -25,7 +25,6 @@ import { ItemListComponent } from './components/item-list/item-list.component';
 import { SharedMarketReportPopoverComponent } from './components/shared-market-report-popover/shared-market-report-popover.component';
 import { StarsComponent } from './components/stars/stars.component';
 import { SharedMarketComment2Component } from './components/professional-comment-2/professional-comment-2.component';
-
 import { SidebarFilterAnswersModule } from '../../../sidebars/components/sidebar-filter-answers/sidebar-filter-answers.module';
 import {SharedEditorsModule} from '../shared-editors/shared-editors.module';
 import {SharedToggleListModule} from '../shared-toggle-list/shared-toggle-list.module';
@@ -37,6 +36,7 @@ import {LikertScaleChartModule} from './components/likert-scale-chart/likert-sca
 import {CountryFlagModule, ModalModule, SidebarFullModule, SidebarInlineModule} from '@umius/umi-common-component';
 import {MissionPipeModule} from '../../../../pipe/mission/missionPipe.module';
 import { MarketReportResultComponent } from './components/market-report-result/market-report-result.component';
+import {LangEntryPipeModule} from '../../../../pipe/lang-entry/langEntryPipe.module';
 
 @NgModule({
   imports: [
@@ -66,6 +66,7 @@ import { MarketReportResultComponent } from './components/market-report-result/m
     SidebarFullModule,
     CountryFlagModule,
     MissionPipeModule,
+    LangEntryPipeModule,
   ],
   declarations: [
     SharedMarketReportComponent,

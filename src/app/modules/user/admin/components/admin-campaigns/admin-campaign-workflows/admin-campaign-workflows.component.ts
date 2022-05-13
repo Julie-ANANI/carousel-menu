@@ -21,6 +21,7 @@ import { lang, Language } from "../../../../../../models/static-data/language";
   templateUrl: './admin-campaign-workflows.component.html',
 })
 export class AdminCampaignWorkflowsComponent implements OnInit {
+
   private _campaign: Campaign = <Campaign>{};
 
   private _selectedTemplate: EmailScenario = <EmailScenario>{};

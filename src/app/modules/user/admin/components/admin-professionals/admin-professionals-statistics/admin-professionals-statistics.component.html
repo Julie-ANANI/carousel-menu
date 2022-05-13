@@ -4,8 +4,10 @@
     <!-- when fetching error -->
     <ng-container *ngIf="fetchingError">
       <div class="d-flex s-error-wrapper align-center">
-        <app-utility-error-template-1  style="width: 100%"
-                                      [errorMessage]="'ERROR.ERRORS.FETCHING'"></app-utility-error-template-1>
+        <app-utility-error-template-1
+          style="width: 100%"
+          [errorMessage]="'ERROR.ERRORS.FETCHING'">
+        </app-utility-error-template-1>
       </div>
     </ng-container>
     <!-- /when fetching error -->
@@ -174,12 +176,14 @@
                      style="width: fit-content;margin: auto; max-width: 100%;">
                 <thead>
                 <tr class="text-center">
-                  <th class="bg-draft"
-                      style="min-width: 40px">{{ (category.label || {en: 'Not classified yet'}).en }}</th>
-                  <th *ngFor="let job of category.jobs"
-                      style="min-width: 40px">
+                  <th class="bg-draft" style="min-width: 40px">
+                    <!--{{ (category.label || {en: 'Not classified yet'}).en }}-->
+                    {{ (category.entry | langEntry:'label':'en') || 'Not classified yet' }}
+                  </th>
+                  <th *ngFor="let job of category.jobs" style="min-width: 40px">
                     <div style="width: fit-content">
-                      {{ (job.label || {en: 'Not classified yet'}).en }}
+                      <!--{{ (job.label || {en: 'Not classified yet'}).en }}-->
+                      {{ (job.entry | langEntry:'label':'en') || 'Not classified yet' }}
                     </div>
                   </th>
                 </tr>

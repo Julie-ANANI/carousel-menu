@@ -24,7 +24,7 @@ export class SharedSearchConfigProComponent implements OnInit {
    * @param value
    */
   @Input() set option(value: { name: string, state: number }) {
-    if(value && value.name && value.state){
+    if(value){
       this._currentState = value.state;
       this._context = value.name;
       if (this.isJobTypo) {

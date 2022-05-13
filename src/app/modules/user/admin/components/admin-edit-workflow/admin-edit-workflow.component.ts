@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { EmailScenario } from '../../../../../models/email-scenario';
 import { EmailTemplate } from '../../../../../models/email-template';
 import { EmailSignature } from '../../../../../models/email-signature';
+import {EmailObject} from '../../../../../models/email';
 import {Column, Table, UmiusConfigInterface, UmiusSidebarInterface} from '@umius/umi-common-component';
 import { Language } from "../../../../../models/static-data/language";
 
@@ -219,7 +220,7 @@ export class AdminEditWorkflowComponent {
     return this._signatures;
   }
 
-  get emailToEdit(): any {
+  get emailToEdit(): EmailObject {
     return this._emailToEdit;
   }
 

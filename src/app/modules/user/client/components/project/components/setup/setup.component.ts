@@ -222,9 +222,9 @@ export class SetupComponent implements OnInit, OnDestroy, CanComponentDeactivate
       this._isAddingCard = true;
       const _lang = this._activeInnovCard.lang === 'en' ? 'fr' : 'en';
       const _card = new InnovCard({lang: _lang});
-      this._innovationService.createInnovationCard(this._innovation._id, _card).pipe(first()).subscribe((card) => {
+      this._innovationService.createInnovationCard(this._innovation._id, _card).pipe(first()).subscribe((cards) => {
         this._isBannerViewed = true;
-        this._innovation.innovationCards.push(card);
+        this._innovation.innovationCards = this._innovation.innovationCards.concat(cards);
         this._emitUpdatedInnovation();
         this._isAddingCard = false;
         this.closeModal();

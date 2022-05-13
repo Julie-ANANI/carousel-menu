@@ -256,6 +256,7 @@ export class SidebarUserAnswerComponent implements OnInit {
   }
 
   public addTag(tag: Tag): void {
+    console.log(tag);
     this._answerService
       .addTag(this._userAnswer._id, tag)
       .pipe(first())

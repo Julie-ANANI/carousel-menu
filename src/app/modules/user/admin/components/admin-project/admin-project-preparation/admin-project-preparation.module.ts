@@ -10,19 +10,21 @@ import {AdminProjectDescriptionModule} from '../admin-project-description/admin-
 import {AdminCampaignsModule} from '../../admin-campaigns/admin-campaigns.module';
 import {AdminProjectStatisticsModule} from '../admin-project-statistics/admin-project-statistics.module';
 import {ModalModule} from '@umius/umi-common-component';
+import { FormsModule } from "@angular/forms";
 
 @NgModule({
-  imports: [
-    CommonModule,
-    RouterModule,
-    AdminProjectCampaignsModule,
-    AdminProjectQuestionnaireModule,
-    AdminProjectTargetingModule,
-    AdminProjectDescriptionModule,
-    AdminProjectStatisticsModule,
-    AdminCampaignsModule,
-    ModalModule
-  ],
+    imports: [
+        CommonModule,
+        RouterModule,
+        AdminProjectCampaignsModule,
+        AdminProjectQuestionnaireModule,
+        AdminProjectTargetingModule,
+        AdminProjectDescriptionModule,
+        AdminProjectStatisticsModule,
+        AdminCampaignsModule,
+        ModalModule,
+        FormsModule
+    ],
   declarations: [
     AdminProjectPreparationComponent
   ],

@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { EmailSignature } from '../../../../models/email-signature';
 import { Language } from "../../../../models/static-data/language";
+import {EmailObject} from '../../../../models/email';
 
 @Component({
   selector: 'app-sidebar-workflow',
@@ -12,9 +13,13 @@ import { Language } from "../../../../models/static-data/language";
 // TODO see the example of AdminEmailsLibraryComponent
 export class SidebarWorkflowComponent implements OnInit{
 
+  get toBeSaved(): boolean {
+    return this._toBeSaved;
+  }
+
   @Input() isEditable = false;
 
-  @Input() emailsObject: any = {};
+  @Input() emailObject: EmailObject = <EmailObject>{};
 
   @Input() signatures: Array<EmailSignature> = [];
 
@@ -26,22 +31,26 @@ export class SidebarWorkflowComponent implements OnInit{
 
   @Output() emailChange: EventEmitter<any> = new EventEmitter<any>();
 
+  private _toBeSaved = false;
+
   constructor() {
-    console.log(this.emailsObject);
   }
 
   ngOnInit(): void {
+    console.log(this.emailObject);
   }
 
   public onClickSave() {
     if (this.isEditable) {
-      this.emailsObject[this.inputLanguage].modified = true;
-      this.emailChange.emit(this.emailsObject);
+      this.emailObject[this.inputLanguage].modified = true;
+      this.emailChange.emit(this.emailObject);
+      this._toBeSaved = false;
     }
   }
 
   public onChangeEmail(value: any) {
-    this.emailsObject = value;
+    this.emailObject = value;
+    this._toBeSaved = true
   }
 
 }

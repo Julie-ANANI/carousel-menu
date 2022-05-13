@@ -58,10 +58,15 @@
         </div>
         <!-- /id -->
 
-        <!-- name -->
+        <!-- name TODO remove multiling -->
         <div class="p-bottom-15">
           <p class="form-label m-no-bottom">Name</p>
-          <p class="text-md m-no-bottom">{{ tag.originalLabel | multiling:lang }}</p>
+          <ng-container *ngIf="tag.entry && tag.entry.length; else noSidebarOriginalEntry">
+            <p class="text-md m-no-bottom">{{ tag.entry | langEntry:'originalLabel':lang }}</p>
+          </ng-container>
+          <ng-template #noSidebarOriginalEntry>
+            <p class="text-md m-no-bottom">{{ tag.originalLabel | multiling:lang }}</p>
+          </ng-template>
         </div>
         <!-- /name -->
 
@@ -108,73 +113,133 @@
       </div>
       <!-- /when to set tag -->
 
-      <!-- label -->
+      <!-- label TODO remove multiling -->
       <div class="p-top-25">
 
         <h1 class="title is-5 m-bottom-20">Actual Tag Label</h1>
 
         <div class="form-group">
-          <label for="sidebar-tags-enLabel" class="form-label">English</label>
-          <input
-            (ngModelChange)="saveButton(true)"
-            [(ngModel)]="tag.label.en"
-            [disabled]="!isEditable"
-            [ngModelOptions]="{ standalone: true }"
-            [placeholder]="'Enter the label in English'"
-            class="form-input is-shadowed"
-            id="sidebar-tags-enLabel"
-            type="text">
+          <label [for]="'sidebar-tags-enLabel'" class="form-label">English</label>
+          <ng-container *ngIf="tag.entry; else noSidebarTagLabelEn">
+            <input
+              #sideTagEntryLabelEn
+              (ngModelChange)="updateTagEntry(sideTagEntryLabelEn.value, 'label', 'en')"
+              [disabled]="!isEditable"
+              [ngModelOptions]="{ standalone: true }"
+              [ngModel]="tag.entry|langEntry:'label':'en'"
+              [placeholder]="'Enter the label in English'"
+              class="form-input is-shadowed"
+              [id]="'sidebar-tags-enLabel'"
+              type="text">
+          </ng-container>
+          <ng-template #noSidebarTagLabelEn>
+            <input
+              (ngModelChange)="saveButton(true)"
+              [(ngModel)]="tag.label.en"
+              [disabled]="!isEditable"
+              [ngModelOptions]="{ standalone: true }"
+              [placeholder]="'Enter the label in English'"
+              class="form-input is-shadowed"
+              [id]="'sidebar-tags-enLabel'"
+              type="text">
+          </ng-template>
         </div>
 
         <div class="form-group">
-          <label for="sidebar-tags-frLabel" class="form-label">French</label>
-          <input
-            (ngModelChange)="saveButton(true)"
-            [(ngModel)]="tag.label.fr"
-            [disabled]="!isEditable"
-            [ngModelOptions]="{ standalone: true }"
-            [placeholder]="'Enter the label in French'"
-            class="form-input is-shadowed"
-            id="sidebar-tags-frLabel"
-            type="text">
+          <label [for]="'sidebar-tags-frLabel'" class="form-label">French</label>
+            <ng-container *ngIf="tag.entry; else noSidebarTagLabelFr">
+              <input
+                #sideTagEntryLabelFr
+                (ngModelChange)="updateTagEntry(sideTagEntryLabelFr.value, 'label', 'fr')"
+                [disabled]="!isEditable"
+                [ngModelOptions]="{ standalone: true }"
+                [ngModel]="tag.entry|langEntry:'label':'fr'"
+                [placeholder]="'Enter the label in French'"
+                class="form-input is-shadowed"
+                id="sidebar-tags-frLabel"
+                type="text">
+            </ng-container>
+          <ng-template #noSidebarTagLabelFr>
+            <input
+              (ngModelChange)="saveButton(true)"
+              [(ngModel)]="tag.label.fr"
+              [disabled]="!isEditable"
+              [ngModelOptions]="{ standalone: true }"
+              [placeholder]="'Enter the label in French'"
+              class="form-input is-shadowed"
+              [id]="'sidebar-tags-frLabel'"
+              type="text">
+          </ng-template>
         </div>
 
       </div>
       <!-- /label -->
 
-      <!-- description -->
+      <!-- description TODO remove multiling -->
       <div class="p-top-20">
 
         <h1 class="title is-5 m-bottom-20">Actual Tag Description</h1>
 
         <div class="form-group">
-          <label for="sidebar-tags-enDesc" class="form-label">English</label>
-          <textarea
-            (ngModelChange)="saveButton(true)"
-            [(ngModel)]="tag.description.en"
-            [disabled]="!isEditable"
-            [ngModelOptions]="{ standalone: true }"
-            [placeholder]="'Write down the description in English'"
-            rows="3"
-            class="form-input is-shadowed p-10"
-            type="text"
-            id="sidebar-tags-enDesc">
+          <label [for]="'sidebar-tags-enDesc'" class="form-label">English</label>
+          <ng-container *ngIf="tag.entry; else noSidebarTagDescEn">
+            <textarea
+              #sideTagEntryDescEn
+              (ngModelChange)="updateTagEntry(sideTagEntryDescEn.value, 'description', 'en')"
+              [disabled]="!isEditable"
+              [ngModelOptions]="{ standalone: true }"
+              [ngModel]="tag.entry|langEntry:'description':'en'"
+              [placeholder]="'Write down the description in English'"
+              class="form-input is-shadowed p-10"
+              [id]="'sidebar-tags-enDesc'"
+              rows="3"
+              type="text">
           </textarea>
+          </ng-container>
+          <ng-template #noSidebarTagDescEn>
+            <textarea
+              (ngModelChange)="saveButton(true)"
+              [(ngModel)]="tag.description.en"
+              [disabled]="!isEditable"
+              [ngModelOptions]="{ standalone: true }"
+              [placeholder]="'Write down the description in English'"
+              rows="3"
+              class="form-input is-shadowed p-10"
+              type="text"
+              [id]="'sidebar-tags-enDesc'">
+          </textarea>
+          </ng-template>
         </div>
 
         <div class="form-group">
-          <label for="sidebar-tags-frDesc" class="form-label">French</label>
-          <textarea
-            (ngModelChange)="saveButton(true)"
-            [(ngModel)]="tag.description.fr"
-            [disabled]="!isEditable"
-            [ngModelOptions]="{ standalone: true }"
-            [placeholder]="'Write down the description in French'"
-            rows="3"
-            class="form-input is-shadowed p-10"
-            type="text"
-            id="sidebar-tags-frDesc">
+          <label [for]="'sidebar-tags-frDesc'" class="form-label">French</label>
+          <ng-container *ngIf="tag.entry; else noSidebarTagDescFr">
+            <textarea
+              #sideTagEntryDescFr
+              (ngModelChange)="updateTagEntry(sideTagEntryDescFr.value, 'description', 'fr')"
+              [disabled]="!isEditable"
+              [ngModelOptions]="{ standalone: true }"
+              [ngModel]="tag.entry|langEntry:'description':'fr'"
+              [placeholder]="'Write down the description in French'"
+              class="form-input is-shadowed p-10"
+              [id]="'sidebar-tags-frDesc'"
+              rows="3"
+              type="text">
           </textarea>
+          </ng-container>
+          <ng-template #noSidebarTagDescFr>
+            <textarea
+              (ngModelChange)="saveButton(true)"
+              [(ngModel)]="tag.description.fr"
+              [disabled]="!isEditable"
+              [ngModelOptions]="{ standalone: true }"
+              [placeholder]="'Write down the description in French'"
+              rows="3"
+              class="form-input is-shadowed p-10"
+              type="text"
+              id="sidebar-tags-frDesc">
+          </textarea>
+          </ng-template>
         </div>
 
       </div>

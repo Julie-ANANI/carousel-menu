@@ -13,6 +13,7 @@ import { RouterModule } from '@angular/router';
 import { AutoCompleteInputModule } from '../../../../utility/auto-complete-input/auto-complete-input.module';
 import {AdminTagsRoutingModule} from './admin-tags-routing.module';
 import {PaginationModule, SortModule} from '@umius/umi-common-component';
+import {LangEntryPipeModule} from '../../../../../pipe/lang-entry/langEntryPipe.module';
 
 @NgModule({
   imports: [
@@ -25,7 +26,9 @@ import {PaginationModule, SortModule} from '@umius/umi-common-component';
     ReactiveFormsModule,
     AdminTagsRoutingModule,
     SortModule,
-    PaginationModule
+    PaginationModule,
+    AdminTagsRoutingModule,
+    LangEntryPipeModule
   ],
   declarations: [
     AdminTagsComponent,
