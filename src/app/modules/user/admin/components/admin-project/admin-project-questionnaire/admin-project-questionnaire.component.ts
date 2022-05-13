@@ -15,7 +15,6 @@ import { Mission, MissionCardTitle, MissionTemplate } from '../../../../../../mo
 import { ErrorFrontService } from '../../../../../../services/error/error-front.service';
 import { MissionQuestionService } from "../../../../../../services/mission/mission-question.service";
 import { lang, Language } from "../../../../../../models/static-data/language";
-// import { InnovCard } from "../../../../../../models/innov-card";
 
 @Component({
   templateUrl: './admin-project-questionnaire.component.html',
@@ -65,27 +64,19 @@ export class AdminProjectQuestionnaireComponent implements OnInit, OnDestroy {
         if (innovation && innovation._id) {
           this._innovation = innovation;
 
-          this._cardsLanguages = [];
-
           if (this._innovation.mission && (<Mission>this._innovation.mission)._id) {
             this._mission = <Mission>this._innovation.mission;
           }
 
-          // this._innovation.innovationCards.map((card) => {
-          //     this.initialiseCardLanguages(card);
-          //   }
-          // );
-
-          // TODO: set real card languages
-          lang.splice(16).map(language =>{
-            this.initialiseCardLanguages(language);
-          })
+          this.initialiseCardLanguages()
 
           this.initialiseMirrorLanguages();
 
           this._setSectionsNames();
 
           this._missionQuestionService.questionnaireLangs = this._cardsLanguages;
+
+          this._missionQuestionService.setEntryLanguages(this._cardsLanguages.map(l => l.type));
         }
       });
     }
@@ -93,16 +84,18 @@ export class AdminProjectQuestionnaireComponent implements OnInit, OnDestroy {
 
   /**
    * initialise cardLanguages list
-   * @param language
-   * // TODO
    */
-  initialiseCardLanguages(language: any) {
-    // const language = lang.find(l => l.type === card.lang);
-    if (language) {
-      language['hidden'] = true;
-      language['status'] = 'EDITING';
-      this._cardsLanguages.push(language);
-    }
+  initialiseCardLanguages() {
+    this._cardsLanguages = [];
+    this._innovation.innovationCards.map((card) => {
+        const language = lang.find(l => l.type === card.lang);
+        if (!!language) {
+          language['hidden'] = !!card['hidden'];
+          language['status'] = card['status'] || 'EDITING';
+          this._cardsLanguages.push(language);
+        }
+      }
+    );
   }
 
   /**
@@ -113,7 +106,7 @@ export class AdminProjectQuestionnaireComponent implements OnInit, OnDestroy {
     if (this._cardsLanguages.length > 1) {
       this._rightMirrorLanguage = this._cardsLanguages[1];
     }
-    this._leftMirrorLanguage = this._cardsLanguages.length && this._cardsLanguages[0] || null;
+    this._leftMirrorLanguage = this._cardsLanguages.length && this._cardsLanguages[0];
   }
 
   public canAccess(path?: Array<string>) {
@@ -195,7 +188,7 @@ export class AdminProjectQuestionnaireComponent implements OnInit, OnDestroy {
     });
   }
 
-  getObjective(lang: string = 'en'){
+  getObjective(lang: string = 'en') {
     const entry = this.mission.template.entry.find(e => e.lang === lang);
     return entry && entry.objective || '';
   }
