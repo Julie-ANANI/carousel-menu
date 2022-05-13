@@ -124,6 +124,11 @@ export class PitchComponent implements OnInit, OnDestroy {
     });
   }
 
+  /**
+   * TODO: duplicated function
+   * Once they merged together, put it in InnovationFrontService
+   * @private
+   */
   private _initInnoCardLanguage() {
     this._innoCardLanguages = [];
     if (this._innovation && this._innovation.innovationCards && this._innovation.innovationCards.length) {
@@ -131,12 +136,11 @@ export class PitchComponent implements OnInit, OnDestroy {
         const language = lang.find(l => l.type === innoCard.lang);
         if (!!language) {
           language['hidden'] = innoCard['hidden'];
-          language['status'] = innoCard['status'] || 'EDITING';
+          language['status'] = innoCard['status'];
           language['checked'] = innoCard['status'] !== 'EDITING';
           this._innoCardLanguages.push(language);
         }
       })
-      console.log(this._innoCardLanguages);
       this._languageSelected = this._innoCardLanguages.length > 0 && this._innoCardLanguages[0];
     }
   }
@@ -256,8 +260,8 @@ export class PitchComponent implements OnInit, OnDestroy {
 
   public onCloseModal() {
     this._showModal = false;
-    this._innoCardLanguages.map(l => l['checked'] = false);
     this._isSelectedAll = false;
+    this._initInnoCardLanguage();
   }
 
   /**
@@ -268,15 +272,15 @@ export class PitchComponent implements OnInit, OnDestroy {
     event.preventDefault();
     this._innoCardLanguages.map(l => {
       // get inno card related
-      const innoCard = this._innovation.innovationCards.find(card => card.lang === l.type);
-      if (l['checked'] && innoCard) {
-        l['status'] = 'WAITING';
-        innoCard['status'] = 'WAITING';
+      if(l['checked']){
+        const innoCard = this._innovation.innovationCards.find(card => card.lang === l.type);
+        if (!!innoCard) {
+          innoCard['status'] = 'WAITING';
+          l['status'] = 'WAITING';
+        }
       }
     })
-    console.log(this._innovation.innovationCards);
     this._updateProject('submit');
-    console.log(this._innovation);
   }
 
   public onSubmitProject(event: Event) {
@@ -494,19 +498,19 @@ export class PitchComponent implements OnInit, OnDestroy {
     }
 
     this._innovationService.save(this._innovation._id, saveObject).pipe(first()).subscribe((_) => {
-      this._resetVariables();
+      // this._resetVariables();
+      this._showModal = false;
       this._translateNotificationsService.success('ERROR.SUCCESS', message);
     }, (err: HttpErrorResponse) => {
       this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
-      this._resetVariables();
+      // this._resetVariables();
+      this._showModal = false;
       console.error(err);
     });
   }
 
   private _resetVariables() {
-    if (this._showModal) {
-      this.onCloseModal();
-    }
+    this._showModal = false;
     if (this._isSendingMessage) {
       this._newMessage = false;
     }
@@ -696,7 +700,7 @@ export class PitchComponent implements OnInit, OnDestroy {
   set showModal(value: boolean) {
     this._showModal = value;
     if (!value) {
-      this._innoCardLanguages.map(l => l['checked'] = false);
+      this._initInnoCardLanguage();
       this._isSelectedAll = false;
     }
   }

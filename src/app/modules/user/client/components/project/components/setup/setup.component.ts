@@ -190,7 +190,6 @@ export class SetupComponent implements OnInit, OnDestroy, CanComponentDeactivate
           this._innoCardLanguages.push(language);
         }
       })
-      console.log(this._innoCardLanguages);
       this._languageSelected = this._innoCardLanguages.length > 0 && this._innoCardLanguages[0];
     }
   }

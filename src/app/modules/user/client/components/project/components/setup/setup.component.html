@@ -48,7 +48,7 @@
             <!-- /preview -->
 
             <!-- card lang -->
-            <ng-container *ngIf="innovation.status === 'EDITING' || innovation.status === 'SUBMITTED'">
+            <ng-container>
               <div class="m-bottom-15 m-right-15">
                 <div class="dropdown">
                   <!-- language selected -->
@@ -78,10 +78,10 @@
               <ng-template #langStatus let-context>
                 <ng-container>
                   <button class="button is-circled is-xs"
-                          [ngClass]="context['status'] ==='EDITING'? 'is-danger': 'is-success'">
-                    <i style="font-size: 20px" [ngClass]="context['status'] ==='EDITING'? 'fa fa-times-circle': 'fa fa-check-circle'"></i>
+                          [ngClass]="context?.status === 'EDITING'? 'is-danger': 'is-success'">
+                    <i style="font-size: 20px" [ngClass]="context?.status ==='EDITING'? 'fa fa-times-circle': 'fa fa-check-circle'"></i>
                   </button>
-                  <span class="m-left-3 m-right-3">{{context.alias}}</span>
+                  <span class="m-left-3 m-right-3">{{context?.alias}}</span>
                 </ng-container>
               </ng-template>
               <!-- /language status + name template -->
