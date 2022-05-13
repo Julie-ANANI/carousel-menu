@@ -82,9 +82,11 @@ export class PitchComponent implements OnInit, OnDestroy {
 
   private _selectedMedia: UmiusModalMedia = <UmiusModalMedia>{};
 
-  private _testLanguages: Array<Language> = lang;
+  private _innoCardLanguages: Array<Language> = lang;
 
   private _isSelectedAll = false;
+
+  private _languageSelected: Language;
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _etherpadService: EtherpadService,
@@ -111,9 +113,7 @@ export class PitchComponent implements OnInit, OnDestroy {
         this._initDefaultSections();
         this._fetchCommentsOfSections();
 
-        this._testLanguages.map(language => {
-          language['checked'] = language['status'] && language['status'] !== 'EDITING';
-        })
+        this._initInnoCardLanguage();
 
       }
     });
@@ -122,6 +122,27 @@ export class PitchComponent implements OnInit, OnDestroy {
       this._activeCardIndex = cardIndex;
       this._initDefaultSections();
     });
+  }
+
+  /**
+   * TODO: duplicated function
+   * Once they merged together, put it in InnovationFrontService
+   * @private
+   */
+  private _initInnoCardLanguage() {
+    this._innoCardLanguages = [];
+    if (this._innovation && this._innovation.innovationCards && this._innovation.innovationCards.length) {
+      this._innovation.innovationCards.map(innoCard => {
+        const language = lang.find(l => l.type === innoCard.lang);
+        if (!!language) {
+          language['hidden'] = innoCard['hidden'];
+          language['status'] = innoCard['status'];
+          language['checked'] = innoCard['status'] !== 'EDITING';
+          this._innoCardLanguages.push(language);
+        }
+      })
+      this._languageSelected = this._innoCardLanguages.length > 0 && this._innoCardLanguages[0];
+    }
   }
 
   public sectionCommentLabel(section: string, etherpadElementId = ''): boolean {
@@ -239,8 +260,27 @@ export class PitchComponent implements OnInit, OnDestroy {
 
   public onCloseModal() {
     this._showModal = false;
-    this._testLanguages.map(l => l['checked'] = false);
     this._isSelectedAll = false;
+    this._initInnoCardLanguage();
+  }
+
+  /**
+   * in modal, confirm the selection of languages
+   * @param event
+   */
+  public onValidateLanguages(event: Event) {
+    event.preventDefault();
+    this._innoCardLanguages.map(l => {
+      // get inno card related
+      if(l['checked']){
+        const innoCard = this._innovation.innovationCards.find(card => card.lang === l.type);
+        if (!!innoCard) {
+          innoCard['status'] = 'WAITING';
+          l['status'] = 'WAITING';
+        }
+      }
+    })
+    this._updateProject('submit');
   }
 
   public onSubmitProject(event: Event) {
@@ -443,7 +483,6 @@ export class PitchComponent implements OnInit, OnDestroy {
     switch (type) {
       case 'submit':
         message = 'ERROR.PROJECT.SUBMITTED_TEXT';
-        saveObject = {status: this._innovation.status};
         break;
       case 'proofreading':
         message = 'ERROR.PROJECT.REQUEST_PROOFREADING';
@@ -459,25 +498,24 @@ export class PitchComponent implements OnInit, OnDestroy {
     }
 
     this._innovationService.save(this._innovation._id, saveObject).pipe(first()).subscribe((_) => {
-      this._resetVariables();
+      // this._resetVariables();
+      this._showModal = false;
       this._translateNotificationsService.success('ERROR.SUCCESS', message);
     }, (err: HttpErrorResponse) => {
       this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
-      this._resetVariables();
+      // this._resetVariables();
+      this._showModal = false;
       console.error(err);
     });
   }
 
   private _resetVariables() {
-    if (this._isSubmitting && this._innovation.status === 'SUBMITTED' && this._showModal) {
-      this.onCloseModal();
-    }
+    this._showModal = false;
     if (this._isSendingMessage) {
       this._newMessage = false;
     }
     this._isSaving = false;
     this._isRequesting = false;
-    this._isSubmitting = false;
     this._isSendingMessage = false;
   }
 
@@ -553,6 +591,11 @@ export class PitchComponent implements OnInit, OnDestroy {
       && this.activeInnovCard.media && this.activeInnovCard.media[0]) {
       this._setMainMedia(this.activeInnovCard.media[0]);
     }
+  }
+
+  languageValidated() {
+    return this._innoCardLanguages && this._innoCardLanguages.length
+      && this._innoCardLanguages.filter(l => l['status'] !== 'EDITING').length;
   }
 
   get isUploadingVideo(): boolean {
@@ -657,7 +700,7 @@ export class PitchComponent implements OnInit, OnDestroy {
   set showModal(value: boolean) {
     this._showModal = value;
     if (!value) {
-      this._testLanguages.map(l => l['checked'] = false);
+      this._initInnoCardLanguage();
       this._isSelectedAll = false;
     }
   }
@@ -685,11 +728,16 @@ export class PitchComponent implements OnInit, OnDestroy {
 
   set isSelectedAll(value: boolean) {
     this._isSelectedAll = value;
-    this._testLanguages.map(l => l['checked'] = value);
+    this._innoCardLanguages.map(l => l['checked'] = value);
   }
 
-  get testLanguages(): Array<Language> {
-    return this._testLanguages;
+
+  get innoCardLanguages(): Array<Language> {
+    return this._innoCardLanguages;
+  }
+
+  get languageSelected(): Language {
+    return this._languageSelected;
   }
 
   ngOnDestroy(): void {
@@ -698,7 +746,7 @@ export class PitchComponent implements OnInit, OnDestroy {
   }
 
   selectLanguage(language: Language) {
-    this._isSelectedAll = !this._testLanguages.find(l => {
+    this._isSelectedAll = !this._innoCardLanguages.find(l => {
       return !l['checked']
     });
   }

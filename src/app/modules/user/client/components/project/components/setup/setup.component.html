@@ -48,21 +48,21 @@
             <!-- /preview -->
 
             <!-- card lang -->
-            <ng-container *ngIf="(innovation.status === 'EDITING' || innovation.status === 'SUBMITTED') && canAddCard">
+            <ng-container>
               <div class="m-bottom-15 m-right-15">
                 <div class="dropdown">
                   <!-- language selected -->
                   <a class="button dropdown-toggle is-primary is-outlined d-flex align-center justify-start" tabindex="0">
                     <ng-container *ngTemplateOutlet="langStatus; context:{$implicit: languageSelected}">
                     </ng-container>
-                     <i class="fas fa-caret-down is-sm" *ngIf="testLanguages && testLanguages.length > 1"></i>
+                     <i class="fas fa-caret-down is-sm" *ngIf="innoCardLanguages && innoCardLanguages.length > 1"></i>
                   </a>
                   <!-- /language selected -->
 
                   <!-- available languages -->
                   <ul class="menu">
                     <li class="menu-item"
-                        *ngFor="let language of testLanguages"
+                        *ngFor="let language of innoCardLanguages"
                         (click)="selectLanguage($event, language)">
                       <label class="fullspace d-flex align-center">
                           <ng-container *ngTemplateOutlet="langStatus; context:{$implicit: language}">
@@ -77,8 +77,11 @@
               <!-- language status + name template -->
               <ng-template #langStatus let-context>
                 <ng-container>
-                  <i [ngClass]="context['status'] ==='EDITING'? 'fa fa-circle text-error': 'fa fa-check-circle text-success'" class="m-right-4 is-sm"></i>
-                  {{context.alias}}
+                  <button class="button is-circled is-xs"
+                          [ngClass]="context?.status === 'EDITING'? 'is-danger': 'is-success'">
+                    <i style="font-size: 20px" [ngClass]="context?.status ==='EDITING'? 'fa fa-times-circle': 'fa fa-check-circle'"></i>
+                  </button>
+                  <span class="m-left-3 m-right-3">{{context?.alias}}</span>
                 </ng-container>
               </ng-template>
               <!-- /language status + name template -->
@@ -142,45 +145,45 @@
 
 
 <!-- modal to innovation card add lang -->
-<umius-modal [(showModal)]="showCardModal">
+<!--<umius-modal [(showModal)]="showCardModal">-->
 
-  <!-- body -->
-  <section class="modal-body p-bottom-40">
-    <h2 style="color: #4C4C4C" class="title is-4 text-center text-bold m-bottom-50">
-      {{ 'PROJECT_SETUP.ADD_PROJECT_MODAL.HEADING' | translate }}
-    </h2>
-    <div class="mxw-550 m-right-auto m-left-auto">
-      {{ 'PROJECT_SETUP.ADD_PROJECT_MODAL.INFO' | translate }}
-    </div>
-  </section>
-  <!-- body -->
+<!--  &lt;!&ndash; body &ndash;&gt;-->
+<!--  <section class="modal-body p-bottom-40">-->
+<!--    <h2 style="color: #4C4C4C" class="title is-4 text-center text-bold m-bottom-50">-->
+<!--      {{ 'PROJECT_SETUP.ADD_PROJECT_MODAL.HEADING' | translate }}-->
+<!--    </h2>-->
+<!--    <div class="mxw-550 m-right-auto m-left-auto">-->
+<!--      {{ 'PROJECT_SETUP.ADD_PROJECT_MODAL.INFO' | translate }}-->
+<!--    </div>-->
+<!--  </section>-->
+<!--  &lt;!&ndash; body &ndash;&gt;-->
 
-  <!-- footer -->
-  <footer class="modal-footer justify-center">
+<!--  &lt;!&ndash; footer &ndash;&gt;-->
+<!--  <footer class="modal-footer justify-center">-->
 
-    <button
-      [disabled]="isAddingCard"
-      (click)="closeModal()"
-      class="button modal-cancel"
-      id="btn-cancel">
-      {{ 'COMMON.BUTTON.CANCEL' | translate }}
-    </button>
+<!--    <button-->
+<!--      [disabled]="isAddingCard"-->
+<!--      (click)="closeModal()"-->
+<!--      class="button modal-cancel"-->
+<!--      id="btn-cancel">-->
+<!--      {{ 'COMMON.BUTTON.CANCEL' | translate }}-->
+<!--    </button>-->
 
-    <button
-      (click)="addInnovationCard($event)"
-      [disabled]="isAddingCard"
-      class="button "
-      id="btn-confirm-card">
-      <ng-container *ngIf="isAddingCard; else defConfirmText">
-        {{ 'COMMON.BUTTON.ADDING_LANG' | translate }}
-      </ng-container>
-      <ng-template #defConfirmText>
-        {{ 'COMMON.BUTTON.CONFIRM' | translate }}
-      </ng-template>
-    </button>
+<!--    <button-->
+<!--      (click)="addInnovationCard($event)"-->
+<!--      [disabled]="isAddingCard"-->
+<!--      class="button "-->
+<!--      id="btn-confirm-card">-->
+<!--      <ng-container *ngIf="isAddingCard; else defConfirmText">-->
+<!--        {{ 'COMMON.BUTTON.ADDING_LANG' | translate }}-->
+<!--      </ng-container>-->
+<!--      <ng-template #defConfirmText>-->
+<!--        {{ 'COMMON.BUTTON.CONFIRM' | translate }}-->
+<!--      </ng-template>-->
+<!--    </button>-->
 
-  </footer>
-  <!-- /footer -->
+<!--  </footer>-->
+<!--  &lt;!&ndash; /footer &ndash;&gt;-->
 
-</umius-modal>
+<!--</umius-modal>-->
 <!-- modal to innovation card add lang -->
