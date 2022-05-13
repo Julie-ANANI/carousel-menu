@@ -6,32 +6,26 @@
     <!-- language choice -->
     <div *ngIf="!noLanguage" class="language-wrapper">
       <label class="form-label">Choose language:</label>
-      <div
-        (click)="changeLanguage('en')"
-        *ngIf="innovationCardLanguages.indexOf('en') !== -1"
-        [ngClass]="{ active: language === 'en' }"
-        class="text-link">
-        English
-      </div>
-      <div
-        (click)="changeLanguage('fr')"
-        *ngIf="innovationCardLanguages.indexOf('fr') !== -1"
-        [ngClass]="{ active: language === 'fr' }"
-        class="text-link">
-        French
-      </div>
+      <ng-container *ngFor="let lang of innovationCardLanguages">
+        <div
+          (click)="changeLanguage(lang)"
+          *ngIf="innovationCardLanguages.indexOf(lang) !== -1"
+          [ngClass]="{ 'text-underline': language === lang }"
+          class="text-link" >
+          {{('COMMON.LANG.' + lang.toUpperCase()) | translate}}
+        </div>
+      </ng-container>
     </div>
     <!-- /language choice -->
 
     <!-- no language set -->
     <div *ngIf="noLanguage && !languageHasBeenSet" class="language-wrapper">
       <label class="form-label">Which language would you like to communicate with the project owner?</label>
-      <div (click)="setLanguage('en')" [ngClass]="{ active: language === 'en' }" class="text-link">
-        English
-      </div>
-      <div (click)="setLanguage('fr')" [ngClass]="{ active: language === 'fr' }" class="text-link">
-        French
-      </div>
+      <ng-container *ngFor="let lang of innovationCardLanguages">
+        <div (click)="setLanguage(lang)" [ngClass]="{ 'active': language === lang }" class="text-link">
+          {{('COMMON.LANG.' + lang.toUpperCase()) | translate}}
+        </div>
+      </ng-container>
     </div>
     <!-- no language set -->
 

@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { EmailSignature } from '../../../../models/email-signature';
-import { Language } from "../../../../models/static-data/language";
 import {EmailObject} from '../../../../models/email';
 
 @Component({
@@ -27,7 +26,7 @@ export class SidebarWorkflowComponent implements OnInit{
 
   @Input() id = this.inputLanguage;
 
-  @Input() innovationCardLanguages: Array<Language> = [];
+  @Input() innovationCardLanguages: Array<string> = [];
 
   @Output() emailChange: EventEmitter<any> = new EventEmitter<any>();
 

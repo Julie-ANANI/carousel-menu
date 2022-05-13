@@ -109,8 +109,6 @@ export class AdminEditWorkflowComponent {
 
     this._total = this._campaignScenario.emails.length;
 
-    console.log(this._emails);
-
     const columns: Array<Column> = [
       {
         _attrs: ['num', `${this._languageSelected}.subject`],
@@ -150,7 +148,6 @@ export class AdminEditWorkflowComponent {
 
   public editEmail(email: any) {
     this._emailToEdit = email;
-    console.log(email);
     this._emailToEdit.campaignId = this.campaignId;
     this._sidebar = {
       size: '726px',

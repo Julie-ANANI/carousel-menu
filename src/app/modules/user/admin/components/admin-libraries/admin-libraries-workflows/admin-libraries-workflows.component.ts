@@ -18,6 +18,8 @@ import {UmiusConfigInterface, UmiusLocalStorageService} from '@umius/umi-common-
 
 export class AdminLibrariesWorkflowsComponent implements OnInit {
 
+  private _workflowTemplateLanguages = ['en', 'fr', 'es', 'de', 'pt', 'it', 'nl'];
+
   private _newScenarioName = '';
 
   private _scenarioSignature: EmailSignature = <EmailSignature>{};
@@ -122,10 +124,8 @@ export class AdminLibrariesWorkflowsComponent implements OnInit {
       this._isAdding = true;
       const emails: Array<EmailTemplate> = [];
       const steps = ['FIRST', 'SECOND', 'THIRD', 'THANKS'];
-
-      const languages = ['en', 'fr'];
       steps.forEach((step: string) => {
-        languages.forEach((language: string) => {
+        this._workflowTemplateLanguages.forEach((language: string) => {
           emails.push(this._createEmail(step, language));
         });
       });
@@ -212,6 +212,10 @@ export class AdminLibrariesWorkflowsComponent implements OnInit {
 
   get fetchingError(): boolean {
     return this._fetchingError;
+  }
+
+  get workflowTemplateLanguages(): string[] {
+    return this._workflowTemplateLanguages;
   }
 
   get config(): UmiusConfigInterface {
