@@ -4,7 +4,6 @@ import { EmailTemplate } from '../../../../../models/email-template';
 import { EmailSignature } from '../../../../../models/email-signature';
 import {EmailObject} from '../../../../../models/email';
 import {Column, Table, UmiusConfigInterface, UmiusSidebarInterface} from '@umius/umi-common-component';
-import { Language } from "../../../../../models/static-data/language";
 
 @Component({
   selector: 'app-admin-edit-workflow',
@@ -14,10 +13,10 @@ import { Language } from "../../../../../models/static-data/language";
 export class AdminEditWorkflowComponent {
 
   // TODO: change to Array<Language>
-  @Input() set innovationCardLanguages(value: Array<Language>) {
+  @Input() set innovationCardLanguages(value: Array<string>) {
     if (value && value.length) {
       this._innovationCardLanguages = value;
-      this._languageSelected = this._innovationCardLanguages[0].type;
+      this._languageSelected = this._innovationCardLanguages[0];
     }
   }
 
@@ -55,7 +54,7 @@ export class AdminEditWorkflowComponent {
 
   private _isModifiedFr = false;
 
-  private _innovationCardLanguages: Array<Language> = [];
+  private _innovationCardLanguages: Array<string> = [];
 
   private _inCampaign = false;
 
@@ -109,6 +108,8 @@ export class AdminEditWorkflowComponent {
     this._emails = [steps.FIRST, steps.SECOND, steps.THIRD, steps.THANKS];
 
     this._total = this._campaignScenario.emails.length;
+
+    console.log(this._emails);
 
     const columns: Array<Column> = [
       {
@@ -268,7 +269,7 @@ export class AdminEditWorkflowComponent {
     this._localConfig = value;
   }
 
-  get innovationCardLanguages(): Array<Language> {
+  get innovationCardLanguages(): Array<string> {
     return this._innovationCardLanguages;
   }
 }

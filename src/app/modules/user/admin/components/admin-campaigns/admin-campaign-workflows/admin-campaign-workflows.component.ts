@@ -15,7 +15,6 @@ import { RolesFrontService } from '../../../../../../services/roles/roles-front.
 import { CampaignFrontService } from '../../../../../../services/campaign/campaign-front.service';
 import { AuthService } from '../../../../../../services/auth/auth.service';
 import {UmiusConfigInterface} from '@umius/umi-common-component';
-import { lang, Language } from "../../../../../../models/static-data/language";
 
 @Component({
   templateUrl: './admin-campaign-workflows.component.html',
@@ -50,7 +49,7 @@ export class AdminCampaignWorkflowsComponent implements OnInit {
 
   private _isTesting = false;
 
-  private _innovationCardLanguages: Array<Language> = [];
+  private _innovationCardLanguages: Array<string> = [];
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _activatedRoute: ActivatedRoute,
@@ -99,7 +98,7 @@ export class AdminCampaignWorkflowsComponent implements OnInit {
     const workflowToAdd = this._templates.find(
       (item) => item.name.toUpperCase().indexOf(workflow.toUpperCase()) !== -1
     );
-    if (this._campaign.settings.defaultWorkflow === '') {
+    if (this._campaign.settings.defaultWorkflow === '' && !!workflowToAdd) {
       this._selectedTemplate = workflowToAdd;
       this._prepareImport(false);
       this.updateAvailableScenario(this._selectedTemplate);
@@ -108,12 +107,13 @@ export class AdminCampaignWorkflowsComponent implements OnInit {
   }
 
   private _getInnovationCardLanguages() {
-    this._innovationCardLanguages = lang.splice(3);
-    // if (this._campaign.innovation && this._campaign.innovation.innovationCards && this._campaign.innovation.innovationCards.length) {
-    //   this._campaign.innovation.innovationCards.map(innoCard => {
-    //     this._innovationCardLanguages.push(innoCard.lang);
-    //   });
-    // }
+    this._innovationCardLanguages = [];
+    if (this._campaign.innovation && this._campaign.innovation.innovationCards && this._campaign.innovation.innovationCards.length) {
+      this._campaign.innovation.innovationCards.map(innoCard => {
+        this._innovationCardLanguages.push(innoCard.lang);
+      });
+    }
+    console.log(this._innovationCardLanguages);
   }
 
   public canAccess(path?: Array<string>) {
@@ -142,6 +142,7 @@ export class AdminCampaignWorkflowsComponent implements OnInit {
       .subscribe(
         (response: Response) => {
           this._templates = (response && response.result) || [];
+          console.log(this._templates);
           if (this._templates.length > 0) {
             this._selectedTemplate = this._templates[0];
             this._verifyCampaignType();
@@ -219,9 +220,11 @@ export class AdminCampaignWorkflowsComponent implements OnInit {
   }
 
   private _prepareImport(isModified: boolean) {
+    console.log(this._selectedTemplate);
     this._selectedTemplate = {
       name: this._selectedTemplate.name,
       emails: this._selectedTemplate.emails.map((m) => {
+        console.log(m);
         m.nameWorkflow = this._selectedTemplate.name;
         m.modified = isModified;
         return m;
@@ -436,7 +439,7 @@ export class AdminCampaignWorkflowsComponent implements OnInit {
     return this._isTesting;
   }
 
-  get innovationCardLanguages(): Array<Language> {
+  get innovationCardLanguages(): Array<string> {
     return this._innovationCardLanguages;
   }
 }
