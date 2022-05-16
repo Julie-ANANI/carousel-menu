@@ -4,7 +4,7 @@ import { MenuKebabComponent } from './menu-kebab.component';
 import { MenuKebabDirective } from './menu-kebab.directive';
 
 @NgModule({
-  declarations: [MenuKebabComponent, Directive, MenuKebabDirective],
+  declarations: [MenuKebabComponent, MenuKebabDirective],
   exports: [MenuKebabComponent, MenuKebabDirective
   ],
   imports: [

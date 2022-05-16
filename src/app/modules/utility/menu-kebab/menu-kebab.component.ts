@@ -1,4 +1,4 @@
-import {AfterViewInit, ChangeDetectorRef, Component, ContentChildren, Directive, Inject, Input, PLATFORM_ID} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, ContentChildren, Directive, Inject, Input, PLATFORM_ID, QueryList} from '@angular/core';
 import {Innovation} from '../../../models/innovation';
 import {RouteFrontService} from '../../../services/route/route-front.service';
 import {InnovCard} from '../../../models/innov-card';
@@ -17,6 +17,7 @@ import {first, takeUntil} from 'rxjs/operators';
 import {HttpErrorResponse} from '@angular/common/http';
 import {ErrorFrontService} from '../../../services/error/error-front.service';
 import {Mission} from '../../../models/mission';
+import {MenuKebabDirective} from './menu-kebab.directive';
 
 @Directive({
   selector: '.kebab-carousel-item'
@@ -28,10 +29,15 @@ export class KebabCarouselItemElement {
   selector: 'app-menu-kebab',
   exportAs:'app-menu-kebab',
   template: `
+<!-- We create template for this utility-->
     <section class="bg-white sticky header-wrapper kebab-carousel-wrapper">
       <div class="d-flex relative m-top-30 align-center container fluid">
       <ul class="kebab-carousel-inner" #carousel>
         <li> *ngFor="let item of items;" class="kebab-carousel-item">
+         <!--   we can't use a simple content of projection because we want curl items
+            The solution is use ng-template-->
+           <!--     We use ng-template-outlet for defined a template parameters who pass in component entry
+           It's for have a reference to a item-->
           <ng-container [ngTemplateOutlet]="item.template"><</ng-container>
         </li>
       </ul>
@@ -55,6 +61,7 @@ export class KebabCarouselItemElement {
 })
 
 export class MenuKebabComponent implements AfterViewInit {
+  @ContentChildren(MenuKebabDirective) items : QueryList<MenuKebabDirective>;
 
   @Input() items11 = [
     'french_1',
