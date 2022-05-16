@@ -1,15 +1,7 @@
-import {
-  AfterViewInit,
-  ChangeDetectorRef,
-  Component,
-  ContentChildren,
-  Directive,
-  Inject,
-  Input,
-  PLATFORM_ID,
-  QueryList,
-  ElementRef,
-  ViewChildren, ViewChild, TemplateRef
+import {AfterViewInit, ChangeDetectorRef, Component,
+  //ContentChildren,
+  Directive, Inject, Input, PLATFORM_ID, QueryList, ElementRef,
+  ViewChildren, ViewChild, TemplateRef, OnInit
 } from '@angular/core';
 import {Innovation} from '../../../models/innovation';
 import {RouteFrontService} from '../../../services/route/route-front.service';
@@ -29,7 +21,7 @@ import {first, takeUntil} from 'rxjs/operators';
 import {HttpErrorResponse} from '@angular/common/http';
 import {ErrorFrontService} from '../../../services/error/error-front.service';
 import {Mission} from '../../../models/mission';
-import {MenuKebabDirective} from './menu-kebab.directive';
+//import {MenuKebabDirective} from './menu-kebab.directive';
 import {AnimationFactory, AnimationPlayer, AnimationBuilder, animate, style} from '@angular/animations';
 
 
@@ -48,7 +40,7 @@ export class KebabCarouselItemElement {
 })
 
 
-export class MenuKebabComponent implements AfterViewInit {
+export class MenuKebabComponent<T> implements AfterViewInit, OnInit {
 
   @Input() timing = '250ms ease-in';
   @Input() kebabCarouselWidth = {};
@@ -60,28 +52,26 @@ export class MenuKebabComponent implements AfterViewInit {
   @Input() isActive = false;
   @Input() minDelimitersOfItems = 5;
   @Input() itemTemplate: TemplateRef<{item: any}>
+  @Input() initialState: 'expanded' | 'collapsed' = 'collapsed';
 
-  @Input() displayedMenuItemsArray = [
-    { lang: 'French_1' },
-    { lang: 'Anglais 2' },
-    { lang: 'Anglais 2' },
-    { lang: 'Anglais 2' },
-    { lang: 'Anglais 2' },
-    { lang: 'Anglais 2' },
-    { lang: 'Anglais 2' },
-    { lang: 'Spain 3' },
+  public alwaysDisplayedMenuItemsArray: T[] = [];
+  public menuItemsArrayExpandable: T[] = [];
+
+
+  @Input() itemsTest = [
+   'French_1',
+   'French_1',
+   'French_1',
+   'French_1',
+   'French_1',
+   'French_1',
+   'French_1',
+   'French_1',
+   'French_1',
+   'French_1',
+   'French_1',
   ];
 
-  @Input() menuItemsArrayExpandable = [
-    { lang: 'French_1' },
-    { lang: 'Anglais 2' },
-    { lang: 'Anglais 2' },
-    { lang: 'Anglais 2' },
-    { lang: 'Anglais 2' },
-    { lang: 'Anglais 2' },
-    { lang: 'Anglais 2' },
-    { lang: 'Spain 3' },
-  ];
 
   private player : AnimationPlayer;
 
@@ -93,7 +83,7 @@ export class MenuKebabComponent implements AfterViewInit {
 
   private _isDisplayItems = false;
 
-  private _displaySuiteKebabItems = true;
+  private _displaySuiteKebabItems = false;
 
   private _campaignTabs: Array<string> = ['search', 'history', 'pros', 'workflows', 'batch'];
 
@@ -130,15 +120,18 @@ export class MenuKebabComponent implements AfterViewInit {
   private _showModal = false;
 
 
-  @ContentChildren(MenuKebabDirective) items : QueryList<MenuKebabDirective>;
+  //@ContentChildren(MenuKebabDirective) items : QueryList<MenuKebabDirective>;
   //we have reference to item
   @ViewChildren(KebabCarouselItemElement, {read: ElementRef}) private itemsElements :
     QueryList<ElementRef>;
   @ViewChild('carousel') private carousel : ElementRef;
 
+  private expanded: false;
+
+
   next() {
-    if( this.currentLang + 1 === this.displayedMenuItemsArray.length ) return;
-    this.currentLang = (this.currentLang + 1) % this.displayedMenuItemsArray.length;
+    if( this.currentLang + 1 === this.itemsTest.length ) return;
+    this.currentLang = (this.currentLang + 1) % this.itemsTest.length;
     const offset = this.currentLang * this.itemWidth;
 
     const myAnimation : AnimationFactory = this.builder.build([
@@ -151,7 +144,7 @@ export class MenuKebabComponent implements AfterViewInit {
 
   prev() {
     if( this.currentLang === 0 ) return;
-    this.currentLang = ((this.currentLang - 1) + this.displayedMenuItemsArray.length) % this.displayedMenuItemsArray.length;
+    this.currentLang = ((this.currentLang - 1) + this.itemsTest.length) % this.itemsTest.length;
     const offset = this.currentLang * this.itemWidth;
 
     const myAnimation : AnimationFactory = this.builder.build([
@@ -244,7 +237,16 @@ export class MenuKebabComponent implements AfterViewInit {
       .subscribe((save) => {
         this._toBeSavedComment = save;
       });
+
+    this.expanded = this.initialState === 'expanded';
+    this.alwaysDisplayedMenuItemsArray = this.itemsTest.slice(0, this.minDelimitersOfItems);
+    this.menuItemsArrayExpandable = this.itemsTest.slice(this.minDelimitersOfItems, this.items.length);
   }
+
+  public toggleExpandables () {
+    this.expanded = !this.expanded;
+  }
+
 
   ngAfterViewChecked() {
     this._changeDetectorRef.detectChanges();
