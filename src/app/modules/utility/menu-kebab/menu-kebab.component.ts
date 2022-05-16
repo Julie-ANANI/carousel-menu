@@ -1,4 +1,4 @@
-import {AfterViewInit, ChangeDetectorRef, Component, ContentChildren, Inject, Input, PLATFORM_ID} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, ContentChildren, Directive, Inject, Input, PLATFORM_ID} from '@angular/core';
 import {Innovation} from '../../../models/innovation';
 import {RouteFrontService} from '../../../services/route/route-front.service';
 import {InnovCard} from '../../../models/innov-card';
@@ -18,11 +18,42 @@ import {HttpErrorResponse} from '@angular/common/http';
 import {ErrorFrontService} from '../../../services/error/error-front.service';
 import {Mission} from '../../../models/mission';
 
+@Directive({
+  selector: '.kebab-carousel-item'
+})
+export class KebabCarouselItemElement {
+}
+
 @Component({
   selector: 'app-menu-kebab',
-  templateUrl: './menu-kebab.html',
-  styleUrls: ['./menu-kebab.scss']
+  exportAs:'app-menu-kebab',
+  template: `
+    <section class="bg-white sticky header-wrapper kebab-carousel-wrapper">
+      <div class="d-flex relative m-top-30 align-center container fluid">
+      <ul class="kebab-carousel-inner" #carousel>
+        <li> *ngFor="let item of items;" class="kebab-carousel-item">
+          <ng-container [ngTemplateOutlet]="item.template"><</ng-container>
+        </li>
+      </ul>
+      </div>
+    </section>
+  `,
+  styles: [`
+    .kebab-carousel-wrapper {
+      overflow: hidden;
+    }
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      height: 40px;
+    }
+    .kebab-carousel-inner {
+      display: flex;
+    }
+ `]
 })
+
 export class MenuKebabComponent implements AfterViewInit {
 
   @Input() items11 = [
@@ -64,21 +95,21 @@ export class MenuKebabComponent implements AfterViewInit {
     }
   }
 
-  @Input() color = '#EFEFEF';
-  @Input() btnViewColor = '#4F5D6B';
-  @Input() textColor = '#00B0FF';
-  @Input() isActive = false;
-  @Input() middleDelimitersOfItems = 10;
-  @Input() maxDelimitersOfItems = 18;
-  @Input() minDelimitersOfItems = 5;
+  // @Input() color = '#EFEFEF';
+  // @Input() btnViewColor = '#4F5D6B';
+  // @Input() textColor = '#00B0FF';
+  // @Input() isActive = false;
+  // @Input() middleDelimitersOfItems = 10;
+  // @Input() maxDelimitersOfItems = 18;
+  // @Input() minDelimitersOfItems = 5;
 
-  private _isDisplayItems = false;
+  //private _isDisplayItems = false;
 
-  private _displaySuiteKebabItems = false;
+  //private _displaySuiteKebabItems = false;
 
-  private _displayBackItems = false;
+  //private _displayBackItems = false;
 
-  private _displayFrontItems = false;
+  //private _displayFrontItems = false;
 
   private _campaignTabs: Array<string> = ['search', 'history', 'pros', 'workflows', 'batch'];
 
@@ -113,6 +144,7 @@ export class MenuKebabComponent implements AfterViewInit {
   private _toBeSavedComment = false;
 
   private _showModal = false;
+
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _routeFrontService: RouteFrontService,
@@ -422,13 +454,13 @@ export class MenuKebabComponent implements AfterViewInit {
     return this._activeTab;
   }
 
-  get showCardModal(): boolean {
-    return this._showCardModal;
-  }
-
-  set showCardModal(value: boolean) {
-    this._showCardModal = value;
-  }
+  // get showCardModal(): boolean {
+  //   return this._showCardModal;
+  // }
+  //
+  // set showCardModal(value: boolean) {
+  //   this._showCardModal = value;
+  // }
 
   get project(): Innovation {
     return this._project;
@@ -479,37 +511,37 @@ export class MenuKebabComponent implements AfterViewInit {
     this._showModal = value;
   }
 
-  get displaySuiteKebabItems(): boolean {
-    return this._displaySuiteKebabItems;
-  }
-
-  set displaySuiteKebabItems(value: boolean) {
-    this._displaySuiteKebabItems = value;
-  }
-
-  get isDisplayItems(): boolean {
-    return this._isDisplayItems;
-  }
-
-  set isDisplayItems(value: boolean) {
-    this._isDisplayItems = value;
-  }
-
-  get displayBackItems(): boolean {
-    return this._displayBackItems;
-  }
-
-  set displayBackItems(value: boolean) {
-    this._displayBackItems = value;
-  }
-
-  get displayFrontItems(): boolean {
-    return this._displayFrontItems;
-  }
-
-  set displayFrontItems(value: boolean) {
-    this._displayFrontItems = value;
-  }
+  // get displaySuiteKebabItems(): boolean {
+  //   return this._displaySuiteKebabItems;
+  // }
+  //
+  // set displaySuiteKebabItems(value: boolean) {
+  //   this._displaySuiteKebabItems = value;
+  // }
+  //
+  // get isDisplayItems(): boolean {
+  //   return this._isDisplayItems;
+  // }
+  //
+  // set isDisplayItems(value: boolean) {
+  //   this._isDisplayItems = value;
+  // }
+  //
+  // get displayBackItems(): boolean {
+  //   return this._displayBackItems;
+  // }
+  //
+  // set displayBackItems(value: boolean) {
+  //   this._displayBackItems = value;
+  // }
+  //
+  // get displayFrontItems(): boolean {
+  //   return this._displayFrontItems;
+  // }
+  //
+  // set displayFrontItems(value: boolean) {
+  //   this._displayFrontItems = value;
+  // }
 
   ngOnDestroy(): void {
     this._ngUnsubscribe.next();

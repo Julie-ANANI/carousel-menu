@@ -1,119 +1,120 @@
-<section class="bg-white sticky header-wrapper">
-  <div class="d-flex relative m-top-30 align-center container fluid"
-       [ngStyle]="{'background-color': color, 'height': '40px'}">
+<!--<section class="bg-white sticky header-wrapper">-->
+<!--  <div class="d-flex relative m-top-30 align-center container fluid"-->
+<!--       [ngStyle]="{'background-color': color, 'height': '40px'}">-->
 
-    <!--  click button front and display button back  -->
-    <div *ngIf="items11.length >= middleDelimitersOfItems && displaySuiteKebabItems"
-         (click)="displayFrontItems = !displayFrontItems"
-         class="absolute m-left-20 icon-container is-xl is-overlay"
-         [ngStyle]="{'left':'-0.7em'}">
-      <i class="icon icon-arrow-left is-lg"></i>
-    </div>
-    <!--  click button front and display end button back -->
+<!--    &lt;!&ndash;  click button front and display button back  &ndash;&gt;-->
+<!--    <div *ngIf="items11.length >= middleDelimitersOfItems && displaySuiteKebabItems"-->
+<!--         (click)="displayFrontItems = !displayFrontItems"-->
+<!--         class="absolute m-left-20 icon-container is-xl is-overlay"-->
+<!--         [ngStyle]="{'left':'-0.7em'}">-->
+<!--      <i class="icon icon-arrow-left is-lg"></i>-->
+<!--    </div>-->
+<!--    &lt;!&ndash;  click button front and display end button back &ndash;&gt;-->
 
-    <!--  item display -->
+<!--    &lt;!&ndash;  item display &ndash;&gt;-->
 
-    <ul class="tab m-left-40"
-        [ngStyle]="{'border-bottom': '0px'}">
-        <ng-container *ngFor="let label of items11; let index = index">
+<!--    <ul class="tab m-left-40"-->
+<!--        [ngStyle]="{'border-bottom': '0px'}">-->
+<!--        <ng-container *ngFor="let label of items11; let index = index">-->
 
-          <!--  item min display -->
-<!--          index < (minDelimitersOfItems ) === !isDisplayItems    first cond-->
-<!--              second cond-->
-          <div *ngIf="(((index < middleDelimitersOfItems  && index > minDelimitersOfItems)  === !displaySuiteKebabItems )=== isDisplayItems) || ((index < minDelimitersOfItems) === !isDisplayItems)">
+<!--          &lt;!&ndash;  item min display &ndash;&gt;-->
+<!--&lt;!&ndash;          index < (minDelimitersOfItems ) === !isDisplayItems    first cond&ndash;&gt;-->
+<!--&lt;!&ndash;              second cond&ndash;&gt;-->
+<!--          <div *ngIf="(((index < middleDelimitersOfItems  && index > minDelimitersOfItems)  === !displaySuiteKebabItems )=== isDisplayItems) || ((index < minDelimitersOfItems) === !isDisplayItems)">-->
 
-            <!--  click button view more and item more minDelimitersOfItem and more to maxDelimitersOfItem 6 > 11-->
-            <!--  end click button view more and item more minDelimitersOfItem and more to maxDelimitersOfItem -->
-<!--            <div *ngIf="(1 > index  && index < 10) === displayBackItems && !displaySuiteKebabItems">-->
+<!--            &lt;!&ndash;  click button view more and item more minDelimitersOfItem and more to maxDelimitersOfItem 6 > 11&ndash;&gt;-->
+<!--            &lt;!&ndash;  end click button view more and item more minDelimitersOfItem and more to maxDelimitersOfItem &ndash;&gt;-->
+<!--&lt;!&ndash;            <div *ngIf="(1 > index  && index < 10) === displayBackItems && !displaySuiteKebabItems">&ndash;&gt;-->
 
 
-              <li class="m-right-30 text-capitalize tab-item">
+<!--              <li class="m-right-30 text-capitalize tab-item">-->
 
-                      <span class="m-left-20 text-sm">{{ label }}</span>
+<!--                      <span class="m-left-20 text-sm">{{ label }}</span>-->
 
-              </li>
-<!--            </div>-->
-          </div>
-          <!--  end item min display -->
-        </ng-container>
-    </ul>
-    <!--  end item display -->
+<!--              </li>-->
+<!--&lt;!&ndash;            </div>&ndash;&gt;-->
+<!--          </div>-->
+<!--          &lt;!&ndash;  end item min display &ndash;&gt;-->
+<!--        </ng-container>-->
+<!--    </ul>-->
+<!--    &lt;!&ndash;  end item display &ndash;&gt;-->
 
-    <!--  button menu-kebab -->
-    <div *ngIf="items11.length > (minDelimitersOfItems - 1) && !displaySuiteKebabItems"
-         id="btn-kebab"
-         class="relative align-center"
-         (click)="displaySuiteKebabItems = !displaySuiteKebabItems">
+<!--    &lt;!&ndash;  button menu-kebab &ndash;&gt;-->
+<!--    <div *ngIf="items11.length > (minDelimitersOfItems - 1) && !displaySuiteKebabItems"-->
+<!--         id="btn-kebab"-->
+<!--         class="relative align-center"-->
+<!--         (click)="displaySuiteKebabItems = !displaySuiteKebabItems">-->
 
-        <div class="m-left-20 icon-container is-xl is-overlay">
-          <i class="icon icon-more-horiz is-lg"></i>
-        </div>
-        <!--  button view more -->
-        <span class="text-xs text-bold absolute btn__view">View more</span>
-        <!--  end button view more -->
-    </div>
-    <!--  end button menu-kebab -->
+<!--        <div class="m-left-20 icon-container is-xl is-overlay">-->
+<!--          <i class="icon icon-more-horiz is-lg"></i>-->
+<!--        </div>-->
+<!--        &lt;!&ndash;  button view more &ndash;&gt;-->
+<!--        <span class="text-xs text-bold absolute btn__view">View more</span>-->
+<!--        &lt;!&ndash;  end button view more &ndash;&gt;-->
+<!--    </div>-->
+<!--    &lt;!&ndash;  end button menu-kebab &ndash;&gt;-->
 
-    <!--  button add-lang -->
-        <div
-          *ngIf="activeTab === 'description' || activeTab === 'targeting' || activeTab === 'questionnaire'"
-          class="d-flex align-center animate-fade is-3" style="max-height: 40px">
+<!--    &lt;!&ndash;  button add-lang &ndash;&gt;-->
+<!--        <div-->
+<!--          *ngIf="activeTab === 'description' || activeTab === 'targeting' || activeTab === 'questionnaire'"-->
+<!--          class="d-flex align-center animate-fade is-3" style="max-height: 40px">-->
 
-          <!-- add lang -->
-          <button
-            (click)="openModal($event, 'ADD_LANG')"
-            *ngIf="canAddCard && activeTab === 'description' && canEditDescription && !displaySuiteKebabItems && items11.length > (minDelimitersOfItems - 1)"
-            [disabled]="isAddingCard"
-            class="button is-link is-sm m-left-50 p-30"
-            id="btn-add-card">
-            <i class="fas fa-plus-circle m-right-2"></i>
-            {{ activeCard.lang === 'fr' ? 'Add english' : 'Add french' }}
-          </button>
-          <!-- /add lang -->
+<!--          &lt;!&ndash; add lang &ndash;&gt;-->
+<!--          <button-->
+<!--            (click)="openModal($event, 'ADD_LANG')"-->
+<!--            *ngIf="canAddCard && activeTab === 'description' && canEditDescription && !displaySuiteKebabItems && items11.length > (minDelimitersOfItems - 1)"-->
+<!--            [disabled]="isAddingCard"-->
+<!--            class="button is-link is-sm m-left-50 p-30"-->
+<!--            id="btn-add-card">-->
+<!--            <i class="fas fa-plus-circle m-right-2"></i>-->
+<!--            {{ activeCard.lang === 'fr' ? 'Add english' : 'Add french' }}-->
+<!--          </button>-->
+<!--          &lt;!&ndash; /add lang &ndash;&gt;-->
 
-          <!-- lang change -->
-          <div *ngIf="showLangDrop && activeTab === 'description'" class="dropdown is-right m-right-10">
-            <a class="button is-sm is-link dropdown-toggle" tabindex="0">
-              {{ activeCard.lang === 'fr' ? 'French' : 'English' }}<i class="fas fa-caret-down m-right-2"></i>
-            </a>
+<!--          &lt;!&ndash; lang change &ndash;&gt;-->
+<!--          <div *ngIf="showLangDrop && activeTab === 'description'" class="dropdown is-right m-right-10">-->
+<!--            <a class="button is-sm is-link dropdown-toggle" tabindex="0">-->
+<!--              {{ activeCard.lang === 'fr' ? 'French' : 'English' }}<i class="fas fa-caret-down m-right-2"></i>-->
+<!--            </a>-->
 
-            <ul class="menu">
-              <li
-                (click)="setCardLang(card.lang)"
-                *ngFor="let card of project.innovationCards"
-                class="menu-item flex-between">
-                {{ card.lang === 'fr' ? 'French' : 'English' }}
-                <div
-                  *ngIf="canEditDescription"
-                  (click)="openModal($event, 'DELETE_LANG', card)"
-                  [ngClass]="{'disabled': isDeletingCard}"
-                  class="icon-container is-sm is-overlay">
-                  <i class="icon text-alert icon-delete"></i>
-                </div>
-              </li>
-            </ul>
-          </div>
-          <!-- /lang change -->
+<!--            <ul class="menu">-->
+<!--              <li-->
+<!--                (click)="setCardLang(card.lang)"-->
+<!--                *ngFor="let card of project.innovationCards"-->
+<!--                class="menu-item flex-between">-->
+<!--                {{ card.lang === 'fr' ? 'French' : 'English' }}-->
+<!--                <div-->
+<!--                  *ngIf="canEditDescription"-->
+<!--                  (click)="openModal($event, 'DELETE_LANG', card)"-->
+<!--                  [ngClass]="{'disabled': isDeletingCard}"-->
+<!--                  class="icon-container is-sm is-overlay">-->
+<!--                  <i class="icon text-alert icon-delete"></i>-->
+<!--                </div>-->
+<!--              </li>-->
+<!--            </ul>-->
+<!--          </div>-->
+<!--          &lt;!&ndash; /lang change &ndash;&gt;-->
 
-        </div>
-    <!--  end button add-lang -->
+<!--        </div>-->
+<!--    &lt;!&ndash;  end button add-lang &ndash;&gt;-->
 
-    <!--  button back  -->
-    <div *ngIf="items11.length >= middleDelimitersOfItems && displaySuiteKebabItems"
-         (click)="displayBackItems = !displayBackItems"
-         class="m-left-20 icon-container is-xl is-overlay">
-      <i class="icon icon-arrow-right"></i>
-    </div>
-    <!--  end button back -->
+<!--    &lt;!&ndash;  button back  &ndash;&gt;-->
+<!--    <div *ngIf="items11.length >= middleDelimitersOfItems && displaySuiteKebabItems"-->
+<!--         (click)="displayBackItems = !displayBackItems"-->
+<!--         class="m-left-20 icon-container is-xl is-overlay">-->
+<!--      <i class="icon icon-arrow-right"></i>-->
+<!--    </div>-->
+<!--    &lt;!&ndash;  end button back &ndash;&gt;-->
 
-    <!--  button view less-->
-    <span *ngIf="items11.length > minDelimitersOfItems && displaySuiteKebabItems"
-          (click)="displaySuiteKebabItems = !displaySuiteKebabItems"
-          class=" absolute text-xs text-bold"
-          [ngStyle]="{'right':'1em', 'color': btnViewColor}">View less
-    </span>
-    <!--  end button view less -->
+<!--    &lt;!&ndash;  button view less&ndash;&gt;-->
+<!--    <span *ngIf="items11.length > minDelimitersOfItems && displaySuiteKebabItems"-->
+<!--          (click)="displaySuiteKebabItems = !displaySuiteKebabItems"-->
+<!--          class=" absolute text-xs text-bold"-->
+<!--          [ngStyle]="{'right':'1em', 'color': btnViewColor}">View less-->
+<!--    </span>-->
+<!--    &lt;!&ndash;  end button view less &ndash;&gt;-->
 
-    </div>
+<!--    </div>-->
 
-</section>
+<!--</section>-->
+<link rel="stylesheet" href="menu-kebab.scss">
