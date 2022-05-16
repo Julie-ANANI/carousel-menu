@@ -70,7 +70,10 @@ export class AdminProjectQuestionnaireComponent implements OnInit, OnDestroy {
 
           this.initialiseCardLanguages()
 
-          this.initialiseMirrorLanguages();
+          // initialise language for the first time
+          if (!this._leftMirrorLanguage) {
+            this.initialiseMirrorLanguages();
+          }
 
           this._setSectionsNames();
 
@@ -252,7 +255,6 @@ export class AdminProjectQuestionnaireComponent implements OnInit, OnDestroy {
    */
   selectMirrorLanguage(event: Event, lang: Language, mirror: string) {
     event.preventDefault();
-    console.log(lang);
     if (mirror === 'right') {
       this._rightMirrorLanguage = lang;
     } else {
@@ -326,7 +328,6 @@ export class AdminProjectQuestionnaireComponent implements OnInit, OnDestroy {
 
   set leftMirrorLanguage(value: Language) {
     this._leftMirrorLanguage = value;
-    console.log(this._leftMirrorLanguage);
   }
 
   set rightMirrorLanguage(value: Language) {
