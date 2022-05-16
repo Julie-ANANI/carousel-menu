@@ -16,11 +16,25 @@
     <ul class="kebab-carousel-inner tab m-left-40" #carousel
         [ngStyle]="{'border-bottom': '0px'}">
           <li class="m-right-30 text-capitalize tab-item kebab-carousel-item">
+
             <!-- always template display -->
-<!--            affiche par default false and display false-->
-            <div *ngIf="!displaySuiteKebabItems && isDisplayItems">
-              <ng-container class="m-left-20 text-sm"
-                            *ngFor="let displayedItems of itemsTest; let i = index">{{displayedItems}}
+            <ng-container>
+              <div *ngIf="displaySuiteKebabItems">
+                <ng-container *ngFor="let expandableItem of itemsTest; let i = index">{{expandableItem}}
+
+                  <div *ngIf="i < 4">
+                      <ng-container *ngTemplateOutlet="itemTemplate;context:{item: expandableItem}"></ng-container>
+                  </div>
+
+                </ng-container>
+              </div>
+            </ng-container>
+            <!-- end always template display -->
+
+            <!-- not always template display -->
+            <div *ngIf="!displaySuiteKebabItems">
+              <ng-container
+                            *ngFor="let displayedItems of itemsTest;">{{displayedItems}}
                 <!--   we can't use a simple content of projection because we want curl items The solution is use ng-template-->
                 <!--   We use ng-template-outlet for defined a template parameters who pass in component entry. It's for have a reference to a item-->
                 <!-- not always template display item -->
@@ -30,19 +44,7 @@
 
             <!-- end always template display -->
 
-           <!-- not always template display -->
-           <ng-container>
-                <div *ngIf="displaySuiteKebabItems && !isDisplayItems">
-                  <ng-container *ngFor="let expandableItem of menueExpandableItems; let i = index">{{expandableItem}}
 
-                    <ng-container *ngIf="i <= 4">
-                      <ng-container *ngTemplateOutlet="itemTemplate;context:{item: expandableItem}"></ng-container>
-                    </ng-container>
-
-                  </ng-container>
-                </div>
-          </ng-container>
-          <!-- en not always template display -->
           </li>
     </ul>
     <!--  end item display -->
@@ -60,14 +62,12 @@
 
     <div    id="btn-kebab"
             class="relative align-center"
-            (click)="toggleExpandables"
-            [ngSwitch]="expandable"
+            (click)="displaySuiteKebabItems = !displaySuiteKebabItems"
+            [ngSwitch]="displaySuiteKebabItems"
             *ngIf="itemsTest.length > 4">
-      <ng-container *ngSwitchCase="true">
-        Tout afficher
-      </ng-container>
-      <ng-container *ngSwitchCase="false">
-        Replier
+<!--    true / false  -->
+      <ng-container *ngSwitchCase="!displaySuiteKebabItems"></ng-container>
+      <ng-container *ngSwitchCase="displaySuiteKebabItems">
         <div class="m-left-20 icon-container is-xl is-overlay">
           <i class="icon icon-more-horiz is-lg"></i>
         </div>
@@ -132,7 +132,6 @@
 
     <!--  button view less-->
     <span *ngIf="!displaySuiteKebabItems"
-          (click)="displaySuiteKebabItems = !displaySuiteKebabItems"
           class=" absolute text-xs text-bold"
           [ngStyle]="{'right':'1em', 'color': btnViewColor}">View less
     </span>

@@ -57,8 +57,8 @@ export class MenuKebabComponent<T> implements AfterViewInit, OnInit {
 
   // Config Template
   @Input() itemTemplate: TemplateRef<{item: any}>
-  @Input() initialState: 'expanded' | 'collapsed' = 'collapsed';
-  @Input() expandable = false;
+ // @Input() initialState: 'expandable' | 'collapsed' = 'collapsed';
+ // @Input() expandable = false;
 
   public alwaysDisplayedItems: string[] = [];
   public menueExpandableItems: string[] = [];
@@ -73,9 +73,13 @@ export class MenuKebabComponent<T> implements AfterViewInit, OnInit {
    'French_1',
    'French_1',
    'French_1',
+   'English_1',
+   'English_1',
+   'English_1',
+   'English_1',
    'French_1',
    'French_1',
-   'French_1',
+   'French_12',
   ];
 
 
@@ -88,7 +92,7 @@ export class MenuKebabComponent<T> implements AfterViewInit, OnInit {
 
   //Config Template
   private _isDisplayItems = false;
-  private _displaySuiteKebabItems = false;
+  private _displaySuiteKebabItems = true;
   private player : AnimationPlayer;
 
 
@@ -232,14 +236,14 @@ export class MenuKebabComponent<T> implements AfterViewInit, OnInit {
       });
 
     //check status
-    this.expandable = this.initialState === 'expanded';
+    //this.expandable = this.initialState === 'expandable';
     this.alwaysDisplayedItems = this.itemsTest.slice(0, this.minDelimitersOfItems);
     this.menueExpandableItems = this.itemsTest.slice(this.minDelimitersOfItems, this.itemsTest.length);
   }
 
-  public toggleExpandables () {
-    this.expandable = !this.expandable;
-  }
+  // public toggleExpandables () {
+  //   this.expandable = !this.expandable;
+  // }
 
 
   ngAfterViewChecked() {
