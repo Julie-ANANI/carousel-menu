@@ -1,16 +1,6 @@
-<app-menu-kebab>
-    <ng-container *ngFor="let item of items;">
-      <ng-container *kebabCarouselItem>
-        <div class="item">{{item}}</div>
-      </ng-container>
-    </ng-container>
-</app-menu-kebab>
-
-
 <div class="container fluid" id="admin-project-description">
   <div class="column col-sm-12 col-11 col-mx-auto p-top-30 p-bottom-30">
 
-<!--    <app-admin-project-langs></app-admin-project-langs>-->
     <!-- notify team -->
     <ng-container>
       <div class="text-center m-bottom-30">
@@ -24,6 +14,16 @@
       </div>
     </ng-container>
     <!-- /notify team -->
+
+    <p>START MENU KEBAB</p>
+    <app-menu-kebab>
+      <ng-container *ngFor="let item of items;">
+        <ng-container *kebabCarouselItem>
+          <div class="item">{{item}}</div>
+        </ng-container>
+      </ng-container>
+    </app-menu-kebab>
+    <p>START MENU KEBAB</p>
 
     <!-- sections dynamic -->
     <section

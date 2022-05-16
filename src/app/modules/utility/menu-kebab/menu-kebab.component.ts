@@ -41,18 +41,42 @@ export class KebabCarouselItemElement {
   selector: 'app-menu-kebab',
   exportAs:'app-menu-kebab',
   template: `
-<!-- We create template for this utility-->
+    <!-- We create template for this utility-->
     <section class="bg-white sticky header-wrapper kebab-carousel-wrapper" [ngStyle]="kebabCarouselStyle">
       <div class="d-flex relative m-top-30 align-center container fluid">
-      <ul class="kebab-carousel-inner" #carousel>
-        <li> *ngFor="let item of items;" class="kebab-carousel-item">
-         <!--   we can't use a simple content of projection because we want curl items
-            The solution is use ng-template-->
-           <!--     We use ng-template-outlet for defined a template parameters who pass in component entry
-           It's for have a reference to a item-->
-          <ng-container [ngTemplateOutlet]="item.tpl"><</ng-container>
-        </li>
-      </ul>
+
+        <!--   button back-->
+        <div class="absolute m-left-20 icon-container is-xl is-overlay"
+             (click)="prev"
+             [ngStyle]="{'left':'-0.7em'}">
+          <i class="icon icon-arrow-left is-lg"></i>
+        </div>
+        <!--  button back -->
+
+        <ul class="kebab-carousel-inner" #carousel>
+          <li *ngFor="let item of items;" class="kebab-carousel-item">
+            <!--   we can't use a simple content of projection because we want curl items
+               The solution is use ng-template-->
+            <!--     We use ng-template-outlet for defined a template parameters who pass in component entry
+            It's for have a reference to a item-->
+            <ng-container [ngTemplateOutlet]="item.tpl"></ng-container>
+          </li>
+        </ul>
+
+        <!--  button menu-kebab -->
+        <div
+             id="btn-kebab"
+             class="relative align-center"
+             (click)="displaySuiteKebabItems">
+
+          <div class="m-left-20 icon-container is-xl is-overlay">
+            <i class="icon icon-more-horiz is-lg"></i>
+          </div>
+          <!--  button view more -->
+          <span class="text-xs text-bold absolute btn__view">View more</span>
+          <!--  end button view more -->
+        </div>
+        <!--  end button menu-kebab -->
       </div>
     </section>
   `,
@@ -69,6 +93,37 @@ export class KebabCarouselItemElement {
     .kebab-carousel-inner {
       display: flex;
     }
+
+    :is(#btn-kebab, .icon-more-horiz) ::before {
+      color: #4F5D6B;
+      height:5px;
+      width:5px;
+      transform: rotate(90deg);
+      margin-bottom: 2px;
+    }
+
+    :is(i, .icon-container, .icon-arrow-right, .icon-arrow-left) ::before {
+      color: #4F5D6B;
+      border: 3px solid #4F5D6B;
+      border-bottom: 0;
+      border-right: 0;
+    }
+
+    .button.is-link{
+      font-size:12px;
+      color: #4F5D6B;
+      font-weight: bold;
+    }
+
+    .fa-plus-circle {
+      color: #FFB300;
+    }
+
+    .btn__view{
+      color: #4F5D6B;
+      width: fit-content;
+      margin-top: 16px;
+    }
  `]
 })
 
@@ -79,7 +134,18 @@ export class MenuKebabComponent implements AfterViewInit {
   @ViewChildren(KebabCarouselItemElement, {read: ElementRef}) private itemsElements :
     QueryList<ElementRef>;
 
-  kebabCarouselStyle = {};
+  private itemHeight : number;
+
+  ngAfterViewInit() {
+    throw new Error("Method not implemented.");
+
+    // this.itemHeight = this.itemsElements.first.nativeElement.getBoundingClientRect().height;
+    // this.kebabCarouselStyle = {
+    //   height: `${this.itemHeight}px`
+    // }
+  }
+
+  @Input() kebabCarouselHeight = '40px';
 
   @Input() items11 = [
     'french_1',
@@ -110,16 +176,6 @@ export class MenuKebabComponent implements AfterViewInit {
     'french',
   ];
 
-  public displayItems (){
-
-    for(let [keys, item] of items11){
-
-            if(keys < 5 && this.displaySuiteKebabItems){
-              return item;
-            }
-    }
-  }
-
   // @Input() color = '#EFEFEF';
   // @Input() btnViewColor = '#4F5D6B';
   // @Input() textColor = '#00B0FF';
@@ -130,11 +186,15 @@ export class MenuKebabComponent implements AfterViewInit {
 
   //private _isDisplayItems = false;
 
-  //private _displaySuiteKebabItems = false;
+  private _displaySuiteKebabItems = false;
 
   //private _displayBackItems = false;
 
-  //private _displayFrontItems = false;
+  //private _next = false;
+
+  private _prev = false;
+
+
 
   private _campaignTabs: Array<string> = ['search', 'history', 'pros', 'workflows', 'batch'];
 
@@ -185,10 +245,6 @@ export class MenuKebabComponent implements AfterViewInit {
               private _activatedRoute: ActivatedRoute,
               private _socketService: SocketService) {
   }
-
-  ngAfterViewInit(): void {
-        throw new Error("Method not implemented.");
-    }
 
   ngOnInit() {
     if (this._activatedRoute.snapshot.data['allCampaign']
@@ -540,13 +596,13 @@ export class MenuKebabComponent implements AfterViewInit {
     this._showModal = value;
   }
 
-  // get displaySuiteKebabItems(): boolean {
-  //   return this._displaySuiteKebabItems;
-  // }
-  //
-  // set displaySuiteKebabItems(value: boolean) {
-  //   this._displaySuiteKebabItems = value;
-  // }
+  get displaySuiteKebabItems(): boolean {
+    return this._displaySuiteKebabItems;
+  }
+
+  set displaySuiteKebabItems(value: boolean) {
+    this._displaySuiteKebabItems = value;
+  }
   //
   // get isDisplayItems(): boolean {
   //   return this._isDisplayItems;
@@ -564,13 +620,13 @@ export class MenuKebabComponent implements AfterViewInit {
   //   this._displayBackItems = value;
   // }
   //
-  // get displayFrontItems(): boolean {
-  //   return this._displayFrontItems;
-  // }
-  //
-  // set displayFrontItems(value: boolean) {
-  //   this._displayFrontItems = value;
-  // }
+  get prev(): boolean {
+    return this._prev;
+  }
+
+  set prev(value: boolean) {
+    this._prev = value;
+  }
 
   ngOnDestroy(): void {
     this._ngUnsubscribe.next();

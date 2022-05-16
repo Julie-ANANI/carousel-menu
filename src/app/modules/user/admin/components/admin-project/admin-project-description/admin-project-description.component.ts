@@ -1,4 +1,4 @@
-import {Component, Inject, Input, OnDestroy, OnInit, PLATFORM_ID} from '@angular/core';
+import {Component, Inject, OnDestroy, OnInit, PLATFORM_ID} from '@angular/core';
 import { InnovationFrontService } from '../../../../../../services/innovation/innovation-front.service';
 import { Innovation } from '../../../../../../models/innovation';
 import { Subject } from 'rxjs';
@@ -35,7 +35,6 @@ interface Toggle {
 export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
 
   //test kebab item
-
   items = [
     'french_1',
     'english_2',
@@ -65,7 +64,6 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
     'french',
   ];
   //end tesst kebab item
-
 
   private _innovation: Innovation = <Innovation>{};
 
