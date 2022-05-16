@@ -32,11 +32,13 @@ import {Mission} from '../../../models/mission';
 import {MenuKebabDirective} from './menu-kebab.directive';
 import {AnimationFactory, AnimationPlayer, AnimationBuilder, animate, style} from '@angular/animations';
 
+
 @Directive({
   selector: '.kebab-carousel-item'
 })
 export class KebabCarouselItemElement {
 }
+
 
 @Component({
   selector: 'app-menu-kebab',
@@ -82,57 +84,12 @@ export class MenuKebabComponent implements AfterViewInit {
   ];
 
   private player : AnimationPlayer;
+
   private itemWidth : number;
+
   private currentLang = 0;
+
   carouselWrapperStyle = {}
-
-
-  @ContentChildren(MenuKebabDirective) items : QueryList<MenuKebabDirective>;
-  //we have ref to item
-  @ViewChildren(KebabCarouselItemElement, {read: ElementRef}) private itemsElements :
-    QueryList<ElementRef>;
-  @ViewChild('carousel') private carousel : ElementRef;
-
-  next() {
-    if( this.currentLang + 1 === this.displayedMenuItemsArray.length ) return;
-
-    this.currentLang = (this.currentLang + 1) % this.displayedMenuItemsArray.length;
-
-    const offset = this.currentLang * this.itemWidth;
-
-    const myAnimation : AnimationFactory = this.builder.build([
-      animate(this.timing, style({ transform: `translateX(-${offset}px)` }))
-    ]);
-
-    this.player = myAnimation.create(this.carousel.nativeElement);
-    this.player.play();
-  }
-
-  prev() {
-    if( this.currentLang === 0 ) return;
-
-    this.currentLang = ((this.currentLang - 1) + this.displayedMenuItemsArray.length) % this.displayedMenuItemsArray.length;
-    const offset = this.currentLang * this.itemWidth;
-
-    const myAnimation : AnimationFactory = this.builder.build([
-      animate(this.timing, style({ transform: `translateX(-${offset}px)` }))
-    ]);
-
-    this.player = myAnimation.create(this.carousel.nativeElement);
-    this.player.play();
-  }
-
-  ngAfterViewInit() {
-    throw new Error("Method not implemented.");
-
-    setTimeout(() => {
-      this.itemWidth = this.itemsElements.first.nativeElement.getBoundingClientRect().width;
-      this.carouselWrapperStyle = {
-        width: `${this.itemWidth}px`
-      }
-    });
-
-  }
 
   private _isDisplayItems = false;
 
@@ -172,6 +129,50 @@ export class MenuKebabComponent implements AfterViewInit {
 
   private _showModal = false;
 
+
+  @ContentChildren(MenuKebabDirective) items : QueryList<MenuKebabDirective>;
+  //we have reference to item
+  @ViewChildren(KebabCarouselItemElement, {read: ElementRef}) private itemsElements :
+    QueryList<ElementRef>;
+  @ViewChild('carousel') private carousel : ElementRef;
+
+  next() {
+    if( this.currentLang + 1 === this.displayedMenuItemsArray.length ) return;
+    this.currentLang = (this.currentLang + 1) % this.displayedMenuItemsArray.length;
+    const offset = this.currentLang * this.itemWidth;
+
+    const myAnimation : AnimationFactory = this.builder.build([
+      animate(this.timing, style({ transform: `translateX(-${offset}px)` }))
+    ]);
+
+    this.player = myAnimation.create(this.carousel.nativeElement);
+    this.player.play();
+  }
+
+  prev() {
+    if( this.currentLang === 0 ) return;
+    this.currentLang = ((this.currentLang - 1) + this.displayedMenuItemsArray.length) % this.displayedMenuItemsArray.length;
+    const offset = this.currentLang * this.itemWidth;
+
+    const myAnimation : AnimationFactory = this.builder.build([
+      animate(this.timing, style({ transform: `translateX(-${offset}px)` }))
+    ]);
+
+    this.player = myAnimation.create(this.carousel.nativeElement);
+    this.player.play();
+  }
+
+  ngAfterViewInit() {
+    throw new Error("Method not implemented.");
+
+    setTimeout(() => {
+      this.itemWidth = this.itemsElements.first.nativeElement.getBoundingClientRect().width;
+      this.carouselWrapperStyle = {
+        width: `${this.itemWidth}px`
+      }
+    });
+
+  }
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _routeFrontService: RouteFrontService,
