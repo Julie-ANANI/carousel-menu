@@ -4,12 +4,12 @@
        [ngStyle]="{'background-color': color, 'height': '40px'}">
 
     <!-- button prev  -->
-    <div *ngIf="!displaySuiteKebabItems"
-         (click)="prev"
-         class="absolute m-left-20 icon-container is-xl is-overlay"
-         [ngStyle]="{'left':'-0.7em'}">
-      <i class="icon icon-arrow-left is-lg"></i>
-    </div>
+<!--    <div *ngIf="!displaySuiteKebabItems"-->
+<!--         (click)="prev"-->
+<!--         class="absolute m-left-20 icon-container is-xl is-overlay"-->
+<!--         [ngStyle]="{'left':'-0.7em'}">-->
+<!--      <i class="icon icon-arrow-left is-lg"></i>-->
+<!--    </div>-->
     <!-- end button prev -->
 
     <!--  item display -->
@@ -60,22 +60,22 @@
 <!--           &lt;!&ndash;  end button view more &ndash;&gt;-->
 <!--    </div>-->
 
-    <div    id="btn-kebab"
-            class="relative align-center"
-            (click)="displaySuiteKebabItems = !displaySuiteKebabItems"
-            [ngSwitch]="displaySuiteKebabItems"
-            *ngIf="items.length > 4">
-<!--    true / false  -->
-      <ng-container *ngSwitchCase="!displaySuiteKebabItems"></ng-container>
-      <ng-container *ngSwitchCase="displaySuiteKebabItems">
-        <div class="m-left-20 icon-container is-xl is-overlay">
-          <i class="icon icon-more-horiz is-lg"></i>
-        </div>
-        <!--  button view more -->
-        <span *ngIf="displaySuiteKebabItems" class="text-xs text-bold absolute btn__view">View more</span>
-        <!--  end button view more -->
-      </ng-container>
-    </div>
+<!--    <div    id="btn-kebab"-->
+<!--            class="relative align-center"-->
+<!--            (click)="displaySuiteKebabItems = !displaySuiteKebabItems"-->
+<!--            [ngSwitch]="displaySuiteKebabItems"-->
+<!--            *ngIf="items.length > 4">-->
+<!--&lt;!&ndash;    true / false  &ndash;&gt;-->
+<!--      <ng-container *ngSwitchCase="!displaySuiteKebabItems"></ng-container>-->
+<!--      <ng-container *ngSwitchCase="displaySuiteKebabItems">-->
+<!--        <div class="m-left-20 icon-container is-xl is-overlay">-->
+<!--          <i class="icon icon-more-horiz is-lg"></i>-->
+<!--        </div>-->
+<!--        &lt;!&ndash;  button view more &ndash;&gt;-->
+<!--        <span *ngIf="displaySuiteKebabItems" class="text-xs text-bold absolute btn__view">View more</span>-->
+<!--        &lt;!&ndash;  end button view more &ndash;&gt;-->
+<!--      </ng-container>-->
+<!--    </div>-->
      <!--  end button menu-kebab -->
 
     <!--  button add-lang -->
@@ -123,18 +123,18 @@
     <!--  end button add-lang -->
 
     <!--  button back  -->
-    <div *ngIf="!displaySuiteKebabItems"
-         class="m-left-20 icon-container is-xl is-overlay"
-         (click)="next">
-      <i class="icon icon-arrow-right"></i>
-    </div>
+<!--    <div *ngIf="!displaySuiteKebabItems"-->
+<!--         class="m-left-20 icon-container is-xl is-overlay"-->
+<!--         (click)="next">-->
+<!--      <i class="icon icon-arrow-right"></i>-->
+<!--    </div>-->
     <!--  end button back -->
 
     <!--  button view less-->
-    <span *ngIf="!displaySuiteKebabItems"
-          class=" absolute text-xs text-bold"
-          [ngStyle]="{'right':'1em', 'color': btnViewColor}">View less
-    </span>
+<!--    <span *ngIf="!displaySuiteKebabItems"-->
+<!--          class=" absolute text-xs text-bold"-->
+<!--          [ngStyle]="{'right':'1em', 'color': btnViewColor}">View less-->
+<!--    </span>-->
     <!--  end button view less -->
 
     </div>

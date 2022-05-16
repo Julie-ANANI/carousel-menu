@@ -45,44 +45,60 @@ export class CarouselItemElement {
            [ngStyle]="{'background-color': color, 'height': '40px'}">
 
         <!-- button prev  -->
-        <div *ngIf="!displaySuiteKebabItems"
-             (click)="prev()"
+        <div (click)="prev()"
+             *ngIf="showControls && !displaySuiteKebabItems"
              class="absolute m-left-20 icon-container is-xl is-overlay"
-             [ngStyle]="{'left':'-0.7em'}">
-          <i class="icon icon-arrow-left is-lg"></i>
-          Next
+             [ngStyle]="{'left':'-0.7em'}"><i class="icon icon-arrow-left is-lg"></i>
         </div>
         <!-- end button prev -->
 
-        <ul class="carousel-inner" #carousel>
-          <li *ngFor="let item of items;" class="carousel-item">
-            <ng-container [ngTemplateOutlet]="item.tpl"></ng-container>
-          </li>
-        </ul>
+          <ul class="carousel-inner tab" #carousel>
+            <li *ngFor="let item of items;" class=" text-capitalize carousel-item"
+                [ngStyle]="{'margin-top':'0'}">
+              <ng-container [ngTemplateOutlet]="item.tpl"></ng-container>
+<!--              161px pour 10 langues-->
+            </li>
+          </ul>
+
+        <!-- button menu-kebab -->
+        <div  id="btn-kebab"
+              class="relative align-center"
+              (click)="displaySuiteKebabItems = !displaySuiteKebabItems"
+              [ngSwitch]="displaySuiteKebabItems"
+              [ngStyle]="{'left': '-6em'}"
+              *ngIf="items.length > 4">
+          <!--    true / false  -->
+          <ng-container *ngSwitchCase="!displaySuiteKebabItems"></ng-container>
+          <ng-container *ngSwitchCase="displaySuiteKebabItems">
+            <div class="m-left-20 icon-container is-xl is-overlay">
+              <i class="icon icon-more-horiz is-lg"></i>
+            </div>
+            <!--  button view more -->
+            <span *ngIf="displaySuiteKebabItems" class="text-xs text-bold absolute btn__view">View more</span>
+            <!--  end button view more -->
+          </ng-container>
+        </div>
+        <!--  end button menu-kebab -->
+
+        <!--  button back  -->
+        <div (click)="next()"
+             *ngIf="showControls && !displaySuiteKebabItems"
+             class="absolute m-left-20 icon-container is-xl is-overlay"
+             [ngStyle]="{'right':'3em'}"><i class="icon icon-arrow-right is-lg"></i>
+        </div>
+        <!--  end button back -->
+
+        <!--  button view less-->
+        <span
+          *ngIf="!displaySuiteKebabItems"
+          class=" absolute text-xs text-bold"
+          [ngStyle]="{'right':'1em', 'color': btnViewColor}">View less
+    </span>
+        <!--  end button view less -->
+
       </div>
     </section>
-    <div *ngIf="showControls" style="margin-top: 1em">
-      <button (click)="next()" class="btn btn-default">Next</button>
-      <button (click)="prev()" class="btn btn-default">Prev</button>
-    </div>
-  `,
-  styles: [`
-    ul {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-      width: 6000px;
-    }
-
-    .carousel-wrapper {
-      overflow: hidden;
-    }
-
-    .carousel-inner {
-      display: flex;
-    }
-
-  `]
+  `
 })
 
 
@@ -150,26 +166,6 @@ export class MenuKebabComponent implements AfterViewInit, OnInit {
 
   public alwaysDisplayedItems: string[] = [];
   public menueExpandableItems: string[] = [];
-
-  //test
-  @Input() itemsTest = [
-   'French_1',
-   'French_1',
-   'French_1',
-   'French_1',
-   'French_1',
-   'French_1',
-   'French_1',
-   'French_1',
-   'English_1',
-   'English_1',
-   'English_1',
-   'English_1',
-   'French_1',
-   'French_1',
-   'French_12',
-  ];
-
 
   //size
   private itemWidth : number;

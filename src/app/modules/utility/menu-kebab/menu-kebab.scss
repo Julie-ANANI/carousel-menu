@@ -1,8 +1,9 @@
-.kebab-carousel-wrapper {
+.carousel-wrapper {
   overflow: hidden;
 
-  .kebab-carousel-inner {
+  .carousel-inner {
     display: flex;
+    width: 870px;
   }
 
   :is(#btn-kebab, .icon-more-horiz) ::before {
@@ -41,19 +42,6 @@
     color: #4F5D6B;
     width: fit-content;
     margin-top: 16px;
-  }
-
-  .item {
-    padding: 0;
-    width: 150px;
-    height: 40px;
-    border: 3px solid crimson;
-    color: black;
-    font-size: 40px;
-    line-height: 300px;
-    text-align: center;
-    align-items:center;
-    margin : auto;
   }
 
 }
