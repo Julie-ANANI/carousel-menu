@@ -1,4 +1,5 @@
 <!-- We create template for this utility-->
+<script src="menu-kebab.component.ts"></script>
 <section class="bg-white sticky header-wrapper kebab-carousel-wrapper" [ngStyle]="{'width': kebabCarouselWidth}">
   <div class="d-flex relative m-top-30 align-center container fluid"
        [ngStyle]="{'background-color': color, 'height': '40px'}">
@@ -16,12 +17,27 @@
     <ul class="kebab-carousel-inner tab m-left-40" #carousel
         [ngStyle]="{'border-bottom': '0px'}">
           <li class="m-right-30 text-capitalize tab-item kebab-carousel-item"
-                   *ngFor="let item of items;">
-                <!--   we can't use a simple content of projection because we want curl items
-                The solution is use ng-template-->
-                <!--     We use ng-template-outlet for defined a template parameters who pass in component entry
-             It's for have a reference to a item-->
-            <ng-container class="m-left-20 text-sm" [ngTemplateOutlet]="item.tpl"></ng-container>
+                   *ngFor="let item of displayedMenuItemsArray;">{{item.lang}}
+                <!--   we can't use a simple content of projection because we want curl items The solution is use ng-template-->
+                <!--   We use ng-template-outlet for defined a template parameters who pass in component entry. It's for have a reference to a item-->
+            <!-- not always template display item -->
+
+            <ng-container class="m-left-20 text-sm"
+                          *ngFor="let displayItems of displayedMenuItemsArray">
+              <!-- always template display -->
+              <ng-container *ngTemplateOutlet="itemTemplate;context:{item: displayItems.lang}"></ng-container>
+            </ng-container>
+
+       <ng-container *ngIf="displayedMenuItemsArray.length > 0">
+            <div [@expandCollapse]="" *ngIf="isDisplayItems">
+              <ng-container *ngFor="let expandableItem of menuItemsArrayExpandable">
+                <ng-container *ngTemplateOutlet="itemTemplate;context:{item: expandableItem}">
+                </ng-container>
+              </ng-container>
+            </div>
+            <!-- always template display -->
+            <ng-container class="m-left-20 text-sm" [ngTemplateOutlet]="item.templateItem"></ng-container>
+
           </li>
     </ul>
     <!--  end item display -->
@@ -57,7 +73,7 @@
           <!-- /add lang -->
 
           <!-- lang change -->
-          <div *ngIf="showLangDrop && activeTab === 'description'" class="dropdown is-right m-right-10">
+          <div *ngIf="showLangDrop && activeTab === 'description' && displaySuiteKebabItems" class="dropdown is-right m-right-10">
             <a class="button is-sm is-link dropdown-toggle" tabindex="0">
               {{ activeCard.lang === 'fr' ? 'French' : 'English' }}<i class="fas fa-caret-down m-right-2"></i>
             </a>

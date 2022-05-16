@@ -36,45 +36,17 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
 
   //test kebab item
 
-  private _project: Innovation = <Innovation>{};
+  // private _project: Innovation = <Innovation>{};
+  //
+  // get project(): Innovation {
+  //   return this._project;
+  // }
 
-  get project(): Innovation {
-    return this._project;
-  }
-  // items = [
-  //   'french_1',
-  //   'english_2',
-  //   'spanish_3',
-  //   'german_4',
-  //   'dutch_5',
-  //   'french_6',
-  //   'english_7',
-  //   'spanish_8',
-  //   'german_9',
-  //   'dutch_10',
-  //   'french_11'
-  // ];
-
-  items = [
-    { title: 'Slide 1' },
-    { title: 'Slide 2' },
-    { title: 'Slide 3' },
+  itemsTest = [
+    { lang: 'French_1' },
+    { lang: 'Anglais 2' },
+    { lang: 'Spain 3' },
   ]
-
-  items12 = [
-    'french',
-    'english',
-    'spanish',
-    'german',
-    'dutch',
-    'french',
-    'english',
-    'spanish',
-    'german',
-    'dutch',
-    'french',
-    'french',
-  ];
   //end tesst kebab item
 
   private _innovation: Innovation = <Innovation>{};

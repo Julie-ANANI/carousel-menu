@@ -9,7 +9,7 @@ import {
   PLATFORM_ID,
   QueryList,
   ElementRef,
-  ViewChildren, ViewChild
+  ViewChildren, ViewChild, TemplateRef
 } from '@angular/core';
 import {Innovation} from '../../../models/innovation';
 import {RouteFrontService} from '../../../services/route/route-front.service';
@@ -57,20 +57,29 @@ export class MenuKebabComponent implements AfterViewInit {
   @Input() textColor = '#00B0FF';
   @Input() isActive = false;
   @Input() minDelimitersOfItems = 5;
+  @Input() itemTemplate: TemplateRef<{item: any}>
 
-  // @Input() items = [
-  //   'french_1',
-  //   'english_2',
-  //   'spanish_3',
-  //   'german_4',
-  //   'dutch_5',
-  //   'french_6',
-  //   'english_7',
-  //   'spanish_8',
-  //   'german_9',
-  //   'dutch_10',
-  //   'french_11'
-  // ];
+  @Input() displayedMenuItemsArray = [
+    { lang: 'French_1' },
+    { lang: 'Anglais 2' },
+    { lang: 'Anglais 2' },
+    { lang: 'Anglais 2' },
+    { lang: 'Anglais 2' },
+    { lang: 'Anglais 2' },
+    { lang: 'Anglais 2' },
+    { lang: 'Spain 3' },
+  ];
+
+  @Input() menuItemsArrayExpandable = [
+    { lang: 'French_1' },
+    { lang: 'Anglais 2' },
+    { lang: 'Anglais 2' },
+    { lang: 'Anglais 2' },
+    { lang: 'Anglais 2' },
+    { lang: 'Anglais 2' },
+    { lang: 'Anglais 2' },
+    { lang: 'Spain 3' },
+  ];
 
   private player : AnimationPlayer;
   private itemWidth : number;
@@ -79,16 +88,15 @@ export class MenuKebabComponent implements AfterViewInit {
 
 
   @ContentChildren(MenuKebabDirective) items : QueryList<MenuKebabDirective>;
-
   //we have ref to item
   @ViewChildren(KebabCarouselItemElement, {read: ElementRef}) private itemsElements :
     QueryList<ElementRef>;
   @ViewChild('carousel') private carousel : ElementRef;
 
   next() {
-    if( this.currentLang + 1 === this.items.length ) return;
+    if( this.currentLang + 1 === this.displayedMenuItemsArray.length ) return;
 
-    this.currentLang = (this.currentLang + 1) % this.items.length;
+    this.currentLang = (this.currentLang + 1) % this.displayedMenuItemsArray.length;
 
     const offset = this.currentLang * this.itemWidth;
 
@@ -103,7 +111,7 @@ export class MenuKebabComponent implements AfterViewInit {
   prev() {
     if( this.currentLang === 0 ) return;
 
-    this.currentLang = ((this.currentLang - 1) + this.items.length) % this.items.length;
+    this.currentLang = ((this.currentLang - 1) + this.displayedMenuItemsArray.length) % this.displayedMenuItemsArray.length;
     const offset = this.currentLang * this.itemWidth;
 
     const myAnimation : AnimationFactory = this.builder.build([
@@ -117,24 +125,18 @@ export class MenuKebabComponent implements AfterViewInit {
   ngAfterViewInit() {
     throw new Error("Method not implemented.");
 
-    this.itemWidth = this.itemsElements.first.nativeElement.getBoundingClientRect().width;
-    this.kebabCarouselWidth = {
-      height: `${this.itemWidth}px`
-    }
+    setTimeout(() => {
+      this.itemWidth = this.itemsElements.first.nativeElement.getBoundingClientRect().width;
+      this.carouselWrapperStyle = {
+        width: `${this.itemWidth}px`
+      }
+    });
+
   }
 
-
-  //private _isDisplayItems = false;
+  private _isDisplayItems = false;
 
   private _displaySuiteKebabItems = true;
-
-  //private _displayBackItems = false;
-
-  private _next = false;
-
-  private _prev = false;
-
-
 
   private _campaignTabs: Array<string> = ['search', 'history', 'pros', 'workflows', 'batch'];
 
@@ -480,13 +482,13 @@ export class MenuKebabComponent implements AfterViewInit {
     return this._activeTab;
   }
 
-  // get showCardModal(): boolean {
-  //   return this._showCardModal;
-  // }
-  //
-  // set showCardModal(value: boolean) {
-  //   this._showCardModal = value;
-  // }
+  get showCardModal(): boolean {
+    return this._showCardModal;
+  }
+
+  set showCardModal(value: boolean) {
+    this._showCardModal = value;
+  }
 
   get project(): Innovation {
     return this._project;
@@ -544,15 +546,15 @@ export class MenuKebabComponent implements AfterViewInit {
   set displaySuiteKebabItems(value: boolean) {
     this._displaySuiteKebabItems = value;
   }
-  //
-  // get isDisplayItems(): boolean {
-  //   return this._isDisplayItems;
-  // }
-  //
-  // set isDisplayItems(value: boolean) {
-  //   this._isDisplayItems = value;
-  // }
-  //
+
+  get isDisplayItems(): boolean {
+    return this._isDisplayItems;
+  }
+
+  set isDisplayItems(value: boolean) {
+    this._isDisplayItems = value;
+  }
+
 
   ngOnDestroy(): void {
     this._ngUnsubscribe.next();
