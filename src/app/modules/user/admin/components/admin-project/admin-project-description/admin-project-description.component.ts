@@ -46,7 +46,15 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
     { lang: 'French_1' },
     { lang: 'Anglais 2' },
     { lang: 'Spain 3' },
+    { lang: 'Spain 3' },
+    { lang: 'Spain 3' },
+    { lang: 'Spain 3' },
+    { lang: 'Spain 3' },
   ]
+
+  getMenuClicked($event: any) {
+    console.log($event);
+  }
   //end tesst kebab item
 
   private _innovation: Innovation = <Innovation>{};

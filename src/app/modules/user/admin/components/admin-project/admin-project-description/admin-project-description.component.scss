@@ -2,12 +2,15 @@
 
 .item {
   padding: 0;
-  width: 300px;
-  height: 300px;
-  color: #fff;
-  font-size: 50px;
-  line-height: 300px;
+  width: 150px;
+  height: 40px;
+  border: 3px solid #4F5D6B;
+  color: black;
+  font-size: 14px;
+  line-height: 40px;
   text-align: center;
+  align-items:center;
+  margin : auto;
 }
 
 #admin-project-description {
