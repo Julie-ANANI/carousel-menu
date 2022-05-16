@@ -1,4 +1,4 @@
-import {Component, Inject, OnDestroy, OnInit, PLATFORM_ID} from '@angular/core';
+import {Component, Inject, Input, OnDestroy, OnInit, PLATFORM_ID} from '@angular/core';
 import { InnovationFrontService } from '../../../../../../services/innovation/innovation-front.service';
 import { Innovation } from '../../../../../../models/innovation';
 import { Subject } from 'rxjs';
@@ -34,13 +34,38 @@ interface Toggle {
 
 export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
 
-  get notificationJobs(): Array<NotificationJob> {
-    return this._notificationJobs;
-  }
+  //test kebab item
 
-  get isSendingNotification(): boolean {
-    return this._isSendingNotification;
-  }
+  items11 = [
+    'french_1',
+    'english_2',
+    'spanish_3',
+    'german_4',
+    'dutch_5',
+    'french_6',
+    'english_7',
+    'spanish_8',
+    'german_9',
+    'dutch_10',
+    'french_11'
+  ];
+
+  items12 = [
+    'french',
+    'english',
+    'spanish',
+    'german',
+    'dutch',
+    'french',
+    'english',
+    'spanish',
+    'german',
+    'dutch',
+    'french',
+    'french',
+  ];
+  //end tesst kebab item
+
 
   private _innovation: Innovation = <Innovation>{};
 
@@ -597,6 +622,14 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
 
   get showSuggestion(): Toggle {
     return this._showSuggestion;
+  }
+
+  get notificationJobs(): Array<NotificationJob> {
+    return this._notificationJobs;
+  }
+
+  get isSendingNotification(): boolean {
+    return this._isSendingNotification;
   }
 
   ngOnDestroy(): void {

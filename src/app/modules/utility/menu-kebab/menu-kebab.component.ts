@@ -26,24 +26,6 @@ import {MenuKebabDirective} from './menu-kebab.directive';
 })
 export class MenuKebabComponent implements AfterViewInit {
 
-
-  @Input() items5 = [
-    'french',
-    'english',
-    'spanish',
-    'german',
-    'dutch',
-  ];
-
-  @Input() items6 = [
-    'french',
-    'english',
-    'spanish',
-    'german',
-    'dutch',
-    'german',
-  ];
-
   @Input() items11 = [
     'french_1',
     'english_2',
