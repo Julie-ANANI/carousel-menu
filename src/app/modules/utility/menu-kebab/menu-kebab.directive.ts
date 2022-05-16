@@ -1,10 +1,10 @@
 import {Directive, TemplateRef} from '@angular/core';
 
 @Directive({
-  selector: '[kebabCarouselItem]'
+  selector: '[carouselItem]'
 })
 export class MenuKebabDirective {
 
-  constructor( public templateItem : TemplateRef<any> ) {
+  constructor( public tpl : TemplateRef<any> ) {
   }
 }

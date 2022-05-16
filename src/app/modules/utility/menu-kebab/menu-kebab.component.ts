@@ -1,7 +1,7 @@
 import {AfterViewInit, ChangeDetectorRef, Component,
-  //ContentChildren,
+  ContentChildren,
   Directive, Inject, Input, PLATFORM_ID, QueryList, ElementRef,
-  ViewChildren, ViewChild, TemplateRef, OnInit
+  ViewChildren, ViewChild, OnInit
 } from '@angular/core';
 import {Innovation} from '../../../models/innovation';
 import {RouteFrontService} from '../../../services/route/route-front.service';
@@ -21,79 +21,163 @@ import {first, takeUntil} from 'rxjs/operators';
 import {HttpErrorResponse} from '@angular/common/http';
 import {ErrorFrontService} from '../../../services/error/error-front.service';
 import {Mission} from '../../../models/mission';
-//import {MenuKebabDirective} from './menu-kebab.directive';
+import {MenuKebabDirective} from './menu-kebab.directive';
 import {AnimationFactory, AnimationPlayer, AnimationBuilder, animate, style} from '@angular/animations';
 
 
 
 @Directive({
-  selector: '.kebab-carousel-item'
+  selector: '.carousel-item'
 })
-export class KebabCarouselItemElement {
+export class CarouselItemElement {
 }
 
 
 @Component({
-  selector: 'app-menu-kebab',
-  exportAs:'app-menu-kebab',
-  templateUrl: './menu-kebab.html',
-  styleUrls: ['./menu-kebab.scss']
+  selector: 'carousel',
+  exportAs:'carousel',
+  //templateUrl: './menu-kebab.html',
+  //styleUrls: ['./menu-kebab.scss']
+  template: `
+    <section class="carousel-wrapper" [ngStyle]="carouselWrapperStyle">
+      <ul class="carousel-inner" #carousel>
+        <li *ngFor="let item of items;" class="carousel-item">
+          <ng-container [ngTemplateOutlet]="item.tpl"></ng-container>
+        </li>
+      </ul>
+    </section>
+    <div *ngIf="showControls" style="margin-top: 1em">
+      <button (click)="next()" class="btn btn-default">Next</button>
+      <button (click)="prev()" class="btn btn-default">Prev</button>
+    </div>
+  `,
+  styles: [`
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      width: 6000px;
+    }
+
+    .carousel-wrapper {
+      overflow: hidden;
+    }
+
+    .carousel-inner {
+      display: flex;
+    }
+
+  `]
 })
 
 
 export class MenuKebabComponent<T> implements AfterViewInit, OnInit {
 
+  //test ultim
+
+  @ContentChildren(MenuKebabDirective) items : QueryList<MenuKebabDirective>;
+  @ViewChildren(CarouselItemElement, { read: ElementRef }) private itemsElements : QueryList<ElementRef>;
+  @ViewChild('carousel') private carousel : ElementRef;
   @Input() timing = '250ms ease-in';
-
-  //Size
-  @Input() kebabCarouselWidth = {};
-  @Input() minDelimitersOfItems = 5;
-
-  //color
-  @Input() color = '#EFEFEF';
-  @Input() btnViewColor = '#4F5D6B';
-  @Input() textColor = '#00B0FF';
-
-
-  // Config Template
-  @Input() itemTemplate: TemplateRef<{item: any}>
- // @Input() initialState: 'expandable' | 'collapsed' = 'collapsed';
- // @Input() expandable = false;
-
-  public alwaysDisplayedItems: string[] = [];
-  public menueExpandableItems: string[] = [];
-
-  //test
-  @Input() itemsTest = [
-   'French_1',
-   'French_1',
-   'French_1',
-   'French_1',
-   'French_1',
-   'French_1',
-   'French_1',
-   'French_1',
-   'English_1',
-   'English_1',
-   'English_1',
-   'English_1',
-   'French_1',
-   'French_1',
-   'French_12',
-  ];
-
-
-  //size
+  @Input() showControls = true;
+  private player : AnimationPlayer;
   private itemWidth : number;
+  private currentSlide = 0;
   carouselWrapperStyle = {}
 
-  //item
-  private currentItem = 0
+  next() {
+    if( this.currentSlide + 1 === this.items.length ) return;
+    this.currentSlide = (this.currentSlide + 1) % this.items.length;
+    const offset = this.currentSlide * this.itemWidth;
+    const myAnimation : AnimationFactory = this.buildAnimation(offset);
+    this.player = myAnimation.create(this.carousel.nativeElement);
+    this.player.play();
+  }
 
-  //Config Template
-  private _isDisplayItems = false;
-  private _displaySuiteKebabItems = true;
-  private player : AnimationPlayer;
+  private buildAnimation( offset ) {
+    return this.builder.build([
+      animate(this.timing, style({ transform: `translateX(-${offset}px)` }))
+    ]);
+  }
+
+  prev() {
+    if( this.currentSlide === 0 ) return;
+
+    this.currentSlide = ((this.currentSlide - 1) + this.items.length) % this.items.length;
+    const offset = this.currentSlide * this.itemWidth;
+
+    const myAnimation : AnimationFactory = this.buildAnimation(offset);
+    this.player = myAnimation.create(this.carousel.nativeElement);
+    this.player.play();
+  }
+
+
+  ngAfterViewInit() {
+    // For some reason only here I need to add setTimeout, in my local env it's working without this.
+    setTimeout(() => {
+      this.itemWidth = this.itemsElements.first.nativeElement.getBoundingClientRect().width;
+      this.carouselWrapperStyle = {
+        width: `${this.itemWidth}px`
+      }
+    });
+
+  }
+
+
+
+
+
+ //  @Input() timing = '250ms ease-in';
+ //
+ //  //Size
+ //  @Input() kebabCarouselWidth = {};
+ //  @Input() minDelimitersOfItems = 5;
+ //
+ //  //color
+ //  @Input() color = '#EFEFEF';
+ //  @Input() btnViewColor = '#4F5D6B';
+ //  @Input() textColor = '#00B0FF';
+ //
+ //
+ //  // Config Template
+ //  @Input() itemTemplate: TemplateRef<{item: any}>
+ // // @Input() initialState: 'expandable' | 'collapsed' = 'collapsed';
+ // // @Input() expandable = false;
+ //
+ //  public alwaysDisplayedItems: string[] = [];
+ //  public menueExpandableItems: string[] = [];
+ //
+ //  //test
+ //  @Input() itemsTest = [
+ //   'French_1',
+ //   'French_1',
+ //   'French_1',
+ //   'French_1',
+ //   'French_1',
+ //   'French_1',
+ //   'French_1',
+ //   'French_1',
+ //   'English_1',
+ //   'English_1',
+ //   'English_1',
+ //   'English_1',
+ //   'French_1',
+ //   'French_1',
+ //   'French_12',
+ //  ];
+ //
+ //
+ //  //size
+ //  private itemWidth : number;
+ //  carouselWrapperStyle = {}
+ //
+ //  //item
+ //  private currentItem = 0
+ //
+ //  //Config Template
+ //  private _isDisplayItems = false;
+ //  private _displaySuiteKebabItems = true;
+ //  private player : AnimationPlayer;
 
 
   //Tabs
@@ -119,50 +203,50 @@ export class MenuKebabComponent<T> implements AfterViewInit, OnInit {
   private _showModal = false;
 
   private _ngUnsubscribe: Subject<any> = new Subject<any>();
+  //
+  // @ContentChildren(MenuKebabDirective) items : QueryList<MenuKebabDirective>;
+  // //we have reference to item
+  // @ViewChildren(KebabCarouselItemElement, {read: ElementRef}) private itemsElements :
+  //   QueryList<ElementRef>;
+  // @ViewChild('carousel') private carousel : ElementRef;
+  //
+  // next() {
+  //   if( this.currentItem  + 1 === this.itemsTest.length ) return;
+  //   this.currentItem  = (this.currentItem  + 1) % this.itemsTest.length;
+  //   const offset = this.currentItem  * this.itemWidth;
+  //
+  //   const myAnimation : AnimationFactory = this.builder.build([
+  //     animate(this.timing, style({ transform: `translateX(-${offset}px)` }))
+  //   ]);
+  //
+  //   this.player = myAnimation.create(this.carousel.nativeElement);
+  //   this.player.play();
+  // }
+  //
+  // prev() {
+  //   if( this.currentItem  === 0 ) return;
+  //   this.currentItem  = ((this.currentItem - 1) + this.itemsTest.length) % this.itemsTest.length;
+  //   const offset = this.currentItem  * this.itemWidth;
+  //
+  //   const myAnimation : AnimationFactory = this.builder.build([
+  //     animate(this.timing, style({ transform: `translateX(-${offset}px)` }))
+  //   ]);
+  //
+  //   this.player = myAnimation.create(this.carousel.nativeElement);
+  //   this.player.play();
+  // }
 
-  //@ContentChildren(MenuKebabDirective) items : QueryList<MenuKebabDirective>;
-  //we have reference to item
-  @ViewChildren(KebabCarouselItemElement, {read: ElementRef}) private itemsElements :
-    QueryList<ElementRef>;
-  @ViewChild('carousel') private carousel : ElementRef;
-
-  next() {
-    if( this.currentItem  + 1 === this.itemsTest.length ) return;
-    this.currentItem  = (this.currentItem  + 1) % this.itemsTest.length;
-    const offset = this.currentItem  * this.itemWidth;
-
-    const myAnimation : AnimationFactory = this.builder.build([
-      animate(this.timing, style({ transform: `translateX(-${offset}px)` }))
-    ]);
-
-    this.player = myAnimation.create(this.carousel.nativeElement);
-    this.player.play();
-  }
-
-  prev() {
-    if( this.currentItem  === 0 ) return;
-    this.currentItem  = ((this.currentItem - 1) + this.itemsTest.length) % this.itemsTest.length;
-    const offset = this.currentItem  * this.itemWidth;
-
-    const myAnimation : AnimationFactory = this.builder.build([
-      animate(this.timing, style({ transform: `translateX(-${offset}px)` }))
-    ]);
-
-    this.player = myAnimation.create(this.carousel.nativeElement);
-    this.player.play();
-  }
-
-  ngAfterViewInit() {
-    throw new Error("Method not implemented.");
-
-    // setTimeout(() => {
-    //   this.itemWidth = this.itemsElements.first.nativeElement.getBoundingClientRect().width;
-    //   this.carouselWrapperStyle = {
-    //     width: `${this.itemWidth}px`
-    //   }
-    // });
-
-  }
+  // ngAfterViewInit() {
+  //   throw new Error("Method not implemented.");
+  //
+  //   // setTimeout(() => {
+  //   //   this.itemWidth = this.itemsElements.first.nativeElement.getBoundingClientRect().width;
+  //   //   this.carouselWrapperStyle = {
+  //   //     width: `${this.itemWidth}px`
+  //   //   }
+  //   // });
+  //
+  // }
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _routeFrontService: RouteFrontService,
@@ -177,7 +261,7 @@ export class MenuKebabComponent<T> implements AfterViewInit, OnInit {
               private _changeDetectorRef: ChangeDetectorRef,
               private _activatedRoute: ActivatedRoute,
               private _socketService: SocketService,
-              private builder : AnimationBuilder) {
+              private builder: AnimationBuilder) {
   }
 
   ngOnInit() {
@@ -237,8 +321,8 @@ export class MenuKebabComponent<T> implements AfterViewInit, OnInit {
 
     //check status
     //this.expandable = this.initialState === 'expandable';
-    this.alwaysDisplayedItems = this.itemsTest.slice(0, this.minDelimitersOfItems);
-    this.menueExpandableItems = this.itemsTest.slice(this.minDelimitersOfItems, this.itemsTest.length);
+    // this.alwaysDisplayedItems = this.itemsTest.slice(0, this.minDelimitersOfItems);
+    // this.menueExpandableItems = this.itemsTest.slice(this.minDelimitersOfItems, this.itemsTest.length);
   }
 
   // public toggleExpandables () {
@@ -540,21 +624,21 @@ export class MenuKebabComponent<T> implements AfterViewInit, OnInit {
     this._showModal = value;
   }
 
-  get displaySuiteKebabItems(): boolean {
-    return this._displaySuiteKebabItems;
-  }
-
-  set displaySuiteKebabItems(value: boolean) {
-    this._displaySuiteKebabItems = value;
-  }
-
-  get isDisplayItems(): boolean {
-    return this._isDisplayItems;
-  }
-
-  set isDisplayItems(value: boolean) {
-    this._isDisplayItems = value;
-  }
+  // get displaySuiteKebabItems(): boolean {
+  //   return this._displaySuiteKebabItems;
+  // }
+  //
+  // set displaySuiteKebabItems(value: boolean) {
+  //   this._displaySuiteKebabItems = value;
+  // }
+  //
+  // get isDisplayItems(): boolean {
+  //   return this._isDisplayItems;
+  // }
+  //
+  // set isDisplayItems(value: boolean) {
+  //   this._isDisplayItems = value;
+  // }
 
 
   ngOnDestroy(): void {

@@ -42,7 +42,7 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
   //   return this._project;
   // }
 
-  itemsTest = [
+  items = [
     { lang: 'French_1' },
     { lang: 'Anglais 2' },
     { lang: 'Spain 3' },

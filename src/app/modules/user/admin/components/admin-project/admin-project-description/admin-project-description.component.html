@@ -15,20 +15,24 @@
     </ng-container>
     <!-- /notify team -->
 
-<!--    <app-menu-kebab>-->
-<!--      &lt;!&ndash;  let card of project.innovationCards&ndash;&gt;-->
-<!--      <ng-container *ngFor="let item of itemsTest;">-->
-<!--        <ng-container *kebabCarouselItem>-->
-<!--          <div class="item">{{item.lang}}</div>-->
-<!--        </ng-container>-->
-<!--      </ng-container>-->
-<!--    </app-menu-kebab>-->
+    <div style="margin: 2em" class="container">
 
-    <app-menu-kebab>
-<!--      <carousel>-->
+      <carousel>
+        <ng-container *ngFor="let item of items;">
+          <ng-container *carouselItem>
+            <div class="item">{{item.lang}}</div>
+          </ng-container>
+        </ng-container>
+      </carousel>
 
-<!--      </carousel>-->
-    </app-menu-kebab>
+      <!--<div style="margin-top: 1em;">
+        <a (click)="carousel.next()" class="btn btn-success">Next</a>
+        <a (click)="carousel.prev()" class="btn btn-success">Prev</a>
+      </div>-->
+
+      <!--<button (click)="addSlide()">Add Slide</button>-->
+
+    </div>
 
 
 
