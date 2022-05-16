@@ -25,6 +25,7 @@ import {Mission} from '../../../models/mission';
 import {AnimationFactory, AnimationPlayer, AnimationBuilder, animate, style} from '@angular/animations';
 
 
+
 @Directive({
   selector: '.kebab-carousel-item'
 })
@@ -43,21 +44,26 @@ export class KebabCarouselItemElement {
 export class MenuKebabComponent<T> implements AfterViewInit, OnInit {
 
   @Input() timing = '250ms ease-in';
-  @Input() kebabCarouselWidth = {};
-  @Input() showControls = true;
 
+  //Size
+  @Input() kebabCarouselWidth = {};
+  @Input() minDelimitersOfItems = 5;
+
+  //color
   @Input() color = '#EFEFEF';
   @Input() btnViewColor = '#4F5D6B';
   @Input() textColor = '#00B0FF';
-  @Input() isActive = false;
-  @Input() minDelimitersOfItems = 5;
+
+
+  // Config Template
   @Input() itemTemplate: TemplateRef<{item: any}>
   @Input() initialState: 'expanded' | 'collapsed' = 'collapsed';
+  @Input() expandable = false;
 
-  public alwaysDisplayedMenuItemsArray: T[] = [];
-  public menuItemsArrayExpandable: T[] = [];
+  public alwaysDisplayedItems: string[] = [];
+  public menueExpandableItems: string[] = [];
 
-
+  //test
   @Input() itemsTest = [
    'French_1',
    'French_1',
@@ -73,52 +79,42 @@ export class MenuKebabComponent<T> implements AfterViewInit, OnInit {
   ];
 
 
-  private player : AnimationPlayer;
-
+  //size
   private itemWidth : number;
-
-  private currentLang = 0;
-
   carouselWrapperStyle = {}
 
+  //item
+  private currentItem = 0
+
+  //Config Template
   private _isDisplayItems = false;
-
   private _displaySuiteKebabItems = false;
+  private player : AnimationPlayer;
 
+
+  //Tabs
   private _campaignTabs: Array<string> = ['search', 'history', 'pros', 'workflows', 'batch'];
-
   private _activeTab = this._routeFrontService.activeTab(8, 7);
 
+  //Innovation / Card
   private _project: Innovation = <Innovation>{};
-
-  private _activeCardIndex = 0;
-
-  private _isSaving = false;
-
-  private _isAddingCard = false;
-
-  private _showCardModal = false;
-
-  private _modelType = '';
-
-  private _isDeletingCard = false;
-
-  private _cardToDelete: InnovCard = <InnovCard>{};
-
-  private _showCampaignTabs = false;
-
   private _selectedCampaign: Campaign = <Campaign>{};
-
   private _allCampaigns: Array<Campaign> = [];
 
-  private _ngUnsubscribe: Subject<any> = new Subject<any>();
-
+  //CardLang
+  private _activeCardIndex = 0;
+  private _isSaving = false;
+  private _isAddingCard = false;
+  private _showCardModal = false;
+  private _modelType = '';
+  private _isDeletingCard = false;
+  private _cardToDelete: InnovCard = <InnovCard>{};
+  private _showCampaignTabs = false;
   private _toBeSaved = '';
-
   private _toBeSavedComment = false;
-
   private _showModal = false;
 
+  private _ngUnsubscribe: Subject<any> = new Subject<any>();
 
   //@ContentChildren(MenuKebabDirective) items : QueryList<MenuKebabDirective>;
   //we have reference to item
@@ -126,13 +122,10 @@ export class MenuKebabComponent<T> implements AfterViewInit, OnInit {
     QueryList<ElementRef>;
   @ViewChild('carousel') private carousel : ElementRef;
 
-  private expanded: false;
-
-
   next() {
-    if( this.currentLang + 1 === this.itemsTest.length ) return;
-    this.currentLang = (this.currentLang + 1) % this.itemsTest.length;
-    const offset = this.currentLang * this.itemWidth;
+    if( this.currentItem  + 1 === this.itemsTest.length ) return;
+    this.currentItem  = (this.currentItem  + 1) % this.itemsTest.length;
+    const offset = this.currentItem  * this.itemWidth;
 
     const myAnimation : AnimationFactory = this.builder.build([
       animate(this.timing, style({ transform: `translateX(-${offset}px)` }))
@@ -143,9 +136,9 @@ export class MenuKebabComponent<T> implements AfterViewInit, OnInit {
   }
 
   prev() {
-    if( this.currentLang === 0 ) return;
-    this.currentLang = ((this.currentLang - 1) + this.itemsTest.length) % this.itemsTest.length;
-    const offset = this.currentLang * this.itemWidth;
+    if( this.currentItem  === 0 ) return;
+    this.currentItem  = ((this.currentItem - 1) + this.itemsTest.length) % this.itemsTest.length;
+    const offset = this.currentItem  * this.itemWidth;
 
     const myAnimation : AnimationFactory = this.builder.build([
       animate(this.timing, style({ transform: `translateX(-${offset}px)` }))
@@ -158,12 +151,12 @@ export class MenuKebabComponent<T> implements AfterViewInit, OnInit {
   ngAfterViewInit() {
     throw new Error("Method not implemented.");
 
-    setTimeout(() => {
-      this.itemWidth = this.itemsElements.first.nativeElement.getBoundingClientRect().width;
-      this.carouselWrapperStyle = {
-        width: `${this.itemWidth}px`
-      }
-    });
+    // setTimeout(() => {
+    //   this.itemWidth = this.itemsElements.first.nativeElement.getBoundingClientRect().width;
+    //   this.carouselWrapperStyle = {
+    //     width: `${this.itemWidth}px`
+    //   }
+    // });
 
   }
 
@@ -238,13 +231,14 @@ export class MenuKebabComponent<T> implements AfterViewInit, OnInit {
         this._toBeSavedComment = save;
       });
 
-    this.expanded = this.initialState === 'expanded';
-    this.alwaysDisplayedMenuItemsArray = this.itemsTest.slice(0, this.minDelimitersOfItems);
-    this.menuItemsArrayExpandable = this.itemsTest.slice(this.minDelimitersOfItems, this.items.length);
+    //check status
+    this.expandable = this.initialState === 'expanded';
+    this.alwaysDisplayedItems = this.itemsTest.slice(0, this.minDelimitersOfItems);
+    this.menueExpandableItems = this.itemsTest.slice(this.minDelimitersOfItems, this.itemsTest.length);
   }
 
   public toggleExpandables () {
-    this.expanded = !this.expanded;
+    this.expandable = !this.expandable;
   }
 
 

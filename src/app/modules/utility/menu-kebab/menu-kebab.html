@@ -17,21 +17,28 @@
         [ngStyle]="{'border-bottom': '0px'}">
           <li class="m-right-30 text-capitalize tab-item kebab-carousel-item">
             <!-- always template display -->
-            <ng-container class="m-left-20 text-sm"
-                          *ngFor="let displayItems of itemsTest">{{displayItems}}
-              <!--   we can't use a simple content of projection because we want curl items The solution is use ng-template-->
-              <!--   We use ng-template-outlet for defined a template parameters who pass in component entry. It's for have a reference to a item-->
-              <!-- not always template display item -->
-              <ng-container *ngTemplateOutlet="itemTemplate; context :{item: displayItems}"></ng-container>
-            </ng-container>
+<!--            affiche par default false and display false-->
+            <div *ngIf="!displaySuiteKebabItems && isDisplayItems">
+              <ng-container class="m-left-20 text-sm"
+                            *ngFor="let displayedItems of itemsTest; let i = index">{{displayedItems}}
+                <!--   we can't use a simple content of projection because we want curl items The solution is use ng-template-->
+                <!--   We use ng-template-outlet for defined a template parameters who pass in component entry. It's for have a reference to a item-->
+                <!-- not always template display item -->
+                <ng-container *ngTemplateOutlet="itemTemplate; context :{item: displayedItems}"></ng-container>
+              </ng-container>
+          </div>
+
             <!-- end always template display -->
 
            <!-- not always template display -->
-           <ng-container *ngIf="itemsTest.length > 0">
-                <div [@expandCollapse]="" *ngIf="isDisplayItems">
-                  <ng-container *ngFor="let expandableItem of menuItemsArrayExpandable">{{expandableItem}}
-                    <ng-container *ngTemplateOutlet="itemTemplate;context:{item: expandableItem}">
+           <ng-container>
+                <div *ngIf="displaySuiteKebabItems && !isDisplayItems">
+                  <ng-container *ngFor="let expandableItem of menueExpandableItems; let i = index">{{expandableItem}}
+
+                    <ng-container *ngIf="i <= 4">
+                      <ng-container *ngTemplateOutlet="itemTemplate;context:{item: expandableItem}"></ng-container>
                     </ng-container>
+
                   </ng-container>
                 </div>
           </ng-container>
@@ -41,27 +48,34 @@
     <!--  end item display -->
 
     <!--  button menu-kebab -->
-    <div *ngIf="displaySuiteKebabItems"
-         (click)="displaySuiteKebabItems = !displaySuiteKebabItems">
-        <div class="m-left-20 icon-container is-xl is-overlay">
-              <i class="icon icon-more-horiz is-lg"></i>
-        </div>
-          <!--  button view more -->
-           <span *ngIf="displaySuiteKebabItems" class="text-xs text-bold absolute btn__view">View more</span>
-           <!--  end button view more -->
-    </div>
+<!--    <div *ngIf="displaySuiteKebabItems"-->
+<!--         (click)="displaySuiteKebabItems = !displaySuiteKebabItems">-->
+<!--        <div class="m-left-20 icon-container is-xl is-overlay">-->
+<!--              <i class="icon icon-more-horiz is-lg"></i>-->
+<!--        </div>-->
+<!--          &lt;!&ndash;  button view more &ndash;&gt;-->
+<!--           <span *ngIf="displaySuiteKebabItems" class="text-xs text-bold absolute btn__view">View more</span>-->
+<!--           &lt;!&ndash;  end button view more &ndash;&gt;-->
+<!--    </div>-->
 
-<!--    <button id="btn-kebab"-->
-<!--            class="relative align-center"-->
-<!--            (click)="displaySuiteKebabItems()"-->
-<!--            [ngSwitch]="isDisplayItems">-->
-<!--      <ng-container *ngSwitchCase="false">-->
-<!--        Tout afficher-->
-<!--      </ng-container>-->
-<!--      <ng-container *ngSwitchCase="true">-->
-<!--        Replier-->
-<!--      </ng-container>-->
-<!--    </button>-->
+    <div    id="btn-kebab"
+            class="relative align-center"
+            (click)="toggleExpandables"
+            [ngSwitch]="expandable"
+            *ngIf="itemsTest.length > 4">
+      <ng-container *ngSwitchCase="true">
+        Tout afficher
+      </ng-container>
+      <ng-container *ngSwitchCase="false">
+        Replier
+        <div class="m-left-20 icon-container is-xl is-overlay">
+          <i class="icon icon-more-horiz is-lg"></i>
+        </div>
+        <!--  button view more -->
+        <span *ngIf="displaySuiteKebabItems" class="text-xs text-bold absolute btn__view">View more</span>
+        <!--  end button view more -->
+      </ng-container>
+    </div>
      <!--  end button menu-kebab -->
 
     <!--  button add-lang -->
