@@ -40,92 +40,10 @@ export class KebabCarouselItemElement {
 @Component({
   selector: 'app-menu-kebab',
   exportAs:'app-menu-kebab',
-  template: `
-    <!-- We create template for this utility-->
-    <section class="bg-white sticky header-wrapper kebab-carousel-wrapper" [ngStyle]="kebabCarouselStyle">
-      <div class="d-flex relative m-top-30 align-center container fluid">
-
-        <!--   button back-->
-        <div class="absolute m-left-20 icon-container is-xl is-overlay"
-             (click)="prev"
-             [ngStyle]="{'left':'-0.7em'}">
-          <i class="icon icon-arrow-left is-lg"></i>
-        </div>
-        <!--  button back -->
-
-        <ul class="kebab-carousel-inner" #carousel>
-          <li *ngFor="let item of items;" class="kebab-carousel-item">
-            <!--   we can't use a simple content of projection because we want curl items
-               The solution is use ng-template-->
-            <!--     We use ng-template-outlet for defined a template parameters who pass in component entry
-            It's for have a reference to a item-->
-            <ng-container [ngTemplateOutlet]="item.tpl"></ng-container>
-          </li>
-        </ul>
-
-        <!--  button menu-kebab -->
-        <div
-             id="btn-kebab"
-             class="relative align-center"
-             (click)="displaySuiteKebabItems">
-
-          <div class="m-left-20 icon-container is-xl is-overlay">
-            <i class="icon icon-more-horiz is-lg"></i>
-          </div>
-          <!--  button view more -->
-          <span class="text-xs text-bold absolute btn__view">View more</span>
-          <!--  end button view more -->
-        </div>
-        <!--  end button menu-kebab -->
-      </div>
-    </section>
-  `,
-  styles: [`
-    .kebab-carousel-wrapper {
-      overflow: hidden;
-    }
-    ul {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-      height: 40px;
-    }
-    .kebab-carousel-inner {
-      display: flex;
-    }
-
-    :is(#btn-kebab, .icon-more-horiz) ::before {
-      color: #4F5D6B;
-      height:5px;
-      width:5px;
-      transform: rotate(90deg);
-      margin-bottom: 2px;
-    }
-
-    :is(i, .icon-container, .icon-arrow-right, .icon-arrow-left) ::before {
-      color: #4F5D6B;
-      border: 3px solid #4F5D6B;
-      border-bottom: 0;
-      border-right: 0;
-    }
-
-    .button.is-link{
-      font-size:12px;
-      color: #4F5D6B;
-      font-weight: bold;
-    }
-
-    .fa-plus-circle {
-      color: #FFB300;
-    }
-
-    .btn__view{
-      color: #4F5D6B;
-      width: fit-content;
-      margin-top: 16px;
-    }
- `]
+  templateUrl: './menu-kebab.html',
+  styleUrls: ['./menu-kebab.scss']
 })
+
 
 export class MenuKebabComponent implements AfterViewInit {
   @ContentChildren(MenuKebabDirective) items : QueryList<MenuKebabDirective>;
@@ -134,18 +52,19 @@ export class MenuKebabComponent implements AfterViewInit {
   @ViewChildren(KebabCarouselItemElement, {read: ElementRef}) private itemsElements :
     QueryList<ElementRef>;
 
-  private itemHeight : number;
+  @Input() kebabCarouselWidth = {};
+  @Input() color = '#EFEFEF';
+
+  private itemWidth : number;
 
   ngAfterViewInit() {
     throw new Error("Method not implemented.");
 
-    // this.itemHeight = this.itemsElements.first.nativeElement.getBoundingClientRect().height;
-    // this.kebabCarouselStyle = {
-    //   height: `${this.itemHeight}px`
-    // }
+    this.itemWidth = this.itemsElements.first.nativeElement.getBoundingClientRect().width;
+    this.kebabCarouselWidth = {
+      height: `${this.itemWidth}px`
+    }
   }
-
-  @Input() kebabCarouselHeight = '40px';
 
   @Input() items11 = [
     'french_1',
@@ -176,13 +95,10 @@ export class MenuKebabComponent implements AfterViewInit {
     'french',
   ];
 
-  // @Input() color = '#EFEFEF';
-  // @Input() btnViewColor = '#4F5D6B';
-  // @Input() textColor = '#00B0FF';
-  // @Input() isActive = false;
-  // @Input() middleDelimitersOfItems = 10;
-  // @Input() maxDelimitersOfItems = 18;
-  // @Input() minDelimitersOfItems = 5;
+  @Input() btnViewColor = '#4F5D6B';
+  @Input() textColor = '#00B0FF';
+  @Input() isActive = false;
+  @Input() minDelimitersOfItems = 5;
 
   //private _isDisplayItems = false;
 
@@ -190,7 +106,7 @@ export class MenuKebabComponent implements AfterViewInit {
 
   //private _displayBackItems = false;
 
-  //private _next = false;
+  private _next = false;
 
   private _prev = false;
 
@@ -612,14 +528,14 @@ export class MenuKebabComponent implements AfterViewInit {
   //   this._isDisplayItems = value;
   // }
   //
-  // get displayBackItems(): boolean {
-  //   return this._displayBackItems;
-  // }
-  //
-  // set displayBackItems(value: boolean) {
-  //   this._displayBackItems = value;
-  // }
-  //
+  get next(): boolean {
+    return this._next;
+  }
+
+  set next(value: boolean) {
+    this._next = value;
+  }
+
   get prev(): boolean {
     return this._prev;
   }
