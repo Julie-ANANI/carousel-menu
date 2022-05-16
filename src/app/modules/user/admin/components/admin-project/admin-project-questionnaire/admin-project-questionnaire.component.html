@@ -57,10 +57,10 @@
     <section *ngIf="canAccess(['view']) || canAccess(['edit'])" class="m-top-15">
 
       <ng-container *ngIf="hasMissionTemplate; else oldPresets">
-        <div [ngClass]="{'d-flex justify-around flex-wrap-wrap': !!rightMirrorLanguage}">
+        <div [ngClass]="{'d-flex justify-around': rightMirrorLanguage}">
 
           <!-- mirror: left side  -->
-          <div [ngClass]="{'questionnaire-column': !!rightMirrorLanguage}">
+          <div [ngClass]="{'questionnaire-column': rightMirrorLanguage}">
             <app-shared-questionnaire-mirror-view
               [showDropDown]="cardsLanguages && cardsLanguages.length > 2"
               [(languageSelected)]="leftMirrorLanguage"
@@ -78,8 +78,7 @@
           <!-- /mirror: left side  -->
 
           <!-- mirror: right side  -->
-          <div *ngIf="!!rightMirrorLanguage"
-               [ngClass]="{'questionnaire-column': !!rightMirrorLanguage}">
+          <div *ngIf="rightMirrorLanguage" [ngClass]="{'questionnaire-column': rightMirrorLanguage}">
             <div class="d-flex flex-d-column p-bottom-20">
               <app-shared-questionnaire-mirror-view
                 [showDropDown]="cardsLanguages && cardsLanguages.length > 3"
