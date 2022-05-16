@@ -1,7 +1,7 @@
 import { Directive } from '@angular/core';
 
 @Directive({
-  selector: '[carouselItem]'
+  selector: '[kebabCarouselItem]'
 })
 export class MenuKebabDirective {
 

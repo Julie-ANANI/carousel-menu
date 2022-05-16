@@ -17,7 +17,6 @@ import {first, takeUntil} from 'rxjs/operators';
 import {HttpErrorResponse} from '@angular/common/http';
 import {ErrorFrontService} from '../../../services/error/error-front.service';
 import {Mission} from '../../../models/mission';
-import {MenuKebabDirective} from './menu-kebab.directive';
 
 @Component({
   selector: 'app-menu-kebab',

@@ -6,7 +6,7 @@ import { MenuKebabDirective } from './menu-kebab.directive';
 
 @NgModule({
   declarations: [MenuKebabComponent, Directive, MenuKebabDirective],
-  exports:[MenuKebabComponent
+  exports: [MenuKebabComponent, MenuKebabDirective
   ],
   imports: [
     CommonModule
