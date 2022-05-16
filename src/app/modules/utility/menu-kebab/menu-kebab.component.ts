@@ -52,21 +52,33 @@ export class CarouselItemElement {
         </div>
         <!-- end button prev -->
 
-          <ul class="carousel-inner tab" #carousel>
-            <li *ngFor="let item of items;" class=" text-capitalize carousel-item"
-                [ngStyle]="{'margin-top':'0'}">
-              <ng-container [ngTemplateOutlet]="item.tpl"></ng-container>
-<!--              161px pour 10 langues-->
-            </li>
-          </ul>
+        <ul class="carousel-inner tab" #carousel>
+          <li *ngFor="let item of items; let i = index" class=" text-capitalize carousel-item"
+              [ngStyle]="{'margin-top':'0'}">
+
+            <!-- always template display -->
+            <ng-container *ngIf="i < 5 && displaySuiteKebabItems && initItemSize"
+                          [ngTemplateOutlet]="item.tpl">
+            </ng-container>
+            <!-- end always template display -->
+
+            <!-- not always template display -->
+            <ng-container *ngIf="!displaySuiteKebabItems"
+                          [ngTemplateOutlet]="item.tpl">
+            </ng-container>
+            <!-- end not always template display -->
+            <!-- 161px pour 10 langues-->
+
+          </li>
+        </ul>
 
         <!-- button menu-kebab -->
-        <div  id="btn-kebab"
-              class="relative align-center"
-              (click)="displaySuiteKebabItems = !displaySuiteKebabItems"
-              [ngSwitch]="displaySuiteKebabItems"
-              [ngStyle]="{'left': '-6em'}"
-              *ngIf="items.length > 4">
+        <div id="btn-kebab"
+             class="relative align-center"
+             (click)="displaySuiteKebabItems = !displaySuiteKebabItems"
+             [ngSwitch]="displaySuiteKebabItems"
+             [ngStyle]="{'left': '-6em'}"
+             *ngIf="items.length > 4">
           <!--    true / false  -->
           <ng-container *ngSwitchCase="!displaySuiteKebabItems"></ng-container>
           <ng-container *ngSwitchCase="displaySuiteKebabItems">
@@ -80,6 +92,50 @@ export class CarouselItemElement {
         </div>
         <!--  end button menu-kebab -->
 
+        <!--  button add-lang -->
+        <div
+          *ngIf="activeTab === 'description' || activeTab === 'targeting' || activeTab === 'questionnaire'"
+          class="d-flex align-center animate-fade is-3" style="max-height: 40px">
+
+          <!-- add lang -->
+          <button
+            (click)="openModal($event, 'ADD_LANG')"
+            *ngIf="canAddCard && activeTab === 'description' && canEditDescription && displaySuiteKebabItems"
+            [disabled]="isAddingCard"
+            class="button is-link is-sm m-left-50 p-30"
+            id="btn-add-card">
+            <i class="fas fa-plus-circle m-right-2"></i>
+            {{ activeCard.lang === 'fr' ? 'Add english' : 'Add french' }}
+          </button>
+          <!-- /add lang -->
+
+          <!-- lang change -->
+          <div *ngIf="showLangDrop && activeTab === 'description' && displaySuiteKebabItems" class="dropdown is-right is-sm m-left-50 p-30">
+            <a class="button is-sm is-link dropdown-toggle" tabindex="0">
+              {{ activeCard.lang === 'fr' ? 'French' : 'English' }}<i class="fas fa-caret-down m-right-2"></i>
+            </a>
+
+            <ul class="menu">
+              <li
+                (click)="setCardLang(card.lang)"
+                *ngFor="let card of project.innovationCards"
+                class="menu-item flex-between">
+                {{ card.lang === 'fr' ? 'French' : 'English' }}
+                <div
+                  *ngIf="canEditDescription"
+                  (click)="openModal($event, 'DELETE_LANG', card)"
+                  [ngClass]="{'disabled': isDeletingCard}"
+                  class="icon-container is-sm is-overlay">
+                  <i class="icon text-alert icon-delete"></i>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <!-- /lang change -->
+
+        </div>
+        <!--  end button add-lang -->
+
         <!--  button back  -->
         <div (click)="next()"
              *ngIf="showControls && !displaySuiteKebabItems"
@@ -90,7 +146,7 @@ export class CarouselItemElement {
 
         <!--  button view less-->
         <span
-          *ngIf="!displaySuiteKebabItems"
+          *ngIf="!displaySuiteKebabItems && initItemSize"
           class=" absolute text-xs text-bold"
           [ngStyle]="{'right':'1em', 'color': btnViewColor}">View less
     </span>
@@ -170,6 +226,7 @@ export class MenuKebabComponent implements AfterViewInit, OnInit {
   //size
   private itemWidth : number;
   carouselWrapperStyle = {}
+  private _initItemSize = true;
 
   //item
   private currentItem: number = 0;
@@ -595,6 +652,10 @@ export class MenuKebabComponent implements AfterViewInit, OnInit {
 
   set isDisplayItems(value: boolean) {
     this._isDisplayItems = value;
+  }
+
+  get initItemSize(): boolean {
+    return this._initItemSize;
   }
 
 
