@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, Inject, Input, PLATFORM_ID} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, ContentChildren, Inject, Input, PLATFORM_ID} from '@angular/core';
 import {Innovation} from '../../../models/innovation';
 import {RouteFrontService} from '../../../services/route/route-front.service';
 import {InnovCard} from '../../../models/innov-card';
@@ -17,13 +17,15 @@ import {first, takeUntil} from 'rxjs/operators';
 import {HttpErrorResponse} from '@angular/common/http';
 import {ErrorFrontService} from '../../../services/error/error-front.service';
 import {Mission} from '../../../models/mission';
+import {MenuKebabDirective} from './menu-kebab.directive';
 
 @Component({
   selector: 'app-menu-kebab',
   templateUrl: './menu-kebab.html',
   styleUrls: ['./menu-kebab.scss']
 })
-export class MenuKebabComponent {
+export class MenuKebabComponent implements AfterViewInit {
+
 
   @Input() items5 = [
     'french',
@@ -44,13 +46,13 @@ export class MenuKebabComponent {
 
   @Input() items11 = [
     'french_1',
-    'english',
-    'spanish',
-    'german',
+    'english_2',
+    'spanish_3',
+    'german_4',
     'dutch_5',
-    'french',
-    'english',
-    'spanish',
+    'french_6',
+    'english_7',
+    'spanish_8',
     'german_9',
     'dutch_10',
     'french_11'
@@ -71,6 +73,16 @@ export class MenuKebabComponent {
     'french',
   ];
 
+  public displayItems (){
+
+    for(let [keys, item] of items11){
+
+            if(keys < 5 && this.displaySuiteKebabItems){
+              return item;
+            }
+    }
+  }
+
   @Input() color = '#EFEFEF';
   @Input() btnViewColor = '#4F5D6B';
   @Input() textColor = '#00B0FF';
@@ -79,11 +91,13 @@ export class MenuKebabComponent {
   @Input() maxDelimitersOfItems = 18;
   @Input() minDelimitersOfItems = 5;
 
-  private _clickOnBack = false;
-
   private _isDisplayItems = false;
 
-  private _displayOtherItems = false;
+  private _displaySuiteKebabItems = false;
+
+  private _displayBackItems = false;
+
+  private _displayFrontItems = false;
 
   private _campaignTabs: Array<string> = ['search', 'history', 'pros', 'workflows', 'batch'];
 
@@ -484,12 +498,12 @@ export class MenuKebabComponent {
     this._showModal = value;
   }
 
-  get displayOtherItems(): boolean {
-    return this._displayOtherItems;
+  get displaySuiteKebabItems(): boolean {
+    return this._displaySuiteKebabItems;
   }
 
-  set displayOtherItems(value: boolean) {
-    this._displayOtherItems = value;
+  set displaySuiteKebabItems(value: boolean) {
+    this._displaySuiteKebabItems = value;
   }
 
   get isDisplayItems(): boolean {
@@ -500,12 +514,20 @@ export class MenuKebabComponent {
     this._isDisplayItems = value;
   }
 
-  get clickOnBack(): boolean {
-    return this._clickOnBack;
+  get displayBackItems(): boolean {
+    return this._displayBackItems;
   }
 
-  set clickOnBack(value: boolean) {
-    this._clickOnBack = value;
+  set displayBackItems(value: boolean) {
+    this._displayBackItems = value;
+  }
+
+  get displayFrontItems(): boolean {
+    return this._displayFrontItems;
+  }
+
+  set displayFrontItems(value: boolean) {
+    this._displayFrontItems = value;
   }
 
   ngOnDestroy(): void {
@@ -513,3 +535,5 @@ export class MenuKebabComponent {
     this._ngUnsubscribe.complete();
   }
 }
+
+

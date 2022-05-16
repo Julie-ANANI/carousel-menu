@@ -2,20 +2,9 @@
   <div class="d-flex relative m-top-30 align-center container fluid"
        [ngStyle]="{'background-color': color, 'height': '40px'}">
 
-    <!-- Button back-->
-    <div *ngIf="items11 && items6.length > minDelimitersOfItem && items11.length >= MaxDelimitersOfLang"
-         class="absolute m-left-20 icon-container is-xl is-overlay"
-         [ngStyle]="{'left':'-0.7em'}">
-      <i class="icon icon-arrow-left is-lg"></i>
-    </div>
-    <!-- end button back-->
-
-
-<!--    &lt;!&ndash; end stat 1 : max 5 items&ndash;&gt;-->
-
-
     <!--  click button front and display button back  -->
-    <div *ngIf="items11.length >= middleDelimitersOfItems && displayOtherItems"
+    <div *ngIf="items11.length >= middleDelimitersOfItems && displaySuiteKebabItems"
+         (click)="displayFrontItems = !displayFrontItems"
          class="absolute m-left-20 icon-container is-xl is-overlay"
          [ngStyle]="{'left':'-0.7em'}">
       <i class="icon icon-arrow-left is-lg"></i>
@@ -26,30 +15,24 @@
 
     <ul class="tab m-left-40"
         [ngStyle]="{'border-bottom': '0px'}">
-        <ng-container *ngFor="let label of items11; let i = index">
+        <ng-container *ngFor="let label of items11; let index = index">
 
           <!--  item min display -->
-          <div *ngIf="i <= (minDelimitersOfItems - 1) || (((i > (minDelimitersOfItems - 1)) === displayOtherItems) === !isDisplayItems)">
+<!--          index < (minDelimitersOfItems ) === !isDisplayItems    first cond-->
+<!--              second cond-->
+          <div *ngIf="(((index < middleDelimitersOfItems  && index > minDelimitersOfItems)  === !displaySuiteKebabItems )=== isDisplayItems) || ((index < minDelimitersOfItems) === !isDisplayItems)">
 
-            <div *ngIf="(((i > (minDelimitersOfItems - 1)) === displayOtherItems) === isDisplayItems && !clickOnBack)
-            || (items11.length < 10) === clickOnBack">
+            <!--  click button view more and item more minDelimitersOfItem and more to maxDelimitersOfItem 6 > 11-->
+            <!--  end click button view more and item more minDelimitersOfItem and more to maxDelimitersOfItem -->
+<!--            <div *ngIf="(1 > index  && index < 10) === displayBackItems && !displaySuiteKebabItems">-->
 
 
               <li class="m-right-30 text-capitalize tab-item">
 
                       <span class="m-left-20 text-sm">{{ label }}</span>
 
-                        <!--  click button view more and item more minDelimitersOfItem and more to maxDelimitersOfItem 6 > 11-->
-                        <!--  end click button view more and item more minDelimitersOfItem and more to maxDelimitersOfItem -->
-
-                                    <!--  item (maxDelimitersOfItem - 2) to 18 max -->
-                                    <!--  item (maxDelimitersOfItem - 2) to 18 max -->
-
-
-
-
               </li>
-            </div>
+<!--            </div>-->
           </div>
           <!--  end item min display -->
         </ng-container>
@@ -57,15 +40,16 @@
     <!--  end item display -->
 
     <!--  button menu-kebab -->
-    <div *ngIf="items11.length > (minDelimitersOfItems - 1)" id="btn-kebab"
-         (click)="displayOtherItems = !displayOtherItems"
-   class="relative align-center">
+    <div *ngIf="items11.length > (minDelimitersOfItems - 1) && !displaySuiteKebabItems"
+         id="btn-kebab"
+         class="relative align-center"
+         (click)="displaySuiteKebabItems = !displaySuiteKebabItems">
 
         <div class="m-left-20 icon-container is-xl is-overlay">
           <i class="icon icon-more-horiz is-lg"></i>
         </div>
         <!--  button view more -->
-<!--        <span class="text-xs text-bold absolute btn__view">View more</span>-->
+        <span class="text-xs text-bold absolute btn__view">View more</span>
         <!--  end button view more -->
     </div>
     <!--  end button menu-kebab -->
@@ -78,7 +62,7 @@
           <!-- add lang -->
           <button
             (click)="openModal($event, 'ADD_LANG')"
-            *ngIf="canAddCard && activeTab === 'description' && canEditDescription && !displayOtherItems && items11.length > (minDelimitersOfItems - 1)"
+            *ngIf="canAddCard && activeTab === 'description' && canEditDescription && !displaySuiteKebabItems && items11.length > (minDelimitersOfItems - 1)"
             [disabled]="isAddingCard"
             class="button is-link is-sm m-left-50 p-30"
             id="btn-add-card">
@@ -115,22 +99,20 @@
     <!--  end button add-lang -->
 
     <!--  button back  -->
-    <div *ngIf="items11.length >= middleDelimitersOfItems && displayOtherItems"
-         (click)="clickOnBack = !clickOnBack"
+    <div *ngIf="items11.length >= middleDelimitersOfItems && displaySuiteKebabItems"
+         (click)="displayBackItems = !displayBackItems"
          class="m-left-20 icon-container is-xl is-overlay">
       <i class="icon icon-arrow-right"></i>
     </div>
     <!--  end button back -->
 
     <!--  button view less-->
-    <span *ngIf="items11.length > minDelimitersOfItems && displayOtherItems"
-          (click)="displayOtherItems = !displayOtherItems"
+    <span *ngIf="items11.length > minDelimitersOfItems && displaySuiteKebabItems"
+          (click)="displaySuiteKebabItems = !displaySuiteKebabItems"
           class=" absolute text-xs text-bold"
           [ngStyle]="{'right':'1em', 'color': btnViewColor}">View less
     </span>
     <!--  end button view less -->
-
-
 
     </div>
 

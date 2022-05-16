@@ -1,4 +1,13 @@
-<app-menu-kebab></app-menu-kebab>
+<app-menu-kebab>
+  <carousel>
+    <ng-container *ngFor="let item of items;">
+      <ng-container *kebabCarouselItem>
+        <div class="item">{{item.title}}</div>
+      </ng-container>
+    </ng-container>
+  </carousel>
+</app-menu-kebab>
+
 
 <div class="container fluid" id="admin-project-description">
   <div class="column col-sm-12 col-11 col-mx-auto p-top-30 p-bottom-30">
