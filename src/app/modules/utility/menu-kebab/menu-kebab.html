@@ -20,7 +20,7 @@
             <!-- always template display -->
             <ng-container>
               <div *ngIf="displaySuiteKebabItems">
-                <ng-container *ngFor="let expandableItem of itemsTest; let i = index">{{expandableItem}}
+                <ng-container *ngFor="let expandableItem of items; let i = index">
 
                   <div *ngIf="i < 4">
                       <ng-container *ngTemplateOutlet="itemTemplate;context:{item: expandableItem}"></ng-container>
@@ -34,7 +34,7 @@
             <!-- not always template display -->
             <div *ngIf="!displaySuiteKebabItems">
               <ng-container
-                            *ngFor="let displayedItems of itemsTest;">{{displayedItems}}
+                            *ngFor="let displayedItems of items;">
                 <!--   we can't use a simple content of projection because we want curl items The solution is use ng-template-->
                 <!--   We use ng-template-outlet for defined a template parameters who pass in component entry. It's for have a reference to a item-->
                 <!-- not always template display item -->
@@ -64,7 +64,7 @@
             class="relative align-center"
             (click)="displaySuiteKebabItems = !displaySuiteKebabItems"
             [ngSwitch]="displaySuiteKebabItems"
-            *ngIf="itemsTest.length > 4">
+            *ngIf="items.length > 4">
 <!--    true / false  -->
       <ng-container *ngSwitchCase="!displaySuiteKebabItems"></ng-container>
       <ng-container *ngSwitchCase="displaySuiteKebabItems">

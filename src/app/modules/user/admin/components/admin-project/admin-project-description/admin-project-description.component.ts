@@ -46,6 +46,10 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
     { lang: 'French_1' },
     { lang: 'Anglais 2' },
     { lang: 'Spain 3' },
+    { lang: 'Spain 3' },
+    { lang: 'Spain 3' },
+    { lang: 'Spain 3' },
+    { lang: 'Spain 3' },
   ]
   //end tesst kebab item
 
