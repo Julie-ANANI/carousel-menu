@@ -36,7 +36,7 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
 
   //test kebab item
 
-  items11 = [
+  items = [
     'french_1',
     'english_2',
     'spanish_3',

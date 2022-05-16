@@ -5,6 +5,6 @@ import {Directive, TemplateRef} from '@angular/core';
 })
 export class MenuKebabDirective {
 
-  constructor( public template : TemplateRef<any> ) {
+  constructor( public tpl : TemplateRef<any> ) {
   }
 }

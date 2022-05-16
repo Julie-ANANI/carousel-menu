@@ -1,4 +1,16 @@
-import {AfterViewInit, ChangeDetectorRef, Component, ContentChildren, Directive, Inject, Input, PLATFORM_ID, QueryList} from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  ContentChildren,
+  Directive,
+  Inject,
+  Input,
+  PLATFORM_ID,
+  QueryList,
+  ElementRef,
+  ViewChildren
+} from '@angular/core';
 import {Innovation} from '../../../models/innovation';
 import {RouteFrontService} from '../../../services/route/route-front.service';
 import {InnovCard} from '../../../models/innov-card';
@@ -30,7 +42,7 @@ export class KebabCarouselItemElement {
   exportAs:'app-menu-kebab',
   template: `
 <!-- We create template for this utility-->
-    <section class="bg-white sticky header-wrapper kebab-carousel-wrapper">
+    <section class="bg-white sticky header-wrapper kebab-carousel-wrapper" [ngStyle]="kebabCarouselStyle">
       <div class="d-flex relative m-top-30 align-center container fluid">
       <ul class="kebab-carousel-inner" #carousel>
         <li> *ngFor="let item of items;" class="kebab-carousel-item">
@@ -38,7 +50,7 @@ export class KebabCarouselItemElement {
             The solution is use ng-template-->
            <!--     We use ng-template-outlet for defined a template parameters who pass in component entry
            It's for have a reference to a item-->
-          <ng-container [ngTemplateOutlet]="item.template"><</ng-container>
+          <ng-container [ngTemplateOutlet]="item.tpl"><</ng-container>
         </li>
       </ul>
       </div>
@@ -62,6 +74,12 @@ export class KebabCarouselItemElement {
 
 export class MenuKebabComponent implements AfterViewInit {
   @ContentChildren(MenuKebabDirective) items : QueryList<MenuKebabDirective>;
+
+  //we have ref to item
+  @ViewChildren(KebabCarouselItemElement, {read: ElementRef}) private itemsElements :
+    QueryList<ElementRef>;
+
+  kebabCarouselStyle = {};
 
   @Input() items11 = [
     'french_1',
@@ -167,6 +185,10 @@ export class MenuKebabComponent implements AfterViewInit {
               private _activatedRoute: ActivatedRoute,
               private _socketService: SocketService) {
   }
+
+  ngAfterViewInit(): void {
+        throw new Error("Method not implemented.");
+    }
 
   ngOnInit() {
     if (this._activatedRoute.snapshot.data['allCampaign']
