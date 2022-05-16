@@ -17,11 +17,12 @@
 
     <p>START MENU KEBAB</p>
     <app-menu-kebab>
-      <ng-container *ngFor="let item of items;">
-        <ng-container *kebabCarouselItem>
-          <div class="item">{{item}}</div>
+<!--  let card of project.innovationCards-->
+        <ng-container *ngFor="let item of items;">
+          <ng-container *kebabCarouselItem>
+            <div class="item">{{item.title}}</div>
+          </ng-container>
         </ng-container>
-      </ng-container>
     </app-menu-kebab>
     <p>START MENU KEBAB</p>
 

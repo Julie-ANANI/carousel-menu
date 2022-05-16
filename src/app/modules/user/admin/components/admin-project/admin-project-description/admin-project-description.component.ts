@@ -35,19 +35,31 @@ interface Toggle {
 export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
 
   //test kebab item
+
+  private _project: Innovation = <Innovation>{};
+
+  get project(): Innovation {
+    return this._project;
+  }
+  // items = [
+  //   'french_1',
+  //   'english_2',
+  //   'spanish_3',
+  //   'german_4',
+  //   'dutch_5',
+  //   'french_6',
+  //   'english_7',
+  //   'spanish_8',
+  //   'german_9',
+  //   'dutch_10',
+  //   'french_11'
+  // ];
+
   items = [
-    'french_1',
-    'english_2',
-    'spanish_3',
-    'german_4',
-    'dutch_5',
-    'french_6',
-    'english_7',
-    'spanish_8',
-    'german_9',
-    'dutch_10',
-    'french_11'
-  ];
+    { title: 'Slide 1' },
+    { title: 'Slide 2' },
+    { title: 'Slide 3' },
+  ]
 
   items12 = [
     'french',

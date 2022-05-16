@@ -4,7 +4,7 @@
        [ngStyle]="{'background-color': color, 'height': '40px'}">
 
     <!-- button prev  -->
-    <div *ngIf="!displaySuiteKebabItems && !showControls"
+    <div *ngIf="!displaySuiteKebabItems"
          (click)="prev"
          class="absolute m-left-20 icon-container is-xl is-overlay"
          [ngStyle]="{'left':'-0.7em'}">
@@ -84,7 +84,7 @@
     <!--  end button add-lang -->
 
     <!--  button back  -->
-    <div *ngIf="!displaySuiteKebabItems && !showControls"
+    <div *ngIf="!displaySuiteKebabItems"
          class="m-left-20 icon-container is-xl is-overlay"
          (click)="next">
       <i class="icon icon-arrow-right"></i>
