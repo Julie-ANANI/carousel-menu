@@ -217,6 +217,75 @@
               </div>
             </div>
 
+            <!-- Project languages 'projectLanguages'-->
+            <div
+              *ngIf="mission._id && (canAccess(['view','missionTeam' ])
+              || canAccess(['edit', 'projectLanguages']))"
+              class="content">
+              <label>Project Languages</label>
+              <div class=" flex-end">
+                <div class="accordion">
+                  <input type="checkbox" id="accordion" name="accordion-checkbox" hidden>
+                  <label style="margin-left: auto;" class="flex-end text-dark" for="accordion">
+                    Languages ({{ innovation.innovationCards.length }})
+                    <i class="icon icon-caret"></i>
+                  </label>
+                  <div class="accordion-body w-full ">
+                    <ul *ngIf="canAccess(['edit', 'missionTeam'])" class="is-md">
+                      <table class="table w-full ">
+                        <thead>
+                        <tr>
+                          <th>
+                            <div class="form-checkbox">
+                              <input
+                                (change)="allLanguagesChecked($event)"
+                                id="allLanguages"
+                                type="checkbox">
+                              <i class="form-icon"></i>
+                            </div>
+                          </th>
+                          <th style="width: 250px !important;" class="flex-around w-full text-sm text-capitalize text-primary">
+                            <div> <i class="fa fa-trash"></i> {{ " Remove "}} </div>
+                            <div> <i class="fa fa-pen"></i> {{" Edit "}} </div>
+                            <div> <i class="fa fa-check"></i> {{" Validate "}} </div>
+                          </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr *ngFor="let inno of innovation.innovationCards">
+                          <td>
+                            <div class="form-checkbox">
+                              <input
+                                (change)="onChangeLanguage($event)"
+                                [id]="inno['lang']"
+                                [value]="inno"
+                                type="checkbox">
+                              <i class="form-icon"></i>
+                              {{inno.lang}}
+                            </div>
+                          </td>
+                          <td  *ngIf="!inno.hidden" class=" flex-around tooltip is-multiline" data-tooltip="This language is visible on client side. Click on the eye to mask it">
+                            <i class="fa fa-eye text-primary text-lg" (click)="changeVisibility(inno)"></i>
+                            <div  [ngClass]="statusClass(inno.status)" class="text-center">
+                              {{inno.status}}
+                            </div>
+                          </td>
+                          <td  *ngIf="inno.hidden"  class=" flex-around tooltip is-multiline" data-tooltip="This language is masked on client side. Click on the eye to unmask it">
+                            <i class="fa fa-eye-slash text-primary text-lg" (click)="changeVisibility(inno)"></i>
+                            <div  [ngClass]="statusClass(inno.status)" class=" text-center">
+                              {{inno.status}}
+                            </div>
+                          </td>
+                        </tr>
+                        </tbody>
+                      </table>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- /Project languages -->
+
             <!-- commercial -->
             <div
               *ngIf="clientProject._id && (canAccess(['view', 'commercial'])

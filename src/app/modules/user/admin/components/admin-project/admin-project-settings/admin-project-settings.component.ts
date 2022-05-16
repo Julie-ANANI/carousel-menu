@@ -46,6 +46,7 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import {UmiusSidebarInterface} from '@umius/umi-common-component';
 import {ActivatedRoute} from '@angular/router';
 import {CacheType} from '../../../../../../models/cache';
+import {InnovCard} from "../../../../../../models/innov-card";
 
 export interface UserSuggestion {
   name: string;
@@ -70,6 +71,8 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
   private _isLoading = true;
 
   private _innovation: Innovation = <Innovation>{};
+
+  private _checkedLanguages: Array<InnovCard> = [];
 
   private _mission: Mission = <Mission>{};
 
@@ -500,6 +503,37 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
       operator: this._innovation.operator,
       mission: this._mission,
     });
+  }
+
+  public allLanguagesChecked(event: any) {
+
+  }
+
+  public onChangeLanguage(event: any) {
+    event.preventDefault();
+    if (event.target.isChecked) {
+      this._checkedLanguages.push(event.target.value);
+      //change value remove edit validate
+    } else {
+      this._checkedLanguages.filter(inno => inno.lang === event.target.value.lang);
+      //change value remove edit validate
+    }
+  }
+
+  public changeVisibility(lang : InnovCard){
+    lang.hidden = !lang.hidden;
+    // send to backend
+  }
+
+  public statusClass(status: string) {
+    switch (status) {
+      case "EDITING":
+        return "label is-danger";
+      case "DONE":
+        return "label is-success";
+      case "WAITING":
+        return "label is-pending";
+    }
   }
 
   /***

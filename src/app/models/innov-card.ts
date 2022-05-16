@@ -51,4 +51,6 @@ export class InnovCard extends Model {
    * but only one for rest type.
    */
   sections?: Array<InnovCardSection>;
+  status: string;
+  hidden: boolean;
 }
