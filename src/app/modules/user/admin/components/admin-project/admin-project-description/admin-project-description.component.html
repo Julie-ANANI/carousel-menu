@@ -1,18 +1,6 @@
-<app-menu-kebab>
-  <carousel>
-    <ng-container *ngFor="let item of items;">
-      <ng-container *kebabCarouselItem>
-        <div class="item">{{item.title}}</div>
-      </ng-container>
-    </ng-container>
-  </carousel>
-</app-menu-kebab>
-
-
 <div class="container fluid" id="admin-project-description">
   <div class="column col-sm-12 col-11 col-mx-auto p-top-30 p-bottom-30">
 
-<!--    <app-admin-project-langs></app-admin-project-langs>-->
     <!-- notify team -->
     <ng-container>
       <div class="text-center m-bottom-30">
@@ -26,6 +14,28 @@
       </div>
     </ng-container>
     <!-- /notify team -->
+
+    <div style="margin: 2em" class="container">
+
+      <carousel>
+        <ng-container *ngFor="let item of items;">
+          <ng-container *carouselItem>
+            <div class="item">{{item.lang}}</div>
+          </ng-container>
+        </ng-container>
+      </carousel>
+
+      <!--<div style="margin-top: 1em;">
+        <a (click)="carousel.next()" class="btn btn-success">Next</a>
+        <a (click)="carousel.prev()" class="btn btn-success">Prev</a>
+      </div>-->
+
+      <!--<button (click)="addSlide()">Add Slide</button>-->
+
+    </div>
+
+
+
 
     <!-- sections dynamic -->
     <section

@@ -14,6 +14,7 @@ import {PipeModule} from '../../../../../../pipe/pipe.module';
 import { NgxPageScrollModule } from "ngx-page-scroll";
 import {ModalModule} from '@umius/umi-common-component';
 import {MenuKebabModule} from '../../../../../utility/menu-kebab/menu-kebab.module';
+import {KebabCarouselItemElement} from '../../../../../utility/menu-kebab/menu-kebab.component';
 
 @NgModule({
   imports: [
@@ -32,7 +33,7 @@ import {MenuKebabModule} from '../../../../../utility/menu-kebab/menu-kebab.modu
     MenuKebabModule,
   ],
   declarations: [
-    AdminProjectDescriptionComponent
+    AdminProjectDescriptionComponent, KebabCarouselItemElement,
   ]
 })
 

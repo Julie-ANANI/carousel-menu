@@ -34,13 +34,20 @@ interface Toggle {
 
 export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
 
-  get notificationJobs(): Array<NotificationJob> {
-    return this._notificationJobs;
-  }
+  //test kebab item
 
-  get isSendingNotification(): boolean {
-    return this._isSendingNotification;
-  }
+  // private _project: Innovation = <Innovation>{};
+  //
+  // get project(): Innovation {
+  //   return this._project;
+  // }
+
+  items = [
+    { lang: 'French_1' },
+    { lang: 'Anglais 2' },
+    { lang: 'Spain 3' },
+  ]
+  //end tesst kebab item
 
   private _innovation: Innovation = <Innovation>{};
 
@@ -597,6 +604,14 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
 
   get showSuggestion(): Toggle {
     return this._showSuggestion;
+  }
+
+  get notificationJobs(): Array<NotificationJob> {
+    return this._notificationJobs;
+  }
+
+  get isSendingNotification(): boolean {
+    return this._isSendingNotification;
   }
 
   ngOnDestroy(): void {
