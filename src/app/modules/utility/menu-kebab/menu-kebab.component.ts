@@ -9,7 +9,7 @@ import {
   PLATFORM_ID,
   QueryList,
   ElementRef,
-  ViewChildren
+  ViewChildren, ViewChild
 } from '@angular/core';
 import {Innovation} from '../../../models/innovation';
 import {RouteFrontService} from '../../../services/route/route-front.service';
@@ -30,6 +30,7 @@ import {HttpErrorResponse} from '@angular/common/http';
 import {ErrorFrontService} from '../../../services/error/error-front.service';
 import {Mission} from '../../../models/mission';
 import {MenuKebabDirective} from './menu-kebab.directive';
+import {AnimationFactory, AnimationPlayer, AnimationBuilder, animate, style} from '@angular/animations';
 
 @Directive({
   selector: '.kebab-carousel-item'
@@ -46,16 +47,72 @@ export class KebabCarouselItemElement {
 
 
 export class MenuKebabComponent implements AfterViewInit {
+
+  @Input() timing = '250ms ease-in';
+  @Input() kebabCarouselWidth = {};
+  @Input() showControls = true;
+
+  @Input() color = '#EFEFEF';
+  @Input() btnViewColor = '#4F5D6B';
+  @Input() textColor = '#00B0FF';
+  @Input() isActive = false;
+  @Input() minDelimitersOfItems = 5;
+
+  // @Input() items = [
+  //   'french_1',
+  //   'english_2',
+  //   'spanish_3',
+  //   'german_4',
+  //   'dutch_5',
+  //   'french_6',
+  //   'english_7',
+  //   'spanish_8',
+  //   'german_9',
+  //   'dutch_10',
+  //   'french_11'
+  // ];
+
+  private player : AnimationPlayer;
+  private itemWidth : number;
+  private currentLang = 0;
+  carouselWrapperStyle = {}
+
+
   @ContentChildren(MenuKebabDirective) items : QueryList<MenuKebabDirective>;
 
   //we have ref to item
   @ViewChildren(KebabCarouselItemElement, {read: ElementRef}) private itemsElements :
     QueryList<ElementRef>;
+  @ViewChild('carousel') private carousel : ElementRef;
 
-  @Input() kebabCarouselWidth = {};
-  @Input() color = '#EFEFEF';
+  next() {
+    if( this.currentLang + 1 === this.items.length ) return;
 
-  private itemWidth : number;
+    this.currentLang = (this.currentLang + 1) % this.items.length;
+
+    const offset = this.currentLang * this.itemWidth;
+
+    const myAnimation : AnimationFactory = this.builder.build([
+      animate(this.timing, style({ transform: `translateX(-${offset}px)` }))
+    ]);
+
+    this.player = myAnimation.create(this.carousel.nativeElement);
+    this.player.play();
+  }
+
+  prev() {
+    if( this.currentLang === 0 ) return;
+
+    this.currentLang = ((this.currentLang - 1) + this.items.length) % this.items.length;
+    const offset = this.currentLang * this.itemWidth;
+
+    const myAnimation : AnimationFactory = this.builder.build([
+      animate(this.timing, style({ transform: `translateX(-${offset}px)` }))
+    ]);
+
+    this.player = myAnimation.create(this.carousel.nativeElement);
+    this.player.play();
+  }
 
   ngAfterViewInit() {
     throw new Error("Method not implemented.");
@@ -66,43 +123,10 @@ export class MenuKebabComponent implements AfterViewInit {
     }
   }
 
-  @Input() items11 = [
-    'french_1',
-    'english_2',
-    'spanish_3',
-    'german_4',
-    'dutch_5',
-    'french_6',
-    'english_7',
-    'spanish_8',
-    'german_9',
-    'dutch_10',
-    'french_11'
-  ];
-
-  @Input() items12 = [
-    'french',
-    'english',
-    'spanish',
-    'german',
-    'dutch',
-    'french',
-    'english',
-    'spanish',
-    'german',
-    'dutch',
-    'french',
-    'french',
-  ];
-
-  @Input() btnViewColor = '#4F5D6B';
-  @Input() textColor = '#00B0FF';
-  @Input() isActive = false;
-  @Input() minDelimitersOfItems = 5;
 
   //private _isDisplayItems = false;
 
-  private _displaySuiteKebabItems = false;
+  private _displaySuiteKebabItems = true;
 
   //private _displayBackItems = false;
 
@@ -159,7 +183,8 @@ export class MenuKebabComponent implements AfterViewInit {
               private _translateTitleService: TranslateTitleService,
               private _changeDetectorRef: ChangeDetectorRef,
               private _activatedRoute: ActivatedRoute,
-              private _socketService: SocketService) {
+              private _socketService: SocketService,
+              private builder : AnimationBuilder) {
   }
 
   ngOnInit() {
@@ -528,21 +553,6 @@ export class MenuKebabComponent implements AfterViewInit {
   //   this._isDisplayItems = value;
   // }
   //
-  get next(): boolean {
-    return this._next;
-  }
-
-  set next(value: boolean) {
-    this._next = value;
-  }
-
-  get prev(): boolean {
-    return this._prev;
-  }
-
-  set prev(value: boolean) {
-    this._prev = value;
-  }
 
   ngOnDestroy(): void {
     this._ngUnsubscribe.next();
