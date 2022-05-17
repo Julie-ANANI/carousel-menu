@@ -203,7 +203,7 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
   }
 
   containsLanguages(language: string, languages: Array<string>){
-    return !!languages.find(l => l === language);
+    return !!languages.find(l => l.toUpperCase() === language.toUpperCase());
   }
 
   private _getBatches() {
