@@ -1,10 +1,5 @@
-import {
-  Component, Inject, Input, PLATFORM_ID, OnInit, EventEmitter, Output,
-} from '@angular/core';
+import {Component, Inject, Input, PLATFORM_ID, OnInit, EventEmitter, Output,} from '@angular/core';
 import {Subject} from 'rxjs';
-
-
-//todo remove this
 
 @Component({
   selector: 'app-utility-carousel-menu',
@@ -13,15 +8,60 @@ import {Subject} from 'rxjs';
   styleUrls: ['./menu-kebab.scss']
 })
 
-
 export class MenuKebabComponent implements OnInit {
 
-  // //todo all
-  // @ContentChildren(MenuKebabDirective) items : QueryList<MenuKebabDirective>;
-  // @ViewChildren(CarouselItemElement, { read: ElementRef }) private itemsElements : QueryList<ElementRef>;
-  // @ViewChild('carousel') private carousel : ElementRef;
+  //config button controls
+  @Input() showControls = true;
 
-  //items: Array<any> = [];
+  //Size
+  @Input() minDelimitersOfItems = 5;
+  @Input() menuHeight = '40px'
+
+  //color
+  @Input() backgroundColor = '#EFEFEF';
+  @Input() btnViewColor = '#4F5D6B';
+  @Input() textColor = '#00B0FF';
+
+  //position
+  @Input() positionBtnPrev = '-0,7em';
+  @Input() positionBtnNext = '3em';
+  @Input() positionBtnKebab = '-6em';
+  @Input() positionBtnLess = '1em';
+
+  @Output() menuItemClicked: EventEmitter<any> = new EventEmitter();
+
+  //size
+  private _initItemSize = true;
+
+  //item
+  private _currentItem: any;
+
+
+
+  //Config Template
+  private _isDisplayItems = false;
+  private _displaySuiteKebabItems = true;
+  private _ngUnsubscribe: Subject<any> = new Subject<any>();
+  private _quatity: number = 0;
+  private _identifier: string = '';
+  private _sources: Array<any> = [];
+  private _displayedItems: Array<any> = [];
+
+  // false: displayItem[0] compare to sources[0]
+  //showPrev = true;
+
+  // false: displayItem[last] compare to sources[last]
+  showNext = true;
+
+  constructor(@Inject(PLATFORM_ID) protected _platformId: Object) {}
+
+  ngOnInit() {}
+
+  clickOnMenu(event: Event, item: any) {
+    event.preventDefault();
+    this._currentItem = item;
+    this.menuItemClicked.emit(item);
+  }
 
   //todo change
   next() {
@@ -54,80 +94,6 @@ export class MenuKebabComponent implements OnInit {
     // this.player.play();
   }
 
-  //config button controls
-  @Input() showControls = true;
-  @Input() timing = '250ms ease-in';
-
-  //Size
-  @Input() kebabCarouselWidth = {};
-  @Input() minDelimitersOfItems = 5;
-
-  //color
-  @Input() backgroundColor = '#EFEFEF';
-  @Input() btnViewColor = '#4F5D6B';
-  @Input() textColor = '#00B0FF';
-
-  //position
-  @Input() menuHeight = '40px'
-  @Input() positionBtnPrev = '-0,7em';
-  @Input() positionBtnNext = '3em';
-  @Input() positionBtnKebab = '-6em';
-  @Input() positionBtnLess = '1em';
-
-  // Config Template
- // @Input() itemTemplate: TemplateRef<{item: any}>
- // @Input() initialState: 'expandable' | 'collapsed' = 'collapsed';
- // @Input() expandable = false;
-
-  public alwaysDisplayedItems: string[] = [];
-  public menueExpandableItems: string[] = [];
-
-  //size
-  carouselWrapperStyle = {}
-  private _initItemSize = true;
-
-  //item
-  private _currentItem: any;
-
-  @Output() menuItemClicked: EventEmitter<any> = new EventEmitter();
-
-  //Config Template
-  private _isDisplayItems = false;
-  private _displaySuiteKebabItems = true;
-  private _ngUnsubscribe: Subject<any> = new Subject<any>();
-
-
-
-
-
-  constructor(@Inject(PLATFORM_ID) protected _platformId: Object) {
-  }
-
-  ngOnInit() {
-
-    //check status
-    //this.expandable = this.initialState === 'expandable';
-    // this.alwaysDisplayedItems = this.itemsTest.slice(0, this.minDelimitersOfItems);
-    // this.menueExpandableItems = this.itemsTest.slice(this.minDelimitersOfItems, this.itemsTest.length);
-  }
-
-  /**
-   * here, you get configuration for the menu
-   * @param value
-   * quatity = 5
-   */
-  @Input() set config(value: any) {
-    if (value) {
-      this._quatity = value.quatity || 0;
-      this._sources = value.sources || [];
-      this._identifier = value.identifier || '';
-      // TODO check sources
-      //initialise _displayedItems
-      this._displayedItems = this._sources.slice(0, this._quatity);
-    }
-  }
-
-
   //old logic
   get displaySuiteKebabItems(): boolean {
     return this._displaySuiteKebabItems;
@@ -153,15 +119,25 @@ export class MenuKebabComponent implements OnInit {
     return this._currentItem;
   }
 
-  clickOnMenu(event: Event, item: any) {
-    event.preventDefault();
-    this._currentItem = item;
-    this.menuItemClicked.emit(item);
-  }
-
   ngOnDestroy(): void {
     this._ngUnsubscribe.next();
     this._ngUnsubscribe.complete();
+  }
+
+  get quatity(): number {
+    return this._quatity;
+  }
+
+  get identifier(): string {
+    return this._identifier;
+  }
+
+  get sources(): Array<any> {
+    return this._sources;
+  }
+
+  get displayedItems(): Array<any> {
+    return this._displayedItems;
   }
 }
 
