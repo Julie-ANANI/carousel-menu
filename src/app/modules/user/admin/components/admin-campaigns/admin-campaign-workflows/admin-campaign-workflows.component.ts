@@ -103,10 +103,10 @@ export class AdminCampaignWorkflowsComponent implements OnInit {
     );
     if (this._campaign.settings.defaultWorkflow === '' && !!workflowToAdd) {
       this._selectedTemplate = workflowToAdd;
-      this._prepareImport(false);
-      this.updateAvailableScenario(this._selectedTemplate);
-      this._saveTemplates('The workflow is added automatically.');
     }
+    this._prepareImport(false);
+    this.updateAvailableScenario(this._selectedTemplate);
+    this._saveTemplates('The workflow is added automatically.');
   }
 
   private _getInnovationCardLanguages() {
