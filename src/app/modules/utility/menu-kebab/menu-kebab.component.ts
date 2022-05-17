@@ -1,5 +1,6 @@
-import {Component, Inject, Input, PLATFORM_ID, ElementRef,
-ViewChild, OnInit, TemplateRef, EventEmitter
+import {
+  Component, Inject, Input, PLATFORM_ID, ElementRef,
+  ViewChild, OnInit, TemplateRef, EventEmitter,
 } from '@angular/core';
 import { AnimationFactory, AnimationPlayer, AnimationBuilder, animate, style } from '@angular/animations';
 
@@ -15,6 +16,10 @@ import { AnimationFactory, AnimationPlayer, AnimationBuilder, animate, style } f
 
 
 export class MenuKebabComponent implements OnInit {
+
+  //@Input()tpl: TemplateRef<{item: any}>;
+
+
 
   // TODO all
  // @ContentChildren(MenuKebabDirective) items: QueryList<MenuKebabDirective>;
