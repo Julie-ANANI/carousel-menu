@@ -110,7 +110,6 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
         this._initCampaign();
         this._campaignFrontService.setLoadingCampaign(false);
         this._statsConfig = this.setBatchesStatsConfig(this._campaign.stats);
-        console.log(this._campaign?.settings?.emails);
       }
     });
 
@@ -187,12 +186,12 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
       && this._campaign.innovation.innovationCards
       && this._campaign.innovation.innovationCards.length) {
       this._campaign.innovation.innovationCards.map(innovationCard => {
-        this._innovationCardLanguages.push(
-          {
-            type: innovationCard.lang,
-            status: innovationCard.status,
-            hidden: innovationCard.hidden
-          });
+        const language: Language= {
+          type: innovationCard.lang,
+        };
+        language['status'] = innovationCard.status || 'EDITING';
+        language['hidden'] = innovationCard.hidden;
+        this._innovationCardLanguages.push(language);
       });
     }
   }

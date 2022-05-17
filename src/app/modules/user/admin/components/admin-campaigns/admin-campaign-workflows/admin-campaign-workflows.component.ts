@@ -84,11 +84,17 @@ export class AdminCampaignWorkflowsComponent implements OnInit {
   private _initCampaign() {
     this._getAllTemplates();
     this._getAllSignatures();
+    this._getInnovationCardLanguages();
+    this._checkEmailsInCampaign();
     this._generateAvailableScenario();
     this._generateModifiedScenarios();
-    this._getInnovationCardLanguages();
   }
 
+  /**
+   * if the campaign is Recup' pro or GetInsights standard
+   * we import the workflow related
+   * @private
+   */
   private _verifyCampaignType() {
     if (this._campaign.title.indexOf('_Récup') !== -1) {
       this._autoWorkflow('Recup\' pro');
@@ -103,10 +109,10 @@ export class AdminCampaignWorkflowsComponent implements OnInit {
     );
     if (this._campaign.settings.defaultWorkflow === '' && !!workflowToAdd) {
       this._selectedTemplate = workflowToAdd;
+      this._prepareImport(false);
+      this.updateAvailableScenario(this._selectedTemplate);
+      this._saveTemplates('The workflow is added automatically.');
     }
-    this._prepareImport(false);
-    this.updateAvailableScenario(this._selectedTemplate);
-    this._saveTemplates('The workflow is added automatically.');
   }
 
   private _getInnovationCardLanguages() {
@@ -115,6 +121,29 @@ export class AdminCampaignWorkflowsComponent implements OnInit {
       this._campaign.innovation.innovationCards.map(innoCard => {
         this._innovationCardLanguages.push(innoCard.lang);
       });
+    }
+  }
+
+  /**
+   * we check if for each innovation card language, we have the emails
+   * @private
+   */
+  private _checkEmailsInCampaign() {
+    const scenarioName = this._campaign?.settings?.defaultWorkflow || '';
+    let toBeUpdated = false;
+    for (const language of this._innovationCardLanguages) {
+      // find emails in scenario according to inno card language
+      let emailsToAdd = this._campaign?.settings?.emails.filter(e => e.language === language);
+      if (emailsToAdd.length === 0 && scenarioName) {
+        // there is no emails in scenario for lang
+        // generate them
+        let emailGenerated = this._generateEmailTemplates(language, scenarioName, null);
+        this._campaign.settings.emails = this._campaign.settings.emails.concat(emailGenerated);
+        toBeUpdated = true;
+      }
+    }
+    if (toBeUpdated) {
+      this._saveTemplates('Successfully generated workflow!');
     }
   }
 
