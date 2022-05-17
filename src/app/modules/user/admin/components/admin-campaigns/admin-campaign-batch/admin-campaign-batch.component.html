@@ -134,6 +134,7 @@
             </div>
           </div>
 
+          <!-- switch - pause-activated -->
           <label
             *ngIf="canAccess(['pause'])"
             class="form-switch float-right text-medium p-no-top"
@@ -146,9 +147,45 @@
             <i class="form-icon"></i>
             <span *ngIf="!batch.active" class="tooltip"
                   [attr.data-tooltip]="'Sending is paused,\n'+'no email will be sent.'">Paused</span>
-            <span *ngIf="batch.active" class="tooltip" [attr.data-tooltip]="'Sending is activated,\n'+'email will be sent.'">Activated</span>
+            <span *ngIf="batch.active" class="tooltip"
+                  [attr.data-tooltip]="'Sending is activated,\n'+'email will be sent.'">Activated</span>
           </label>
+          <!-- /switch - pause-activated -->
 
+        </div>
+
+        <div class="languages-status-sections d-flex flex-wrap-wrap">
+          <ng-container *ngFor="let language of innovationCardLanguages">
+            <div
+              [ngClass]="isReady(language) ? 'bg-success' : 'bg-alert'"
+              class="shape is-circled is-sm text-white m-left-2">
+              <i [ngClass]="isReady(language) ? 'fa-check' : 'fa-times'" class="fas"></i>
+            </div>
+
+            <div class="m-left-1 text-medium">
+              <div [ngClass]="{'popover is-top': !isReady(language)}">
+                <div>{{language.alias}}</div>
+                <div *ngIf="!isReady(language)" class="popover-container is-sm">
+                  <div class="card d-flex flex-d-column align-flex-start bg-white">
+                    <label class="m-bottom-1">Tasks remaining to validate this language:</label>
+                    <label class="d-flex align-center m-top-3">
+                      <i [ngClass]="language['status'] !== 'DONE'? 'fa fa-times-circle text-error': 'fa fa-check-circle text-success'"
+                         class="m-right-2"></i>
+                      Project to be validated
+                    </label>
+                    <label class="d-flex align-center m-top-3">
+                      <i class=" m-right-2" [ngClass]="!isWorkflowReady(language)? 'fa fa-times-circle text-error': 'fa fa-check-circle text-success'"></i>
+                      Workflows to be saved
+                    </label>
+                    <label class="d-flex align-center m-top-3">
+                      <i class="m-right-2" [ngClass]="!innovation.quizId? 'fa fa-times-circle text-error': 'fa fa-check-circle text-success'"></i>
+                      Quiz link to be generated
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-container>
         </div>
 
         <div class="card-body">
