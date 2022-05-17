@@ -149,6 +149,8 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
 
   private _canBeValidated = false;
 
+  private _canBeAllEdited = false;
+
   isMasterSel:boolean;
 
   categoryList:any;
@@ -566,9 +568,61 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
     }
   }
 
-  public checkActions(){
+  public checkActions(){ // this is hell.
     let lang = this._checkedLanguages.filter((card)=> card.selected === true);
-    console.log(lang);
+
+    if(lang.length === 1) {
+      switch (lang[0].status) {
+        case "WAITING":
+          this._canBeDeleted = true;
+          this._canBeValidated = true;
+          this._canBeEdited = true;
+          break;
+        case "EDITING":
+          this._canBeDeleted = true;
+          if(lang[0].hidden === true){
+            this._canBeValidated = true;
+            this._canBeDeleted = true;
+          }
+          break;
+        case "DONE":
+          this._canBeDeleted = true;
+          this._canBeEdited = true;
+          if(lang[0].hidden){
+            this._canBeValidated = true;
+          }
+          if(lang[0].shotSent && lang[0].hidden){
+            this._canBeDeleted = false;
+            this._canBeValidated = false;
+            this._canBeEdited = false;
+            this._canBeAllEdited = false;
+          }
+          break;
+      }
+    }
+    if(lang.length > 1) {
+      // if every lang selected have the same status
+      if(lang.every(la => la.status === "EDITING")){
+        this._canBeDeleted = true;
+      }
+      if(lang.every(la => la.status === "DONE")){
+        this._canBeDeleted = true;
+        this._canBeEdited = true;
+      }
+      if(lang.every(la => la.status === "WAITING")){
+        this._canBeDeleted = true;
+        this._canBeEdited = true;
+        this._canBeAllEdited = true;
+      }
+
+      //if languages have not the same status
+      // filtré par status et comparé les lenght?
+
+    }
+
+
+
+
   }
 
   public canBeEdited() {
@@ -582,6 +636,11 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
   public canBeDeleted(){
     return this._canBeDeleted;
   }
+
+  public canBeAllEdited() {
+    return this._canBeAllEdited;
+  }
+
 
   public removeLang(event: Event){
     event.preventDefault();
