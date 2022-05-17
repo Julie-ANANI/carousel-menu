@@ -2,205 +2,107 @@ import {
   AfterViewInit, ChangeDetectorRef, Component,
   ContentChildren,
   Directive, Inject, Input, PLATFORM_ID, QueryList, ElementRef,
-  ViewChildren, ViewChild, OnInit, TemplateRef
+  ViewChildren, ViewChild, OnInit, TemplateRef, EventEmitter
 } from '@angular/core';
-import {Innovation} from '../../../models/innovation';
-import {RouteFrontService} from '../../../services/route/route-front.service';
-import {InnovCard} from '../../../models/innov-card';
-import {InnovationFrontService} from '../../../services/innovation/innovation-front.service';
-import {RolesFrontService} from '../../../services/roles/roles-front.service';
-import {Campaign} from '../../../models/campaign';
-import {Subject} from 'rxjs';
-import {ActivatedRoute, Router} from '@angular/router';
-import {InnovationService} from '../../../services/innovation/innovation.service';
-import {CampaignFrontService} from '../../../services/campaign/campaign-front.service';
-import {MissionService} from '../../../services/mission/mission.service';
-import {TranslateNotificationsService} from '../../../services/translate-notifications/translate-notifications.service';
-import {TranslateTitleService} from '../../../services/title/title.service';
-import {SocketService} from '../../../services/socket/socket.service';
-import {first, takeUntil} from 'rxjs/operators';
-import {HttpErrorResponse} from '@angular/common/http';
-import {ErrorFrontService} from '../../../services/error/error-front.service';
-import {Mission} from '../../../models/mission';
-import {MenuKebabDirective} from './menu-kebab.directive';
-import {AnimationFactory, AnimationPlayer, AnimationBuilder, animate, style} from '@angular/animations';
+import { Innovation } from '../../../models/innovation';
+import { RouteFrontService } from '../../../services/route/route-front.service';
+import { InnovCard } from '../../../models/innov-card';
+import { InnovationFrontService } from '../../../services/innovation/innovation-front.service';
+import { RolesFrontService } from '../../../services/roles/roles-front.service';
+import { Campaign } from '../../../models/campaign';
+import { Subject } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
+import { InnovationService } from '../../../services/innovation/innovation.service';
+import { CampaignFrontService } from '../../../services/campaign/campaign-front.service';
+import { MissionService } from '../../../services/mission/mission.service';
+import { TranslateNotificationsService } from '../../../services/translate-notifications/translate-notifications.service';
+import { TranslateTitleService } from '../../../services/title/title.service';
+import { SocketService } from '../../../services/socket/socket.service';
+import { first, takeUntil } from 'rxjs/operators';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ErrorFrontService } from '../../../services/error/error-front.service';
+import { Mission } from '../../../models/mission';
+import { MenuKebabDirective } from './menu-kebab.directive';
+import { AnimationFactory, AnimationPlayer, AnimationBuilder, animate, style } from '@angular/animations';
 
 
-
-@Directive({
-  selector: '.carousel-item'
-})
 export class CarouselItemElement {
 }
 
 
 @Component({
   selector: 'carousel',
-  exportAs:'carousel',
- // templateUrl: './menu-kebab.html',
+  exportAs: 'carousel',
+  templateUrl: './menu-kebab.html',
   styleUrls: ['./menu-kebab.scss'],
-  template: `
-    <section class="bg-white sticky header-wrapper carousel-wrapper" [ngStyle]="carouselWrapperStyle">
-      <div class="d-flex relative m-top-30 align-center container fluid"
-           [ngStyle]="{'background-color': color, 'height': '40px'}">
-
-        <!-- button prev  -->
-        <div (click)="prev()"
-             *ngIf="showControls && !displaySuiteKebabItems"
-             class="absolute m-left-20 icon-container is-xl is-overlay"
-             [ngStyle]="{'left':'-0.7em'}"><i class="icon icon-arrow-left is-lg"></i>
-        </div>
-        <!-- end button prev -->
-
-        <ul class="carousel-inner tab" #carousel>
-          <li *ngFor="let item of items; let i = index" class=" text-capitalize carousel-item"
-              [ngStyle]="{'margin-top':'0'}">
-
-            <!-- always template display -->
-            <ng-container *ngIf="i < 5 && displaySuiteKebabItems && initItemSize"
-                          [ngTemplateOutlet]="item.tpl">
-            </ng-container>
-            <!-- end always template display -->
-
-            <!-- not always template display -->
-            <ng-container *ngIf="!displaySuiteKebabItems"
-                          [ngTemplateOutlet]="item.tpl">
-            </ng-container>
-            <!-- end not always template display -->
-            <!-- 161px pour 10 langues-->
-
-          </li>
-        </ul>
-
-        <!-- button menu-kebab -->
-        <div id="btn-kebab"
-             class="relative align-center"
-             (click)="displaySuiteKebabItems = !displaySuiteKebabItems"
-             [ngSwitch]="displaySuiteKebabItems"
-             [ngStyle]="{'left': '-6em'}"
-             *ngIf="items.length > 4">
-          <!--    true / false  -->
-          <ng-container *ngSwitchCase="!displaySuiteKebabItems"></ng-container>
-          <ng-container *ngSwitchCase="displaySuiteKebabItems">
-            <div class="m-left-20 icon-container is-xl is-overlay">
-              <i class="icon icon-more-horiz is-lg"></i>
-            </div>
-            <!--  button view more -->
-            <span *ngIf="displaySuiteKebabItems" class="text-xs text-bold absolute btn__view">View more</span>
-            <!--  end button view more -->
-          </ng-container>
-        </div>
-        <!--  end button menu-kebab -->
-
-        <!--  button add-lang -->
-        <div
-          *ngIf="activeTab === 'description' || activeTab === 'targeting' || activeTab === 'questionnaire'"
-          class="d-flex align-center animate-fade is-3" style="max-height: 40px">
-
-          <!-- add lang -->
-          <button
-            (click)="openModal($event, 'ADD_LANG')"
-            *ngIf="canAddCard && activeTab === 'description' && canEditDescription && displaySuiteKebabItems"
-            [disabled]="isAddingCard"
-            class="button is-link is-sm m-left-50 p-30"
-            id="btn-add-card">
-            <i class="fas fa-plus-circle m-right-2"></i>
-            {{ activeCard.lang === 'fr' ? 'Add english' : 'Add french' }}
-          </button>
-          <!-- /add lang -->
-
-          <!-- lang change -->
-          <div *ngIf="showLangDrop && activeTab === 'description' && displaySuiteKebabItems" class="dropdown is-right is-sm m-left-50 p-30">
-            <a class="button is-sm is-link dropdown-toggle" tabindex="0">
-              {{ activeCard.lang === 'fr' ? 'French' : 'English' }}<i class="fas fa-caret-down m-right-2"></i>
-            </a>
-
-            <ul class="menu">
-              <li
-                (click)="setCardLang(card.lang)"
-                *ngFor="let card of project.innovationCards"
-                class="menu-item flex-between">
-                {{ card.lang === 'fr' ? 'French' : 'English' }}
-                <div
-                  *ngIf="canEditDescription"
-                  (click)="openModal($event, 'DELETE_LANG', card)"
-                  [ngClass]="{'disabled': isDeletingCard}"
-                  class="icon-container is-sm is-overlay">
-                  <i class="icon text-alert icon-delete"></i>
-                </div>
-              </li>
-            </ul>
-          </div>
-          <!-- /lang change -->
-
-        </div>
-        <!--  end button add-lang -->
-
-        <!--  button back  -->
-        <div (click)="next()"
-             *ngIf="showControls && !displaySuiteKebabItems"
-             class="absolute m-left-20 icon-container is-xl is-overlay"
-             [ngStyle]="{'right':'3em'}"><i class="icon icon-arrow-right is-lg"></i>
-        </div>
-        <!--  end button back -->
-
-        <!--  button view less-->
-        <span
-          *ngIf="!displaySuiteKebabItems && initItemSize"
-          class=" absolute text-xs text-bold"
-          [ngStyle]="{'right':'1em', 'color': btnViewColor}">View less
-    </span>
-        <!--  end button view less -->
-
-      </div>
-    </section>
-  `
 })
 
 
-export class MenuKebabComponent implements AfterViewInit, OnInit {
+export class MenuKebabComponent implements OnInit {
 
-  @ContentChildren(MenuKebabDirective) items : QueryList<MenuKebabDirective>;
-  @ViewChildren(CarouselItemElement, { read: ElementRef }) private itemsElements : QueryList<ElementRef>;
-  @ViewChild('carousel') private carousel : ElementRef;
+  // TODO all
+  @ContentChildren(MenuKebabDirective) items: QueryList<MenuKebabDirective>;
+  @ViewChildren(CarouselItemElement, {read: ElementRef}) private _itemsElements: QueryList<ElementRef>;
+  @ViewChild('carousel') private carousel: ElementRef;
 
+  // false: displayItem[0] compare to sources[0]
+  showPrev = true;
+
+  // false: displayItem[last] compare to sources[last]
+  showNext = true;
+
+  // TODO all
+
+  /**
+   * TODO: to change
+   */
   next() {
-    if( this.currentItem + 1 === this.items.length ) return;
+    if (this.currentItem + 1 === this.items.length) return;
     this.currentItem = (this.currentItem + 1) % this.items.length;
     //const offset = this.currentItem * this.itemWidth;
-    const myAnimation : AnimationFactory = this.buildAnimation();
+    const myAnimation: AnimationFactory = this.buildAnimation();
     this.player = myAnimation.create(this.carousel.nativeElement);
     this.player.play();
   }
 
-  private buildAnimation( ) {
+  // TODO remove
+  private buildAnimation() {
     return this.builder.build([
-      animate(this.timing, style({ transform: `translateX(-150px)` }))
+      animate(this.timing, style({transform: `translateX(-150px)`}))
     ]);
   }
 
+  /**
+   * TODO: to change
+   */
   prev() {
-    if( this.currentItem === 0 ) return;
-
-    this.currentItem = ((this.currentItem - 1) + this.items.length) % this.items.length;
-    //const offset = this.currentItem * this.itemWidth;
-
-    const myAnimation : AnimationFactory = this.buildAnimation();
-    this.player = myAnimation.create(this.carousel.nativeElement);
-    this.player.play();
+    // get first item in displayedItems
+    // go through sources
+    // find first item in sources, and get the index.
+    // if index > 5 => change completely the displayedItems
+    // if index < 5 => take what's in former sources + what's left in displayedItems
+    //
+    // if (this.currentItem === 0) return;
+    //
+    // this.currentItem = ((this.currentItem - 1) + this.items.length) % this.items.length;
+    // //const offset = this.currentItem * this.itemWidth;
+    //
+    // const myAnimation: AnimationFactory = this.buildAnimation();
+    // this.player = myAnimation.create(this.carousel.nativeElement);
+    // this.player.play();
   }
 
 
-  ngAfterViewInit() {
-
-    setTimeout(() => {
-      this.itemWidth = this.itemsElements.first.nativeElement.getBoundingClientRect().width;
-      this.carouselWrapperStyle = {
-        width: `${this.itemWidth}px`
-      }
-    });
-    throw new Error("Method not implemented.");
-  }
+  // ngAfterViewInit() {
+  //
+  //   setTimeout(() => {
+  //     this.itemWidth = this.itemsElements.first.nativeElement.getBoundingClientRect().width;
+  //     this.carouselWrapperStyle = {
+  //       width: `${this.itemWidth}px`
+  //     }
+  //   });
+  //   throw new Error("Method not implemented.");
+  // }
 
   @Input() showControls = true;
   @Input() timing = '250ms ease-in';
@@ -216,25 +118,41 @@ export class MenuKebabComponent implements AfterViewInit, OnInit {
 
 
   // Config Template
-  @Input() itemTemplate: TemplateRef<{item: any}>
- // @Input() initialState: 'expandable' | 'collapsed' = 'collapsed';
- // @Input() expandable = false;
+  @Input() itemTemplate: TemplateRef<{ item: any }>
+  // @Input() initialState: 'expandable' | 'collapsed' = 'collapsed';
+  // @Input() expandable = false;
 
   public alwaysDisplayedItems: string[] = [];
   public menueExpandableItems: string[] = [];
 
   //size
-  private itemWidth : number;
+  private itemWidth: number;
   carouselWrapperStyle = {}
   private _initItemSize = true;
 
   //item
   private currentItem: number = 0;
 
+  /**
+   * here, you get configuration for the menu
+   * @param value
+   * quatity = 5
+   */
+  @Input() set config(value: any) {
+    if (value) {
+        this._quatity = value.quatity || 0;
+        this._sources = value.sources || [];
+        this._identifier = value.identifier || '';
+        // TODO check sources
+      //initialise _displayedItems
+        this._displayedItems = this._sources.slice(0, this._quatity);
+    }
+  }
+
   //Config Template
   private _isDisplayItems = false;
   private _displaySuiteKebabItems = true;
-  private player : AnimationPlayer;
+  private player: AnimationPlayer;
 
 
   //Tabs
@@ -261,91 +179,33 @@ export class MenuKebabComponent implements AfterViewInit, OnInit {
 
   private _ngUnsubscribe: Subject<any> = new Subject<any>();
 
+  private _config: any;
+
+  private _quatity: number = 0;
+
+  private _identifier: string = '';
+
+  private _sources: Array<any> = [];
+
+  private _displayedItems: Array<any> = [];
+
+  private _clickOnMenu: EventEmitter<any> = new EventEmitter();
+
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _routeFrontService: RouteFrontService,
               private _router: Router,
               private _innovationService: InnovationService,
-              private _campaignFrontService: CampaignFrontService,
               private _missionService: MissionService,
               private _innovationFrontService: InnovationFrontService,
               private _rolesFrontService: RolesFrontService,
               private _translateNotificationsService: TranslateNotificationsService,
               private _translateTitleService: TranslateTitleService,
-              private _changeDetectorRef: ChangeDetectorRef,
-              private _activatedRoute: ActivatedRoute,
-              private _socketService: SocketService,
               private builder: AnimationBuilder) {
   }
 
   ngOnInit() {
-    if (this._activatedRoute.snapshot.data['allCampaign']
-      && typeof this._activatedRoute.snapshot.data['allCampaign'] !== undefined) {
-      this._allCampaigns = this._activatedRoute.snapshot.data['allCampaign'].result || [];
-    }
 
-    this._innovationFrontService.innovation().pipe(takeUntil(this._ngUnsubscribe)).subscribe((innovation) => {
-      if (innovation && innovation._id) {
-        this._project = innovation;
-        this.setPageTitle();
-        this._setActiveCardIndex();
-      }
-    });
-
-    // Cards text has already been saved by another user
-    this._socketService.getProjectFieldUpdates(this._project._id, 'innovationCards')
-      .pipe(takeUntil(this._ngUnsubscribe))
-      .subscribe((_) => {
-        // We keep our changes to be saved except innovationCards
-        this._toBeSaved = this._toBeSaved.replace(/(innovationCards[,]?)/g, '');
-      }, (error) => {
-        console.error(error);
-      });
-
-    this._campaignFrontService.activeCampaignTab().pipe(takeUntil(this._ngUnsubscribe)).subscribe((tab) => {
-      if (tab && this._activeTab !== tab) {
-        this._activeTab = tab;
-        setTimeout(() => {
-          this._showCampaignTabs = true;
-          this.setPageTitle();
-        }, 100);
-      }
-    });
-
-    this._campaignFrontService.activeCampaign().pipe(takeUntil(this._ngUnsubscribe)).subscribe((campaign) => {
-      this._selectedCampaign = campaign || <Campaign>{};
-    });
-
-    this._campaignFrontService.showCampaignTabs().pipe(takeUntil(this._ngUnsubscribe)).subscribe((show) => {
-      this._showCampaignTabs = show;
-    });
-
-    this._innovationFrontService.getNotifyChanges().pipe(takeUntil(this._ngUnsubscribe)).subscribe((save) => {
-      this._toBeSaved = this._toBeSaved ? this._toBeSaved + ',' + save.key : save.key;
-      if (save.autoSave) {
-        this.onSave(new Event(''))
-      }
-    });
-
-    this._innovationFrontService.getCardCommentNotifyChanges()
-      .pipe(takeUntil(this._ngUnsubscribe))
-      .subscribe((save) => {
-        this._toBeSavedComment = save;
-      });
-
-    //check status
-    //this.expandable = this.initialState === 'expandable';
-    // this.alwaysDisplayedItems = this.itemsTest.slice(0, this.minDelimitersOfItems);
-    // this.menueExpandableItems = this.itemsTest.slice(this.minDelimitersOfItems, this.itemsTest.length);
-  }
-
-  // public toggleExpandables () {
-  //   this.expandable = !this.expandable;
-  // }
-
-
-  ngAfterViewChecked() {
-    this._changeDetectorRef.detectChanges();
   }
 
 
@@ -659,9 +519,34 @@ export class MenuKebabComponent implements AfterViewInit, OnInit {
   }
 
 
+  get itemsElements(): QueryList<ElementRef> {
+    return this._itemsElements;
+  }
+
+  get quatity(): number {
+    return this._quatity;
+  }
+
+  get identifier(): string {
+    return this._identifier;
+  }
+
+  get sources(): Array<any> {
+    return this._sources;
+  }
+
+  get displayedItems(): Array<any> {
+    return this._displayedItems;
+  }
+
   ngOnDestroy(): void {
     this._ngUnsubscribe.next();
     this._ngUnsubscribe.complete();
+  }
+
+  clickOnMenu(event: Event, item: any) {
+    event.preventDefault();
+    this._clickOnMenu.emit(item);
   }
 }
 

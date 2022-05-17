@@ -1,142 +1,123 @@
-<!-- We create template for this utility-->
-<section class="bg-white sticky header-wrapper kebab-carousel-wrapper" [ngStyle]="{'width': kebabCarouselWidth}">
+<section class="bg-white sticky header-wrapper carousel-wrapper" [ngStyle]="carouselWrapperStyle">
   <div class="d-flex relative m-top-30 align-center container fluid"
        [ngStyle]="{'background-color': color, 'height': '40px'}">
+    //TODO static css in ngStyle
 
+    //TODO: this one is ok
     <!-- button prev  -->
-<!--    <div *ngIf="!displaySuiteKebabItems"-->
-<!--         (click)="prev"-->
-<!--         class="absolute m-left-20 icon-container is-xl is-overlay"-->
-<!--         [ngStyle]="{'left':'-0.7em'}">-->
-<!--      <i class="icon icon-arrow-left is-lg"></i>-->
-<!--    </div>-->
+    <div (click)="prev()"
+         *ngIf="showControls && !displaySuiteKebabItems"
+         class="absolute m-left-20 icon-container is-xl is-overlay"
+         [ngStyle]="{'left':'-0.7em'}"><i class="icon icon-arrow-left is-lg"></i>
+    </div>
     <!-- end button prev -->
 
-    <!--  item display -->
-    <ul class="kebab-carousel-inner tab m-left-40" #carousel
-        [ngStyle]="{'border-bottom': '0px'}">
-          <li class="m-right-30 text-capitalize tab-item kebab-carousel-item">
+    //TODO remove #carousel
+    <ul class="carousel-inner tab" #carousel>
+      <li *ngFor="let item of displayedItems; let i = index" class=" text-capitalize carousel-item"
+          [ngStyle]="{'margin-top':'0'}" (click)="clickOnMenu($event, item)">
 
-            <!-- always template display -->
-            <ng-container>
-              <div *ngIf="displaySuiteKebabItems">
-                <ng-container *ngFor="let expandableItem of items; let i = index">
+        {{item[identifier]}}
 
-                  <div *ngIf="i < 4">
-                      <ng-container *ngTemplateOutlet="itemTemplate;context:{item: expandableItem}"></ng-container>
-                  </div>
+<!--        &lt;!&ndash; always template display &ndash;&gt;-->
+<!--        <ng-container *ngIf="i < 5 && displaySuiteKebabItems && initItemSize"-->
+<!--                      [ngTemplateOutlet]="item.tpl">-->
+<!--        </ng-container>-->
+<!--        &lt;!&ndash; end always template display &ndash;&gt;-->
 
-                </ng-container>
-              </div>
-            </ng-container>
-            <!-- end always template display -->
+<!--        &lt;!&ndash; not always template display &ndash;&gt;-->
+<!--        <ng-container *ngIf="!displaySuiteKebabItems"-->
+<!--                      [ngTemplateOutlet]="item.tpl">-->
+<!--        </ng-container>-->
+<!--        &lt;!&ndash; end not always template display &ndash;&gt;-->
+<!--        &lt;!&ndash; 161px pour 10 langues&ndash;&gt;-->
 
-            <!-- not always template display -->
-            <div *ngIf="!displaySuiteKebabItems">
-              <ng-container
-                            *ngFor="let displayedItems of items;">
-                <!--   we can't use a simple content of projection because we want curl items The solution is use ng-template-->
-                <!--   We use ng-template-outlet for defined a template parameters who pass in component entry. It's for have a reference to a item-->
-                <!-- not always template display item -->
-                <ng-container *ngTemplateOutlet="itemTemplate; context :{item: displayedItems}"></ng-container>
-              </ng-container>
-          </div>
-
-            <!-- end always template display -->
-
-
-          </li>
+      </li>
     </ul>
-    <!--  end item display -->
 
-    <!--  button menu-kebab -->
-<!--    <div *ngIf="displaySuiteKebabItems"-->
-<!--         (click)="displaySuiteKebabItems = !displaySuiteKebabItems">-->
-<!--        <div class="m-left-20 icon-container is-xl is-overlay">-->
-<!--              <i class="icon icon-more-horiz is-lg"></i>-->
-<!--        </div>-->
-<!--          &lt;!&ndash;  button view more &ndash;&gt;-->
-<!--           <span *ngIf="displaySuiteKebabItems" class="text-xs text-bold absolute btn__view">View more</span>-->
-<!--           &lt;!&ndash;  end button view more &ndash;&gt;-->
-<!--    </div>-->
-
-<!--    <div    id="btn-kebab"-->
-<!--            class="relative align-center"-->
-<!--            (click)="displaySuiteKebabItems = !displaySuiteKebabItems"-->
-<!--            [ngSwitch]="displaySuiteKebabItems"-->
-<!--            *ngIf="items.length > 4">-->
-<!--&lt;!&ndash;    true / false  &ndash;&gt;-->
-<!--      <ng-container *ngSwitchCase="!displaySuiteKebabItems"></ng-container>-->
-<!--      <ng-container *ngSwitchCase="displaySuiteKebabItems">-->
-<!--        <div class="m-left-20 icon-container is-xl is-overlay">-->
-<!--          <i class="icon icon-more-horiz is-lg"></i>-->
-<!--        </div>-->
-<!--        &lt;!&ndash;  button view more &ndash;&gt;-->
-<!--        <span *ngIf="displaySuiteKebabItems" class="text-xs text-bold absolute btn__view">View more</span>-->
-<!--        &lt;!&ndash;  end button view more &ndash;&gt;-->
-<!--      </ng-container>-->
-<!--    </div>-->
-     <!--  end button menu-kebab -->
-
-    <!--  button add-lang -->
-        <div
-          *ngIf="activeTab === 'description' || activeTab === 'targeting' || activeTab === 'questionnaire'"
-          class="d-flex align-center animate-fade is-3" style="max-height: 40px">
-
-          <!-- add lang -->
-          <button
-            (click)="openModal($event, 'ADD_LANG')"
-            *ngIf="canAddCard && activeTab === 'description' && canEditDescription && displaySuiteKebabItems"
-            [disabled]="isAddingCard"
-            class="button is-link is-sm m-left-50 p-30"
-            id="btn-add-card">
-            <i class="fas fa-plus-circle m-right-2"></i>
-            {{ activeCard.lang === 'fr' ? 'Add english' : 'Add french' }}
-          </button>
-          <!-- /add lang -->
-
-          <!-- lang change -->
-          <div *ngIf="showLangDrop && activeTab === 'description' && displaySuiteKebabItems" class="dropdown is-right is-sm m-left-50 p-30">
-            <a class="button is-sm is-link dropdown-toggle" tabindex="0">
-              {{ activeCard.lang === 'fr' ? 'French' : 'English' }}<i class="fas fa-caret-down m-right-2"></i>
-            </a>
-
-            <ul class="menu">
-              <li
-                (click)="setCardLang(card.lang)"
-                *ngFor="let card of project.innovationCards"
-                class="menu-item flex-between">
-                {{ card.lang === 'fr' ? 'French' : 'English' }}
-                <div
-                  *ngIf="canEditDescription"
-                  (click)="openModal($event, 'DELETE_LANG', card)"
-                  [ngClass]="{'disabled': isDeletingCard}"
-                  class="icon-container is-sm is-overlay">
-                  <i class="icon text-alert icon-delete"></i>
-                </div>
-              </li>
-            </ul>
-          </div>
-          <!-- /lang change -->
-
+    // TODO remove block
+    <!-- button menu-kebab -->
+    <div id="btn-kebab"
+         class="relative align-center"
+         (click)="displaySuiteKebabItems = !displaySuiteKebabItems"
+         [ngSwitch]="displaySuiteKebabItems"
+         [ngStyle]="{'left': '-6em'}"
+         *ngIf="items.length > 4">
+      <!--    true / false  -->
+      <ng-container *ngSwitchCase="!displaySuiteKebabItems"></ng-container>
+      <ng-container *ngSwitchCase="displaySuiteKebabItems">
+        <div class="m-left-20 icon-container is-xl is-overlay">
+          <i class="icon icon-more-horiz is-lg"></i>
         </div>
+        <!--  button view more -->
+        <span *ngIf="displaySuiteKebabItems" class="text-xs text-bold absolute btn__view">View more</span>
+        <!--  end button view more -->
+      </ng-container>
+    </div>
+    <!--  end button menu-kebab -->
+
+    // TODO remove block
+    <!--  button add-lang -->
+    <div
+      *ngIf="activeTab === 'description' || activeTab === 'targeting' || activeTab === 'questionnaire'"
+      class="d-flex align-center animate-fade is-3" style="max-height: 40px">
+
+      <!-- add lang -->
+      <button
+        (click)="openModal($event, 'ADD_LANG')"
+        *ngIf="canAddCard && activeTab === 'description' && canEditDescription && displaySuiteKebabItems"
+        [disabled]="isAddingCard"
+        class="button is-link is-sm m-left-50 p-30"
+        id="btn-add-card">
+        <i class="fas fa-plus-circle m-right-2"></i>
+        {{ activeCard.lang === 'fr' ? 'Add english' : 'Add french' }}
+      </button>
+      <!-- /add lang -->
+
+      <!-- lang change -->
+      <div *ngIf="showLangDrop && activeTab === 'description' && displaySuiteKebabItems"
+           class="dropdown is-right is-sm m-left-50 p-30">
+        <a class="button is-sm is-link dropdown-toggle" tabindex="0">
+          {{ activeCard.lang === 'fr' ? 'French' : 'English' }}<i class="fas fa-caret-down m-right-2"></i>
+        </a>
+
+        <ul class="menu">
+          <li
+            (click)="setCardLang(card.lang)"
+            *ngFor="let card of project.innovationCards"
+            class="menu-item flex-between">
+            {{ card.lang === 'fr' ? 'French' : 'English' }}
+            <div
+              *ngIf="canEditDescription"
+              (click)="openModal($event, 'DELETE_LANG', card)"
+              [ngClass]="{'disabled': isDeletingCard}"
+              class="icon-container is-sm is-overlay">
+              <i class="icon text-alert icon-delete"></i>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <!-- /lang change -->
+
+    </div>
     <!--  end button add-lang -->
 
     <!--  button back  -->
-<!--    <div *ngIf="!displaySuiteKebabItems"-->
-<!--         class="m-left-20 icon-container is-xl is-overlay"-->
-<!--         (click)="next">-->
-<!--      <i class="icon icon-arrow-right"></i>-->
-<!--    </div>-->
+    <div (click)="next()"
+         *ngIf="showControls && !displaySuiteKebabItems"
+         class="absolute m-left-20 icon-container is-xl is-overlay"
+         [ngStyle]="{'right':'3em'}"><i class="icon icon-arrow-right is-lg"></i>
+    </div>
     <!--  end button back -->
 
+    //TODO remove block
     <!--  button view less-->
-<!--    <span *ngIf="!displaySuiteKebabItems"-->
-<!--          class=" absolute text-xs text-bold"-->
-<!--          [ngStyle]="{'right':'1em', 'color': btnViewColor}">View less-->
-<!--    </span>-->
+    <span
+      *ngIf="!displaySuiteKebabItems && initItemSize"
+      class=" absolute text-xs text-bold"
+      [ngStyle]="{'right':'1em', 'color': btnViewColor}">View less
+    </span>
     <!--  end button view less -->
 
-    </div>
-
+  </div>
 </section>
