@@ -1,13 +1,13 @@
 <!-- We create template for this utility-->
-<section class="bg-white sticky header-wrapper carousel-wrapper">
+<section class="bg-white sticky header-wrapper carousel-wrapper p-40">
+  <div class="d-flex">
   <div class="d-flex relative m-top-30 align-center container fluid"
        [ngStyle]="{'background-color': backgroundColor, 'height': menuHeight}">
 
     <!-- button prev  -->
     <div (click)="prev()"
          *ngIf="showControls"
-         class="absolute m-left-20 icon-container is-xl is-overlay"
-         [ngStyle]="{'left':positionBtnPrev}"><i class="icon icon-arrow-left is-lg"></i>
+         class="m-left-20 icon-container is-xl is-overlay"><i class="icon icon-arrow-left is-lg"></i>
     </div>
     <!-- end button prev -->
 
@@ -58,4 +58,7 @@
 <!--    </span>-->
     <!--  end button view less -->
   </div>
+  </div>
 </section>
+
+
