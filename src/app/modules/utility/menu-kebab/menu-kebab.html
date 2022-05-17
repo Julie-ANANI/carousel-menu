@@ -15,7 +15,9 @@
       <!-- always template display -->
       <ng-container class="carousel-inner tab text-capitalize carousel-item"
         *ngFor="let item of displayedItems; let i = index">
-        <button class="button is-primary" (click)="clickOnMenu($event, item)">{{item[identifier]}}</button>
+        <button class="button"
+                (click)="clickOnMenu($event, item)"
+                [ngStyle]="{'min-width':itemWidth}">{{item[identifier]}}</button>
       </ng-container>
       <!-- end always template display -->
     </div>

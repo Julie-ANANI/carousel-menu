@@ -9,6 +9,9 @@ import {Subject} from 'rxjs';
 })
 
 export class MenuKebabComponent implements OnInit {
+  get initIndex(): number {
+    return this._initIndex;
+  }
 
   //config button controls
   @Input() showControls = true;
@@ -16,6 +19,7 @@ export class MenuKebabComponent implements OnInit {
   //Size
   @Input() minDelimitersOfItems = 5;
   @Input() menuHeight = '40px'
+  @Input() itemWidth = '146px'
 
   //color
   @Input() backgroundColor = '#EFEFEF';
@@ -38,11 +42,12 @@ export class MenuKebabComponent implements OnInit {
   @Input() set config(value: any) {
     if (value) {
       this._quatity = value.quatity || 0;
+      this._initIndex = value.initIndex || 0;
       this._sources = value.sources || [];
       this._identifier = value.identifier || '';
       // TODO check sources
       //initialise _displayedItems
-      this._displayedItems = this._sources.slice(0, this._quatity);
+      this._displayedItems = this._sources.slice(this._initIndex, this._quatity);
     }
   }
 
@@ -52,7 +57,7 @@ export class MenuKebabComponent implements OnInit {
   //item
   private _currentItem: any;
 
-
+  private _initIndex: number = 0;
 
   //Config Template
   private _isDisplayItems = false;
@@ -80,14 +85,55 @@ export class MenuKebabComponent implements OnInit {
   }
 
   //todo change
-  next() {
+  next(event: Event, item: any) {
     console.log('next button');
-    // if( this.currentItemToDisplay + 1 === this.items.length ) return;
-    // this.currentItemToDisplay = (this.currentItemToDisplay + 1) % this.items.length;
-    // //const offset = this.currentItem * this.itemWidth;
+    //console.log($event);
+    //event.preventDefault();
+   // this._currentItem = item;
+
+    // false: displayItem[last] compare to sources[last]
+
+    //recupère la longeur du tableau
+
+    //boucle sur le tableau
+         //push show item sauf le dernier
+
+
+
+
+    //si c'est le dernier index afficher button prev
+
+    //si c'est le dernier display hide
+    // width + decal width 1
+
+    let initValueDisplayedItems = 0
+    let diffItems = (initValueDisplayedItems - 1);
+    let itemsToDisplay= (diffItems + this.displayedItems.length)
+
+     let lastItemDisplayed = (diffItems + this.displayedItems.length) % this.displayedItems.length;
+
+
+
+    if(!this.displayedItems) {
+      return;
+    } else {
+      //value start
+      console.log('start value :' + (this._initIndex + 1));
+      //value end
+      //if not last
+      console.log('start value :' + (lastItemDisplayed + 1));
+    }
+     console.log(diffItems);
+     console.log(lastItemDisplayed);
+     console.log(itemsToDisplay);
+
+    //const offset = this.currentItem * this.itemWidth;
+
     // const myAnimation : AnimationFactory = this.buildAnimation();
     // this.player = myAnimation.create(this.carousel.nativeElement);
     // this.player.play();
+
+
   }
 
   //todo change this
