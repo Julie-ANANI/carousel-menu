@@ -146,12 +146,22 @@
             <i class="form-icon"></i>
             <span *ngIf="!batch.active" class="tooltip"
                   [attr.data-tooltip]="'Sending is paused,\n'+'no email will be sent.'">Paused</span>
-            <span *ngIf="batch.active" class="tooltip" [attr.data-tooltip]="'Sending is activated,\n'+'email will be sent.'">Activated</span>
+            <span *ngIf="batch.active" class="tooltip"
+                  [attr.data-tooltip]="'Sending is activated,\n'+'email will be sent.'">Activated</span>
           </label>
 
         </div>
 
         <div class="card-body">
+          <ng-container *ngFor="let lang of innovationCardLanguages">
+            <ng-container *ngIf="containsLanguages(lang.type, batch.languages)">
+              <div>
+                {{lang?.status}} -
+                {{('COMMON.LANG.' + lang?.type.toUpperCase()) | translate}}
+              </div>
+            </ng-container>
+          </ng-container>
+
           <umius-table
             (editRow)="onClickEdit($event, batch)"
             [config]="localConfig"

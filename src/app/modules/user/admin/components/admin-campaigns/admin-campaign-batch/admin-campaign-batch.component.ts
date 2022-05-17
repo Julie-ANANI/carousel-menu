@@ -19,6 +19,7 @@ import { MissionService } from '../../../../../../services/mission/mission.servi
 import { Mission } from '../../../../../../models/mission';
 import {StatsInterface} from "../../../../../../models/stats";
 import {Table, UmiusSidebarInterface} from '@umius/umi-common-component';
+import { Language } from "../../../../../../models/static-data/language";
 
 @Component({
   templateUrl: './admin-campaign-batch.component.html',
@@ -64,7 +65,7 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
 
   private _innovation: Innovation = <Innovation>{};
 
-  private _innovationCardLanguages: string[] = [];
+  private _innovationCardLanguages: Array<Language> = [];
 
   private _statsConfig: Array<StatsInterface> = [];
 
@@ -176,6 +177,7 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
     })
   }
 
+  // TODO duplicated function, need to refactor
   private _getInnovationLanguages() {
     this._innovationCardLanguages = [];
     if (this._campaign
@@ -183,7 +185,12 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
       && this._campaign.innovation.innovationCards
       && this._campaign.innovation.innovationCards.length) {
       this._campaign.innovation.innovationCards.map(innovationCard => {
-        this._innovationCardLanguages.push(innovationCard.lang);
+        this._innovationCardLanguages.push(
+          {
+            type: innovationCard.lang,
+            status: innovationCard.status,
+            hidden: innovationCard.hidden
+          });
       });
     }
   }
@@ -191,6 +198,10 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
   private _reinitializeVariables() {
     this._batches = {};
     this._batchesTable = [];
+  }
+
+  containsLanguages(language: string, languages: Array<string>){
+    return !!languages.find(l => l === language);
   }
 
   private _getBatches() {
@@ -787,7 +798,7 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
   }
 
   get templatesStatus(): boolean {
-    const emailsImported = this._campaign.settings.emails.filter(e => this._innovationCardLanguages.indexOf(e.language) !== -1);
+    const emailsImported = this._campaign.settings.emails.filter(e => {return !!this._innovationCardLanguages.find(l => l.type === e.language)});
     return (
       this._campaign.settings &&
       this._campaign.settings.emails &&
@@ -833,6 +844,11 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
 
   get batchesTable() {
     return this._batchesTable;
+  }
+
+
+  get innovationCardLanguages(): Array<Language> {
+    return this._innovationCardLanguages;
   }
 
   get currentBatch(): Batch {
