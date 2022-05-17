@@ -51,7 +51,7 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
     { lang: 'Spain 3' },
     { lang: 'Spain 3' },
   ]
-  //end tesst kebab item
+  //end test kebab item
 
   private _innovation: Innovation = <Innovation>{};
 
