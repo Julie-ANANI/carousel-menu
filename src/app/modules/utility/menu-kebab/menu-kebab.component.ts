@@ -18,8 +18,8 @@ export class CarouselItemElement {
 
 
 @Component({
-  selector: 'carousel',
-  exportAs:'carousel',
+  selector: 'app-menu-kebab',
+  exportAs:'app-menu-kebab',
  templateUrl: './menu-kebab.html',
   styleUrls: ['./menu-kebab.scss']
 })

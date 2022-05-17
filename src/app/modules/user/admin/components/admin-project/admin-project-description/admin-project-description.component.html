@@ -17,13 +17,13 @@
 
     <div style="margin: 2em" class="container">
 
-      <carousel>
+      <app-menu-kebab>
         <ng-container *ngFor="let item of items;">
           <ng-container *carouselItem>
             <div class="item">{{item.lang}}</div>
           </ng-container>
         </ng-container>
-      </carousel>
+      </app-menu-kebab>
 
       <!--<div style="margin-top: 1em;">
         <a (click)="carousel.next()" class="btn btn-success">Next</a>
