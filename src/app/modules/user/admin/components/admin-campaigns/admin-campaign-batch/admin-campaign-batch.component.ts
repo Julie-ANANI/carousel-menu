@@ -110,6 +110,7 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
         this._initCampaign();
         this._campaignFrontService.setLoadingCampaign(false);
         this._statsConfig = this.setBatchesStatsConfig(this._campaign.stats);
+        console.log(this._campaign?.settings?.emails);
       }
     });
 
@@ -568,7 +569,6 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
    * @param language
    */
   isReady(language: Language) {
-    // TODO: should add condition to check workflow
     return this._innovation.quizId
       && language['status']==='DONE' && this.isWorkflowReady(language)
   }
@@ -578,11 +578,14 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
    * for fr, all the emails in french should be prepared
    * @param language
    */
-  isWorkflowReady(language: Language){
-    return this._campaign && this._campaign.settings
-      && this._campaign.settings.emails
-      && this._campaign.settings.emails.length
-      && this._campaign.settings.emails.filter(email => email.language === language.type).length === 0
+  isWorkflowReady(language: Language) {
+    const emailsOfLanguage = this._campaign?.settings?.emails.filter(email => email.language === language.type);
+    if(!emailsOfLanguage.length){
+      return false;
+    }
+    return this._campaign?.settings?.emails.reduce((acc, current) => {
+      return acc && (current.language !== language.type || current.modified);
+    }, true);
   }
 
   getTooltipMessage(language: Language){

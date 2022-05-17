@@ -193,6 +193,10 @@ export class AdminEditWorkflowComponent {
 
 
   isModified(language: string) {
+    const emailsOfLanguage = this._campaignScenario.emails.filter(email => email.language === language);
+    if(!emailsOfLanguage.length){
+      return false;
+    }
     return this._campaignScenario.emails.reduce((acc, current) => {
       return acc && (current.language !== language || current.modified);
     }, true);
