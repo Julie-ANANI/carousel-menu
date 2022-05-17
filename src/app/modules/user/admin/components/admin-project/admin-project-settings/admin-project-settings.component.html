@@ -236,47 +236,60 @@
                         <thead>
                         <tr>
                           <th>
-                            <div class="form-checkbox">
+                            <label class="form-checkbox">
                               <input
                                 (change)="allLanguagesChecked($event)"
                                 id="allLanguages"
-                                type="checkbox">
+                                type="checkbox"
+                              [checked]="allSelected">
                               <i class="form-icon"></i>
-                            </div>
+                            </label>
                           </th>
                           <th style="width: 250px !important;" class="flex-around w-full text-sm text-capitalize text-primary">
-                            <div> <i class="fa fa-trash"></i> {{ " Remove "}} </div>
-                            <div> <i class="fa fa-pen"></i> {{" Edit "}} </div>
-                            <div> <i class="fa fa-check"></i> {{" Validate "}} </div>
+                            <div *ngIf="canBeDeleted()" (click)="removeLang($event)"> <i class="fa fa-trash"></i> {{" Remove "}} </div>
+                            <div *ngIf="canBeEdited()" (click)="editLang($event)">> <i class="fa fa-pen"></i> {{" Edit "}} </div>
+                            <div *ngIf="canBeValidated()" (click)="validateLang($event)">><i class="fa fa-check"></i> {{" Validate "}} </div>
                           </th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr *ngFor="let inno of innovation.innovationCards">
+                        <tr *ngFor="let inno of checkedLanguages">
                           <td>
-                            <div class="form-checkbox">
+                            <label class="form-checkbox">
                               <input
-                                (change)="onChangeLanguage($event)"
+                                (change)="onChangeLanguage($event, inno)"
                                 [id]="inno['lang']"
                                 [value]="inno"
-                                type="checkbox">
+                                type="checkbox"
+                                [checked]="inno.selected">
                               <i class="form-icon"></i>
-                              {{inno.lang}}
+                              {{'COMMON.LANG.' + inno.lang.toUpperCase() | translate }}
+                            </label>
+                          </td>
+                          <td  *ngIf="!inno.hidden" class="flex-around">
+                            <div class="flex-centered tooltip is-multiline" data-tooltip="This language is visible on client side. Click on the eye to mask it">
+                              <i class="fa fa-eye text-primary text-lg" (click)="changeVisibility(inno)"></i>
+                              <div  [ngClass]="statusClass(inno.status)" class="text-center">
+                                {{inno.status| translate}}
+                              </div>
+                            </div>
+                            <div *ngIf="shotsSent(inno)" class=" w-100 text-center tooltip is-multiline" data-tooltip="This language can't be deleted because workflows have already been sent in this language.">
+                              <i  class="fa fa-trash text-lg text-draft" ></i>
                             </div>
                           </td>
-                          <td  *ngIf="!inno.hidden" class=" flex-around tooltip is-multiline" data-tooltip="This language is visible on client side. Click on the eye to mask it">
-                            <i class="fa fa-eye text-primary text-lg" (click)="changeVisibility(inno)"></i>
-                            <div  [ngClass]="statusClass(inno.status)" class="text-center">
-                              {{inno.status}}
+                          <td  *ngIf="inno.hidden" class="flex-around">
+                            <div class="flex-centered tooltip is-multiline" data-tooltip="This language is masked on client side. Click on the eye to unmask it">
+                              <i class="fa fa-eye-slash text-primary text-lg" (click)="changeVisibility(inno)"></i>
+                              <div  [ngClass]="statusClass(inno.status)" class="text-center">
+                                {{inno.status | translate}}
+                              </div>
                             </div>
-                          </td>
-                          <td  *ngIf="inno.hidden"  class=" flex-around tooltip is-multiline" data-tooltip="This language is masked on client side. Click on the eye to unmask it">
-                            <i class="fa fa-eye-slash text-primary text-lg" (click)="changeVisibility(inno)"></i>
-                            <div  [ngClass]="statusClass(inno.status)" class=" text-center">
-                              {{inno.status}}
+                            <div *ngIf="shotsSent(inno)" class=" w-100 text-center tooltip is-multiline" data-tooltip="This language can't be deleted because workflows have already been sent in this language.">
+                              <i  class="fa fa-trash text-lg text-draft" ></i>
                             </div>
                           </td>
                         </tr>
+
                         </tbody>
                       </table>
                     </ul>

@@ -72,7 +72,9 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
 
   private _innovation: Innovation = <Innovation>{};
 
-  private _checkedLanguages: Array<InnovCard> = [];
+  private _checkedLanguages: Array<any> = [];
+
+  private _allSelected = false;
 
   private _mission: Mission = <Mission>{};
 
@@ -141,6 +143,18 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
 
   private _showModalDone = false;
 
+  private _canBeEdited = false;
+
+  private _canBeDeleted = false;
+
+  private _canBeValidated = false;
+
+  isMasterSel:boolean;
+
+  categoryList:any;
+
+  checkedCategoryList:any;
+
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _answerService: AnswerService,
               private _rolesFrontService: RolesFrontService,
@@ -171,9 +185,18 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
       this._innovationFrontService.innovation().pipe(takeUntil(this._ngUnsubscribe)).subscribe((innovation) => {
         if (innovation && innovation._id) {
           this._innovation = innovation;
+          this._fillProjectLanguage();
           this._initFields();
         }
       });
+    }
+  }
+
+  private _fillProjectLanguage(){
+    for (let card of this._innovation.innovationCards){
+      let element = <any>card;
+      element.selected = false;
+      this._checkedLanguages.push(element);
     }
   }
 
@@ -506,23 +529,77 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
   }
 
   public allLanguagesChecked(event: any) {
+    this._allSelected = event.target.checked;
+    if(this._allSelected){
+      for (let card of this._checkedLanguages) {
+        card.selected = true;
+      }
+    } else {
+      for (let card of this._checkedLanguages) {
+        card.selected = false;
+      }
+    }
 
+    this.checkActions();
   }
 
-  public onChangeLanguage(event: any) {
+  public onChangeLanguage(event: Event, card: any) {
     event.preventDefault();
-    if (event.target.isChecked) {
-      this._checkedLanguages.push(event.target.value);
-      //change value remove edit validate
-    } else {
-      this._checkedLanguages.filter(inno => inno.lang === event.target.value.lang);
-      //change value remove edit validate
+    card.selected = !card.selected;
+    if(this._checkedLanguages.every((card) => card.selected === true)){
+        this._allSelected = true;
     }
+    this.checkActions();
   }
 
   public changeVisibility(lang : InnovCard){
     lang.hidden = !lang.hidden;
     // send to backend
+  }
+
+  public shotsSent(inno : InnovCard){
+    // check if the shots have been sent for this language
+    if(inno){
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  public checkActions(){
+    let lang = this._checkedLanguages.filter((card)=> card.selected === true);
+    console.log(lang);
+  }
+
+  public canBeEdited() {
+    return this._canBeEdited;
+  }
+
+  public canBeValidated() {
+    return this._canBeValidated;
+  }
+
+  public canBeDeleted(){
+    return this._canBeDeleted;
+  }
+
+  public removeLang(event: Event){
+    event.preventDefault();
+    let lang = this._checkedLanguages.filter((card)=> card.selected === true);
+    console.log(lang);
+    //call backend
+  }
+  public editLang(event: Event){
+    event.preventDefault();
+    let lang = this._checkedLanguages.filter((card)=> card.selected === true);
+    console.log(lang);
+    //call backend
+  }
+  public validateLang(event: Event){
+    event.preventDefault();
+    let lang = this._checkedLanguages.filter((card)=> card.selected === true);
+    console.log(lang);
+    //call backend
   }
 
   public statusClass(status: string) {
@@ -1095,6 +1172,14 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
 
   get newOwner(): UserSuggestion {
     return this._newOwner;
+  }
+
+  get checkedLanguages(){
+    return this._checkedLanguages;
+  }
+
+  get allSelected(): boolean {
+    return this._allSelected;
   }
 
   ngOnDestroy(): void {
