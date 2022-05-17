@@ -12,6 +12,7 @@ import { isPlatformBrowser } from "@angular/common";
 import { Response } from "../../../../../../models/response";
 import {UmiusConfigInterface, UmiusLocalStorageService} from '@umius/umi-common-component';
 import { TemplateFrontService } from "../../../../../../services/templates/template-front.service";
+import { Language } from "../../../../../../models/static-data/language";
 
 @Component({
   templateUrl: 'admin-libraries-workflows.component.html',
@@ -19,7 +20,21 @@ import { TemplateFrontService } from "../../../../../../services/templates/templ
 
 export class AdminLibrariesWorkflowsComponent implements OnInit {
 
-  private _workflowTemplateLanguages = ['en', 'fr', 'es', 'de', 'pt', 'it', 'nl'];
+  private _workflowTemplateLanguages: Array<Language> = [
+    {
+      type: 'en'
+    }, {
+      type: 'fr'
+    }, {
+      type: 'es'
+    }, {
+      type: 'de'
+    },{
+      type: 'pt'
+    },{
+      type: 'it'
+    },
+  ];
 
   private _newScenarioName = '';
 
@@ -113,8 +128,8 @@ export class AdminLibrariesWorkflowsComponent implements OnInit {
       const emails: Array<EmailTemplate> = [];
       const steps = ['FIRST', 'SECOND', 'THIRD', 'THANKS'];
       steps.forEach((step: string) => {
-        this._workflowTemplateLanguages.forEach((language: string) => {
-          emails.push(TemplateFrontService.createEmail(step, language, this._newScenarioName, this._scenarioSignature));
+        this._workflowTemplateLanguages.forEach((language: Language) => {
+          emails.push(TemplateFrontService.createEmail(step, language.type, this._newScenarioName, this._scenarioSignature));
         });
       });
 
@@ -202,7 +217,7 @@ export class AdminLibrariesWorkflowsComponent implements OnInit {
     return this._fetchingError;
   }
 
-  get workflowTemplateLanguages(): string[] {
+  get workflowTemplateLanguages(): Array<Language> {
     return this._workflowTemplateLanguages;
   }
 

@@ -14,7 +14,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { Mission, MissionCardTitle, MissionTemplate } from '../../../../../../models/mission';
 import { ErrorFrontService } from '../../../../../../services/error/error-front.service';
 import { MissionQuestionService } from "../../../../../../services/mission/mission-question.service";
-import { lang, Language } from "../../../../../../models/static-data/language";
+import { Language } from "../../../../../../models/static-data/language";
 
 @Component({
   templateUrl: './admin-project-questionnaire.component.html',
@@ -89,16 +89,7 @@ export class AdminProjectQuestionnaireComponent implements OnInit, OnDestroy {
    * initialise cardLanguages list
    */
   initialiseCardLanguages() {
-    this._cardsLanguages = [];
-    this._innovation.innovationCards.map((card) => {
-        const language = lang.find(l => l.type === card.lang);
-        if (!!language) {
-          language['hidden'] = !!card['hidden'];
-          language['status'] = card['status'] || 'EDITING';
-          this._cardsLanguages.push(language);
-        }
-      }
-    );
+    this._cardsLanguages = this._innovationFrontService.formateInnovationCardLanguages(this._innovation.innovationCards) || [];
   }
 
   /**

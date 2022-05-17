@@ -4,20 +4,20 @@
  * are used more than once for the innovation in the app.
  */
 
-import {Injectable} from '@angular/core';
-import {BehaviorSubject, Subject} from 'rxjs';
-import {Innovation, InnovationFollowUpEmailsTemplate} from '../../models/innovation';
-import {CardComment, CardSectionTypes, InnovCard, InnovCardSection} from '../../models/innov-card';
-import {ScrapeHTMLTags} from '../../pipe/pipes/ScrapeHTMLTags';
-import {Question} from '../../models/question';
-import {Section} from '../../models/section';
-import {DomSanitizer} from '@angular/platform-browser';
-import {PublicationType} from '../../models/community';
-import {MediaFrontService} from '../media/media-front.service';
-import {Mission, MissionQuestion, MissionTemplate} from '../../models/mission';
-import {MissionFrontService} from '../mission/mission-front.service';
-import {UmiusMediaInterface} from '@umius/umi-common-component';
-import {environment} from '../../../environments/environment';
+import { Injectable } from '@angular/core';
+import { BehaviorSubject, Subject } from 'rxjs';
+import { Innovation, InnovationFollowUpEmailsTemplate } from '../../models/innovation';
+import { CardComment, CardSectionTypes, InnovCard, InnovCardSection } from '../../models/innov-card';
+import { ScrapeHTMLTags } from '../../pipe/pipes/ScrapeHTMLTags';
+import { Question } from '../../models/question';
+import { Section } from '../../models/section';
+import { DomSanitizer } from '@angular/platform-browser';
+import { PublicationType } from '../../models/community';
+import { MediaFrontService } from '../media/media-front.service';
+import { Mission, MissionQuestion, MissionTemplate } from '../../models/mission';
+import { MissionFrontService } from '../mission/mission-front.service';
+import { UmiusMediaInterface } from '@umius/umi-common-component';
+import { environment } from '../../../environments/environment';
 
 export interface Values {
   settingPercentage?: number;
@@ -31,10 +31,7 @@ export interface Values {
 @Injectable({providedIn: 'root'})
 export class InnovationFrontService {
 
-  constructor(private _domSanitizer: DomSanitizer) { }
-
-  get calculatedPercentages(): Values {
-    return this._calculatedValues;
+  constructor(private _domSanitizer: DomSanitizer) {
   }
 
   totalFieldsPresent: number;
@@ -53,7 +50,7 @@ export class InnovationFrontService {
 
   private _selectedInnovationIndex: Subject<number> = new Subject<number>();
 
-  private _saveNotifySubject: Subject<{key: string, state: boolean}> = new Subject<{key: string, state: boolean}>();
+  private _saveNotifySubject: Subject<{ key: string, state: boolean }> = new Subject<{ key: string, state: boolean }>();
 
   private _saveCommentSubject: Subject<boolean> = new Subject<boolean>();
 
@@ -115,7 +112,7 @@ export class InnovationFrontService {
           break;
 
         default:
-          // Do nothing...
+        // Do nothing...
 
       }
 
@@ -491,7 +488,7 @@ export class InnovationFrontService {
 
     if (value.settings.geography.exclude.length || value.settings.geography.comments.length
       || value.settings.geography.continentTarget.oceania || value.settings.geography.continentTarget.europe
-      || value.settings.geography.continentTarget.asia  || value.settings.geography.continentTarget.americaSud
+      || value.settings.geography.continentTarget.asia || value.settings.geography.continentTarget.americaSud
       || value.settings.geography.continentTarget.americaNord || value.settings.geography.continentTarget.africa) {
       this.totalFieldsPresent++;
       this.settingsFieldsPresent++;
@@ -549,6 +546,22 @@ export class InnovationFrontService {
 
   }
 
+  /**
+   * set list innovation card languages
+   * @param innovationCards
+   */
+  public formateInnovationCardLanguages(innovationCards: Array<InnovCard>) {
+    if (innovationCards && innovationCards.length) {
+      return innovationCards.map((innoCard: InnovCard) => {
+        return {
+          type: innoCard.lang,
+          hidden: innoCard.hidden,
+          status: innoCard.status
+        };
+      })
+    }
+  }
+
   public videoSrc(media: UmiusMediaInterface): any {
     return media && media.video && media.video.embeddableUrl
       ? this._domSanitizer.bypassSecurityTrustResourceUrl(media.video.embeddableUrl) : '';
@@ -575,11 +588,11 @@ export class InnovationFrontService {
    * in the component that changes are to be saved or not for the innovation.
    * @param value
    */
-  public setNotifyChanges(value: {key: string, state: boolean, autoSave?: boolean}) {
+  public setNotifyChanges(value: { key: string, state: boolean, autoSave?: boolean }) {
     this._saveNotifySubject.next(value);
   }
 
-  public getNotifyChanges(): Subject<{key: string, state: boolean, autoSave?: boolean}> {
+  public getNotifyChanges(): Subject<{ key: string, state: boolean, autoSave?: boolean }> {
     return this._saveNotifySubject;
   }
 
@@ -610,6 +623,10 @@ export class InnovationFrontService {
    */
   public innovation(): BehaviorSubject<Innovation> {
     return this._innovationObj;
+  }
+
+  get calculatedPercentages(): Values {
+    return this._calculatedValues;
   }
 
 }

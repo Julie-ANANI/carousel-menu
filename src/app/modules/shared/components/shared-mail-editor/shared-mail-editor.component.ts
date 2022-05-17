@@ -3,6 +3,7 @@ import {EmailSignature} from '../../../../models/email-signature';
 import {EmailTemplate} from '../../../../models/email-template';
 import {RouteFrontService} from '../../../../services/route/route-front.service';
 import {EmailObject} from '../../../../models/email';
+import { Language } from "../../../../models/static-data/language";
 
 // type editorTypes = 'FOLLOW-UP' | '';
 
@@ -31,7 +32,7 @@ export class SharedMailEditorComponent implements OnInit {
 
   @Input() ccEmail = '';
 
-  @Input() innovationCardLanguages: string [] = [];
+  @Input() innovationCardLanguages: Array<Language> = [];
 
   @Input() set emailObject(value: EmailObject) {
     if (value) {

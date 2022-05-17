@@ -16,19 +16,20 @@
       Use by default
     </div>
 
+
     <div class="d-flex flex-wrap-wrap justify-start">
       <ng-container *ngFor="let language of innovationCardLanguages; let i = index">
         <div
-          [ngClass]="inCampaign && isModified(language) ? 'bg-success' : 'bg-alert'"
+          [ngClass]="inCampaign && isModified(language.type) ? 'bg-success' : 'bg-alert'"
           class="shape is-circled is-sm text-white m-left-2">
-          <i [ngClass]="inCampaign && isModified(language) ? 'fa-check' : 'fa-times'" class="fas"></i>
+          <i [ngClass]="inCampaign && isModified(language.type) ? 'fa-check' : 'fa-times'" class="fas"></i>
         </div>
 
         <div
           (click)="changeLanguage(language)"
           class="m-left-1 text-medium c-hand text-hover-underline"
           [ngClass]="{'text-underline': language === languageSelected}">
-          {{('COMMON.LANG.' + language.toUpperCase()) | translate}}
+          {{('COMMON.LANG.' + language.type.toUpperCase()) | translate}}
         </div>
         <span class="m-left-2" *ngIf="i!==innovationCardLanguages.length-1">|</span>
       </ng-container>
@@ -86,7 +87,7 @@
     [isEditable]="isEditable && sidebar.animate_state === 'active'"
     [emailObject]="emailToEdit"
     [id]="getId()"
-    [inputLanguage]="languageSelected"
+    [inputLanguage]="languageSelected.type"
     [innovationCardLanguages]="innovationCardLanguages">
   </app-sidebar-workflow>
 </umius-sidebar-full>

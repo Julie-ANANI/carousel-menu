@@ -4,6 +4,7 @@ import { EmailTemplate } from '../../../../../models/email-template';
 import { EmailSignature } from '../../../../../models/email-signature';
 import {EmailObject} from '../../../../../models/email';
 import {Column, Table, UmiusConfigInterface, UmiusSidebarInterface} from '@umius/umi-common-component';
+import { Language } from "../../../../../models/static-data/language";
 
 @Component({
   selector: 'app-admin-edit-workflow',
@@ -12,7 +13,7 @@ import {Column, Table, UmiusConfigInterface, UmiusSidebarInterface} from '@umius
 })
 export class AdminEditWorkflowComponent {
 
-  @Input() set innovationCardLanguages(value: Array<string>) {
+  @Input() set innovationCardLanguages(value: Array<Language>) {
     if (value && value.length) {
       this._innovationCardLanguages = value;
       this._languageSelected = this._innovationCardLanguages[0];
@@ -53,11 +54,11 @@ export class AdminEditWorkflowComponent {
 
   private _isModifiedFr = false;
 
-  private _innovationCardLanguages: Array<string> = [];
+  private _innovationCardLanguages: Array<Language> = [];
 
   private _inCampaign = false;
 
-  private _languageSelected: string = '';
+  private _languageSelected: Language;
 
   private _signatures: Array<EmailSignature> = [];
 
@@ -110,13 +111,13 @@ export class AdminEditWorkflowComponent {
 
     const columns: Array<Column> = [
       {
-        _attrs: ['num', `${this._languageSelected}.subject`],
+        _attrs: ['num', `${this._languageSelected.type}.subject`],
         _name: 'Emails',
         _type: 'TEXT',
         _choices: null,
       },
       {
-        _attrs: [`${this._languageSelected}.defaultSignatureName`],
+        _attrs: [`${this._languageSelected.type}.defaultSignatureName`],
         _name: 'Signatures',
         _type: 'TEXT',
         _choices: null,
@@ -125,7 +126,7 @@ export class AdminEditWorkflowComponent {
 
     if (this._inCampaign) {
       columns.push({
-        _attrs: [`${this._languageSelected}.status`],
+        _attrs: [`${this._languageSelected.type}.status`],
         _name: 'Status',
         _type: 'MULTI-CHOICES',
         _choices: [
@@ -181,7 +182,7 @@ export class AdminEditWorkflowComponent {
     this.defaultScenarioChange.emit(this.defaultScenario);
   }
 
-  public changeLanguage(value: string) {
+  public changeLanguage(value: Language) {
     this._languageSelected = value;
     this._initTable();
   }
@@ -193,6 +194,10 @@ export class AdminEditWorkflowComponent {
 
 
   isModified(language: string) {
+    const emailsOfLanguage = this._campaignScenario.emails.filter(email => email.language === language);
+    if(!emailsOfLanguage.length){
+      return false;
+    }
     return this._campaignScenario.emails.reduce((acc, current) => {
       return acc && (current.language !== language || current.modified);
     }, true);
@@ -248,7 +253,7 @@ export class AdminEditWorkflowComponent {
     return this._inCampaign;
   }
 
-  get languageSelected(): string {
+  get languageSelected(): Language {
     return this._languageSelected;
   }
 
@@ -264,7 +269,7 @@ export class AdminEditWorkflowComponent {
     this._localConfig = value;
   }
 
-  get innovationCardLanguages(): Array<string> {
+  get innovationCardLanguages(): Array<Language> {
     return this._innovationCardLanguages;
   }
 }
