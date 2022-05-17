@@ -9,7 +9,7 @@ import {MenuKebabDirective} from './menu-kebab.directive';
 import {AnimationFactory, AnimationPlayer, AnimationBuilder, animate, style} from '@angular/animations';
 
 
-
+//todo remove this
 @Directive({
   selector: '.carousel-item'
 })
@@ -27,10 +27,12 @@ export class CarouselItemElement {
 
 export class MenuKebabComponent implements AfterViewInit, OnInit {
 
+  //todo all
   @ContentChildren(MenuKebabDirective) items : QueryList<MenuKebabDirective>;
   @ViewChildren(CarouselItemElement, { read: ElementRef }) private itemsElements : QueryList<ElementRef>;
   @ViewChild('carousel') private carousel : ElementRef;
 
+  //todo change
   next() {
     if( this.currentItem + 1 === this.items.length ) return;
     this.currentItem = (this.currentItem + 1) % this.items.length;
@@ -40,12 +42,14 @@ export class MenuKebabComponent implements AfterViewInit, OnInit {
     this.player.play();
   }
 
+  //todo change this
   private buildAnimation( ) {
     return this.builder.build([
       animate(this.timing, style({ transform: `translateX(-150px)` }))
     ]);
   }
 
+  //todo change
   prev() {
     if( this.currentItem === 0 ) return;
 
@@ -58,6 +62,7 @@ export class MenuKebabComponent implements AfterViewInit, OnInit {
   }
 
 
+  //todo remove
   ngAfterViewInit() {
 
     setTimeout(() => {
