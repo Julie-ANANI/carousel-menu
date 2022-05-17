@@ -32,6 +32,8 @@ export class MenuKebabComponent implements AfterViewInit, OnInit {
   @ViewChildren(CarouselItemElement, { read: ElementRef }) private itemsElements : QueryList<ElementRef>;
   @ViewChild('carousel') private carousel : ElementRef;
 
+  //items: Array<any> = [];
+
   //todo change
   next() {
     if( this.currentItem + 1 === this.items.length ) return;

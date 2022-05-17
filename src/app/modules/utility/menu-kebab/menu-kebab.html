@@ -5,13 +5,14 @@
 
     <!-- button prev  -->
     <div (click)="prev()"
-         *ngIf="showControls && !displaySuiteKebabItems"
+         *ngIf="showControls"
          class="absolute m-left-20 icon-container is-xl is-overlay"
          [ngStyle]="{'left':'-0.7em'}"><i class="icon icon-arrow-left is-lg"></i>
     </div>
     <!-- end button prev -->
 
-    <ul class="carousel-inner tab">
+<!--    i can remove this carousel -->
+    <ul class="carousel-inner tab" #carousel>
       <li *ngFor="let item of items; let i = index" class=" text-capitalize carousel-item"
           [ngStyle]="{'margin-top':'0'}">
 
@@ -34,20 +35,19 @@
     <!-- button menu-kebab -->
     <div id="btn-kebab"
          class="relative align-center"
-         (click)="displaySuiteKebabItems = !displaySuiteKebabItems"
          [ngSwitch]="displaySuiteKebabItems"
          [ngStyle]="{'left': '-6em'}"
          *ngIf="items.length > 4">
       <!--    true / false  -->
-      <ng-container *ngSwitchCase="!displaySuiteKebabItems"></ng-container>
-      <ng-container *ngSwitchCase="displaySuiteKebabItems">
-        <div class="m-left-20 icon-container is-xl is-overlay">
-          <i class="icon icon-more-horiz is-lg"></i>
-        </div>
-        <!--  button view more -->
-        <span *ngIf="displaySuiteKebabItems" class="text-xs text-bold absolute btn__view">View more</span>
-        <!--  end button view more -->
-      </ng-container>
+<!--      <ng-container *ngSwitchCase="!displaySuiteKebabItems"></ng-container>-->
+<!--      <ng-container *ngSwitchCase="displaySuiteKebabItems">-->
+<!--        <div class="m-left-20 icon-container is-xl is-overlay">-->
+<!--          <i class="icon icon-more-horiz is-lg"></i>-->
+<!--        </div>-->
+<!--        &lt;!&ndash;  button view more &ndash;&gt;-->
+<!--        <span *ngIf="displaySuiteKebabItems" class="text-xs text-bold absolute btn__view">View more</span>-->
+<!--        &lt;!&ndash;  end button view more &ndash;&gt;-->
+<!--      </ng-container>-->
     </div>
     <!--  end button menu-kebab -->
 
@@ -56,7 +56,7 @@
 
     <!--  button back  -->
     <div (click)="next()"
-         *ngIf="showControls && !displaySuiteKebabItems"
+         *ngIf="showControls"
          class="absolute m-left-20 icon-container is-xl is-overlay"
          [ngStyle]="{'right':'3em'}"><i class="icon icon-arrow-right is-lg"></i>
     </div>
