@@ -159,5 +159,8 @@ export class AppComponent implements OnInit, OnDestroy {
     clearTimeout(this._timeout);
   }
 
+  getMenuClicked($event: any) {
+    console.log($event);
+  }
 }
 

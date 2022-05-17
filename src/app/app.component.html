@@ -1,3 +1,13 @@
-<div [hidden]="spinnerState"><router-outlet></router-outlet></div>
-<simple-notifications [options]="notificationsOptions"></simple-notifications>
-<app-utility-spinner-loader [spinnerState]="spinnerState"></app-utility-spinner-loader>
+<!--<div [hidden]="spinnerState"><router-outlet></router-outlet></div>-->
+<!--<simple-notifications [options]="notificationsOptions"></simple-notifications>-->
+<!--<app-utility-spinner-loader [spinnerState]="spinnerState"></app-utility-spinner-loader>-->
+<app-utility-carousel-menu
+  [config]="{
+   quatity: 5,
+   identifier: 'lang',
+   sources: [{index:0, lang: 'French0'},{index:1, lang: 'French1'},{index:2, lang: 'French2'},{index:3, lang: 'French3'},
+   {index:4, lang: 'French4'},{index:5, lang: 'French5'},{index:6, lang: 'French6'},{index:7, lang: 'French7'},
+   {index:8, lang: 'French8'},{index:9, lang: 'French9'},{index:10, lang: 'French10'},{index:11, lang: 'French11'}]
+  }" (menuItemClicked)="getMenuClicked($event)">
+
+</app-utility-carousel-menu>

@@ -22,27 +22,29 @@ import { LoaderBrowserInterceptor } from './interceptors/loader.interceptor';
 import { SessionInterceptor } from './interceptors/session.interceptor';
 import {CachingInterceptor} from './interceptors/caching.interceptor';
 import {EtherpadInterceptor} from "./interceptors/etherpad.interceptor";
+import { MenuKebabModule } from "./modules/utility/menu-kebab/menu-kebab.module";
 
 @NgModule({
-  imports: [
-    NotFoundModule,
-    BrowserTransferStateModule,
-    HttpClientModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    SimpleNotificationsModule.forRoot(),
-    CookieModule.forRoot(),
-    SpinnerLoaderModule,
-    BrowserModule.withServerTransition({
-      appId: 'umi-application-front'
-    }),
-    TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-        useFactory: (CreateTranslateLoader)
-      }
-    })
-  ],
+    imports: [
+        NotFoundModule,
+        BrowserTransferStateModule,
+        HttpClientModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        SimpleNotificationsModule.forRoot(),
+        CookieModule.forRoot(),
+        SpinnerLoaderModule,
+        BrowserModule.withServerTransition({
+            appId: 'umi-application-front'
+        }),
+        TranslateModule.forRoot({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: (CreateTranslateLoader)
+            }
+        }),
+        MenuKebabModule
+    ],
   declarations: [
     AppComponent
   ],
