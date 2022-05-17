@@ -15,26 +15,16 @@
     </ng-container>
     <!-- /notify team -->
 
-    <div style="margin: 2em" class="container">
+      <app-utility-carousel-menu
+        [config]="{
+         quatity: 5,
+         identifier: 'lang',
+         sources: [{index:0, lang: 'French0'},{index:1, lang: 'French1'},{index:2, lang: 'French2'},{index:3, lang: 'French3'},
+         {index:4, lang: 'French4'},{index:5, lang: 'French5'},{index:6, lang: 'French6'},{index:7, lang: 'French7'},
+         {index:8, lang: 'French8'},{index:9, lang: 'French9'},{index:10, lang: 'French10'},{index:11, lang: 'French11'}]
+        }" (menuItemClicked)="getMenuClicked($event)">
 
-      <app-menu-kebab>
-        <ng-container *ngFor="let item of items;">
-          <ng-container *carouselItem>
-            <div class="item">{{item.lang}}</div>
-          </ng-container>
-        </ng-container>
-      </app-menu-kebab>
-
-      <!--<div style="margin-top: 1em;">
-        <a (click)="carousel.next()" class="btn btn-success">Next</a>
-        <a (click)="carousel.prev()" class="btn btn-success">Prev</a>
-      </div>-->
-
-      <!--<button (click)="addSlide()">Add Slide</button>-->
-
-    </div>
-
-
+      </app-utility-carousel-menu>
 
 
     <!-- sections dynamic -->

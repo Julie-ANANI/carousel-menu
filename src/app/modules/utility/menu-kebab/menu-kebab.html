@@ -12,8 +12,8 @@
     <!-- end button prev -->
 
 <!--    i can remove this carousel -->
-    <ul class="carousel-inner tab" #carousel>
-      <li *ngFor="let item of items; let i = index" class=" text-capitalize carousel-item"
+    <ul class="carousel-inner tab">
+      <li *ngFor="let item of displayedItems; let i = index" class=" text-capitalize carousel-item"
           [ngStyle]="{'margin-top':'0'}">
 
         <!-- always template display -->
