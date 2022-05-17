@@ -30,6 +30,22 @@ export class MenuKebabComponent implements OnInit {
 
   @Output() menuItemClicked: EventEmitter<any> = new EventEmitter();
 
+  /**
+   * here, you get configuration for the menu
+   * @param value
+   * quatity = 5
+   */
+  @Input() set config(value: any) {
+    if (value) {
+      this._quatity = value.quatity || 0;
+      this._sources = value.sources || [];
+      this._identifier = value.identifier || '';
+      // TODO check sources
+      //initialise _displayedItems
+      this._displayedItems = this._sources.slice(0, this._quatity);
+    }
+  }
+
   //size
   private _initItemSize = true;
 
