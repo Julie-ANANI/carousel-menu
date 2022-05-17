@@ -17,6 +17,8 @@ import { AuthService } from '../../../../../../services/auth/auth.service';
 import { UmiusConfigInterface } from '@umius/umi-common-component';
 import { EmailTemplate } from "../../../../../../models/email-template";
 import { TemplateFrontService } from "../../../../../../services/templates/template-front.service";
+import { InnovationFrontService } from "../../../../../../services/innovation/innovation-front.service";
+import { Language } from "../../../../../../models/static-data/language";
 
 @Component({
   templateUrl: './admin-campaign-workflows.component.html',
@@ -51,7 +53,7 @@ export class AdminCampaignWorkflowsComponent implements OnInit {
 
   private _isTesting = false;
 
-  private _innovationCardLanguages: Array<string> = [];
+  private _innovationCardLanguages: Array<Language> = [];
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _activatedRoute: ActivatedRoute,
@@ -60,6 +62,7 @@ export class AdminCampaignWorkflowsComponent implements OnInit {
               private _templatesService: TemplatesService,
               private _rolesFrontService: RolesFrontService,
               private _authService: AuthService,
+              private _innovationFrontService: InnovationFrontService,
               private _translateNotificationsService: TranslateNotificationsService) {
   }
 
@@ -116,12 +119,7 @@ export class AdminCampaignWorkflowsComponent implements OnInit {
   }
 
   private _getInnovationCardLanguages() {
-    this._innovationCardLanguages = [];
-    if (this._campaign.innovation && this._campaign.innovation.innovationCards && this._campaign.innovation.innovationCards.length) {
-      this._campaign.innovation.innovationCards.map(innoCard => {
-        this._innovationCardLanguages.push(innoCard.lang);
-      });
-    }
+    this._innovationCardLanguages = this._innovationFrontService.formateInnovationCardLanguages(this._campaign.innovation.innovationCards) || [];
   }
 
   /**
@@ -133,11 +131,11 @@ export class AdminCampaignWorkflowsComponent implements OnInit {
     let toBeUpdated = false;
     for (const language of this._innovationCardLanguages) {
       // find emails in scenario according to inno card language
-      let emailsToAdd = this._campaign?.settings?.emails.filter(e => e.language === language);
+      let emailsToAdd = this._campaign?.settings?.emails.filter(e => e.language === language.type);
       if (emailsToAdd.length === 0 && scenarioName) {
         // there is no emails in scenario for lang
         // generate them
-        let emailGenerated = this._generateEmailTemplates(language, scenarioName, null);
+        let emailGenerated = this._generateEmailTemplates(language.type, scenarioName, null);
         this._campaign.settings.emails = this._campaign.settings.emails.concat(emailGenerated);
         toBeUpdated = true;
       }
@@ -227,14 +225,14 @@ export class AdminCampaignWorkflowsComponent implements OnInit {
     if (scenario && scenario.emails && scenario.emails.length) {
       this._innovationCardLanguages.map(lang => {
         // find emails in scenario according to inno card language
-        let emailsToAdd = scenario.emails.filter(e => e.language === lang);
+        let emailsToAdd = scenario.emails.filter(e => e.language === lang.type);
         if (emailsToAdd.length > 0) {
           // INSERT
           this._campaign.settings.emails = this._campaign.settings.emails.concat(emailsToAdd);
         } else {
           // there is no emails in scenario for lang
           // generate them
-          let emailGenerated = this._generateEmailTemplates(lang, scenario.name, scenario.emails[0].signature);
+          let emailGenerated = this._generateEmailTemplates(lang.type, scenario.name, scenario.emails[0].signature);
           this._campaign.settings.emails = this._campaign.settings.emails.concat(emailGenerated);
           scenario.emails = scenario.emails.concat(emailGenerated);
         }
@@ -489,7 +487,7 @@ export class AdminCampaignWorkflowsComponent implements OnInit {
     return this._isTesting;
   }
 
-  get innovationCardLanguages(): Array<string> {
+  get innovationCardLanguages(): Array<Language> {
     return this._innovationCardLanguages;
   }
 }

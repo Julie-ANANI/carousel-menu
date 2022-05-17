@@ -185,19 +185,8 @@ export class AdminProjectPreparationComponent implements OnInit, AfterViewChecke
    * @private
    */
   private initInnoCardLanguagesList() {
-    this._innoCardLanguages = [];
-    if (this._project && this._project.innovationCards && this._project.innovationCards.length) {
-      this._project.innovationCards.map(innoCard => {
-        const language = this._languages.find(lang => lang.type === innoCard.lang);
-        if(!!language){
-          language['hidden'] = innoCard.hidden;
-          language['status'] = innoCard.status || 'EDITING';
-          this._innoCardLanguages.push(language);
-        }
-      })
-      // by default, language selected is the first innovation card language
-      this._languageSelected = this._innoCardLanguages.length > 0 && this._innoCardLanguages[0].type;
-    }
+    this._innoCardLanguages = this._innovationFrontService.formateInnovationCardLanguages(this._project.innovationCards) || [];
+    this._languageSelected = this._innoCardLanguages.length > 0 && this._innoCardLanguages[0].type;
   }
 
   /**

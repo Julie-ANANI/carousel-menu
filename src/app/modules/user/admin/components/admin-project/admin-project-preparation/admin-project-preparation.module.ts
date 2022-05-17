@@ -11,6 +11,7 @@ import {AdminCampaignsModule} from '../../admin-campaigns/admin-campaigns.module
 import {AdminProjectStatisticsModule} from '../admin-project-statistics/admin-project-statistics.module';
 import {ModalModule} from '@umius/umi-common-component';
 import { FormsModule } from "@angular/forms";
+import { TranslateModule } from "@ngx-translate/core";
 
 @NgModule({
     imports: [
@@ -23,7 +24,8 @@ import { FormsModule } from "@angular/forms";
         AdminProjectStatisticsModule,
         AdminCampaignsModule,
         ModalModule,
-        FormsModule
+        FormsModule,
+        TranslateModule
     ],
   declarations: [
     AdminProjectPreparationComponent

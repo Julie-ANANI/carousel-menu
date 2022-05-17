@@ -11,7 +11,7 @@
         <!-- language status  -->
 
         <!-- language name  -->
-        <span class="m-left-10">{{languageSelected.alias}}</span>
+        <span class="m-left-10">{{('COMMON.LANG.' + languageSelected.type.toUpperCase()) | translate}}</span>
         <!-- /language name  -->
 
         <!-- icon drop down  -->
@@ -41,7 +41,7 @@
               <!-- dropdown menu - item status  -->
 
               <!-- dropdown menu - item name -->
-              <span class="m-left-10">{{lang.alias}}</span>
+              <span class="m-left-10">{{('COMMON.LANG.' + languageSelected.type.toUpperCase()) | translate}}</span>
               <!-- dropdown menu - item name -->
 
               <!-- dropdown menu - icon - visible for client -->
@@ -61,10 +61,6 @@
       <!-- /dropdown menu -->
 
     </div>
-    <!--              <div class="form-group">-->
-    <!--                <label class="form-label">{{leftMirrorLanguage.alias}} Objective</label>-->
-    <!--                <input type="text" class="form-input" [value]="getObjective('en')">-->
-    <!--              </div>-->
   </div>
 
   <!-- questionnaire part -->

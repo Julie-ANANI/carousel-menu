@@ -11,8 +11,8 @@
           *ngIf="innovationCardLanguages.indexOf(lang) !== -1"
           [ngClass]="{ 'text-underline': language === lang }"
           class="button is-link"
-          (click)="changeLanguage(lang)">
-          {{('COMMON.LANG.' + lang.toUpperCase()) | translate}}</button>
+          (click)="changeLanguage(lang.type)">
+          {{('COMMON.LANG.' + lang?.type.toUpperCase()) | translate}}</button>
       </ng-container>
     </div>
     <!-- /language choice -->
@@ -21,8 +21,8 @@
     <div *ngIf="noLanguage && !languageHasBeenSet" class="language-wrapper">
       <label class="form-label">Which language would you like to communicate with the project owner?</label>
       <ng-container *ngFor="let lang of innovationCardLanguages">
-        <div (click)="setLanguage(lang)" [ngClass]="{ 'active': language === lang }" class="text-link">
-          {{('COMMON.LANG.' + lang.toUpperCase()) | translate}}
+        <div (click)="setLanguage(lang.type)" [ngClass]="{ 'active': language === lang }" class="text-link">
+          {{('COMMON.LANG.' + lang?.type.toUpperCase()) | translate}}
         </div>
       </ng-container>
     </div>

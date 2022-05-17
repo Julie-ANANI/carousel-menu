@@ -180,19 +180,11 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
 
   // TODO duplicated function, need to refactor
   private _getInnovationLanguages() {
-    this._innovationCardLanguages = [];
     if (this._campaign
       && this._campaign.innovation
       && this._campaign.innovation.innovationCards
       && this._campaign.innovation.innovationCards.length) {
-      this._campaign.innovation.innovationCards.map(innovationCard => {
-        const language: Language= {
-          type: innovationCard.lang,
-        };
-        language['status'] = innovationCard.status || 'EDITING';
-        language['hidden'] = innovationCard.hidden;
-        this._innovationCardLanguages.push(language);
-      });
+      this._innovationCardLanguages = this._innovationFrontService.formateInnovationCardLanguages(this._campaign.innovation.innovationCards) || [];
     }
   }
 
