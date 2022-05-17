@@ -153,14 +153,19 @@
         </div>
 
         <div class="card-body">
-          <ng-container *ngFor="let lang of innovationCardLanguages">
-            <ng-container *ngIf="containsLanguages(lang.type, batch.languages)">
-              <div>
-                {{lang?.status}} -
-                {{('COMMON.LANG.' + lang?.type.toUpperCase()) | translate}}
-              </div>
+          <!-- languages status -->
+          <div class="d-flex align-center flex-wrap-wrap m-bottom-10" *ngIf="batch.languages && batch.languages.length">
+            <ng-container *ngFor="let lang of innovationCardLanguages">
+              <ng-container *ngIf="containsLanguages(lang.type, batch.languages)">
+                <div class="d-flex align-center">
+                  <i class="fas m-right-2"
+                     [ngClass]="lang?.status === 'DONE' ? 'fa-check-circle text-success' : 'fa-times-circle text-error'"></i>
+                  {{('COMMON.LANG.' + lang?.type.toUpperCase()) | translate}}
+                </div>
+              </ng-container>
             </ng-container>
-          </ng-container>
+          </div>
+          <!-- /languages status -->
 
           <umius-table
             (editRow)="onClickEdit($event, batch)"
