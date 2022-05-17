@@ -76,6 +76,7 @@ export class MenuKebabComponent implements AfterViewInit, OnInit {
     throw new Error("Method not implemented.");
   }
 
+  //config button controls
   @Input() showControls = true;
   @Input() timing = '250ms ease-in';
 
@@ -84,10 +85,16 @@ export class MenuKebabComponent implements AfterViewInit, OnInit {
   @Input() minDelimitersOfItems = 5;
 
   //color
-  @Input() color = '#EFEFEF';
+  @Input() backgroundColor = '#EFEFEF';
   @Input() btnViewColor = '#4F5D6B';
   @Input() textColor = '#00B0FF';
 
+  //position
+  @Input() menuHeight = '40px'
+  @Input() positionBtnPrev = '-0,7em';
+  @Input() positionBtnNext = '3em';
+  @Input() positionBtnKebab = '-6em';
+  @Input() positionBtnLess = '1em';
 
   // Config Template
   @Input() itemTemplate: TemplateRef<{item: any}>

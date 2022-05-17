@@ -1,13 +1,13 @@
 <!-- We create template for this utility-->
 <section class="bg-white sticky header-wrapper carousel-wrapper" [ngStyle]="carouselWrapperStyle">
   <div class="d-flex relative m-top-30 align-center container fluid"
-       [ngStyle]="{'background-color': color, 'height': '40px'}">
+       [ngStyle]="{'background-color': backgroundColor, 'height': menuHeight}">
 
     <!-- button prev  -->
     <div (click)="prev()"
          *ngIf="showControls"
          class="absolute m-left-20 icon-container is-xl is-overlay"
-         [ngStyle]="{'left':'-0.7em'}"><i class="icon icon-arrow-left is-lg"></i>
+         [ngStyle]="{'left':positionBtnPrev}"><i class="icon icon-arrow-left is-lg"></i>
     </div>
     <!-- end button prev -->
 
@@ -36,7 +36,7 @@
     <div id="btn-kebab"
          class="relative align-center"
          [ngSwitch]="displaySuiteKebabItems"
-         [ngStyle]="{'left': '-6em'}"
+         [ngStyle]="{'left': positionBtnKebab}"
          *ngIf="items.length > 4">
       <!--    true / false  -->
 <!--      <ng-container *ngSwitchCase="!displaySuiteKebabItems"></ng-container>-->
@@ -58,7 +58,7 @@
     <div (click)="next()"
          *ngIf="showControls"
          class="absolute m-left-20 icon-container is-xl is-overlay"
-         [ngStyle]="{'right':'3em'}"><i class="icon icon-arrow-right is-lg"></i>
+         [ngStyle]="{'right':positionBtnNext}"><i class="icon icon-arrow-right is-lg"></i>
     </div>
     <!--  end button back -->
 
@@ -66,7 +66,7 @@
     <span
       *ngIf="!displaySuiteKebabItems && initItemSize"
       class=" absolute text-xs text-bold"
-      [ngStyle]="{'right':'1em', 'color': btnViewColor}">View less
+      [ngStyle]="{'right':positionBtnLess, 'color': btnViewColor}">View less
     </span>
     <!--  end button view less -->
 
