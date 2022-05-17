@@ -112,20 +112,23 @@ export class MenuKebabComponent implements OnInit {
 
      let lastItemDisplayed = (diffItems + this.displayedItems.length) % this.displayedItems.length;
 
-
+    console.log(diffItems);
+    console.log(lastItemDisplayed);
+    console.log(itemsToDisplay);
 
     if(!this.displayedItems) {
       return;
     } else {
       //value start
       console.log('start value :' + (this._initIndex + 1));
+      console.log('start value :' + (lastItemDisplayed + 1));
+      this._initIndex ++
+      this._quatity ++
+      this._displayedItems = this._sources.slice(this._initIndex, this._quatity);
+      return this.displayedItems;
       //value end
       //if not last
-      console.log('start value :' + (lastItemDisplayed + 1));
     }
-     console.log(diffItems);
-     console.log(lastItemDisplayed);
-     console.log(itemsToDisplay);
 
     //const offset = this.currentItem * this.itemWidth;
 
