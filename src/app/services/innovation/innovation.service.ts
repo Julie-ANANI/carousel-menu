@@ -189,6 +189,30 @@ export class InnovationService {
     });
   }
 
+  public changeVisibility(innovationId: string, hidden: boolean): Observable<any>{
+    return this._http.put(`/innovation/${innovationId}/changeLanguageVisibility`, {
+      hidden: hidden
+    });
+  }
+
+  public editLanguage(card: InnovCard): Observable<any>{
+    return this._http.put(`/innovation/${card._id}/editLanguage`, {
+      innovation: card
+    });
+  }
+
+  public validateLanguage( card: InnovCard): Observable<any>{
+    return this._http.put(`/innovation/${card._id}/validateLanguage`, {
+      innovation: card
+    });
+  }
+
+  public removeLanguage(card: InnovCard): Observable<any>{
+    return this._http.put(`/innovation/${card._id}/removeLanguage`, {
+      innovation: card
+    });
+  }
+
   public shareSynthesis(projectId: string): Observable<any> {
     return this._http.post('/sharing', {id: projectId, type: 'synthesis'});
   }

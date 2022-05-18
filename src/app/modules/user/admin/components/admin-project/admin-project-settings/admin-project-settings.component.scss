@@ -3,6 +3,25 @@
 #admin-project-settings {
   padding-bottom: 40px;
 
+  .tooltip.is-multiline::before {
+    z-index: 1000 !important;
+  }
+  .tooltip.is-multiline::after {
+    z-index: 1000 !important;
+  }
+  .tooltip.is-multiline {
+    z-index: 1000 !important;
+  }
+
+  .text-meta{
+    opacity: 33%;
+  }
+
+  .status{
+    width: 80px;
+    margin-left: 20px;
+  }
+
   .settings-wrapper {
     display: flex;
     justify-content: space-between;
