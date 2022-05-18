@@ -42,7 +42,7 @@ export class MenuKebabComponent implements OnInit {
   @Input() set config(value: any) {
     if (value) {
       this._quatity = value.quatity || 0;
-      this._initIndex = value.initIndex || 1;
+      this._initIndex = value.initIndex || 0;
       this._sources = value.sources || [];
       this._identifier = value.identifier || '';
       // TODO check sources
@@ -57,7 +57,7 @@ export class MenuKebabComponent implements OnInit {
   //item
   private _currentItem: any;
 
-  private _initIndex: number = 1;
+  private _initIndex: number = 0;
 
   //Config Template
   private _isDisplayItems = false;
@@ -84,71 +84,47 @@ export class MenuKebabComponent implements OnInit {
     this.menuItemClicked.emit(item);
   }
 
-  //todo change
+
   next() {
     console.log('next button');
 
-    let initValueDisplayedItems = 0
-    let diffItems = (initValueDisplayedItems - 1);
-    let itemsToDisplay= (diffItems + this.displayedItems.length)
+    //pseudo calcul
+    // let initValueDisplayedItems = 0
+    // let diffItems = (initValueDisplayedItems - 1);
+    // let itemsToDisplay= (diffItems + this.displayedItems.length)
+    // let lastItemDisplayed = (diffItems + this.displayedItems.length) % this.displayedItems.length;
 
-     let lastItemDisplayed = (diffItems + this.displayedItems.length) % this.displayedItems.length;
+    let maxValInitNext = this._quatity % this.displayedItems.length;
+    let maxValQuantityOnePart = (this.displayedItems.length % this._quatity);
+    let maxValQuantityNext = (maxValQuantityOnePart + maxValInitNext);
 
-    console.log(diffItems);
-    console.log(lastItemDisplayed);
-    console.log(itemsToDisplay);
+    //If dont have length && [].length === 0
+    console.log('initIndex :' + this._initIndex);
+    console.log('quantity :' + this._quatity);
+    console.log('max length :' + this._sources.length);
+    console.log('max quantity :' + maxValQuantityNext);
+    console.log('max init :' + maxValInitNext);
 
-    if(!this.displayedItems) {
-      console.log('tu fais rien');
-
-      if(this._quatity <= this.displayedItems.length){
-        console.log('tu fais rien_ 2');
+      //when max view value for btn next with max value && max init valu
+      if(this._quatity === maxValQuantityNext && this._initIndex === maxValInitNext ){
+        console.log('tu assign max value');
+        //assign max value
+        this._quatity = maxValQuantityNext;
+        this._initIndex = maxValInitNext;
         this._displayedItems = this._sources.slice(this._initIndex, this._quatity);
         return this.displayedItems;
-      }
-
-    } else if (this._initIndex !== this.displayedItems.length) {
+        //when we can increment initIndex && quantity
+      } else if (this._initIndex !== this.displayedItems.length) {
       this._quatity ++
       this._initIndex ++
-
-      // if(this.quatity < this.displayedItems.length){
-      //   return this._quatity && this._initIndex;
-      // }else{
-      //
-      // }
-      //value start
-      //console.log('start value :' + (this._initIndex + 1));
-      console.log('start value :' + (lastItemDisplayed + 1));
-      console.log('initIndex :' + this._initIndex);
-      console.log('quantity :' + this._quatity);
-      //max value init is value quantity - lenght
-      //init - lenght < lenght
-      //lenght - init === lenght
-      //quanty + init
-      console.log('value init index max:' + ((this._initIndex - this.displayedItems.length) <  this.displayedItems.length)); //si 13 est < lenght
-      //this._quatity ++
-
-      //il y a quantity <== this.displayedItems.length &&
-      // start value :2
-      // menu-kebab.component.ts:131 start value :10
-      // menu-kebab.component.ts:132 initIndex :1
-      // menu-kebab.component.ts:133 quantity :12
       this._displayedItems = this._sources.slice(this._initIndex, this._quatity);
       return this.displayedItems;
-      //value end
-      //if not last
-    }else{
+
+      //If dont have length && [].length === 0
+    } else {
       console.log('tu fais rien');
       return this.displayedItems;
     }
-
-    //const offset = this.currentItem * this.itemWidth;
-
-    // const myAnimation : AnimationFactory = this.buildAnimation();
-    // this.player = myAnimation.create(this.carousel.nativeElement);
-    // this.player.play();
-
-
   }
 
   //todo change this
@@ -192,16 +168,16 @@ export class MenuKebabComponent implements OnInit {
       // }
 
     let initIndexPrev = this._initIndex
-    const diff = -1;
+    //const diff = 1;
     console.log('initIndexPrev : ' + initIndexPrev);
 
     if(this._displayedItems && this._displayedItems.length){
       console.log('start value prev cas 1 :' + (this._initIndex));
-      console.log('initIndex prev :' + (this._initIndex - 1));
+      console.log('initIndex prev :' + (this._initIndex = (initIndexPrev - 1)));
       console.log('quantity prev :' + (this._quatity + 1));
-      //this._quatity ++
-      this._initIndex = initIndexPrev - diff;
-      console.log('new initInex : ' + (this._initIndex = (initIndexPrev - 1)) );
+      console.log('max quantity :' + (this._quatity % this.displayedItems.length ));
+      this._quatity ++
+      this._initIndex = initIndexPrev - 1;
       this._displayedItems = this._sources.slice(this._initIndex, this._quatity);
       return initIndexPrev - 1 && this._displayedItems
 
