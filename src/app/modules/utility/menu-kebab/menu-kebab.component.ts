@@ -42,7 +42,7 @@ export class MenuKebabComponent implements OnInit {
   @Input() set config(value: any) {
     if (value) {
       this._quatity = value.quatity || 0;
-      this._initIndex = value.initIndex || 0;
+      this._initIndex = value.initIndex || 1;
       this._sources = value.sources || [];
       this._identifier = value.identifier || '';
       // TODO check sources
@@ -57,7 +57,7 @@ export class MenuKebabComponent implements OnInit {
   //item
   private _currentItem: any;
 
-  private _initIndex: number = 0;
+  private _initIndex: number = 1;
 
   //Config Template
   private _isDisplayItems = false;
@@ -87,24 +87,6 @@ export class MenuKebabComponent implements OnInit {
   //todo change
   next() {
     console.log('next button');
-    //console.log($event);
-    //event.preventDefault();
-   // this._currentItem = item;
-
-    // false: displayItem[last] compare to sources[last]
-
-    //recupère la longeur du tableau
-
-    //boucle sur le tableau
-         //push show item sauf le dernier
-
-
-
-
-    //si c'est le dernier index afficher button prev
-
-    //si c'est le dernier display hide
-    // width + decal width 1
 
     let initValueDisplayedItems = 0
     let diffItems = (initValueDisplayedItems - 1);
@@ -191,16 +173,40 @@ export class MenuKebabComponent implements OnInit {
     console.log(lastItemDisplayed); // -1
     console.log(itemsToDisplay);
 
-      console.log('start value prev:' + (lastItemDisplayed));
-      console.log('initIndex prev :' + (this._initIndex + 1));
-      console.log('quantity prev :' + (this._quatity - 1));
 
-      if(this._displayedItems){
-        this._quatity -1
-        this._initIndex -1
-        this._displayedItems = this._sources.slice(this._initIndex, this._quatity);
-        return this._displayedItems;
-      }
+
+      // if(this._displayedItems && this._initIndex !== 0 && this._quatity < this._displayedItems.length){
+      //   console.log('start value prev cas 1 :' + (this._initIndex));
+      //   console.log('initIndex prev :' + (this._initIndex - 1));
+      //   console.log('quantity prev :' + (this._quatity + 1));
+      //   this._quatity ++
+      //   this._initIndex - 1
+      //   this._displayedItems = this._sources.slice(this._initIndex, this._quatity);
+      //   return this._displayedItems;
+      // } else if(this._initIndex === 0 ){
+      //   console.log('ELSE')
+      //   console.log('start value prev cas 1 :' + (this._initIndex));
+      //   console.log('initIndex prev :' + (this._initIndex - 1));
+      //   console.log('quantity prev :' + (this._quatity + 1));
+      //   return this._displayedItems;
+      // }
+
+    let initIndexPrev = this._initIndex
+    const diff = -1;
+    console.log('initIndexPrev : ' + initIndexPrev);
+
+    if(this._displayedItems && this._displayedItems.length){
+      console.log('start value prev cas 1 :' + (this._initIndex));
+      console.log('initIndex prev :' + (this._initIndex - 1));
+      console.log('quantity prev :' + (this._quatity + 1));
+      //this._quatity ++
+      this._initIndex = initIndexPrev - diff;
+      console.log('new initInex : ' + (this._initIndex = (initIndexPrev - 1)) );
+      this._displayedItems = this._sources.slice(this._initIndex, this._quatity);
+      return initIndexPrev - 1 && this._displayedItems
+
+      //return this._displayedItems;
+    }
 
       console.log('value init index max:' + ((this._initIndex - this.displayedItems.length) <  this.displayedItems.length)); //si 13 est < lenght
 
