@@ -1,11 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MenuKebabComponent } from './menu-kebab.component';
-import { MenuKebabDirective } from './menu-kebab.directive';
 
 @NgModule({
-  declarations: [MenuKebabComponent, MenuKebabDirective],
-  exports: [MenuKebabComponent, MenuKebabDirective
+  declarations: [MenuKebabComponent],
+  exports: [MenuKebabComponent
   ],
   imports: [
     CommonModule

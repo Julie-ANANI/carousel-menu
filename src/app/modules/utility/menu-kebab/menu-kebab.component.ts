@@ -17,9 +17,10 @@ export class MenuKebabComponent implements OnInit {
   @Input() showControls = true;
 
   //Size
-  @Input() minDelimitersOfItems = 5;
-  @Input() menuHeight = '40px'
+  @Input() minDelimitersOfItems = 7;
+  @Input() menuHeight = '30px'
   @Input() itemWidth = '146px'
+  @Input() maxWidthItem = '6em'
 
   //color
   @Input() backgroundColor = '#EFEFEF';
@@ -27,17 +28,30 @@ export class MenuKebabComponent implements OnInit {
   @Input() textColor = '#00B0FF';
 
   //position
-  @Input() positionBtnPrev = '-0,7em';
-  @Input() positionBtnNext = '3em';
-  @Input() positionBtnKebab = '-6em';
+  @Input() positionBtnKebabBottom = '0.5em';
+  @Input() positionBtnKebabRight = '1em';
+  @Input() positionBtnMore = '9px';
+  @Input() positionBtnMoreBottom = '0.5em';
+  @Input() positionBtnMoreLeft = '16em';
   @Input() positionBtnLess = '1em';
 
+  @Input() positionBtnNextBottom = '16px';
+
+
   @Output() menuItemClicked: EventEmitter<any> = new EventEmitter();
+
+  //calculate width max
+        //display max item
+  // - item for button view more
+
+  // - affiche le max d'item possible dans le premier état (view more) ' +
+  // - le reste en surplus est affiché après le click view more
+
 
   /**
    * here, you get configuration for the menu
    * @param value
-   * quatity = 5
+   *
    */
   @Input() set config(value: any) {
     if (value) {
@@ -45,8 +59,6 @@ export class MenuKebabComponent implements OnInit {
       this._initIndex = value.initIndex || 0;
       this._sources = value.sources || [];
       this._identifier = value.identifier || '';
-      // TODO check sources
-      //initialise _displayedItems
       this._displayedItems = this._sources.slice(this._initIndex, this._quatity);
     }
   }
@@ -68,12 +80,6 @@ export class MenuKebabComponent implements OnInit {
   private _sources: Array<any> = [];
   private _displayedItems: Array<any> = [];
 
-  // false: displayItem[0] compare to sources[0]
-  //showPrev = true;
-
-  // false: displayItem[last] compare to sources[last]
-  showNext = true;
-
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object) {}
 
   ngOnInit() {}
@@ -86,125 +92,49 @@ export class MenuKebabComponent implements OnInit {
 
 
   next() {
-    console.log('next button');
-
-    //pseudo calcul
-    // let initValueDisplayedItems = 0
-    // let diffItems = (initValueDisplayedItems - 1);
-    // let itemsToDisplay= (diffItems + this.displayedItems.length)
-    // let lastItemDisplayed = (diffItems + this.displayedItems.length) % this.displayedItems.length;
-
-    let maxValInitNext = this._quatity % this.displayedItems.length;
+    //let maxValInitNext = this._quatity % this.displayedItems.length;
+    let maxValInitNext = this._initIndex - 1;
     let maxValQuantityOnePart = (this.displayedItems.length % this._quatity);
-    let maxValQuantityNext = (maxValQuantityOnePart + maxValInitNext);
-
-    //If dont have length && [].length === 0
-    console.log('initIndex :' + this._initIndex);
-    console.log('quantity :' + this._quatity);
-    console.log('max length :' + this._sources.length);
-    console.log('max quantity :' + maxValQuantityNext);
-    console.log('max init :' + maxValInitNext);
+    let maxValQuantityNext = ((maxValQuantityOnePart + maxValInitNext) + 1);
 
       //when max view value for btn next with max value && max init valu
-      if(this._quatity === maxValQuantityNext && this._initIndex === maxValInitNext ){
-        console.log('tu assign max value');
-        //assign max value
-        this._quatity = maxValQuantityNext;
-        this._initIndex = maxValInitNext;
-        this._displayedItems = this._sources.slice(this._initIndex, this._quatity);
-        return this.displayedItems;
-        //when we can increment initIndex && quantity
-      } else if (this._initIndex !== this.displayedItems.length) {
-      this._quatity ++
-      this._initIndex ++
-      this._displayedItems = this._sources.slice(this._initIndex, this._quatity);
-      return this.displayedItems;
+      if(this.displayedItems.length > 0){
+
+        if(this.displayedItems.length > 0 && this._quatity === maxValQuantityNext && this._initIndex === maxValQuantityNext){
+          console.log('tu assign max value');
+          //assign max value
+          this._quatity = maxValQuantityNext;
+          this._initIndex = maxValInitNext;
+          this._displayedItems = this._sources.slice(this._initIndex, this._quatity);
+          return this.displayedItems;
+          //when we can increment initIndex && quantity
+        } else {
+          console.log('TU INCREMENTE');
+          this._quatity ++
+          this._initIndex ++
+          this._displayedItems = this._sources.slice(this._initIndex, this._quatity);
+          return this.displayedItems;
+        }
 
       //If dont have length && [].length === 0
     } else {
-      console.log('tu fais rien');
       return this.displayedItems;
     }
-  }
 
-  //todo change this
+   }
 
-  // private buildAnimation( ) {
-  //   return this.builder.build([
-  //     animate(this.timing, style({ transform: `translateX(-150px)` }))
-  //   ]);
-  // }
-
-  //todo change
   prev() {
-    console.log('previous button');
-
-    let initValueDisplayedItems = 0
-    let diffItems = (initValueDisplayedItems - 1);
-    let itemsToDisplay= (diffItems + this.displayedItems.length)
-
-    let lastItemDisplayed = (diffItems + this.displayedItems.length) % this.displayedItems.length;
-
-    console.log(diffItems);
-    console.log(lastItemDisplayed); // -1
-    console.log(itemsToDisplay);
-
-
-
-      // if(this._displayedItems && this._initIndex !== 0 && this._quatity < this._displayedItems.length){
-      //   console.log('start value prev cas 1 :' + (this._initIndex));
-      //   console.log('initIndex prev :' + (this._initIndex - 1));
-      //   console.log('quantity prev :' + (this._quatity + 1));
-      //   this._quatity ++
-      //   this._initIndex - 1
-      //   this._displayedItems = this._sources.slice(this._initIndex, this._quatity);
-      //   return this._displayedItems;
-      // } else if(this._initIndex === 0 ){
-      //   console.log('ELSE')
-      //   console.log('start value prev cas 1 :' + (this._initIndex));
-      //   console.log('initIndex prev :' + (this._initIndex - 1));
-      //   console.log('quantity prev :' + (this._quatity + 1));
-      //   return this._displayedItems;
-      // }
-
     let initIndexPrev = this._initIndex
-    //const diff = 1;
-    console.log('initIndexPrev : ' + initIndexPrev);
 
     if(this._displayedItems && this._displayedItems.length){
-      console.log('start value prev cas 1 :' + (this._initIndex));
-      console.log('initIndex prev :' + (this._initIndex = (initIndexPrev - 1)));
-      console.log('quantity prev :' + (this._quatity + 1));
-      console.log('max quantity :' + (this._quatity % this.displayedItems.length ));
-      this._quatity ++
+      this._quatity = this._quatity - 1
       this._initIndex = initIndexPrev - 1;
       this._displayedItems = this._sources.slice(this._initIndex, this._quatity);
       return initIndexPrev - 1 && this._displayedItems
-
-      //return this._displayedItems;
+    } else {
+      return this.displayedItems;
     }
 
-      console.log('value init index max:' + ((this._initIndex - this.displayedItems.length) <  this.displayedItems.length)); //si 13 est < lenght
-
-
-
-
-    //const offset = this.currentItem * this.itemWidth;
-
-    // const myAnimation : AnimationFactory = this.buildAnimation();
-    // this.player = myAnimation.create(this.carousel.nativeElement);
-    // this.player.play();
-
-
-
-    // if( this.currentItem === 0 ) return;
-    //
-    // this.currentItem = ((this.currentItem - 1) + this.items.length) % this.items.length;
-    // //const offset = this.currentItem * this.itemWidth;
-    //
-    // const myAnimation : AnimationFactory = this.buildAnimation();
-    // this.player = myAnimation.create(this.carousel.nativeElement);
-    // this.player.play();
   }
 
 

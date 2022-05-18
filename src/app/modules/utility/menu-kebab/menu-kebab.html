@@ -1,66 +1,76 @@
 <!-- We create template for this utility-->
-<section class="bg-white sticky header-wrapper carousel-wrapper p-40">
-  <div class="d-flex">
-  <div class="d-flex relative m-top-30 align-center container fluid"
-       [ngStyle]="{'background-color': backgroundColor, 'height': menuHeight}">
+<section class="bg-white sticky header-wrapper carousel-wrapper p-40"
+         [ngStyle]="{'background-color': backgroundColor}">
 
-    <!-- button prev  -->
-    <div (click)="prev()"
-         *ngIf="showControls"
-         class="m-left-20 icon-container is-xl is-overlay"><i class="icon icon-arrow-left is-lg"></i>
-    </div>
-    <!-- end button prev -->
+  <div class="d-flex flex-wrap-nowrap relative"
+       [ngStyle]="{'height': menuHeight}">
 
-    <div class="d-flex">
+
+      <!-- button prev  -->
+      <div (click)="prev()"
+           *ngIf="showControls && !displaySuiteKebabItems"
+           [ngStyle]="{'margin-bottom' : positionBtnNextBottom}"
+           class="m-left-20 icon-container is-xl is-overlay"><i class="icon icon-arrow-left is-lg"></i>
+      </div>
+      <!-- end button prev -->
+
       <!-- always template display -->
+    <div>
+
       <ng-container class="carousel-inner tab text-capitalize carousel-item"
-        *ngFor="let item of displayedItems; let i = index">
-        <button class="button"
+                    *ngFor="let item of displayedItems; let i = index">
+
+        <button class="button btn-primary"
                 (click)="clickOnMenu($event, item)"
-                [ngStyle]="{'min-width':itemWidth}">{{item[identifier]}}</button>
+                *ngIf="i < minDelimitersOfItems"
+                [ngStyle]="{'min-width': maxWidthItem, 'margin-right': '39px'}">{{item[identifier]}}
+        </button>
       </ng-container>
-      <!-- end always template display -->
     </div>
+
+      <!-- end always template display -->
 
     <!-- button menu-kebab -->
-<!--    <div id="btn-kebab"-->
-<!--         class="relative align-center"-->
-<!--         [ngSwitch]="displaySuiteKebabItems"-->
-<!--         [ngStyle]="{'left': positionBtnKebab}"-->
-<!--         *ngIf="displayedItems.length > 4">-->
-<!--      &lt;!&ndash;    true / false  &ndash;&gt;-->
-<!--&lt;!&ndash;      <ng-container *ngSwitchCase="!displaySuiteKebabItems"></ng-container>&ndash;&gt;-->
-<!--&lt;!&ndash;      <ng-container *ngSwitchCase="displaySuiteKebabItems">&ndash;&gt;-->
-<!--&lt;!&ndash;        <div class="m-left-20 icon-container is-xl is-overlay">&ndash;&gt;-->
-<!--&lt;!&ndash;          <i class="icon icon-more-horiz is-lg"></i>&ndash;&gt;-->
-<!--&lt;!&ndash;        </div>&ndash;&gt;-->
-<!--&lt;!&ndash;        &lt;!&ndash;  button view more &ndash;&gt;&ndash;&gt;-->
-<!--&lt;!&ndash;        <span *ngIf="displaySuiteKebabItems" class="text-xs text-bold absolute btn__view">View more</span>&ndash;&gt;-->
-<!--&lt;!&ndash;        &lt;!&ndash;  end button view more &ndash;&gt;&ndash;&gt;-->
-<!--&lt;!&ndash;      </ng-container>&ndash;&gt;-->
-<!--    </div>-->
+    <div id="btn-kebab"
+         class="align-center"
+         (click)="displaySuiteKebabItems = !displaySuiteKebabItems"
+         [ngSwitch]="displaySuiteKebabItems"
+         *ngIf="displayedItems.length > 4 && displaySuiteKebabItems">
+      <!--    true / false  -->
+      <ng-container *ngSwitchCase="!displaySuiteKebabItems"></ng-container>
+      <ng-container *ngSwitchCase="displaySuiteKebabItems"
+                    [ngStyle]="{'bottom': positionBtnKebabBottom,'right': positionBtnKebabRight}">
+        <div class="m-left-20 icon-container is-xl is-overlay"
+             [ngStyle]="{'bottom': positionBtnKebabBottom,'right': positionBtnKebabRight}">
+          <i class="icon icon-more-horiz is-lg"></i>
+        </div>
+        <!--  button view more -->
+        <span *ngIf="displaySuiteKebabItems"
+              [ngStyle]="{'bottom': positionBtnMoreBottom,'right': positionBtnMoreLeft}"
+              class="text-xs text-bold btn__view">View more</span>
+        <!--  end button view more -->
+      </ng-container>
+    </div>
     <!--  end button menu-kebab -->
 
-    <!--  button add-lang -->
-    <!--  end button add-lang -->
-
-    <!--  button back  -->
-    <div (click)="next()"
-         *ngIf="showControls"
-         class="absolute m-left-20 icon-container is-xl is-overlay"
-         [ngStyle]="{'right':positionBtnNext}"><i class="icon icon-arrow-right is-lg"></i>
-    </div>
-    <!--  end button back -->
+      <!--  button back  -->
+      <div (click)="next()"
+           *ngIf="showControls && !displaySuiteKebabItems"
+           class="m-left-20 icon-container is-xl is-overlay"
+           ><i class="icon icon-arrow-right is-lg"></i>
+      </div>
+      <!--  end button back -->
 
     <!--  button view less-->
-<!--    <span-->
-<!--      *ngIf="!displaySuiteKebabItems && initItemSize"-->
-<!--      class=" absolute text-xs text-bold"-->
-<!--      [ngStyle]="{'right':positionBtnLess, 'color': btnViewColor}">View less-->
-<!--    </span>-->
+    <span
+      *ngIf="displayedItems.length > 4 && !displaySuiteKebabItems"
+      (click)="displaySuiteKebabItems = !displaySuiteKebabItems"
+      class="text-xs text-bold"
+      [ngStyle]="{'color': btnViewColor}">View less
+    </span>
     <!--  end button view less -->
   </div>
-  </div>
+
 </section>
 
 
