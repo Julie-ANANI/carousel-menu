@@ -85,7 +85,7 @@ export class MenuKebabComponent implements OnInit {
   }
 
   //todo change
-  next(event: Event, item: any) {
+  next() {
     console.log('next button');
     //console.log($event);
     //event.preventDefault();
@@ -117,17 +117,47 @@ export class MenuKebabComponent implements OnInit {
     console.log(itemsToDisplay);
 
     if(!this.displayedItems) {
-      return;
-    } else {
-      //value start
-      console.log('start value :' + (this._initIndex + 1));
-      console.log('start value :' + (lastItemDisplayed + 1));
-      this._initIndex ++
+      console.log('tu fais rien');
+
+      if(this._quatity <= this.displayedItems.length){
+        console.log('tu fais rien_ 2');
+        this._displayedItems = this._sources.slice(this._initIndex, this._quatity);
+        return this.displayedItems;
+      }
+
+    } else if (this._initIndex !== this.displayedItems.length) {
       this._quatity ++
+      this._initIndex ++
+
+      // if(this.quatity < this.displayedItems.length){
+      //   return this._quatity && this._initIndex;
+      // }else{
+      //
+      // }
+      //value start
+      //console.log('start value :' + (this._initIndex + 1));
+      console.log('start value :' + (lastItemDisplayed + 1));
+      console.log('initIndex :' + this._initIndex);
+      console.log('quantity :' + this._quatity);
+      //max value init is value quantity - lenght
+      //init - lenght < lenght
+      //lenght - init === lenght
+      //quanty + init
+      console.log('value init index max:' + ((this._initIndex - this.displayedItems.length) <  this.displayedItems.length)); //si 13 est < lenght
+      //this._quatity ++
+
+      //il y a quantity <== this.displayedItems.length &&
+      // start value :2
+      // menu-kebab.component.ts:131 start value :10
+      // menu-kebab.component.ts:132 initIndex :1
+      // menu-kebab.component.ts:133 quantity :12
       this._displayedItems = this._sources.slice(this._initIndex, this._quatity);
       return this.displayedItems;
       //value end
       //if not last
+    }else{
+      console.log('tu fais rien');
+      return this.displayedItems;
     }
 
     //const offset = this.currentItem * this.itemWidth;
@@ -140,6 +170,7 @@ export class MenuKebabComponent implements OnInit {
   }
 
   //todo change this
+
   // private buildAnimation( ) {
   //   return this.builder.build([
   //     animate(this.timing, style({ transform: `translateX(-150px)` }))
@@ -149,6 +180,41 @@ export class MenuKebabComponent implements OnInit {
   //todo change
   prev() {
     console.log('previous button');
+
+    let initValueDisplayedItems = 0
+    let diffItems = (initValueDisplayedItems - 1);
+    let itemsToDisplay= (diffItems + this.displayedItems.length)
+
+    let lastItemDisplayed = (diffItems + this.displayedItems.length) % this.displayedItems.length;
+
+    console.log(diffItems);
+    console.log(lastItemDisplayed); // -1
+    console.log(itemsToDisplay);
+
+      console.log('start value prev:' + (lastItemDisplayed));
+      console.log('initIndex prev :' + (this._initIndex + 1));
+      console.log('quantity prev :' + (this._quatity - 1));
+
+      if(this._displayedItems){
+        this._quatity -1
+        this._initIndex -1
+        this._displayedItems = this._sources.slice(this._initIndex, this._quatity);
+        return this._displayedItems;
+      }
+
+      console.log('value init index max:' + ((this._initIndex - this.displayedItems.length) <  this.displayedItems.length)); //si 13 est < lenght
+
+
+
+
+    //const offset = this.currentItem * this.itemWidth;
+
+    // const myAnimation : AnimationFactory = this.buildAnimation();
+    // this.player = myAnimation.create(this.carousel.nativeElement);
+    // this.player.play();
+
+
+
     // if( this.currentItem === 0 ) return;
     //
     // this.currentItem = ((this.currentItem - 1) + this.items.length) % this.items.length;
@@ -158,6 +224,7 @@ export class MenuKebabComponent implements OnInit {
     // this.player = myAnimation.create(this.carousel.nativeElement);
     // this.player.play();
   }
+
 
   //old logic
   get displaySuiteKebabItems(): boolean {
