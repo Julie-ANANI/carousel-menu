@@ -9,6 +9,16 @@ import {Subject} from 'rxjs';
 })
 
 export class MenuKebabComponent implements OnInit {
+  get type(): string {
+    return this._type;
+  }
+
+  set type(value: string) {
+    this._type = value;
+  }
+  get itemSelected(): string {
+    return this._itemSelected;
+  }
   get initIndex(): number {
     return this._initIndex;
   }
@@ -38,8 +48,10 @@ export class MenuKebabComponent implements OnInit {
   @Input() positionBtnNextBottom = '16px';
 
 
-  @Output() menuItemClicked: any;
+  //@Output() menuItemClicked: any;
+  @Output() menuItemClicked: EventEmitter<any> = new EventEmitter();
 
+  private _itemSelected: string = '';
   //calculate width max
         //display max item
   // - item for button view more
@@ -59,6 +71,7 @@ export class MenuKebabComponent implements OnInit {
       this._initIndex = value.initIndex || 0;
       this._sources = value.sources || [];
       this._identifier = value.identifier || '';
+      this._type = value.type || '';
       this._displayedItems = this._sources.slice(this._initIndex, this._quatity);
     }
   }
@@ -77,6 +90,7 @@ export class MenuKebabComponent implements OnInit {
   private _ngUnsubscribe: Subject<any> = new Subject<any>();
   private _quatity: number = 0;
   private _identifier: string = '';
+  private _type: string = '';
   private _sources: Array<any> = [];
   private _displayedItems: Array<any> = [];
 
@@ -84,7 +98,7 @@ export class MenuKebabComponent implements OnInit {
 
   ngOnInit() {}
 
-  clickOnMenu(event: Event, item: any) {
+  clickOnMenu(event: Event, item: string) {
     event.preventDefault();
     this._currentItem = item;
     this.menuItemClicked.emit(item);

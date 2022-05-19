@@ -34,57 +34,9 @@ interface Toggle {
 })
 
 export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
-  get activeCardIndex(): number {
-    return this._activeCardIndex;
-  }
 
   //test kebab item
-  public setCardLang(value: string) {
-    debugger;
-    if (this.activeCard && !(this._cardToDelete._id)) {
-      this._languageSelected = value;
-      this._activeCardIndex = InnovationFrontService.currentLangInnovationCard(this._project, value, 'INDEX');
-      this._setActiveCardIndex();
-    }
-  }
-
-  getMenuClicked(event: Event) {
-    // if (this.activeCard && !(this._cardToDelete._id)) {
-    //   this._languageSelected = value;
-    //   this._activeCardIndex = InnovationFrontService.currentLangInnovationCard(this._project, value, 'INDEX');
-    //   this._setActiveCardIndex();
-    // }
-    console.log(event);
-  }
-
   @Input() languages: Array<Language> = lang;
-
-  private _languageSelected: string = '';
-
-  // public setCardLang(value: string) {
-  //
-  // }
-
-  private _project: Innovation = <Innovation>{};
-  private _cardToDelete: InnovCard = <InnovCard>{};
-
-  private _setActiveCardIndex() {
-    this._innovationFrontService.setActiveCardIndex(this._activeCardIndex);
-  }
-
-  get activeCard(): InnovCard {
-    return InnovationFrontService.activeCard(this._project, this._activeCardIndex);
-  }
-
-  get languageSelected(): string {
-    return this._languageSelected;
-  }
-  private _innoCardLanguages: Array<Language> = [];
-
-  get innoCardLanguages(): Array<Language> {
-    return this._innoCardLanguages;
-  }
-
   //end test kebab item
 
   private _innovation: Innovation = <Innovation>{};

@@ -20,11 +20,27 @@
       <ng-container class="carousel-inner tab text-capitalize carousel-item"
                     *ngFor="let item of displayedItems; let i = index">
 
-        <button class="button btn-primary"
-                (click)="clickOnMenu($event, item)"
+<!--        <button class="button btn-primary"-->
+<!--                (click)="clickOnMenu($event, item)"-->
+<!--                *ngIf="i < minDelimitersOfItems"-->
+<!--                [ngStyle]="{'min-width': maxWidthItem, 'margin-right': '39px'}">{{item[identifier]}}-->
+<!--        </button>-->
+
+        <button class="button btn-primary text-medium"
+                (click)="clickOnMenu($event, item.type)"
                 *ngIf="i < minDelimitersOfItems"
+                [ngClass]="{'text-underline': item?.type === itemSelected}"
                 [ngStyle]="{'min-width': maxWidthItem, 'margin-right': '39px'}">{{item[identifier]}}
         </button>
+
+<!--        <div class="d-flex flex-wrap-wrap text-medium">-->
+<!--          <ng-container *ngFor="let language of innoCardLanguages">-->
+<!--            <button class="button is-link m-left-10"-->
+<!--                    [ngClass]="{'text-underline': language?.type === languageSelected}"-->
+<!--                    (click)="setCardLang(language.type)">-->
+<!--              {{('COMMON.LANG.' + language?.type.toUpperCase()) | translate}}</button>-->
+<!--          </ng-container>-->
+<!--        </div>-->
       </ng-container>
     </div>
 

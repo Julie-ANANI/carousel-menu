@@ -20,7 +20,7 @@ import { environment } from '../../../../../../../environments/environment';
 import { ErrorFrontService } from '../../../../../../services/error/error-front.service';
 import { NotificationService } from '../../../../../../services/notification/notification.service';
 import { NotificationTrigger } from '../../../../../../models/notification';
-import { lang, Language } from "../../../../../../models/static-data/language";
+import { lang, Language} from "../../../../../../models/static-data/language";
 
 @Component({
   templateUrl: './admin-project-preparation.component.html',
@@ -29,7 +29,13 @@ import { lang, Language } from "../../../../../../models/static-data/language";
 
 export class AdminProjectPreparationComponent implements OnInit, AfterViewChecked, OnDestroy {
 
+  get typeLanguages(): Array<Language> {
+    return this._typeLanguages;
+  }
+
   private _languages: Array<Language> = lang;
+
+  private _typeLanguages: Array<Language> = lang['type'];
 
   private _languagesToAdd: Array<Language> = [];
 
