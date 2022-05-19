@@ -611,7 +611,10 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
             this._canBeEdited = true;
           }
         } else { // at least one lang is hidden
-          if(lang.every(la => la.status !== "DONE")){
+          if(lang.every(la => la.status !== "EDITING")){
+            this._canBeEdited = false;
+          }
+          if(lang.every(la => la.status !== "DONE" && la.hidden === true)){
             this._canBeValidated = true;
           }
         }
@@ -638,9 +641,11 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
           this._canBeDeleted = true;
           this._canBeEdited = true;
           this._canBeValidated = false;
-          if(lang[0].shotSent && lang[0].hidden){
-            this._canBeDeleted = false;
+          if(lang[0].hidden){
             this._canBeEdited = false;
+          }
+          if(lang[0].shotSent){
+            this._canBeDeleted = false;
           }
           break;
       }
