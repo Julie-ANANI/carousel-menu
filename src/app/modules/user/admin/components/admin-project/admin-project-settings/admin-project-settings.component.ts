@@ -149,7 +149,7 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
 
   private _canBeValidated = false;
 
-  private _canBeAllEdited = false;
+  private _notAllEdited = true;
 
   isMasterSel:boolean;
 
@@ -183,7 +183,6 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
       this._getStats();
       this._quizLink = InnovationFrontService.quizLink(this._innovation);
       this._isLoading = false;
-
       this._innovationFrontService.innovation().pipe(takeUntil(this._ngUnsubscribe)).subscribe((innovation) => {
         if (innovation && innovation._id) {
           this._innovation = innovation;
@@ -200,11 +199,8 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
       element.selected = false;
       this._projectLanguages.push(element);
     }
-
     if(this._projectLanguages.every((lang)=> lang.shotSent === true)){
-      this._canBeAllEdited = true;
-    } else {
-      this._canBeAllEdited = true;
+     this._notAllEdited = false;
     }
   }
 
@@ -558,6 +554,8 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
     card.selected = !card.selected;
     if(this._projectLanguages.every((card) => card.selected === true)){
         this._allSelected = true;
+    } else {
+      this._allSelected = false;
     }
     this.checkActions();
   }
@@ -602,7 +600,7 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
       if(lang.length < 2) {
         this.setAction(lang);
       } else {
-        this._canBeDeleted = true;
+        this._canBeDeleted = false; //true;
         if(lang.every(la => la.hidden === false)){ // no lang hidden
           if(lang.every(la => la.status === "WAITING")){
             this._canBeValidated = true;
@@ -626,26 +624,26 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
     if(lang.length){
       switch (lang[0].status) {
         case "WAITING":
-          this._canBeDeleted = true;
+          this._canBeDeleted = false; //true;
           this._canBeValidated = true;
           this._canBeEdited = true;
           break;
         case "EDITING":
-          this._canBeDeleted = true;
+          this._canBeDeleted = false; //true;
           if(lang[0].hidden === true){
             this._canBeValidated = true;
-            this._canBeDeleted = true;
+            this._canBeDeleted = false; //true;
           }
           break;
         case "DONE":
-          this._canBeDeleted = true;
+          this._canBeDeleted = false; //true;
           this._canBeEdited = true;
           this._canBeValidated = false;
           if(lang[0].hidden){
             this._canBeEdited = false;
           }
           if(lang[0].shotSent){
-            this._canBeDeleted = false;
+            this._canBeDeleted = false; //false;
           }
           break;
       }
@@ -676,9 +674,14 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
     });
   }
 
-  public editLang(event: Event){
+  public reEditLang(event: Event){
     event.preventDefault();
     let lang = this._projectLanguages.filter((card)=> card.selected === true);
+    let isReEditAll = false;
+    if(this._projectLanguages.every(l => l.shotSent === true)){ // for case when it's re edit all with email shot sent
+       lang = this._projectLanguages;
+       isReEditAll = true;
+    }
     lang.forEach((l)=>{
       this._innovationService
         .editLanguageStatus(this._innovation._id , l._id, {status:"EDITING", lang:l.lang})
@@ -694,6 +697,9 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
           }
         );
     });
+    if(isReEditAll){
+      this._notAllEdited = true;
+    }
   }
 
   public validateLang(event: Event){
@@ -747,8 +753,8 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
     return this._canBeDeleted;
   }
 
-  public canBeAllEdited(): boolean {
-    return this._canBeAllEdited;
+  public notAllEdited(): boolean{
+    return this._notAllEdited;
   }
 
   /***

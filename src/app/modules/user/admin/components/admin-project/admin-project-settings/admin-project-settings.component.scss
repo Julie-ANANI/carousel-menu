@@ -3,18 +3,15 @@
 #admin-project-settings {
   padding-bottom: 40px;
 
-  .tooltip.is-multiline::before {
-    z-index: 1000 !important;
-  }
-  .tooltip.is-multiline::after {
-    z-index: 1000 !important;
-  }
-  .tooltip.is-multiline {
-    z-index: 1000 !important;
-  }
-
   .text-meta{
     opacity: 33%;
+  }
+
+  .form-checkbox input:checked + .form-icon{
+    border-color: $primary-color !important;
+  }
+  .form-checkbox input:checked + .form-icon::before{
+    border-color: $primary-color !important;
   }
 
   .status{
