@@ -71,6 +71,10 @@ export class InnovationService {
     return this._http.delete('/innovation/' + innovationId + '/innovationCard/' + innovationCardId);
   }
 
+  public editLanguageStatus(innovationId: string, innovationCardId: string, body: object): Observable<any> {
+    return this._http.put('/innovation/' + innovationId + '/innovationCard/' + innovationCardId + '/changeStatus', body);
+  }
+
   /**
    *
    * @param innovationCardId - get the card form the route '/innovation/card/:innovationCardId'
@@ -189,28 +193,8 @@ export class InnovationService {
     });
   }
 
-  public changeVisibility(innovationId: string, hidden: boolean): Observable<any>{
-    return this._http.put(`/innovation/${innovationId}/changeLanguageVisibility`, {
-      hidden: hidden
-    });
-  }
-
-  public editLanguage(card: InnovCard): Observable<any>{
-    return this._http.put(`/innovation/${card._id}/editLanguage`, {
-      innovation: card
-    });
-  }
-
-  public validateLanguage( card: InnovCard): Observable<any>{
-    return this._http.put(`/innovation/${card._id}/validateLanguage`, {
-      innovation: card
-    });
-  }
-
-  public removeLanguage(card: InnovCard): Observable<any>{
-    return this._http.put(`/innovation/${card._id}/removeLanguage`, {
-      innovation: card
-    });
+  public changeVisibility(innovationId: string, innovationCardId: string, body: object): Observable<any>{
+    return this._http.put(`/innovation/${innovationId}/innovationCard/${innovationCardId}/changeLanguageVisibility`, body);
   }
 
   public shareSynthesis(projectId: string): Observable<any> {

@@ -38,7 +38,9 @@ export class InnovCard extends Model {
   readonly updated?: Date;
   readonly innovation_reference?: string;
   readonly lang: string;
-
+  shotSent?: boolean;
+  status?: string;
+  hidden?: boolean;
   title?: string;
   media?: Array<UmiusMediaInterface>;
   principalMedia?: UmiusMediaInterface;
@@ -51,6 +53,4 @@ export class InnovCard extends Model {
    * but only one for rest type.
    */
   sections?: Array<InnovCardSection>;
-  status: string;
-  hidden: boolean;
 }

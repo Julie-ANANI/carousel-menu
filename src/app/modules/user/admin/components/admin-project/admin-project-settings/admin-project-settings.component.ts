@@ -198,10 +198,6 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
     for (let card of this._innovation.innovationCards){
       let element = <any>card;
       element.selected = false;
-      // get if shot are sent
-
-
-      element.shotSent = true;
       this._projectLanguages.push(element);
     }
 
@@ -568,17 +564,26 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
 
   public changeVisibility(lang : InnovCard, event: Event){
     this.bulkEditReset();
-    lang.hidden = !lang.hidden;
-    this._innovationService.changeVisibility(lang._id, lang.hidden).pipe(first()).subscribe((result) => {
-            this._translateNotificationsService.success('Success', result);
+    this._innovationService.changeVisibility(this._innovation._id, lang._id, {hidden: !lang.hidden, lang: lang.lang}).pipe(first()).subscribe((result) => {
+              lang.hidden = !lang.hidden;
+              this._translateNotificationsService.success('Success', result.message);
           },
           (err: HttpErrorResponse) => {
             this._translateNotificationsService.error('Updating Language Error...', ErrorFrontService.getErrorKey(err.error));
-            console.error(err);
           }
         );
     if(lang.status === "WAITING"){
-      this.editLang(event)
+      this._innovationService.editLanguageStatus(this._innovation._id , lang._id, {status:"EDITING", lang:lang.lang})
+        .pipe(first())
+        .subscribe(
+          (result) => {
+            lang.status = "EDITING";
+            this._translateNotificationsService.success('Success', result.message);
+          },
+          (err: HttpErrorResponse) => {
+            this._translateNotificationsService.error('Project Updating Error...', ErrorFrontService.getErrorKey(err.error));
+          }
+        );
     }
   }
 
@@ -599,21 +604,15 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
       } else {
         this._canBeDeleted = true;
         if(lang.every(la => la.hidden === false)){ // no lang hidden
-          // if every lang selected have the same status
           if(lang.every(la => la.status === "WAITING")){
-            this._canBeDeleted = true;
             this._canBeValidated = true;
-            this._canBeEdited = true;
           }
-          //No lang selected is editing
-          if(lang.every(la => la.status !== "EDITING")){
-            this._canBeDeleted = true;
+          if(lang.every(la => la.status !== "EDITING")){//No lang selected is editing
             this._canBeEdited = true;
           }
         } else { // at least one lang is hidden
-
           if(lang.every(la => la.status !== "DONE")){
-            this._canBeEdited = true;
+            this._canBeValidated = true;
           }
         }
       }
@@ -638,12 +637,9 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
         case "DONE":
           this._canBeDeleted = true;
           this._canBeEdited = true;
-          if(lang[0].hidden){
-            this._canBeValidated = true;
-          }
+          this._canBeValidated = false;
           if(lang[0].shotSent && lang[0].hidden){
             this._canBeDeleted = false;
-            this._canBeValidated = false;
             this._canBeEdited = false;
           }
           break;
@@ -661,11 +657,11 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
     this._projectLanguages = this._projectLanguages.filter((card)=> card.selected === false);
     lang.forEach((l)=> {
       this._innovationService
-        .removeLanguage(l)
+        .removeInnovationCard(this._innovation._id , l._id)
         .pipe(first())
         .subscribe(
           (result) => {
-            this._translateNotificationsService.success('Success', result);
+            this._translateNotificationsService.success('Success', result.message);
           },
           (err: HttpErrorResponse) => {
             this._translateNotificationsService.error('Project Updating Error...', ErrorFrontService.getErrorKey(err.error));
@@ -679,13 +675,13 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
     event.preventDefault();
     let lang = this._projectLanguages.filter((card)=> card.selected === true);
     lang.forEach((l)=>{
-      l.status = "EDITING";
       this._innovationService
-        .editLanguage(l)
+        .editLanguageStatus(this._innovation._id , l._id, {status:"EDITING", lang:l.lang})
         .pipe(first())
         .subscribe(
           (result) => {
-            this._translateNotificationsService.success('Success', result);
+            this._translateNotificationsService.success('Success', result.message);
+            l.status = "EDITING";
           },
           (err: HttpErrorResponse) => {
             this._translateNotificationsService.error('Project Updating Error...', ErrorFrontService.getErrorKey(err.error));
@@ -699,13 +695,13 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
     event.preventDefault();
     let lang = this._projectLanguages.filter((card)=> card.selected === true);
     lang.forEach((l)=>{
-      l.status = "DONE";
       this._innovationService
-        .validateLanguage(l)
+        .editLanguageStatus(this._innovation._id , l._id, {status:"DONE", lang:l.lang})
         .pipe(first())
         .subscribe(
           (result) => {
-            this._translateNotificationsService.success('Success', result);
+            l.status = "DONE";
+            this._translateNotificationsService.success('Success', result.message);
           },
           (err: HttpErrorResponse) => {
             this._translateNotificationsService.error('Project Updating Error...', ErrorFrontService.getErrorKey(err.error));
