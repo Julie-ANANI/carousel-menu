@@ -30,7 +30,7 @@
 
           <!-- dropdown menu - item -->
           <li class="menu-item"
-              *ngIf="hiddenLanguageItem(lang)"
+              *ngIf="!hiddenLanguageItem(lang)"
               (click)="selectMirrorLanguage($event, lang)">
             <div class="d-flex align-center">
 
@@ -41,7 +41,7 @@
               <!-- dropdown menu - item status  -->
 
               <!-- dropdown menu - item name -->
-              <span class="m-left-10">{{('COMMON.LANG.' + languageSelected.type.toUpperCase()) | translate}}</span>
+              <span class="m-left-10">{{('COMMON.LANG.' + lang?.type.toUpperCase()) | translate}}</span>
               <!-- dropdown menu - item name -->
 
               <!-- dropdown menu - icon - visible for client -->
