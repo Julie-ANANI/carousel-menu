@@ -28,23 +28,12 @@
 <!--      </app-utility-carousel-menu>-->
 
     <app-utility-carousel-menu
+      *ngFor="let language of innoCardLanguages"
       [config]="{
          quatity: 8,
          identifier: 'alias',
-         sources: languages}" (menuItemClicked)="getMenuClicked($event)">
+         sources: languages}" (menuItemClicked)="setCardLang(language.type)">
     </app-utility-carousel-menu>
-
-
-    <!-- languages menu -->
-<!--    <div class="d-flex flex-wrap-wrap text-medium">-->
-<!--      <ng-container *ngFor="let language of innoCardLanguages">-->
-<!--        <button class="button is-link m-left-10"-->
-<!--                [ngClass]="{'text-underline': language?.type === languageSelected}"-->
-<!--                (click)="setCardLang(language.type)">-->
-<!--          {{('COMMON.LANG.' + language?.type.toUpperCase()) | translate}}</button>-->
-<!--      </ng-container>-->
-<!--    </div>-->
-    <!-- /languages menu -->
 
 
     <!-- sections dynamic -->

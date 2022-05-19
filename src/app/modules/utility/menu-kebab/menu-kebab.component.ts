@@ -38,7 +38,7 @@ export class MenuKebabComponent implements OnInit {
   @Input() positionBtnNextBottom = '16px';
 
 
-  @Output() menuItemClicked: EventEmitter<any> = new EventEmitter();
+  @Output() menuItemClicked: any;
 
   //calculate width max
         //display max item
