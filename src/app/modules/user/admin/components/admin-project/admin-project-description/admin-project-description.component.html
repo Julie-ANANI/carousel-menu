@@ -15,18 +15,36 @@
     </ng-container>
     <!-- /notify team -->
 
-      <app-utility-carousel-menu
-        [config]="{
-         quatity: 8,
-         identifier: 'lang',
-         sources: [{index:0, lang: 'French1'},{index:1, lang: 'French2'},{index:2, lang: 'French3'},{index:3, lang: 'French4'},
-         {index:4, lang: 'French5'},{index:5, lang: 'French6'},{index:6, lang: 'French7'},{index:7, lang: 'French8'},
-         {index:8, lang: 'French9'},{index:9, lang: 'French10'},{index:10, lang: 'French11'},{index:11, lang: 'French12'},{index:12, lang: 'French13'},
-         {index:13, lang: 'French14'},{index:14, lang: 'French15'}
-         ,{index:15, lang: 'French16'},{index:16, lang: 'French17'},{index:17, lang: 'French18'}]
-        }" (menuItemClicked)="getMenuClicked($event)">
+<!--      <app-utility-carousel-menu-->
+<!--        [config]="{-->
+<!--         quatity: 8,-->
+<!--         identifier: 'lang',-->
+<!--         sources: [{index:0, lang: 'French1'},{index:1, lang: 'French2'},{index:2, lang: 'French3'},{index:3, lang: 'French4'},-->
+<!--         {index:4, lang: 'French5'},{index:5, lang: 'French6'},{index:6, lang: 'French7'},{index:7, lang: 'French8'},-->
+<!--         {index:8, lang: 'French9'},{index:9, lang: 'French10'},{index:10, lang: 'French11'},{index:11, lang: 'French12'},{index:12, lang: 'French13'},-->
+<!--         {index:13, lang: 'French14'},{index:14, lang: 'French15'}-->
+<!--         ,{index:15, lang: 'French16'},{index:16, lang: 'French17'},{index:17, lang: 'French18'}]-->
+<!--        }" (menuItemClicked)="getMenuClicked($event)">-->
+<!--      </app-utility-carousel-menu>-->
 
-      </app-utility-carousel-menu>
+    <app-utility-carousel-menu
+      [config]="{
+         quatity: 8,
+         identifier: 'alias',
+         sources: languages}" (menuItemClicked)="getMenuClicked($event)">
+    </app-utility-carousel-menu>
+
+
+    <!-- languages menu -->
+<!--    <div class="d-flex flex-wrap-wrap text-medium">-->
+<!--      <ng-container *ngFor="let language of innoCardLanguages">-->
+<!--        <button class="button is-link m-left-10"-->
+<!--                [ngClass]="{'text-underline': language?.type === languageSelected}"-->
+<!--                (click)="setCardLang(language.type)">-->
+<!--          {{('COMMON.LANG.' + language?.type.toUpperCase()) | translate}}</button>-->
+<!--      </ng-container>-->
+<!--    </div>-->
+    <!-- /languages menu -->
 
 
     <!-- sections dynamic -->

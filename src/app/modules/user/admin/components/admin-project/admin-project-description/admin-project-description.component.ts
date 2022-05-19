@@ -1,4 +1,4 @@
-import {Component, Inject, OnDestroy, OnInit, PLATFORM_ID} from '@angular/core';
+import {Component, Inject, Input, OnDestroy, OnInit, PLATFORM_ID} from '@angular/core';
 import { InnovationFrontService } from '../../../../../../services/innovation/innovation-front.service';
 import { Innovation } from '../../../../../../models/innovation';
 import { Subject } from 'rxjs';
@@ -16,6 +16,7 @@ import {NotificationService} from '../../../../../../services/notification/notif
 import {NotificationJob} from '../../../../../../models/notification';
 import {isPlatformBrowser} from '@angular/common';
 import {UmiusConfigInterface, UmiusMediaInterface, UmiusModalMedia, UmiusVideoInterface} from '@umius/umi-common-component';
+import {lang, Language} from '../../../../../../models/static-data/language';
 
 const he = require('he');
 
@@ -38,6 +39,10 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
   getMenuClicked($event: any) {
     console.log($event);
   }
+
+  @Input() languages: Array<Language> = lang;
+
+
   //end test kebab item
 
   private _innovation: Innovation = <Innovation>{};
