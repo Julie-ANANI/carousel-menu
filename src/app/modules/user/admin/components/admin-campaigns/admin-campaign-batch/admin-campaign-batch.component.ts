@@ -178,7 +178,6 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
     })
   }
 
-  // TODO duplicated function, need to refactor
   private _getInnovationLanguages() {
     if (this._campaign
       && this._campaign.innovation
@@ -193,7 +192,7 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
     this._batchesTable = [];
   }
 
-  containsLanguages(language: string, languages: Array<string>){
+  containsLanguages(language: string, languages: Array<string>) {
     return !!languages.find(l => l.toUpperCase() === language.toUpperCase());
   }
 
@@ -476,8 +475,8 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
         formValue.value['send'] === 'true'
           ? Date.now()
           : AdminCampaignBatchComponent._computeDate(
-          formValue.value['date'],
-          formValue.value['time'] || '00:00'
+            formValue.value['date'],
+            formValue.value['time'] || '00:00'
           ),
       sendNow: formValue.value['send'],
       campaign: this._campaign,
@@ -559,9 +558,19 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
    * quiz ok, workflow ok, status ok
    * @param language
    */
-  isReady(language: Language) {
-    return this._innovation.quizId
-      && language['status']==='DONE' && this.isWorkflowReady(language)
+  isReady(language: string) {
+    return this.quizGenerated(language)
+      && this.languagesValidated(language) && this.isWorkflowReady(language)
+  }
+
+  languagesValidated(lang: string) {
+    const language = this._innovationCardLanguages.find(l => l.type === lang);
+    return !!language && language['status'] === 'DONE';
+  }
+
+  quizGenerated(lang: string) {
+    const innoCard = this._innovation?.innovationCards?.find(card => card.lang === lang);
+    return !!innoCard && innoCard.quizGenerated;
   }
 
   /**
@@ -569,20 +578,15 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
    * for fr, all the emails in french should be prepared
    * @param language
    */
-  isWorkflowReady(language: Language) {
-    const emailsOfLanguage = this._campaign?.settings?.emails.filter(email => email.language === language.type);
-    if(!emailsOfLanguage.length){
+  isWorkflowReady(language: string) {
+    const emailsOfLanguage = this._campaign?.settings?.emails.filter(email => email.language === language);
+    if (!emailsOfLanguage.length) {
       return false;
     }
     return this._campaign?.settings?.emails.reduce((acc, current) => {
-      return acc && (current.language !== language.type || current.modified);
+      return acc && (current.language !== language || current.modified);
     }, true);
   }
-
-  getTooltipMessage(language: Language){
-
-  }
-
 
 
   public onDeleteBatch(event: Event, batch: Batch) {
@@ -792,17 +796,35 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
       {
         heading: 'Scheduled',
         content: [
-          {subHeading: 'Pros scheduled', value: AdminCampaignBatchComponent._campaignBatchesStats(stats, 'pros', 'batched')},
-          {subHeading: 'Good emails scheduled', value: AdminCampaignBatchComponent._campaignBatchesStats(stats, 'batches', 'goodEmails')},
-          {subHeading: 'Risky emails scheduled', value: AdminCampaignBatchComponent._campaignBatchesStats(stats,'batches', 'riskyEmails')}
+          {
+            subHeading: 'Pros scheduled',
+            value: AdminCampaignBatchComponent._campaignBatchesStats(stats, 'pros', 'batched')
+          },
+          {
+            subHeading: 'Good emails scheduled',
+            value: AdminCampaignBatchComponent._campaignBatchesStats(stats, 'batches', 'goodEmails')
+          },
+          {
+            subHeading: 'Risky emails scheduled',
+            value: AdminCampaignBatchComponent._campaignBatchesStats(stats, 'batches', 'riskyEmails')
+          }
         ]
       },
       {
         heading: 'Shots',
         content: [
-          {subHeading: 'Shot 1 expected', value: AdminCampaignBatchComponent._campaignBatchesStats(stats, 'batches', 'shot1Expected')},
-          {subHeading: 'Shot 2 expected', value: AdminCampaignBatchComponent._campaignBatchesStats(stats, 'batches', 'shot2Expected')},
-          {subHeading: 'Shot 3 expected', value: AdminCampaignBatchComponent._campaignBatchesStats(stats, 'batches', 'shot3Expected')}
+          {
+            subHeading: 'Shot 1 expected',
+            value: AdminCampaignBatchComponent._campaignBatchesStats(stats, 'batches', 'shot1Expected')
+          },
+          {
+            subHeading: 'Shot 2 expected',
+            value: AdminCampaignBatchComponent._campaignBatchesStats(stats, 'batches', 'shot2Expected')
+          },
+          {
+            subHeading: 'Shot 3 expected',
+            value: AdminCampaignBatchComponent._campaignBatchesStats(stats, 'batches', 'shot3Expected')
+          }
         ]
       }
     ];
@@ -822,7 +844,9 @@ export class AdminCampaignBatchComponent implements OnInit, OnDestroy {
   }
 
   get templatesStatus(): boolean {
-    const emailsImported = this._campaign.settings.emails.filter(e => {return !!this._innovationCardLanguages.find(l => l.type === e.language)});
+    const emailsImported = this._campaign.settings.emails.filter(e => {
+      return !!this._innovationCardLanguages.find(l => l.type === e.language)
+    });
     return (
       this._campaign.settings &&
       this._campaign.settings.emails &&

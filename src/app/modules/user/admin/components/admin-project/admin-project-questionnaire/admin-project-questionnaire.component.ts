@@ -77,6 +77,8 @@ export class AdminProjectQuestionnaireComponent implements OnInit, OnDestroy {
 
           this._setSectionsNames();
 
+          this._setQuizLink();
+
           this._missionQuestionService.questionnaireLangs = this._cardsLanguages;
 
           this._missionQuestionService.setEntryLanguages(this._cardsLanguages.map(l => l.type));
@@ -196,6 +198,8 @@ export class AdminProjectQuestionnaireComponent implements OnInit, OnDestroy {
 
     this._innovationService.createQuiz(this._innovation._id).pipe(first()).subscribe((innovation: Innovation) => {
       this._setQuizLink();
+      this._innovation.innovationCards.map(card => card.quizGenerated = true);
+      this._innovationFrontService.setInnovation(this._innovation);
       this._translateNotificationsService.success('Success', 'The quiz is generated.');
     }, (err: HttpErrorResponse) => {
       this._translateNotificationsService.error('Quiz Generating Error...', ErrorFrontService.getErrorKey(err.error));
