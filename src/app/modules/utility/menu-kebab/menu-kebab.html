@@ -1,6 +1,6 @@
 <!-- We create template for this utility-->
-<section class="bg-white sticky header-wrapper carousel-wrapper p-40"
-         [ngStyle]="{'background-color': backgroundColor}">
+<section class="bg-white sticky header-wrapper carousel-wrapper"
+         [ngStyle]="{'background': backgroundColor}">
 
   <div class="d-flex flex-wrap-nowrap relative"
        [ngStyle]="{'height': menuHeight}">
@@ -18,7 +18,7 @@
     <div>
 
       <ng-container class="carousel-inner tab text-capitalize"
-                  >
+                    *ngFor="let item of displayedItems; let i = index">
 
 <!--        <button class="button btn-primary"-->
 <!--                (click)="clickOnMenu($event, item)"-->
@@ -28,7 +28,7 @@
 
         <button class="button is-link m-left-10 text-normal"
                 (click)="clickOnMenu($event, item.type)"
-                *ngFor="let item of displayedItems; let i = index"
+                *ngIf="i < minDelimitersOfItems"
                 [ngClass]="{'text-underline': item?.type === itemSelected}"
                 [ngStyle]="{'min-width': maxWidthItem, 'margin-right': '39px', 'color': textColor}">{{item[identifier]}}
         </button>

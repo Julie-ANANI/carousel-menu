@@ -124,11 +124,21 @@
 
           <!-- languages menu -->
           <div class="d-flex flex-wrap-wrap text-medium">
-            <ng-container *ngFor="let language of innoCardLanguages">
-              <button class="button is-link m-left-10"
-                      [ngClass]="{'text-underline': language?.type === languageSelected}"
-                      (click)="setCardLang(language.type)">
-                {{('COMMON.LANG.' + language?.type.toUpperCase()) | translate}}</button>
+            <ng-container *ngFor="let language of innoCardLanguages; let i = index">
+<!--              <button class="button is-link m-left-10"-->
+<!--                      [ngClass]="{'text-underline': language?.type === languageSelected}"-->
+<!--                      (click)="setCardLang(language.type)">-->
+<!--                {{('COMMON.LANG.' + language?.type.toUpperCase()) | translate}}</button>-->
+              <div
+                class="kebab-menu"
+                *ngIf="activeTab === 'description' && i < 1">
+                <app-utility-carousel-menu
+                  [config]="{
+                   quatity: 8,
+                   identifier: 'alias',
+                   sources: languages}" (menuItemClicked)="setCardLang(language.type)">
+                </app-utility-carousel-menu>
+              </div>
             </ng-container>
           </div>
           <!-- /languages menu -->

@@ -33,7 +33,7 @@ export class MenuKebabComponent implements OnInit {
   @Input() maxWidthItem = '6em'
 
   //color
-  @Input() backgroundColor = '#EFEFEF';
+  @Input() backgroundColor = '0';
   @Input() btnViewColor = '#4F5D6B';
   @Input() textColor = '#00B0FF';
 
