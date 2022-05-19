@@ -55,8 +55,6 @@
           </div>
           <!-- /list of campaigns  -->
 
-
-
           <!-- Description || Targeting || Questionnaire -->
           <div
             *ngIf="activeTab === 'description' || activeTab === 'targeting' || activeTab === 'questionnaire'"
@@ -110,22 +108,12 @@
               </span>
             </button>
             <!-- /save -->
+
           </div>
           <!-- /Description || Targeting || Questionnaire -->
 
         </div>
         <!-- /actions buttons -->
-
-<!--        <div *ngFor="let language of innoCardLanguages">-->
-          <app-utility-carousel-menu
-            *ngIf="activeTab === 'description'"
-            [config]="{
-                 quatity: 8,
-                 identifier: 'alias',
-                 type: 'type',
-                 sources: languages}" (menuItemClicked)="setCardLang(language.type)">
-          </app-utility-carousel-menu>
-<!--        </div>-->
 
       </div>
 
@@ -135,15 +123,14 @@
         <div class="d-flex align-center">
 
           <!-- languages menu -->
-<!--          <div class="d-flex flex-wrap-wrap text-medium">-->
-<!--            <ng-container *ngFor="let language of innoCardLanguages">-->
-<!--              <button class="button is-link m-left-10"-->
-<!--                      [ngClass]="{'text-underline': language?.type === languageSelected}"-->
-<!--                      (click)="setCardLang(language.type)">-->
-<!--                {{('COMMON.LANG.' + language?.type.toUpperCase()) | translate}}</button>-->
-<!--            </ng-container>-->
-<!--          </div>-->
-
+          <div class="d-flex flex-wrap-wrap text-medium">
+            <ng-container *ngFor="let language of innoCardLanguages">
+              <button class="button is-link m-left-10"
+                      [ngClass]="{'text-underline': language?.type === languageSelected}"
+                      (click)="setCardLang(language.type)">
+                {{('COMMON.LANG.' + language?.type.toUpperCase()) | translate}}</button>
+            </ng-container>
+          </div>
           <!-- /languages menu -->
 
           <!-- add languages button -->
@@ -156,6 +143,7 @@
             </ng-container>
           </button>
           <!-- /add languages button -->
+
         </div>
 
       </section>
