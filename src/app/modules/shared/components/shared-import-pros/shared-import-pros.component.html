@@ -22,11 +22,39 @@
   <!-- /import button -->
 
   <p class="text-center text-sm">The file must use these <b>exact names</b> for the columns:
-    <b>First Name UMI, Last Name UMI, Company UMI, Country UMI</b>
-    , Language, Email UMI, emailConfidence, Linkedin,
+    <b>First Name UMI, Last Name UMI, Company UMI, Country UMI&#42;, Language&#42;&#42;</b>, Email UMI, emailConfidence, Linkedin,
     Company Site, Job UMI</p>
 
   <p class="text-center text-sm">Bold columns are mandatory, other columns are optional. The order of the columns does
     not matter</p>
+  <p class="text-center text-sm">&#42;Can be a country name in French, Italian, English, Spanish or German.</p>
+  <p class="text-center text-sm">&#42;&#42;You must choose among following: Arabic, Spanish, Portuguese, Dutch, Danish, German, Norwegian, Chinese, Italian, Korean, Modern Greek, Swedish, Finnish,Japanese, Polish, Russian, Ukrainian, Turkish (not case sensitive).</p>
+
+  <!-- import errors -->
+  <ng-container *ngIf="importingErrors && importingErrors.length === 1">
+    <app-shared-csv-error [error]="importingErrors[0]"></app-shared-csv-error>
+  </ng-container>
+  <!-- /import errors -->
 
 </div>
+<!-- errors modal -->
+<umius-modal [(showModal)]="errorsModal" [title]="'Import errors'" (close)="onImportFinished()">
+  <section *ngIf="importingErrors && slicedErrors" class="modal-body max-height-365">
+    <ng-container *ngIf="importingErrors.length">
+      <div class="flex-d-column d-flex errors-box">
+        <span class="text-error text-sm"> {{ importingErrors.length }} error(s) </span>
+        <ul>
+          <app-shared-csv-error *ngFor="let err of slicedErrors" [error]="err" [htmlTag]="'li'"></app-shared-csv-error>
+        </ul>
+      </div>
+
+      <!-- button to show more errors -->
+      <div class="text-center" *ngIf="importingErrors.length > slicedErrors.length">
+        <a class="text-link text-xs" (click)="onClickSeeMore()">{{ 'COMMON.BUTTON.SEE_MORE' | translate}}</a>
+      </div>
+      <!-- /button to show more errors -->
+    </ng-container>
+  </section>
+
+</umius-modal>
+<!-- /errors modal -->
