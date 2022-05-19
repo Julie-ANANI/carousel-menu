@@ -64,7 +64,7 @@
                   <ul class="menu" style="width: 350px">
                     <ng-container *ngFor="let language of innoCardLanguages">
                       <li class="menu-item m-bottom-10 m-top-10"
-                          *ngIf="language.type !== languageSelected.type"
+                          *ngIf="language.type !== languageSelected.type && !language.hidden"
                           (click)="selectLanguage($event, language)">
                         <label class="fullspace d-flex align-center">
                           <ng-container *ngTemplateOutlet="langStatus; context:{$implicit: language}">
@@ -82,12 +82,12 @@
                 <ng-container *ngIf="context">
                   <button class="button is-circled is-xs"
                           [attr.data-tooltip]="'This language should \n be validated to contact\n the professionals'"
-                          [ngClass]="context.status === 'EDITING'? 'tooltip is-right is-danger': 'is-success'">
+                          [ngClass]="context?.status === 'EDITING'? 'tooltip is-right is-danger': 'is-success'">
                     <i style="font-size: 20px"
-                       [ngClass]="context.status ==='EDITING'? 'fa fa-times-circle': 'fa fa-check-circle'">
+                       [ngClass]="context?.status ==='EDITING'? 'fa fa-times-circle': 'fa fa-check-circle'">
                     </i>
                   </button>
-                  <span class="m-left-3 m-right-3">{{context.alias}}</span>
+                  <span class="m-left-3 m-right-3">{{('COMMON.LANG.' + context?.type.toUpperCase()) | translate}}</span>
                 </ng-container>
               </ng-template>
               <!-- /language status + name template -->

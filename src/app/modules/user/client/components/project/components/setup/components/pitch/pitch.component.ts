@@ -133,8 +133,10 @@ export class PitchComponent implements OnInit, OnDestroy {
     this._innoCardLanguages = [];
     if (this._innovation && this._innovation.innovationCards && this._innovation.innovationCards.length) {
       this._innovation.innovationCards.map(innoCard => {
-        const language = lang.find(l => l.type === innoCard.lang);
-        if (!!language) {
+        if (!innoCard['hidden']) {
+          const language = {
+            type: innoCard.lang
+          };
           language['hidden'] = innoCard['hidden'];
           language['status'] = innoCard['status'];
           language['checked'] = innoCard['status'] !== 'EDITING';

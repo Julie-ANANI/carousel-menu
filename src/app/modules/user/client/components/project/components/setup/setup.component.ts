@@ -15,7 +15,7 @@ import { environment } from '../../../../../../../../environments/environment';
 import { CanComponentDeactivate } from '../../../../../../../guards/can-deactivate-guard.service';
 import { RouteFrontService } from '../../../../../../../services/route/route-front.service';
 import { picto, Picto } from '../../../../../../../models/static-data/picto';
-import { lang, Language } from "../../../../../../../models/static-data/language";
+import { Language } from "../../../../../../../models/static-data/language";
 
 interface Banner {
   message: string;
@@ -179,12 +179,15 @@ export class SetupComponent implements OnInit, OnDestroy, CanComponentDeactivate
     }
   }
 
+  // TODO: refactor
   private _initInnoCardLanguage() {
     this._innoCardLanguages = [];
     if (this._innovation && this._innovation.innovationCards && this._innovation.innovationCards.length) {
       this._innovation.innovationCards.map(innoCard => {
-        const language = lang.find(l => l.type === innoCard.lang);
-        if (!!language) {
+        if (!innoCard['hidden']) {
+          const language = {
+            type: innoCard.lang
+          };
           language['hidden'] = innoCard['hidden'];
           language['status'] = innoCard['status'] || 'EDITING';
           this._innoCardLanguages.push(language);

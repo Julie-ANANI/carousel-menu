@@ -354,7 +354,25 @@ export const COMMON = {
 
   'LANG': {
     'FR': 'French',
-    'EN': 'English'
+    'EN': 'English',
+    'AR': 'Arabic',
+    'ZH': 'Chinese',
+    'DA':'Danish',
+    'NL':'Dutch',
+    'FI':'Finnish',
+    'DE':'German',
+    'IT':'Italian',
+    'JA':'Japanese',
+    'KO':'Korean',
+    'EL':'Greek',
+    'NO':'Norwegian',
+    'PL':'Polish',
+    'PT':'Portuguese',
+    'RU':'Russian',
+    'ES':'Spanish',
+    'SV':'Swedish',
+    'TR':'Turkish',
+    'UK':'Ukrainian',
   },
 
   'USERS': 'Users',
