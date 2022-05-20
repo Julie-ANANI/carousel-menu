@@ -228,6 +228,124 @@
               </div>
             </div>
 
+            <!-- Project languages 'projectLanguages'-->
+            <div
+              *ngIf="mission._id && (canAccess(['view','missionTeam' ])
+              || canAccess(['edit', 'projectLanguages']))"
+              class="content">
+              <label>Project Languages</label>
+              <div class=" flex-end">
+                <div class="accordion">
+                  <input type="checkbox" id="accordion" name="accordion-checkbox" hidden>
+                  <label style="margin-left: auto;" class="flex-end text-dark" for="accordion">
+                    Languages ({{ innovation.innovationCards.length }})
+                    <i class="icon icon-caret"></i>
+                  </label>
+                  <div class="accordion-body w-full ">
+                    <div *ngIf="canAccess(['edit', 'missionTeam'])" class="is-md">
+                      <ng-container *ngIf="notAllEdited(); else editAll">
+                        <table  class="table w-full">
+                          <thead>
+                          <tr>
+                            <th>
+                              <label class="form-checkbox">
+                                <input
+                                  (change)="allLanguagesChecked($event)"
+                                  id="allLanguages"
+                                  type="checkbox"
+                                  [checked]="allSelected">
+                                <i class="form-icon"></i>
+                              </label>
+                            </th>
+                            <th style="width: 250px !important;" class="flex-around w-full text-sm text-capitalize text-primary">
+                              <div *ngIf="canBeValidated()" (click)="validateLang($event)"><i class="fa fa-check"></i> {{" Validate "}} </div>
+                              <div *ngIf="canBeEdited()" (click)="reEditLang($event)"><i class="fa fa-pen"></i> {{" Reedit "}} </div>
+                              <div *ngIf="canBeDeleted()" (click)="removeLang($event)"><i class="fa fa-trash"></i> {{" Remove "}} </div>
+                            </th>
+                          </tr>
+                          </thead>
+                          <tbody>
+                          <tr *ngFor="let inno of projectLanguages">
+                            <td>
+                              <label class="form-checkbox">
+                                <input
+                                  (change)="onChangeLanguage($event, inno)"
+                                  [id]="inno['lang']"
+                                  [value]="inno"
+                                  type="checkbox"
+                                  [checked]="inno.selected">
+                                <i class="form-icon"></i>
+                                {{'COMMON.LANG.' + inno.lang.toUpperCase() | translate }}
+                              </label>
+                            </td>
+                            <td  *ngIf="!inno.hidden" class="flex-start">
+                              <div class=" flex-start tooltip is-multiline" data-tooltip="This language is visible on client side. Click on the eye to mask it">
+                                <i class="fa fa-eye text-primary text-lg m-right-10" (click)="changeVisibility(inno, $event)"></i>
+                                <div  [ngClass]="statusClass(inno.status)" class="text-center status">
+                                  {{capitalize(inno.status)}}
+                                </div>
+                              </div>
+                              <div *ngIf="inno.shotSent" class="  w-100 text-center tooltip is-multiline" data-tooltip="This language can't be deleted because workflows have already been sent in this language.">
+                                <i  class="fa fa-trash is-outlined text-lg text-meta" ></i>
+                              </div>
+                            </td>
+                            <td  *ngIf="inno.hidden" class="flex-around">
+                              <div class="  flex-around tooltip is-multiline" data-tooltip="This language is masked on client side. Click on the eye to unmask it">
+                                <i class="fa fa-eye-slash text-primary text-lg" (click)="changeVisibility(inno, $event)"></i>
+                                <div  [ngClass]="statusClass(inno.status)" class="text-capitalize text-center status">
+                                  {{capitalize(inno.status)}}
+                                </div>
+                              </div>
+                              <div *ngIf="inno.shotSent" class="  w-100 text-center tooltip is-multiline" data-tooltip="This language can't be deleted because workflows have already been sent in this language.">
+                                <i  class="fa fa-trash is-outlined text-lg text-meta" ></i>
+                              </div>
+                            </td>
+                          </tr>
+                          </tbody>
+                        </table>
+                      </ng-container>
+                      <ng-template #editAll>
+                        <div>
+                          <div *ngFor="let inno of projectLanguages" class="m-top-30 is-md flex-around w-full">
+                            {{'COMMON.LANG.' + inno.lang.toUpperCase() | translate }}
+                            <div *ngIf="inno.hidden" class="w-150   text-center tooltip is-multiline" data-tooltip="This language is masked on client side. Click on the eye to unmask it" >
+                              <i class="fa fa-eye-slash text-primary text-lg" (click)="changeVisibility(inno, $event)"></i>
+                              <div  [ngClass]="statusClass(inno.status)" class="text-capitalize text-center status">
+                                {{capitalize(inno.status)}}
+                              </div>
+                            </div>
+                            <div *ngIf="!inno.hidden" class="w-150   text-center tooltip is-multiline" data-tooltip="This language is masked on client side. Click on the eye to unmask it" >
+                              <i class="fa fa-eye text-primary text-lg" (click)="changeVisibility(inno, $event)"></i>
+                              <div  [ngClass]="statusClass(inno.status)" class="text-capitalize text-center status">
+                                {{capitalize(inno.status)}}
+                              </div>
+                            </div>
+                            <div class="w-100 float-right text-center tooltip is-multiline" data-tooltip="This language can't be deleted because workflows have already been sent in this language.">
+                              <i class="fa fa-trash is-outlined text-lg text-meta"></i>
+                            </div>
+                          </div>
+                          <div class="popover is-right  ">
+                            <button
+                              (click)="reEditLang($event)"
+                              class="button float-right is-primary text-center m-top-20 is-sm w-160 m-right-20">
+                              <label class="text-white"> Reedit All </label> <i  class="fa fa-pen text-lg" ></i>
+                            </button>
+                            <div class="popover-container is-sm">
+                              <div class="card">
+                                Be careful, if you <strong>"reedit all"</strong>, the client will be able again to modify the project. You can still edit the project on <strong>admin side</strong>.
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                      </ng-template>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- /Project languages -->
+
             <!-- commercial -->
             <div
               *ngIf="clientProject._id && (canAccess(['view', 'commercial'])

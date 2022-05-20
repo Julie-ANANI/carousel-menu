@@ -38,6 +38,9 @@ export class InnovCard extends Model {
   readonly updated?: Date;
   readonly innovation_reference?: string;
   readonly lang: string;
+  shotSent?: boolean;
+  status?: string;
+  hidden?: boolean;
   quizGenerated: boolean;
 
   title?: string;

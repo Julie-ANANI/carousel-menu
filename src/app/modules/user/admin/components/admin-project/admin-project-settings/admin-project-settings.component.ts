@@ -46,6 +46,7 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import {UmiusSidebarInterface} from '@umius/umi-common-component';
 import {ActivatedRoute} from '@angular/router';
 import {CacheType} from '../../../../../../models/cache';
+import {InnovCard} from "../../../../../../models/innov-card";
 
 export interface UserSuggestion {
   name: string;
@@ -70,6 +71,10 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
   private _isLoading = true;
 
   private _innovation: Innovation = <Innovation>{};
+
+  private _projectLanguages: Array<any> = [];
+
+  private _allSelected = false;
 
   private _mission: Mission = <Mission>{};
 
@@ -155,6 +160,20 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
 
   private _selectedLanguages = ['español', 'dutch'];//  = []
 
+  private _canBeEdited = false;
+
+  private _canBeDeleted = false;
+
+  private _canBeValidated = false;
+
+  private _notAllEdited = true;
+
+  isMasterSel:boolean;
+
+  categoryList:any;
+
+  checkedCategoryList:any;
+
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _answerService: AnswerService,
               private _rolesFrontService: RolesFrontService,
@@ -181,13 +200,24 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
       this._getStats();
       this._quizLink = InnovationFrontService.quizLink(this._innovation);
       this._isLoading = false;
-
       this._innovationFrontService.innovation().pipe(takeUntil(this._ngUnsubscribe)).subscribe((innovation) => {
         if (innovation && innovation._id) {
           this._innovation = innovation;
+          this._fillProjectLanguage();
           this._initFields();
         }
       });
+    }
+  }
+
+  private _fillProjectLanguage(){
+    for (let card of this._innovation.innovationCards){
+      let element = <any>card;
+      element.selected = false;
+      this._projectLanguages.push(element);
+    }
+    if(this._projectLanguages.every((lang)=> lang.shotSent === true)){
+     this._notAllEdited = false;
     }
   }
 
@@ -554,6 +584,231 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
       operator: this._innovation.operator,
       mission: this._mission,
     });
+  }
+
+  public allLanguagesChecked(event: any) {
+    event.preventDefault();
+    this.bulkEditReset();
+    this._allSelected = event.target.checked;
+    if(this._allSelected){
+      for (let card of this._projectLanguages) {
+        card.selected = true;
+      }
+    } else {
+      for (let card of this._projectLanguages) {
+        card.selected = false;
+      }
+    }
+    this.checkActions();
+  }
+
+  public onChangeLanguage(event: Event, card: any) {
+    event.preventDefault();
+    this.bulkEditReset();
+    card.selected = !card.selected;
+    if(this._projectLanguages.every((card) => card.selected === true)){
+        this._allSelected = true;
+    } else {
+      this._allSelected = false;
+    }
+    this.checkActions();
+  }
+
+  public changeVisibility(lang : InnovCard, event: Event){
+    this.bulkEditReset();
+    this._innovationService.changeVisibility(this._innovation._id, lang._id, {hidden: !lang.hidden, lang: lang.lang}).pipe(first()).subscribe((result) => {
+              lang.hidden = !lang.hidden;
+              this._translateNotificationsService.success('Success', result.message);
+          },
+          (err: HttpErrorResponse) => {
+            this._translateNotificationsService.error('Updating Language Error...', ErrorFrontService.getErrorKey(err.error));
+          }
+        );
+    if(lang.status === "WAITING"){
+      this._innovationService.editLanguageStatus(this._innovation._id , lang._id, {status:"EDITING", lang:lang.lang})
+        .pipe(first())
+        .subscribe(
+          (result) => {
+            lang.status = "EDITING";
+            this._translateNotificationsService.success('Success', result.message);
+          },
+          (err: HttpErrorResponse) => {
+            this._translateNotificationsService.error('Project Updating Error...', ErrorFrontService.getErrorKey(err.error));
+          }
+        );
+    }
+  }
+
+  public bulkEditReset(){
+    this._canBeDeleted = false;
+    this._canBeValidated = false;
+    this._canBeEdited = false;
+  }
+
+  public checkActions(){ // this is hell.
+    let lang = this._projectLanguages.filter((card)=> card.selected === true);
+    if(lang.find(la => la.shotSent === true)){
+      // NO ACTIONS
+      this.bulkEditReset();
+    } else {
+      if(lang.length < 2) {
+        this.setAction(lang);
+      } else {
+        this._canBeDeleted = false; //true;
+        if(lang.every(la => la.hidden === false)){ // no lang hidden
+          if(lang.every(la => la.status === "WAITING")){
+            this._canBeValidated = true;
+          }
+          if(lang.every(la => la.status !== "EDITING")){//No lang selected is editing
+            this._canBeEdited = true;
+          }
+        } else { // at least one lang is hidden
+          if(lang.every(la => la.status !== "EDITING")){
+            this._canBeEdited = false;
+          }
+          if(lang.every(la => la.status !== "DONE" && la.hidden === true)){
+            this._canBeValidated = true;
+          }
+        }
+      }
+    }
+  }
+
+  public setAction(lang: any[]){
+    if(lang.length){
+      switch (lang[0].status) {
+        case "WAITING":
+          this._canBeDeleted = false; //true;
+          this._canBeValidated = true;
+          this._canBeEdited = true;
+          break;
+        case "EDITING":
+          this._canBeDeleted = false; //true;
+          if(lang[0].hidden === true){
+            this._canBeValidated = true;
+            this._canBeDeleted = false; //true;
+          }
+          break;
+        case "DONE":
+          this._canBeDeleted = false; //true;
+          this._canBeEdited = true;
+          this._canBeValidated = false;
+          if(lang[0].hidden){
+            this._canBeEdited = false;
+          }
+          if(lang[0].shotSent){
+            this._canBeDeleted = false; //false;
+          }
+          break;
+      }
+    } else {
+      this._canBeDeleted = false;
+      this._canBeValidated = false;
+      this._canBeEdited = false;
+    }
+  }
+
+  public removeLang(event: Event){
+    event.preventDefault();
+    let lang = this._projectLanguages.filter((card)=> card.selected === true);
+    this._projectLanguages = this._projectLanguages.filter((card)=> card.selected === false);
+    lang.forEach((l)=> {
+      this._innovationService
+        .removeInnovationCard(this._innovation._id , l._id)
+        .pipe(first())
+        .subscribe(
+          (result) => {
+            this._translateNotificationsService.success('Success', result.message);
+          },
+          (err: HttpErrorResponse) => {
+            this._translateNotificationsService.error('Project Updating Error...', ErrorFrontService.getErrorKey(err.error));
+            console.error(err);
+          }
+        );
+    });
+  }
+
+  public reEditLang(event: Event){
+    event.preventDefault();
+    let lang = this._projectLanguages.filter((card)=> card.selected === true);
+    let isReEditAll = false;
+    if(this._projectLanguages.every(l => l.shotSent === true)){ // for case when it's re edit all with email shot sent
+       lang = this._projectLanguages;
+       isReEditAll = true;
+    }
+    lang.forEach((l)=>{
+      this._innovationService
+        .editLanguageStatus(this._innovation._id , l._id, {status:"EDITING", lang:l.lang})
+        .pipe(first())
+        .subscribe(
+          (result) => {
+            this._translateNotificationsService.success('Success', result.message);
+            l.status = "EDITING";
+          },
+          (err: HttpErrorResponse) => {
+            this._translateNotificationsService.error('Project Updating Error...', ErrorFrontService.getErrorKey(err.error));
+            console.error(err);
+          }
+        );
+    });
+    if(isReEditAll){
+      this._notAllEdited = true;
+    }
+  }
+
+  public validateLang(event: Event){
+    event.preventDefault();
+    let lang = this._projectLanguages.filter((card)=> card.selected === true);
+    lang.forEach((l)=>{
+      this._innovationService
+        .editLanguageStatus(this._innovation._id , l._id, {status:"DONE", lang:l.lang})
+        .pipe(first())
+        .subscribe(
+          (result) => {
+            l.status = "DONE";
+            this._translateNotificationsService.success('Success', result.message);
+          },
+          (err: HttpErrorResponse) => {
+            this._translateNotificationsService.error('Project Updating Error...', ErrorFrontService.getErrorKey(err.error));
+            console.error(err);
+          }
+        );
+    });
+  }
+
+  public statusClass(status: string) {
+    switch (status) {
+      case "EDITING":
+        return "label is-danger";
+      case "DONE":
+        return "label is-success";
+      case "WAITING":
+        return "label is-warning";
+    }
+  }
+
+  public capitalize(str:string) {
+    if(str === "DONE"){
+      return "Ok";
+    } else {
+      return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+    }
+  }
+
+  public canBeEdited() {
+    return this._canBeEdited;
+  }
+
+  public canBeValidated(): boolean {
+    return this._canBeValidated;
+  }
+
+  public canBeDeleted(): boolean{
+    return this._canBeDeleted;
+  }
+
+  public notAllEdited(): boolean{
+    return this._notAllEdited;
   }
 
   /***
@@ -1124,6 +1379,14 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
 
   get newOwner(): UserSuggestion {
     return this._newOwner;
+  }
+
+  get projectLanguages(){
+    return this._projectLanguages;
+  }
+
+  get allSelected(): boolean {
+    return this._allSelected;
   }
 
   get showModalRemoveLang(): boolean {
