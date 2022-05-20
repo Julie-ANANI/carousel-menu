@@ -45,7 +45,7 @@
               "node_modules/tinymce/plugins/lists/plugin.min.js",
               "node_modules/tinymce/plugins/code/plugin.min.js",
               "node_modules/tinymce/plugins/autoresize/plugin.min.js",
-              "node_modules/tinymce/plugins/wordcount/plugin.min.js"
+              "node_modules/tinymce/plugins/wordcount/plugin.min.js",
               "assets/plugins/plugin.js"
             ]
           },
