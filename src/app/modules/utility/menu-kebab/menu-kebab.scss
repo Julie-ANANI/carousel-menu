@@ -2,24 +2,12 @@
   overflow: hidden;
   border: 3px solid red;
 
-  .carousel-inner {
-    display: flex;
-    width: 1200px;
-  }
-
   :is(#btn-kebab, .icon-more-horiz) ::before {
     color: #4F5D6B;
     height:5px;
     width:5px;
     transform: rotate(90deg);
     margin-bottom: 2px;
-  }
-
-  ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    height: 40px;
   }
 
   :is(i, .icon-container, .icon-arrow-right, .icon-arrow-left) ::before {
@@ -29,12 +17,12 @@
     border-right: 0;
   }
 
-
   #btn-kebab, .btn__view {
     align-items: center;
     justify-content: center;
     margin-top: -12px;
     width: 150px;
+    color: #4F5D6B;
   }
 
   .button.is-link{
@@ -62,7 +50,7 @@
     margin-top: -7px;
   }
 
-  #btn__prev .btn__prev {
+  .btn__prev {
     margin-top: -11px;
   }
 }
