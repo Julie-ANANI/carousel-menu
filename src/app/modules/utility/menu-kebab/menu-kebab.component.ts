@@ -83,7 +83,7 @@ export class MenuKebabComponent implements OnInit {
   private _sources: Array<any> = [];
   private _displayedItems: Array<any> = [];
   private _itemSelected: string = '';
-  private _currentItem: any;
+  //private _currentItem: any;
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object) {}
 
@@ -97,16 +97,24 @@ export class MenuKebabComponent implements OnInit {
 
 
   next() {
-    let maxValInitNext = this.sources.length;
-    let viewToView = (this._quatity - 1);
+    let viewToView = (this._quatity);
     let maxValQuantityNext = this.sources.length;
+    // //let maxValInitNext = (this._quatity + (maxValQuantityNext / this._quatity));
+    // let quantityInit = (this.sources.length / this._quatity);
+    // //let quantityInitIncrement = (quantityInit + ((maxValQuantityNext - this._quatity)))
+    // //let quantityInitbis = (quantityInitIncrement/ this._quatity);
+    // //let maxValInitNext = (quantityInitbis + ((maxValQuantityNext - this._quatity)))
+    //
+    // let maxValInitNext = (this._initIndex + (maxValQuantityNext - this._quatity))
+    // //init / incremente = (quantityInit + ((maxValQuantityNext / this._quatity)))
 
       //when max view value for btn next with max value && max init valu
       if(this.displayedItems.length > 0){
-        if(this._quatity === maxValQuantityNext && this._initIndex === maxValQuantityNext){
+        debugger;
+        if(((maxValQuantityNext - this._quatity) < this._quatity)){
           //assign max value
           this._quatity = maxValQuantityNext;
-          this._initIndex = maxValInitNext;
+          this._initIndex = (this._initIndex + this._initIndex);
           this._displayedItems = this._sources.slice(this._initIndex, this._quatity);
           return this.displayedItems;
           //when we can increment initIndex && quantity
@@ -127,8 +135,12 @@ export class MenuKebabComponent implements OnInit {
     let initIndexPrev = this._initIndex
 
     if(this._displayedItems && this._displayedItems.length){
-      this._quatity = this._quatity - 1
-      this._initIndex = initIndexPrev - 1;
+      console.log('old qauntity prev : ' + this._quatity);
+      this._quatity = this._quatity - 7
+      console.log('new qauntity prev : ' + this._quatity);
+      console.log('old init prev :' + this._initIndex)
+      this._initIndex = initIndexPrev - 7;
+      console.log('new init prev :' + this._initIndex)
       this._displayedItems = this._sources.slice(this._initIndex, this._quatity);
       return initIndexPrev - 1 && this._displayedItems
     } else {
