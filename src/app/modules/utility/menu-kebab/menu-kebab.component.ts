@@ -9,6 +9,9 @@ import {Subject} from 'rxjs';
 })
 
 export class MenuKebabComponent implements OnInit {
+  get initViewLess(): boolean {
+    return this._initViewLess;
+  }
 
   //config button controls
   @Input() showControls = true;
@@ -54,6 +57,7 @@ export class MenuKebabComponent implements OnInit {
   private _initQuantity: number;
   private _initIndex: number = 0;
   private _currentItem: any;
+  private _initViewLess: boolean = true;
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object) {}
 
@@ -163,6 +167,10 @@ export class MenuKebabComponent implements OnInit {
   }
   get initIndex(): number {
     return this._initIndex;
+  }
+
+  get initQuantity():number {
+    return this._initQuantity;
   }
 }
 
