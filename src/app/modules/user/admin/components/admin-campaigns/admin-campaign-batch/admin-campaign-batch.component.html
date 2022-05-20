@@ -167,7 +167,7 @@
               </div>
               <div class="m-left-1 text-medium">
                 <div [ngClass]="{'popover is-top': !isReady(language)}">
-                  <div>{{('COMMON.LANG.' + language?.toUpperCase()) | translate}}</div>
+                  <div>{{'COMMON.LANG.' + language | uppercase | translate}}</div>
                   <div *ngIf="!isReady(language)" class="popover-container is-sm">
                     <div class="card d-flex flex-d-column align-flex-start bg-white">
                       <label class="m-bottom-1">Tasks remaining to validate this language:</label>

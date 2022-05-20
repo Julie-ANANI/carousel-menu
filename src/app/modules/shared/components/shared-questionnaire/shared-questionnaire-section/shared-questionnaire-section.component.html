@@ -33,7 +33,7 @@
             class="m-right-20 d-flex align-center tooltip"
             data-tooltip="Section name">
               <label class="form-label text-normal text-white m-right-2 m-no-bottom">
-                {{ 'COMMON.LANG.' + languageSelected.toUpperCase() | uppercase | translate }}:
+                {{ 'COMMON.LANG.' + languageSelected | uppercase | translate }}:
               </label>
             <span [lang]="languageSelected" class="w-full"> {{ sectionName(languageSelected) }} </span>
           </div>
@@ -81,7 +81,7 @@
         <!-- name -->
         <div class="m-right-20 d-flex align-center">
           <label class="form-label text-normal text-white m-right-2 m-no-bottom">
-            {{ 'COMMON.LANG.' + languageSelected.toUpperCase() | uppercase | translate }}:
+            {{ 'COMMON.LANG.' + languageSelected | uppercase | translate }}:
           </label>
           <ng-container *ngIf="accessPath.length && !canAccess(['section', 'edit', 'name']); else defSEditName">
             <p [lang]="languageSelected" class="m-no-bottom">{{ sectionName(languageSelected) }}</p>

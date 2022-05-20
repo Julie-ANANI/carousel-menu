@@ -11,7 +11,7 @@
         <!-- language status  -->
 
         <!-- language name  -->
-        <span class="m-left-10">{{('COMMON.LANG.' + languageSelected?.type.toUpperCase()) | translate}}</span>
+        <span class="m-left-10">{{'COMMON.LANG.' + languageSelected?.type | uppercase |  translate}}</span>
         <!-- /language name  -->
 
         <!-- icon drop down  -->
@@ -41,7 +41,7 @@
               <!-- dropdown menu - item status  -->
 
               <!-- dropdown menu - item name -->
-              <span class="m-left-10">{{('COMMON.LANG.' + lang?.type.toUpperCase()) | translate}}</span>
+              <span class="m-left-10">{{'COMMON.LANG.' + lang?.type | uppercase | translate}}</span>
               <!-- dropdown menu - item name -->
 
               <!-- dropdown menu - icon - visible for client -->

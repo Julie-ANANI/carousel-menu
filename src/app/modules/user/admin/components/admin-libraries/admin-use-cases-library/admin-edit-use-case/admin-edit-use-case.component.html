@@ -51,7 +51,7 @@
               [showDropDown]="true"
               [(languageSelected)]="leftMirrorLanguage"
               [languagesList]="questionnaireLanguages"
-              [languagesExcludedInSelector]="[rightMirrorLanguage]">
+              [languagesExcludedInSelector]="[rightMirrorLanguage, leftMirrorLanguage]">
 
               <!-- objective -->
               <ng-container *ngTemplateOutlet="objective;
@@ -79,7 +79,7 @@
                 [showDropDown]="true"
                 [(languageSelected)]="rightMirrorLanguage"
                 [languagesList]="questionnaireLanguages"
-                [languagesExcludedInSelector]="[leftMirrorLanguage]">
+                [languagesExcludedInSelector]="[rightMirrorLanguage, leftMirrorLanguage]">
 
                 <!-- objective -->
                 <ng-container *ngTemplateOutlet="objective;
@@ -113,7 +113,7 @@
   <div class="input-group">
     <div class="m-bottom-25 form-group m-no-left m-right-10">
       <label class="form-label" >
-        {{('COMMON.LANG.' + context?.lang?.type.toUpperCase()) | translate | titlecase}} Objective
+        {{'COMMON.LANG.' + context?.lang?.type | uppercase | translate | titlecase}} Objective
       </label>
       <input
         (ngModelChange)="onChangeObjective($event, context?.lang?.type)"
