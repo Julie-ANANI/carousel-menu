@@ -1,27 +1,54 @@
 <div id="editable-tag-label" class="is-draft">
 
-  <div class="tag-container label is-draft is-draft is-rounded">
+  <!--TODO remove multiling-->
+  <div class="tag-container label is-draft is-rounded">
     <i class="fas fa-tag icon-left"></i>
     <label class="d-block w-full" *ngIf="isEditable">
-      <input
-        (keyup)="addNewTags($event)"
-        [disabled]="!isEditable && !defaultTag.label.en && !defaultTag.label.fr"
-        [list-formatter]="autocompleteListFormatter"
-        [source]="tagSuggestions.bind(this)"
-        [value-formatter]="autocompleteValueFormatter"
-        [value]="defaultTag.label[currentLang]"
-        (valueChanged)="valueOnChange($event)"
-        [placeholder]="!defaultTag.label.en? 'add a tag...': ''"
-        (input)="valueOnChange($event.target['value'])"
-        [min-chars]="2"
-        type="text"
-        id="editable-tag-label-input"
-        class="form-input is-xs text-white"
-        auto-complete>
+      <ng-container *ngIf="defaultTag.entry; else noEditableTag">
+        <input
+          (keyup)="addNewTags($event)"
+          [disabled]="!isEditable && (!defaultTag.entry|langEntry:'label':'en')
+        && (!defaultTag.entry|langEntry:'label':'fr')"
+          [list-formatter]="autocompleteListFormatter"
+          [source]="tagSuggestions.bind(this)"
+          [value-formatter]="autocompleteValueFormatter"
+          [value]="defaultTag.entry|langEntry:'label':'en'"
+          (valueChanged)="valueOnChange($event)"
+          [placeholder]="(!defaultTag.entry|langEntry:'label':'en') ? 'add a tag...' : ''"
+          (input)="valueOnChange($event.target['value'])"
+          [min-chars]="2"
+          type="text"
+          id="editable-tag-label-input"
+          class="form-input is-xs text-white"
+          auto-complete>
+      </ng-container>
+      <ng-template #noEditableTag>
+        <input
+          (keyup)="addNewTags($event)"
+          [disabled]="!isEditable && !defaultTag.label.en && !defaultTag.label.fr"
+          [list-formatter]="autocompleteListFormatter"
+          [source]="tagSuggestions.bind(this)"
+          [value-formatter]="autocompleteValueFormatter"
+          [value]="defaultTag.label[currentLang]"
+          (valueChanged)="valueOnChange($event)"
+          [placeholder]="!defaultTag.label.en? 'add a tag...': ''"
+          (input)="valueOnChange($event.target['value'])"
+          [min-chars]="2"
+          type="text"
+          [id]="'editable-tag-label-input'"
+          class="form-input is-xs text-white"
+          auto-complete>
+      </ng-template>
     </label>
 
+    <!--TODO remove multiling-->
     <div *ngIf="!isEditable">
-      {{defaultTag.label | multiling:currentLang}}
+      <ng-container *ngIf="defaultTag.entry; else noEditableLabel">
+        {{defaultTag.entry|langEntry:'label':'en'}}
+      </ng-container>
+      <ng-template #noEditableLabel>
+        {{defaultTag.label | multiling:currentLang}}
+      </ng-template>
     </div>
     <i class="fas fa-times icon-right"
        (click)="deleteTag($event)"
@@ -45,7 +72,14 @@
   <section class="modal-body">
     Do you really want to create a new tag?
     <p class="form-label m-top-15">Tag Name</p>
-    <p class="text-sm m-no-bottom" *ngIf="defaultTag && defaultTag.label">{{ defaultTag.label[currentLang] }}</p>
+    <ng-container *ngIf="defaultTag.entry && defaultTag.entry.length; else noEditableModal">
+      <p class="text-sm m-no-bottom">
+        {{ label }}
+      </p>
+    </ng-container>
+    <ng-template #noEditableModal>
+      <p class="text-sm m-no-bottom" *ngIf="defaultTag && defaultTag.label">{{ defaultTag.label[currentLang] }}</p>
+    </ng-template>
   </section>
 
   <footer class="modal-footer">

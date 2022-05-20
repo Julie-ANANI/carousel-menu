@@ -29,7 +29,7 @@ export interface InnovationFollowUpEmailsTemplateEntry {
   content: string;
 }
 
-export interface InnovationFollowUpEmailsTemplates {
+export interface InnovationFollowUpEmailsTemplate {
   name: InnovationFollowUpTemplateType;
   entry: Array<InnovationFollowUpEmailsTemplateEntry>;
 }
@@ -59,7 +59,7 @@ export interface InnovationFollowUpEmails {
   /**
    * TODO send this format from back.
    */
-  templates?: Array<InnovationFollowUpEmailsTemplates>;
+  templates?: Array<InnovationFollowUpEmailsTemplate>;
 
   /**
    * TODO remove these pattern

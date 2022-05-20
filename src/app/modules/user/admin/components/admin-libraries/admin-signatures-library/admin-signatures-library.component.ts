@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { TemplatesService } from '../../../../../../services/templates/templates.service';
 import { EmailSignature } from '../../../../../../models/email-signature';
 import { TranslateNotificationsService } from '../../../../../../services/translate-notifications/translate-notifications.service';
@@ -14,7 +14,7 @@ import {UmiusConfigInterface, UmiusSidebarInterface, Table} from '@umius/umi-com
   styleUrls: ['admin-signatures-library.component.scss']
 })
 
-export class AdminSignaturesLibraryComponent {
+export class AdminSignaturesLibraryComponent implements OnInit {
 
   private _config: UmiusConfigInterface = {
     fields: '',
@@ -52,9 +52,10 @@ export class AdminSignaturesLibraryComponent {
               private _translateTitleService: TranslateTitleService,
               private _activatedRoute: ActivatedRoute,
               private _translateNotificationsService: TranslateNotificationsService) {
-
     this._translateTitleService.setTitle('Signatures | Libraries');
+  }
 
+  ngOnInit(): void {
     if (this._activatedRoute.snapshot.data.signatures && Array.isArray(this._activatedRoute.snapshot.data.signatures.result)) {
       this._signatures = this._activatedRoute.snapshot.data.signatures.result;
       this._total = this._activatedRoute.snapshot.data.signatures._metadata.totalCount;
@@ -63,7 +64,6 @@ export class AdminSignaturesLibraryComponent {
     } else {
       this._fetchingError = true;
     }
-
   }
 
   private _initializeTable() {

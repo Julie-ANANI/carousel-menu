@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {CommonModule, TitleCasePipe} from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { SharedFollowUpComponent } from './shared-follow-up.component';
@@ -13,6 +13,8 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {SharedWorldmapModule} from '../shared-worldmap/shared-worldmap.module';
 import {LangEntryPipeModule} from '../../../../pipe/lang-entry/langEntryPipe.module';
 import {ModalModule, SidebarFullModule, SidebarInlineModule, TableModule} from '@umius/umi-common-component';
+import { SharedFollowUpAdminEditorComponent } from './shared-follow-up-admin/shared-follow-up-admin-editor/shared-follow-up-admin-editor/shared-follow-up-admin-editor.component';
+import {SharedEditorTinymceModule} from '../shared-editor-tinymce/shared-editor-tinymce.module';
 
 @NgModule({
   imports: [
@@ -28,15 +30,20 @@ import {ModalModule, SidebarFullModule, SidebarInlineModule, TableModule} from '
     TableModule,
     SidebarInlineModule,
     SidebarFullModule,
-    ModalModule
+    ModalModule,
+    SharedEditorTinymceModule
   ],
   declarations: [
     SharedFollowUpComponent,
     SharedFollowUpClientComponent,
-    SharedFollowUpAdminComponent
+    SharedFollowUpAdminComponent,
+    SharedFollowUpAdminEditorComponent
   ],
   exports: [
     SharedFollowUpComponent
+  ],
+  providers: [
+    TitleCasePipe
   ]
 })
 

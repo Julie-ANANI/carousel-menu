@@ -38,6 +38,7 @@ export class InnovCard extends Model {
   readonly updated?: Date;
   readonly innovation_reference?: string;
   readonly lang: string;
+  quizGenerated: boolean;
 
   title?: string;
   media?: Array<UmiusMediaInterface>;
@@ -51,4 +52,6 @@ export class InnovCard extends Model {
    * but only one for rest type.
    */
   sections?: Array<InnovCardSection>;
+  hidden: boolean;
+  status: 'WAITING' | 'EDITING'| 'DONE';
 }

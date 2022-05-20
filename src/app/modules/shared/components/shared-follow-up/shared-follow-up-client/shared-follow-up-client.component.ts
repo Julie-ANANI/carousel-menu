@@ -1,8 +1,12 @@
 import {Component, EventEmitter, Input, OnDestroy, Output} from '@angular/core';
 import {Answer} from '../../../../../models/answer';
-import {Innovation, InnovationFollowUpEmails, InnovationFollowUpEmailsCc} from '../../../../../models/innovation';
+import {
+  Innovation,
+  InnovationFollowUpEmails,
+  InnovationFollowUpEmailsCc,
+  InnovationFollowUpEmailsTemplate
+} from '../../../../../models/innovation';
 import {MissionQuestion} from '../../../../../models/mission';
-import {EmailsObject} from '../../../../../models/email';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {TranslateNotificationsService} from '../../../../../services/translate-notifications/translate-notifications.service';
 import {InnovationFrontService} from '../../../../../services/innovation/innovation-front.service';
@@ -89,9 +93,11 @@ export class SharedFollowUpClientComponent implements OnDestroy {
 
   private _steps: Array<string> = ['COMMON.LABEL.SELECTED', 'COMMON.LABEL.CONFIGURE', 'COMMON.LABEL.SEND'];
 
-  private _emailsObject: EmailsObject = <EmailsObject>{};
+  // private _emailsObject: EmailObject = <EmailObject>{};
+  private _emailsObject: InnovationFollowUpEmailsTemplate = <InnovationFollowUpEmailsTemplate>{};
 
-  private _emailsObjectReplaced: EmailsObject = <EmailsObject>{};
+  // private _emailsObjectReplaced: EmailObject = <EmailObject>{};
+  private _emailsObjectReplaced: InnovationFollowUpEmailsTemplate = <InnovationFollowUpEmailsTemplate>{};
 
   private _showModal = false;
 
@@ -378,8 +384,13 @@ export class SharedFollowUpClientComponent implements OnDestroy {
     };
   }
 
+  /**
+   * TODO delete the commented part after multilang migration
+   */
   public initEmailObject() {
-    this._emailsObject = JSON.parse(JSON.stringify(LangEntryService.followUpEmails(this._project.followUpEmails, this._selectedPhrase)));
+    // this._emailsObject = JSON.parse(JSON.stringify(LangEntryService.followUpEmails(this._project.followUpEmails, this._selectedPhrase)));
+    this._emailsObject = JSON.parse(JSON.stringify(InnovationFrontService.getFollowUpTemplate(
+      this._project.followUpEmails?.templates, this._selectedPhrase)));
     this._emailsObjectReplaced = null;
     this._emailsObjectReplaced = JSON.parse(JSON.stringify(this._emailsObject));
     const cc = this._selectedCC.map((_cc) => {
@@ -393,27 +404,67 @@ export class SharedFollowUpClientComponent implements OnDestroy {
     });
   }
 
+  /**
+   * TODO delete the commented part after multilang migration
+   * @param lang
+   * @param card
+   * @param cc
+   * @private
+   */
   private _highlightFields(lang: string, card: InnovCard, cc: string) {
-    this._emailsObject[lang]['subject'] = this._emailsObject[lang]['subject']
-      .replace(/\*\|TITLE\|\*/g,
-        `<span class="label is-mail width-120 is-sm m-h text-xs text-draft m-no-right">${card.title}</span>`
-      );
+    const index = LangEntryService.entryIndex(this._emailsObject.entry, 'lang', lang);
 
-    this._emailsObject[lang]['content'] = this._emailsObject[lang]['content']
-      .replace(/\*\|COMPANY_NAME\|\*/g, `<span class="label is-mail width-120 is-sm text-xs
-       text-draft m-h m-no-right">${new ScrapeHTMLTags().transform(this.companyName.trim())}</span>`)
-      .replace(/\*\|CLIENT_NAME\|\*/g, `<span class="label is-mail width-120 is-sm text-xs text-draft m-h m-no-right">${cc}</span>`)
-      .replace(/\*\|TITLE\|\*/g, `<span class="label is-mail width-120 is-sm text-xs text-draft m-h m-no-right">${card.title}</span>`);
+    if (index !== -1) {
+      this._emailsObject.entry[index].subject = this._emailsObject.entry[index].subject
+        .replace(/\*\|TITLE\|\*/g,
+          `<span class="label is-mail width-120 is-sm m-h text-xs text-draft m-no-right">${card.title}</span>`
+        );
+
+      this._emailsObject.entry[index].content = this._emailsObject.entry[index].content
+        .replace(/\*\|COMPANY_NAME\|\*/g, `<span class="label is-mail width-120 is-sm text-xs
+       text-background m-h m-no-right">${new ScrapeHTMLTags().transform(this.companyName.trim())}</span>`)
+        .replace(/\*\|CLIENT_NAME\|\*/g, `<span class="label is-mail width-120 is-sm text-xs text-background m-h m-no-right">${cc}</span>`)
+        .replace(/\*\|TITLE\|\*/g, `<span class="label is-mail width-120 is-sm text-xs text-draft m-h m-no-right">${card.title}</span>`);
+    }
+    /*this._emailsObject[lang]['subject'] = this._emailsObject[lang]['subject']
+      .replace(/\*\|TITLE\|\*!/g,
+        `<span class="label is-mail width-120 is-sm m-h text-xs text-background m-no-right">${card.title}</span>`
+      );*/
+
+    /*this._emailsObject[lang]['content'] = this._emailsObject[lang]['content']
+      .replace(/\*\|COMPANY_NAME\|\*!/g, `<span class="label is-mail width-120 is-sm text-xs
+       text-background m-h m-no-right">${new ScrapeHTMLTags().transform(this.companyName.trim())}</span>`)
+      .replace(/\*\|CLIENT_NAME\|\*!/g, `<span class="label is-mail width-120 is-sm text-xs text-background m-h m-no-right">${cc}</span>`)
+      .replace(/\*\|TITLE\|\*!/g, `<span class="label is-mail width-120 is-sm text-xs text-background m-h m-no-right">${card.title}</span>`);*/
   }
 
+  /**
+   * TODO delete the commented part after multilang migration
+   * @param lang
+   * @param card
+   * @param cc
+   * @private
+   */
   private _replaceVariables(lang: string, card: InnovCard, cc: string) {
-    this._emailsObjectReplaced[lang]['subject'] = this._emailsObjectReplaced[lang]['subject'].
-    replace(/\*\|TITLE\|\*/g, card.title);
+    const index = LangEntryService.entryIndex(this._emailsObjectReplaced.entry, 'lang', lang);
 
-    this._emailsObjectReplaced[lang]['content'] = this._emailsObjectReplaced[lang]['content']
-      .replace(/\*\|COMPANY_NAME\|\*/g, new ScrapeHTMLTags().transform(this.companyName.trim()))
-      .replace(/\*\|CLIENT_NAME\|\*/g, cc)
-      .replace(/\*\|TITLE\|\*/g, `${card.title}`);
+    if (index !== -1) {
+      this._emailsObjectReplaced.entry[index].subject = this._emailsObjectReplaced.entry[index].subject
+        .replace(/\*\|TITLE\|\*/g, card.title);
+
+      this._emailsObjectReplaced.entry[index].content = this._emailsObjectReplaced.entry[index].content
+        .replace(/\*\|COMPANY_NAME\|\*/g, new ScrapeHTMLTags().transform(this.companyName.trim()))
+        .replace(/\*\|CLIENT_NAME\|\*/g, cc)
+        .replace(/\*\|TITLE\|\*/g, `${card.title}`);
+    }
+
+    /*this._emailsObjectReplaced[lang]['subject'] = this._emailsObjectReplaced[lang]['subject'].
+    replace(/\*\|TITLE\|\*!/g, card.title);*/
+
+    /*this._emailsObjectReplaced[lang]['content'] = this._emailsObjectReplaced[lang]['content']
+      .replace(/\*\|COMPANY_NAME\|\*!/g, new ScrapeHTMLTags().transform(this.companyName.trim()))
+      .replace(/\*\|CLIENT_NAME\|\*!/g, cc)
+      .replace(/\*\|TITLE\|\*!/g, `${card.title}`);*/
   }
 
   public onChangePhrase(event: string) {
@@ -597,11 +648,11 @@ export class SharedFollowUpClientComponent implements OnDestroy {
     return this._steps;
   }
 
-  get emailsObject(): EmailsObject {
+  get emailsObject(): InnovationFollowUpEmailsTemplate {
     return this._emailsObject;
   }
 
-  get emailsObjectReplaced(): EmailsObject {
+  get emailsObjectReplaced(): InnovationFollowUpEmailsTemplate {
     return this._emailsObjectReplaced;
   }
 

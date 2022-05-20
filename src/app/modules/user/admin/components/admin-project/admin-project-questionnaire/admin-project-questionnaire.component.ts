@@ -14,8 +14,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { Mission, MissionCardTitle, MissionTemplate } from '../../../../../../models/mission';
 import { ErrorFrontService } from '../../../../../../services/error/error-front.service';
 import { MissionQuestionService } from "../../../../../../services/mission/mission-question.service";
-import { lang, Language } from "../../../../../../models/static-data/language";
-// import { InnovCard } from "../../../../../../models/innov-card";
+import { Language } from "../../../../../../models/static-data/language";
 
 @Component({
   templateUrl: './admin-project-questionnaire.component.html',
@@ -65,27 +64,24 @@ export class AdminProjectQuestionnaireComponent implements OnInit, OnDestroy {
         if (innovation && innovation._id) {
           this._innovation = innovation;
 
-          this._cardsLanguages = [];
-
           if (this._innovation.mission && (<Mission>this._innovation.mission)._id) {
             this._mission = <Mission>this._innovation.mission;
           }
 
-          // this._innovation.innovationCards.map((card) => {
-          //     this.initialiseCardLanguages(card);
-          //   }
-          // );
+          this.initialiseCardLanguages()
 
-          // TODO: set real card languages
-          lang.splice(16).map(language =>{
-            this.initialiseCardLanguages(language);
-          })
-
-          this.initialiseMirrorLanguages();
+          // initialise language for the first time
+          if (!this._leftMirrorLanguage) {
+            this.initialiseMirrorLanguages();
+          }
 
           this._setSectionsNames();
 
+          this._setQuizLink();
+
           this._missionQuestionService.questionnaireLangs = this._cardsLanguages;
+
+          this._missionQuestionService.setEntryLanguages(this._cardsLanguages.map(l => l.type));
         }
       });
     }
@@ -93,16 +89,9 @@ export class AdminProjectQuestionnaireComponent implements OnInit, OnDestroy {
 
   /**
    * initialise cardLanguages list
-   * @param language
-   * // TODO
    */
-  initialiseCardLanguages(language: any) {
-    // const language = lang.find(l => l.type === card.lang);
-    if (language) {
-      language['hidden'] = true;
-      language['status'] = 'EDITING';
-      this._cardsLanguages.push(language);
-    }
+  initialiseCardLanguages() {
+    this._cardsLanguages = this._innovationFrontService.formateInnovationCardLanguages(this._innovation.innovationCards) || [];
   }
 
   /**
@@ -113,7 +102,7 @@ export class AdminProjectQuestionnaireComponent implements OnInit, OnDestroy {
     if (this._cardsLanguages.length > 1) {
       this._rightMirrorLanguage = this._cardsLanguages[1];
     }
-    this._leftMirrorLanguage = this._cardsLanguages.length && this._cardsLanguages[0] || null;
+    this._leftMirrorLanguage = this._cardsLanguages.length && this._cardsLanguages[0];
   }
 
   public canAccess(path?: Array<string>) {
@@ -204,6 +193,8 @@ export class AdminProjectQuestionnaireComponent implements OnInit, OnDestroy {
 
     this._innovationService.createQuiz(this._innovation._id).pipe(first()).subscribe((innovation: Innovation) => {
       this._setQuizLink();
+      this._innovation.innovationCards.map(card => card.quizGenerated = true);
+      this._innovationFrontService.setInnovation(this._innovation);
       this._translateNotificationsService.success('Success', 'The quiz is generated.');
     }, (err: HttpErrorResponse) => {
       this._translateNotificationsService.error('Quiz Generating Error...', ErrorFrontService.getErrorKey(err.error));
@@ -254,7 +245,6 @@ export class AdminProjectQuestionnaireComponent implements OnInit, OnDestroy {
    */
   selectMirrorLanguage(event: Event, lang: Language, mirror: string) {
     event.preventDefault();
-    console.log(lang);
     if (mirror === 'right') {
       this._rightMirrorLanguage = lang;
     } else {
@@ -328,7 +318,6 @@ export class AdminProjectQuestionnaireComponent implements OnInit, OnDestroy {
 
   set leftMirrorLanguage(value: Language) {
     this._leftMirrorLanguage = value;
-    console.log(this._leftMirrorLanguage);
   }
 
   set rightMirrorLanguage(value: Language) {

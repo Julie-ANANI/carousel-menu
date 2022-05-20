@@ -10,7 +10,7 @@ import {takeUntil} from 'rxjs/operators';
 import {InnovationFrontService} from '../../../../services/innovation/innovation-front.service';
 import { ErrorFrontService } from "../../../../services/error/error-front.service";
 import { HttpErrorResponse } from "@angular/common/http";
-import {EmailsObject} from '../../../../models/email';
+import {EmailObject} from '../../../../models/email';
 
 @Component({
   selector: 'app-innovation-form',
@@ -52,7 +52,7 @@ export class InnovationFormComponent implements OnInit, OnDestroy {
   private _project: Innovation = <Innovation>{};
   private _isChange = false;
 
-  private _email: EmailsObject = <EmailsObject>{};
+  private _email: EmailObject = <EmailObject>{};
 
   status = [
     {name: 'EDITING', alias: 'Editing'},
@@ -259,11 +259,11 @@ export class InnovationFormComponent implements OnInit, OnDestroy {
     this._isChange = value;
   }
 
-  get email(): EmailsObject {
+  get email(): EmailObject {
     return this._email;
   }
 
-  set email(value: EmailsObject) {
+  set email(value: EmailObject) {
     this._email = value;
     this.isChange = true;
   }

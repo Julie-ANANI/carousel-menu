@@ -54,6 +54,7 @@
         <!-- header section -->
         <div class="d-flex selected-tags-wrapper text-center">
 
+          <!--TODO remove multiling-->
           <div *ngFor="let tagStat of selectedTagsStats; let i = index;" class="tag text-meta">
             <span>
               <ng-container *ngIf="tagStat.tag.entry; else noTagStatEntryLabel">
@@ -148,6 +149,7 @@
 
     <h2 class="text text-draft m-no-bottom title-secondary p-right-1 text-medium p-bottom-1" [innerText]="'SHOWCASE.SECTORS_MODAL.TITLE'" translate></h2>
 
+    <!--TODO remove multiling-->
     <ng-container *ngIf="selectedTagsStats.length">
       <div class="selected-wrapper">
         <div *ngFor="let selected of selectedTagsStats" class="label label-tag is-rounded">
@@ -165,16 +167,28 @@
 
     <hr class="hr">
 
+    <!--TODO remove multiling-->
     <div class="d-flex tags-wrapper flex-wrap-wrap">
       <div *ngFor="let tag of sectorTags" class="card is-responsive">
-        <label class="form-checkbox text-sm">
+        <label *ngIf="tag.entry && tag.entry.length; else notShowcaseTagEntry" class="form-checkbox text-sm">
           <input
             (change)="onChangeTag($event, tag)"
-            [name]="tag.label | multiling:currentLang"
             type="checkbox">
           <i class="form-icon"></i>
-          <span class="text-ellipsis">{{ tag.label | multiling:currentLang | FormatText }}</span>
+          <span class="text-ellipsis">
+            {{ tag.entry | langEntry:'label':currentLang:true | titlecase }}
+          </span>
         </label>
+        <ng-template #notShowcaseTagEntry>
+          <label class="form-checkbox text-sm">
+            <input
+              (change)="onChangeTag($event, tag)"
+              [name]="tag.label | multiling:currentLang"
+              type="checkbox">
+            <i class="form-icon"></i>
+            <span class="text-ellipsis">{{ tag.label | multiling:currentLang | FormatText }}</span>
+          </label>
+        </ng-template>
       </div>
     </div>
 

@@ -26,7 +26,7 @@ export const COMMON = {
   'CREATED': 'Créé le',
   'UPDATED': 'Modifié le',
   'LAUNCHED': 'Lancé le',
-  'EXPIRATION' : 'Expire le',
+  'EXPIRATION': 'Expire le',
   'EXPIRATION-SPECIFY': 'Ou renseigner une date d\'expiration',
   'REASON': 'Raison',
   'CLOSE': 'Fermer',
@@ -35,7 +35,7 @@ export const COMMON = {
   'NO': 'Non',
   'YES': 'Oui',
   'ACCEPT': 'Accepter',
-  'PAGINATION' : 'Lignes par pages',
+  'PAGINATION': 'Lignes par pages',
   'FILTER': 'Filtrer',
   'RESET': 'Réinitialiser',
   'SEARCH': 'Recherche',
@@ -349,9 +349,28 @@ export const COMMON = {
   'OR': 'Ou',
 
   'LANGUAGE': 'Langue',
+
   'LANG': {
     'FR': 'Français',
-    'EN': 'Anglais'
+    'EN': 'Anglais',
+    'AR': 'Arabe',
+    'ZH': 'Chinois',
+    'DA': 'Danois',
+    'NL': 'Néerlandais',
+    'FI': 'Finnois',
+    'DE': 'Allemand',
+    'IT': 'Italien',
+    'JA': 'Japonais',
+    'KO': 'Coréen',
+    'EL': 'Grec',
+    'NO': 'Norvégien',
+    'PL': 'Polonais',
+    'PT': 'Portugais',
+    'RU': 'Russe',
+    'ES': 'Espagnol',
+    'SV': 'Suédois',
+    'TR': 'Turc',
+    'UK': 'Ukrainien',
   },
 
   'USERS': 'Utilisateurs',
@@ -372,7 +391,7 @@ export const COMMON = {
 
   'PROFESSIONAL': {
     'PITCH-DELETE': 'Êtes-vous sûr de vouloir supprimer le(s) professionnel(s)',
-    'PITCH-DELETE-ALL' : 'Êtes-vous sûr de vouloir supprimer tous les professionnels',
+    'PITCH-DELETE-ALL': 'Êtes-vous sûr de vouloir supprimer tous les professionnels',
     'DELETE': 'Supprimer le(s) professionnel(s)',
     'DELETE_BOARD': {
       'HEADING': 'Suppression',

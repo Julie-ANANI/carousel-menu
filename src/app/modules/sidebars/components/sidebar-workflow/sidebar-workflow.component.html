@@ -4,7 +4,7 @@
   <div *ngIf="isEditable" class="text-right p-bottom-30">
     <button
       (click)="onClickSave()"
-      class="button  is-sm"
+      class="button is-community is-sm"
       type="button">
       Save
     </button>
@@ -16,9 +16,9 @@
     (emailChange)="onChangeEmail($event)"
     [isEditableMode]="isEditable"
     [isEnablePreviewBtn]="isEditable"
-    [emailsObject]="emailsObject"
+    [emailObject]="emailObject"
     [id]="id"
-    [inputLanguage]="inputLanguage"
+    [(inputLanguage)]="inputLanguage"
     [innovationCardLanguages]="innovationCardLanguages"
     [signatures]="signatures">
   </app-shared-mail-editor>

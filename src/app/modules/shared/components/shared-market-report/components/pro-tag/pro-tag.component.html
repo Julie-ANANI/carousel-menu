@@ -51,12 +51,22 @@
   </div>
   <!-- /details -->
 
-  <!-- tag -->
+  <!-- tag TODO remove multiling -->
   <div *ngIf="tags.length > 0" class="tags-wrapper">
-    <div *ngFor="let tag of tags" [title]="tag.description | multiling:currentLang" class="label is-draft is-rounded">
-      <i class="fas fa-tag icon-left"></i>
-      {{ tag.label | multiling:currentLang }}
-    </div>
+    <ng-container *ngFor="let tag of tags">
+      <ng-container *ngIf="tag.entry && tag.entry.length; else noProTagEntry">
+        <div class="label is-tag is-rounded">
+          <i class="fas fa-tag icon-left"></i>
+          {{ tag.entry | langEntry:'label':currentLang:true }}
+        </div>
+      </ng-container>
+      <ng-template #noProTagEntry>
+        <div class="label is-tag is-rounded">
+          <i class="fas fa-tag icon-left"></i>
+          {{ tag.label | multiling:currentLang }}
+        </div>
+      </ng-template>
+    </ng-container>
   </div>
   <!-- /tag -->
 

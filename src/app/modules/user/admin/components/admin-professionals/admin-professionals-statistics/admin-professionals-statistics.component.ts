@@ -1,10 +1,15 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
 import {RolesFrontService} from '../../../../../../services/roles/roles-front.service';
 import {ClassificationService} from '../../../../../../services/classification/classification.service';
 import {EmailType, SeniorityClassification} from '../../../../../../models/seniority-classification';
 import {JobsClassification} from '../../../../../../models/jobs-classification';
 import {HttpErrorResponse} from '@angular/common/http';
 import * as moment from 'moment';
+import {isPlatformBrowser} from '@angular/common';
+import {first} from 'rxjs/operators';
+import {ErrorFrontService} from '../../../../../../services/error/error-front.service';
+import {TranslateNotificationsService} from '../../../../../../services/translate-notifications/translate-notifications.service';
+import {LangEntryService} from '../../../../../../services/lang-entry/lang-entry.service';
 
 @Component({
   selector: 'app-professionals-statistics',
@@ -47,18 +52,23 @@ export class AdminProfessionalsStatisticsComponent implements OnInit {
 
   private _nbGoodEmailsClassified = 0;
 
-  private _isLoading = false;
+  private _isLoading = true;
 
   private _dropdownMonths: Array<string> = ['January', 'February', 'March', 'April', 'May', 'June',
     'July', 'August', 'September', 'October', 'November', 'December'];
 
-  constructor(private _rolesFrontService: RolesFrontService,
+  constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
+              private _langEntryService: LangEntryService,
+              private _translateNotificationsService: TranslateNotificationsService,
+              private _rolesFrontService: RolesFrontService,
               private _classificationService: ClassificationService) {
   }
 
   ngOnInit() {
-    this._initYears();
-    this._getClassificationsByEmailConfidences();
+    if (isPlatformBrowser(this._platformId)) {
+      this._initYears();
+      this._getClassificationsByEmailConfidences();
+    }
   }
 
   private _getClassificationsByEmailConfidences() {
@@ -69,10 +79,13 @@ export class AdminProfessionalsStatisticsComponent implements OnInit {
       this._getJobsClassification({...this._config, emailConfidence: 'RISKY'}),
       this._getJobsClassification({...this._config, emailConfidence: 'GOOD'}),
       this._getJobsClassification({...this._config, emailConfidence: 'ALL'})
-    ]).then((values) => {
+    ]).then(() => {
       this.selectEmailConfidenceType('ALL');
       this.computeEmailConfidenceStats();
-      this._isLoading = false;
+    }).catch((err) => {
+      console.error(err);
+    }).finally(() => {
+      this._isLoading = false
     });
   }
 
@@ -137,8 +150,7 @@ export class AdminProfessionalsStatisticsComponent implements OnInit {
 
   private _getSeniorityLevelsClassification(config: any) {
     return new Promise(((resolve, reject) => {
-      this._classificationService.seniorityLevels(config).subscribe((res: { classification: SeniorityClassification }) => {
-
+      this._classificationService.seniorityLevels(config).pipe(first()).subscribe((res: { classification: SeniorityClassification }) => {
         if (res.classification) {
           const seniorityLevelsOrder = ['Top executive', 'Top manager', 'Manager', 'Expert', 'Other', 'Excluding', 'Irregular', 'No jobs'];
           res.classification.seniorityLevels.sort(function (a, b) {
@@ -161,13 +173,24 @@ export class AdminProfessionalsStatisticsComponent implements OnInit {
     }));
   }
 
+  /** TODO delete the commented part after multilang migration
+   *
+   * @param config
+   * @private
+   */
   private _getJobsClassification(config: any) {
     return new Promise(((resolve, reject) => {
-      this._classificationService.categoriesAndJobs(config).subscribe((res: { classification: JobsClassification }) => {
+      this._classificationService.categoriesAndJobs(config).pipe(first()).subscribe((res: { classification: JobsClassification }) => {
+
         if (res.classification) {
-          res.classification.categories = res.classification.categories.sort((a, b) => {
+          /*res.classification.categories = res.classification.categories.sort((a, b) => {
             const aLabel = (a.label || {en: 'Not classified yet'}).en;
             const bLabel = (b.label || {en: 'Not classified yet'}).en;
+            return aLabel.localeCompare(bLabel);
+          });*/
+          res.classification.categories = res.classification.categories.sort((a, b) => {
+            const aLabel = this._langEntryService.transform(a.entry, 'label', 'en') || 'Not classified yet';
+            const bLabel = this._langEntryService.transform(b.entry, 'label', 'en') || 'Not classified yet';
             return aLabel.localeCompare(bLabel);
           });
 
@@ -180,8 +203,15 @@ export class AdminProfessionalsStatisticsComponent implements OnInit {
             this._classified = res.classification.total;
           }
 
-          res.classification.categories.forEach(category => {
+          /*res.classification.categories.forEach(category => {
             category.jobs = category.jobs.sort((a, b) => a.label.en.localeCompare(b.label.en));
+          });*/
+          res.classification.categories.forEach(category => {
+            category.jobs = category.jobs.sort((a, b) => {
+              const aLabel = this._langEntryService.transform(a.entry, 'label', 'en');
+              const bLabel = this._langEntryService.transform(b.entry, 'label', 'en');
+              return aLabel.localeCompare(bLabel);
+            });
           });
 
           this._jobsClassifications.push(res.classification);
@@ -199,10 +229,8 @@ export class AdminProfessionalsStatisticsComponent implements OnInit {
     }));
   }
 
-  private _initYears() {
-
-    this._classificationService.classificationDates().subscribe((dates) => {
-
+  private _initYears(): void {
+    this._classificationService.classificationDates().pipe(first()).subscribe((dates) => {
       let _firstYear = 2020;
       const _currentYear = Number(moment().year().toString());
       if (dates.length) {
@@ -212,8 +240,8 @@ export class AdminProfessionalsStatisticsComponent implements OnInit {
         this._dropdownYears.push((i).toString(10));
       }
       this._selectedYear = _currentYear.toString(10);
-
     }, (err: HttpErrorResponse) => {
+      this._translateNotificationsService.error('Error', ErrorFrontService.getErrorKey(err.error));
       console.error(err);
     });
   }

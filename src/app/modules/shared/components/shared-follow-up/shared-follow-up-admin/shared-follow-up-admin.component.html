@@ -153,7 +153,7 @@
 <!-- /filter sidebar -->
 
 <!-- modal for mails -->
-<ng-container *ngIf="!!(emailsObject && showEmailsModal && canAccess(['workflow']))">
+<ng-container *ngIf="!!(emailTemplate.name && showEmailsModal && canAccess(['workflow']))">
   <umius-modal [(showModal)]="showEmailsModal" [maxWidth]="'1080px'">
     <section class="modal-body p-top-30 p-bottom-30 p-left-50 p-right-50">
 
@@ -169,8 +169,8 @@
       </div>
       <!-- /close button -->
 
-      <!-- mail wrapper -->
-      <div>
+      <!-- mail wrapper TODO delete the commented part after multilang migration -->
+      <!--<div>
         <app-shared-mail-editor
           [isEditableMode]="canAccess(['workflow', 'edit'])"
           [canTestMails]="canAccess(['workflow', 'test'])"
@@ -181,6 +181,17 @@
           (sendTestEmails)="sendTestEmails()"
           [(emailsObject)]="emailsObject">
         </app-shared-mail-editor>
+      </div>-->
+      <div>
+        <app-shared-follow-up-admin-editor
+          (sendTestEmails)="sendTestEmails()"
+          [isEditableMode]="canAccess(['workflow', 'edit'])"
+          [canTestMails]="canAccess(['workflow', 'test'])"
+          [professionals]="pros"
+          [(ccEmail)]="ccEmail"
+          [customFields]="customFields"
+          [(emailTemplate)]="emailTemplate">
+        </app-shared-follow-up-admin-editor>
       </div>
       <!-- /mail wrapper -->
 
@@ -188,7 +199,6 @@
       <div *ngIf="canAccess(['workflow', 'edit'])" class="text-center">
         <button
           (click)="saveProject()"
-
           style="width: 141px"
           class="button">
           {{ 'COMMON.BUTTON.SAVE' | translate }}

@@ -4,9 +4,10 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
 import { AutocompleteService } from '../../../../services/autocomplete/autocomplete.service';
 import { TagsService } from '../../../../services/tags/tags.service';
-import { MultilingPipe } from '../../../../pipe/pipes/multiling.pipe';
+// import { MultilingPipe } from '../../../../pipe/pipes/multiling.pipe';
 import { Tag } from '../../../../models/tag';
 import { Observable } from 'rxjs';
+import {LangEntryService} from '../../../../services/lang-entry/lang-entry.service';
 
 type TagType = 'tags';
 
@@ -44,7 +45,8 @@ export class SharedTagsComponent implements OnInit {
 
   constructor(private _translateService: TranslateService,
               private _formBuilder: FormBuilder,
-              private _multilingPipe: MultilingPipe,
+              // private _multilingPipe: MultilingPipe,
+              private _langEntryService: LangEntryService,
               private _domSanitizer: DomSanitizer,
               private _tagsService: TagsService,
               private _autocompleteService: AutocompleteService) {
@@ -73,12 +75,14 @@ export class SharedTagsComponent implements OnInit {
     return this._domSanitizer.bypassSecurityTrustHtml(`<span>${text}</span>`);
   };
 
+  // TODO remove multiling
   public autocompleValueFormatter = (data: any): string => {
-    if (!this.projectId || this.type) {
+    return this._langEntryService.tagEntry(data, 'label', this._translateService.currentLang);
+    /*if (!this.projectId || this.type) {
       return this._multilingPipe.transform(data.name, this._translateService.currentLang);
     } else {
       return this._multilingPipe.transform(data.label, this._translateService.currentLang);
-    }
+    }*/
   };
 
   public onSubmit() {
@@ -94,13 +98,20 @@ export class SharedTagsComponent implements OnInit {
     this.removeTag.emit(tag);
   }
 
-  // TODO Create tag send entry object
+  // TODO remove multiling
   public createNewTag(): void {
     const name = this._tagForm.get('tag').value;
     this._tagForm.get('tag').reset();
 
     if (typeof name === 'string') {
-      this.createTag.emit({label: {en: name, fr: name}, description: {en: '', fr: ''}});
+      const newTag = {
+        entry: [
+          {lang: 'en', label: name, description: ''},
+          {lang: 'fr', label: name, description: ''},
+        ]
+      };
+      this.createTag.emit(newTag);
+      // this.createTag.emit({label: {en: name, fr: name}, description: {en: '', fr: ''}});
     }
 
     this._showModal = false;
