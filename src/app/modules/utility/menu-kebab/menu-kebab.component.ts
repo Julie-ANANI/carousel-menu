@@ -9,21 +9,6 @@ import {Subject} from 'rxjs';
 })
 
 export class MenuKebabComponent implements OnInit {
-  get type(): string {
-    return this._type;
-  }
-
-  set type(value: string) {
-    this._type = value;
-  }
-  get itemSelected(): string {
-    return this._itemSelected;
-  }
-  get initIndex(): number {
-    return this._initIndex;
-  }
-
-  //moins input
 
   //config button controls
   @Input() showControls = true;
@@ -31,31 +16,16 @@ export class MenuKebabComponent implements OnInit {
   //Size
   @Input() minDelimitersOfItems = 7;
   @Input() menuHeight = '30px'
-  @Input() itemWidth = '146px'
   @Input() maxWidthItem = '6em'
 
   //color
   @Input() backgroundColor = '#e1e7ea';
-  @Input() btnViewColor = '#4F5D6B';
   @Input() textColor = '#00B0FF';
 
-  //position
-  @Input() positionBtnKebabBottom = '0.5em';
-  @Input() positionBtnKebabRight = '1em';
-  @Input() positionBtnMore = '9px';
-  @Input() positionBtnMoreBottom = '0.5em';
-  @Input() positionBtnMoreLeft = '16em';
-  @Input() positionBtnMoreTop = '-1 em';
-  @Input() positionBtnLess = '1em';
-
-  @Input() positionBtnNextBottom = '16px';
-
-
-  //@Output() menuItemClicked: any;
   @Output() menuItemClicked: EventEmitter<any> = new EventEmitter();
 
   /**
-   * here, you get configuration for the menu
+   * get configuration for the menu
    * @param value
    *
    */
@@ -66,13 +36,10 @@ export class MenuKebabComponent implements OnInit {
       this._initIndex = value.initIndex || 0;
       this._sources = value.sources || [];
       this._identifier = value.identifier || '';
-     // this._type = value.type || '';
+      this._type = value.type || '';
       this._displayedItems = this._sources.slice(this._initIndex, this._quatity);
     }
   }
-
-
-  private _initIndex: number = 0;
 
   //Config Template
   private _isDisplayItems = false;
@@ -85,7 +52,8 @@ export class MenuKebabComponent implements OnInit {
   private _displayedItems: Array<any> = [];
   private _itemSelected: string = '';
   private _initQuantity: number;
-  //private _currentItem: any;
+  private _initIndex: number = 0;
+  private _currentItem: any;
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object) {}
 
@@ -97,18 +65,9 @@ export class MenuKebabComponent implements OnInit {
     this.menuItemClicked.emit(item);
   }
 
-
   next() {
     let viewToView = (this._quatity);
     let maxValQuantityNext = this.sources.length;
-    // //let maxValInitNext = (this._quatity + (maxValQuantityNext / this._quatity));
-    // let quantityInit = (this.sources.length / this._quatity);
-    // //let quantityInitIncrement = (quantityInit + ((maxValQuantityNext - this._quatity)))
-    // //let quantityInitbis = (quantityInitIncrement/ this._quatity);
-    // //let maxValInitNext = (quantityInitbis + ((maxValQuantityNext - this._quatity)))
-    //
-    // let maxValInitNext = (this._initIndex + (maxValQuantityNext - this._quatity))
-    // //init / incremente = (quantityInit + ((maxValQuantityNext / this._quatity)))
 
       //when max view value for btn next with max value && max init valu
       if(this.displayedItems.length > 0){
@@ -133,35 +92,25 @@ export class MenuKebabComponent implements OnInit {
    }
 
   prev() {
-
      let init = this._initIndex
 
     if(this._displayedItems.length > 0){
-
+      //when with have max length of sources
       if(this._quatity === this.sources.length){
-        console.log('old qauntity prev 2 : ' + this._quatity);
-        console.log('old init prev :' + this._initIndex)
-        //this._initIndex = (this._quatity + (this.sources.length - this._quatity))
         this._quatity = this._initIndex;
+        //value of init view items must be displayed
         init = this._initQuantity
         this._initIndex = init;
-        console.log('new init prev :' + this._initIndex)
         this._displayedItems = this._sources.slice(this._initIndex, this._quatity);
         return this.displayedItems;
-
+       //when with don't have view max length of sources
       }else {
-        console.log('old qauntity prev : ' + this._quatity);
+        //back to old items
         this._quatity = ((this._quatity + 1 ) - (this._initIndex + 1))
-        console.log('new qauntity prev : ' + this._quatity);
-        console.log('old init prev :' + this._initIndex)
         this._initIndex = (this._initIndex - (this._initQuantity)) ;
-        console.log('new init prev :' + this._initIndex)
         this._displayedItems = this._sources.slice(this._initIndex, this._quatity);
         return this.displayedItems;
-
-
       }
-
     } else {
       return this.displayedItems;
     }
@@ -203,6 +152,17 @@ export class MenuKebabComponent implements OnInit {
 
   get displayedItems(): Array<any> {
     return this._displayedItems;
+  }
+
+  get type(): string {
+    return this._type;
+  }
+
+  get itemSelected(): string {
+    return this._itemSelected;
+  }
+  get initIndex(): number {
+    return this._initIndex;
   }
 }
 
