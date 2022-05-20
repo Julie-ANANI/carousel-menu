@@ -2,6 +2,10 @@
 
 #admin-edit-question {
 
+  .questionnaire-column {
+    flex: 0 0 49%;
+  }
+
   .header-wrapper {
     background-color: $draft-color;
     border-radius: 6px;

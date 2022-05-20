@@ -143,6 +143,8 @@ export class MissionQuestionService {
    */
   private _addEntryLang: Array<string> = ['en', 'fr'];
 
+  private _templateLangs: Array<string> = ['en', 'fr'];
+
   /**
    * Questions identifier should imperatively be less than 24 characters for etherpad purposes
    * @private
@@ -232,9 +234,12 @@ export class MissionQuestionService {
    */
   public static entryInfo(value: any, lang = 'en'): any {
     if (value && value.entry && value.entry.length) {
+      const en_entry = value.entry.find((_entry: any) => _entry.lang === 'en');
       const entry = value.entry.find((_entry: any) => _entry.lang === lang);
       if (!!entry) {
         return entry;
+      } else if(!!en_entry){
+        return en_entry;
       }
     }
     return <any>{};
@@ -848,9 +853,9 @@ export class MissionQuestionService {
    */
   public questionEntry(question: MissionQuestion = <MissionQuestion>{}, lang: string): MissionQuestionEntry {
     if (this._questionnaireLangs.length) {
-      const quesLang = this._questionnaireLangs.find((_lang) => _lang.type === lang);
+      const quesLang = this._templateLangs.find((_lang) => _lang === lang);
       if (!!quesLang) {
-        return MissionQuestionService.entryInfo(question, quesLang.type);
+        return MissionQuestionService.entryInfo(question, quesLang);
       } else {
         return MissionQuestionService.entryInfo(question, 'en') || <MissionQuestionEntry>{};
       }

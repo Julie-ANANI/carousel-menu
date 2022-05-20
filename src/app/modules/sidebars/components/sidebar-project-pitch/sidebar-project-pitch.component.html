@@ -59,7 +59,8 @@
             [elementId]="sectionId"
             [isEditable]="isEditable"
             [isClient]="true"
-            [type]="'pitch'">
+            [type]="'pitch'"
+            [lang]="cardLang">
           </app-shared-editors>
         </div>
         <div *ngIf="!isEditable" [innerHTML]="cardContent | cleanHtml" class="text-sm"></div>

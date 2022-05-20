@@ -55,6 +55,9 @@ export class SharedQuestionnaireQuestionComponent implements OnInit {
    */
   @Input() presetLanguages: Array<string> = [];
 
+  /**
+   * language selected
+   */
   @Input() languageSelected = 'en';
 
   @Input() set question(value: MissionQuestion) {

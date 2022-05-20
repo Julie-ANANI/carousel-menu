@@ -12,7 +12,7 @@ import { MissionFrontService } from '../../../../../../../services/mission/missi
 import { TranslateService } from '@ngx-translate/core';
 import { TranslateTitleService } from '../../../../../../../services/title/title.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import {UmiusLocalStorageService} from '@umius/umi-common-component';
+import { lang, Language } from "../../../../../../../models/static-data/language";
 
 interface ConfirmUpdate {
   tool: boolean;
@@ -21,6 +21,7 @@ interface ConfirmUpdate {
 
 @Component({
   templateUrl: './admin-edit-use-case.component.html',
+  styleUrls: ['./admin-edit-use-case.component.scss']
 })
 export class AdminEditUseCaseComponent implements OnInit {
 
@@ -32,7 +33,11 @@ export class AdminEditUseCaseComponent implements OnInit {
 
   private _toBeSaved = false;
 
-  private _questionnaireLanguages: Array<string> = ['en', 'fr'];
+  /**
+   * template languages
+   * @private
+   */
+  private _questionnaireLanguages: Array<Language> = lang;
 
   private _accessPath: Array<string> = ['libraries', 'useCases'];
 
@@ -53,6 +58,10 @@ export class AdminEditUseCaseComponent implements OnInit {
 
   private _templateName = '';
 
+  private _rightMirrorLanguage: Language = null;
+
+  private _leftMirrorLanguage: Language = null;
+
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _missionService: MissionService,
               private _activatedRoute: ActivatedRoute,
@@ -60,8 +69,7 @@ export class AdminEditUseCaseComponent implements OnInit {
               private _rolesFrontService: RolesFrontService,
               private _translateTitleService: TranslateTitleService,
               private _translateNotificationsService: TranslateNotificationsService,
-              private _missionQuestionService: MissionQuestionService,
-              private _localStorageService: UmiusLocalStorageService) {
+              private _missionQuestionService: MissionQuestionService) {
   }
 
   ngOnInit() {
@@ -69,6 +77,7 @@ export class AdminEditUseCaseComponent implements OnInit {
     this._templates = this._missionQuestionService.allTemplates;
     this._jsonParse();
     this._setTitle();
+    this.setLanguages();
 
     /**
      * if the user refresh the page in that case we do not have the value in the
@@ -85,6 +94,20 @@ export class AdminEditUseCaseComponent implements OnInit {
       this._getAllTemplates();
     }
 
+    this._missionQuestionService.questionnaireLangs = this._questionnaireLanguages;
+
+  }
+
+  setLanguages() {
+    this._leftMirrorLanguage = this._questionnaireLanguages[0];
+    this._rightMirrorLanguage = this._questionnaireLanguages[1];
+  }
+
+  getObjective(lang: string = 'en') {
+    if (this._missionTemplate && this._missionTemplate.entry && this._missionTemplate.entry.length) {
+      const entry = this._missionTemplate.entry.find(e => e.lang === lang);
+      return entry && entry.objective || '';
+    }
   }
 
   private _jsonParse() {
@@ -130,10 +153,13 @@ export class AdminEditUseCaseComponent implements OnInit {
     }
   }
 
-  public onChangeObjective(event: string, index: number) {
+  public onChangeObjective(event: string, lang: string) {
     if (this.canAccess(['edit', 'objective'])) {
-      this._missionTemplate.entry[index].objective = event.trim();
-      this._toBeSaved = true;
+      const entry = this._missionTemplate.entry.find(e => e.lang === lang);
+      if (entry) {
+        entry.objective = event.trim();
+        this._toBeSaved = true;
+      }
     }
   }
 
@@ -165,19 +191,7 @@ export class AdminEditUseCaseComponent implements OnInit {
         data['actions'] = this._valuesToSave;
       }
 
-      this._updateTemplateInStorage();
       this._updateLibraryTemplate(data);
-    }
-  }
-
-  private _updateTemplateInStorage() {
-    const missionTemplates = this._localStorageService.getItem('missionTemplates') && JSON.parse(this._localStorageService.getItem('missionTemplates'));
-    if (missionTemplates) {
-      missionTemplates.result = missionTemplates.result.map((template: MissionTemplate) => {
-        return this._missionTemplate._id === template._id? this.missionTemplate : template;
-      });
-      this._localStorageService.setItem('missionTemplates', JSON.stringify(missionTemplates));
-      this._missionQuestionService.setAllTemplates(missionTemplates.result);
     }
   }
 
@@ -314,7 +328,7 @@ export class AdminEditUseCaseComponent implements OnInit {
     return this._toBeSaved;
   }
 
-  get questionnaireLanguages(): Array<string> {
+  get questionnaireLanguages(): Array<Language> {
     return this._questionnaireLanguages;
   }
 
@@ -338,4 +352,20 @@ export class AdminEditUseCaseComponent implements OnInit {
     return this._translateService.currentLang;
   }
 
+
+  get rightMirrorLanguage(): Language {
+    return this._rightMirrorLanguage;
+  }
+
+  set rightMirrorLanguage(value: Language) {
+    this._rightMirrorLanguage = value;
+  }
+
+  get leftMirrorLanguage(): Language {
+    return this._leftMirrorLanguage;
+  }
+
+  set leftMirrorLanguage(value: Language) {
+    this._leftMirrorLanguage = value;
+  }
 }

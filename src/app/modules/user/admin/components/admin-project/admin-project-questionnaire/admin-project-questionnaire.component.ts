@@ -184,11 +184,6 @@ export class AdminProjectQuestionnaireComponent implements OnInit, OnDestroy {
     });
   }
 
-  getObjective(lang: string = 'en') {
-    const entry = this.mission.template.entry.find(e => e.lang === lang);
-    return entry && entry.objective || '';
-  }
-
   /***
    * when the user clicks on the Generate button to generate quiz.
    * @param event

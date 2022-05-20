@@ -128,7 +128,7 @@
               <button class="button is-link m-left-10"
                       [ngClass]="{'text-underline': language?.type === languageSelected}"
                       (click)="setCardLang(language.type)">
-                {{('COMMON.LANG.' + language?.type.toUpperCase()) | translate}}</button>
+                {{'COMMON.LANG.' + language?.type | uppercase | translate}}</button>
             </ng-container>
           </div>
           <!-- /languages menu -->

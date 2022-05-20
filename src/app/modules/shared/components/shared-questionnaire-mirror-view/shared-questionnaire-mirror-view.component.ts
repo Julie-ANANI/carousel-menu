@@ -11,15 +11,21 @@ export class SharedQuestionnaireMirrorViewComponent implements OnInit {
   @Input() showDropDown = true;
 
   @Input() set languageSelected(value: Language){
-    this._languageSelected = value;
+    if(value){
+      this._languageSelected = value;
+    }
   }
 
   @Input() set languagesExcludedInSelector(value: Array<Language>){
-    this._languagesExcludedInSelector = value;
+    if(value && value.length){
+      this._languagesExcludedInSelector = value;
+    }
   }
 
   @Input() set languagesList(value: Array<Language>){
-    this._languagesList = value;
+    if(value && value.length){
+      this._languagesList = value;
+    }
   }
 
   @Output() languageSelectedChange: EventEmitter<Language> = new EventEmitter<Language>();
@@ -44,7 +50,7 @@ export class SharedQuestionnaireMirrorViewComponent implements OnInit {
   }
 
   hiddenLanguageItem(lang: Language){
-    return !this._languagesExcludedInSelector.find(language => language.type === lang.type);
+    return !!this._languagesExcludedInSelector.find(language => language.type === lang.type);
   }
 
   get languagesExcludedInSelector(): Array<Language> {

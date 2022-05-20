@@ -233,189 +233,37 @@
 
             <!-- question content -->
             <div class="d-flex">
-              <div
-                *ngFor="let lang of questionnaireLangs; let i = index;"
-                [ngClass]="{'has-border': questionnaireLangs.length > 1 && i > 0,
-                'has-more-content': questionnaireLangs.length > 1}"
-                class="question-content">
+              <!-- mirror: left side  -->
+              <div [ngClass]="{'questionnaire-column': rightMirrorLanguage}">
 
-                <!-- language -->
-                <div [ngClass]="questionnaireLangs.length === 1 ? 'text-center' : 'text-left'" class="m-bottom-20">
-                  <div class="label m-no lang-label relative">
-                    {{ 'COMMON.LANG.' + lang | uppercase | translate }}
+                <app-shared-questionnaire-mirror-view
+                  [showDropDown]="true"
+                  [(languageSelected)]="leftMirrorLanguage"
+                  [languagesList]="questionnaireLangs"
+                  [languagesExcludedInSelector]="[rightMirrorLanguage, leftMirrorLanguage]">
+                  <div class="question-content">
+                    <ng-container *ngTemplateOutlet="questionTml; context: {$implicit: leftMirrorLanguage?.type}"></ng-container>
                   </div>
-                </div>
-                <!-- /language -->
-
-                <!-- objective -->
-                <div class="m-bottom-15">
-                  <label class="form-label">{{ lang === 'fr' ? 'Objectif' : 'Objective' }}</label>
-                  <ng-template #showObjective>
-                    <p class="text-sm">{{ questionEntry(lang).objective || 'NA' }}</p>
-                  </ng-template>
-                  <textarea
-                    #textAreaElement
-                    appTextareaAutoResize
-                    (change)="onChangeQuestionEntry(textAreaElement.value, lang, 'objective')"
-                    *ngIf="canAccess(['edit', 'objective']) && editMode; else showObjective"
-                    [ngModel]="questionEntry(lang).objective || 'NA'"
-                    [id]="'question-objective-'+lang"
-                    class="form-input"
-                    type="text">
-                  </textarea>
-                </div>
-                <!-- /objective -->
-
-                <!-- title -->
-                <div class="m-bottom-15">
-                  <label class="form-label">{{ lang === 'fr' ? 'Titre synthèse' : 'Synthesis title' }}</label>
-                  <ng-template #showTitle>
-                    <p class="text-sm">{{ questionEntry(lang).title || 'NA' }}</p>
-                  </ng-template>
-                  <textarea
-                    #textAreaElement
-                    appTextareaAutoResize
-                    (change)="onChangeQuestionEntry(textAreaElement.value, lang, 'title')"
-                    *ngIf="canAccess(['edit', 'title']) && editMode; else showTitle"
-                    [ngModel]="questionEntry(lang).title || 'NA'"
-                    [id]="'question-title-'+lang"
-                    class="form-input"
-                    type="text">
-                  </textarea>
-                </div>
-                <!-- /title -->
-
-                <!-- subtitle -->
-                <div class="m-bottom-15">
-                  <label class="form-label">{{ lang === 'fr' ? 'Sous-titre synthèse' : 'Synthesis subtitle' }}</label>
-                  <ng-template #showSubtitle>
-                    <p class="text-sm">{{ questionEntry(lang).subtitle || 'NA' }}</p>
-                  </ng-template>
-                  <textarea
-                    #textAreaElement
-                    appTextareaAutoResize
-                    (change)="onChangeQuestionEntry(textAreaElement.value, lang, 'subtitle')"
-                    *ngIf="canAccess(['edit', 'subtitle']) && editMode; else showSubtitle"
-                    [ngModel]="questionEntry(lang).subtitle || 'NA'"
-                    [id]="'question-subtitle-'+lang"
-                    class="form-input"
-                    type="text">
-                  </textarea>
-                </div>
-                <!-- /subtitle -->
-
-                <!-- label -->
-                <div class="m-bottom-15">
-                  <label class="form-label">Question</label>
-                  <ng-template #showLabel>
-                    <p class="text-sm">{{ questionEntry(lang).label || 'NA' }}</p>
-                  </ng-template>
-                  <textarea
-                    #textAreaElement
-                    appTextareaAutoResize
-                    (change)="onChangeQuestionEntry(textAreaElement.value, lang, 'label')"
-                    *ngIf="canAccess(['edit', 'label']) && editMode; else showLabel"
-                    [ngModel]="questionEntry(lang).label || 'NA'"
-                    [id]="'question-label-'+lang"
-                    class="form-input"
-                    type="text">
-                  </textarea>
-                </div>
-                <!-- /label -->
-
-                <!-- instruction -->
-                <div class="m-bottom-15">
-                  <label class="form-label">{{ lang === 'fr' ? 'Consigne' : 'Instruction' }}</label>
-                  <ng-template #showInstruction>
-                    <p class="text-sm">{{ questionEntry(lang).instruction || 'NA' }}</p>
-                  </ng-template>
-                  <textarea
-                    #textAreaElement
-                    (change)="onChangeQuestionEntry(textAreaElement.value, lang, 'instruction')"
-                    *ngIf="canAccess(['edit', 'instruction']) && editMode; else showInstruction"
-                    [id]="'question-instruction-'+lang"
-                    [ngModel]="questionEntry(lang).instruction || 'NA'"
-                    [ngStyle]="{'minHeight': textAreaElement.scrollHeight + 'px'}"
-                    class="form-input"
-                    type="text">
-                  </textarea>
-                </div>
-                <!-- /instruction -->
-
-                <!-- question types -->
-                <ng-container *ngIf="question.controlType === 'radio' || question.controlType === 'checkbox'
-                || question.controlType === 'stars' || question.controlType === 'ranking' || question.controlType === 'likert-scale'">
-
-                  <!-- options -->
-                  <div [ngClass]="{'has-single-option': questionnaireLangs.length === 1}" class="options-wrapper">
-                    <div
-                      *ngFor="let option of question.options; let optionIndex = index;"
-                      [ngClass]="{'is-editable': canAccess(['edit', 'options']),
-                      'is-editable-small': question.controlType === 'likert-scale'}"
-                      class="card">
-
-                      <ng-template #showOptionLabel>{{ optionEntry(option, lang).label || 'NA' }}</ng-template>
-
-                      <!-- move option -->
-                      <div
-                        *ngIf="question.controlType !== 'likert-scale' && (editMode || canAccess(['edit', 'options', 'order']))"
-                        class="flex-centered m-top-10 m-bottom-10">
-                        <div
-                          [ngClass]="{'is-horizontal': questionnaireLangs.length === 1}"
-                          data-tooltip="Move"
-                          class="move-arrows m-no-right tooltip is-bottom">
-                          <i
-                            (click)="moveQuestionOption($event, optionIndex, -1)"
-                            [ngClass]="{'disabled': optionIndex == 0, 'icon-arrow-up': questionnaireLangs.length > 1,
-                            'icon-arrow-left': questionnaireLangs.length === 1}"
-                            class="icon">
-                          </i>
-                          <i
-                            (click)="moveQuestionOption($event, optionIndex, 1)"
-                            [ngClass]="{'disabled': (optionIndex + 1) == question.options.length,
-                            'icon-arrow-down': questionnaireLangs.length > 1, 'icon-arrow-right' :
-                            questionnaireLangs.length === 1}"
-                            class="icon">
-                          </i>
-                        </div>
-                      </div>
-                      <!-- /move option -->
-
-                      <!-- input -->
-                      <textarea
-                        #textAreaElement
-                        (change)="onChangeQuestionOptionEntry(textAreaElement.value, lang, optionIndex)"
-                        *ngIf="question.controlType !== 'likert-scale' && (!editMode || canAccess(['edit', 'options', 'label'])); else showOptionLabel"
-                        [ngModel]="optionEntry(option, lang).label || 'NA'"
-                        [id]="'option-label-'+lang"
-                        [ngStyle]="{'minHeight': textAreaElement.scrollHeight + 'px'}"
-                        class="form-input"
-                        type="text">
-                      </textarea>
-                      <!-- /input -->
-
-                      <!-- delete icon -->
-                      <div *ngIf="question.controlType !== 'likert-scale'" class="text-center m-top-10">
-                        <div
-                          (click)="deleteOption($event, optionIndex)"
-                          *ngIf="canAccess(['edit', 'options', 'delete']) && editMode"
-                          [id]="'adminEditQuestion-btn-delete-option-' + optionIndex"
-                          class="icon-container is-overlay">
-                          <span data-tooltip="Delete option" class="tooltip">
-                            <i class="icon icon-delete text-alert"></i>
-                          </span>
-                        </div>
-                      </div>
-                      <!-- /delete icon -->
-
-                    </div>
-                  </div>
-                  <!-- /options -->
-
-                </ng-container>
-                <!-- /question types -->
-
+                </app-shared-questionnaire-mirror-view>
               </div>
+              <!-- /mirror: left side  -->
+
+              <!-- mirror: right side  -->
+              <div *ngIf="rightMirrorLanguage"
+                   [ngClass]="{'questionnaire-column': rightMirrorLanguage}">
+                <div class="d-flex flex-d-column p-bottom-20">
+                  <app-shared-questionnaire-mirror-view
+                    [showDropDown]="true"
+                    [(languageSelected)]="rightMirrorLanguage"
+                    [languagesList]="questionnaireLangs"
+                    [languagesExcludedInSelector]="[rightMirrorLanguage, leftMirrorLanguage]">
+                    <div class="question-content has-border">
+                      <ng-container *ngTemplateOutlet="questionTml; context:{$implicit: rightMirrorLanguage?.type}"></ng-container>
+                    </div>
+                  </app-shared-questionnaire-mirror-view>
+                </div>
+              </div>
+              <!-- mirror: right side  -->
             </div>
             <!-- /question content -->
 
@@ -448,6 +296,186 @@
       </div>
     </ng-template>
     <!-- /no fetching error -->
+
+    <ng-template #questionTml let-context>
+      <ng-container *ngIf="context">
+        <!-- language -->
+        <div class="m-bottom-20 text-left">
+          <div class="label m-no lang-label relative">
+            {{ 'COMMON.LANG.' + context | uppercase | translate }}
+          </div>
+        </div>
+        <!-- /language -->
+
+        <!-- objective -->
+        <div class="m-bottom-15">
+          <label class="form-label">{{ context === 'fr' ? 'Objectif' : 'Objective' }}</label>
+          <ng-template #showObjective>
+            <p class="text-sm">{{ questionEntry(context).objective || 'NA' }}</p>
+          </ng-template>
+          <textarea
+            #textAreaElement
+            appTextareaAutoResize
+            (change)="onChangeQuestionEntry(textAreaElement.value, context, 'objective')"
+            *ngIf="canAccess(['edit', 'objective']) && editMode; else showObjective"
+            [ngModel]="questionEntry(context).objective || 'NA'"
+            [id]="'question-objective-'+context"
+            class="form-input"
+            type="text">
+          </textarea>
+        </div>
+        <!-- /objective -->
+
+        <!-- title -->
+        <div class="m-bottom-15">
+          <label class="form-label">{{ context === 'fr' ? 'Titre synthèse' : 'Synthesis title' }}</label>
+          <ng-template #showTitle>
+            <p class="text-sm">{{ questionEntry(context).title || 'NA' }}</p>
+          </ng-template>
+          <textarea
+            #textAreaElement
+            appTextareaAutoResize
+            (change)="onChangeQuestionEntry(textAreaElement.value, context, 'title')"
+            *ngIf="canAccess(['edit', 'title']) && editMode; else showTitle"
+            [ngModel]="questionEntry(context).title || 'NA'"
+            [id]="'question-title-'+context "
+            class="form-input"
+            type="text">
+                        </textarea>
+        </div>
+        <!-- /title -->
+
+        <!-- subtitle -->
+        <div class="m-bottom-15">
+          <label class="form-label">{{ context === 'fr' ? 'Sous-titre synthèse' : 'Synthesis subtitle' }}</label>
+          <ng-template #showSubtitle>
+            <p class="text-sm">{{ questionEntry(context).subtitle || 'NA' }}</p>
+          </ng-template>
+          <textarea
+            #textAreaElement
+            appTextareaAutoResize
+            (change)="onChangeQuestionEntry(textAreaElement.value, context, 'subtitle')"
+            *ngIf="canAccess(['edit', 'subtitle']) && editMode; else showSubtitle"
+            [ngModel]="questionEntry(context).subtitle || 'NA'"
+            [id]="'question-subtitle-'+context"
+            class="form-input"
+            type="text">
+                        </textarea>
+        </div>
+        <!-- /subtitle -->
+
+        <!-- label -->
+        <div class="m-bottom-15">
+          <label class="form-label">Question</label>
+          <ng-template #showLabel>
+            <p class="text-sm">{{ questionEntry(context).label || 'NA' }}</p>
+          </ng-template>
+          <textarea
+            #textAreaElement
+            appTextareaAutoResize
+            (change)="onChangeQuestionEntry(textAreaElement.value, context, 'label')"
+            *ngIf="canAccess(['edit', 'label']) && editMode; else showLabel"
+            [ngModel]="questionEntry(context).label || 'NA'"
+            [id]="'question-label-'+context"
+            class="form-input"
+            type="text">
+                  </textarea>
+        </div>
+        <!-- /label -->
+
+        <!-- instruction -->
+        <div class="m-bottom-15">
+          <label class="form-label">{{ context === 'fr' ? 'Consigne' : 'Instruction' }}</label>
+          <ng-template #showInstruction>
+            <p class="text-sm">{{ questionEntry(context).instruction || 'NA' }}</p>
+          </ng-template>
+          <textarea
+            #textAreaElement
+            (change)="onChangeQuestionEntry(textAreaElement.value, context, 'instruction')"
+            *ngIf="canAccess(['edit', 'instruction']) && editMode; else showInstruction"
+            [id]="'question-instruction-'+context"
+            [ngModel]="questionEntry(context).instruction || 'NA'"
+            [ngStyle]="{'minHeight': textAreaElement.scrollHeight + 'px'}"
+            class="form-input"
+            type="text">
+                  </textarea>
+        </div>
+        <!-- /instruction -->
+
+        <!-- question types -->
+        <ng-container *ngIf="question.controlType === 'radio' || question.controlType === 'checkbox'
+                || question.controlType === 'stars' || question.controlType === 'ranking' || question.controlType === 'likert-scale'">
+
+          <!-- options -->
+          <div [ngClass]="{'has-single-option': questionnaireLangs.length === 1}" class="options-wrapper">
+            <div
+              *ngFor="let option of question.options; let optionIndex = index;"
+              [ngClass]="{'is-editable': canAccess(['edit', 'options']),
+                      'is-editable-small': question.controlType === 'likert-scale'}"
+              class="card">
+
+              <ng-template #showOptionLabel>{{ optionEntry(option, context).label || 'NA' }}</ng-template>
+
+              <!-- move option -->
+              <div
+                *ngIf="question.controlType !== 'likert-scale' && (editMode || canAccess(['edit', 'options', 'order']))"
+                class="flex-centered m-top-10 m-bottom-10">
+                <div
+                  [ngClass]="{'is-horizontal': questionnaireLangs.length === 1}"
+                  data-tooltip="Move"
+                  class="move-arrows m-no-right tooltip is-bottom">
+                  <i
+                    (click)="moveQuestionOption($event, optionIndex, -1)"
+                    [ngClass]="{'disabled': optionIndex == 0, 'icon-arrow-up': questionnaireLangs.length > 1,
+                            'icon-arrow-left': questionnaireLangs.length === 1}"
+                    class="icon">
+                  </i>
+                  <i
+                    (click)="moveQuestionOption($event, optionIndex, 1)"
+                    [ngClass]="{'disabled': (optionIndex + 1) == question.options.length,
+                            'icon-arrow-down': questionnaireLangs.length > 1, 'icon-arrow-right' :
+                            questionnaireLangs.length === 1}"
+                    class="icon">
+                  </i>
+                </div>
+              </div>
+              <!-- /move option -->
+
+              <!-- input -->
+              <textarea
+                #textAreaElement
+                (change)="onChangeQuestionOptionEntry(textAreaElement.value, context, optionIndex)"
+                *ngIf="question.controlType !== 'likert-scale' && (!editMode || canAccess(['edit', 'options', 'label'])); else showOptionLabel"
+                [ngModel]="optionEntry(option, context).label || 'NA'"
+                [id]="'option-label-'+context"
+                [ngStyle]="{'minHeight': textAreaElement.scrollHeight + 'px'}"
+                class="form-input"
+                type="text">
+                      </textarea>
+              <!-- /input -->
+
+              <!-- delete icon -->
+              <div *ngIf="question.controlType !== 'likert-scale'" class="text-center m-top-10">
+                <div
+                  (click)="deleteOption($event, optionIndex)"
+                  *ngIf="canAccess(['edit', 'options', 'delete']) && editMode"
+                  [id]="'adminEditQuestion-btn-delete-option-' + optionIndex"
+                  class="icon-container is-overlay">
+                          <span data-tooltip="Delete option" class="tooltip">
+                            <i class="icon icon-delete text-alert"></i>
+                          </span>
+                </div>
+              </div>
+              <!-- /delete icon -->
+
+            </div>
+          </div>
+          <!-- /options -->
+
+        </ng-container>
+        <!-- /question types -->
+      </ng-container>
+    </ng-template>
 
   </div>
 </div>
