@@ -143,7 +143,7 @@ export class MenuKebabComponent implements OnInit {
         console.log('old init prev :' + this._initIndex)
         //this._initIndex = (this._quatity + (this.sources.length - this._quatity))
         this._quatity = this._initIndex;
-        init = this._initQuantity + 1
+        init = this._initQuantity
         this._initIndex = init;
         console.log('new init prev :' + this._initIndex)
         this._displayedItems = this._sources.slice(this._initIndex, this._quatity);
@@ -151,10 +151,10 @@ export class MenuKebabComponent implements OnInit {
 
       }else {
         console.log('old qauntity prev : ' + this._quatity);
-        this._quatity = (this._quatity - this._initIndex)
+        this._quatity = ((this._quatity + 1 ) - (this._initIndex + 1))
         console.log('new qauntity prev : ' + this._quatity);
         console.log('old init prev :' + this._initIndex)
-        this._initIndex = (this._initIndex - this._initQuantity) ;
+        this._initIndex = (this._initIndex - (this._initQuantity)) ;
         console.log('new init prev :' + this._initIndex)
         this._displayedItems = this._sources.slice(this._initIndex, this._quatity);
         return this.displayedItems;
