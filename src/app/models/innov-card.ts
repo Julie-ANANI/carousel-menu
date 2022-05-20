@@ -38,9 +38,7 @@ export class InnovCard extends Model {
   readonly updated?: Date;
   readonly innovation_reference?: string;
   readonly lang: string;
-  shotSent?: boolean;
-  status?: string;
-  hidden?: boolean;
+
   quizGenerated: boolean;
 
   title?: string;
@@ -55,6 +53,11 @@ export class InnovCard extends Model {
    * but only one for rest type.
    */
   sections?: Array<InnovCardSection>;
+
+  /**
+   * Languages related fields
+   */
+  shotSent?: boolean;
   hidden: boolean;
   status: 'WAITING' | 'EDITING'| 'DONE';
 }
