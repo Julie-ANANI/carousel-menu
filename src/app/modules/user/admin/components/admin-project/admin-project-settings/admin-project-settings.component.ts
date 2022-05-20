@@ -156,10 +156,6 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
     batch: false
   };
 
-  //private _projectLanguage = ['english', 'français', 'español'];
-
-  private _selectedLanguages = ['español', 'dutch'];//  = []
-
   private _canBeEdited = false;
 
   private _canBeDeleted = false;
@@ -485,24 +481,6 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
     this._showModalRemoveLang = false;
   }
 
-  public onConfirmDeleteLang(event: Event) {
-    event.preventDefault();
-    if (!this._isSaving) {
-      this._isSaving = true;
-    }
-    this._innovationService.removeLanguage(this.innovation._id, this._selectedLanguages).pipe(first()).subscribe(() => {
-      this.closeModal(event);
-      this._translateNotificationsService.success('Project Status Success...', 'The project status has been updated to Done.');
-      this._isSaving = false;
-    }, (err: HttpErrorResponse) => {
-      this._isSaving = false;
-      this._translateNotificationsService.error('Project Status Error...', ErrorFrontService.getErrorKey(err.error));
-      console.error(err);
-    });
-    this.closeModal(event);
-    this._translateNotificationsService.success('Project Status Success...', 'The project status has been updated to Done.');
-  }
-
   private _emitUpdatedInnovation() {
     this._innovationFrontService.setInnovation(this._innovation);
   }
@@ -654,7 +632,7 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
       if(lang.length < 2) {
         this.setAction(lang);
       } else {
-        this._canBeDeleted = false; //true;
+        this._canBeDeleted = true;
         if(lang.every(la => la.hidden === false)){ // no lang hidden
           if(lang.every(la => la.status === "WAITING")){
             this._canBeValidated = true;
@@ -672,32 +650,35 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
         }
       }
     }
+    if(this._projectLanguages.every((card)=> card.selected === true)){
+      this._canBeDeleted = false;
+    }
   }
 
   public setAction(lang: any[]){
     if(lang.length){
       switch (lang[0].status) {
         case "WAITING":
-          this._canBeDeleted = false; //true;
+          this._canBeDeleted = true;
           this._canBeValidated = true;
           this._canBeEdited = true;
           break;
         case "EDITING":
-          this._canBeDeleted = false; //true;
+          this._canBeDeleted = true;
           if(lang[0].hidden === true){
             this._canBeValidated = true;
-            this._canBeDeleted = false; //true;
+            this._canBeDeleted = true;
           }
           break;
         case "DONE":
-          this._canBeDeleted = false; //true;
+          this._canBeDeleted = true;
           this._canBeEdited = true;
           this._canBeValidated = false;
           if(lang[0].hidden){
             this._canBeEdited = false;
           }
           if(lang[0].shotSent){
-            this._canBeDeleted = false; //false;
+            this._canBeDeleted = false;
           }
           break;
       }
@@ -710,6 +691,11 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
 
   public removeLang(event: Event){
     event.preventDefault();
+    if (!this._isSaving) {
+      this._isSaving = true;
+    }
+    this._innovationFrontService.setInnovation(this._innovation);
+    event.preventDefault();
     let lang = this._projectLanguages.filter((card)=> card.selected === true);
     this._projectLanguages = this._projectLanguages.filter((card)=> card.selected === false);
     lang.forEach((l)=> {
@@ -718,14 +704,17 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
         .pipe(first())
         .subscribe(
           (result) => {
+            this._isSaving = false;
             this._translateNotificationsService.success('Success', result.message);
           },
           (err: HttpErrorResponse) => {
+            this._isSaving = false;
             this._translateNotificationsService.error('Project Updating Error...', ErrorFrontService.getErrorKey(err.error));
             console.error(err);
           }
         );
     });
+    this.closeModal(event);
   }
 
   public reEditLang(event: Event){
@@ -962,14 +951,6 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
 
   public selectOwner(value: UserSuggestion) {
     this._newOwner = value;
-  }
-
-  get selectedLanguages(): any[] {
-    return this._selectedLanguages;
-  }
-
-  get isLangSelected(): boolean{
-    return this._selectedLanguages.length>0;
   }
 
 

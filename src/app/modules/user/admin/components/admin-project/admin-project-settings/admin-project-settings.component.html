@@ -53,16 +53,6 @@
 
         <!-- left content -->
         <div class="content-wrapper">
-          <!-- remove language -->
-          <a
-            (click)="onRemoveLanguages($event)"
-            *ngIf="true"
-            class="text-primary"
-            id="btn-remove-language">
-            <i class="fas fa-trash icon-left"></i>
-            Remove
-          </a>
-          <!-- /remove language -->
 
           <h6 class="text-meta">Setup</h6>
 
@@ -257,10 +247,11 @@
                                 <i class="form-icon"></i>
                               </label>
                             </th>
+                            <!-- /remove language -->
                             <th style="width: 250px !important;" class="flex-around w-full text-sm text-capitalize text-primary">
                               <div *ngIf="canBeValidated()" (click)="validateLang($event)"><i class="fa fa-check"></i> {{" Validate "}} </div>
                               <div *ngIf="canBeEdited()" (click)="reEditLang($event)"><i class="fa fa-pen"></i> {{" Reedit "}} </div>
-                              <div *ngIf="canBeDeleted()" (click)="removeLang($event)"><i class="fa fa-trash"></i> {{" Remove "}} </div>
+                              <div *ngIf="canBeDeleted()" (click)="onRemoveLanguages($event)"><i class="fa fa-trash"></i> {{" Remove "}} </div>
                             </th>
                           </tr>
                           </thead>
@@ -839,7 +830,7 @@
 </ng-container>
 <!-- /modal -->
 
-<ng-container *ngIf="showModalRemoveLang && isLangSelected">
+<ng-container *ngIf="showModalRemoveLang">
   <div class="modal active" >
     <div class="modal-overlay"></div>
     <div class="modal-container">
@@ -882,7 +873,7 @@
         Cancel
       </button>
       <button
-        (click)="onConfirmDeleteLang($event)"
+        (click)="removeLang($event)"
         [disabled]="!isSaving && !isValid"
         class="button "
         id="btn-modal-confirm-project-done"
