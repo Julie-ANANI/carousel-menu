@@ -28,7 +28,7 @@
   <p class="text-center text-sm">Bold columns are mandatory, other columns are optional. The order of the columns does
     not matter</p>
   <p class="text-center text-sm">&#42;Can be a country name in French, Italian, English, Spanish or German.</p>
-  <p class="text-center text-sm">&#42;&#42;You must choose among following: Arabic, Spanish, Portuguese, Dutch, Danish, German, Norwegian, Chinese, Italian, Korean, Modern Greek, Swedish, Finnish,Japanese, Polish, Russian, Ukrainian, Turkish (not case sensitive).</p>
+  <p class="text-center text-sm">&#42;&#42;You must choose among following: Arabic, Chinese, Danish, Dutch, English, Finnish, French, German, Italian, Japanese, Korean, Modern Greek, Norwegian, Polish, Portuguese, Russian, Spanish, Swedish, Turkish, Ukrainian. (not case sensitive).</p>
 
   <!-- import errors -->
   <ng-container *ngIf="importingErrors && importingErrors.length === 1">
@@ -38,7 +38,7 @@
 
 </div>
 <!-- errors modal -->
-<umius-modal [(showModal)]="errorsModal" [title]="'Import errors'" (close)="onImportFinished()">
+  <umius-modal [(showModal)]="errorsModal" [title]="'Import errors'" (close)="onImportFinished()">
   <section *ngIf="importingErrors && slicedErrors" class="modal-body max-height-365">
     <ng-container *ngIf="importingErrors.length">
       <div class="flex-d-column d-flex errors-box">

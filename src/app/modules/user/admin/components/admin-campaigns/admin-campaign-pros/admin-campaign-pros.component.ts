@@ -13,7 +13,7 @@ import { ErrorFrontService } from '../../../../../../services/error/error-front.
 import { StatsInterface } from '../../../../../../models/stats';
 import { CampaignFrontService } from '../../../../../../services/campaign/campaign-front.service';
 import { Bytes2Human } from '../../../../../../utils/bytes2human';
-import {CampaignService} from "../../../../../../services/campaign/campaign.service";
+import {CampaignService} from '../../../../../../services/campaign/campaign.service';
 import {UmiusConfigInterface, UmiusConfigService, UmiusSidebarInterface} from '@umius/umi-common-component';
 
 export interface SelectedProfessional extends Professional {
@@ -87,7 +87,10 @@ export class AdminCampaignProsComponent implements OnInit {
     'pros',
   ];
 
+  private _csvImportErrorArray: Array<any>;
   private _csvImportError = '';
+
+  private _slicedErrors: Array<any> = [];
 
   private _prosStatsConfig: Array<StatsInterface> = [];
 
@@ -118,11 +121,11 @@ export class AdminCampaignProsComponent implements OnInit {
 
   loadStats() {
     this._campaignService.getProsStats(this._campaign._id).subscribe((result) => {
-      this._campaign.stats = result
+      this._campaign.stats = result;
       this._prosStatsConfig = this.setProsStatsConfig(result.pros ||{});
     }, (err: HttpErrorResponse) =>{
-      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error))
-    })
+      this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
+    });
   }
 
   private _initCampaign() {
@@ -211,7 +214,7 @@ export class AdminCampaignProsComponent implements OnInit {
   public onClickImportCsv(file: File) {
     if (!this._isImporting) {
       this._isImporting = true;
-      this._csvImportError = '';
+      this._csvImportErrorArray = null;
       // Verify the size here...
       if (file) {
         if (file.size <= SIZE_LIMIT) {
@@ -235,10 +238,12 @@ export class AdminCampaignProsComponent implements OnInit {
               (err: HttpErrorResponse) => {
                 this._translateNotificationsService.error(
                   'ERROR.ERROR',
-                  ErrorFrontService.getErrorKey(err.error)
-                );
-                this._isImporting = false;
+                  ErrorFrontService.getErrorKey(err.error));
                 this._csvImportError = err.error.message;
+                if (!!err.error.detailedMessage) {
+                  this._csvImportErrorArray = err.error.detailedMessage;
+                  this._slicedErrors = this._csvImportErrorArray.slice(0, 10);
+                }
               }
             );
         } else {
@@ -278,6 +283,10 @@ export class AdminCampaignProsComponent implements OnInit {
                 );
                 this._isImporting = false;
                 this._csvImportError = err.error.message;
+                if (!!err.error.detailedMessage) {
+                  this._csvImportErrorArray = err.error.detailedMessage;
+                  this._slicedErrors = this._csvImportErrorArray.slice(0, 10);
+                }
               }
             );
         } else {
@@ -316,6 +325,10 @@ export class AdminCampaignProsComponent implements OnInit {
             );
             this._isImporting = false;
             this._csvImportError = err.error.message;
+            if (!!err.error.detailedMessage) {
+              this._csvImportErrorArray = err.error.detailedMessage;
+              this._slicedErrors = this._csvImportErrorArray.slice(0, 10);
+            }
           }
         );
     }
@@ -562,6 +575,9 @@ export class AdminCampaignProsComponent implements OnInit {
     return this._csvImportError;
   }
 
+  get slicedErrors(): Array<any> {
+    return this._slicedErrors;
+  }
   get updatePreview(): any {
     return this._updatePreview;
   }

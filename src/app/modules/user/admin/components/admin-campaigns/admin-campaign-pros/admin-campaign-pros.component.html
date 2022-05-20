@@ -173,18 +173,38 @@
       </label>
 
       <p class="text-center text-sm m-top-10">The file must use these <b>exact names</b> for the columns:
-        <b>First Name UMI, Last Name UMI, Company UMI, Country UMI</b>
-        , Language, Email UMI, emailConfidence, Linkedin,
+        <b>First Name UMI, Last Name UMI, Company UMI, Country UMI&#42;, Language&#42;&#42;</b>, Email UMI, emailConfidence, Linkedin,
         Company Site, Job UMI</p>
 
       <p class="text-center text-sm">Bold columns are mandatory, other columns are optional. The order of the columns does
         not matter</p>
+      <p class="text-center text-sm">&#42;Can be a country name in French, Italian, English, Spanish or German.</p>
+      <p class="text-center text-sm">&#42;&#42;You must choose among following: Arabic, Chinese, Danish, Dutch, English, Finnish, French, German, Italian, Japanese, Korean, Modern Greek, Norwegian, Polish, Portuguese, Russian, Spanish, Swedish, Turkish, Ukrainian. (not case sensitive).</p>
+
     </div>
 
   </section>
 
   <footer class="modal-footer">
-    <div [hidden]="!csvImportError" class="text-center p-top-25 error-msg">Error: {{csvImportError}}</div>
+    <div [hidden]="!csvImportError">
+      <div class="w-full d-flex align-center m-top-20">
+        <span class="text-error text-15 text-bold">Import errors</span>
+      </div>
+      <ng-container *ngIf="slicedErrors.length;else string_error_message">
+        <div class="flex-d-column d-flex errors-box">
+          <span class="text-error text-sm"> {{ slicedErrors.length }} error(s) </span>
+          <ul>
+            <app-shared-csv-error *ngFor="let err of slicedErrors" [error]="err" [htmlTag]="'li'"></app-shared-csv-error>
+          </ul>
+        </div>
+      </ng-container>
+
+      <ng-template #string_error_message>
+        <div class="text-center p-top-25 error-msg">
+        Error: {{csvImportError}}
+        </div>
+      </ng-template>
+    </div>
 
     <div [hidden]="!!csvImportError">
       <button [disabled]="isImporting" class="button modal-cancel" type="button">Cancel</button>
