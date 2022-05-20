@@ -62,6 +62,7 @@ export class MenuKebabComponent implements OnInit {
   @Input() set config(value: any) {
     if (value) {
       this._quatity = value.quatity || 0;
+      this._initQuantity = value.initQuantity || 0;
       this._initIndex = value.initIndex || 0;
       this._sources = value.sources || [];
       this._identifier = value.identifier || '';
@@ -83,6 +84,7 @@ export class MenuKebabComponent implements OnInit {
   private _sources: Array<any> = [];
   private _displayedItems: Array<any> = [];
   private _itemSelected: string = '';
+  private _initQuantity: number;
   //private _currentItem: any;
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object) {}
@@ -110,7 +112,6 @@ export class MenuKebabComponent implements OnInit {
 
       //when max view value for btn next with max value && max init valu
       if(this.displayedItems.length > 0){
-        debugger;
         if(((maxValQuantityNext - this._quatity) < this._quatity)){
           //assign max value
           this._quatity = maxValQuantityNext;
@@ -132,17 +133,35 @@ export class MenuKebabComponent implements OnInit {
    }
 
   prev() {
-    let initIndexPrev = this._initIndex
 
-    if(this._displayedItems && this._displayedItems.length){
-      console.log('old qauntity prev : ' + this._quatity);
-      this._quatity = this._quatity - 7
-      console.log('new qauntity prev : ' + this._quatity);
-      console.log('old init prev :' + this._initIndex)
-      this._initIndex = initIndexPrev - 7;
-      console.log('new init prev :' + this._initIndex)
-      this._displayedItems = this._sources.slice(this._initIndex, this._quatity);
-      return initIndexPrev - 1 && this._displayedItems
+     let init = this._initIndex
+
+    if(this._displayedItems.length > 0){
+      debugger;
+      if(this._quatity === this.sources.length){
+        console.log('old qauntity prev 2 : ' + this._quatity);
+        console.log('old init prev :' + this._initIndex)
+        //this._initIndex = (this._quatity + (this.sources.length - this._quatity))
+        this._quatity = this._initIndex;
+        init = this._initQuantity + 1
+        this._initIndex = init;
+        console.log('new init prev :' + this._initIndex)
+        this._displayedItems = this._sources.slice(this._initIndex, this._quatity);
+        return this.displayedItems;
+
+      }else {
+        console.log('old qauntity prev : ' + this._quatity);
+        this._quatity = (this._quatity - this._initIndex)
+        console.log('new qauntity prev : ' + this._quatity);
+        console.log('old init prev :' + this._initIndex)
+        this._initIndex = (this._initIndex - this._initQuantity) ;
+        console.log('new init prev :' + this._initIndex)
+        this._displayedItems = this._sources.slice(this._initIndex, this._quatity);
+        return this.displayedItems;
+
+
+      }
+
     } else {
       return this.displayedItems;
     }

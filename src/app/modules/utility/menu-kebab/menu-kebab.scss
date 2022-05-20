@@ -33,7 +33,7 @@
   #btn-kebab, .btn__view {
     align-items: center;
     justify-content: center;
-    margin-top: -0.5em;
+    margin-top: -12px;
     width: 150px;
   }
 
@@ -55,6 +55,15 @@
 
   .view__less {
     margin-left: -55px;
+    margin-top: -6px;
+  }
+
+  .btn__next {
+    margin-top: -7px;
+  }
+
+  #btn__prev .btn__prev {
+    margin-top: -11px;
   }
 }
 
