@@ -40,59 +40,32 @@
 
     <!-- button menu-kebab -->
     <div id="btn-kebab"
-         class="align-center"
-         (click)="displaySuiteKebabItems = !displaySuiteKebabItems"
-         [ngSwitch]="displaySuiteKebabItems"
-         *ngIf="displayedItems.length > 4 && displaySuiteKebabItems">
-      <!--    true / false  -->
-      <ng-container *ngSwitchCase="!displaySuiteKebabItems"></ng-container>
-      <ng-container *ngSwitchCase="displaySuiteKebabItems"
-                    [ngStyle]="{'bottom': positionBtnKebabBottom,'right': positionBtnKebabRight}">
-        <div class="m-left-20 icon-container is-xl is-overlay">
-          <i class="icon icon-more-horiz is-lg"></i>
-        </div>
-        <!--  button view more -->
-        <span *ngIf="displaySuiteKebabItems"
-              class="text-xs text-bold btn__view">View more</span>
-        <!--  end button view more -->
-      </ng-container>
-    </div>
-
-    <div id="btn-kebab"
-         class="align-center"
-         (click)="displaySuiteKebabItems = !displaySuiteKebabItems"
-         [ngSwitch]="displaySuiteKebabItems"
-         *ngIf="displayedItems.length > 4 && displaySuiteKebabItems">
-      <!--    true / false  -->
-      <ng-container *ngSwitchCase="!displaySuiteKebabItems"></ng-container>
-      <ng-container *ngSwitchCase="displaySuiteKebabItems"
-                    [ngStyle]="{'bottom': positionBtnKebabBottom,'right': positionBtnKebabRight}">
-        <div class="m-left-20 icon-container is-xl is-overlay">
-          <i class="icon icon-more-horiz is-lg"></i>
-        </div>
-        <!--  button view more -->
-        <span *ngIf="displaySuiteKebabItems"
-              class="text-xs text-bold btn__view">View more</span>
-        <!--  end button view more -->
-      </ng-container>
+         *ngIf="displayedItems.length > 4 && displaySuiteKebabItems"
+         class="m-left-20 icon-container is-xl is-overlay align center"
+         (click)="displaySuiteKebabItems = !displaySuiteKebabItems">
+      <i class="icon icon-more-horiz is-lg"></i>
+      <!--  button view more -->
+      <span *ngIf="displaySuiteKebabItems"
+            class="text-xs text-bold btn__view">View more</span>
+      <!--  end button view more -->
     </div>
     <!--  end button menu-kebab -->
 
       <!--  button back  -->
       <div (click)="next()"
-           *ngIf="showControls && !displaySuiteKebabItems && quatity <= displayedItems.length"
+           *ngIf="showControls && !displaySuiteKebabItems && quatity <= 18"
            class="m-left-20 icon-container is-xl is-overlay"
            ><i class="icon icon-arrow-right is-lg"></i>
       </div>
       <!--  end button back -->
 
     <!--  button view less-->
-<!--    <span-->
-<!--      *ngIf="displayedItems.length > 4 && !displaySuiteKebabItems"-->
-<!--      (click)="displaySuiteKebabItems = !displaySuiteKebabItems"-->
-<!--      class="text-xs text-bold"-->
-<!--      [ngStyle]="{'color': btnViewColor}">View less-->
-<!--    </span>-->
+    <span
+      *ngIf="displayedItems.length > 4 && !displaySuiteKebabItems"
+      (click)="displaySuiteKebabItems = !displaySuiteKebabItems"
+      class="text-xs text-bold"
+      [ngStyle]="{'color': btnViewColor}">View less
+    </span>
     <!--  end button view less -->
   </div>
 

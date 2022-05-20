@@ -23,6 +23,8 @@ export class MenuKebabComponent implements OnInit {
     return this._initIndex;
   }
 
+  //moins input
+
   //config button controls
   @Input() showControls = true;
 
@@ -52,15 +54,6 @@ export class MenuKebabComponent implements OnInit {
   //@Output() menuItemClicked: any;
   @Output() menuItemClicked: EventEmitter<any> = new EventEmitter();
 
-  private _itemSelected: string = '';
-  //calculate width max
-        //display max item
-  // - item for button view more
-
-  // - affiche le max d'item possible dans le premier état (view more) ' +
-  // - le reste en surplus est affiché après le click view more
-
-
   /**
    * here, you get configuration for the menu
    * @param value
@@ -77,11 +70,6 @@ export class MenuKebabComponent implements OnInit {
     }
   }
 
-  //size
-  private _initItemSize = true;
-
-  //item
-  private _currentItem: any;
 
   private _initIndex: number = 0;
 
@@ -94,6 +82,8 @@ export class MenuKebabComponent implements OnInit {
   private _type: string = '';
   private _sources: Array<any> = [];
   private _displayedItems: Array<any> = [];
+  private _itemSelected: string = '';
+  private _currentItem: any;
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object) {}
 
@@ -107,17 +97,13 @@ export class MenuKebabComponent implements OnInit {
 
 
   next() {
-    //let maxValInitNext = this._quatity % this.displayedItems.length;
-    let maxValInitNext = this._initIndex - 1;
-    let maxValQuantityOnePart = (this.displayedItems.length % this._quatity);
-   // let quatityToquatity = this._quatity
-    let maxValQuantityNext = ((maxValQuantityOnePart + maxValInitNext) + 1);
+    let maxValInitNext = this.sources.length;
+    let viewToView = (this._quatity - 1);
+    let maxValQuantityNext = this.sources.length;
 
       //when max view value for btn next with max value && max init valu
       if(this.displayedItems.length > 0){
-
-        if(this.displayedItems.length > 0 && this._quatity === maxValQuantityNext && this._initIndex === maxValQuantityNext){
-          console.log('tu assign max value');
+        if(this._quatity === maxValQuantityNext && this._initIndex === maxValQuantityNext){
           //assign max value
           this._quatity = maxValQuantityNext;
           this._initIndex = maxValInitNext;
@@ -125,19 +111,11 @@ export class MenuKebabComponent implements OnInit {
           return this.displayedItems;
           //when we can increment initIndex && quantity
         } else {
-          console.log('TU INCREMENTE');
-          console.log('old quatity :' + this._quatity);
-          ///this._quatity = (this._quatity + this._quatity);
           this._quatity = (this._quatity + this._quatity)
-          console.log('new quatity :' + this._quatity);
-          console.log('old init :' + this._initIndex);
-         // this._initIndex = (this._initIndex + this._quatity);
-          this._initIndex = (this._initIndex + 7)
-          console.log('new init :' + this._initIndex);
+          this._initIndex = viewToView;
           this._displayedItems = this._sources.slice(this._initIndex, this._quatity);
           return this.displayedItems;
         }
-
       //If dont have length && [].length === 0
     } else {
       return this.displayedItems;
@@ -159,8 +137,6 @@ export class MenuKebabComponent implements OnInit {
 
   }
 
-
-  //old logic
   get displaySuiteKebabItems(): boolean {
     return this._displaySuiteKebabItems;
   }
@@ -175,14 +151,6 @@ export class MenuKebabComponent implements OnInit {
 
   set isDisplayItems(value: boolean) {
     this._isDisplayItems = value;
-  }
-
-  get initItemSize(): boolean {
-    return this._initItemSize;
-  }
-
-  get currentItem(): any {
-    return this._currentItem;
   }
 
   ngOnDestroy(): void {
