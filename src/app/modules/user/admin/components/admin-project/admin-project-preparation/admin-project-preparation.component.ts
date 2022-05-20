@@ -28,15 +28,7 @@ import { lang, Language} from "../../../../../../models/static-data/language";
 })
 
 export class AdminProjectPreparationComponent implements OnInit, AfterViewChecked, OnDestroy {
-
-  get typeLanguages(): Array<Language> {
-    return this._typeLanguages;
-  }
-
   private _languages: Array<Language> = lang;
-
-  private _typeLanguages: Array<Language> = lang['type'];
-
   private _languagesToAdd: Array<Language> = [];
 
   private _defaultTabs: Array<string> = ['description', 'questionnaire', 'targeting', 'campaigns', 'statistics'];
@@ -312,7 +304,6 @@ export class AdminProjectPreparationComponent implements OnInit, AfterViewChecke
   }
 
   public setCardLang(value: string) {
-    debugger;
     if (this.activeCard && !(this._cardToDelete._id)) {
       this._languageSelected = value;
       this._activeCardIndex = InnovationFrontService.currentLangInnovationCard(this._project, value, 'INDEX');

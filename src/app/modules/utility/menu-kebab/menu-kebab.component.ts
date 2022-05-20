@@ -137,7 +137,7 @@ export class MenuKebabComponent implements OnInit {
      let init = this._initIndex
 
     if(this._displayedItems.length > 0){
-      debugger;
+
       if(this._quatity === this.sources.length){
         console.log('old qauntity prev 2 : ' + this._quatity);
         console.log('old init prev :' + this._initIndex)
