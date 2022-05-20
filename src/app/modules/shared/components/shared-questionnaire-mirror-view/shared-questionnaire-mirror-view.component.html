@@ -69,9 +69,11 @@
 
   <!-- template to display lang status -->
   <ng-template #langStatus let-context>
-    <ng-container [ngSwitch]="context['status']">
-      <i class="fas fa-check-circle text-success" *ngSwitchCase="'DONE'"></i>
-      <i class="fas fa-circle text-error" *ngSwitchDefault></i>
+    <ng-container *ngIf="context?.status">
+      <ng-container [ngSwitch]="context['status']">
+        <i class="fas fa-check-circle text-success" *ngSwitchCase="'DONE'"></i>
+        <i class="fas fa-circle text-error" *ngSwitchDefault></i>
+      </ng-container>
     </ng-container>
   </ng-template>
   <!-- /template to display lang status -->

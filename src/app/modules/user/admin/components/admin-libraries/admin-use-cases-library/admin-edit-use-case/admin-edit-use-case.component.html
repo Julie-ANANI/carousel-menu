@@ -48,7 +48,7 @@
           <div [ngClass]="{'questionnaire-column': rightMirrorLanguage}">
 
             <app-shared-questionnaire-mirror-view
-              [showDropDown]="false"
+              [showDropDown]="true"
               [(languageSelected)]="leftMirrorLanguage"
               [languagesList]="questionnaireLanguages"
               [languagesExcludedInSelector]="[rightMirrorLanguage]">
@@ -76,7 +76,7 @@
                [ngClass]="{'questionnaire-column': rightMirrorLanguage}">
             <div class="d-flex flex-d-column p-bottom-20">
               <app-shared-questionnaire-mirror-view
-                [showDropDown]="false"
+                [showDropDown]="true"
                 [(languageSelected)]="rightMirrorLanguage"
                 [languagesList]="questionnaireLanguages"
                 [languagesExcludedInSelector]="[leftMirrorLanguage]">

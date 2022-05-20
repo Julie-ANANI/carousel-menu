@@ -12,7 +12,7 @@ import { MissionFrontService } from '../../../../../../../services/mission/missi
 import { TranslateService } from '@ngx-translate/core';
 import { TranslateTitleService } from '../../../../../../../services/title/title.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Language } from "../../../../../../../models/static-data/language";
+import { lang, Language } from "../../../../../../../models/static-data/language";
 
 interface ConfirmUpdate {
   tool: boolean;
@@ -37,16 +37,7 @@ export class AdminEditUseCaseComponent implements OnInit {
    * template languages
    * @private
    */
-  private _questionnaireLanguages: Array<Language> = [
-    {
-      type: 'en',
-      alias: 'English'
-    },
-    {
-      type: 'fr',
-      alias: 'French'
-    }
-  ];
+  private _questionnaireLanguages: Array<Language> = lang;
 
   private _accessPath: Array<string> = ['libraries', 'useCases'];
 
@@ -108,18 +99,8 @@ export class AdminEditUseCaseComponent implements OnInit {
   }
 
   setLanguages() {
-    this._questionnaireLanguages = [];
-    if(this._missionTemplate && this._missionTemplate.entry){
-      this._missionTemplate.entry.map(entry => {
-        this._questionnaireLanguages.push({type: entry.lang, status: 'DONE'});
-      })
-      if (this._questionnaireLanguages.length > 0) {
-        this._leftMirrorLanguage = this._questionnaireLanguages[0];
-      }
-      if (this._questionnaireLanguages.length > 1) {
-        this._rightMirrorLanguage = this._questionnaireLanguages[1];
-      }
-    }
+    this._leftMirrorLanguage = this._questionnaireLanguages[0];
+    this._rightMirrorLanguage = this._questionnaireLanguages[1];
   }
 
   getObjective(lang: string = 'en') {
