@@ -49,12 +49,12 @@
         (ngModelChange)="onUpdate($event)"
         [(ngModel)]="email.subject"
         [lang]="language"
-        class="form-input is-sm"
+        class="form-input"
         id="shared-mail-editor-subject"
         name="subject"
         placeholder="Enter the subject of the mail"
         type="text">
-      <p *ngIf="!isEditableMode && email && email.subject" class="text-sm">{{ email.subject }}</p>
+      <p [lang]="language" *ngIf="!isEditableMode && email && email.subject">{{ email.subject }}</p>
     </div>
     <!-- /subject -->
 
@@ -74,7 +74,7 @@
           </ng-container>
 
           <ng-container *ngIf="!isEditableMode && email && email.content">
-            <p [innerHTML]="email.content | cleanHtml" class="text-md"></p>
+            <p [lang]="language" [innerHTML]="email.content | cleanHtml" class="text-md"></p>
           </ng-container>
 
         </div>

@@ -90,60 +90,62 @@ export class AdminEditWorkflowComponent {
   }
 
   private _initTable() {
-    const steps: any = {
-      FIRST: {step: 'FIRST', num: '01 - '},
-      SECOND: {step: 'SECOND', num: '02 - '},
-      THIRD: {step: 'THIRD', num: '03 - '},
-      THANKS: {step: 'THANKS', num: '04 - '},
-    };
+    if(!!this._innovationCardLanguages.length) {
+      const steps: any = {
+        FIRST: {step: 'FIRST', num: '01 - '},
+        SECOND: {step: 'SECOND', num: '02 - '},
+        THIRD: {step: 'THIRD', num: '03 - '},
+        THANKS: {step: 'THANKS', num: '04 - '},
+      };
 
-    this._campaignScenario.emails.forEach((email: EmailTemplate) => {
-      steps[email.step][email.language] = email;
-      email.defaultSignatureName = email.signature
-        ? email.signature.name
-        : 'Karine Caulfield'; //TODO why a workflow wouldn't have a signature??
-      email.status = email.modified ? email.modified.toString() : 'false';
-    });
-
-    this._emails = [steps.FIRST, steps.SECOND, steps.THIRD, steps.THANKS];
-
-    this._total = this._campaignScenario.emails.length;
-
-    const columns: Array<Column> = [
-      {
-        _attrs: ['num', `${this._languageSelected.type}.subject`],
-        _name: 'Emails',
-        _type: 'TEXT',
-        _choices: null,
-      },
-      {
-        _attrs: [`${this._languageSelected.type}.defaultSignatureName`],
-        _name: 'Signatures',
-        _type: 'TEXT',
-        _choices: null,
-      },
-    ];
-
-    if (this._inCampaign) {
-      columns.push({
-        _attrs: [`${this._languageSelected.type}.status`],
-        _name: 'Status',
-        _type: 'MULTI-CHOICES',
-        _choices: [
-          {_name: 'false', _alias: 'To modify', _class: 'label is-draft'},
-          {_name: 'true', _alias: 'Modified', _class: 'label is-success'},
-        ],
+      this._campaignScenario.emails.forEach((email: EmailTemplate) => {
+        steps[email.step][email.language] = email;
+        email.defaultSignatureName = email.signature
+          ? email.signature.name
+          : 'Karine Caulfield'; //TODO why a workflow wouldn't have a signature??
+        email.status = email.modified ? email.modified.toString() : 'false';
       });
-    }
 
-    this._tableInfos = {
-      _selector: 'admin-scenario',
-      _content: this._emails,
-      _total: this._total,
-      _clickIndex: 1,
-      _isNoMinHeight: true,
-      _columns: columns,
-    };
+      this._emails = [steps.FIRST, steps.SECOND, steps.THIRD, steps.THANKS];
+
+      this._total = this._campaignScenario.emails.length;
+
+      const columns: Array<Column> = [
+        {
+          _attrs: ['num', `${this._languageSelected.type}.subject`],
+          _name: 'Emails',
+          _type: 'TEXT',
+          _choices: null,
+        },
+        {
+          _attrs: [`${this._languageSelected.type}.defaultSignatureName`],
+          _name: 'Signatures',
+          _type: 'TEXT',
+          _choices: null,
+        },
+      ];
+
+      if (this._inCampaign) {
+        columns.push({
+          _attrs: [`${this._languageSelected.type}.status`],
+          _name: 'Status',
+          _type: 'MULTI-CHOICES',
+          _choices: [
+            {_name: 'false', _alias: 'To modify', _class: 'label is-draft'},
+            {_name: 'true', _alias: 'Modified', _class: 'label is-success'},
+          ],
+        });
+      }
+
+      this._tableInfos = {
+        _selector: 'admin-scenario',
+        _content: this._emails,
+        _total: this._total,
+        _clickIndex: 1,
+        _isNoMinHeight: true,
+        _columns: columns,
+      };
+    }
   }
 
   public editEmail(email: any) {

@@ -148,6 +148,7 @@
 
           <label class="d-block flex-full">
             <textarea
+              dir="auto"
               (change)="emitChanges()"
               [(ngModel)]="fullAnswer.answers[question.identifier]"
               class="form-input is-shadowed"
@@ -436,6 +437,7 @@
 
       <label class="d-block flex-full">
         <textarea
+          dir="auto"
           (change)="emitChanges()"
           [(ngModel)]="fullAnswer.answers[question.identifier + 'Comment']"
           class="form-input is-shadowed"

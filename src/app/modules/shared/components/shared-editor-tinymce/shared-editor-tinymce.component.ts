@@ -238,6 +238,7 @@ export class SharedEditorTinymceComponent implements AfterViewInit, OnDestroy {
       fontsize_formats: "8pt 10pt 11pt 12pt 14pt 18pt 24pt 30pt 36pt 48pt 60pt 72pt 96pt",
       toolbar : !this.hideToolbar && 'undo redo | styleselect | fontsizeselect | bold italic underline forecolor casechange' +
         '| bullist numlist | link | code ',
+      content_style: 'body { font-size: 16px; }',
       setup: (editor: any) => {
         this._editor = editor;
         this._contentHash = SharedEditorTinymceComponent.hashString(this._text);

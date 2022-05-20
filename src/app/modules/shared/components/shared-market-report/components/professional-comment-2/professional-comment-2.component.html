@@ -60,9 +60,9 @@
   <ng-container *ngIf="!showTranslation">
     <p *ngIf="answer.answers[questionId]?.length > 0" class="text-15 m-no p-top-h" dir="auto">{{ answer.answers[questionId] }}</p>
     <span class="text-sm text-meta c-hand text-hover-underline" (click)="translate('en')"
-          *ngIf="answer.used_language.toLowerCase() === 'fr' ">{{ 'MARKET_REPORT.TRANSLATE_DEEPL_EN' | translateIn: reportingLang }}</span>
+          *ngIf="reportingLang === 'en' ">{{ 'MARKET_REPORT.TRANSLATE_DEEPL_EN' | translateIn: reportingLang }}</span>
     <span class="text-sm text-meta c-hand text-hover-underline" (click)="translate('fr')"
-          *ngIf="answer.used_language.toLowerCase() === 'en' ">{{ 'MARKET_REPORT.TRANSLATE_DEEPL_FR' | translateIn: reportingLang }}</span>
+          *ngIf="reportingLang=== 'fr' ">{{ 'MARKET_REPORT.TRANSLATE_DEEPL_FR' | translateIn: reportingLang }}</span>
   </ng-container>
 
   <ng-container *ngIf="showTranslation">
