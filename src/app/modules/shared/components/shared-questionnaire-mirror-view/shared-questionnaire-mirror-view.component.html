@@ -1,4 +1,4 @@
-<div id="shared-questionnaire-mirror-view">
+<div id="shared-questionnaire-mirror-view" *ngIf="languageSelected">
   <div class="d-flex flex-d-column p-bottom-20">
     <div class="dropdown">
       <!-- selected language  -->
@@ -6,12 +6,12 @@
 
         <!-- language status  -->
         <ng-container *ngTemplateOutlet="langStatus;
-                             context: {$implicit:{status: languageSelected['status']}}">
+                             context: {$implicit:{status: languageSelected?.status}}">
         </ng-container>
         <!-- language status  -->
 
         <!-- language name  -->
-        <span class="m-left-10">{{('COMMON.LANG.' + languageSelected.type.toUpperCase()) | translate}}</span>
+        <span class="m-left-10">{{('COMMON.LANG.' + languageSelected?.type.toUpperCase()) | translate}}</span>
         <!-- /language name  -->
 
         <!-- icon drop down  -->

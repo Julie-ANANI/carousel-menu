@@ -33,6 +33,10 @@ export class AdminEditUseCaseComponent implements OnInit {
 
   private _toBeSaved = false;
 
+  /**
+   * template languages
+   * @private
+   */
   private _questionnaireLanguages: Array<Language> = [
     {
       type: 'en',
@@ -82,9 +86,7 @@ export class AdminEditUseCaseComponent implements OnInit {
     this._templates = this._missionQuestionService.allTemplates;
     this._jsonParse();
     this._setTitle();
-    // TODO: to get real _questionnaireLanguages for library view
-    this._leftMirrorLanguage = this._questionnaireLanguages[0];
-    this._rightMirrorLanguage = this._questionnaireLanguages[1];
+    this.setLanguages();
 
     /**
      * if the user refresh the page in that case we do not have the value in the
@@ -105,8 +107,23 @@ export class AdminEditUseCaseComponent implements OnInit {
 
   }
 
+  setLanguages() {
+    this._questionnaireLanguages = [];
+    if(this._missionTemplate && this._missionTemplate.entry){
+      this._missionTemplate.entry.map(entry => {
+        this._questionnaireLanguages.push({type: entry.lang, status: 'DONE'});
+      })
+      if (this._questionnaireLanguages.length > 0) {
+        this._leftMirrorLanguage = this._questionnaireLanguages[0];
+      }
+      if (this._questionnaireLanguages.length > 1) {
+        this._rightMirrorLanguage = this._questionnaireLanguages[1];
+      }
+    }
+  }
+
   getObjective(lang: string = 'en') {
-    if(this._missionTemplate && this._missionTemplate.entry && this._missionTemplate.entry.length){
+    if (this._missionTemplate && this._missionTemplate.entry && this._missionTemplate.entry.length) {
       const entry = this._missionTemplate.entry.find(e => e.lang === lang);
       return entry && entry.objective || '';
     }
@@ -158,7 +175,7 @@ export class AdminEditUseCaseComponent implements OnInit {
   public onChangeObjective(event: string, lang: string) {
     if (this.canAccess(['edit', 'objective'])) {
       const entry = this._missionTemplate.entry.find(e => e.lang === lang);
-      if(entry){
+      if (entry) {
         entry.objective = event.trim();
         this._toBeSaved = true;
       }

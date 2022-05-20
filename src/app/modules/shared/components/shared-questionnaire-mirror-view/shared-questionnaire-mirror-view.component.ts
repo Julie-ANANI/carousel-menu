@@ -11,7 +11,9 @@ export class SharedQuestionnaireMirrorViewComponent implements OnInit {
   @Input() showDropDown = true;
 
   @Input() set languageSelected(value: Language){
-    this._languageSelected = value;
+    if(value){
+      this._languageSelected = value;
+    }
   }
 
   @Input() set languagesExcludedInSelector(value: Array<Language>){

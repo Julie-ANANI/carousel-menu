@@ -45,10 +45,10 @@
         <!-- template sections -->
         <div class="p-top-20 d-flex justify-around flex-wrap-wrap">
           <!-- mirror: left side  -->
-          <div [ngClass]="{'questionnaire-column': !!rightMirrorLanguage}">
+          <div [ngClass]="{'questionnaire-column': rightMirrorLanguage}">
 
             <app-shared-questionnaire-mirror-view
-              [showDropDown]="true"
+              [showDropDown]="false"
               [(languageSelected)]="leftMirrorLanguage"
               [languagesList]="questionnaireLanguages"
               [languagesExcludedInSelector]="[rightMirrorLanguage]">
@@ -64,7 +64,7 @@
                 (valueToSave)="changeStack($event)"
                 [accessPath]="accessPath"
                 [isLibraryView]="true"
-                [languageSelected]="leftMirrorLanguage.type"
+                [languageSelected]="leftMirrorLanguage?.type"
                 [template]="missionTemplate">
               </app-shared-questionnaire>
             </app-shared-questionnaire-mirror-view>
@@ -72,11 +72,11 @@
           <!-- /mirror: left side  -->
 
           <!-- mirror: right side  -->
-          <div *ngIf="!!rightMirrorLanguage"
-               [ngClass]="{'questionnaire-column': !!rightMirrorLanguage}">
+          <div *ngIf="rightMirrorLanguage"
+               [ngClass]="{'questionnaire-column': rightMirrorLanguage}">
             <div class="d-flex flex-d-column p-bottom-20">
               <app-shared-questionnaire-mirror-view
-                [showDropDown]="true"
+                [showDropDown]="false"
                 [(languageSelected)]="rightMirrorLanguage"
                 [languagesList]="questionnaireLanguages"
                 [languagesExcludedInSelector]="[leftMirrorLanguage]">
@@ -88,7 +88,7 @@
                 <!-- /objective -->
 
                 <app-shared-questionnaire
-                  [languageSelected]="rightMirrorLanguage.type"
+                  [languageSelected]="rightMirrorLanguage?.type"
                   (templateChange)="onChangeTemplate($event)"
                   (valueToSave)="changeStack($event)"
                   [accessPath]="accessPath"
@@ -113,16 +113,16 @@
   <div class="input-group">
     <div class="m-bottom-25 form-group m-no-left m-right-10">
       <label class="form-label" >
-        {{context['lang']['alias'] | titlecase}} Objective
+        {{('COMMON.LANG.' + context?.lang?.type.toUpperCase()) | translate | titlecase}} Objective
       </label>
       <input
-        (ngModelChange)="onChangeObjective($event, context['lang']['type'])"
+        (ngModelChange)="onChangeObjective($event, context?.lang?.type)"
         *ngIf="canAccess(['edit', 'objective'])"
-        [ngModel]="getObjective(context['lang']['type'])"
+        [ngModel]="getObjective(context?.lang?.type)"
         class="form-input is-sm"
         placeholder="Enter objective name*"
         type='text'>
-      <p *ngIf="!canAccess(['edit', 'objective'])" class="text-sm">{{ getObjective(context['lang']['type']) }}</p>
+      <p *ngIf="!canAccess(['edit', 'objective'])" class="text-sm">{{ getObjective(context?.lang?.type) }}</p>
     </div>
   </div>
 </ng-template>
