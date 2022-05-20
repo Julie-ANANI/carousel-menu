@@ -33,7 +33,7 @@ export class MenuKebabComponent implements OnInit {
   @Input() maxWidthItem = '6em'
 
   //color
-  @Input() backgroundColor = '0';
+  @Input() backgroundColor = '#e1e7ea';
   @Input() btnViewColor = '#4F5D6B';
   @Input() textColor = '#00B0FF';
 
@@ -43,6 +43,7 @@ export class MenuKebabComponent implements OnInit {
   @Input() positionBtnMore = '9px';
   @Input() positionBtnMoreBottom = '0.5em';
   @Input() positionBtnMoreLeft = '16em';
+  @Input() positionBtnMoreTop = '-1 em';
   @Input() positionBtnLess = '1em';
 
   @Input() positionBtnNextBottom = '16px';
@@ -71,7 +72,7 @@ export class MenuKebabComponent implements OnInit {
       this._initIndex = value.initIndex || 0;
       this._sources = value.sources || [];
       this._identifier = value.identifier || '';
-      this._type = value.type || '';
+     // this._type = value.type || '';
       this._displayedItems = this._sources.slice(this._initIndex, this._quatity);
     }
   }
@@ -109,6 +110,7 @@ export class MenuKebabComponent implements OnInit {
     //let maxValInitNext = this._quatity % this.displayedItems.length;
     let maxValInitNext = this._initIndex - 1;
     let maxValQuantityOnePart = (this.displayedItems.length % this._quatity);
+   // let quatityToquatity = this._quatity
     let maxValQuantityNext = ((maxValQuantityOnePart + maxValInitNext) + 1);
 
       //when max view value for btn next with max value && max init valu
@@ -124,8 +126,14 @@ export class MenuKebabComponent implements OnInit {
           //when we can increment initIndex && quantity
         } else {
           console.log('TU INCREMENTE');
-          this._quatity ++
-          this._initIndex ++
+          console.log('old quatity :' + this._quatity);
+          ///this._quatity = (this._quatity + this._quatity);
+          this._quatity = (this._quatity + this._quatity)
+          console.log('new quatity :' + this._quatity);
+          console.log('old init :' + this._initIndex);
+         // this._initIndex = (this._initIndex + this._quatity);
+          this._initIndex = (this._initIndex + 7)
+          console.log('new init :' + this._initIndex);
           this._displayedItems = this._sources.slice(this._initIndex, this._quatity);
           return this.displayedItems;
         }

@@ -1,6 +1,6 @@
 <!-- We create template for this utility-->
-<section class="bg-white sticky header-wrapper carousel-wrapper"
-         [ngStyle]="{'background': backgroundColor}">
+<section class="sticky header-wrapper carousel-wrapper p-20"
+         [ngStyle]="{'background-color': backgroundColor}">
 
   <div class="d-flex flex-wrap-nowrap relative"
        [ngStyle]="{'height': menuHeight}">
@@ -8,7 +8,7 @@
 
       <!-- button prev  -->
       <div (click)="prev()"
-           *ngIf="showControls && !displaySuiteKebabItems"
+           *ngIf="showControls && !displaySuiteKebabItems && initIndex !== 0"
            [ngStyle]="{'margin-bottom' : positionBtnNextBottom}"
            class="m-left-20 icon-container is-xl is-overlay"><i class="icon icon-arrow-left is-lg"></i>
       </div>
@@ -28,7 +28,7 @@
 
         <button class="button is-link m-left-10 text-normal"
                 (click)="clickOnMenu($event, item.type)"
-                *ngIf="i < minDelimitersOfItems"
+                *ngIf="i < 7"
                 [ngClass]="{'text-underline': item?.type === itemSelected}"
                 [ngStyle]="{'min-width': maxWidthItem, 'margin-right': '39px', 'color': textColor}">{{item[identifier]}}
         </button>
@@ -48,13 +48,30 @@
       <ng-container *ngSwitchCase="!displaySuiteKebabItems"></ng-container>
       <ng-container *ngSwitchCase="displaySuiteKebabItems"
                     [ngStyle]="{'bottom': positionBtnKebabBottom,'right': positionBtnKebabRight}">
-        <div class="m-left-20 icon-container is-xl is-overlay"
-             [ngStyle]="{'bottom': positionBtnKebabBottom,'right': positionBtnKebabRight}">
+        <div class="m-left-20 icon-container is-xl is-overlay">
           <i class="icon icon-more-horiz is-lg"></i>
         </div>
         <!--  button view more -->
         <span *ngIf="displaySuiteKebabItems"
-              [ngStyle]="{'bottom': positionBtnMoreBottom,'right': positionBtnMoreLeft}"
+              class="text-xs text-bold btn__view">View more</span>
+        <!--  end button view more -->
+      </ng-container>
+    </div>
+
+    <div id="btn-kebab"
+         class="align-center"
+         (click)="displaySuiteKebabItems = !displaySuiteKebabItems"
+         [ngSwitch]="displaySuiteKebabItems"
+         *ngIf="displayedItems.length > 4 && displaySuiteKebabItems">
+      <!--    true / false  -->
+      <ng-container *ngSwitchCase="!displaySuiteKebabItems"></ng-container>
+      <ng-container *ngSwitchCase="displaySuiteKebabItems"
+                    [ngStyle]="{'bottom': positionBtnKebabBottom,'right': positionBtnKebabRight}">
+        <div class="m-left-20 icon-container is-xl is-overlay">
+          <i class="icon icon-more-horiz is-lg"></i>
+        </div>
+        <!--  button view more -->
+        <span *ngIf="displaySuiteKebabItems"
               class="text-xs text-bold btn__view">View more</span>
         <!--  end button view more -->
       </ng-container>
@@ -63,19 +80,19 @@
 
       <!--  button back  -->
       <div (click)="next()"
-           *ngIf="showControls && !displaySuiteKebabItems"
+           *ngIf="showControls && !displaySuiteKebabItems && quatity <= displayedItems.length"
            class="m-left-20 icon-container is-xl is-overlay"
            ><i class="icon icon-arrow-right is-lg"></i>
       </div>
       <!--  end button back -->
 
     <!--  button view less-->
-    <span
-      *ngIf="displayedItems.length > 4 && !displaySuiteKebabItems"
-      (click)="displaySuiteKebabItems = !displaySuiteKebabItems"
-      class="text-xs text-bold"
-      [ngStyle]="{'color': btnViewColor}">View less
-    </span>
+<!--    <span-->
+<!--      *ngIf="displayedItems.length > 4 && !displaySuiteKebabItems"-->
+<!--      (click)="displaySuiteKebabItems = !displaySuiteKebabItems"-->
+<!--      class="text-xs text-bold"-->
+<!--      [ngStyle]="{'color': btnViewColor}">View less-->
+<!--    </span>-->
     <!--  end button view less -->
   </div>
 
