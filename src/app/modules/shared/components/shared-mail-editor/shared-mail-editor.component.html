@@ -48,6 +48,7 @@
         *ngIf="isEditableMode"
         (ngModelChange)="onUpdate($event)"
         [(ngModel)]="email.subject"
+        [lang]="language"
         class="form-input is-sm"
         id="shared-mail-editor-subject"
         name="subject"
@@ -66,6 +67,7 @@
             <div class="text-md">
               <app-shared-editor-tinymce
                 (onTextChange)="updateContent($event)"
+                [lang]="language"
                 [data]="email.content || ''">
               </app-shared-editor-tinymce>
             </div>

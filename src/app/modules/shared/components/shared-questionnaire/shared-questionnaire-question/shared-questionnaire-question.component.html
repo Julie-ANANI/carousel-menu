@@ -7,7 +7,7 @@
   'costumedBg': !isLibraryView && !isTaggedQuestion}" class="header-wrapper flex-between">
 
     <!-- move / select / type / label-->
-    <div class="d-flex align-center">
+    <div class="d-flex align-center w-full">
 
       <div *ngIf="isEditable || canAccess(['order'])" data-tooltip="Move" class="move-arrows tooltip">
         <i (click)="up($event)" class="icon icon-arrow-up"></i>
@@ -23,7 +23,7 @@
             <option>{{ 'PRESETS.QUESTION.TYPE.' + question.controlType | translate }}</option>
           </select>
         </label>
-        <span class="m-right-20">{{ questionEntry().label }}</span>
+        <span [lang]="languageSelected" class="m-right-40 w-full">{{ questionEntry().label }}</span>
         <!-- /label / type -->
 
         <!-- question type specific to template -->
@@ -301,6 +301,7 @@
           <textarea
             appTextareaAutoResize
             #textAreaElement
+
             (change)="onChangeQuestionEntry(textAreaElement.value, languageSelected, 'subtitle')"
             *ngIf="canAccess(['edit', 'subtitle']); else showSubtitle"
             [ngModel]="questionEntry().subtitle || 'NA'"
@@ -320,6 +321,7 @@
           <textarea
             #textAreaElement
             appTextareaAutoResize
+            [lang]="languageSelected"
             (change)="onChangeQuestionEntry(textAreaElement.value, languageSelected, 'label')"
             *ngIf="isEditable || canAccess(['edit', 'label']); else showLabel"
             [ngModel]="questionEntry().label || 'NA'"
@@ -338,6 +340,7 @@
           </ng-template>
           <textarea
             #textAreaElement
+            [lang]="languageSelected"
             (change)="onChangeQuestionEntry(textAreaElement.value, languageSelected, 'instruction')"
             *ngIf="isEditable || canAccess(['edit', 'instruction']); else showInstruction"
             [id]="'question-instruction-'+languageSelected"
@@ -364,8 +367,8 @@
               'is-editable-small': isEssential || isLibraryView && question.controlType === 'likert-scale'}"
               class="card card-medium">
 
-              <ng-template
-                #showOptionLabel>{{ optionEntry(option).label || 'NA' }}
+              <ng-template #showOptionLabel>
+                <div [lang]="languageSelected">{{ optionEntry(option).label || 'NA' }}</div>
               </ng-template>
 
               <!-- move option-->
@@ -397,6 +400,7 @@
               <textarea
                 #textAreaElement
                 appTextareaAutoResize
+                [lang]="languageSelected"
                 (change)="onChangeQuestionOptionEntry(textAreaElement.value, languageSelected, optionIndex)"
                 *ngIf="question.controlType !== 'likert-scale' &&
                        (isEditable || canAccess(['edit', 'options', 'label'])); else showOptionLabel"

@@ -144,7 +144,7 @@
         class="textarea-wrapper">
 
         <!-- edit mode -->
-        <form *ngIf="editMode" class="d-flex justify-center m-1">
+        <form *ngIf="editMode" class="d-flex justify-center m-1" dir="auto">
 
           <label class="d-block flex-full">
             <textarea
@@ -187,8 +187,8 @@
         <div *ngIf="!editMode && fullAnswer.answers[question.identifier]" class="label label-answer">
 
           <ng-container *ngIf="!showQuestionTranslation">
-            <div class="text-left" style="white-space: pre-line">
-              {{fullAnswer.answers[question.identifier]}}
+            <div class="text-justify" style="white-space: pre-line">
+              <p dir="auto">{{fullAnswer.answers[question.identifier]}}</p>
             </div>
             <button
               (click)="showQuestionTranslation = true"
@@ -379,7 +379,7 @@
     </div>
 
     <div *ngIf="!showCommentTranslation" class="p-top-10 text-dark">
-      {{ fullAnswer.answers[question.identifier + 'Comment'] }}
+      <p dir="auto"> {{ fullAnswer.answers[question.identifier + 'Comment'] }} </p>
       <button
         (click)="showCommentTranslation = true"
         *ngIf="adminMode && (fullAnswer.used_language.toLowerCase() !== platformLang)"

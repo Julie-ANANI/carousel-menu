@@ -1,10 +1,10 @@
 <div [id]="'section-' + sectionIndex" class="shared-questionnaire-section">
 
   <!-- header -->
-  <div class="header-wrapper flex-between">
+  <div class="header-wrapper flex-between w-full">
 
     <!-- move button / description -->
-    <div class="d-flex align-center m-bottom-10">
+    <div class="d-flex align-center m-bottom-10 w-full">
 
       <div
         *ngIf="isEditable || canAccess(['section', 'order'])"
@@ -27,7 +27,7 @@
           </select>
         </label>
 
-        <div class="d-flex flex-wrap-wrap">
+        <div class="d-flex flex-wrap-wrap w-full justify-end">
           <div
             *ngIf="languageSelected"
             class="m-right-20 d-flex align-center tooltip"
@@ -35,7 +35,7 @@
               <label class="form-label text-normal text-white m-right-2 m-no-bottom">
                 {{ 'COMMON.LANG.' + languageSelected.toUpperCase() | uppercase | translate }}:
               </label>
-            {{ sectionName(languageSelected) }}
+            <span [lang]="languageSelected" class="w-full"> {{ sectionName(languageSelected) }} </span>
           </div>
         </div>
 
@@ -84,13 +84,14 @@
             {{ 'COMMON.LANG.' + languageSelected.toUpperCase() | uppercase | translate }}:
           </label>
           <ng-container *ngIf="accessPath.length && !canAccess(['section', 'edit', 'name']); else defSEditName">
-            <p class="m-no-bottom">{{ sectionName(languageSelected) }}</p>
+            <p [lang]="languageSelected" class="m-no-bottom">{{ sectionName(languageSelected) }}</p>
           </ng-container>
           <ng-template #defSEditName>
             <input
               #name
               (change)="onChangeName(name.value, languageSelected)"
               [ngModel]="sectionName(languageSelected)"
+              [lang]="languageSelected"
               class="form-input is-sm"
               type="text">
           </ng-template>

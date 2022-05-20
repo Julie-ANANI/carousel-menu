@@ -26,7 +26,7 @@
 
   <!-- readonly -->
   <div *ngIf="readonly" class="content-wrapper">
-    <div [innerHTML]="text | cleanHtml"></div>
+    <div [innerHTML]="text | cleanHtml" [lang]="lang"></div>
   </div>
   <!-- /readonly -->
 

@@ -27,6 +27,8 @@ export class SharedEditorEtherpadComponent implements OnInit, OnDestroy {
     this._text = value || '';
   }
 
+  @Input() lang = 'en';
+
   @Input() set etherpad(value: Etherpad) {
     this._initEtherpad(value);
   }
@@ -82,7 +84,7 @@ export class SharedEditorEtherpadComponent implements OnInit, OnDestroy {
         type: value.type || 'orphan',
         elementId: value.elementId,
         showChat: value.showChat || false,
-        lang: value.lang,
+        lang: /* value.lang */ 'en', // Should always display pad text in english
         noColors: value.noColors || false,
         userName: value.userName || 'user',
         padID: value.padID || this._etherpadFrontService.buildPadID(value.type, value.elementId),

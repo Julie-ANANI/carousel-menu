@@ -58,7 +58,7 @@
   </div>
 
   <ng-container *ngIf="!showTranslation">
-    <p *ngIf="answer.answers[questionId]?.length > 0" class="text-15 m-no p-top-h">{{ answer.answers[questionId] }}</p>
+    <p *ngIf="answer.answers[questionId]?.length > 0" class="text-15 m-no p-top-h" dir="auto">{{ answer.answers[questionId] }}</p>
     <span class="text-sm text-meta c-hand text-hover-underline" (click)="translate('en')"
           *ngIf="answer.used_language.toLowerCase() === 'fr' ">{{ 'MARKET_REPORT.TRANSLATE_DEEPL_EN' | translateIn: reportingLang }}</span>
     <span class="text-sm text-meta c-hand text-hover-underline" (click)="translate('fr')"
