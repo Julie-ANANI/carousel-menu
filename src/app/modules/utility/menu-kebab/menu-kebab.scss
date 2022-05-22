@@ -1,6 +1,5 @@
 .carousel-wrapper {
   overflow: hidden;
-  border: 3px solid red;
 
   :is(#btn-kebab, .icon-more-horiz) ::before {
     color: #4F5D6B;
@@ -29,6 +28,18 @@
     font-size:12px;
     color: #4F5D6B;
     font-weight: bold;
+  }
+
+  .blue{
+    border: 3px solid blue;
+  }
+
+  .redy{
+    border: 3px solid red;
+  }
+
+ .height-test {
+    height: 200px;
   }
 
   .fa-plus-circle, {
