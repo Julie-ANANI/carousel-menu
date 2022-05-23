@@ -122,28 +122,28 @@
                *ngIf="activeTab === 'description'">
         <div class="d-flex align-center">
 
-          <!-- languages menu -->
-          <div class="d-flex flex-wrap-wrap text-medium">
-            <ng-container *ngFor="let language of innoCardLanguages; let i = index">
-              <button class="button is-link m-left-10"
-                      [ngClass]="{'text-underline': language?.type === languageSelected}"
-                      (click)="setCardLang($event, language.type)">
-                {{('COMMON.LANG.' + language?.type.toUpperCase()) | translate}}</button>
-              <div
-                class="kebab-menu"
-                *ngIf="activeTab === 'description' && i < 1">
-                <app-utility-carousel-menu
-                  (menuItemClicked)="setCardLang($event, language.type)"
-                  [config]="{
+          <div
+            class="kebab-menu">
+            <app-utility-carousel-menu
+              (menuItemClicked)="getMenuClicked($event)"
+              [config]="{
                    quatity: 8,
                    initQuantity: 8,
                    identifier: 'alias',
                    type : 'type',
-                   sources: languages}">
-                </app-utility-carousel-menu>
-              </div>
-            </ng-container>
+                   sources: innoCardLanguages}">
+            </app-utility-carousel-menu>
           </div>
+
+          <!-- languages menu -->
+<!--          <div class="d-flex flex-wrap-wrap text-medium">-->
+<!--            <ng-container *ngFor="let language of innoCardLanguages; let i = index">-->
+<!--              <button class="button is-link m-left-10"-->
+<!--                      [ngClass]="{'text-underline': language?.type === languageSelected}"-->
+<!--                      (click)="setCardLang($event, language.type)">-->
+<!--                {{('COMMON.LANG.' + language?.type.toUpperCase()) | translate}}</button>-->
+<!--            </ng-container>-->
+<!--          </div>-->
           <!-- /languages menu -->
 
           <!-- add languages button -->

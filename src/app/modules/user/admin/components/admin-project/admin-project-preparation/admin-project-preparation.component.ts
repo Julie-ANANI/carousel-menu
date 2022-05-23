@@ -20,7 +20,7 @@ import { environment } from '../../../../../../../environments/environment';
 import { ErrorFrontService } from '../../../../../../services/error/error-front.service';
 import { NotificationService } from '../../../../../../services/notification/notification.service';
 import { NotificationTrigger } from '../../../../../../models/notification';
-import { lang, Language} from "../../../../../../models/static-data/language";
+import { lang, Language } from "../../../../../../models/static-data/language";
 
 @Component({
   templateUrl: './admin-project-preparation.component.html',
@@ -303,12 +303,22 @@ export class AdminProjectPreparationComponent implements OnInit, AfterViewChecke
     }
   }
 
-  public setCardLang(event:Event, value: string) {
-    debugger;
+  getMenuClicked(lang: any) {
+    console.log(lang);
+    if (lang) {
+      this.setCardLangSelected(lang);
+    }
+  }
+
+  public setCardLangSelected(lang: string){
+    this._languageSelected = lang;
+    this._activeCardIndex = InnovationFrontService.currentLangInnovationCard(this._project, lang, 'INDEX');
+    this._setActiveCardIndex();
+  }
+
+  public setCardLang(event: Event, value: string) {
     if (this.activeCard && !(this._cardToDelete._id)) {
-      this._languageSelected = value;
-      this._activeCardIndex = InnovationFrontService.currentLangInnovationCard(this._project, value, 'INDEX');
-      this._setActiveCardIndex();
+      this.setCardLangSelected(value);
     }
   }
 
@@ -601,5 +611,4 @@ export class AdminProjectPreparationComponent implements OnInit, AfterViewChecke
     this._ngUnsubscribe.next();
     this._ngUnsubscribe.complete();
   }
-
 }

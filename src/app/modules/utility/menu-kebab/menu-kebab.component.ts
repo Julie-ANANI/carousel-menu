@@ -64,9 +64,6 @@ export class MenuKebabComponent implements OnInit {
   ngOnInit() {}
 
   clickOnMenu(event: Event, item: any) {
-    debugger;
-    console.log(event);
-    console.log(item);
     event.preventDefault();
     this._itemSelected = item;
     this.menuItemClicked.emit(item);
