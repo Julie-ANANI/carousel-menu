@@ -304,6 +304,7 @@ export class AdminProjectPreparationComponent implements OnInit, AfterViewChecke
   }
 
   getMenuClicked(lang: any) {
+    debugger;
     console.log(lang);
     if (lang) {
       this.setCardLangSelected(lang);

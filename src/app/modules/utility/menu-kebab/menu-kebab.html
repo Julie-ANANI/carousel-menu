@@ -26,7 +26,7 @@
       <!-- end always template display -->
       <ng-container *ngFor="let item of displayedItems; let i = index">
         <button class="button is-link m-left-10 text-normal"
-                (click)="clickOnMenu($event, item.type)"
+                (click)="clickOnMenu($event,item.type)"
                 *ngIf="!displaySuiteKebabItems"
                 [ngClass]="{'text-underline': item?.type === itemSelected}"
                 [ngStyle]="{'min-width': maxWidthItem, 'margin-right': '39px', 'color': textColor}">{{('COMMON.LANG.' + item?.type.toUpperCase()) | translate}}
