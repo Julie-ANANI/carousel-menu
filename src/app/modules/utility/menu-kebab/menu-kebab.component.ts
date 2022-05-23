@@ -27,7 +27,7 @@ export class MenuKebabComponent implements OnInit {
   /**
    * get configuration for the menu
    * @param value
-   *
+   * quantity
    */
   @Input() set config(value: any) {
     if (value) {
