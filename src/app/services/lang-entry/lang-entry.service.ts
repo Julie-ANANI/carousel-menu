@@ -3,12 +3,12 @@
  */
 
 import { Injectable } from '@angular/core';
-import {PieChart} from '../../models/chart/pie-chart';
-import {Tag} from '../../models/tag';
-import {TransactionalEmail} from '../../models/transactional-email';
-import {JobConfig, JobsTypologies} from '../../models/target-pros';
-import {TranslateService} from '@ngx-translate/core';
-import {UmiusLangEntryService} from '@umius/umi-common-component';
+import { PieChart } from '../../models/chart/pie-chart';
+import { Tag } from '../../models/tag';
+import { TransactionalEmail } from '../../models/transactional-email';
+import { JobConfig, JobsTypologies } from '../../models/target-pros';
+import { TranslateService } from '@ngx-translate/core';
+import { UmiusLangEntryService } from '@umius/umi-common-component';
 
 /**
  * UmiusLangEntryService functions:
@@ -65,11 +65,19 @@ export class LangEntryService extends UmiusLangEntryService {
     if (job.entry && job.entry.length) {
       const object = {};
       job.entry.forEach((_entry) => {
-        object[_entry.lang] = _entry.value;
+        object[_entry.lang] = _entry.label;
       });
       job[type] = object;
     }
     return job;
+  }
+
+  public jobLabelEntry(job: JobConfig | JobsTypologies, requested: string, lang = 'en') {
+    if (!job || !requested) return '';
+    if (job.entry && job.entry.length) {
+      return this.transform(job.entry, requested, lang, true);
+    }
+    return '';
   }
 
   /**

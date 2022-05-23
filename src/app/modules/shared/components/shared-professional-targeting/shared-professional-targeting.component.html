@@ -146,7 +146,7 @@
                 [isPreview]="isPreview"
                 [showToggleSearch]="jobTypo.isToggle"
                 [identifier]="jobTypo.identifier"
-                [option]="{name: jobTypo.name.en, state: jobTypo.state}"
+                [option]="{typo: jobTypo, state: jobTypo.state}"
                 [jobs]="sortJobs(jobTypo.jobs)"
                 [filteredJobs]="filteredJobsTypologies[jobTypo.identifier].jobs"
                 [isJobTypo]="true">

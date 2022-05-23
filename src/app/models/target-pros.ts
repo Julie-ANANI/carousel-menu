@@ -1,5 +1,5 @@
 export interface TargetProsJobEntry {
-  value: string;
+  label: string;
   lang: string;
 }
 
@@ -11,11 +11,6 @@ export interface JobConfig {
   hovered?: boolean;
   hoveredState?: number;
   entry?: Array<TargetProsJobEntry>;
-
-  /**
-   * replace this with Array<TargetProsJobEntry>
-   */
-  label: { en: string, fr: string };
 }
 
 export interface JobsTypologies {
@@ -25,11 +20,6 @@ export interface JobsTypologies {
   identifier?: string;
   isToggle?: boolean;
   entry?: Array<TargetProsJobEntry>;
-
-  /**
-   * replace this with Array<TargetProsJobEntry>
-   */
-  name: { en: string, fr: string };
 }
 
 export interface JobsCategory {
@@ -37,11 +27,6 @@ export interface JobsCategory {
   identifier: string;
   jobs: Array<JobConfig>;
   entry?: Array<TargetProsJobEntry>;
-
-  /**
-   * replace this with Array<TargetProsJobEntry>
-   */
-  label: { en: string, fr: string };
 }
 
 export interface SeniorityLevel {

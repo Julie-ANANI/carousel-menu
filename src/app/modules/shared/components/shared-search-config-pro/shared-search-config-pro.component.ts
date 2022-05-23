@@ -1,7 +1,7 @@
 import { Component, Inject, Input, OnInit, PLATFORM_ID } from '@angular/core';
 import { JobConfig } from '../../../../models/target-pros';
 import { JobsFrontService } from '../../../../services/jobs/jobs-front.service';
-import {LangEntryService} from '../../../../services/lang-entry/lang-entry.service';
+import { LangEntryService } from '../../../../services/lang-entry/lang-entry.service';
 
 /**
  * SL - 0: excluded, 1: included
@@ -23,10 +23,14 @@ export class SharedSearchConfigProComponent implements OnInit {
    * one category: seniority level/ job category
    * @param value
    */
-  @Input() set option(value: { name: string, state: number }) {
-    if(value){
+  @Input() set option(value: any) {
+    if (value) {
       this._currentState = value.state;
-      this._context = value.name;
+      if (value.hasOwnProperty('name')) {
+        this._context = value.name;
+      } else {
+        this._context =  this._langEntryService.jobLabelEntry(value.typo, 'label');
+      }
       if (this.isJobTypo) {
         this.initJobStates();
         this._countStates();
@@ -44,17 +48,14 @@ export class SharedSearchConfigProComponent implements OnInit {
   }
 
   @Input() set jobs(jobs: Array<JobConfig>) {
-    if(jobs && jobs.length){
+    if (jobs && jobs.length) {
       this._jobConfigs = jobs;
-      this._jobConfigs = this._jobConfigs.map((_job) => {
-        return LangEntryService.jobEntry(_job, 'label');
-      })
       this._currentState = this._jobFrontService.checkJobTypoState(jobs);
     }
   }
 
   @Input() set filteredJobs(jobs: Array<JobConfig>) {
-    if(jobs && jobs.length){
+    if (jobs && jobs.length) {
       this._filteredJobsIds = jobs.map(_j => _j._id);
     }
   }
@@ -96,7 +97,8 @@ export class SharedSearchConfigProComponent implements OnInit {
   count = 1;
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
-              private _jobFrontService: JobsFrontService) {
+              private _jobFrontService: JobsFrontService,
+              private _langEntryService: LangEntryService) {
   }
 
 

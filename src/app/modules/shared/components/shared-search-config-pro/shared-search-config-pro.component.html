@@ -3,7 +3,7 @@
   <div class="d-flex flex-d-column align-start justify-start w-full">
     <!-- Seniority level / Job category level -->
     <div class="pro-select-wrapper d-flex align-center w-full m-top-10">
-      <div  class="d-flex w-full">
+      <div class="d-flex w-full">
         <!-- check box-->
         <div class="button-checker m-left-3" [ngStyle]="getCurrentState()"
              [ngClass]="{'prevent-event': isPreview}"
@@ -56,9 +56,12 @@
       <!-- Job category expand item-->
       <div class="d-flex m-left-auto text-white m-right-3" *ngIf="isJobTypo" (click)="onClickToggle()">
         <!-- nb of included/excluded jobs-->
-        <div class="d-flex flex-end flex-grow" style="width: 80%" [ngClass]="{'prevent-event': isPreview}" (mouseenter)="showNextState($event)" (mouseleave)="closeHoverState()">
-          <span class="shape bg-success is-circled is-sm text-13 text-white m-right-1" *ngIf="nbIncluded"> {{nbIncluded}} </span>
-          <span class="shape bg-alert is-circled is-sm text-13 text-white m-right-1" *ngIf="nbExcluded"> {{nbExcluded}} </span>
+        <div class="d-flex flex-end flex-grow" style="width: 80%" [ngClass]="{'prevent-event': isPreview}"
+             (mouseenter)="showNextState($event)" (mouseleave)="closeHoverState()">
+          <span class="shape bg-success is-circled is-sm text-13 text-white m-right-1"
+                *ngIf="nbIncluded"> {{nbIncluded}} </span>
+          <span class="shape bg-alert is-circled is-sm text-13 text-white m-right-1"
+                *ngIf="nbExcluded"> {{nbExcluded}} </span>
         </div>
         <!-- /nb of included/excluded jobs-->
         <i class="text-link icon" style="color: #00B0FF"
@@ -111,7 +114,7 @@
                [ngClass]="{'prevent-event': isPreview}"
                (mouseenter)="showJobNextState($event, job)"
                (mouseleave)="closeJobHoverState(job)">
-            {{job.label.en | titlecase}}
+            {{job.entry | langEntry: 'label': 'en': true | titlecase}}
           </div>
           <!-- Job's label-->
         </div>
