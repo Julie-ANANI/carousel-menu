@@ -1,14 +1,15 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MenuKebabComponent } from './menu-kebab.component';
-import { MenuKebabDirective } from './menu-kebab.directive';
+import {TranslateModule} from '@ngx-translate/core';
 
 @NgModule({
-  declarations: [MenuKebabComponent, MenuKebabDirective],
-  exports: [MenuKebabComponent, MenuKebabDirective
+  declarations: [MenuKebabComponent],
+  exports: [MenuKebabComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    TranslateModule
   ]
 })
 export class MenuKebabModule { }

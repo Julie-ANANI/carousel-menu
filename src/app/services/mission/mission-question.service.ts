@@ -7,12 +7,13 @@ import {
   MissionQuestionOption,
   MissionQuestionType,
   MissionTemplate,
-  MissionTemplateSection,
+  MissionTemplateSection, MissionTemplateSectionEntry, OptionEntry,
 } from '../../models/mission';
 import { Subject } from 'rxjs/Subject';
 import { colors } from '../../utils/chartColors';
 import { replaceNumberRegex } from '../../utils/regex';
 import optionLikert from '../../../../assets/json/likert-scale.json';
+import { Language } from "../../models/static-data/language";
 
 @Injectable({providedIn: 'root'})
 export class MissionQuestionService {
@@ -53,11 +54,11 @@ export class MissionQuestionService {
     return this._taggedQuestionsTypes;
   }
 
-  get questionnaireLangs(): Array<string> {
+  get questionnaireLangs(): Array<Language> {
     return this._questionnaireLangs;
   }
 
-  set questionnaireLangs(value: Array<string>) {
+  set questionnaireLangs(value: Array<Language>) {
     this._questionnaireLangs = value;
   }
 
@@ -77,6 +78,7 @@ export class MissionQuestionService {
    * it's file data JSON of Choice Likert Scale
    *
    */
+    // TODO: add translation in option likert
   dataOfChoiceLikertScale = optionLikert;
 
   get optionsNamesLikert(): Object {
@@ -133,7 +135,7 @@ export class MissionQuestionService {
    */
   private _cardsSections: MissionCardTitle = <MissionCardTitle>{};
 
-  private _questionnaireLangs: Array<string> = ['en', 'fr'];
+  private _questionnaireLangs: Array<Language> = [];
 
   /**
    * for the moment we always add the entry in both languages
@@ -468,13 +470,15 @@ export class MissionQuestionService {
   public addOptionLikert(question: MissionQuestion = <MissionQuestion>{}, measureOptions: any): MissionQuestionOption {
     if (question.controlType === 'likert-scale') {
       const id = question.options.length;
+      // for likert scale option
+      // if there is no template option, we take english version
       return {
         identifier: id.toString(),
         positive: false,
-        entry:  this._addEntryLang.map((_lang) => {
+        entry: this._addEntryLang.map((_lang) => {
           return {
             lang: _lang,
-            label: measureOptions[_lang]
+            label: measureOptions[_lang] || measureOptions['en']
           };
         })
       };
@@ -729,10 +733,18 @@ export class MissionQuestionService {
   public changeSectionName(newValue: string, lang: string, section: MissionTemplateSection) {
     if (section && section.entry && section.entry.length) {
       const index = section.entry.findIndex((_entry) => _entry.lang === lang);
+      // When we have MissionTemplateSectionEntry
       if (index !== -1) {
         section.entry[index].name = newValue;
-        this._emitTemplate();
+      } else {
+        // when there is no template entry for this lang, create one and push in sections.
+        const newSectionEntry: MissionTemplateSectionEntry = <MissionTemplateSectionEntry>{
+          name: newValue,
+          lang: lang
+        };
+        section.entry.push(newSectionEntry);
       }
+      this._emitTemplate();
     }
   }
 
@@ -749,22 +761,29 @@ export class MissionQuestionService {
       const index = question.entry.findIndex((_entry) => _entry.lang === lang);
       if (index !== -1) {
         question.entry[index][attr] = newValue;
-        if (emitChanges) {
-          this._emitTemplate();
+      } else {
+        // if we can't find entry in question, create a new one and push it in question.entry
+        const newQuestionEntry: MissionQuestionEntry = <MissionQuestionEntry>{
+          lang: lang,
+          title: '',
+          subtitle: '',
+          instruction: '',
+          positivesAnswersLabel: '',
+          label: '',
+          objective: ''
         }
+        newQuestionEntry[attr] = newValue;
+        question.entry.push(newQuestionEntry);
+      }
+      if (emitChanges) {
+        this._emitTemplate();
       }
     }
 
     return question;
   }
 
- /***
-   * update the value of the option entry with new value.
-   * @param newValue
-   * @param lang
-   * @param question
-   * @param optionIndex
-   * @param emitChanges /* /!**
+  /***
    * update the value of the option entry with new value.
    * @param newValue
    * @param lang
@@ -779,9 +798,16 @@ export class MissionQuestionService {
       const index = option.entry.findIndex((_entry) => _entry.lang === lang);
       if (index !== -1) {
         option.entry[index].label = newValue;
-        if (emitChanges) {
-          this._emitTemplate();
-        }
+      } else {
+        const newOptionEntry: OptionEntry = <OptionEntry>{
+          lang: lang,
+          label: ''
+        };
+        newOptionEntry.label = newValue;
+        option.entry.push(newOptionEntry);
+      }
+      if (emitChanges) {
+        this._emitTemplate();
       }
     }
 
@@ -822,11 +848,11 @@ export class MissionQuestionService {
    */
   public questionEntry(question: MissionQuestion = <MissionQuestion>{}, lang: string): MissionQuestionEntry {
     if (this._questionnaireLangs.length) {
-      const quesLang = this._questionnaireLangs.find((_lang) => _lang === lang);
+      const quesLang = this._questionnaireLangs.find((_lang) => _lang.type === lang);
       if (!!quesLang) {
-        return MissionQuestionService.entryInfo(question, quesLang);
+        return MissionQuestionService.entryInfo(question, quesLang.type);
       } else {
-        return MissionQuestionService.entryInfo(question, this._questionnaireLangs[0]) || <MissionQuestionEntry>{};
+        return MissionQuestionService.entryInfo(question, 'en') || <MissionQuestionEntry>{};
       }
     }
 
@@ -974,7 +1000,18 @@ export class MissionQuestionService {
    * @param value
    */
   public setNotifyChanges(value: boolean) {
+    console.log(value);
     this._notifyObj.next(value);
+  }
+
+  /**
+   * this function is used to add innovation card languages
+   * ['fr', 'en', 'zh', 'uk']...
+   * operation related to questionnaire page
+   * @param entry
+   */
+  public setEntryLanguages(entry: Array<string>) {
+    this._addEntryLang = entry;
   }
 
   public notifyChanges(): Subject<boolean> {

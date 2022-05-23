@@ -1,41 +1,66 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { EmailSignature } from '../../../../models/email-signature';
+import {EmailObject} from '../../../../models/email';
+import { Language } from "../../../../models/static-data/language";
 
 @Component({
   selector: 'app-sidebar-workflow',
   templateUrl: './sidebar-workflow.component.html',
 })
 
+
 // TODO update this if the emailsObject have not multiling functionality.
 // TODO see the example of AdminEmailsLibraryComponent
-export class SidebarWorkflowComponent {
+export class SidebarWorkflowComponent implements OnInit{
+
+  get toBeSaved(): boolean {
+    return this._toBeSaved;
+  }
 
   @Input() isEditable = false;
 
-  @Input() emailsObject: any = {};
+  @Input() emailObject: EmailObject = <EmailObject>{};
 
   @Input() signatures: Array<EmailSignature> = [];
 
-  @Input() inputLanguage = 'en';
+  @Input() set inputLanguage(value: string){
+    if(value){
+      this._inputLanguage = value;
+    }
+  }
 
-  @Input() id = this.inputLanguage;
+  @Input() id = 'en';
 
-  @Input() innovationCardLanguages: string [] = [];
+  @Input() innovationCardLanguages: Array<Language> = [];
 
   @Output() emailChange: EventEmitter<any> = new EventEmitter<any>();
+
+  private _toBeSaved = false;
+
+  private _inputLanguage = '';
 
   constructor() {
   }
 
+  ngOnInit(): void {
+  }
+
   public onClickSave() {
     if (this.isEditable) {
-      this.emailsObject[this.inputLanguage].modified = true;
-      this.emailChange.emit(this.emailsObject);
+      this.emailObject[this.inputLanguage].modified = true;
+      this.emailChange.emit(this.emailObject);
+      this._toBeSaved = false;
     }
   }
 
+  get inputLanguage(): string {
+    return this._inputLanguage;
+  }
+
+
   public onChangeEmail(value: any) {
-    this.emailsObject = value;
+    this.emailObject = value;
+    this._toBeSaved = true
   }
 
 }

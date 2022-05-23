@@ -1,6 +1,9 @@
 export interface Language {
   type?: string;
   alias?: string;
+  status?: 'EDITING' | 'WAITING' | 'DONE';
+  hidden?: boolean;
+  [property: string]: any;
 }
 
 export const lang: Array<Language> = [

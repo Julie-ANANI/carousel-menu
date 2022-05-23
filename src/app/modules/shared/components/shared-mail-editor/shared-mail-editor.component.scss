@@ -2,31 +2,18 @@
 
 #shared-mail-editor {
 
-  .variable {
-    color:#0B90C6;
-    background-color: #CCEBF8;
-    padding: 4px 10px;
-    font-size: 12px;
-    border-radius: 3px;
-    margin-left: 2px;
-    margin-right: 4px;
-    margin-bottom: 4px;
-  }
-
-  .label.is-tag {
-    margin: 0;
-    border-radius: 3px;
-    padding: 4px 10px;
-  }
-
   .header-wrapper {
     flex-wrap: wrap;
 
     .language-wrapper{
       display: flex;
       flex-wrap: wrap;
-      align-items: center;
+      align-items: baseline;
       font-size: 15px;
+
+      button{
+        min-width: fit-content;
+      }
 
       .form-label, .text-link {
         margin-right: 15px;
@@ -36,6 +23,8 @@
       .text-link {
         color: $meta-color;
         padding-bottom: $unit-o;
+        font-size: 15px;
+        text-decoration: none !important;
 
         &.active {
           color: $primary-color;
@@ -60,16 +49,6 @@
 
   .column-header {
     flex-direction: column;
-  }
-
-  .form-group {
-    margin-bottom: 25px;
-  }
-
-  .content-wrapper {
-    display: flex;
-    flex-direction: column;
-    padding-top: 10px;
   }
 
 }

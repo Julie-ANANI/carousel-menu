@@ -29,15 +29,13 @@
 
         <div class="d-flex flex-wrap-wrap">
           <div
-            *ngFor="let lang of questionnaireLangs"
+            *ngIf="languageSelected"
             class="m-right-20 d-flex align-center tooltip"
             data-tooltip="Section name">
-            <ng-container *ngIf="questionnaireLangs.length > 1">
-              <label [for]="lang" class="form-label text-normal text-white m-right-2 m-no-bottom">
-                {{ 'COMMON.LANG.' + lang | uppercase | translate }}:
+              <label class="form-label text-normal text-white m-right-2 m-no-bottom">
+                {{ 'COMMON.LANG.' + languageSelected.toUpperCase() | uppercase | translate }}:
               </label>
-            </ng-container>
-            {{ sectionName(lang) }}
+            {{ sectionName(languageSelected) }}
           </div>
         </div>
 
@@ -61,7 +59,7 @@
         </ng-container>
 
         <ng-template #defCardSection>
-          <label [ngClass]="{'m-right-20': questionnaireLangs.length === 1}">
+        <label class="m-right-20" >
             <select
               #identifier
               (change)="onChangeCardSection(identifier.value)"
@@ -69,7 +67,7 @@
               class="form-select is-sm">
               <option>{{ cardSectionTitle() | titlecase }}</option>
               <option>--------------</option>
-              <ng-container *ngFor="let cardSection of cardsSections[showTitlesLang]">
+              <ng-container *ngFor="let cardSection of cardsSections[languageSelected]">
                 <ng-container *ngIf="cardSectionTitle() !== cardSection.title">
                   <option [value]="cardSection._id">{{ cardSection.title }}</option>
                 </ng-container>
@@ -78,35 +76,21 @@
             </select>
           </label>
 
-          <ng-container *ngIf="questionnaireLangs.length > 1">
-            <div class="m-right-20">
-              <div (click)="changeTitlesLang()" class="icon-container is-overlay">
-              <span
-                [attr.data-tooltip]="'Show card titles of ' + (showTitlesLang === 'fr' ? 'English' : 'French')"
-                class="tooltip">
-                <i class="fas fa-sync text-white"></i>
-              </span>
-              </div>
-            </div>
-          </ng-container>
-
         </ng-template>
 
         <!-- name -->
-        <div *ngFor="let lang of questionnaireLangs" class="m-right-20 d-flex align-center">
-          <label [for]="lang" class="form-label text-normal text-white m-right-2 m-no-bottom">
-            {{ 'COMMON.LANG.' + lang | uppercase | translate }}:
+        <div class="m-right-20 d-flex align-center">
+          <label class="form-label text-normal text-white m-right-2 m-no-bottom">
+            {{ 'COMMON.LANG.' + languageSelected.toUpperCase() | uppercase | translate }}:
           </label>
           <ng-container *ngIf="accessPath.length && !canAccess(['section', 'edit', 'name']); else defSEditName">
-            <p class="m-no-bottom">{{ sectionName(lang) }}</p>
+            <p class="m-no-bottom">{{ sectionName(languageSelected) }}</p>
           </ng-container>
           <ng-template #defSEditName>
             <input
               #name
-              (change)="onChangeName(name.value, lang)"
-              [attr.placeholder]="'Section name in ' + (lang === 'fr' ? 'French' : 'English')"
-              [id]="lang"
-              [ngModel]="sectionName(lang)"
+              (change)="onChangeName(name.value, languageSelected)"
+              [ngModel]="sectionName(languageSelected)"
               class="form-input is-sm"
               type="text">
           </ng-template>
@@ -190,6 +174,7 @@
           [isEditable]="isEditable"
           [questionIndex]="i"
           [question]="ques"
+          [languageSelected]="languageSelected"
           [sectionIndex]="sectionIndex">
         </app-shared-questionnaire-question>
       </ng-template>

@@ -54,9 +54,9 @@
             (scenarioChange)="updateScenario($event)"
             [isDeletable]="canAccess(['delete'])"
             [isEditable]="canAccess(['edit'])"
+            [innovationCardLanguages]="workflowTemplateLanguages"
             [scenario]="scenario"
-            [signatures]="signatures"
-            [innovationCardLanguages]="['en', 'fr']">
+            [signatures]="signatures">
           </app-admin-edit-workflow>
         </section>
       </div>
@@ -74,11 +74,11 @@
 
   <section class="modal-body">
 
-    <div class="form-group m-bottom-15">
+    <div class="form-group m-bottom-20">
       <label class="form-label" for="add-workflow">Workflow Name</label>
       <input
         [(ngModel)]="newScenarioName"
-        class="form-input is-shadowed"
+        class="form-input is-shadowed is-sm"
         id="add-workflow"
         name="scenarioName"
         placeholder="Enter the workflow name"
@@ -88,7 +88,7 @@
     <div class="form-group">
       <label class="form-label" for="add-workflow-signature">Workflow Default Signature</label>
       <select
-        class="form-select is-shadowed"
+        class="form-select is-shadowed is-sm"
         id="add-workflow-signature"
         #select_signature
         [ngModel]="select_signature"

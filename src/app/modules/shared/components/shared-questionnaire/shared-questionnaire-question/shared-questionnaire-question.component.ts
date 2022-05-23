@@ -12,12 +12,14 @@ import { MissionQuestionService } from '../../../../../services/mission/mission-
 import { TranslateService } from '@ngx-translate/core';
 import { RolesFrontService } from '../../../../../services/roles/roles-front.service';
 import {CommonService} from '../../../../../services/common/common.service';
+import { Language } from "../../../../../models/static-data/language";
 
 @Component({
   selector: 'app-shared-questionnaire-question',
   templateUrl: './shared-questionnaire-question.component.html',
   styleUrls: ['./shared-questionnaire-question.component.scss']
 })
+
 export class SharedQuestionnaireQuestionComponent implements OnInit {
 
   /**
@@ -52,6 +54,8 @@ export class SharedQuestionnaireQuestionComponent implements OnInit {
    * provide the innovation cards lang.
    */
   @Input() presetLanguages: Array<string> = [];
+
+  @Input() languageSelected = 'en';
 
   @Input() set question(value: MissionQuestion) {
     this._question = value;
@@ -244,12 +248,12 @@ export class SharedQuestionnaireQuestionComponent implements OnInit {
     this._emitValueToSave(['edit', 'options', 'delete']);
   }
 
-  public optionEntry(option: MissionQuestionOption, lang: string): OptionEntry {
-    return <OptionEntry>MissionQuestionService.entryInfo(option, lang) || <OptionEntry>{};
+  public optionEntry(option: MissionQuestionOption): OptionEntry {
+    return <OptionEntry>MissionQuestionService.entryInfo(option, this.languageSelected) || <OptionEntry>{};
   }
 
-  public questionEntry(lang: string = this.platformLang): MissionQuestionEntry {
-    return this._missionQuestionService.questionEntry(this._question, lang);
+  public questionEntry(): MissionQuestionEntry {
+    return this._missionQuestionService.questionEntry(this._question, this.languageSelected);
   }
 
   public updateValue(value: any, attr: string, index?: number) {
@@ -310,7 +314,7 @@ export class SharedQuestionnaireQuestionComponent implements OnInit {
     return this._translateService.currentLang;
   }
 
-  get questionnaireLangs(): Array<string> {
+  get questionnaireLangs(): Array<Language> {
     return this._missionQuestionService.questionnaireLangs || [];
   }
 

@@ -11,20 +11,24 @@ import {AdminCampaignsModule} from '../../admin-campaigns/admin-campaigns.module
 import {AdminProjectStatisticsModule} from '../admin-project-statistics/admin-project-statistics.module';
 import {ModalModule} from '@umius/umi-common-component';
 import {MenuKebabModule} from '../../../../../utility/menu-kebab/menu-kebab.module';
+import { FormsModule } from "@angular/forms";
+import { TranslateModule } from "@ngx-translate/core";
 
 @NgModule({
-  imports: [
-    CommonModule,
-    RouterModule,
-    AdminProjectCampaignsModule,
-    AdminProjectQuestionnaireModule,
-    AdminProjectTargetingModule,
-    AdminProjectDescriptionModule,
-    AdminProjectStatisticsModule,
-    AdminCampaignsModule,
-    ModalModule,
-    MenuKebabModule
-  ],
+    imports: [
+        CommonModule,
+        RouterModule,
+        AdminProjectCampaignsModule,
+        AdminProjectQuestionnaireModule,
+        AdminProjectTargetingModule,
+        AdminProjectDescriptionModule,
+        AdminProjectStatisticsModule,
+        AdminCampaignsModule,
+        ModalModule,
+        FormsModule,
+        TranslateModule,
+        MenuKebabModule
+    ],
   declarations: [
     AdminProjectPreparationComponent
   ],

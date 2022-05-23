@@ -129,7 +129,7 @@
                 <div class="step_send_right relative">
                   <div class="absolute lang_wrapper d-flex align-center">
                     <div *ngFor="let lang of langs; let i = index" class="text-white text-md text-medium">
-                      <span (click)="onChangeLang(lang)" class="c-hand">{{ lang | uppercase }}</span>
+                      <span (click)="onChangeLang(lang)" class="c-hand m-right-1">{{ lang | uppercase }}</span>
                       <span *ngIf="(i + 1) < langs.length " class="m-right-1">|</span>
                     </div>
                   </div>
@@ -150,10 +150,19 @@
                   </div>
                   <div>
                     <span class="mail_label">{{ 'COMMON.LABEL.SUBJECT' | translate }}: </span>
-                    <span [innerHTML]="emailsObjectReplaced[selectedLang].subject" class="text-13"></span>
+                    <!--TODO remove commented part-->
+                    <!--<span [innerHTML]="emailsObjectReplaced[selectedLang].subject" class="text-13"></span>-->
+                    <span
+                      [innerHTML]="emailsObjectReplaced.entry | langEntry:'subject':selectedLang"
+                      class="text-13">
+                    </span>
                   </div>
                   <div class="p-top-10">
-                    <div [innerHTML]="emailsObjectReplaced[selectedLang].content" class="text-13"></div>
+                    <!--<div [innerHTML]="emailsObjectReplaced[selectedLang].content" class="text-13"></div>-->
+                    <div
+                      [innerHTML]="emailsObjectReplaced.entry | langEntry:'content':selectedLang"
+                      class="text-13">
+                    </div>
                   </div>
                 </div>
               </div>
@@ -288,9 +297,18 @@
                   </div>
                   <div>
                     <span class="mail_label">{{ 'COMMON.LABEL.SUBJECT' | translate }}: </span>
-                    <span [innerHTML]="emailsObjectReplaced[selectedLang].subject" class="text-13"></span>
+                    <!--TODO remove commented part-->
+                    <!--<span [innerHTML]="emailsObjectReplaced[selectedLang].subject" class="text-13"></span>-->
+                    <span
+                      [innerHTML]="emailsObject.entry | langEntry:'subject':selectedLang"
+                      class="text-13">
+                    </span>
                   </div>
-                  <div [innerHTML]="emailsObjectReplaced[selectedLang].content" class="text-13 p-top-10"></div>
+                  <!--<div [innerHTML]="emailsObjectReplaced[selectedLang].content" class="text-13 p-top-10"></div>-->
+                  <div
+                    [innerHTML]="emailsObject.entry | langEntry:'content':selectedLang"
+                    class="text-13 p-top-10">
+                  </div>
 
                 </div>
 
