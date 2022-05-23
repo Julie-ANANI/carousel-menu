@@ -20,7 +20,7 @@
                 (click)="clickOnMenu($event, item.type)"
                 *ngIf="displayedItems.length && displaySuiteKebabItems && i < initQuantity"
                 [ngClass]="{'text-underline': item?.type === itemSelected}"
-                [ngStyle]="{'min-width': maxWidthItem, 'margin-right': '39px', 'color': textColor}">{{item[identifier]}}
+                [ngStyle]="{'min-width': maxWidthItem, 'margin-right': '39px', 'color': textColor}">{{('COMMON.LANG.' + item?.type.toUpperCase()) | translate}}
         </button>
       </ng-container>
       <!-- end always template display -->
@@ -29,7 +29,7 @@
                 (click)="clickOnMenu($event, item.type)"
                 *ngIf="!displaySuiteKebabItems"
                 [ngClass]="{'text-underline': item?.type === itemSelected}"
-                [ngStyle]="{'min-width': maxWidthItem, 'margin-right': '39px', 'color': textColor}">{{item[identifier]}}
+                [ngStyle]="{'min-width': maxWidthItem, 'margin-right': '39px', 'color': textColor}">{{('COMMON.LANG.' + item?.type.toUpperCase()) | translate}}
         </button>
       </ng-container>
     </div>

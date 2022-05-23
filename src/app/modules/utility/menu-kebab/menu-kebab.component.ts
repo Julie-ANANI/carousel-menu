@@ -1,10 +1,14 @@
 import {Component, Inject, Input, PLATFORM_ID, OnInit, EventEmitter, Output,} from '@angular/core';
 import {Subject} from 'rxjs';
+import {InnovationFrontService} from '../../../services/innovation/innovation-front.service';
+import {InnovCard} from '../../../models/innov-card';
+import {Innovation} from '../../../models/innovation';
+import {InnovationService} from '../../../services/innovation/innovation.service';
 
 @Component({
   selector: 'app-utility-carousel-menu',
   exportAs:'app-utility-carousel-menu',
- templateUrl: './menu-kebab.html',
+  templateUrl: './menu-kebab.html',
   styleUrls: ['./menu-kebab.scss']
 })
 
@@ -53,15 +57,38 @@ export class MenuKebabComponent implements OnInit {
   private _itemSelected: string = '';
   private _initQuantity: number;
   private _initIndex: number = 0;
+  private _currentItem: any;
 
-  constructor(@Inject(PLATFORM_ID) protected _platformId: Object) {}
+  constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
+              private _innovationFrontService: InnovationFrontService) {}
 
   ngOnInit() {}
 
-  clickOnMenu(event: Event, item: string) {
+  clickOnMenu(event: Event, item: any) {
+    console.log(event);
     event.preventDefault();
+    this._currentItem = item;
     this.menuItemClicked.emit(item);
+
+    if (this.activeCard && !(this._cardToDelete._id)) {
+      this._itemSelected = item;
+      this._activeCardIndex = InnovationFrontService.currentLangInnovationCard(this._project, item, 'INDEX');
+      this._setActiveCardIndex();
+    }
   }
+
+  //test
+  private _setActiveCardIndex() {
+    this._innovationFrontService.setActiveCardIndex(this._activeCardIndex);
+  }
+  private _cardToDelete: InnovCard = <InnovCard>{};
+  get activeCard(): InnovCard {
+    return InnovationFrontService.activeCard(this._project, this._activeCardIndex);
+  }
+
+  private _project: Innovation = <Innovation>{};
+  private _activeCardIndex = 0;
+  //
 
   next() {
     let viewToView = (this._quatity);

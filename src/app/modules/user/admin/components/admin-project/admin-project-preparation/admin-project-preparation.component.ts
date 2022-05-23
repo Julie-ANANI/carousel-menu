@@ -304,6 +304,7 @@ export class AdminProjectPreparationComponent implements OnInit, AfterViewChecke
   }
 
   public setCardLang(value: string) {
+    debugger;
     if (this.activeCard && !(this._cardToDelete._id)) {
       this._languageSelected = value;
       this._activeCardIndex = InnovationFrontService.currentLangInnovationCard(this._project, value, 'INDEX');
