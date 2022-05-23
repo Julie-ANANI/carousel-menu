@@ -42,7 +42,7 @@
 <!--test-->
         <button class="button is-link m-left-10 text-normal"
                 (click)="clickOnMenu($event,item)"
-                *ngIf="!displaySuiteKebabItems"
+                *ngIf="!displaySuiteKebabItems && i < quatity"
                 [ngClass]="{'text-underline': item=== itemSelected}"
                 [ngStyle]="{'min-width': maxWidthItem, 'margin-right': '39px', 'color': textColor}">{{item[identifier]}}
         </button>
