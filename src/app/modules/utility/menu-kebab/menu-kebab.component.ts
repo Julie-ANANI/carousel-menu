@@ -12,6 +12,9 @@ import {Subject} from 'rxjs';
 })
 
 export class MenuKebabComponent implements OnInit {
+  get maxViewNext(): number {
+    return this._maxViewNext;
+  }
 
   //config button controls
   @Input() showControls = true;
@@ -56,6 +59,7 @@ export class MenuKebabComponent implements OnInit {
   private _itemSelected: any;
   private _initQuantity: number;
   private _initIndex: number = 0;
+  private _maxViewNext: number = 10;
   //private _currentItem: any;
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
@@ -70,6 +74,7 @@ export class MenuKebabComponent implements OnInit {
   }
 
   next() {
+    debugger;
     let viewToView = (this._quatity);
     let maxValQuantityNext = this.sources.length;
 
@@ -83,6 +88,7 @@ export class MenuKebabComponent implements OnInit {
           return this.displayedItems;
           //when we can increment initIndex && quantity
         } else {
+          // quanty ==2 + 2
           this._quatity = (this._quatity + this._quatity)
           this._initIndex = viewToView;
           this._displayedItems = this._sources.slice(this._initIndex, this._quatity);
