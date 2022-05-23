@@ -1,9 +1,8 @@
 import {Component, Inject, Input, PLATFORM_ID, OnInit, EventEmitter, Output,} from '@angular/core';
 import {Subject} from 'rxjs';
-import {InnovationFrontService} from '../../../services/innovation/innovation-front.service';
-import {InnovCard} from '../../../models/innov-card';
-import {Innovation} from '../../../models/innovation';
-import {InnovationService} from '../../../services/innovation/innovation.service';
+// import {InnovationFrontService} from '../../../services/innovation/innovation-front.service';
+// import {InnovCard} from '../../../models/innov-card';
+// import {Innovation} from '../../../models/innovation';
 
 @Component({
   selector: 'app-utility-carousel-menu',
@@ -54,40 +53,42 @@ export class MenuKebabComponent implements OnInit {
   private _type: string = '';
   private _sources: Array<any> = [];
   private _displayedItems: Array<any> = [];
-  private _itemSelected: string = '';
+  private _itemSelected: any;
   private _initQuantity: number;
   private _initIndex: number = 0;
-  private _currentItem: any;
+  //private _currentItem: any;
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
-              private _innovationFrontService: InnovationFrontService) {}
+              ) {}
 
   ngOnInit() {}
 
   clickOnMenu(event: Event, item: any) {
+    debugger;
     console.log(event);
+    console.log(item);
     event.preventDefault();
-    this._currentItem = item;
+    this._itemSelected = item;
     this.menuItemClicked.emit(item);
 
-    if (this.activeCard && !(this._cardToDelete._id)) {
-      this._itemSelected = item;
-      this._activeCardIndex = InnovationFrontService.currentLangInnovationCard(this._project, item, 'INDEX');
-      this._setActiveCardIndex();
-    }
+    // if (this.activeCard && !(this._cardToDelete._id)) {
+    //   this._itemSelected = item;
+    //   this._activeCardIndex = InnovationFrontService.currentLangInnovationCard(this._project, item, 'INDEX');
+    //   this._setActiveCardIndex();
+    // }
   }
 
   //test
-  private _setActiveCardIndex() {
-    this._innovationFrontService.setActiveCardIndex(this._activeCardIndex);
-  }
-  private _cardToDelete: InnovCard = <InnovCard>{};
-  get activeCard(): InnovCard {
-    return InnovationFrontService.activeCard(this._project, this._activeCardIndex);
-  }
-
-  private _project: Innovation = <Innovation>{};
-  private _activeCardIndex = 0;
+  // private _setActiveCardIndex() {
+  //   this._innovationFrontService.setActiveCardIndex(this._activeCardIndex);
+  // }
+  // private _cardToDelete: InnovCard = <InnovCard>{};
+  // get activeCard(): InnovCard {
+  //   return InnovationFrontService.activeCard(this._project, this._activeCardIndex);
+  // }
+  //
+  // private _project: Innovation = <Innovation>{};
+  // private _activeCardIndex = 0;
   //
 
   next() {

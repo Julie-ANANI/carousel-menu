@@ -127,19 +127,19 @@
             <ng-container *ngFor="let language of innoCardLanguages; let i = index">
               <button class="button is-link m-left-10"
                       [ngClass]="{'text-underline': language?.type === languageSelected}"
-                      (click)="setCardLang(language.type)">
+                      (click)="setCardLang($event, language.type)">
                 {{('COMMON.LANG.' + language?.type.toUpperCase()) | translate}}</button>
               <div
                 class="kebab-menu"
                 *ngIf="activeTab === 'description' && i < 1">
                 <app-utility-carousel-menu
-                  (menuItemClicked)="setCardLang(language.type)"
+                  (menuItemClicked)="setCardLang($event, language.type)"
                   [config]="{
                    quatity: 8,
                    initQuantity: 8,
                    identifier: 'alias',
                    type : 'type',
-                   sources: innoCardLanguages}">
+                   sources: languages}">
                 </app-utility-carousel-menu>
               </div>
             </ng-container>

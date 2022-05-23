@@ -303,7 +303,7 @@ export class AdminProjectPreparationComponent implements OnInit, AfterViewChecke
     }
   }
 
-  public setCardLang(value: string) {
+  public setCardLang(event:Event, value: string) {
     debugger;
     if (this.activeCard && !(this._cardToDelete._id)) {
       this._languageSelected = value;
