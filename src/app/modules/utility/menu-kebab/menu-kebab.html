@@ -7,44 +7,29 @@
     <!-- button prev  -->
     <div (click)="prev()"
          id="btn__prev"
-         *ngIf="showControls && !displaySuiteKebabItems && initIndex > 0"
+         *ngIf="currentPagination !== 1"
          class="icon-container is-xl is-overlay"><i class="btn__prev icon icon-arrow-left is-lg"></i>
     </div>
     <!-- end button prev -->
 
-    <div class="d-flex carousel-inner tab text-capitalize">
+    <div class="d-flex text-capitalize">
       <!-- always template display -->
-      <ng-container class="d-flex carousel-inner tab text-capitalize"
-                    *ngFor="let item of sources; let i = index">
+<!--      <ng-container class="d-flex carousel-inner tab text-capitalize"-->
+<!--                    *ngFor="let item of sources; let i = index">-->
 <!--        <button class="button is-link m-left-10 text-normal"-->
 <!--                (click)="clickOnMenu($event, item.type)"-->
 <!--                *ngIf="displayedItems.length && displaySuiteKebabItems && i < initQuantity"-->
 <!--                [ngClass]="{'text-underline': item?.type === itemSelected}"-->
 <!--                [ngStyle]="{'min-width': maxWidthItem, 'margin-right': '39px', 'color': textColor}">{{('COMMON.LANG.' + item?.type.toUpperCase()) | translate}}-->
 <!--        </button>-->
-
-<!--        test-->
-        <button class="button is-link m-left-10 text-normal"
-                (click)="clickOnMenu($event, item)"
-                *ngIf="displayedItems.length && displaySuiteKebabItems && i < initQuantity"
-                [ngClass]="{'text-underline': item === itemSelected}"
-                [ngStyle]="{'min-width': maxWidthItem, 'margin-right': '39px', 'color': textColor}">{{item[identifier]}}
-        </button>
-      </ng-container>
+<!--      </ng-container>-->
       <!-- end always template display -->
       <ng-container *ngFor="let item of displayedItems; let i = index">
-<!--        <button class="button is-link m-left-10 text-normal"-->
-<!--                (click)="clickOnMenu($event,item.type)"-->
-<!--                *ngIf="!displaySuiteKebabItems"-->
-<!--                [ngClass]="{'text-underline': item?.type === itemSelected}"-->
-<!--                [ngStyle]="{'min-width': maxWidthItem, 'margin-right': '39px', 'color': textColor}">{{('COMMON.LANG.' + item?.type.toUpperCase()) | translate}}-->
-<!--        </button>-->
-<!--test-->
         <button class="button is-link m-left-10 text-normal"
-                (click)="clickOnMenu($event,item)"
-                *ngIf="!displaySuiteKebabItems && i < quatity"
-                [ngClass]="{'text-underline': item=== itemSelected}"
-                [ngStyle]="{'min-width': maxWidthItem, 'margin-right': '39px', 'color': textColor}">{{item[identifier]}}
+                (click)="clickOnMenu($event,item.type)"
+                *ngIf="!displaySuiteKebabItems"
+                [ngClass]="{'text-underline': item?.type === itemSelected}"
+                [ngStyle]="{'min-width': maxWidthItem, 'margin-right': '39px', 'color': textColor}">{{('COMMON.LANG.' + item?.type.toUpperCase()) | translate}}
         </button>
       </ng-container>
     </div>
@@ -60,7 +45,7 @@
     </div>
 
     <div (click)="next()"
-         *ngIf="showControls && !displaySuiteKebabItems && quatity !== sources.length && displayedItems.length"
+         *ngIf="currentPagination !== maxPagination"
          class="btn__next icon-container is-xl is-overlay"
          ><i class="icon icon-arrow-right is-lg"></i>
     </div>
