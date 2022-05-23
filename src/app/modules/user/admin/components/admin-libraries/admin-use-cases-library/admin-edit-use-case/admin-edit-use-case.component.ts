@@ -77,6 +77,10 @@ export class AdminEditUseCaseComponent implements OnInit {
     this._templates = this._missionQuestionService.allTemplates;
     this._jsonParse();
     this._setTitle();
+    this._questionnaireLanguages = lang.map(l => {
+        return {type: l.type}
+      }
+    );
     this.setLanguages();
 
     /**

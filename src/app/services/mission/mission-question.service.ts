@@ -13,7 +13,7 @@ import { Subject } from 'rxjs/Subject';
 import { colors } from '../../utils/chartColors';
 import { replaceNumberRegex } from '../../utils/regex';
 import optionLikert from '../../../../assets/json/likert-scale.json';
-import { Language } from "../../models/static-data/language";
+import { lang, Language } from "../../models/static-data/language";
 
 @Injectable({providedIn: 'root'})
 export class MissionQuestionService {
@@ -141,9 +141,9 @@ export class MissionQuestionService {
    * for the moment we always add the entry in both languages
    * later we will deal with it.
    */
-  private _addEntryLang: Array<string> = ['en', 'fr'];
+  private _addEntryLang: Array<string> = lang.map(l => l.type);
 
-  private _templateLangs: Array<string> = ['en', 'fr'];
+  private _templateLangs: Array<string> = lang.map(l => l.type);
 
   /**
    * Questions identifier should imperatively be less than 24 characters for etherpad purposes
@@ -1005,7 +1005,6 @@ export class MissionQuestionService {
    * @param value
    */
   public setNotifyChanges(value: boolean) {
-    console.log(value);
     this._notifyObj.next(value);
   }
 

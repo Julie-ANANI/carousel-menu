@@ -94,6 +94,10 @@ export class AdminEditQuestionComponent implements OnInit {
     this._jsonParse();
     this._getTemplate(this._question._id);
     this._initVariables();
+    this._questionnaireLangs = lang.map(l => {
+        return {type: l.type}
+      }
+    );
     this.setLanguages();
 
     /**
