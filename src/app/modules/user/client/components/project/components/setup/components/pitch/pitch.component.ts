@@ -390,7 +390,6 @@ export class PitchComponent implements OnInit, OnDestroy, AfterViewChecked {
             this._innovation.innovationCards[this._activeCardIndex].principalMedia = event.content;
           }
           this._cardContent = this.activeInnovCard.media;
-          console.log('card content', this._cardContent)
           this._updateProject('image');
           break;
 
@@ -404,6 +403,9 @@ export class PitchComponent implements OnInit, OnDestroy, AfterViewChecked {
 
         case 'DELETE_MEDIA':
           this._deleteMedia(event.content);
+          this._cardContent = this._cardContent.filter((media: UmiusMediaInterface) => media.id !== event.content.id);
+          this._mediaFilter = this.cardContent.slice(1, 4);
+          console.log('card content on delete pitch', this.cardContent, 'filter', this._mediaFilter);
           break;
       }
     }
@@ -627,6 +629,7 @@ export class PitchComponent implements OnInit, OnDestroy, AfterViewChecked {
       .subscribe(() => {
         this.activeInnovCard.media = this.activeInnovCard.media.filter((_media) => _media._id !== media._id);
         this._cardContent = this.activeInnovCard.media;
+        console.log('card content after delete', this._cardContent)
         this._verifyPrincipal(media);
         this._resetVariables();
         this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.UPDATED_TEXT');

@@ -550,6 +550,7 @@ export class SidebarProjectPitchComponent implements OnInit, OnChanges, OnDestro
       this.isSavingChange.emit(true);
       this.saveProject.emit({type: 'DELETE_MEDIA', content: <UmiusMediaInterface>media});
     }
+    this.cardContent = this.cardContent.filter((_media:UmiusMediaInterface) => _media.id !== media.id)
   }
 
   /***
