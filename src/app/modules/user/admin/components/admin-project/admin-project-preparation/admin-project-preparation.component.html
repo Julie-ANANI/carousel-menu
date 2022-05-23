@@ -136,6 +136,7 @@
           <!-- add languages button -->
           <button class="button is-link text-highlight is-sm text-no-underline"
                   type="button"
+                  *ngIf="innoCardLanguages.length !== 20"
                   (click)="openModal($event, 'ADD_LANG')">
             <ng-container>
               <i class="fas fa-plus-circle icon-left"></i>
