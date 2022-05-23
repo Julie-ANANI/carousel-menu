@@ -1,6 +1,7 @@
 import { Component, Inject, OnDestroy, AfterViewInit, EventEmitter, Input, Output, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { SwellrtBackend } from "../../../swellrt-client/services/swellrt-backend";
+import {rtlLanguages} from "../../../../utils/rtlLanguages";
 
 declare const tinymce: any;
 declare let swellrt: any;
@@ -29,6 +30,16 @@ export class SharedEditorTinymceComponent implements AfterViewInit, OnDestroy {
   @Input() hideToolbar = false;
 
   @Input() useVariables = false;
+
+  @Input() set lang(value: string) {
+    this._lang = value;
+    if (isPlatformBrowser(this.platformId)) {
+      tinymce.remove(this._editor);
+      this.initEditor();
+    }
+  }
+
+  private _lang = 'en';
 
   @Input() set readonly(value: boolean) {
     this._readonly = value;
@@ -159,53 +170,6 @@ export class SharedEditorTinymceComponent implements AfterViewInit, OnDestroy {
       }, err => {
         console.error(err);
       });
-
-    // this._swellRTBackend.openDocument( this.elementId.toString() )
-    //   .then(result=> {
-    //     if (result) {
-    //       this._sharedDocument = result;
-    //       if (!this._sharedDocument.node('documents')) {
-    //         // Create a live map
-    //         this._sharedDocument.put('documents', swellrt.Map.create());
-    //         // Make public after initialization
-    //         this._sharedDocument.setPublic(true);
-    //       }
-    //
-    //       // Configure the actual editor
-    //       this._sharedEditor = swellrt.Editor.create(document.getElementById("editor"));
-    //       this._sharedEditor.setSelectionHandler((range, editor, selection) => {
-    //         console.log('selection changed '+ range);
-    //       });
-    //
-    //       //Configure function
-    //       // clean previous editor state
-    //       this._sharedEditor.clean();
-    //       if (!this._name) {
-    //         // create a new text
-    //         this._sharedtext = swellrt.Text.create("Write here your document. This text is not stored yet!");
-    //         /*isLocal = true;
-    //         configButton("saveBtn","Save...");*/
-    //       } else {
-    //         this._sharedtext = this._sharedDocument.get('documents.txt');
-    //         /*isLocal = false;
-    //         configButton("saveBtn","Save", true);
-    //         revisionsText = text.getPlaybackTextFor(swell.TextWeb.REV_HISTORY);
-    //         renderRevisionList();*/
-    //       }
-    //       // Show the text in the editor,
-    //       // edit mode is disabled by default
-    //       this._sharedEditor.set(this._sharedtext);
-    //       // Show title for new document
-    //       //configTitle(name);
-    //       // Show Edit button
-    //       //configButton("editBtn", "Edit On");
-    //       this._sharedEditor.edit(true);
-    //       //////////
-    //
-    //     }
-    //   }, err => {
-    //     console.error(err);
-    //   });
   }
 
   get htmlId(): string {
@@ -247,67 +211,63 @@ export class SharedEditorTinymceComponent implements AfterViewInit, OnDestroy {
 
   ngAfterViewInit() {
     if (isPlatformBrowser(this.platformId) && !this._readonly) {
-      tinymce.init({
-        selector: '#' + this._htmlId,
-        plugins: ['link', 'paste', 'lists', 'advlist', 'textcolor', 'code', 'paste code'], // Voir .angular-cli.json
-        variable_valid: ["TITLE", "FIRSTNAME", "LASTNAME", "COMPANY_NAME", "CLIENT_NAME"],
-        variable_mapper: this._variableMapping,
-        default_link_target: '_blank',
-        width: "inherit",
-        height: this.height,
-        statusbar: false,
-        menubar: false,
-        paste_as_text: true,
-        paste_remove_styles_if_webkit: true,
-        // paste_webkit_styles: "color font-size font-weight",
-        // paste_retain_style_properties: "color font-size font-weight",
-        paste_retain_style_properties: 'none',
-        fontsize_formats: "8pt 10pt 11pt 12pt 14pt 18pt 24pt 30pt 36pt 48pt 60pt 72pt 96pt",
-        toolbar : !this.hideToolbar && 'undo redo | fontsizeselect | bold italic underline forecolor ' +
-          '| bullist numlist | link | code',
-        skin_url: '/assets/skins/lightgray', // Voir .angular-cli.json
-        setup: (editor: any) => {
-          this._editor = editor;
-          this._contentHash = SharedEditorTinymceComponent.hashString(this._text);
-          /*editor.on('MouseLeave', () => {
-            //When the user leaves the tinyMCE box, we save the content
-            const actualHash = this._contentHash;
-            const content = SharedEditorTinymceComponent._htmlToString(editor.getContent());
-            this._contentHash = SharedEditorTinymceComponent.hashString(content);
-            if (this._contentHash !== actualHash) {
-              this._isSaving = true;
-              console.log('init');
-              console.log(content);
-              this.onTextChange.emit({content: content});
-            }
-            /!*if(this._sharedEditor) {
-              this._sharedEditor.set('text', this._text);
-            }
-            console.log("Goodbye motherfucker!");*!/
-          });*/
-          /**
-           * Why we use 'change' event as a trigger to send modified context?
-           * Before we used 'MouseLeave' event, but sometimes, this trigger doesn't work, the modification will be missing
-           * So we use 'change' event as a trigger, send context as soon as the users make changes
-           */
-          editor.on('change', ()=>{
-            const actualHash = this._contentHash;
-            const content = SharedEditorTinymceComponent._htmlToString(editor.getContent());
-            this._contentHash = SharedEditorTinymceComponent.hashString(content);
-            if (this._contentHash !== actualHash) {
-              this._isSaving = true;
-              this.onTextChange.emit({content: content});
-            }
-          })
-        }
-      });
-      if (this._text && this._editor) {
-        this._setContent(this._text);
-      }
-      setTimeout(() => {
-        this._isLoading = false;
-      }, 800);
+      this.initEditor();
     }
+  }
+
+  initEditor() {
+    this._isLoading = true;
+    tinymce.init({
+      selector: `[id="${this._htmlId}"]`,
+      theme: "silver",
+      directionality: (rtlLanguages.includes(this.lang))? 'rtl':'ltr',
+      plugins: ['link', 'lists', 'advlist', 'code', 'searchreplace', 'wordcount', 'autoresize', 'fontsizeselect'], // Voir .angular-cli.json
+      variable_valid: ["TITLE", "FIRSTNAME", "LASTNAME", "COMPANY_NAME", "CLIENT_NAME"],
+      variable_mapper: this._variableMapping,
+      default_link_target: '_blank',
+      width: "inherit",
+      height: this.height,
+      statusbar: true,
+      menubar: false,
+      elementpath: false,
+      branding: false,
+      paste_as_text: true,
+      paste_remove_styles_if_webkit: true,
+      paste_block_drop: false,
+      paste_data_images: true,
+      fontsize_formats: "8pt 10pt 11pt 12pt 14pt 18pt 24pt 30pt 36pt 48pt 60pt 72pt 96pt",
+      toolbar : !this.hideToolbar && 'undo redo | styleselect | fontsizeselect | bold italic underline forecolor casechange' +
+        '| bullist numlist | link | code ',
+      content_style: 'body { font-size: 16px; }',
+      setup: (editor: any) => {
+        this._editor = editor;
+        this._contentHash = SharedEditorTinymceComponent.hashString(this._text);
+        /**
+         * Why we use 'change' event as a trigger to send modified context?
+         * Before we used 'MouseLeave' event, but sometimes, this trigger doesn't work, the modification will be missing
+         * So we use 'change' event as a trigger, send context as soon as the users make changes
+         */
+        editor.on('change', ()=>{
+          const actualHash = this._contentHash;
+          const content = SharedEditorTinymceComponent._htmlToString(editor.getContent());
+          this._contentHash = SharedEditorTinymceComponent.hashString(content);
+          if (this._contentHash !== actualHash) {
+            this._isSaving = true;
+            this.onTextChange.emit({content: content});
+          }
+        })
+      }
+    });
+    if (this._text && this._editor) {
+      this._setContent(this._text);
+    }
+    setTimeout(() => {
+      this._isLoading = false;
+    }, 400);
+  }
+
+  get lang(): string {
+    return this._lang;
   }
 
   ngOnDestroy() {

@@ -3,6 +3,7 @@ import {EmailSignature} from '../../../../models/email-signature';
 import {EmailTemplate} from '../../../../models/email-template';
 import {RouteFrontService} from '../../../../services/route/route-front.service';
 import {EmailObject} from '../../../../models/email';
+import { Language } from "../../../../models/static-data/language";
 
 // type editorTypes = 'FOLLOW-UP' | '';
 
@@ -31,7 +32,7 @@ export class SharedMailEditorComponent implements OnInit {
 
   @Input() ccEmail = '';
 
-  @Input() innovationCardLanguages: string [] = [];
+  @Input() innovationCardLanguages: Array<Language> = [];
 
   @Input() set emailObject(value: EmailObject) {
     if (value) {
@@ -70,7 +71,7 @@ export class SharedMailEditorComponent implements OnInit {
 
   @Input() id = '';
 
-  @Output() languageChange = new EventEmitter<string>();
+  @Output() inputLanguageChange = new EventEmitter<string>();
 
   // @Output() sendTestEmails = new EventEmitter();
 
@@ -125,6 +126,7 @@ export class SharedMailEditorComponent implements OnInit {
     if (this._emailObject) {
       this._email = this._emailObject[this._language];
     }
+    this.inputLanguageChange.emit(this._language);
   }
 
   /*public insertTextAtCursor(text: string) {
@@ -162,7 +164,7 @@ export class SharedMailEditorComponent implements OnInit {
 
   public setLanguage(value: string) {
     this.changeLanguage(value);
-    this.languageChange.emit(value);
+    this.inputLanguageChange.emit(value);
   }
 
   public onUpdate(event: any, language?: string) {

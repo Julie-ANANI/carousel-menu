@@ -16,37 +16,23 @@
       Use by default
     </div>
 
-    <div
-      *ngIf="innovationCardLanguages && innovationCardLanguages.indexOf('en') !== -1"
-      [ngClass]="inCampaign && isModifiedEn ? 'bg-success' : 'bg-alert'"
-      class="shape is-circled is-sm text-white m-left-2">
-      <i [ngClass]="inCampaign && isModifiedEn ? 'fa-check' : 'fa-times'" class="fas"></i>
-    </div>
 
-    <div
-      (click)="changeLanguage('en')"
-      *ngIf="innovationCardLanguages && innovationCardLanguages.indexOf('en') !== -1"
-      [ngClass]="{ 'text-primary': language === 'en', 'text-meta': language !== 'en' }"
-      class="m-left-1 text-medium c-hand text-hover-underline">
-      English
-    </div>
+    <div class="d-flex flex-wrap-wrap justify-start">
+      <ng-container *ngFor="let language of innovationCardLanguages; let i = index">
+        <div
+          [ngClass]="inCampaign && isModified(language.type) ? 'bg-success' : 'bg-alert'"
+          class="shape is-circled is-sm text-white m-left-2">
+          <i [ngClass]="inCampaign && isModified(language.type) ? 'fa-check' : 'fa-times'" class="fas"></i>
+        </div>
 
-    &nbsp;&nbsp;<span *ngIf="innovationCardLanguages && innovationCardLanguages.length===2">|</span>
-
-
-    <div
-      *ngIf="innovationCardLanguages && innovationCardLanguages.indexOf('fr') !== -1"
-      [ngClass]="inCampaign && isModifiedFr ? 'bg-success' : 'bg-alert'"
-      class="shape is-circled is-sm text-white m-left-2">
-      <i [ngClass]="inCampaign && isModifiedFr ? 'fa-check' : 'fa-times'" class="fas"></i>
-    </div>
-
-    <div
-      (click)="changeLanguage('fr')"
-      *ngIf="innovationCardLanguages && innovationCardLanguages.indexOf('fr') !== -1"
-      [ngClass]="{ 'text-primary': language === 'fr', 'text-meta': language !== 'fr' }"
-      class="m-left-1 text-medium c-hand text-hover-underline">
-      French
+        <div
+          (click)="changeLanguage(language)"
+          class="m-left-1 text-medium c-hand text-hover-underline"
+          [ngClass]="{'text-underline': language === languageSelected}">
+          {{'COMMON.LANG.' + language.type | uppercase | translate}}
+        </div>
+        <span class="m-left-2" *ngIf="i!==innovationCardLanguages.length-1">|</span>
+      </ng-container>
     </div>
 
     <div
@@ -72,7 +58,6 @@
   <!-- /table -->
 
 </div>
-
 
 <!-- modal to delete the scenario -->
 <umius-modal *ngIf="isDeletable" [(showModal)]="modalDelete" title="Delete Board">
@@ -102,7 +87,7 @@
     [isEditable]="isEditable && sidebar.animate_state === 'active'"
     [emailObject]="emailToEdit"
     [id]="getId()"
-    [inputLanguage]="language"
+    [inputLanguage]="languageSelected.type"
     [innovationCardLanguages]="innovationCardLanguages">
   </app-sidebar-workflow>
 </umius-sidebar-full>

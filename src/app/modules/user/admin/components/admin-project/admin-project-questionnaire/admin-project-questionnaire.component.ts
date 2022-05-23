@@ -13,6 +13,8 @@ import { InnovationFrontService } from '../../../../../../services/innovation/in
 import { isPlatformBrowser } from '@angular/common';
 import { Mission, MissionCardTitle, MissionTemplate } from '../../../../../../models/mission';
 import { ErrorFrontService } from '../../../../../../services/error/error-front.service';
+import { MissionQuestionService } from "../../../../../../services/mission/mission-question.service";
+import { Language } from "../../../../../../models/static-data/language";
 
 @Component({
   templateUrl: './admin-project-questionnaire.component.html',
@@ -35,15 +37,20 @@ export class AdminProjectQuestionnaireComponent implements OnInit, OnDestroy {
 
   private _ngUnsubscribe: Subject<any> = new Subject<any>();
 
-  private _cardsLanguages: Array<string> = [];
+  private _cardsLanguages: Array<Language> = [];
 
   private _cardsSections: MissionCardTitle = <MissionCardTitle>{};
+
+  private _leftMirrorLanguage: Language = null;
+
+  private _rightMirrorLanguage: Language = null;
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _autocompleteService: AutocompleteService,
               private _presetService: PresetService,
               private _rolesFrontService: RolesFrontService,
               private _innovationFrontService: InnovationFrontService,
+              private _missionQuestionService: MissionQuestionService,
               private _translateNotificationsService: TranslateNotificationsService,
               private _innovationService: InnovationService) {
   }
@@ -61,11 +68,41 @@ export class AdminProjectQuestionnaireComponent implements OnInit, OnDestroy {
             this._mission = <Mission>this._innovation.mission;
           }
 
-          this._cardsLanguages = this._innovation.innovationCards.map((card) => card.lang);
+          this.initialiseCardLanguages()
+
+          // initialise language for the first time
+          if (!this._leftMirrorLanguage) {
+            this.initialiseMirrorLanguages();
+          }
+
           this._setSectionsNames();
+
+          this._setQuizLink();
+
+          this._missionQuestionService.questionnaireLangs = this._cardsLanguages;
+
+          this._missionQuestionService.setEntryLanguages(this._cardsLanguages.map(l => l.type));
         }
       });
     }
+  }
+
+  /**
+   * initialise cardLanguages list
+   */
+  initialiseCardLanguages() {
+    this._cardsLanguages = this._innovationFrontService.formateInnovationCardLanguages(this._innovation.innovationCards) || [];
+  }
+
+  /**
+   * when there are more than 2 languages
+   * set two mirror languages or only set left mirror
+   */
+  initialiseMirrorLanguages() {
+    if (this._cardsLanguages.length > 1) {
+      this._rightMirrorLanguage = this._cardsLanguages[1];
+    }
+    this._leftMirrorLanguage = this._cardsLanguages.length && this._cardsLanguages[0];
   }
 
   public canAccess(path?: Array<string>) {
@@ -131,7 +168,7 @@ export class AdminProjectQuestionnaireComponent implements OnInit, OnDestroy {
       }
     } else {
       const sectionCardToMark = this._mission.template.sections.find(s => s.type === section.type);
-      if(sectionCardToMark){
+      if (sectionCardToMark) {
         sectionCardToMark['index'] = index;
       }
     }
@@ -140,11 +177,11 @@ export class AdminProjectQuestionnaireComponent implements OnInit, OnDestroy {
   private _saveInnovation() {
     this._innovationService.save(this._innovation._id, {preset: this._innovation.preset})
       .pipe(first()).subscribe((_) => {
-        this._translateNotificationsService.success('Success', 'The preset is updated.');
-        }, (err: HttpErrorResponse) => {
-        this._translateNotificationsService.error('Project Saving Error...', ErrorFrontService.getErrorKey(err.error));
-        console.error(err);
-      });
+      this._translateNotificationsService.success('Success', 'The preset is updated.');
+    }, (err: HttpErrorResponse) => {
+      this._translateNotificationsService.error('Project Saving Error...', ErrorFrontService.getErrorKey(err.error));
+      console.error(err);
+    });
   }
 
   /***
@@ -156,6 +193,8 @@ export class AdminProjectQuestionnaireComponent implements OnInit, OnDestroy {
 
     this._innovationService.createQuiz(this._innovation._id).pipe(first()).subscribe((innovation: Innovation) => {
       this._setQuizLink();
+      this._innovation.innovationCards.map(card => card.quizGenerated = true);
+      this._innovationFrontService.setInnovation(this._innovation);
       this._translateNotificationsService.success('Success', 'The quiz is generated.');
     }, (err: HttpErrorResponse) => {
       this._translateNotificationsService.error('Quiz Generating Error...', ErrorFrontService.getErrorKey(err.error));
@@ -196,6 +235,21 @@ export class AdminProjectQuestionnaireComponent implements OnInit, OnDestroy {
     this._innovation.preset = this._chosenPreset;
     this._saveInnovation();
     this._showPresetModal = false;
+  }
+
+  /**
+   *
+   * @param event
+   * @param lang
+   * @param mirror: which side
+   */
+  selectMirrorLanguage(event: Event, lang: Language, mirror: string) {
+    event.preventDefault();
+    if (mirror === 'right') {
+      this._rightMirrorLanguage = lang;
+    } else {
+      this._leftMirrorLanguage = lang;
+    }
   }
 
   /***
@@ -245,7 +299,7 @@ export class AdminProjectQuestionnaireComponent implements OnInit, OnDestroy {
     return this._sectionsNames;
   }
 
-  get cardsLanguages(): Array<string> {
+  get cardsLanguages(): Array<Language> {
     return this._cardsLanguages;
   }
 
@@ -257,9 +311,27 @@ export class AdminProjectQuestionnaireComponent implements OnInit, OnDestroy {
     return this._cardsSections;
   }
 
+  get leftMirrorLanguage(): Language {
+    return this._leftMirrorLanguage;
+  }
+
+
+  set leftMirrorLanguage(value: Language) {
+    this._leftMirrorLanguage = value;
+  }
+
+  set rightMirrorLanguage(value: Language) {
+    this._rightMirrorLanguage = value;
+  }
+
+  get rightMirrorLanguage(): Language {
+    return this._rightMirrorLanguage;
+  }
+
   ngOnDestroy(): void {
     this._ngUnsubscribe.next();
     this._ngUnsubscribe.complete();
   }
+
 
 }

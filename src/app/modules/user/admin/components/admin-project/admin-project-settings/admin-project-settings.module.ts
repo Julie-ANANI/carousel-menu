@@ -14,24 +14,26 @@ import { AutoSuggestionUserModule } from "../../../../../utility/auto-suggestion
 import {AdminProjectDoneModule} from '../../admin-project-done-modal/admin-project-done.module';
 import {LangEntryPipeModule} from '../../../../../../pipe/lang-entry/langEntryPipe.module';
 import {ModalModule, SidebarFullModule, TextInputModule} from '@umius/umi-common-component';
+import {TranslateModule} from "@ngx-translate/core";
 
 @NgModule({
-  imports: [
-    CommonModule,
-    AdminStatsBannerModule,
-    FormsModule,
-    SidebarTagsModule,
-    MissionFormModule,
-    SidebarBlacklistModule,
-    SharedUploadZonePhotoModule,
-    AutoSuggestionUserModule,
-    ReactiveFormsModule,
-    AdminProjectDoneModule,
-    LangEntryPipeModule,
-    SidebarFullModule,
-    ModalModule,
-    TextInputModule
-  ],
+    imports: [
+        CommonModule,
+        AdminStatsBannerModule,
+        FormsModule,
+        SidebarTagsModule,
+        MissionFormModule,
+        SidebarBlacklistModule,
+        SharedUploadZonePhotoModule,
+        AutoSuggestionUserModule,
+        ReactiveFormsModule,
+        AdminProjectDoneModule,
+        LangEntryPipeModule,
+        SidebarFullModule,
+        ModalModule,
+        TextInputModule,
+        TranslateModule
+    ],
   declarations: [
     AdminProjectSettingsComponent,
     AdminProjectSettingsModalComponent

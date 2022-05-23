@@ -19,6 +19,7 @@
         [etherpad]="etherpad"
         [isEditable]="isEditable"
         [minHeight]="padHeight"
+        [lang]="lang"
         [text]="text">
       </app-shared-editor-etherpad>
     </ng-container>
@@ -28,6 +29,7 @@
     <ng-container *ngSwitchCase="'TINY_MCE'">
       <app-shared-editor-tinymce
         (onTextChange)="onTextChange($event)"
+        [lang]="lang"
         [data]="text"
         [height]="tinymceHeight"
         [readonly]="!isEditable">

@@ -20,6 +20,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {TranslateTitleService} from '../../../../../../../services/title/title.service';
 import {HttpErrorResponse} from '@angular/common/http';
 import {UmiusConfigInterface} from '@umius/umi-common-component';
+import { lang, Language } from "../../../../../../../models/static-data/language";
 
 interface ConfirmUpdate {
   tool: boolean;
@@ -36,7 +37,7 @@ export class AdminEditQuestionComponent implements OnInit {
 
   private _isSaving = false;
 
-  private _questionnaireLangs: Array<string> = ['en', 'fr'];
+  private _questionnaireLangs: Array<Language> = lang;
 
   private _accessPath: Array<string> = ['libraries', 'questions'];
 
@@ -72,6 +73,11 @@ export class AdminEditQuestionComponent implements OnInit {
     sort: '{"created":-1}'
   };
 
+  private _rightMirrorLanguage: Language = null;
+
+  private _leftMirrorLanguage: Language = null;
+
+
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _activatedRoute: ActivatedRoute,
               private _router: Router,
@@ -88,6 +94,11 @@ export class AdminEditQuestionComponent implements OnInit {
     this._jsonParse();
     this._getTemplate(this._question._id);
     this._initVariables();
+    this._questionnaireLangs = lang.map(l => {
+        return {type: l.type}
+      }
+    );
+    this.setLanguages();
 
     /**
      * if the user refresh the page in that case we do not have the value in the
@@ -104,6 +115,11 @@ export class AdminEditQuestionComponent implements OnInit {
     if (!this._questions.length) {
       this._getAllQuestions();
     }
+  }
+
+  setLanguages() {
+    this._leftMirrorLanguage = this._questionnaireLangs[0];
+    this._rightMirrorLanguage = this._questionnaireLangs[1];
   }
 
   private _getAllQuestions() {
@@ -397,6 +413,7 @@ export class AdminEditQuestionComponent implements OnInit {
     return this._isPartUseCase;
   }
 
+
   get fetchingError(): boolean {
     return this._fetchingError;
   }
@@ -405,7 +422,7 @@ export class AdminEditQuestionComponent implements OnInit {
     return this._isSaving;
   }
 
-  get questionnaireLangs(): Array<string> {
+  get questionnaireLangs(): Array<Language> {
     return this._questionnaireLangs;
   }
 
@@ -461,4 +478,21 @@ export class AdminEditQuestionComponent implements OnInit {
     return this._translateService.currentLang;
   }
 
+
+  get rightMirrorLanguage(): Language {
+    return this._rightMirrorLanguage;
+  }
+
+  get leftMirrorLanguage(): Language {
+    return this._leftMirrorLanguage;
+  }
+
+
+  set rightMirrorLanguage(value: Language) {
+    this._rightMirrorLanguage = value;
+  }
+
+  set leftMirrorLanguage(value: Language) {
+    this._leftMirrorLanguage = value;
+  }
 }

@@ -1,0 +1,82 @@
+<div id="shared-questionnaire-mirror-view" *ngIf="languageSelected">
+  <div class="d-flex flex-d-column p-bottom-20">
+    <div class="dropdown">
+      <!-- selected language  -->
+      <a class="button dropdown-toggle is-primary is-outlined is-xs p-no-left" tabindex="0">
+
+        <!-- language status  -->
+        <ng-container *ngTemplateOutlet="langStatus;
+                             context: {$implicit:{status: languageSelected?.status}}">
+        </ng-container>
+        <!-- language status  -->
+
+        <!-- language name  -->
+        <span class="m-left-10">{{'COMMON.LANG.' + languageSelected?.type | uppercase |  translate}}</span>
+        <!-- /language name  -->
+
+        <!-- icon drop down  -->
+        <div *ngIf="showDropDown" class="d-flex flex-d-column">
+          <i class="fas fa-caret-up" style="margin-bottom: -10px"></i>
+          <i class="fas fa-caret-down"></i>
+        </div>
+        <!-- /icon drop down  -->
+
+      </a>
+      <!-- /selected language  -->
+
+      <!-- dropdown menu  -->
+      <ul class="menu" *ngIf="languagesList && languagesList.length > 2">
+        <ng-container *ngFor="let lang of languagesList">
+
+          <!-- dropdown menu - item -->
+          <li class="menu-item"
+              *ngIf="!hiddenLanguageItem(lang)"
+              (click)="selectMirrorLanguage($event, lang)">
+            <div class="d-flex align-center">
+
+              <!-- dropdown menu - item status  -->
+              <ng-container *ngTemplateOutlet="langStatus;
+                             context: {$implicit:{status: lang['status']}}">
+              </ng-container>
+              <!-- dropdown menu - item status  -->
+
+              <!-- dropdown menu - item name -->
+              <span class="m-left-10">{{'COMMON.LANG.' + lang?.type | uppercase | translate}}</span>
+              <!-- dropdown menu - item name -->
+
+              <!-- dropdown menu - icon - visible for client -->
+              <button class="button is-circled m-left-auto is-draft is-xs tooltip is-left"
+                      [attr.data-tooltip]="'This language \n is hidden \n on client side'"
+                      *ngIf="lang['hidden']">
+                <i class="fa fa-eye-slash"></i>
+              </button>
+              <!-- dropdown menu - icon - visible for client -->
+
+            </div>
+          </li>
+          <!-- /dropdown menu - item -->
+
+        </ng-container>
+      </ul>
+      <!-- /dropdown menu -->
+
+    </div>
+  </div>
+
+  <!-- questionnaire part -->
+  <ng-content></ng-content>
+  <!-- /questionnaire part -->
+
+  <!-- template to display lang status -->
+  <ng-template #langStatus let-context>
+    <ng-container *ngIf="context?.status">
+      <ng-container [ngSwitch]="context['status']">
+        <i class="fas fa-check-circle text-success" *ngSwitchCase="'DONE'"></i>
+        <i class="fas fa-circle text-error" *ngSwitchDefault></i>
+      </ng-container>
+    </ng-container>
+  </ng-template>
+  <!-- /template to display lang status -->
+
+
+</div>

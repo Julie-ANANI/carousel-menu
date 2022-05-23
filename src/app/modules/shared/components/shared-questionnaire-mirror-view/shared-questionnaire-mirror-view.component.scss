@@ -1,0 +1,9 @@
+@import "~@umius/umi-style-framework/scss/variables";
+@import "~@umius/umi-style-framework/scss/mixins";
+
+#shared-questionnaire-mirror-view{
+  .menu{
+    max-height: 300px;
+    overflow-y: auto;
+  }
+}

@@ -5,6 +5,7 @@ import {takeUntil} from 'rxjs/operators';
 import {Subject} from 'rxjs';
 import {RolesFrontService} from '../../../../services/roles/roles-front.service';
 
+
 @Component({
   selector: 'app-shared-questionnaire',
   templateUrl: './shared-questionnaire.component.html',
@@ -30,13 +31,6 @@ export class SharedQuestionnaireComponent implements OnInit {
   @Input() isEditable = false;
 
   /**
-   * provide the lang of the innovation cards.
-   */
-  @Input() set questionnaireLanguages(value: Array<string>) {
-    this._missionQuestionService.questionnaireLangs = value;
-  }
-
-  /**
    * mission template
    * @param value
    */
@@ -52,6 +46,8 @@ export class SharedQuestionnaireComponent implements OnInit {
   @Input() set cardsSections(value: MissionCardTitle) {
     this._missionQuestionService.cardsSections = value;
   }
+
+  @Input() languageSelected = '';
 
   @Output() templateChange: EventEmitter<MissionTemplate> = new EventEmitter<MissionTemplate>();
 

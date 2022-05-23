@@ -57,13 +57,47 @@
     <section *ngIf="canAccess(['view']) || canAccess(['edit'])" class="m-top-15">
 
       <ng-container *ngIf="hasMissionTemplate; else oldPresets">
-        <app-shared-questionnaire
-          (templateChange)="updatePreset($event, 'TEMPLATE')"
-          [cardsSections]="cardsSections"
-          [isEditable]="canAccess(['edit'])"
-          [questionnaireLanguages]="cardsLanguages"
-          [template]="mission.template">
-        </app-shared-questionnaire>
+        <div [ngClass]="{'d-flex justify-around': rightMirrorLanguage}">
+
+          <!-- mirror: left side  -->
+          <div [ngClass]="{'questionnaire-column': rightMirrorLanguage}">
+            <app-shared-questionnaire-mirror-view
+              [showDropDown]="cardsLanguages && cardsLanguages.length > 2"
+              [(languageSelected)]="leftMirrorLanguage"
+              [languagesList]="cardsLanguages"
+              [languagesExcludedInSelector]="[leftMirrorLanguage, rightMirrorLanguage]">
+              <app-shared-questionnaire
+                (templateChange)="updatePreset($event, 'TEMPLATE')"
+                [cardsSections]="cardsSections"
+                [isEditable]="canAccess(['edit'])"
+                [languageSelected]="leftMirrorLanguage.type"
+                [template]="mission.template">
+              </app-shared-questionnaire>
+            </app-shared-questionnaire-mirror-view>
+          </div>
+          <!-- /mirror: left side  -->
+
+          <!-- mirror: right side  -->
+          <div *ngIf="rightMirrorLanguage" [ngClass]="{'questionnaire-column': rightMirrorLanguage}">
+            <div class="d-flex flex-d-column p-bottom-20">
+              <app-shared-questionnaire-mirror-view
+                [showDropDown]="cardsLanguages && cardsLanguages.length > 3"
+                [(languageSelected)]="rightMirrorLanguage"
+                [languagesList]="cardsLanguages"
+                [languagesExcludedInSelector]="[leftMirrorLanguage, rightMirrorLanguage]">
+                <app-shared-questionnaire
+                  (templateChange)="updatePreset($event, 'TEMPLATE')"
+                  [cardsSections]="cardsSections"
+                  [isEditable]="canAccess(['edit'])"
+                  [languageSelected]="rightMirrorLanguage.type"
+                  [template]="mission.template">
+                </app-shared-questionnaire>
+              </app-shared-questionnaire-mirror-view>
+            </div>
+          </div>
+          <!-- mirror: right side  -->
+
+        </div>
       </ng-container>
 
       <ng-template #oldPresets>

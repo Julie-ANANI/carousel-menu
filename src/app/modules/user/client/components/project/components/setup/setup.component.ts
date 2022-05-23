@@ -1,6 +1,6 @@
-import {Component, HostListener, Inject, OnDestroy, OnInit, PLATFORM_ID} from '@angular/core';
+import { Component, HostListener, Inject, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
 import { Innovation } from '../../../../../../../models/innovation';
-import { first, takeUntil} from 'rxjs/operators';
+import { first, takeUntil } from 'rxjs/operators';
 import { Observable, Subject } from 'rxjs';
 import { NavigationEnd, Router } from '@angular/router';
 import { InnovationService } from '../../../../../../../services/innovation/innovation.service';
@@ -13,8 +13,9 @@ import { Mission } from '../../../../../../../models/mission';
 import { MissionFrontService } from '../../../../../../../services/mission/mission-front.service';
 import { environment } from '../../../../../../../../environments/environment';
 import { CanComponentDeactivate } from '../../../../../../../guards/can-deactivate-guard.service';
-import {RouteFrontService} from '../../../../../../../services/route/route-front.service';
-import {picto, Picto} from '../../../../../../../models/static-data/picto';
+import { RouteFrontService } from '../../../../../../../services/route/route-front.service';
+import { picto, Picto } from '../../../../../../../models/static-data/picto';
+import { Language } from "../../../../../../../models/static-data/language";
 
 interface Banner {
   message: string;
@@ -71,9 +72,13 @@ export class SetupComponent implements OnInit, OnDestroy, CanComponentDeactivate
 
   private _activeInnovCard: InnovCard = <InnovCard>{};
 
+  private _innoCardLanguages: Array<Language> = [];
+
+  private _languageSelected: Language;
+
   private _tabs: Array<Tab> = [
-    { route: 'pitch', name: 'PITCH', tracking: 'gtm-edit-market-targeting' },
-    { route: 'targeting', name: 'TARGETING', tracking: 'gtm-edit-market-targeting' },
+    {route: 'pitch', name: 'PITCH', tracking: 'gtm-edit-market-targeting'},
+    {route: 'targeting', name: 'TARGETING', tracking: 'gtm-edit-market-targeting'},
   ];
 
   private _showCardModal = false;
@@ -117,6 +122,8 @@ export class SetupComponent implements OnInit, OnDestroy, CanComponentDeactivate
         this._previewLink = `${environment.quizUrl}/quiz/${innovation._id}/preview`;
         this._initBanner();
         this._initInnovCard();
+
+        this._initInnoCardLanguage();
 
         this._hasDropdownLang = this._activeInnovCard.lang && this._innovation.innovationCards
           && this._innovation.innovationCards.length > 1;
@@ -169,6 +176,24 @@ export class SetupComponent implements OnInit, OnDestroy, CanComponentDeactivate
       return 'PROJECT_SETUP.BANNER_MESSAGES.DONE';
     } else {
       return '';
+    }
+  }
+
+  // TODO: refactor
+  private _initInnoCardLanguage() {
+    this._innoCardLanguages = [];
+    if (this._innovation && this._innovation.innovationCards && this._innovation.innovationCards.length) {
+      this._innovation.innovationCards.map(innoCard => {
+        if (!innoCard['hidden']) {
+          const language = {
+            type: innoCard.lang
+          };
+          language['hidden'] = innoCard['hidden'];
+          language['status'] = innoCard['status'] || 'EDITING';
+          this._innoCardLanguages.push(language);
+        }
+      })
+      this._languageSelected = this._innoCardLanguages.length > 0 && this._innoCardLanguages[0];
     }
   }
 
@@ -229,7 +254,7 @@ export class SetupComponent implements OnInit, OnDestroy, CanComponentDeactivate
         this._isAddingCard = false;
         this.closeModal();
         this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.SAVED_TEXT');
-        }, (err: HttpErrorResponse) => {
+      }, (err: HttpErrorResponse) => {
         this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
         this._isAddingCard = false;
         console.error(err);
@@ -258,15 +283,15 @@ export class SetupComponent implements OnInit, OnDestroy, CanComponentDeactivate
       this._isSavingProject = true;
       this._innovationService.save(this._innovation._id, {settings: this._innovation.settings})
         .pipe(first()).subscribe(() => {
-          this._isSavingProject = false;
-          this._saveChanges.state = false;
-          this._innovationFrontService.setNotifyChanges(this._saveChanges);
-          this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.SAVED_TEXT');
-          }, (err: HttpErrorResponse) => {
-          this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
-          this._isSavingProject = false;
-          console.error(err);
-        });
+        this._isSavingProject = false;
+        this._saveChanges.state = false;
+        this._innovationFrontService.setNotifyChanges(this._saveChanges);
+        this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.SAVED_TEXT');
+      }, (err: HttpErrorResponse) => {
+        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
+        this._isSavingProject = false;
+        console.error(err);
+      });
     }
   }
 
@@ -334,9 +359,23 @@ export class SetupComponent implements OnInit, OnDestroy, CanComponentDeactivate
     return this._activeSaveBadge;
   }
 
+
+  get languageSelected(): Language {
+    return this._languageSelected;
+  }
+
+  get innoCardLanguages(): Array<Language> {
+    return this._innoCardLanguages;
+  }
+
   ngOnDestroy(): void {
     this._ngUnsubscribe.next();
     this._ngUnsubscribe.complete();
   }
 
+  // TODO
+  selectLanguage(event: Event, language: Language) {
+    event.preventDefault();
+    this._languageSelected = language;
+  }
 }

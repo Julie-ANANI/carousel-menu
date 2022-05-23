@@ -8,17 +8,19 @@ import { AdminEditQuestionComponent } from './admin-edit-question/admin-edit-que
 import {FormsModule} from '@angular/forms';
 import {TextareaAutoResizeModule} from '../../../../../../directives/textareaAutoResize/textarea-auto-resize.module';
 import {ModalModule, TableModule} from '@umius/umi-common-component';
+import { SharedQuestionnaireMirrorViewModule } from "../../../../../shared/components/shared-questionnaire-mirror-view/shared-questionnaire-mirror-view.module";
 
 @NgModule({
-  imports: [
-    CommonModule,
-    TranslateModule.forChild(),
-    MessageErrorModule,
-    FormsModule,
-    TextareaAutoResizeModule,
-    ModalModule,
-    TableModule
-  ],
+    imports: [
+        CommonModule,
+        TranslateModule.forChild(),
+        MessageErrorModule,
+        FormsModule,
+        TextareaAutoResizeModule,
+        ModalModule,
+        TableModule,
+        SharedQuestionnaireMirrorViewModule
+    ],
   declarations: [
     AdminQuestionsLibraryComponent,
     AdminEditQuestionComponent

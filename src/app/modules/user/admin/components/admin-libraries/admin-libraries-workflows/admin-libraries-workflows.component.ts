@@ -11,12 +11,30 @@ import { ErrorFrontService } from "../../../../../../services/error/error-front.
 import { isPlatformBrowser } from "@angular/common";
 import { Response } from "../../../../../../models/response";
 import {UmiusConfigInterface, UmiusLocalStorageService} from '@umius/umi-common-component';
+import { TemplateFrontService } from "../../../../../../services/templates/template-front.service";
+import { Language } from "../../../../../../models/static-data/language";
 
 @Component({
   templateUrl: 'admin-libraries-workflows.component.html',
 })
 
 export class AdminLibrariesWorkflowsComponent implements OnInit {
+
+  private _workflowTemplateLanguages: Array<Language> = [
+    {
+      type: 'en'
+    }, {
+      type: 'fr'
+    }, {
+      type: 'es'
+    }, {
+      type: 'de'
+    },{
+      type: 'pt'
+    },{
+      type: 'it'
+    },
+  ];
 
   private _newScenarioName = '';
 
@@ -104,29 +122,14 @@ export class AdminLibrariesWorkflowsComponent implements OnInit {
     this._modalAdd = true;
   }
 
-  private _createEmail(step: string, language: string): EmailTemplate {
-    return {
-      step: step,
-      language: language,
-      profile: 'NEW',
-      subject: `${step.toLowerCase()} mail - ${language}`,
-      content: 'content',
-      modified: false,
-      nameWorkflow: this._newScenarioName,
-      signature: this._scenarioSignature
-    }
-  }
-
   public onClickConfirm() {
     if (!this._isAdding) {
       this._isAdding = true;
       const emails: Array<EmailTemplate> = [];
       const steps = ['FIRST', 'SECOND', 'THIRD', 'THANKS'];
-
-      const languages = ['en', 'fr'];
       steps.forEach((step: string) => {
-        languages.forEach((language: string) => {
-          emails.push(this._createEmail(step, language));
+        this._workflowTemplateLanguages.forEach((language: Language) => {
+          emails.push(TemplateFrontService.createEmail(step, language.type, this._newScenarioName, this._scenarioSignature));
         });
       });
 
@@ -212,6 +215,10 @@ export class AdminLibrariesWorkflowsComponent implements OnInit {
 
   get fetchingError(): boolean {
     return this._fetchingError;
+  }
+
+  get workflowTemplateLanguages(): Array<Language> {
+    return this._workflowTemplateLanguages;
   }
 
   get config(): UmiusConfigInterface {

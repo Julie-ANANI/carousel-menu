@@ -17,6 +17,7 @@ import {Response} from '../../models/response';
 import {UmiusConfigInterface, UmiusVideoInterface} from '@umius/umi-common-component';
 import {CacheType} from '../../models/cache';
 import {Consent} from '../../models/consent';
+import { Language } from "../../models/static-data/language";
 
 @Injectable({providedIn: 'root'})
 export class InnovationService {
@@ -45,8 +46,18 @@ export class InnovationService {
       {params: params, headers: new HttpHeaders().set('cache', cache)});
   }
 
-  public createInnovationCard(innovationId: string, innovationCardObj: InnovCard): Observable<InnovCard> {
-    return this._http.post<InnovCard>('/innovation/' + innovationId + '/innovationCard', innovationCardObj);
+  /**
+   * create innovation card with several languages
+   * @param innovationId
+   * @param innovationCardObj
+   * @param languagesToAdd
+   */
+  public createInnovationCard(innovationId: string, innovationCardObj: InnovCard, languagesToAdd: Array<Language> = []): Observable<Array<InnovCard>> {
+    const body = {
+      innovationCardObj: innovationCardObj,
+      languages: languagesToAdd
+    }
+    return this._http.post<Array<InnovCard>>('/innovation/' + innovationId + '/innovationCard', body);
   }
 
   public campaigns(innovationId: string): Observable<{result: Array<Campaign>}> {
@@ -69,6 +80,10 @@ export class InnovationService {
 
   public removeInnovationCard(innovationId: string, innovationCardId: string): Observable<any> {
     return this._http.delete('/innovation/' + innovationId + '/innovationCard/' + innovationCardId);
+  }
+
+  public editLanguageStatus(innovationId: string, innovationCardId: string, body: object): Observable<any> {
+    return this._http.put('/innovation/' + innovationId + '/innovationCard/' + innovationCardId + '/changeStatus', body);
   }
 
   public removeLanguage(innovationId: string, languages: string[]): Observable<any> {
@@ -191,6 +206,10 @@ export class InnovationService {
     return this._http.post(`/innovation/${innovationId}/addAmbassador`, {
       selectedProfessionals: professionalArray
     });
+  }
+
+  public changeVisibility(innovationId: string, innovationCardId: string, body: object): Observable<any>{
+    return this._http.put(`/innovation/${innovationId}/innovationCard/${innovationCardId}/changeLanguageVisibility`, body);
   }
 
   public shareSynthesis(projectId: string): Observable<any> {

@@ -24,6 +24,7 @@ interface IdentifierError {
   exist: boolean;
 }
 
+
 @Component({
   selector: 'app-shared-questionnaire-section',
   templateUrl: './shared-questionnaire-section.component.html',
@@ -56,6 +57,8 @@ export class SharedQuestionnaireSectionComponent implements OnInit {
   @Input() set section(value: MissionTemplateSection) {
     this._section = value || <MissionTemplateSection>{};
   }
+
+  @Input() languageSelected = 'en';
 
   /**
    * do not change this as we are using this under the Library page use case.
@@ -91,8 +94,6 @@ export class SharedQuestionnaireSectionComponent implements OnInit {
 
   private _isCheckingAvailability = false;
 
-  private _showTitlesLang = this.questionnaireLangs.length ? this.questionnaireLangs[0] : 'en';
-
   constructor(private _translateService: TranslateService,
               private _rolesFrontService: RolesFrontService,
               private _missionService: MissionService,
@@ -102,20 +103,7 @@ export class SharedQuestionnaireSectionComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this.prepareSectionName();
   }
-
-  // private prepareSectionName() {
-  //   for (const lang of ['en', 'fr']) {
-  //     if (!this.isLibraryView &&
-  //       this._section['index'] >= 0
-  //       && this.cardsSections[lang][this._section['index']]
-  //       && (this.cardsSections[lang][this._section['index']].title)) {
-  //       const entry = this._section.entry.find(e => e.lang === lang);
-  //       entry.name = this.cardsSections[lang][this._section['index']].title;
-  //     }
-  //   }
-  // }
 
   public addNewQuestion(event: Event) {
     event.preventDefault();
@@ -160,17 +148,13 @@ export class SharedQuestionnaireSectionComponent implements OnInit {
     }
   }
 
-  public changeTitlesLang() {
-    this._showTitlesLang = this._showTitlesLang === 'fr' ? 'en' : 'fr';
-  }
-
   public onChangeCardSection(value: string) {
     this._section.identifier = '';
 
     if (value === 'NOTHING') {
       this._section.type = 'NOTHING';
     } else {
-      const _find = this.cardsSections[this._showTitlesLang].find((_section: InnovCardSection) => _section._id === value);
+      const _find = this.cardsSections[this.languageSelected].find((_section: InnovCardSection) => _section._id === value);
       if (_find.type === 'OTHER') {
         this._section.identifier = _find.title;
       }
@@ -185,8 +169,8 @@ export class SharedQuestionnaireSectionComponent implements OnInit {
       return this._section.type;
     }
 
-    if (!!this.cardsSections[this._showTitlesLang].length) {
-      const _find = this.cardsSections[this._showTitlesLang].find((_section: InnovCardSection) => {
+    if (!!this.cardsSections[this.languageSelected].length) {
+      const _find = this.cardsSections[this.languageSelected].find((_section: InnovCardSection) => {
         return (_section.title === this._section.identifier) || (_section.type === this._section.type);
       });
       return _find && _find.title ? _find.title : this._section.type;
@@ -200,7 +184,7 @@ export class SharedQuestionnaireSectionComponent implements OnInit {
     if (this._section.identifier) {
       return this._section.identifier;
     }
-    const _find = this.cardsSections[this._showTitlesLang].find((_section: InnovCardSection) => _section.type === this._section.type);
+    const _find = this.cardsSections[this.languageSelected].find((_section: InnovCardSection) => _section.type === this._section.type);
     return _find && _find.title ? _find.title : this._section.type;
   }
 
@@ -361,10 +345,6 @@ export class SharedQuestionnaireSectionComponent implements OnInit {
     }
   }
 
-  get showTitlesLang(): string {
-    return this._showTitlesLang;
-  }
-
   get isCheckingAvailability(): boolean {
     return this._isCheckingAvailability;
   }
@@ -405,10 +385,6 @@ export class SharedQuestionnaireSectionComponent implements OnInit {
 
   get sectionTypes(): Array<string> {
     return this._sectionTypes;
-  }
-
-  get questionnaireLangs(): Array<string> {
-    return this._missionQuestionService.questionnaireLangs;
   }
 
   get cardsSections(): MissionCardTitle {

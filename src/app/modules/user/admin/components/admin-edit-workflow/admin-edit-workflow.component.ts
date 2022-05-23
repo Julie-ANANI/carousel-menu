@@ -4,6 +4,7 @@ import { EmailTemplate } from '../../../../../models/email-template';
 import { EmailSignature } from '../../../../../models/email-signature';
 import {EmailObject} from '../../../../../models/email';
 import {Column, Table, UmiusConfigInterface, UmiusSidebarInterface} from '@umius/umi-common-component';
+import { Language } from "../../../../../models/static-data/language";
 
 @Component({
   selector: 'app-admin-edit-workflow',
@@ -12,9 +13,11 @@ import {Column, Table, UmiusConfigInterface, UmiusSidebarInterface} from '@umius
 })
 export class AdminEditWorkflowComponent {
 
-  @Input() set innovationCardLanguages(value: string[]) {
-    this._innovationCardLanguages = value && value.length ? value : ['fr', 'en'];
-    this._language = this._innovationCardLanguages[0];
+  @Input() set innovationCardLanguages(value: Array<Language>) {
+    if (value && value.length) {
+      this._innovationCardLanguages = value;
+      this._languageSelected = this._innovationCardLanguages[0];
+    }
   }
 
   @Input() isEditable = false;
@@ -51,11 +54,11 @@ export class AdminEditWorkflowComponent {
 
   private _isModifiedFr = false;
 
-  private _innovationCardLanguages: string[] = [];
+  private _innovationCardLanguages: Array<Language> = [];
 
   private _inCampaign = false;
 
-  private _language = '';
+  private _languageSelected: Language;
 
   private _signatures: Array<EmailSignature> = [];
 
@@ -87,60 +90,62 @@ export class AdminEditWorkflowComponent {
   }
 
   private _initTable() {
-    const steps: any = {
-      FIRST: {step: 'FIRST', num: '01 - '},
-      SECOND: {step: 'SECOND', num: '02 - '},
-      THIRD: {step: 'THIRD', num: '03 - '},
-      THANKS: {step: 'THANKS', num: '04 - '},
-    };
+    if(!!this._innovationCardLanguages.length) {
+      const steps: any = {
+        FIRST: {step: 'FIRST', num: '01 - '},
+        SECOND: {step: 'SECOND', num: '02 - '},
+        THIRD: {step: 'THIRD', num: '03 - '},
+        THANKS: {step: 'THANKS', num: '04 - '},
+      };
 
-    this._campaignScenario.emails.forEach((email: EmailTemplate) => {
-      steps[email.step][email.language] = email;
-      email.defaultSignatureName = email.signature
-        ? email.signature.name
-        : 'Karine Caulfield'; //TODO why a workflow wouldn't have a signature??
-      email.status = email.modified ? email.modified.toString() : 'false';
-    });
-
-    this._emails = [steps.FIRST, steps.SECOND, steps.THIRD, steps.THANKS];
-
-    this._total = this._campaignScenario.emails.length;
-
-    const columns: Array<Column> = [
-      {
-        _attrs: ['num', `${this._language}.subject`],
-        _name: 'Emails',
-        _type: 'TEXT',
-        _choices: null,
-      },
-      {
-        _attrs: [`${this._language}.defaultSignatureName`],
-        _name: 'Signatures',
-        _type: 'TEXT',
-        _choices: null,
-      },
-    ];
-
-    if (this._inCampaign) {
-      columns.push({
-        _attrs: [`${this._language}.status`],
-        _name: 'Status',
-        _type: 'MULTI-CHOICES',
-        _choices: [
-          {_name: 'false', _alias: 'To modify', _class: 'label is-draft'},
-          {_name: 'true', _alias: 'Modified', _class: 'label is-success'},
-        ],
+      this._campaignScenario.emails.forEach((email: EmailTemplate) => {
+        steps[email.step][email.language] = email;
+        email.defaultSignatureName = email.signature
+          ? email.signature.name
+          : 'Karine Caulfield'; //TODO why a workflow wouldn't have a signature??
+        email.status = email.modified ? email.modified.toString() : 'false';
       });
-    }
 
-    this._tableInfos = {
-      _selector: 'admin-scenario',
-      _content: this._emails,
-      _total: this._total,
-      _clickIndex: 1,
-      _isNoMinHeight: true,
-      _columns: columns,
-    };
+      this._emails = [steps.FIRST, steps.SECOND, steps.THIRD, steps.THANKS];
+
+      this._total = this._campaignScenario.emails.length;
+
+      const columns: Array<Column> = [
+        {
+          _attrs: ['num', `${this._languageSelected.type}.subject`],
+          _name: 'Emails',
+          _type: 'TEXT',
+          _choices: null,
+        },
+        {
+          _attrs: [`${this._languageSelected.type}.defaultSignatureName`],
+          _name: 'Signatures',
+          _type: 'TEXT',
+          _choices: null,
+        },
+      ];
+
+      if (this._inCampaign) {
+        columns.push({
+          _attrs: [`${this._languageSelected.type}.status`],
+          _name: 'Status',
+          _type: 'MULTI-CHOICES',
+          _choices: [
+            {_name: 'false', _alias: 'To modify', _class: 'label is-draft'},
+            {_name: 'true', _alias: 'Modified', _class: 'label is-success'},
+          ],
+        });
+      }
+
+      this._tableInfos = {
+        _selector: 'admin-scenario',
+        _content: this._emails,
+        _total: this._total,
+        _clickIndex: 1,
+        _isNoMinHeight: true,
+        _columns: columns,
+      };
+    }
   }
 
   public editEmail(email: any) {
@@ -154,7 +159,6 @@ export class AdminEditWorkflowComponent {
   }
 
   public updateEmail(emailsObject: any) {
-    this._setModified();
 
     this._campaignScenario.emails = this._campaignScenario.emails.map(
       (email: EmailTemplate) => {
@@ -180,17 +184,22 @@ export class AdminEditWorkflowComponent {
     this.defaultScenarioChange.emit(this.defaultScenario);
   }
 
-  public changeLanguage(value: string) {
-    this._language = value;
+  public changeLanguage(value: Language) {
+    this._languageSelected = value;
     this._initTable();
   }
 
   private _setModified() {
-    this._isModifiedEn = this._isModified('en');
-    this._isModifiedFr = this._isModified('fr');
+    this._isModifiedEn = this.isModified('en');
+    this._isModifiedFr = this.isModified('fr');
   }
 
-  private _isModified(language: string) {
+
+  isModified(language: string) {
+    const emailsOfLanguage = this._campaignScenario.emails.filter(email => email.language === language);
+    if(!emailsOfLanguage.length){
+      return false;
+    }
     return this._campaignScenario.emails.reduce((acc, current) => {
       return acc && (current.language !== language || current.modified);
     }, true);
@@ -201,7 +210,7 @@ export class AdminEditWorkflowComponent {
   }
 
   public getId(): string {
-    return `${this._language}_${this._campaignScenario.name
+    return `${this._languageSelected}_${this._campaignScenario.name
       .replace(/\s/gi, '_')
       .toLowerCase()}`;
   }
@@ -246,8 +255,8 @@ export class AdminEditWorkflowComponent {
     return this._inCampaign;
   }
 
-  get language(): string {
-    return this._language;
+  get languageSelected(): Language {
+    return this._languageSelected;
   }
 
   get campaignScenario(): EmailScenario {
@@ -262,7 +271,7 @@ export class AdminEditWorkflowComponent {
     this._localConfig = value;
   }
 
-  get innovationCardLanguages(): string[] {
+  get innovationCardLanguages(): Array<Language> {
     return this._innovationCardLanguages;
   }
 }
