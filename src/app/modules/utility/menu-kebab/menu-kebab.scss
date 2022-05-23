@@ -1,6 +1,9 @@
+@import "~@umius/umi-style-framework/scss/variables";
+
 .carousel-wrapper {
   overflow: hidden;
 
+  //buttons controls
   :is(#btn-kebab, .icon-more-horiz) ::before {
     color: #4F5D6B;
     height:5px;
@@ -24,12 +27,6 @@
     color: #4F5D6B;
   }
 
-  .button.is-link{
-    font-size:12px;
-    color: #4F5D6B;
-    font-weight: bold;
-  }
-
   .btn__view{
     color: #4F5D6B;
     width: fit-content;
@@ -48,4 +45,27 @@
   .btn__prev {
     margin-top: -11px;
   }
+
+  //buttons items
+  .carousel__container__button{
+    margin-top: 6px;
+
+    &.button.is-link{
+      font-size:12px;
+      color: #4F5D6B;
+      font-weight: bold;
+    }
+
+    .primary-color{
+      color: $primary-color;
+      font-size: 14px;
+    }
+
+    &.text__button {
+      font-weight: 400;
+      font-size:12px;
+    }
+
+  }
+
 }

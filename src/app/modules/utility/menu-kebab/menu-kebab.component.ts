@@ -1,4 +1,4 @@
-import { Component, Inject, Input, PLATFORM_ID, OnInit, EventEmitter, Output, } from '@angular/core';
+import { Component, Inject, Input, PLATFORM_ID, OnInit, EventEmitter, Output } from '@angular/core';
 import { Subject } from 'rxjs';
 
 @Component({
@@ -14,13 +14,14 @@ export class MenuKebabComponent implements OnInit {
   @Input() showControls = true;
 
   //Size
-  @Input() minDelimitersOfItems = 7;
   @Input() menuHeight = '30px'
-  @Input() maxWidthItem = '6em'
+  @Input() minWidthItem = '6em'
 
   //color
   @Input() backgroundColor = '#e1e7ea';
-  @Input() textColor = '#00B0FF';
+  @Input() clickColor = '#00B0FF';
+  @Input() textColor = '#4F5D6B ';
+  @Input() btnRight = '39px';
 
   @Output() menuItemClicked: EventEmitter<any> = new EventEmitter();
 
@@ -36,15 +37,12 @@ export class MenuKebabComponent implements OnInit {
       this._initIndex = value.initIndex || 0;
       this._sources = value.sources || [];
       this._identifier = value.identifier || '';
-      this._type = value.type || '';
       this.setUpMenu();
-
     }
   }
 
   //Config Template
-  private _isDisplayItems = false;
-  private _displaySuiteKebabItems = true;
+  private _displaySuiteItems = true;
   private _ngUnsubscribe: Subject<any> = new Subject<any>();
   private _quantity: number = 0;
   private _identifier: string = '';
@@ -58,16 +56,10 @@ export class MenuKebabComponent implements OnInit {
   private _currentPagination = 1;
   private _maxPagination = 0;
 
-  constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
-  ) {
-  }
+  constructor(@Inject(PLATFORM_ID) protected _platformId: Object) {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
-  /**
-   *
-   */
   setUpMenu() {
     this._displayedItems = this._sources.slice(0, this._quantity);
     if (this._sources && this._sources.length > 0) {
@@ -75,11 +67,10 @@ export class MenuKebabComponent implements OnInit {
     }
   }
 
-
-  clickOnMenu(event: Event, item: any) {
+  clickOnMenu(event: Event, itemClicked: any) {
     event.preventDefault();
-    this._itemSelected = item;
-    this.menuItemClicked.emit(item);
+    this._itemSelected = itemClicked;
+    this.menuItemClicked.emit(itemClicked);
   }
 
   next() {
@@ -131,53 +122,17 @@ export class MenuKebabComponent implements OnInit {
     }
   }
 
-  /**
-   prev() {
-    let init = this._initIndex
-
-    if (this._displayedItems.length > 0) {
-      //when with have max length of sources
-      if (this._quantity === this.sources.length) {
-        this._quantity = this._initIndex;
-        //value of init view items must be displayed
-        init = this._initQuantity
-        this._initIndex = init;
-        this._displayedItems = this._sources.slice(this._initIndex, this._quantity);
-        return this.displayedItems;
-        //when with don't have view max length of sources
-      } else {
-        //back to old items
-        this._quantity = ((this._quantity + 1) - (this._initIndex + 1))
-        this._initIndex = (this._initIndex - (this._initQuantity));
-        this._displayedItems = this._sources.slice(this._initIndex, this._quantity);
-        return this.displayedItems;
-      }
-    } else {
-      return this.displayedItems;
-    }
-
-  }
-   */
-
   ngOnDestroy(): void {
     this._ngUnsubscribe.next();
     this._ngUnsubscribe.complete();
   }
 
-  get displaySuiteKebabItems(): boolean {
-    return this._displaySuiteKebabItems;
+  get displaySuiteItems(): boolean {
+    return this._displaySuiteItems;
   }
 
-  set displaySuiteKebabItems(value: boolean) {
-    this._displaySuiteKebabItems = value;
-  }
-
-  get isDisplayItems(): boolean {
-    return this._isDisplayItems;
-  }
-
-  set isDisplayItems(value: boolean) {
-    this._isDisplayItems = value;
+  set displaySuiteItems(value: boolean) {
+    this._displaySuiteItems = value;
   }
 
   get quatity(): number {
@@ -219,4 +174,5 @@ export class MenuKebabComponent implements OnInit {
   get maxPagination(): number {
     return this._maxPagination;
   }
+
 }
