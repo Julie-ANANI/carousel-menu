@@ -273,7 +273,7 @@
                               <div class=" flex-start tooltip is-multiline" data-tooltip="This language is visible on client side. Click on the eye to mask it">
                                 <i class="fa fa-eye text-primary text-lg m-right-10" (click)="changeVisibility(inno, $event)"></i>
                                 <div  [ngClass]="statusClass(inno.status)" class="text-center status">
-                                  {{capitalize(inno.status)}}
+                                  {{ inno.status | titlecase }}
                                 </div>
                               </div>
                               <div *ngIf="inno.shotSent" class="  w-100 text-center tooltip is-multiline" data-tooltip="This language can't be deleted because workflows have already been sent in this language.">
@@ -284,7 +284,7 @@
                               <div class="  flex-around tooltip is-multiline" data-tooltip="This language is masked on client side. Click on the eye to unmask it">
                                 <i class="fa fa-eye-slash text-primary text-lg" (click)="changeVisibility(inno, $event)"></i>
                                 <div  [ngClass]="statusClass(inno.status)" class="text-capitalize text-center status">
-                                  {{capitalize(inno.status)}}
+                                  {{inno.status | titlecase }}
                                 </div>
                               </div>
                               <div *ngIf="inno.shotSent" class="  w-100 text-center tooltip is-multiline" data-tooltip="This language can't be deleted because workflows have already been sent in this language.">
@@ -302,13 +302,13 @@
                             <div *ngIf="inno.hidden" class="w-150   text-center tooltip is-multiline" data-tooltip="This language is masked on client side. Click on the eye to unmask it" >
                               <i class="fa fa-eye-slash text-primary text-lg" (click)="changeVisibility(inno, $event)"></i>
                               <div  [ngClass]="statusClass(inno.status)" class="text-capitalize text-center status">
-                                {{capitalize(inno.status)}}
+                                {{inno.status | titlecase }}
                               </div>
                             </div>
                             <div *ngIf="!inno.hidden" class="w-150   text-center tooltip is-multiline" data-tooltip="This language is masked on client side. Click on the eye to unmask it" >
                               <i class="fa fa-eye text-primary text-lg" (click)="changeVisibility(inno, $event)"></i>
                               <div  [ngClass]="statusClass(inno.status)" class="text-capitalize text-center status">
-                                {{capitalize(inno.status)}}
+                                {{inno.status | titlecase }}
                               </div>
                             </div>
                             <div class="w-100 float-right text-center tooltip is-multiline" data-tooltip="This language can't be deleted because workflows have already been sent in this language.">
