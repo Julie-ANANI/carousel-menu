@@ -194,11 +194,10 @@
                       <img
                         style="cursor: pointer; width: 100%; height: 100%; object-fit: cover; background-color: #ececec"
                         (click)="toggleDisplayMediaSlider('showSelected', i+1)"
-                        [src]="mediaSrc(media)"
+                        [src]="activeInnovCard.media[i+1].url + '?a=' + activeInnovCard.media[i+1].cloudinary.version"
                         alt=" "
                         class="img-responsive" >
                     </figure>
-<!--                    (click)="toggleDisplayMediaSlider('showSelected', i+1)"-->
                     <!-- /if type === 'PHOTO' -->
                   </div>
                 </ng-container>
@@ -432,6 +431,7 @@
   <app-sidebar-project-pitch
     (newCardContent)="updateMedias($event)"
     (saveProject)="onSaveProject($event)"
+    (mediaIndex)="getMediaIndex($event)"
     (tobeSavedChanges)="onChangesToBeSaved($event)"
     [(isSaving)]="isSaving"
     [cardContent]="cardContent"

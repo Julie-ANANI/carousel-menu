@@ -85,6 +85,8 @@ export class PitchComponent implements OnInit, OnDestroy, AfterViewChecked {
 
   private _displayMediaSlider = false;
 
+  private _editedMediaIndex: number | undefined  = undefined;
+
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _etherpadService: EtherpadService,
               private _innovationService: InnovationService,
@@ -167,9 +169,7 @@ export class PitchComponent implements OnInit, OnDestroy, AfterViewChecked {
         }
       }
       this._mediaFilter = this.activeInnovCard.media.slice(1, 4);
-
     }
-    console.log('filter:', this.mediaFilter, 'card', this.cardContent)
 
   }
 
@@ -334,6 +334,10 @@ export class PitchComponent implements OnInit, OnDestroy, AfterViewChecked {
     return this._etherpadFrontService.buildPadIdOldInnovation(sectionType, _sectionIndex, this.activeInnovCard.lang);
   }
 
+  public getMediaIndex(event: number) {
+    this._editedMediaIndex = event;
+  }
+
   public onSaveProject(event: { type: string, content: any }) {
     if (event.type && this.isEditable && this._isSaving && !this._isSubmitting) {
 
@@ -376,11 +380,17 @@ export class PitchComponent implements OnInit, OnDestroy, AfterViewChecked {
           break;
 
         case 'IMAGE':
-          this._innovation.innovationCards[this._activeCardIndex].media.push(event.content);
+          if (this._editedMediaIndex === 0 || this._editedMediaIndex > 0) {
+            console.log('index', this._editedMediaIndex);
+            this._innovation.innovationCards[this._activeCardIndex].media[this._editedMediaIndex] = event.content;
+          } else {
+            this._innovation.innovationCards[this._activeCardIndex].media.push(event.content);
+          }
           if (!this._innovation.innovationCards[this._activeCardIndex].principalMedia) {
             this._innovation.innovationCards[this._activeCardIndex].principalMedia = event.content;
           }
           this._cardContent = this.activeInnovCard.media;
+          console.log('card content', this._cardContent)
           this._updateProject('image');
           break;
 
@@ -787,6 +797,10 @@ export class PitchComponent implements OnInit, OnDestroy, AfterViewChecked {
 
   get displayMediaSlider(): boolean {
     return this._displayMediaSlider;
+  }
+
+  get editedMediaIndex(): number  {
+    return this._editedMediaIndex;
   }
 
   ngOnDestroy(): void {

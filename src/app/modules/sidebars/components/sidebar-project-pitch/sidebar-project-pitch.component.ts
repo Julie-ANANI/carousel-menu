@@ -99,6 +99,8 @@ export class SidebarProjectPitchComponent implements OnInit, OnChanges, OnDestro
   @Output() newCardContent : EventEmitter<[]> = new EventEmitter();
   content : [] = this.cardContent;
 
+  @Output() mediaIndex = new EventEmitter<number>();
+
   // 'TITLE' | 'SUMMARY' | 'ISSUE' | 'SOLUTION' | 'MEDIA' | 'OTHER' | 'CONTEXT'
   @Input() type: CardSectionTypes = '';
 
@@ -152,7 +154,6 @@ export class SidebarProjectPitchComponent implements OnInit, OnChanges, OnDestro
 
   private _updateMediaFilter() {
     this._mediaFitler = this.cardContent.slice(1, 4);
-    console.log('sidebar mediafilter update', this._mediaFitler, 'medias', this.cardContent)
   }
 
   constructor(private _innovationFrontService: InnovationFrontService,
@@ -324,6 +325,9 @@ export class SidebarProjectPitchComponent implements OnInit, OnChanges, OnDestro
     if (media && type && this.isEditable) {
       this.isSavingChange.emit(true);
       this.saveProject.emit({type: type, content: media});
+    }
+    if (this._editedMediaIndex === 0 || this._editedMediaIndex > 0) {
+      this.cardContent[this._editedMediaIndex] = media;
     }
     this.toggleDisplayUploadOverlay();
     this._updateMediaFilter();
@@ -650,6 +654,7 @@ export class SidebarProjectPitchComponent implements OnInit, OnChanges, OnDestro
 
   public setEditedMediaIndex(index: any) {
     this._editedMediaIndex = index;
+    this.mediaIndex.emit(index);
   }
 
 
