@@ -167,9 +167,18 @@ export class PitchComponent implements OnInit, OnDestroy, AfterViewChecked {
         }
       }
       this._mediaFilter = this.activeInnovCard.media.slice(1, 4);
+
     }
+    console.log('filter:', this.mediaFilter, 'card', this.cardContent)
 
   }
+
+  public updateMedias(data: any){
+    this.activeInnovCard.media = data;
+    this._mediaFilter = data.slice(1, 4);
+    console.log('new media array', this.activeInnovCard.media, 'filter', this._mediaFilter);
+  }
+
 
   public sectionCommentLabel(section: string, etherpadElementId = ''): boolean {
     let comments;

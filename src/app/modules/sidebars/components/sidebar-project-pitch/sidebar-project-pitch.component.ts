@@ -2,15 +2,20 @@ import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, S
 import { PitchHelpFields } from '../../../../models/static-data/project-pitch';
 import { CommonService } from '../../../../services/common/common.service';
 import { InnovationFrontService } from '../../../../services/innovation/innovation-front.service';
-import { CardComment, CardSectionTypes } from '../../../../models/innov-card';
+import {CardComment, CardSectionTypes} from '../../../../models/innov-card';
 import { CollaborativeComment } from '../../../../models/collaborative-comment';
 import { picto } from '../../../../models/static-data/picto';
-import { takeUntil } from 'rxjs/operators';
+import {first, takeUntil} from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { SocketService } from '../../../../services/socket/socket.service';
 import { EtherpadFrontService } from '../../../../services/etherpad/etherpad-front.service';
 import { MediaFrontService } from '../../../../services/media/media-front.service';
 import {UmiusMediaInterface, UmiusModalMedia, UmiusVideoInterface} from '@umius/umi-common-component';
+import {HttpErrorResponse} from "@angular/common/http";
+import {ErrorFrontService} from "../../../../services/error/error-front.service";
+import { InnovationService } from '../../../../services/innovation/innovation.service';
+import {TranslateNotificationsService} from "../../../../services/translate-notifications/translate-notifications.service";
+import {Innovation} from "../../../../models/innovation";
 // import {HttpErrorResponse} from "@angular/common/http";
 
 /***
@@ -82,9 +87,17 @@ export class SidebarProjectPitchComponent implements OnInit, OnChanges, OnDestro
   }
 
   @Input() innovationId: string;
+  @Input() activeInnovCardId: string;
+  @Input() activeCardIndex: number;
+  @Input() innovation: Innovation;
   @Input() sectionId: string;
 
   @Input() cardContent: any = '';
+
+  @Input() inputFromParent: any;
+
+  @Output() newCardContent : EventEmitter<[]> = new EventEmitter();
+  content : [] = this.cardContent;
 
   // 'TITLE' | 'SUMMARY' | 'ISSUE' | 'SOLUTION' | 'MEDIA' | 'OTHER' | 'CONTEXT'
   @Input() type: CardSectionTypes = '';
@@ -139,11 +152,14 @@ export class SidebarProjectPitchComponent implements OnInit, OnChanges, OnDestro
 
   private _updateMediaFilter() {
     this._mediaFitler = this.cardContent.slice(1, 4);
+    console.log('sidebar mediafilter update', this._mediaFitler, 'medias', this.cardContent)
   }
 
   constructor(private _innovationFrontService: InnovationFrontService,
               private _etherpadFrontService: EtherpadFrontService,
-              private _socketService: SocketService) {
+              private _socketService: SocketService,
+              private _innovationService: InnovationService,
+              private _translateNotificationsService: TranslateNotificationsService) {
   }
 
   ngOnInit(): void {
@@ -311,6 +327,44 @@ export class SidebarProjectPitchComponent implements OnInit, OnChanges, OnDestro
     }
     this.toggleDisplayUploadOverlay();
     this._updateMediaFilter();
+    if (type !== 'VIDEO' && (this.cardContent[0]['cloudinary'].width / this.cardContent[0]['cloudinary'].height) < 4/3) {
+      this._mainContainerStyle = {
+        width: 'fit-content',
+        height: '408px',
+        'align-content': 'flex-start',
+        'align-items': 'flex-start',
+        'gap': '8px'
+      };
+      this._mainMediaContainerStyle = {
+        width: '290px',
+        height: '100%'
+      };
+      if (this.cardContent.length > 1) {
+        this._secondaryContainerStyle = {
+          'flex-direction': 'column',
+          height: '100%',
+        };
+      }
+    } else if (type === 'VIDEO' || (this.cardContent[0]['cloudinary'].width / this.cardContent[0]['cloudinary'].height) > 4/3) {
+      this._mainContainerStyle = {
+        width: '528px',
+        height: 'auto',
+        'place-items': 'center',
+        'box-sizing': 'border-box',
+        'gap': '8px'
+      };
+      this._mainMediaContainerStyle = {
+        width: '100%',
+        height: '290px'
+      };
+      if (this.cardContent.length > 1) {
+        this._secondaryContainerStyle = {
+          'flex-direction': 'row',
+          width: '100%',
+        };
+      }
+    }
+
   }
 
   /***
@@ -341,12 +395,147 @@ export class SidebarProjectPitchComponent implements OnInit, OnChanges, OnDestro
    * when the user clicks on the Set as main media button to set the media as a main media
    * @param media
    */
-  public onSetPrincipal(media: any, index?: number) {
+
+  public updateCardContent() {
+    this.content = this.cardContent;
+    this.newCardContent.emit(this.content);
+  }
+
+  public onSetPrincipal(media: UmiusMediaInterface, index?: number) {
+    if (media.type !== 'VIDEO' && (media.cloudinary.width / media.cloudinary.height) < 4/3) {
+      this._mainContainerStyle = {
+        width: 'fit-content',
+        height: '408px',
+        'align-content': 'flex-start',
+        'align-items': 'flex-start',
+        'row-gap': '8px'
+      };
+      this._mainMediaContainerStyle = {
+        width: '290px',
+        height: '100%'
+      };
+      if (this.cardContent.length > 1) {
+        this._secondaryContainerStyle = {
+          //'row-gap': '8px',
+          'flex-direction': 'column',
+          height: '100%',
+          'padding-left': '8px'
+        };
+      }
+    } else if (media.type === 'VIDEO' || (media.cloudinary.width / media.cloudinary.height) > 4/3) {
+      this._mainContainerStyle = {
+        width: '528px',
+        height: 'auto',
+        'place-items': 'center',
+        'box-sizing': 'border-box',
+        'column-gap': '8px'
+      };
+      this._mainMediaContainerStyle = {
+        width: '100%',
+        height: '290px'
+      };
+      if (this.cardContent.length > 1) {
+        this._secondaryContainerStyle = {
+          //'column-gap': '8px',
+          'flex-direction': 'row',
+          width: '100%',
+          'padding-top': '8px'
+        };
+      }
+    }
+
+      this._innovationService.setPrincipalMediaOfInnovationCard(this.innovationId, this.activeInnovCardId, media._id, index)
+        .pipe(first())
+        .subscribe((data: any) => {
+         /* if (index) {   // when a secondary media is set as main media, switch their places in the medias array
+            this.cardContent[0] = media; // place new media at index 0
+            // delete video if main media was a video because videos can't be secondary medias
+            if (this.mainMedia && this.mainMedia.type === 'VIDEO' && media.type !== 'VIDEO') {
+              const mainVideoId = this.mainMedia._id;
+              this._innovationService.deleteMediaOfInnovationCard(this.innovationId, this.activeInnovCardId, mainVideoId)
+                .pipe(first())
+                .subscribe(() => {*/
+                  const previousMainMedia = this.mainMedia;
+                  this.cardContent = data.innovationCards[0].media;
+                  this.mainMedia = media;
+                  this._updateMediaFilter();
+                  this.updateCardContent();
+                  this.isSavingChange.emit(true);
+                  this.saveProject.emit({type: 'MAIN_MEDIA', content: <UmiusMediaInterface>media});
+                  this._translateNotificationsService.success('Success', 'The media has been set as a principal media.');
+                  if (previousMainMedia['type'] === 'VIDEO' && media['type'] !== 'VIDEO') {
+                    this._translateNotificationsService.success('Success', 'The video has been deleted.');
+                  }
+                 /* this.cardContent = this.cardContent.filter((_media: UmiusMediaInterface) => _media._id !== mainVideoId);
+                  this.cardContent.splice(index, 1);
+                  this.innovation.innovationCards[this.activeCardIndex].media = this.cardContent;
+                  this._translateNotificationsService.success('Success', 'The video has been deleted.');
+                }, (err: HttpErrorResponse) => {
+                  this._translateNotificationsService.error('Media Deleting Error...', ErrorFrontService.getErrorKey(err.error));
+                  console.error(err);
+                });*/
+           /* } else {
+              this.cardContent[index] = this.cardContent[0];
+            }
+          }
+          this.cardContent[0] = media;
+          this._updateMediaFilter();
+          this.isSavingChange.emit(true);
+          this.saveProject.emit({type: 'MAIN_MEDIA', content: <UmiusMediaInterface>media});
+          //this._emitUpdatedInnovation();
+          this._translateNotificationsService.success('Success', 'The media has been set as a principal media.');*/
+        }, (err: HttpErrorResponse) => {
+          this._translateNotificationsService.error('Principal Media Error...', ErrorFrontService.getErrorKey(err.error));
+          console.error(err);
+        });
+    }
+
+  /*public onSetPrincipal(media: any, index?: number) {
     if (media && this.isNotMainMedia(media) && !this._isSaving && this.isEditable) {
+      const previousMainMedia = this.cardContent[0];
+      this.cardContent[0] = media;
+      this.cardContent[index] = previousMainMedia;
       this.isSavingChange.emit(true);
       this.saveProject.emit({type: 'MAIN_MEDIA', content: <UmiusMediaInterface>media});
+      if (media.type !== 'VIDEO' && (media.cloudinary.width / media.cloudinary.height) < 4/3) {
+        this._mainContainerStyle = {
+          width: 'fit-content',
+          height: '408px',
+          'align-content': 'flex-start',
+          'align-items': 'flex-start',
+          'gap': '8px'
+        };
+        this._mainMediaContainerStyle = {
+          width: '290px',
+          height: '100%'
+        };
+        if (this.cardContent.length > 1) {
+          this._secondaryContainerStyle = {
+            'flex-direction': 'column',
+            height: '100%',
+          };
+        }
+      } else if (media.type === 'VIDEO' || (media.cloudinary.width / media.cloudinary.height) > 4/3) {
+        this._mainContainerStyle = {
+          width: '528px',
+          height: 'auto',
+          'place-items': 'center',
+          'box-sizing': 'border-box',
+          'gap': '8px'
+        };
+        this._mainMediaContainerStyle = {
+          width: '100%',
+          height: '290px'
+        };
+        if (this.cardContent.length > 1) {
+          this._secondaryContainerStyle = {
+            'flex-direction': 'row',
+            width: '100%',
+          };
+        }
+      }
     }
-  }
+  }*/
 
   /***
    * when the user clicks on the Delete media button

@@ -430,6 +430,7 @@
 <!-- sidebar to edit innovation card field -->
 <umius-sidebar-full *ngIf="activeSection.etherpadElementId" [(template)]="sidebarValue" style="z-index: 5 !important">
   <app-sidebar-project-pitch
+    (newCardContent)="updateMedias($event)"
     (saveProject)="onSaveProject($event)"
     (tobeSavedChanges)="onChangesToBeSaved($event)"
     [(isSaving)]="isSaving"
@@ -438,6 +439,9 @@
     [comment]="operatorComment"
     [imagePostUri]="imagePostUri"
     [innovationId]="innovation._id"
+    [activeInnovCardId]="activeInnovCard._id"
+    [innovation]="innovation"
+    [activeCardIndex]="_activeCardIndex"
     [isEditable]="isEditable"
     [isUploadingVideo]="isUploadingVideo"
     [mainMedia]="activeInnovCard.principalMedia"
