@@ -9,12 +9,6 @@ import {Subject} from 'rxjs';
 })
 
 export class MenuKebabComponent implements OnInit {
-  get initView(): boolean {
-    return this._initView;
-  }
-  get initViewLess(): boolean {
-    return this._initViewLess;
-  }
 
   //config button controls
   @Input() showControls = true;
@@ -59,10 +53,6 @@ export class MenuKebabComponent implements OnInit {
   private _itemSelected: string = '';
   private _initQuantity: number;
   private _initIndex: number = 0;
- // private _currentItem: any;
-  private _initViewLess: boolean = true;
-  private _initView : boolean = true;
-  hidden: boolean = true;
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object) {}
 
@@ -70,7 +60,6 @@ export class MenuKebabComponent implements OnInit {
 
   clickOnMenu(event: Event, item: string) {
     event.preventDefault();
-    //this._currentItem = item;
     this.menuItemClicked.emit(item);
   }
 
@@ -126,6 +115,11 @@ export class MenuKebabComponent implements OnInit {
 
   }
 
+  ngOnDestroy(): void {
+    this._ngUnsubscribe.next();
+    this._ngUnsubscribe.complete();
+  }
+
   get displaySuiteKebabItems(): boolean {
     return this._displaySuiteKebabItems;
   }
@@ -140,11 +134,6 @@ export class MenuKebabComponent implements OnInit {
 
   set isDisplayItems(value: boolean) {
     this._isDisplayItems = value;
-  }
-
-  ngOnDestroy(): void {
-    this._ngUnsubscribe.next();
-    this._ngUnsubscribe.complete();
   }
 
   get quatity(): number {
@@ -178,5 +167,3 @@ export class MenuKebabComponent implements OnInit {
     return this._initQuantity;
   }
 }
-
-
