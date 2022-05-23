@@ -5,42 +5,35 @@
   <div class="d-flex flex-wrap-nowrap relative"
        [ngStyle]="{'height': menuHeight}">
 
-      <!-- button prev  -->
-      <div (click)="prev()"
-           id="btn__prev"
-           *ngIf="showControls && !displaySuiteKebabItems && displayedItems.length === initQuantity && displayedItems.length === initIndex"
-           class="icon-container is-xl is-overlay redy"><i class="btn__prev icon icon-arrow-left is-lg"></i>
-      </div>
-      <!-- end button prev -->
+    <!-- button prev  -->
+    <div (click)="prev()"
+         id="btn__prev"
+         *ngIf="showControls && !displaySuiteKebabItems && initIndex !== 0"
+         class="icon-container is-xl is-overlay"><i class="btn__prev icon icon-arrow-left is-lg"></i>
+    </div>
+    <!-- end button prev -->
 
-      <!-- always template display -->
+    <!-- always template display -->
     <div>
       <ng-container class="d-flex carousel-inner tab text-capitalize"
                     *ngFor="let item of displayedItems; let i = index">
-        <button class="button is-link m-left-10 text-normal blue"
-                (click)="clickOnMenu($event, item.type)"
-                *ngIf="displayedItems.length && displaySuiteKebabItems && displayedItems.length === initQuantity"
-                [ngClass]="{'text-underline': item?.type === itemSelected}"
-                [ngStyle]="{'min-width': maxWidthItem, 'margin-right': '39px', 'color': textColor}">{{item[identifier]}}
-        </button>
-
         <button class="button is-link m-left-10 text-normal redy"
                 (click)="clickOnMenu($event, item.type)"
-                *ngIf="!displaySuiteKebabItems && displayedItems.length === initQuantity && displayedItems.length === initIndex"
+                *ngIf="!displaySuiteKebabItems"
                 [ngClass]="{'text-underline': item?.type === itemSelected}"
                 [ngStyle]="{'min-width': maxWidthItem, 'margin-right': '39px', 'color': textColor}">{{item[identifier]}}
         </button>
       </ng-container>
 
-<!--      <ul>-->
-<!--        <li>Item 1</li>-->
-<!--        <li>Item 2</li>-->
-<!--        <li class="hidden" *ngIf ="hidden">Item 3</li>-->
-<!--        <li class="hidden" *ngIf ="hidden">Item 4</li>-->
-<!--      </ul>-->
-
-
-
+      <ng-container class="d-flex carousel-inner tab text-capitalize"
+                    *ngFor="let item of sources; let i = index">
+        <button class="button is-link m-left-10 text-normal blue"
+                (click)="clickOnMenu($event, item.type)"
+                *ngIf="displayedItems.length && displaySuiteKebabItems && i < 8"
+                [ngClass]="{'text-underline': item?.type === itemSelected}"
+                [ngStyle]="{'min-width': maxWidthItem, 'margin-right': '39px', 'color': textColor}">{{item[identifier]}}
+        </button>
+      </ng-container>
     </div>
 
     <div class="d-flex">
@@ -54,14 +47,14 @@
     </div>
 
       <div (click)="next()"
-           *ngIf="showControls && !displaySuiteKebabItems && displayedItems.length === initQuantity && displayedItems.length === initIndex"
+           *ngIf="showControls && !displaySuiteKebabItems && quatity !== sources.length && displayedItems.length"
            class="btn__next icon-container is-xl is-overlay redy"
            ><i class="icon icon-arrow-right is-lg"></i>
       </div>
 
     <div class="d-flex m-left-20 view__less redy">
-      <div *ngIf="sources.length && !displaySuiteKebabItems && hidden"
-           (click)="displaySuiteKebabItems"
+      <div *ngIf="!displaySuiteKebabItems && displayedItems.length > 1"
+           (click)="displaySuiteKebabItems = !displaySuiteKebabItems"
             class="text-sm text-bold btn__view">View less
       </div>
     </div>
@@ -69,3 +62,75 @@
   </div>
 
 </section>
+
+
+
+
+
+<!-- We create template for this utility-->
+<section class="sticky header-wrapper carousel-wrapper p-20 m-left-100"
+         [ngStyle]="{'background-color': backgroundColor}">
+
+  <div class="d-flex flex-wrap-nowrap relative"
+       [ngStyle]="{'height': menuHeight}">
+
+    <!-- button prev  -->
+    <div (click)="prev()"
+         id="btn__prev"
+         *ngIf="showControls && !displaySuiteKebabItems && initIndex !== 0"
+         class="icon-container is-xl is-overlay"><i class="btn__prev icon icon-arrow-left is-lg"></i>
+    </div>
+    <!-- end button prev -->
+
+    <!-- always template display -->
+    <div>
+
+      <ng-container class="d-flex carousel-inner tab text-capitalize"
+                    *ngFor="let item of displayedItems; let i = index">
+
+        <!--        <button class="button btn-primary"-->
+        <!--                (click)="clickOnMenu($event, item)"-->
+        <!--                *ngIf="i < minDelimitersOfItems"-->
+        <!--                [ngStyle]="{'min-width': maxWidthItem, 'margin-right': '39px'}">{{item[identifier]}}-->
+        <!--        </button>-->
+
+        <button class="button is-link m-left-10 text-normal"
+                (click)="clickOnMenu($event, item.type)"
+                *ngIf="i < 8"
+                [ngClass]="{'text-underline': item?.type === itemSelected}"
+                [ngStyle]="{'min-width': maxWidthItem, 'margin-right': '39px', 'color': textColor}">{{item[identifier]}}
+        </button>
+
+      </ng-container>
+    </div>
+
+    <!-- end always template display -->
+
+    <div class="d-flex">
+      <div id="btn-kebab"
+           *ngIf="displayedItems.length > 4 && displaySuiteKebabItems"
+           class="icon-container is-xl is-overlay"
+           (click)="displaySuiteKebabItems = !displaySuiteKebabItems">
+        <i class="icon icon-more-horiz is-lg"></i>
+        <p class="text-sm text-bold btn__view">View more</p>
+      </div>
+    </div>
+
+    <div (click)="next()"
+         *ngIf="showControls && !displaySuiteKebabItems && quatity !== sources.length && displayedItems.length > 0"
+         class="btn__next icon-container is-xl is-overlay"
+    ><i class="icon icon-arrow-right is-lg"></i>
+    </div>
+
+    <div class="d-flex m-left-20 view__less">
+      <div *ngIf=" sources.length && !displaySuiteKebabItems && displayedItems.length > 4"
+           (click)="displaySuiteKebabItems = !displaySuiteKebabItems"
+           class="text-sm text-bold btn__view">View less
+      </div>
+    </div>
+
+  </div>
+
+</section>
+
+
