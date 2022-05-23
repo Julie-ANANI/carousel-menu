@@ -793,14 +793,6 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
     }
   }
 
-  public capitalize(str:string) {
-    if(str === "DONE"){
-      return "Ok";
-    } else {
-      return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
-    }
-  }
-
   public canBeEdited() {
     return this._canBeEdited;
   }
