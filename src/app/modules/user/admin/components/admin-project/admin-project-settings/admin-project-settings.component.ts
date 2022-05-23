@@ -469,7 +469,6 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
 
   public checked(event: Event){
     event.preventDefault();
-
     const elementId: string = (event.target as Element).id;
     this._checked[elementId] = true;
     if (Object.values(this._checked).every(value => value)){
@@ -584,6 +583,8 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
     event.preventDefault();
     this.bulkEditReset();
     card.selected = !card.selected;
+    let foundIndex = this._projectLanguages.findIndex(x => x._id == card._id);
+    this._projectLanguages[foundIndex] = card;
     if(this._projectLanguages.every((card) => card.selected === true)){
         this._allSelected = true;
     } else {
@@ -694,8 +695,6 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
     if (!this._isSaving) {
       this._isSaving = true;
     }
-    this._innovationFrontService.setInnovation(this._innovation);
-    event.preventDefault();
     let lang = this._projectLanguages.filter((card)=> card.selected === true);
     this._projectLanguages = this._projectLanguages.filter((card)=> card.selected === false);
     lang.forEach((l)=> {

@@ -86,10 +86,6 @@ export class InnovationService {
     return this._http.put('/innovation/' + innovationId + '/innovationCard/' + innovationCardId + '/changeStatus', body);
   }
 
-  public removeLanguage(innovationId: string, languages: string[]): Observable<any> {
-    return this._http.put('/innovation/' + innovationId + '/languages/', {languages: languages});
-  }
-
   /**
    *
    * @param innovationCardId - get the card form the route '/innovation/card/:innovationCardId'
