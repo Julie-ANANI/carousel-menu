@@ -713,6 +713,7 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
           }
         );
     });
+    this.bulkEditReset();
     this.closeModal(event);
   }
 
