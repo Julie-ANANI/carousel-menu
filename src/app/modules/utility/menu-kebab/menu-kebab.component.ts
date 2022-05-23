@@ -67,26 +67,7 @@ export class MenuKebabComponent implements OnInit {
     event.preventDefault();
     this._itemSelected = item;
     this.menuItemClicked.emit(item);
-
-    // if (this.activeCard && !(this._cardToDelete._id)) {
-    //   this._itemSelected = item;
-    //   this._activeCardIndex = InnovationFrontService.currentLangInnovationCard(this._project, item, 'INDEX');
-    //   this._setActiveCardIndex();
-    // }
   }
-
-  //test
-  // private _setActiveCardIndex() {
-  //   this._innovationFrontService.setActiveCardIndex(this._activeCardIndex);
-  // }
-  // private _cardToDelete: InnovCard = <InnovCard>{};
-  // get activeCard(): InnovCard {
-  //   return InnovationFrontService.activeCard(this._project, this._activeCardIndex);
-  // }
-  //
-  // private _project: Innovation = <Innovation>{};
-  // private _activeCardIndex = 0;
-  //
 
   next() {
     let viewToView = (this._quatity);

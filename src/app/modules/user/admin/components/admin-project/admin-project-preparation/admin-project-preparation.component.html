@@ -122,19 +122,38 @@
                *ngIf="activeTab === 'description'">
         <div class="d-flex align-center">
 
-          <div
-            class="kebab-menu">
-            <app-utility-carousel-menu
-              (menuItemClicked)="getMenuClicked($event)"
-              [config]="{
-                   quatity: 8,
-                   initQuantity: 8,
-                   identifier: 'alias',
-                   type : 'type',
-                   sources: innoCardLanguages}">
-            </app-utility-carousel-menu>
-          </div>
+<!--            <app-utility-carousel-menu-->
+<!--              (menuItemClicked)="getMenuClicked($event)"-->
+<!--              [config]="{-->
+<!--                   quatity: 8,-->
+<!--                   initQuantity: 8,-->
+<!--                   identifier: 'alias',-->
+<!--                   type : 'type',-->
+<!--                   sources: innoCardLanguages}">-->
+<!--            </app-utility-carousel-menu>-->
 
+          <app-utility-carousel-menu
+            (menuItemClicked)="getMenuClicked($event)"
+            [config]="{
+                   quatity: 4,
+                   initQuantity: 4,
+                   identifier: 'lang',
+                   sources: [{index:0, lang: 'French1'},{index:1, lang: 'French2'},{index:2, lang: 'French3'},{index:3, lang: 'French4'},
+             {index:4, lang: 'French5'},{index:5, lang: 'French6'},{index:6, lang: 'French7'},{index:7, lang: 'French8'},{index:8, lang: 'French9'}, {index:9, lang: 'French10'} ]}">
+          </app-utility-carousel-menu>
+
+<!--          <app-utility-carousel-menu-->
+<!--            (menuItemClicked)="getMenuClicked($event)"-->
+<!--            [config]="{-->
+<!--                   quatity: 8,-->
+<!--                   initQuantity: 8,-->
+<!--                   identifier: 'lang',-->
+<!--                   sources: [{index:0, lang: 'French1'},{index:1, lang: 'French2'},{index:2, lang: 'French3'},{index:3, lang: 'French4'},-->
+<!--             {index:4, lang: 'French5'},{index:5, lang: 'French6'},{index:6, lang: 'French7'},{index:7, lang: 'French8'},-->
+<!--             {index:8, lang: 'French9'},{index:9, lang: 'French10'},{index:10, lang: 'French11'},{index:11, lang: 'French12'},{index:12, lang: 'French13'},-->
+<!--             {index:13, lang: 'French14'},{index:14, lang: 'French15'}-->
+<!--             ,{index:15, lang: 'French16'},{index:16, lang: 'French17'},{index:17, lang: 'French18'}]}">-->
+<!--          </app-utility-carousel-menu>-->
           <!-- languages menu -->
 <!--          <div class="d-flex flex-wrap-wrap text-medium">-->
 <!--            <ng-container *ngFor="let language of innoCardLanguages; let i = index">-->
