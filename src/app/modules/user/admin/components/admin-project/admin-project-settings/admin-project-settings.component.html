@@ -249,9 +249,15 @@
                             </th>
                             <!-- /remove language -->
                             <th style="width: 250px !important;" class="flex-around w-full text-sm text-capitalize text-primary">
-                              <div *ngIf="canBeValidated()" (click)="validateLang($event)"><i class="fa fa-check"></i> {{" Validate "}} </div>
-                              <div *ngIf="canBeEdited()" (click)="reEditLang($event)"><i class="fa fa-pen"></i> {{" Reedit "}} </div>
-                              <div *ngIf="canBeDeleted()" (click)="onRemoveLanguages($event)"><i class="fa fa-trash"></i> {{" Remove "}} </div>
+                              <div class="flex-centered w-80">
+                                <div *ngIf="canBeValidated()" (click)="validateLang($event)"><i class="fa fa-check"></i> {{" Validate "}} </div>
+                              </div>
+                              <div  class="flex-centered w-80">
+                                <div *ngIf="canBeEdited()" (click)="reEditLang($event)"><i class="fa fa-pen"></i> {{" Reedit "}} </div>
+                              </div>
+                              <div class="flex-centered w-80">
+                                <div *ngIf="canBeDeleted()" (click)="onRemoveLanguages($event)"><i class="fa fa-trash"></i> {{" Remove "}} </div>
+                              </div>
                             </th>
                           </tr>
                           </thead>
@@ -270,7 +276,7 @@
                               </label>
                             </td>
                             <td  *ngIf="!inno.hidden" class="flex-start">
-                              <div class=" flex-start tooltip is-multiline" data-tooltip="This language is visible on client side. Click on the eye to mask it">
+                              <div class="flex-start tooltip is-multiline" data-tooltip="This language is visible on client side. Click on the eye to mask it">
                                 <i class="fa fa-eye text-primary text-lg m-right-10" (click)="changeVisibility(inno, $event)"></i>
                                 <div  [ngClass]="statusClass(inno.status)" class="text-center status">
                                   {{capitalize(inno.status)}}
@@ -280,10 +286,10 @@
                                 <i  class="fa fa-trash is-outlined text-lg text-meta" ></i>
                               </div>
                             </td>
-                            <td  *ngIf="inno.hidden" class="flex-around">
-                              <div class="  flex-around tooltip is-multiline" data-tooltip="This language is masked on client side. Click on the eye to unmask it">
-                                <i class="fa fa-eye-slash text-primary text-lg" (click)="changeVisibility(inno, $event)"></i>
-                                <div  [ngClass]="statusClass(inno.status)" class="text-capitalize text-center status">
+                            <td  *ngIf="inno.hidden" class="flex-start">
+                              <div class="flex-start tooltip is-multiline" data-tooltip="This language is masked on client side. Click on the eye to unmask it">
+                                <i class="fa fa-eye-slash text-primary text-lg m-right-10" (click)="changeVisibility(inno, $event)"></i>
+                                <div  [ngClass]="statusClass(inno.status)" class="text-center status">
                                   {{capitalize(inno.status)}}
                                 </div>
                               </div>
