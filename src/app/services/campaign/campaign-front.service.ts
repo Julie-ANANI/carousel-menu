@@ -2,8 +2,10 @@ import { Injectable } from '@angular/core';
 import { Answer } from '../../models/answer';
 import { Campaign } from '../../models/campaign';
 import { Observable, Subject } from 'rxjs';
+import { TargetPros } from "../../models/target-pros";
+import { LangEntryService } from "../lang-entry/lang-entry.service";
 
-@Injectable({ providedIn: 'root' })
+@Injectable({providedIn: 'root'})
 export class CampaignFrontService {
   private _allCampaigns: Subject<Array<Campaign>> = new Subject<Array<Campaign>>();
 
@@ -66,6 +68,25 @@ export class CampaignFrontService {
     }
 
     return value;
+  }
+
+  /**
+   * for old projects, adapt the entry
+   * @param targetPro
+   */
+  static reformateTargetPro(targetPro: TargetPros) {
+    Object.keys(targetPro.jobsTypologies).forEach(jobTypoKey => {
+      // get Entry for jobTypo
+      if (targetPro.jobsTypologies[jobTypoKey].name && targetPro.jobsTypologies[jobTypoKey].name.fr && targetPro.jobsTypologies[jobTypoKey].name.en) {
+        targetPro.jobsTypologies[jobTypoKey].entry = LangEntryService.reformateJobEntry(targetPro.jobsTypologies[jobTypoKey], 'name');
+      }
+      targetPro.jobsTypologies[jobTypoKey].jobs.map((_job) => {
+        if (_job.label && _job.label.fr && _job.label.en) {
+          _job.entry = LangEntryService.reformateJobEntry(_job, 'label');
+        }
+      });
+    });
+    return targetPro;
   }
 
   /***
@@ -147,7 +168,7 @@ export class CampaignFrontService {
     return this._filtersCountries.asObservable();
   }
 
-  public setAllCampaigns(value: Array<Campaign>){
+  public setAllCampaigns(value: Array<Campaign>) {
     this._allCampaigns.next(value);
   }
 

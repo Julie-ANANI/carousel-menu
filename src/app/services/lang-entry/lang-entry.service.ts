@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
 import { PieChart } from '../../models/chart/pie-chart';
 import { Tag } from '../../models/tag';
 import { TransactionalEmail } from '../../models/transactional-email';
-import { JobConfig, JobsTypologies } from '../../models/target-pros';
+import { JobConfig, JobsTypologies, TargetProsJobEntry } from '../../models/target-pros';
 import { TranslateService } from '@ngx-translate/core';
 import { UmiusLangEntryService } from '@umius/umi-common-component';
 
@@ -70,6 +70,20 @@ export class LangEntryService extends UmiusLangEntryService {
       job[type] = object;
     }
     return job;
+  }
+
+  /**
+   * convert label: { en: string, fr: string } to entry: [{lang: fr, label: string},{lang: en, label: string}]
+   * @param job
+   * @param type
+   */
+  public static reformateJobEntry(job: JobConfig | JobsTypologies, type: 'name' | 'label'): Array<TargetProsJobEntry> {
+    if (!job || !type) return [];
+    const entry: Array<TargetProsJobEntry> = [];
+    Object.keys(job[type]).forEach(lang => {
+      entry.push({lang: lang, label: job[lang]})
+    })
+    return entry;
   }
 
   public jobLabelEntry(job: JobConfig | JobsTypologies, requested: string, lang = 'en') {
