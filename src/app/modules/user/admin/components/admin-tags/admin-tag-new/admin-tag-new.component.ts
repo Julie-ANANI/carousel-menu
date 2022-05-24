@@ -71,7 +71,16 @@ export class AdminTagNewComponent {
               private _notificationsService: TranslateNotificationsService) {}
 
   public onSubmit(_event: any) {
-    this._tagsService.create(this.formData.value)
+    const _tagObject = this.formData.value
+    _tagObject.entry = [];
+    _tagObject.entry = [
+      {lang: 'en', label: _tagObject.label.en, description: _tagObject.description.en},
+      {lang: 'fr', label: _tagObject.label.fr, description: _tagObject.description.fr}
+    ];
+    delete _tagObject.label;
+    delete _tagObject.description;
+
+    this._tagsService.create(_tagObject)
       .pipe(first())
       .subscribe((result: any) => {
         if (result) {

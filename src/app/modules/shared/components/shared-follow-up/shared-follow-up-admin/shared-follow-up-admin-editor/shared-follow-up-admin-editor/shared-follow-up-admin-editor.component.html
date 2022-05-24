@@ -1,0 +1,193 @@
+<div id="shared-follow-up-admin-editor">
+
+  <!-- insert field / test emails / test with contact -->
+  <div class="flex-centered flex-wrap">
+
+    <!-- insert field -->
+    <div *ngIf="customField && customField.length" class="dropdown m-left-10 m-bottom-10 m-right-10">
+
+      <a class="button is-link is-draft dropdown-toggle" tabindex="0">
+        <i class="fas fa-link icon-left text-primary"></i> Insert a field
+      </a>
+
+      <ul class="menu">
+        <li
+          (click)="insertTextAtCursor(field.value)"
+          *ngFor="let field of customField"
+          class="menu-item">
+          {{ field.value }}
+        </li>
+      </ul>
+
+    </div>
+    <!-- /insert field -->
+
+    <!-- test emails -->
+    <div *ngIf="canTestMails" class="m-left-10 m-bottom-10 m-right-10">
+      <button
+        (click)="onClickTestEmails($event)"
+        class="button is-draft is-link text-no-underline"
+        type="button">
+        <i class="fas fa-paper-plane icon-left text-primary"></i> Test the emails
+      </button>
+    </div>
+    <!-- /test emails -->
+
+    <!-- test with contact -->
+    <div *ngIf="canTestMails" class="m-left-10 m-bottom-10 m-right-10">
+      <label>
+        <select
+          (change)="onSelectProfessional($event.target['value'])"
+          class="form-select p-left-15 is-sm text-13"
+          style="height: unset; max-width: 206px">
+          <option [value]="''">Test with a contact</option>
+          <option *ngFor="let professional of professionals" [value]="professional._id">
+            {{ professional.firstName }} {{ professional.lastName }}
+          </option>
+        </select>
+      </label>
+    </div>
+    <!-- /test with contact -->
+
+  </div>
+  <!-- /insert field / test emails / test with contact -->
+
+  <!-- divider -->
+  <div *ngIf="isEditableMode" class="divider is-lg"></div>
+  <!-- /divider -->
+
+  <!-- Preview for one professional -->
+  <div [hidden]="!professionalPreview" class="text-sm p-top-15 p-bottom-25" [innerHTML]="professionalPreview"></div>
+  <!-- /Preview for one professional -->
+
+  <!-- editors -->
+  <div class="columns" [ngClass]="{ 'd-none': !!professionalPreview }">
+
+    <!-- in english -->
+    <div class="column col-md-12 col-6">
+      <div class="p-top-10 p-bottom-25">
+
+        <!-- subject -->
+        <div class="d-flex align-center m-bottom-2">
+
+          <div class="text-sm m-right-2">
+            <span class="text-notify text-medium m-right-1">Subject:</span>
+            <span class="text-secondary-dark text-normal">Follow up -</span>
+          </div>
+
+          <label *ngIf="isEditableMode" style="flex: 1">
+            <input
+              #subjectEn
+              (ngModelChange)="onUpdate('subject', subjectEn.value, 'en')"
+              [ngModel]="emailTemplate.entry | langEntry:'subject':'en'"
+              class="form-input text-13"
+              name="subject-en"
+              style="height: 40px"
+              type="text">
+          </label>
+
+          <div
+            *ngIf="!isEditableMode"
+            [innerText]="emailTemplate.entry | langEntry:'subject':'en'"
+            class="label is-tag">
+          </div>
+
+        </div>
+        <!-- /subject -->
+
+        <!-- cc -->
+        <div class="d-flex align-center m-bottom-25">
+          <div class="text-sm m-right-2"><span class="text-notify text-medium">CC:</span></div>
+          <label *ngIf="isEditableMode" style="flex: 1">
+            <input
+              (ngModelChange)="updateChanges($event)"
+              [(ngModel)]="ccEmail"
+              class="form-input text-13"
+              style="height: 40px"
+              type="text">
+          </label>
+          <div *ngIf="!isEditableMode" class="label is-tag" [innerText]="ccEmail"></div>
+        </div>
+        <!-- /cc -->
+
+        <!-- message -->
+        <app-shared-editor-tinymce
+          #textZone
+          (onTextChange)="onUpdate('content', $event, 'en')"
+          [readonly]="!isEditableMode"
+          [variableMapping]="variableMapping['en']"
+          [useVariables]="true"
+          [data]="(emailTemplate.entry | langEntry:'content':'en') || ''">
+        </app-shared-editor-tinymce>
+        <!-- /message -->
+
+      </div>
+    </div>
+    <!-- /in english -->
+
+    <!-- in french -->
+    <div class="column col-md-12 col-6">
+      <div class="p-top-10 p-bottom-25">
+
+        <!-- subject -->
+        <div class="d-flex align-center m-bottom-2">
+
+          <div class="text-sm m-right-2">
+            <span class="text-notify text-medium m-right-1">Sujet :</span>
+            <span class="text-secondary-dark text-normal">Suivi - </span>
+          </div>
+
+          <label *ngIf="isEditableMode" style="flex: 1">
+            <input
+              #subjectFr
+              (ngModelChange)="onUpdate('subject', subjectFr.value, 'fr')"
+              [ngModel]="emailTemplate.entry | langEntry:'subject':'fr'"
+              class="form-input text-13"
+              name="subject-fr"
+              style="height: 40px"
+              type="text">
+          </label>
+
+            <div
+              *ngIf="!isEditableMode"
+              [innerText]="emailTemplate.entry | langEntry:'subject':'fr'"
+              class="label is-tag">
+            </div>
+
+        </div>
+        <!-- /subject -->
+
+        <!-- cc -->
+        <div class="d-flex align-center m-bottom-25">
+          <div class="text-sm m-right-2"><span class="text-notify text-medium">CC :</span></div>
+          <label *ngIf="isEditableMode" style="flex: 1">
+            <input
+              (ngModelChange)="updateChanges($event)"
+              [(ngModel)]="ccEmail"
+              style="height: 40px"
+              class="form-input text-13"
+              type="text">
+          </label>
+          <div *ngIf="!isEditableMode" class="label is-tag" [innerText]="ccEmail"></div>
+        </div>
+        <!-- /cc -->
+
+        <!-- message -->
+        <app-shared-editor-tinymce
+          #textZone
+          (onTextChange)="onUpdate('content', $event, 'fr')"
+          [readonly]="!isEditableMode"
+          [variableMapping]="variableMapping['fr']"
+          [useVariables]="true"
+          [data]="(emailTemplate.entry | langEntry:'content':'fr') || ''">
+        </app-shared-editor-tinymce>
+        <!-- /message -->
+
+      </div>
+    </div>
+    <!-- /in french -->
+
+  </div>
+  <!-- /editors -->
+
+</div>

@@ -2,15 +2,16 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
 import { TagsService } from '../../../../services/tags/tags.service';
+// import { Multiling } from '../../../../models/multiling';
 import { Tag } from '../../../../models/tag';
 import { AutocompleteService } from '../../../../services/autocomplete/autocomplete.service';
 import { TranslateNotificationsService } from '../../../../services/translate-notifications/translate-notifications.service';
-import { MultilingPipe } from '../../../../pipe/pipes/multiling.pipe';
+// import { MultilingPipe } from '../../../../pipe/pipes/multiling.pipe';
 import { Observable } from 'rxjs';
 import { first } from 'rxjs/operators';
 import { HttpErrorResponse } from "@angular/common/http";
 import { ErrorFrontService } from "../../../../services/error/error-front.service";
-import {UmiusMultilingInterface} from '@umius/umi-common-component';
+import {LangEntryService} from '../../../../services/lang-entry/lang-entry.service';
 
 type Template = 'ADD_TAGS' | 'EDIT_TAG' | '';
 type TagType = 'tags' | '';
@@ -72,7 +73,8 @@ export class SidebarTagsComponent {
 
   constructor(private _tagsService: TagsService,
               private _autocompleteService: AutocompleteService,
-              private _multiling: MultilingPipe,
+              private _langEntryService: LangEntryService,
+              // private _multiling: MultilingPipe,
               private _translateNotificationsService: TranslateNotificationsService,
               private _translateService: TranslateService,
               private _domSanitizer: DomSanitizer) { }
@@ -85,13 +87,15 @@ export class SidebarTagsComponent {
     return this._autocompleteService.get(queryConf);
   }
 
-  public autocompleListFormatter = (data: {name: UmiusMultilingInterface, _id: string}) : SafeHtml => {
+  public autocompleListFormatter = (data: {name: any, _id: string}) : SafeHtml => {
     const text = this.autocompleValueFormatter(data);
     return this._domSanitizer.bypassSecurityTrustHtml(`<span>${text}</span>`);
   };
 
-  public autocompleValueFormatter = (data: {name: UmiusMultilingInterface, _id: string}) : string => {
-    return this._multiling.transform(data.name, this._translateService.currentLang);
+  // TODO remove multiling
+  public autocompleValueFormatter = (data: Tag) : string => {
+    return this._langEntryService.tagEntry(data, 'label', this._translateService.currentLang);
+    // return this._multiling.transform(data.name, this._translateService.currentLang);
   };
 
   public onAddTag(value: any) {
@@ -122,6 +126,15 @@ export class SidebarTagsComponent {
       console.error(err);
     });
   }
+
+  public updateTagEntry(value: string, attr: 'label' | 'description', lang: string) {
+    const _index = LangEntryService.entryIndex(this._tag.entry, 'lang', lang);
+    if (_index !== -1) {
+      this._tag.entry[_index][attr] = value.trim();
+      this.saveButton(true);
+    }
+  }
+
 
   public onClickSave() {
     if (this.isEditable) {

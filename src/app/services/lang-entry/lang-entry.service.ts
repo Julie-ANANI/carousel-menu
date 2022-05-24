@@ -3,14 +3,12 @@
  */
 
 import { Injectable } from '@angular/core';
-import {PieChart} from '../../models/chart/pie-chart';
-import {InnovationFollowUpEmails} from '../../models/innovation';
-import {EmailMultiling} from '../../models/email';
-import {Tag} from '../../models/tag';
-import {TransactionalEmail} from '../../models/transactional-email';
-import {JobConfig, JobsTypologies} from '../../models/target-pros';
-import {TranslateService} from '@ngx-translate/core';
-import {UmiusLangEntryService} from '@umius/umi-common-component';
+import { PieChart } from '../../models/chart/pie-chart';
+import { Tag } from '../../models/tag';
+import { TransactionalEmail } from '../../models/transactional-email';
+import { JobConfig, JobsTypologies, TargetProsJobEntry } from '../../models/target-pros';
+import { TranslateService } from '@ngx-translate/core';
+import { UmiusLangEntryService } from '@umius/umi-common-component';
 
 /**
  * UmiusLangEntryService functions:
@@ -28,29 +26,15 @@ export class LangEntryService extends UmiusLangEntryService {
   }
 
   /**
-   * return the innovation follow-up email object
-   * @param followEmails
-   * @param templateName - should be same InnovationFollowUpTemplateType and also in uppercase.
+   * return the entry index based on the searchValue and the searchKey with which we compare the value
+   * for ex: _entry[lang] === 'en' => lang (searchKey) & en (searchValue)
+   * @param entry
+   * @param searchKey
+   * @param searchValue
    */
-  public static followUpEmails(followEmails: InnovationFollowUpEmails, templateName: string): EmailMultiling {
-    if (!followEmails || !templateName) return {};
-
-    if (followEmails.templates && followEmails.templates.length) {
-      // TODO remove console
-      console.log('New Multi-language system.');
-      const template = followEmails.templates.find((_template) => _template.name === templateName);
-      if (!template && !template.entry && !template.entry.length) return {};
-      const email = {};
-      template.entry.map((_entry) => {
-        email[_entry.lang] = {
-          subject: _entry.subject,
-          content: _entry.content
-        };
-      });
-      return email;
-    }
-
-    return followEmails[templateName.toLocaleLowerCase()] || {};
+  public static entryIndex(entry: Array<any>, searchKey: string, searchValue: string): number {
+    if (!entry.length || !searchKey || !searchValue) return -1;
+    return entry.findIndex((_entry) => _entry[searchKey] === searchValue);
   }
 
   /**
@@ -61,8 +45,6 @@ export class LangEntryService extends UmiusLangEntryService {
   public static transactionalEmails(email: TransactionalEmail): TransactionalEmail {
     if (!email) return <TransactionalEmail>{};
     if (email.templates && email.templates.length) {
-      // TODO remove console
-      console.log('New Multi-language system.');
       email.templates.forEach((_template) => {
         if (!email[_template.lang]) email[_template.lang] = {};
         email[_template.lang] = _template.template;
@@ -81,15 +63,35 @@ export class LangEntryService extends UmiusLangEntryService {
   public static jobEntry(job: JobConfig | JobsTypologies, type: 'name' | 'label'): any {
     if (!job || !type) return <JobConfig | JobsTypologies>{};
     if (job.entry && job.entry.length) {
-      // TODO remove console
-      console.log('New Multi-language system.');
       const object = {};
       job.entry.forEach((_entry) => {
-        object[_entry.lang] = _entry.value;
+        object[_entry.lang] = _entry.label;
       });
       job[type] = object;
     }
     return job;
+  }
+
+  /**
+   * convert label: { en: string, fr: string } to entry: [{lang: fr, label: string},{lang: en, label: string}]
+   * @param job
+   * @param type
+   */
+  public static reformateJobEntry(job: JobConfig | JobsTypologies, type: 'name' | 'label'): Array<TargetProsJobEntry> {
+    if (!job || !type) return [];
+    const entry: Array<TargetProsJobEntry> = [];
+    Object.keys(job[type]).forEach(lang => {
+      entry.push({lang: lang, label: job[lang]})
+    })
+    return entry;
+  }
+
+  public jobLabelEntry(job: JobConfig | JobsTypologies, requested: string, lang = 'en') {
+    if (!job || !requested) return '';
+    if (job.entry && job.entry.length) {
+      return this.transform(job.entry, requested, lang, true);
+    }
+    return '';
   }
 
   /**

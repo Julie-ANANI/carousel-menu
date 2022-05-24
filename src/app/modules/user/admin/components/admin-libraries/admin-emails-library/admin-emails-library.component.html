@@ -30,7 +30,7 @@
 <umius-sidebar-full [(template)]="sidebarValue">
   <app-sidebar-workflow
     [id]="getId()"
-    [emailsObject]="emailToEdit"
+    [emailObject]="emailToEdit"
     (emailChange)="updateEmail($event)"
     [signatures]="signatures"
     [inputLanguage]="language">

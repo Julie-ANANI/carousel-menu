@@ -170,7 +170,7 @@ export class ExecutiveReportFrontService {
 
   }
 
-  /***
+  /*** TODO remove multiling
    * this returns the content of the RANKING section for tags.
    * @param tagsData
    * @param lang
@@ -187,7 +187,8 @@ export class ExecutiveReportFrontService {
         section.values.push({
           legend: tag.count + 'X',
           color: '#4F5D6B',
-          name: this._multilingPipe.transform(tag.label, lang),
+          name: this._langEntryService.tagEntry(tag, 'label', lang),
+          // name: this._multilingPipe.transform(tag.label, lang),
           visibility: tag.count > 0
         });
       });
@@ -244,18 +245,18 @@ export class ExecutiveReportFrontService {
   }
 
 
-  /***
+  /*** TODO remove multiling
    * this returns the content of the likertScaleCustomSection
    * @param tagsData
    * @param lang
    */
   public likertScaleCustomSection(tagsData: Array<Tag>, lang: string): SectionLikertScale {
       return {
-      color: '#BBC7D6',
-      legend: '',
-      name: 'UNCERTAIN',
-      visibility: false
-    }
+        color: '#BBC7D6',
+        legend: '',
+        name: 'UNCERTAIN',
+        visibility: false
+      };
   }
 
 

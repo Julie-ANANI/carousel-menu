@@ -177,36 +177,6 @@
             "browserTarget": "umi:build"
           }
         },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "src/test.ts",
-            "karmaConfig": "./karma.conf.js",
-            "polyfills": "src/polyfills.ts",
-            "tsConfig": "src/tsconfig.spec.json",
-            "scripts": [
-              "node_modules/tinymce/tinymce.min.js",
-              "node_modules/tinymce/themes/modern/theme.min.js",
-              "node_modules/tinymce/plugins/advlist/plugin.min.js",
-              "node_modules/tinymce/plugins/textcolor/plugin.min.js",
-              "node_modules/tinymce/plugins/link/plugin.min.js",
-              "node_modules/tinymce/plugins/lists/plugin.min.js",
-              "node_modules/tinymce/plugins/paste/plugin.min.js",
-              "node_modules/tinymce/plugins/code/plugin.min.js",
-              "assets/plugins/plugin.js"
-            ],
-            "styles": [
-              "src/style/styles.scss"
-            ],
-            "assets": [
-              {
-                "glob": "**/*",
-                "input": "node_modules/tinymce/skins",
-                "output": "/assets/skins"
-              }
-            ]
-          }
-        },
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {

@@ -1,9 +1,8 @@
 export interface TargetProsJobEntry {
-  value: string;
+  label: string;
   lang: string;
 }
 
-// TODO remove multiling
 export interface JobConfig {
   hidden?: boolean;
   state: number;
@@ -11,10 +10,7 @@ export interface JobConfig {
   hovered?: boolean;
   hoveredState?: number;
   entry?: Array<TargetProsJobEntry>;
-
-  /**
-   * replace this with Array<TargetProsJobEntry>
-   */
+  // For old projects
   label: { en: string, fr: string };
 }
 
@@ -25,10 +21,7 @@ export interface JobsTypologies {
   identifier?: string;
   isToggle?: boolean;
   entry?: Array<TargetProsJobEntry>;
-
-  /**
-   * replace this with Array<TargetProsJobEntry>
-   */
+  // For old projects
   name: { en: string, fr: string };
 }
 
@@ -37,11 +30,6 @@ export interface JobsCategory {
   identifier: string;
   jobs: Array<JobConfig>;
   entry?: Array<TargetProsJobEntry>;
-
-  /**
-   * replace this with Array<TargetProsJobEntry>
-   */
-  label: { en: string, fr: string };
 }
 
 export interface SeniorityLevel {

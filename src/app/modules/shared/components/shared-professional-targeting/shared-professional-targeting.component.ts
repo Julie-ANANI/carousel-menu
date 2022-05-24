@@ -6,7 +6,8 @@ import { Subject } from 'rxjs';
 
 import * as _ from 'lodash';
 import { isPlatformBrowser } from '@angular/common';
-import {LangEntryService} from '../../../../services/lang-entry/lang-entry.service';
+import { LangEntryService } from '../../../../services/lang-entry/lang-entry.service';
+
 
 @Component({
   selector: 'app-shared-professional-targeting',
@@ -239,7 +240,6 @@ export class SharedProfessionalTargetingComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * TODO remove multiling
    * search jobs by keyword
    * @param keyword
    */
@@ -247,21 +247,22 @@ export class SharedProfessionalTargetingComponent implements OnInit, OnDestroy {
     if (!!keyword) {
       this._filteredJobsTypologies = {};
       Object.keys(this._jobsTypologies).forEach(jobTypoKey => {
-        this._jobsTypologies[jobTypoKey] = LangEntryService.jobEntry(this._jobsTypologies[jobTypoKey], 'name');
-        if (this._jobsTypologies[jobTypoKey].name.en.toLowerCase().includes(keyword.toLowerCase())
-          || this._jobsTypologies[jobTypoKey].name.fr.toLowerCase().includes(keyword.toLowerCase())) {
-          this._filteredJobsTypologies[jobTypoKey] = JSON.parse(JSON.stringify(this._jobsTypologies[jobTypoKey]));
-          this._filteredJobsTypologies[jobTypoKey].isToggle = false;
-        } else {
-          this._jobsTypologies[jobTypoKey].jobs = this._jobsTypologies[jobTypoKey].jobs.map((_job) => {
-            return LangEntryService.jobEntry(_job, 'label');
-          });
-          const filteredJobs = this._jobsTypologies[jobTypoKey].jobs.filter(j => j.label.en.toLowerCase().includes(keyword.toLowerCase())
-            || j.label.fr.toLowerCase().includes(keyword.toLowerCase()));
-          if (filteredJobs.length) {
+        const keyword_toLowerCase = keyword.toLowerCase();
+        if (this._jobsTypologies[jobTypoKey] && this._jobsTypologies[jobTypoKey].entry && this._jobsTypologies[jobTypoKey].entry.length) {
+          const jobTypoFound = this._jobsTypologies[jobTypoKey].entry.find(e => e.label.toLowerCase().indexOf(keyword_toLowerCase) !== -1);
+          if (!!jobTypoFound) {
             this._filteredJobsTypologies[jobTypoKey] = JSON.parse(JSON.stringify(this._jobsTypologies[jobTypoKey]));
-            this._filteredJobsTypologies[jobTypoKey].jobs = filteredJobs;
             this._filteredJobsTypologies[jobTypoKey].isToggle = false;
+          } else {
+            const jobFound = this._jobsTypologies[jobTypoKey].jobs && this._jobsTypologies[jobTypoKey].jobs.length
+              && this._jobsTypologies[jobTypoKey].jobs.filter(
+                job => job.entry && job.entry.length && job.entry.find(e => e.label.toLowerCase().indexOf(keyword_toLowerCase) !== -1)
+              );
+            if (jobFound && jobFound.length) {
+              this._filteredJobsTypologies[jobTypoKey] = JSON.parse(JSON.stringify(this._jobsTypologies[jobTypoKey]));
+              this._filteredJobsTypologies[jobTypoKey].jobs = jobFound;
+              this._filteredJobsTypologies[jobTypoKey].isToggle = false;
+            }
           }
         }
       });

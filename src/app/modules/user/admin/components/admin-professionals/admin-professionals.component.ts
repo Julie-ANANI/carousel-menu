@@ -1,7 +1,7 @@
 import {TranslateTitleService} from '../../../../../services/title/title.service';
 import {RolesFrontService} from '../../../../../services/roles/roles-front.service';
 import {NavigationCancel, NavigationEnd, Router} from '@angular/router';
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
 interface ActionOption {
   functionality: string;
@@ -20,7 +20,8 @@ interface Tab {
   styleUrls: ['./admin-professionals.component.scss']
 })
 
-export class AdminProfessionalsComponent {
+export class AdminProfessionalsComponent implements OnInit {
+
   private _tabs: Array<Tab> = [
     {name: 'Professionals database', path: 'list', link: 'list'},
     {name: 'Professionals statistics', path: 'statistics', link: 'statistics'}
@@ -32,9 +33,10 @@ export class AdminProfessionalsComponent {
   constructor(private _translateTitleService: TranslateTitleService,
               private _router: Router,
               private _rolesFrontService: RolesFrontService) {
-
     this.setPageTitle();
+  }
 
+  ngOnInit(): void {
     this._router.events.subscribe((event) => {
       if (event instanceof NavigationEnd || event instanceof NavigationCancel) {
         const url = this._router.routerState.snapshot.url.split('/');

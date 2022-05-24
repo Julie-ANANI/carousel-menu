@@ -223,7 +223,7 @@ export class CommonService extends UmiusCommonService {
    * @param file
    */
   public playAudio(file: any) {
-    const sound = new Audio('data:audio/wav;base64,' + file);
+    const sound = new Audio('data:audio/mpeg;base64,' + Buffer.from(file).toString('base64'));
     sound.play().then( () => {
       console.log('Played successfully!');
     }).catch((err) => {

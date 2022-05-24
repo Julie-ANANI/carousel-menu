@@ -5,15 +5,17 @@ import { EditableTagLabelComponent } from './editable-tag-label.component';
 import { NguiAutoCompleteModule } from "../auto-complete/auto-complete.module";
 import { PipeModule } from "../../../pipe/pipe.module";
 import {ModalModule} from '@umius/umi-common-component';
+import {LangEntryPipeModule} from '../../../pipe/lang-entry/langEntryPipe.module';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    TranslateModule.forChild(),
-    NguiAutoCompleteModule,
-    PipeModule,
-    ModalModule,
-  ],
+    imports: [
+        CommonModule,
+        TranslateModule.forChild(),
+        NguiAutoCompleteModule,
+        PipeModule,
+        ModalModule,
+        LangEntryPipeModule,
+    ],
   declarations: [
     EditableTagLabelComponent
   ],

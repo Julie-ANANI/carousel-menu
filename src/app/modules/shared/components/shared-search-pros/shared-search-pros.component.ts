@@ -14,7 +14,7 @@ import { TargetPros } from '../../../../models/target-pros';
 import { JobsFrontService } from '../../../../services/jobs/jobs-front.service';
 import { Subject } from 'rxjs/Subject';
 import { UmiusLocalStorageService, UmiusSidebarInterface } from '@umius/umi-common-component';
-
+import { CampaignFrontService } from "../../../../services/campaign/campaign-front.service";
 
 @Component({
   selector: 'app-shared-search-pros',
@@ -131,7 +131,8 @@ export class SharedSearchProsComponent implements OnInit, OnDestroy {
     return new Promise((resolve, reject) => {
       this._campaignService.getTargetedPros(this._campaign._id).pipe(first())
         .subscribe(res => {
-          this._jobFrontService.setTargetedProsToUpdate({targetPros: res, isToggle: false, identifier: ''});
+          let targetPros = CampaignFrontService.reformateTargetPro(res);
+          this._jobFrontService.setTargetedProsToUpdate({targetPros: targetPros, isToggle: false, identifier: ''});
           this._initialTargetedPro = JSON.parse(JSON.stringify(res));
           resolve(true);
         }, error => {
@@ -526,7 +527,8 @@ export class SharedSearchProsComponent implements OnInit, OnDestroy {
   restoreTargetedPros() {
     this._campaignService.getTargetedPros(this._campaign._id).pipe(first())
       .subscribe(res => {
-        this._jobFrontService.setTargetedProsToUpdate({targetPros: res, isToggle: false, identifier: ''});
+        let targetPros = CampaignFrontService.reformateTargetPro(res);
+        this._jobFrontService.setTargetedProsToUpdate({targetPros: targetPros, isToggle: false, identifier: ''});
         this._initialTargetedPro = JSON.parse(JSON.stringify(res));
         this._isReset = false;
         this._toSave = false;
