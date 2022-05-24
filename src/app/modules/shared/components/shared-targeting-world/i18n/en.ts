@@ -19,6 +19,6 @@ export const SHARED_TARGETING_WORLD = {
     'TO_INCLUDE_COUNTRY': 'Enter the country name to be included',
   },
 
-  'COUNTRY_SELECTED': 'Country Selected',
+  'COUNTRY_SELECTED': 'Countries Selected',
 
 };
