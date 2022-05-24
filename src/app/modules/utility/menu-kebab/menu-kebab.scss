@@ -1,7 +1,8 @@
 @import "~@umius/umi-style-framework/scss/variables";
 
 .carousel-wrapper {
-  overflow: hidden;
+  //overflow: hidden;
+  margin-top: -6px;
 
   //buttons controls
   :is(#btn-kebab, .icon-more-horiz) ::before {
@@ -33,13 +34,8 @@
     margin-top: 12px;
   }
 
-  .view__less {
-    margin-left: -55px;
-    margin-top: -6px;
-  }
-
   .btn__next {
-    margin-top: -7px;
+    margin-top: -8px;
   }
 
   .btn__prev {
@@ -48,7 +44,7 @@
 
   //buttons items
   .carousel__container__button{
-
+    margin-top: 6px;
     div{
       width: fit-content;
     }
@@ -56,8 +52,6 @@
     &:hover {
       cursor: pointer;
     }
-
-    margin-top: 6px;
 
     &.button.is-link{
       font-size:12px;
@@ -68,6 +62,8 @@
     .primary-color{
       color: $primary-color;
       font-size: 14px;
+      text-decoration: underline solid 2.5px;
+      text-underline-offset: 0.7rem;
     }
 
     &.text__button {

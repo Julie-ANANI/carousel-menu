@@ -120,7 +120,7 @@
       <!-- languages section -->
       <section class="lang-menu column col-sm-12 col-11 col-mx-auto p-2 relative m-top-30"
                *ngIf="activeTab === 'description'">
-        <div class="d-flex align-center">
+        <div class="d-flex align-center carousel__menu">
 
           <app-utility-carousel-menu
             (menuItemClicked)="getMenuClicked($event)"
@@ -134,6 +134,7 @@
           <!-- add languages button -->
           <button class="button is-link text-highlight is-sm text-no-underline"
                   type="button"
+                  *ngIf="innoCardLanguages.length !== 20"
                   (click)="openModal($event, 'ADD_LANG')">
             <ng-container>
               <i class="fas fa-plus-circle icon-left"></i>
