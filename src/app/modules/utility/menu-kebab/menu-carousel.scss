@@ -1,0 +1,60 @@
+@import "~@umius/umi-style-framework/scss/variables";
+
+.carousel-wrapper {
+  display:flex;
+  height: 2.5em;
+
+  .btn__next, .btn__prev, .icon-arrow-right, .icon-arrow-left, .is-link{
+    color: #4F5D6B;
+  }
+
+  .wrapper__item{
+    margin-top: 8px;
+  }
+
+  //buttons controls
+  :is(.icon-more-horiz) ::before {
+    width:5px;
+    transform: rotate(90deg);
+  }
+
+  :is(i, .icon-container, .icon-arrow-right, .icon-arrow-left) ::before {
+    border: 3px solid #4F5D6B;
+    border-bottom: 0;
+    border-right: 0;
+  }
+
+  .btn__next, .btn__prev {
+    width: fit-content;
+  }
+
+  .btn__next{
+    margin-top: -0.5em;
+    margin-right: 1.5em;
+  }
+
+  .btn__prev{
+    margin-top: -1em;
+  }
+
+  //buttons items
+  .carousel__container__button {
+
+    &.button__item{
+      width: fit-content;
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+
+    .primary-color{
+      color: $primary-color;
+      font-size: 14px;
+      text-decoration: underline solid 2.5px;
+      text-underline-offset: 0.7rem;
+    }
+
+  }
+
+}
