@@ -12,7 +12,7 @@
           [ngClass]="{ 'text-underline': language === lang }"
           class="button is-link"
           (click)="changeLanguage(lang.type)">
-          {{('COMMON.LANG.' + lang?.type.toUpperCase()) | translate}}</button>
+          {{'COMMON.LANG.' + lang?.type | uppercase | translate}}</button>
       </ng-container>
     </div>
     <!-- /language choice -->
@@ -22,7 +22,7 @@
       <label class="form-label">Which language would you like to communicate with the project owner?</label>
       <ng-container *ngFor="let lang of innovationCardLanguages">
         <div (click)="setLanguage(lang.type)" [ngClass]="{ 'active': language === lang }" class="text-link">
-          {{('COMMON.LANG.' + lang?.type.toUpperCase()) | translate}}
+          {{'COMMON.LANG.' + lang?.type | uppercase | translate}}
         </div>
       </ng-container>
     </div>
@@ -48,12 +48,13 @@
         *ngIf="isEditableMode"
         (ngModelChange)="onUpdate($event)"
         [(ngModel)]="email.subject"
-        class="form-input is-sm"
+        [lang]="language"
+        class="form-input"
         id="shared-mail-editor-subject"
         name="subject"
         placeholder="Enter the subject of the mail"
         type="text">
-      <p *ngIf="!isEditableMode && email && email.subject" class="text-sm">{{ email.subject }}</p>
+      <p [lang]="language" *ngIf="!isEditableMode && email && email.subject">{{ email.subject }}</p>
     </div>
     <!-- /subject -->
 
@@ -66,13 +67,14 @@
             <div class="text-md">
               <app-shared-editor-tinymce
                 (onTextChange)="updateContent($event)"
+                [lang]="language"
                 [data]="email.content || ''">
               </app-shared-editor-tinymce>
             </div>
           </ng-container>
 
           <ng-container *ngIf="!isEditableMode && email && email.content">
-            <p [innerHTML]="email.content | cleanHtml" class="text-md"></p>
+            <p [lang]="language" [innerHTML]="email.content | cleanHtml" class="text-md"></p>
           </ng-container>
 
         </div>

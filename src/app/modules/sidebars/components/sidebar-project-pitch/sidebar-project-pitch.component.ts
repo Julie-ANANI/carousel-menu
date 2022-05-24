@@ -88,6 +88,8 @@ export class SidebarProjectPitchComponent implements OnInit, OnChanges, OnDestro
   // 'TITLE' | 'SUMMARY' | 'ISSUE' | 'SOLUTION' | 'MEDIA' | 'OTHER' | 'CONTEXT'
   @Input() type: CardSectionTypes = '';
 
+  @Input() cardLang = 'en';
+
   @Output() saveProject: EventEmitter<{ type: string, content: any }> = new EventEmitter<{ type: string, content: any }>();
 
   @Output() isSavingChange: EventEmitter<boolean> = new EventEmitter<boolean>();

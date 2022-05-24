@@ -42,48 +42,91 @@
         </section>
         <!-- /save template / name -->
 
-        <!-- objective -->
-        <section [ngStyle]="{'margin-right': '-10px'}">
-          <div class="input-group">
-            <div
-              *ngFor="let entry of missionTemplate.entry; let i = index;"
-              class="m-bottom-25 form-group m-no-left m-right-10">
-              <label class="form-label" [for]="entry.lang">
-                {{ entry.lang === 'en' ? 'English' : entry.lang === 'fr' ? 'French'
-                : (entry.lang | titlecase) }} Objective
-              </label>
-              <input
-                (ngModelChange)="onChangeObjective($event, i)"
-                *ngIf="canAccess(['edit', 'objective'])"
-                [ngModel]="entry.objective"
-                class="form-input is-sm"
-                placeholder="Enter objective name*"
-                type='text'>
-              <p *ngIf="!canAccess(['edit', 'objective'])" class="text-sm">{{ entry.objective }}</p>
+        <!-- template sections -->
+        <div class="p-top-20 d-flex justify-around flex-wrap-wrap">
+          <!-- mirror: left side  -->
+          <div [ngClass]="{'questionnaire-column': rightMirrorLanguage}">
+
+            <app-shared-questionnaire-mirror-view
+              [showDropDown]="true"
+              [(languageSelected)]="leftMirrorLanguage"
+              [languagesList]="questionnaireLanguages"
+              [languagesExcludedInSelector]="[rightMirrorLanguage, leftMirrorLanguage]">
+
+              <!-- objective -->
+              <ng-container *ngTemplateOutlet="objective;
+                             context: {$implicit :{lang:leftMirrorLanguage}}">
+              </ng-container>
+              <!-- /objective -->
+
+              <app-shared-questionnaire
+                (templateChange)="onChangeTemplate($event)"
+                (valueToSave)="changeStack($event)"
+                [accessPath]="accessPath"
+                [isLibraryView]="true"
+                [languageSelected]="leftMirrorLanguage?.type"
+                [template]="missionTemplate">
+              </app-shared-questionnaire>
+            </app-shared-questionnaire-mirror-view>
+          </div>
+          <!-- /mirror: left side  -->
+
+          <!-- mirror: right side  -->
+          <div *ngIf="rightMirrorLanguage"
+               [ngClass]="{'questionnaire-column': rightMirrorLanguage}">
+            <div class="d-flex flex-d-column p-bottom-20">
+              <app-shared-questionnaire-mirror-view
+                [showDropDown]="true"
+                [(languageSelected)]="rightMirrorLanguage"
+                [languagesList]="questionnaireLanguages"
+                [languagesExcludedInSelector]="[rightMirrorLanguage, leftMirrorLanguage]">
+
+                <!-- objective -->
+                <ng-container *ngTemplateOutlet="objective;
+                             context: {$implicit :{lang:rightMirrorLanguage}}">
+                </ng-container>
+                <!-- /objective -->
+
+                <app-shared-questionnaire
+                  [languageSelected]="rightMirrorLanguage?.type"
+                  (templateChange)="onChangeTemplate($event)"
+                  (valueToSave)="changeStack($event)"
+                  [accessPath]="accessPath"
+                  [isLibraryView]="true"
+                  [template]="missionTemplate">
+                </app-shared-questionnaire>
+              </app-shared-questionnaire-mirror-view>
             </div>
           </div>
-        </section>
-        <!-- /objective -->
-
-        <!-- template sections -->
-        <section class="p-top-20">
-          <app-shared-questionnaire
-            (templateChange)="onChangeTemplate($event)"
-            (valueToSave)="changeStack($event)"
-            [accessPath]="accessPath"
-            [isLibraryView]="true"
-            [questionnaireLanguages]="questionnaireLanguages"
-            [template]="missionTemplate">
-          </app-shared-questionnaire>
-        </section>
+          <!-- mirror: right side  -->
+        </div>
         <!-- /template sections -->
-
       </div>
     </ng-template>
     <!-- /no fetching error -->
 
   </div>
 </div>
+
+<!-- objective template -->
+<ng-template #objective let-context>
+  <div class="input-group">
+    <div class="m-bottom-25 form-group m-no-left m-right-10">
+      <label class="form-label" >
+        {{'COMMON.LANG.' + context?.lang?.type | uppercase | translate | titlecase}} Objective
+      </label>
+      <input
+        (ngModelChange)="onChangeObjective($event, context?.lang?.type)"
+        *ngIf="canAccess(['edit', 'objective'])"
+        [ngModel]="getObjective(context?.lang?.type)"
+        class="form-input is-sm"
+        placeholder="Enter objective name*"
+        type='text'>
+      <p *ngIf="!canAccess(['edit', 'objective'])" class="text-sm">{{ getObjective(context?.lang?.type) }}</p>
+    </div>
+  </div>
+</ng-template>
+<!-- /objective template -->
 
 <umius-modal
   *ngIf="canAccess(['section', 'edit']) || canAccess(['question', 'edit'])"

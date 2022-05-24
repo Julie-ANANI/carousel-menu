@@ -20,6 +20,7 @@
         <div [ngClass]="{'popover': !isRequesting && !isSaving && !isSubmitting}" class="m-right-15 m-bottom-15">
 
           <button
+            *ngIf="languageValidated() !== innoCardLanguages.length"
             (click)="onRequestProofreading($event)"
             [disabled]="isRequesting || isSaving || isSubmitting"
             style="min-width: 226px; min-height: 46px"
@@ -47,11 +48,12 @@
         <!-- validate -->
         <button
           (click)="onOpenModal($event)"
+          *ngIf="languageValidated() !== innoCardLanguages.length"
           [disabled]="isRequesting || isSaving || isSubmitting"
           style="min-width: 226px; min-height: 46px"
           class="button is-sm m-bottom-15"
           id="btn-submit">
-          {{ 'COMMON.BUTTON.VALIDATE_DEFINITIVELY' | translate }}
+          {{ 'COMMON.BUTTON.VALIDATE_DEFINITIVELY' | translate }} {{languageValidated()}}/{{innoCardLanguages.length}}
           <img
             alt=" "
             src="https://res.cloudinary.com/umi/image/upload/app/default-images/pictos/picto-validate-white.svg"
@@ -308,6 +310,27 @@
 
     <div class="mxw-650 authorise-wrapper form-group">
       <p>{{ 'PROJECT_PITCH.MODAL.SUBMIT_TEXT' | translate }}</p>
+
+      <div class="languages-selection">
+        <div class="form-group">
+            <label class="form-checkbox d-flex align-center">
+              <input type="checkbox" [(ngModel)]="isSelectedAll">
+              <i class="form-icon"></i> {{'COMMON.LABEL.SELECT_ALL' | translate}}
+            </label>
+        </div>
+        <div class="form-group d-flex flex-wrap-wrap m-top-10">
+          <ng-container *ngFor="let language of innoCardLanguages">
+            <label class="form-checkbox d-flex align-center" style="width: 33%">
+              <input type="checkbox"
+                     [disabled]="language['status'] && language['status'] !== 'EDITING'"
+                     [(ngModel)]="language['checked']"
+                     (ngModelChange)="selectLanguage(language)">
+              <i class="form-icon"></i> {{('COMMON.LANG.' + context?.type.toUpperCase()) | translate}}
+            </label>
+          </ng-container>
+        </div>
+      </div>
+
     </div>
 
   </section>
@@ -318,21 +341,16 @@
 
     <button
       (click)="onCloseModal()"
-      [disabled]="isSubmitting"
       id="btn-cancel"
       class="button modal-cancel">
       {{ 'COMMON.BUTTON.CANCEL' | translate }}
     </button>
 
     <button
-      [disabled]="isSubmitting"
-      (click)="onSubmitProject($event)"
+      (click)="onValidateLanguages($event)"
       class="button"
       id="btn-confirm">
-      <ng-container *ngIf="isSubmitting; else defSubText">
-        {{ 'COMMON.BUTTON.VALIDATING_DEFINITIVELY' | translate }}
-      </ng-container>
-      <ng-template #defSubText>{{ 'COMMON.BUTTON.CONFIRM' | translate }}</ng-template>
+      {{ 'COMMON.BUTTON.CONFIRM' | translate }}
     </button>
 
   </footer>
@@ -358,7 +376,8 @@
     [mainMedia]="activeInnovCard.principalMedia"
     [pitchHelp]="pitchHelp"
     [sectionId]="activeSection.etherpadElementId"
-    [type]="sidebarValue.type">
+    [type]="sidebarValue.type"
+    [cardLang]="activeInnovCard.lang">
   </app-sidebar-project-pitch>
 </umius-sidebar-full>
 <!-- /sidebar to edit innovation card field -->

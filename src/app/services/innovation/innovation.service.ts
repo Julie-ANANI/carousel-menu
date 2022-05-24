@@ -82,6 +82,14 @@ export class InnovationService {
     return this._http.delete('/innovation/' + innovationId + '/innovationCard/' + innovationCardId);
   }
 
+  public editLanguageStatus(innovationId: string, innovationCardId: string, body: object): Observable<any> {
+    return this._http.put('/innovation/' + innovationId + '/innovationCard/' + innovationCardId + '/changeStatus', body);
+  }
+
+  public removeLanguage(innovationId: string, languages: string[]): Observable<any> {
+    return this._http.put('/innovation/' + innovationId + '/languages/', {languages: languages});
+  }
+
   /**
    *
    * @param innovationCardId - get the card form the route '/innovation/card/:innovationCardId'
@@ -198,6 +206,10 @@ export class InnovationService {
     return this._http.post(`/innovation/${innovationId}/addAmbassador`, {
       selectedProfessionals: professionalArray
     });
+  }
+
+  public changeVisibility(innovationId: string, innovationCardId: string, body: object): Observable<any>{
+    return this._http.put(`/innovation/${innovationId}/innovationCard/${innovationCardId}/changeLanguageVisibility`, body);
   }
 
   public shareSynthesis(projectId: string): Observable<any> {

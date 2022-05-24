@@ -3,6 +3,22 @@
 #admin-project-settings {
   padding-bottom: 40px;
 
+  .text-meta{
+    opacity: 33%;
+  }
+
+  .form-checkbox input:checked + .form-icon{
+    border-color: $primary-color !important;
+  }
+  .form-checkbox input:checked + .form-icon::before{
+    border-color: $primary-color !important;
+  }
+
+  .status{
+    width: 80px;
+    margin-left: 20px;
+  }
+
   .settings-wrapper {
     display: flex;
     justify-content: space-between;

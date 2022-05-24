@@ -307,7 +307,7 @@ export const COMMON = {
     'EXAMPLE': 'Example',
     'REQUEST_PROOFREADING': 'Request a proofreading',
     'REQUESTING_PROOFREADING': 'requesting the proofreading...',
-    'VALIDATE_DEFINITIVELY': 'Validate definitively',
+    'VALIDATE_DEFINITIVELY': 'Validate languages definitely',
     'VALIDATING_DEFINITIVELY': 'submitting the project...',
     'COMMENT': 'Comment',
     'SENDING_MESSAGE': 'sending the message...',

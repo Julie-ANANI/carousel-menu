@@ -304,8 +304,6 @@ export class AdminProjectPreparationComponent implements OnInit, AfterViewChecke
   }
 
   getMenuClicked(lang: any) {
-    debugger;
-    console.log(lang);
     if (lang) {
       this.setCardLangSelected(lang);
     }
@@ -424,31 +422,19 @@ export class AdminProjectPreparationComponent implements OnInit, AfterViewChecke
   public addInnovationCard(event: Event) {
     event.preventDefault();
     const languagesToAdd = this._languagesToAdd.filter(language => language['checked']);
-    console.log(languagesToAdd);
-
-    // TODO need to call service to create the innovationCard
-
-    //if (this.canAddCard && !this._isAddingCard) {
-    this._isAddingCard = true;
-
     const _card = new InnovCard({lang: 'en', status: 'EDITING'});
-    console.log(_card);
     this._innovationService.createInnovationCard(this._project._id, _card, languagesToAdd).pipe(first()).subscribe((cards) => {
       if (cards && cards.length) {
         this._project.innovationCards = this._project.innovationCards.concat(cards);
       }
-      console.log(cards);
       this._emitUpdatedInnovation();
-      // this._isAddingCard = false;
       this._translateNotificationsService.success('Success',
-        `TODO add message`);
+        `Successfully added ${languagesToAdd.length} languages!`);
       this.closeModal();
     }, (err: HttpErrorResponse) => {
       this._translateNotificationsService.error('Card Adding Error...', ErrorFrontService.getErrorKey(err.error));
-      this._isAddingCard = false;
       console.error(err);
     });
-    // }
 
   }
 

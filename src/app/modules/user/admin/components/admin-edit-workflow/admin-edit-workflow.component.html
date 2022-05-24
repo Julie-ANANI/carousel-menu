@@ -29,7 +29,7 @@
           (click)="changeLanguage(language)"
           class="m-left-1 text-medium c-hand text-hover-underline"
           [ngClass]="{'text-underline': language === languageSelected}">
-          {{('COMMON.LANG.' + language.type.toUpperCase()) | translate}}
+          {{'COMMON.LANG.' + language.type | uppercase | translate}}
         </div>
         <span class="m-left-2" *ngIf="i!==innovationCardLanguages.length-1">|</span>
       </ng-container>

@@ -1,8 +1,5 @@
-import { Component, Inject, Input, PLATFORM_ID, OnInit, EventEmitter, Output, } from '@angular/core';
+import { Component, Inject, Input, PLATFORM_ID, OnInit, EventEmitter, Output } from '@angular/core';
 import { Subject } from 'rxjs';
-// import {InnovationFrontService} from '../../../services/innovation/innovation-front.service';
-// import {InnovCard} from '../../../models/innov-card';
-// import {Innovation} from '../../../models/innovation';
 
 @Component({
   selector: 'app-utility-carousel-menu',
@@ -12,48 +9,41 @@ import { Subject } from 'rxjs';
 })
 
 export class MenuKebabComponent implements OnInit {
-
   //config button controls
   @Input() showControls = true;
 
   //Size
-  @Input() minDelimitersOfItems = 7;
   @Input() menuHeight = '30px'
-  @Input() maxWidthItem = '6em'
+  @Input() minWidthItem = '6em'
 
   //color
   @Input() backgroundColor = '#e1e7ea';
-  @Input() textColor = '#00B0FF';
+  @Input() clickColor = '#00B0FF';
+  @Input() textColor = '#4F5D6B ';
+  @Input() btnRight = '39px';
 
   @Output() menuItemClicked: EventEmitter<any> = new EventEmitter();
 
   /**
    * get configuration for the menu
    * @param value
-   *
+   * quantity
    */
   @Input() set config(value: any) {
     if (value) {
-      // TODO: why set 0 if there is no quantity? Better to set default value: for example: 5, 6, 7,8???
-      // TODO Wei's version - I will do it like pagination
-      // this._quantity = value.quantity || 0;
-      this._quantity = value.quantity || 5; // if no quantity, I will take 5 => means display 5 by 5
+      //quantity it's for to choose the number of items you want between the next and prev buttons
+      this._quantity = value.quantity || 10;
+      //initQuantity it's for choose items display by default button view more
       this._initQuantity = value.initQuantity || 0;
       this._initIndex = value.initIndex || 0;
       this._sources = value.sources || [];
       this._identifier = value.identifier || '';
-      this._type = value.type || '';
-      // this._displayedItems = this._sources.slice(this._initIndex, this._quantity);
-      // TODO Wei's version - I will do it like pagination
-      // we can have the setting: always display 0 - 4 (in total: 5 items)
       this.setUpMenu();
-
     }
   }
 
   //Config Template
-  private _isDisplayItems = false;
-  private _displaySuiteKebabItems = true;
+  private _displaySuiteItems = true;
   private _ngUnsubscribe: Subject<any> = new Subject<any>();
   private _quantity: number = 0;
   private _identifier: string = '';
@@ -63,23 +53,13 @@ export class MenuKebabComponent implements OnInit {
   private _itemSelected: any;
   private _initQuantity: number;
   private _initIndex: number = 0;
-  //private _currentItem: any;
-
-
-  // TODO Wei's version - I will do it like pagination
   private _currentPagination = 1;
   private _maxPagination = 0;
 
-  constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
-  ) {
-  }
+  constructor(@Inject(PLATFORM_ID) protected _platformId: Object) {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
-  /**
-   *
-   */
   setUpMenu() {
     this._displayedItems = this._sources.slice(0, this._quantity);
     if (this._sources && this._sources.length > 0) {
@@ -87,33 +67,12 @@ export class MenuKebabComponent implements OnInit {
     }
   }
 
-
   clickOnMenu(event: Event, item: any) {
     event.preventDefault();
     this._itemSelected = item;
     this.menuItemClicked.emit(item);
-
-    // if (this.activeCard && !(this._cardToDelete._id)) {
-    //   this._itemSelected = item;
-    //   this._activeCardIndex = InnovationFrontService.currentLangInnovationCard(this._project, item, 'INDEX');
-    //   this._setActiveCardIndex();
-    // }
   }
 
-  //test
-  // private _setActiveCardIndex() {
-  //   this._innovationFrontService.setActiveCardIndex(this._activeCardIndex);
-  // }
-  // private _cardToDelete: InnovCard = <InnovCard>{};
-  // get activeCard(): InnovCard {
-  //   return InnovationFrontService.activeCard(this._project, this._activeCardIndex);
-  // }
-  //
-  // private _project: Innovation = <Innovation>{};
-  // private _activeCardIndex = 0;
-  //
-
-  // TODO Wei's version - I will do it like pagination
   next() {
     // there is next items
     if (this._currentPagination < this._maxPagination) {
@@ -125,35 +84,6 @@ export class MenuKebabComponent implements OnInit {
     }
   }
 
-  /**
-   next() {
-    let viewToView = (this._quantity);
-    let maxValQuantityNext = this.sources.length;
-
-    //when max view value for btn next with max value && max init valu
-    if (this.displayedItems.length > 0) {
-      if (((maxValQuantityNext - this._quantity) < this._quantity)) {
-        //assign max value
-        this._quantity = maxValQuantityNext;
-        this._initIndex = (this._initIndex + this._initIndex);
-        this._displayedItems = this._sources.slice(this._initIndex, this._quantity);
-        return this.displayedItems;
-        //when we can increment initIndex && quantity
-      } else {
-        this._quantity = (this._quantity + this._quantity)
-        this._initIndex = viewToView;
-        this._displayedItems = this._sources.slice(this._initIndex, this._quantity);
-        return this.displayedItems;
-      }
-      //If dont have length && [].length === 0
-    } else {
-      return this.displayedItems;
-    }
-
-  }
-   */
-
-  // TODO Wei's version - I will do it like pagination
   prev() {
     if (this._currentPagination > 1 && this._currentPagination <= this._maxPagination) {
       // then go to previous
@@ -164,53 +94,17 @@ export class MenuKebabComponent implements OnInit {
     }
   }
 
-  /**
-   prev() {
-    let init = this._initIndex
-
-    if (this._displayedItems.length > 0) {
-      //when with have max length of sources
-      if (this._quantity === this.sources.length) {
-        this._quantity = this._initIndex;
-        //value of init view items must be displayed
-        init = this._initQuantity
-        this._initIndex = init;
-        this._displayedItems = this._sources.slice(this._initIndex, this._quantity);
-        return this.displayedItems;
-        //when with don't have view max length of sources
-      } else {
-        //back to old items
-        this._quantity = ((this._quantity + 1) - (this._initIndex + 1))
-        this._initIndex = (this._initIndex - (this._initQuantity));
-        this._displayedItems = this._sources.slice(this._initIndex, this._quantity);
-        return this.displayedItems;
-      }
-    } else {
-      return this.displayedItems;
-    }
-
-  }
-   */
-
   ngOnDestroy(): void {
     this._ngUnsubscribe.next();
     this._ngUnsubscribe.complete();
   }
 
-  get displaySuiteKebabItems(): boolean {
-    return this._displaySuiteKebabItems;
+  get displaySuiteItems(): boolean {
+    return this._displaySuiteItems;
   }
 
-  set displaySuiteKebabItems(value: boolean) {
-    this._displaySuiteKebabItems = value;
-  }
-
-  get isDisplayItems(): boolean {
-    return this._isDisplayItems;
-  }
-
-  set isDisplayItems(value: boolean) {
-    this._isDisplayItems = value;
+  set displaySuiteItems(value: boolean) {
+    this._displaySuiteItems = value;
   }
 
   get quatity(): number {
@@ -245,7 +139,6 @@ export class MenuKebabComponent implements OnInit {
     return this._initQuantity;
   }
 
-
   get currentPagination(): number {
     return this._currentPagination;
   }
@@ -253,4 +146,5 @@ export class MenuKebabComponent implements OnInit {
   get maxPagination(): number {
     return this._maxPagination;
   }
+
 }

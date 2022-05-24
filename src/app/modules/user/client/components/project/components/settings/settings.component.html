@@ -278,7 +278,7 @@
                 <div *ngFor="let card of innovation.innovationCards" class="lang-wrapper m-no-bottom">
                   <span class="m-right-40">
                     {{ 'PROJECT_SETTINGS.PROJECT_IN' | translate }}
-                    {{ 'COMMON.LANG.' + card.lang.toUpperCase() | translate }}.
+                    {{ 'COMMON.LANG.' + card.lang | uppercase | translate }}.
                   </span>
                   <span
                     (click)="openDeleteModal($event, section, card)"
@@ -607,7 +607,7 @@
       <!-- LANGUAGE -->
       <div *ngSwitchCase="'LANGUAGE'">
         <p>{{ 'PROJECT_SETTINGS.MODAL_DELETE.CARD' | translate }}</p>
-        <p class="text-sm text-medium">{{ 'COMMON.LANG.' + selectedValue.lang.toUpperCase() | translate }}</p>
+        <p class="text-sm text-medium">{{ 'COMMON.LANG.' + selectedValue.lang | uppercase | translate }}</p>
       </div>
       <!-- /LANGUAGE -->
 

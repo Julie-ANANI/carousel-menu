@@ -13,7 +13,6 @@ import { TranslateNotificationsService } from '../../../../../services/translate
 import { InnovCardSection } from '../../../../../models/innov-card';
 import { PresetFrontService } from "../../../../../services/preset/preset-front.service";
 import {UmiusAutoSuggestionInterface} from '@umius/umi-common-component';
-import { Language } from "../../../../../models/static-data/language";
 
 interface AddQuestion {
   from: 'SCRATCH' | 'LIBRARY';
@@ -386,10 +385,6 @@ export class SharedQuestionnaireSectionComponent implements OnInit {
 
   get sectionTypes(): Array<string> {
     return this._sectionTypes;
-  }
-
-  get questionnaireLangs(): Array<Language> {
-    return this._missionQuestionService.questionnaireLangs;
   }
 
   get cardsSections(): MissionCardTitle {

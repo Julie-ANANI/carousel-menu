@@ -8,18 +8,20 @@ import { AdminEditUseCaseComponent } from './admin-edit-use-case/admin-edit-use-
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedQuestionnaireModule } from '../../../../../shared/components/shared-questionnaire/shared-questionnaire.module';
 import {ModalModule, TableModule} from '@umius/umi-common-component';
+import { SharedQuestionnaireMirrorViewModule } from "../../../../../shared/components/shared-questionnaire-mirror-view/shared-questionnaire-mirror-view.module";
 
 @NgModule({
-  imports: [
-    CommonModule,
-    TranslateModule.forChild(),
-    MessageErrorModule,
-    ReactiveFormsModule,
-    FormsModule,
-    SharedQuestionnaireModule,
-    TableModule,
-    ModalModule,
-  ],
+    imports: [
+        CommonModule,
+        TranslateModule.forChild(),
+        MessageErrorModule,
+        ReactiveFormsModule,
+        FormsModule,
+        SharedQuestionnaireModule,
+        TableModule,
+        ModalModule,
+        SharedQuestionnaireMirrorViewModule,
+    ],
   declarations: [
     AdminUseCasesLibraryComponent,
     AdminEditUseCaseComponent,

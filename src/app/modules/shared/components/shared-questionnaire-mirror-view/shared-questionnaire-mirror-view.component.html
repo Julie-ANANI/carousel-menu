@@ -1,4 +1,4 @@
-<div id="shared-questionnaire-mirror-view">
+<div id="shared-questionnaire-mirror-view" *ngIf="languageSelected">
   <div class="d-flex flex-d-column p-bottom-20">
     <div class="dropdown">
       <!-- selected language  -->
@@ -6,12 +6,12 @@
 
         <!-- language status  -->
         <ng-container *ngTemplateOutlet="langStatus;
-                             context: {$implicit:{status: languageSelected['status']}}">
+                             context: {$implicit:{status: languageSelected?.status}}">
         </ng-container>
         <!-- language status  -->
 
         <!-- language name  -->
-        <span class="m-left-10">{{('COMMON.LANG.' + languageSelected.type.toUpperCase()) | translate}}</span>
+        <span class="m-left-10">{{'COMMON.LANG.' + languageSelected?.type | uppercase |  translate}}</span>
         <!-- /language name  -->
 
         <!-- icon drop down  -->
@@ -30,7 +30,7 @@
 
           <!-- dropdown menu - item -->
           <li class="menu-item"
-              *ngIf="hiddenLanguageItem(lang)"
+              *ngIf="!hiddenLanguageItem(lang)"
               (click)="selectMirrorLanguage($event, lang)">
             <div class="d-flex align-center">
 
@@ -41,7 +41,7 @@
               <!-- dropdown menu - item status  -->
 
               <!-- dropdown menu - item name -->
-              <span class="m-left-10">{{('COMMON.LANG.' + languageSelected.type.toUpperCase()) | translate}}</span>
+              <span class="m-left-10">{{'COMMON.LANG.' + lang?.type | uppercase | translate}}</span>
               <!-- dropdown menu - item name -->
 
               <!-- dropdown menu - icon - visible for client -->
@@ -69,9 +69,11 @@
 
   <!-- template to display lang status -->
   <ng-template #langStatus let-context>
-    <ng-container [ngSwitch]="context['status']">
-      <i class="fas fa-check-circle text-success" *ngSwitchCase="'DONE'"></i>
-      <i class="fas fa-circle text-error" *ngSwitchDefault></i>
+    <ng-container *ngIf="context?.status">
+      <ng-container [ngSwitch]="context['status']">
+        <i class="fas fa-check-circle text-success" *ngSwitchCase="'DONE'"></i>
+        <i class="fas fa-circle text-error" *ngSwitchDefault></i>
+      </ng-container>
     </ng-container>
   </ng-template>
   <!-- /template to display lang status -->

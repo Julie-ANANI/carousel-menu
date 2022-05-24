@@ -11,7 +11,7 @@ import {MessageErrorModule} from '../../../utility/messages/message-error/messag
         CommonModule,
         TranslateModule.forChild(),
         CleanHtmlModule,
-        MessageErrorModule,
+        MessageErrorModule
     ],
   declarations: [
     SharedEditorEtherpadComponent
