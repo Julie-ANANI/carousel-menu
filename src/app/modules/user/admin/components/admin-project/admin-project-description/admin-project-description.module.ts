@@ -13,7 +13,7 @@ import { CleanHtmlModule } from '../../../../../../pipe/cleanHtml/cleanHtml.modu
 import {PipeModule} from '../../../../../../pipe/pipe.module';
 import { NgxPageScrollModule } from "ngx-page-scroll";
 import {ModalModule} from '@umius/umi-common-component';
-import {MenuKebabModule} from '../../../../../utility/menu-kebab/menu-kebab.module';
+import {MenuCarouselModule} from '../../../../../utility/menu-kebab/menu-carousel.module';
 
 @NgModule({
   imports: [
@@ -29,7 +29,7 @@ import {MenuKebabModule} from '../../../../../utility/menu-kebab/menu-kebab.modu
     PipeModule,
     NgxPageScrollModule,
     ModalModule,
-    MenuKebabModule,
+    MenuCarouselModule,
   ],
   declarations: [
     AdminProjectDescriptionComponent,

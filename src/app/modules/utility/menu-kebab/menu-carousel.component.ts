@@ -4,23 +4,17 @@ import { Subject } from 'rxjs';
 @Component({
   selector: 'app-utility-carousel-menu',
   exportAs: 'app-utility-carousel-menu',
-  templateUrl: './menu-kebab.html',
-  styleUrls: ['./menu-kebab.scss']
+  templateUrl: './menu-carousel.html',
+  styleUrls: ['./menu-carousel.scss']
 })
 
-export class MenuKebabComponent implements OnInit {
-  //config button controls
+export class MenuCarouselComponent implements OnInit {
+  //button controls
   @Input() showControls = true;
-
   //Size
-  @Input() menuHeight = '30px'
   @Input() minWidthItem = '6em'
-
-  //color
-  @Input() backgroundColor = '#e1e7ea';
-  @Input() clickColor = '#00B0FF';
-  @Input() textColor = '#4F5D6B ';
-  @Input() btnRight = '39px';
+  //margin
+  @Input() btnRight = '5em';
 
   @Output() menuItemClicked: EventEmitter<any> = new EventEmitter();
 
@@ -107,7 +101,7 @@ export class MenuKebabComponent implements OnInit {
     this._displaySuiteItems = value;
   }
 
-  get quatity(): number {
+  get quantity(): number {
     return this._quantity;
   }
 
