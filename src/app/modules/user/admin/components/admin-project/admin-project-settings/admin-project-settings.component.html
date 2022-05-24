@@ -223,18 +223,20 @@
               *ngIf="mission._id && (canAccess(['view','missionTeam' ])
               || canAccess(['edit', 'projectLanguages']))"
               class="content">
+
               <label>Project Languages</label>
-              <div class=" flex-end">
-                <div class="accordion">
+
+              <div class="accordion is-right">
                   <input type="checkbox" id="accordion" name="accordion-checkbox" hidden>
-                  <label style="margin-left: auto;" class="flex-end text-dark" for="accordion">
-                    Languages ({{ projectLanguages.length }})
-                    <i class="icon icon-caret"></i>
+                  <label for="accordion">
+                    <a class=" dropdown-toggle text-dark text-lang">
+                      Languages ({{ projectLanguages.length }}) <i class="icon icon-caret" style=" font-size: 26px; margin-left: 15px;"></i>
+                    </a>
                   </label>
-                  <div class="accordion-body w-full ">
+                  <div class="accordion-body w-full">
                     <div *ngIf="canAccess(['edit', 'missionTeam'])" class="is-md">
                       <ng-container *ngIf="notAllEdited(); else editAll">
-                        <table  class="table w-full table-responsive is-max-height">
+                        <table  class="table w-full">
                           <thead>
                           <tr>
                             <th>
@@ -249,13 +251,13 @@
                             </th>
                             <!-- /remove language -->
                             <th style="width: 250px !important;" class="flex-around w-full text-sm text-capitalize text-primary">
-                              <div class="flex-centered w-80">
+                              <div class="flex-centered w-80 c-hand">
                                 <div *ngIf="canBeValidated()" (click)="validateLang($event)"><i class="fa fa-check"></i> {{" Validate "}} </div>
                               </div>
-                              <div  class="flex-centered w-80">
+                              <div  class="flex-centered w-80 c-hand">
                                 <div *ngIf="canBeEdited()" (click)="reEditLang($event)"><i class="fa fa-pen"></i> {{" Reedit "}} </div>
                               </div>
-                              <div class="flex-centered w-80">
+                              <div class="flex-centered w-80 c-hand">
                                 <div *ngIf="canBeDeleted()" (click)="onRemoveLanguages($event)"><i class="fa fa-trash"></i> {{" Remove "}} </div>
                               </div>
                             </th>
@@ -275,26 +277,22 @@
                                 {{'COMMON.LANG.' + inno.lang.toUpperCase() | translate }}
                               </label>
                             </td>
-                            <td  *ngIf="!inno.hidden" class="flex-start">
-                              <div class="flex-start tooltip is-multiline" data-tooltip="This language is visible on client side. Click on the eye to mask it">
-                                <i class="fa fa-eye text-primary text-lg m-right-10" (click)="changeVisibility(inno, $event)"></i>
-                                <div  [ngClass]="statusClass(inno.status)" class="text-center status">
+                            <td class="flex-around w-full">
+                              <div class="flex-centered w-full">
+                                <div *ngIf="inno.hidden" class="is-table text-center tooltip is-multiline not-table" data-tooltip="This language is masked on client side. Click on the eye to unmask it">
+                                  <i class="fa fa-eye-slash c-hand text-primary text-lg m-right-10" (click)="changeVisibility(inno, $event)"></i>
+                                </div>
+                                <div *ngIf="!inno.hidden" class="is-table text-center tooltip is-multiline not-table" data-tooltip="This language is visible on client side. Click on the eye to mask it">
+                                  <i class="fa fa-eye c-hand text-primary text-lg m-right-10" (click)="changeVisibility(inno, $event)"></i>
+                                </div>
+                                <div  [ngClass]="statusClass(inno.status)" class=" w-100text-capitalize text-center status">
                                   {{capitalize(inno.status)}}
                                 </div>
                               </div>
-                              <div *ngIf="inno.shotSent" class="  w-100 text-center tooltip is-multiline" data-tooltip="This language can't be deleted because workflows have already been sent in this language.">
-                                <i  class="fa fa-trash is-outlined text-lg text-meta" ></i>
-                              </div>
-                            </td>
-                            <td  *ngIf="inno.hidden" class="flex-start">
-                              <div class="flex-start tooltip is-multiline" data-tooltip="This language is masked on client side. Click on the eye to unmask it">
-                                <i class="fa fa-eye-slash text-primary text-lg m-right-10" (click)="changeVisibility(inno, $event)"></i>
-                                <div  [ngClass]="statusClass(inno.status)" class="text-center status">
-                                  {{capitalize(inno.status)}}
+                              <div class=" w-100 text-center">
+                                <div *ngIf="inno.shotSent" class=" w-full tooltip is-multiline"  data-tooltip="This language can't be deleted because workflows have already been sent in this language.">
+                                  <i class="fa fa-trash is-outlined text-lg text-meta"></i>
                                 </div>
-                              </div>
-                              <div *ngIf="inno.shotSent" class="  w-100 text-center tooltip is-multiline" data-tooltip="This language can't be deleted because workflows have already been sent in this language.">
-                                <i  class="fa fa-trash is-outlined text-lg text-meta" ></i>
                               </div>
                             </td>
                           </tr>
@@ -304,32 +302,31 @@
                       <ng-template #editAll>
                         <div>
                           <div *ngFor="let inno of projectLanguages" class="m-top-30 is-md flex-around w-full">
-                            {{'COMMON.LANG.' + inno.lang.toUpperCase() | translate }}
-                            <div *ngIf="inno.hidden" class="w-150   text-center tooltip is-multiline" data-tooltip="This language is masked on client side. Click on the eye to unmask it" >
-                              <i class="fa fa-eye-slash text-primary text-lg" (click)="changeVisibility(inno, $event)"></i>
-                              <div  [ngClass]="statusClass(inno.status)" class="text-capitalize text-center status">
-                                {{capitalize(inno.status)}}
-                              </div>
+                            <div class="w-100 p-left-10" >
+                              {{'COMMON.LANG.' + inno.lang.toUpperCase() | translate }}
                             </div>
-                            <div *ngIf="!inno.hidden" class="w-150   text-center tooltip is-multiline" data-tooltip="This language is masked on client side. Click on the eye to unmask it" >
-                              <i class="fa fa-eye text-primary text-lg" (click)="changeVisibility(inno, $event)"></i>
-                              <div  [ngClass]="statusClass(inno.status)" class="text-capitalize text-center status">
-                                {{capitalize(inno.status)}}
-                              </div>
+                            <div *ngIf="inno.hidden" class=" text-center tooltip is-multiline not-table" data-tooltip="This language is masked on client side. Click on the eye to unmask it">
+                              <i class="fa fa-eye-slash c-hand text-primary text-lg m-right-10" (click)="changeVisibility(inno, $event)"></i>
                             </div>
-                            <div class="w-100 float-right text-center tooltip is-multiline" data-tooltip="This language can't be deleted because workflows have already been sent in this language.">
-                              <i class="fa fa-trash is-outlined text-lg text-meta"></i>
+                            <div *ngIf="!inno.hidden" class=" text-center tooltip is-multiline not-table" data-tooltip="This language is visible on client side. Click on the eye to mask it">
+                              <i class="fa fa-eye c-hand text-primary text-lg m-right-10" (click)="changeVisibility(inno, $event)"></i>
+                            </div>
+                            <div  [ngClass]="statusClass(inno.status)" class=" w-100text-capitalize text-center status">
+                              {{capitalize(inno.status)}}
+                            </div>
+                            <div class="w-100 text-center tooltip is-multiline" data-tooltip="This language can't be deleted because workflows have already been sent in this language.">
+                              <i  class="fa fa-trash is-outlined text-lg text-meta"></i>
                             </div>
                           </div>
-                          <div class="popover is-right  ">
+                          <div class="popover is-right float-right">
                             <button
                               (click)="reEditLang($event)"
-                              class="button float-right is-primary text-center m-top-20 is-sm w-160 m-right-20">
-                              <label class="text-white"> Reedit All </label> <i  class="fa fa-pen text-lg" ></i>
+                              class="button is-xs float-right is-primary but text-center m-top-20 text-13">
+                              <label class="text-white"> Reedit All</label> <i class="fa fa-pen" ></i>
                             </button>
-                            <div class="popover-container is-sm">
+                            <div class="popover-container text-justify is-sm">
                               <div class="card">
-                                Be careful, if you <strong>"reedit all"</strong>, the client will be able again to modify the project. You can still edit the project on <strong>admin side</strong>.
+                                Be careful, if you <p class="text-bold">"reedit all",</p> the client will be able again to modify the project. You can still edit the project on <p class="text-bold">admin side.</p>
                               </div>
                             </div>
                           </div>
@@ -339,7 +336,6 @@
                     </div>
                   </div>
                 </div>
-              </div>
             </div>
             <!-- /Project languages -->
 
