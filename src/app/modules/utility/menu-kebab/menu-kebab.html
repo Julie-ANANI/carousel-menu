@@ -37,7 +37,7 @@
 
     <div class="d-flex">
       <div id="btn-kebab"
-           *ngIf="displayedItems.length && displaySuiteItems"
+           *ngIf="displayedItems.length && displaySuiteItems && displayedItems.length > initQuantity"
            class="icon-container is-xl is-overlay"
            (click)="displaySuiteItems = !displaySuiteItems">
         <i class="icon icon-more-horiz is-lg"></i>
