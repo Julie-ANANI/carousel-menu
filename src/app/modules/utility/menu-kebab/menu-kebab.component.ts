@@ -13,11 +13,12 @@ export class MenuKebabComponent implements OnInit {
   @Input() showControls = true;
 
   //Size
-  @Input() menuHeight = '30px'
+  //@Input() menuHeight = '20px'
   @Input() minWidthItem = '6em'
 
   //color
-  @Input() backgroundColor = '#e1e7ea';
+  //@Input() backgroundColor = '#e1e7ea';
+  //@Input() backgroundColor = '#e1e7ea';
   @Input() clickColor = '#00B0FF';
   @Input() textColor = '#4F5D6B ';
   @Input() btnRight = '39px';
@@ -32,7 +33,7 @@ export class MenuKebabComponent implements OnInit {
   @Input() set config(value: any) {
     if (value) {
       //quantity it's for to choose the number of items you want between the next and prev buttons
-      this._quantity = value.quantity || 10;
+      this._quantity = value.quantity || 9;
       //initQuantity it's for choose items display by default button view more
       this._initQuantity = value.initQuantity || 0;
       this._initIndex = value.initIndex || 0;
@@ -107,7 +108,7 @@ export class MenuKebabComponent implements OnInit {
     this._displaySuiteItems = value;
   }
 
-  get quatity(): number {
+  get quantity(): number {
     return this._quantity;
   }
 
