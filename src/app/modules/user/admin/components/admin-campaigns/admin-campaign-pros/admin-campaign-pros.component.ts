@@ -383,7 +383,7 @@ export class AdminCampaignProsComponent implements OnInit {
         jobTitle: value.jobTitle,
         country: value.country,
         //Guillaume
-        language: value.language.toUpperCase(),
+        language: value.language.toLowerCase(),
         profileUrl: value.profileUrl,
         company: value.company,
         emailConfidence: 100,

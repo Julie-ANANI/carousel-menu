@@ -303,7 +303,7 @@ export class UserFormComponent implements OnInit {
       //Guillaume
       for (const code in this._languages) {
         if (this._languages[code].toLowerCase() === this._userForm.get('language').value.toLowerCase()) {
-          this._userForm.value['language'] = code.toUpperCase();
+          this._userForm.value['language'] = code.toLowerCase();
         }
       }
 
