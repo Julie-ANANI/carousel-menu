@@ -7,7 +7,6 @@ import { LangEntryService } from '../../../../services/lang-entry/lang-entry.ser
  * SL - 0: excluded, 1: included
  * JT - 0: excluded, 1: included, 2: neutral, 3:mixe
  */
-
 @Component({
   selector: 'app-shared-search-config-pro',
   templateUrl: './shared-search-config-pro.component.html',
@@ -229,8 +228,8 @@ export class SharedSearchConfigProComponent implements OnInit {
    */
   private _countStates() {
     if (this.isJobTypo) {
-      this._nbIncluded = this.jobConfigs.filter(_job => _job.state === 1).length;
-      this._nbExcluded = this.jobConfigs.filter(_job => _job.state === 0).length;
+      this._nbIncluded = this.jobConfigs.filter(_job => _job.state === 1 && !_job.hidden).length;
+      this._nbExcluded = this.jobConfigs.filter(_job => _job.state === 0 && !_job.hidden).length;
     }
   }
 
