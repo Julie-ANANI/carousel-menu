@@ -44,7 +44,9 @@
     <!--TODO remove multiling-->
     <div *ngIf="!isEditable">
       <ng-container *ngIf="defaultTag.entry; else noEditableLabel">
-        {{defaultTag.entry|langEntry:'label':'en'}}
+        {{(defaultTag.entry|langEntry:'label':currentLang)
+        || (defaultTag.entry|langEntry:'label':'en')
+        || (defaultTag.entry|langEntry:'label':'fr')}}
       </ng-container>
       <ng-template #noEditableLabel>
         {{defaultTag.label | multiling:currentLang}}

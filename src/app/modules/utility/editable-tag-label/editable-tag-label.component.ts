@@ -2,7 +2,6 @@ import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output } from '@
 import { Observable } from 'rxjs';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
-// import { MultilingPipe } from '../../../pipe/pipes/multiling.pipe';
 import { TagsService } from '../../../services/tags/tags.service';
 import { AutocompleteService } from '../../../services/autocomplete/autocomplete.service';
 import { Tag } from '../../../models/tag';
@@ -67,7 +66,6 @@ export class EditableTagLabelComponent implements OnInit, AfterViewInit {
 
   constructor(private _translateService: TranslateService,
               private _langEntryService: LangEntryService,
-              // private _multilingPipe: MultilingPipe,
               private _domSanitizer: DomSanitizer,
               private _tagsService: TagsService,
               private _autocompleteService: AutocompleteService) {
