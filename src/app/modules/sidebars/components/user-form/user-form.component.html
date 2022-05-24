@@ -260,6 +260,31 @@
         </ul>
       </div>
 
+      <!-- language
+      //Guillaume
+      -->
+      <div class="form-group">
+        <label class="form-label" for="user-form-language">{{ 'COMMON.LABEL.LANGUAGE' | translate }}</label>
+        <input
+          (keyup)="onSuggestLanguages()"
+          [attr.placeholder]="'COMMON.PLACEHOLDER.LANGUAGE' | translate"
+          class="form-input"
+          formControlName="language"
+          id="user-form-language"
+          type="text">
+        <ul
+          *ngIf="userForm.get('language').value"
+          [ngStyle]="{ 'display': displayLanguageSuggestion ? 'block' : 'none' }"
+          class="menu menu__fixed-height">
+          <li
+            (click)="onValueSelectLanguage(suggestion)"
+            *ngFor="let suggestion of languagesSuggestion.sort()"
+            class="menu-item">
+            {{ suggestion | titlecase }}
+          </li>
+        </ul>
+      </div>
+
       <!-- url -->
       <ng-container *ngIf="isProfessional">
         <div class="form-group">

@@ -382,11 +382,12 @@ export class AdminCampaignProsComponent implements OnInit {
         email: value.email,
         jobTitle: value.jobTitle,
         country: value.country,
+        //Guillaume
+        language: value.language.toUpperCase(),
         profileUrl: value.profileUrl,
         company: value.company,
         emailConfidence: 100,
       };
-
       this._professionalsService
         .create(
           [this._newPro],

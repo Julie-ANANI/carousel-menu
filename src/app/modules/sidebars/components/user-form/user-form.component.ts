@@ -16,6 +16,7 @@ import { Tag } from '../../../../models/tag';
 import { QuizService } from '../../../../services/quiz/quiz.service';
 import { isPlatformBrowser } from '@angular/common';
 import { countries } from '../../../../models/static-data/country';
+import { languages } from '../../../../models/static-data/languages';
 import { SearchService } from '../../../../services/search/search.service';
 import { ProfessionalsService } from '../../../../services/professionals/professionals.service';
 import {ErrorFrontService} from '../../../../services/error/error-front.service';
@@ -59,6 +60,8 @@ export class UserFormComponent implements OnInit {
       this._isProfessional = true;
       this._selectedProject = null;
       value.country = this.getCountryName(value.country);
+      //Guillaume
+      value.language = this.getLanguages(value.language);
       this._pro = value;
       this.loadProfessional();
     }
@@ -75,6 +78,8 @@ export class UserFormComponent implements OnInit {
     if (value) {
       this._selectedProject = null;
       value.country = this.getCountryName(value.country);
+      //Guillaume
+      value.language = this.getLanguages(value.language);
       this._user = value;
       this.loadEditUser();
     }
@@ -103,9 +108,13 @@ export class UserFormComponent implements OnInit {
 
   private _countriesSuggestion: Array<string> = [];
 
+  private _languagesSuggestion: Array<string> = [];
+
   private _companySuggestion: Array<Clearbit> = [];
 
   private _displayCountrySuggestion = false;
+
+  private _displayLanguageSuggestion = false;
 
   private _displayCompanySuggestion = false;
 
@@ -142,6 +151,7 @@ export class UserFormComponent implements OnInit {
   };
 
   private _countries = countries;
+  private _languages = languages;
 
   private _proKeywords: Array<string> = null;
 
@@ -176,7 +186,6 @@ export class UserFormComponent implements OnInit {
     this._displayCompanySuggestion = false;
   }
 
-
   private buildForm() {
     this._userForm = this.formBuilder.group( {
       firstName: ['', [Validators.required]],
@@ -185,6 +194,8 @@ export class UserFormComponent implements OnInit {
       jobTitle: [''],
       email: ['', [Validators.required, Validators.pattern(emailRegEx)]],
       country: [''],
+      //Guillaume
+      language: [''],
       roles: [''],
       isOperator: [false],
       profileUrl: [null],
@@ -208,10 +219,8 @@ export class UserFormComponent implements OnInit {
       });
   }
 
-
   private loadTemplate() {
     this.reinitialiseForm();
-
     if (this._type === 'editUser') {
       this._isEditUser = true;
       this.loadEditUser();
@@ -221,7 +230,6 @@ export class UserFormComponent implements OnInit {
     } else if (this._type === 'addPro') {
       this._isProfessional = true;
     }
-
   }
 
   private reinitialiseForm() {
@@ -253,7 +261,6 @@ export class UserFormComponent implements OnInit {
     }
   }
 
-
   private loadEditUser() {
     if (this._user) {
       this._isSelf = this._authService.userId === this._user.id;
@@ -262,7 +269,6 @@ export class UserFormComponent implements OnInit {
       this.loadInnovations();
     }
   }
-
 
   private loadInnovations(): void {
     if (this._user._id) {
@@ -291,6 +297,13 @@ export class UserFormComponent implements OnInit {
       for (const code in this._countries) {
         if (this._countries[code] === this._userForm.get('country').value) {
           this._userForm.value['country'] = code;
+        }
+      }
+
+      //Guillaume
+      for (const code in this._languages) {
+        if (this._languages[code].toLowerCase() === this._userForm.get('language').value.toLowerCase()) {
+          this._userForm.value['language'] = code.toUpperCase();
         }
       }
 
@@ -353,12 +366,37 @@ export class UserFormComponent implements OnInit {
     });
   }
 
+  //Guillaume
+  onSuggestLanguages() {
+    this._userForm.get('language').valueChanges.pipe(distinctUntilChanged()).subscribe((input: any) => {
+      this._displayLanguageSuggestion = true;
+      this._languagesSuggestion = [];
+      this.autoCompleteService.get({query: input, type: 'languages'}).subscribe((res: any) => {
+        if (res.length === 0) {
+          this._displayLanguageSuggestion = false;
+        } else {
+          res.forEach((items: any) => {
+            const valueIndex = this._languagesSuggestion.indexOf(items.name);
+            if (valueIndex === -1) { // if not exist then push into the array.
+              this._languagesSuggestion.push(items.name);
+
+            }
+          });
+        }
+      });
+    });
+  }
 
   onValueSelect(value: string) {
     this._userForm.get('country').setValue(value);
     this._displayCountrySuggestion = false;
   }
 
+  //Guillaume
+  onValueSelectLanguage(value: string) {
+    this._userForm.get('language').setValue(value[0].toUpperCase() + value.substr(1).toLowerCase());
+    this._displayLanguageSuggestion = false;
+  }
 
   openQuizUri(pro: Professional, event: Event): void {
     event.preventDefault();
@@ -435,10 +473,23 @@ export class UserFormComponent implements OnInit {
 
   }
 
+  //Guillaume
+  //Get language name from language code
+  getLanguages(value: string) {
+    for (const code in this._languages) {
+      if (code === value) {
+        return this._languages[code];
+      }
+    }
+
+    return value;
+
+  }
+
   public onEmailChange() {
     if (this._type === 'addPro' && this._userForm.get('email').valid) {
       const config = {
-        fields: 'firstName lastName company email country jobTitle campaigns innovations',
+        fields: 'firstName lastName company email country language jobTitle campaigns innovations',
         limit: '1',
         offset: '0',
         search: '{}',
@@ -545,8 +596,18 @@ export class UserFormComponent implements OnInit {
     return this._countriesSuggestion;
   }
 
+  //Guillaume
+  get languagesSuggestion(): Array<string> {
+    return this._languagesSuggestion;
+  }
+
   get displayCountrySuggestion(): boolean {
     return this._displayCountrySuggestion;
+  }
+
+  //Guillaume
+  get displayLanguageSuggestion(): boolean {
+    return this._displayLanguageSuggestion;
   }
 
   get displayCompanySuggestion(): boolean {
@@ -555,6 +616,11 @@ export class UserFormComponent implements OnInit {
 
   get countries(): any {
     return this._countries;
+  }
+
+  //Guillaume
+  get languages(): any {
+    return this._languages;
   }
 
   get proKeywords(): Array<string> {
