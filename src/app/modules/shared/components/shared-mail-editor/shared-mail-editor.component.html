@@ -9,7 +9,7 @@
       <ng-container *ngFor="let lang of innovationCardLanguages">
         <button
           *ngIf="innovationCardLanguages.indexOf(lang) !== -1"
-          [ngClass]="{ 'text-underline': language === lang }"
+          [ngClass]="language === lang.type? 'text-underline is-primary' : 'is-draft'"
           class="button is-link"
           (click)="changeLanguage(lang.type)">
           {{'COMMON.LANG.' + lang?.type | uppercase | translate}}</button>
