@@ -101,6 +101,8 @@ export class SidebarProjectPitchComponent implements OnInit, OnChanges, OnDestro
 
   @Output() mediaIndex = new EventEmitter<number>();
 
+  @Output() saveAdjustedMedia =  new EventEmitter<boolean>();
+
   // 'TITLE' | 'SUMMARY' | 'ISSUE' | 'SOLUTION' | 'MEDIA' | 'OTHER' | 'CONTEXT'
   @Input() type: CardSectionTypes = '';
 
@@ -190,7 +192,7 @@ export class SidebarProjectPitchComponent implements OnInit, OnChanges, OnDestro
           height: '408px',
           'align-content': 'flex-start',
           'align-items': 'flex-start',
-          'row-gap': '8px'
+          'column-gap': '8px'
         };
         this._mainMediaContainerStyle = {
           width: '290px',
@@ -200,7 +202,8 @@ export class SidebarProjectPitchComponent implements OnInit, OnChanges, OnDestro
           this._secondaryContainerStyle = {
             'flex-direction': 'column',
             height: '100%',
-            'padding-left': '8px'
+            'row-gap': '8px'
+            //'padding-left': '8px'
           };
         }
       } else if (this.cardContent[0].type === 'VIDEO' || (this.cardContent[0].cloudinary.width / this.cardContent[0].cloudinary.height) > 4/3) {
@@ -209,7 +212,7 @@ export class SidebarProjectPitchComponent implements OnInit, OnChanges, OnDestro
           height: 'auto',
           'place-items': 'center',
           'box-sizing': 'border-box',
-          'column-gap': '8px'
+          'row-gap': '8px'
         };
         this._mainMediaContainerStyle = {
           width: '100%',
@@ -219,7 +222,8 @@ export class SidebarProjectPitchComponent implements OnInit, OnChanges, OnDestro
           this._secondaryContainerStyle = {
             'flex-direction': 'row',
             width: '100%',
-            'padding-top': '8px'
+            'column-gap': '8px'
+            //'padding-top': '8px'
           };
         }
       }
@@ -337,7 +341,7 @@ export class SidebarProjectPitchComponent implements OnInit, OnChanges, OnDestro
         height: '408px',
         'align-content': 'flex-start',
         'align-items': 'flex-start',
-        'gap': '8px'
+        'column-gap': '8px'
       };
       this._mainMediaContainerStyle = {
         width: '290px',
@@ -347,6 +351,7 @@ export class SidebarProjectPitchComponent implements OnInit, OnChanges, OnDestro
         this._secondaryContainerStyle = {
           'flex-direction': 'column',
           height: '100%',
+          'row-gap': '8px'
         };
       }
     } else if (type === 'VIDEO' || (this.cardContent[0]['cloudinary'].width / this.cardContent[0]['cloudinary'].height) > 4/3) {
@@ -355,7 +360,7 @@ export class SidebarProjectPitchComponent implements OnInit, OnChanges, OnDestro
         height: 'auto',
         'place-items': 'center',
         'box-sizing': 'border-box',
-        'gap': '8px'
+        'row-gap': '8px'
       };
       this._mainMediaContainerStyle = {
         width: '100%',
@@ -365,6 +370,7 @@ export class SidebarProjectPitchComponent implements OnInit, OnChanges, OnDestro
         this._secondaryContainerStyle = {
           'flex-direction': 'row',
           width: '100%',
+          'column-gap': '8px'
         };
       }
     }
@@ -412,7 +418,7 @@ export class SidebarProjectPitchComponent implements OnInit, OnChanges, OnDestro
         height: '408px',
         'align-content': 'flex-start',
         'align-items': 'flex-start',
-        'row-gap': '8px'
+        'column-gap': '8px'
       };
       this._mainMediaContainerStyle = {
         width: '290px',
@@ -420,10 +426,10 @@ export class SidebarProjectPitchComponent implements OnInit, OnChanges, OnDestro
       };
       if (this.cardContent.length > 1) {
         this._secondaryContainerStyle = {
-          //'row-gap': '8px',
+          'row-gap': '8px',
           'flex-direction': 'column',
           height: '100%',
-          'padding-left': '8px'
+          //'padding-left': '8px'
         };
       }
     } else if (media.type === 'VIDEO' || (media.cloudinary.width / media.cloudinary.height) > 4/3) {
@@ -432,7 +438,7 @@ export class SidebarProjectPitchComponent implements OnInit, OnChanges, OnDestro
         height: 'auto',
         'place-items': 'center',
         'box-sizing': 'border-box',
-        'column-gap': '8px'
+        'row-gap': '8px'
       };
       this._mainMediaContainerStyle = {
         width: '100%',
@@ -440,10 +446,10 @@ export class SidebarProjectPitchComponent implements OnInit, OnChanges, OnDestro
       };
       if (this.cardContent.length > 1) {
         this._secondaryContainerStyle = {
-          //'column-gap': '8px',
+          'column-gap': '8px',
           'flex-direction': 'row',
           width: '100%',
-          'padding-top': '8px'
+          //'padding-top': '8px'
         };
       }
     }
@@ -640,8 +646,10 @@ export class SidebarProjectPitchComponent implements OnInit, OnChanges, OnDestro
   public adjustMedia(media: UmiusMediaInterface, action: string) {
     if (action === 'crop') {
       this._isMediaAdjusted = false;
+      this.saveAdjustedMedia.emit(false);
     } else if (action === 'adjust') {
       this._isMediaAdjusted = true;
+      this.saveAdjustedMedia.emit(true);
     }
     this.cardContent[0].isMediaAdjusted = this._isMediaAdjusted;
     /* if (!this._isBeingEdited && this.activeInnovCard.principalMedia) {

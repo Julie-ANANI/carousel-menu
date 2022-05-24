@@ -19,6 +19,8 @@ import {EtherpadService} from '../../../../../../../../../services/etherpad/ethe
 import {MediaFrontService} from '../../../../../../../../../services/media/media-front.service';
 import {TranslateService} from '@ngx-translate/core';
 import {UmiusMediaInterface, UmiusModalMedia, UmiusSidebarInterface} from '@umius/umi-common-component';
+import {MediaService} from "../../../../../../../../../services/media/media.service";
+
 
 @Component({
   templateUrl: './pitch.component.html',
@@ -87,13 +89,16 @@ export class PitchComponent implements OnInit, OnDestroy, AfterViewChecked {
 
   private _editedMediaIndex: number | undefined  = undefined;
 
+  private _isMediaAdjusted = false;
+
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _etherpadService: EtherpadService,
               private _innovationService: InnovationService,
               private _translateService: TranslateService,
               private _etherpadFrontService: EtherpadFrontService,
               private _translateNotificationsService: TranslateNotificationsService,
-              private _innovationFrontService: InnovationFrontService) {
+              private _innovationFrontService: InnovationFrontService,
+              private _mediaService: MediaService) {
   }
 
   ngOnInit() {
@@ -230,6 +235,7 @@ export class PitchComponent implements OnInit, OnDestroy, AfterViewChecked {
     return this._translateService.currentLang === 'fr' ? 'Éditer' : 'Edit';
   }
 
+
   public openSidebar(section: InnovCardSection, index: number) {
     if (!this._toBeSaved) {
       this._activeSectionIndex = index;
@@ -348,6 +354,10 @@ export class PitchComponent implements OnInit, OnDestroy, AfterViewChecked {
 
   public getMediaIndex(event: number) {
     this._editedMediaIndex = event;
+  }
+
+  public saveAdjustedMedia(event: boolean) {
+    this._isMediaAdjusted = event;
   }
 
   public onSaveProject(event: { type: string, content: any }) {
@@ -732,6 +742,16 @@ export class PitchComponent implements OnInit, OnDestroy, AfterViewChecked {
       this._sidebarValue = value;
       if (this._sidebarValue.animate_state === 'inactive') {
         this._activeSection = <InnovCardSection>{};
+        if (this._sidebarValue.type === 'MEDIA' && this.activeInnovCard.principalMedia)
+          this.activeInnovCard.principalMedia.isMediaAdjusted = this._isMediaAdjusted;
+          this._mediaService.update(this.activeInnovCard.principalMedia.id, this.activeInnovCard.principalMedia).subscribe((data: any) => {
+              console.log(data);
+            }, (err: HttpErrorResponse) => {
+              console.error(err);
+            });
+
+          this._isMediaAdjusted = false;
+          //this._updateMediaFilter();
       }
     } else if (this._toBeSaved) {
       this._changesToSave();
@@ -820,6 +840,10 @@ export class PitchComponent implements OnInit, OnDestroy, AfterViewChecked {
 
   get editedMediaIndex(): number  {
     return this._editedMediaIndex;
+  }
+
+  get isMediaAdjusted(): boolean {
+    return this._isMediaAdjusted;
   }
 
   ngOnDestroy(): void {

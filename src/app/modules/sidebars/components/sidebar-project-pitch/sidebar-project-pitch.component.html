@@ -145,7 +145,7 @@
       <!-- /main media -->
 
       <!-- secondary medias -->
-      <div *ngIf="cardContent.length > 0" style="display: flex; flex-wrap: wrap; gap: 8px" [ngStyle]="(cardContent.length > 1) ? secondaryContainerStyle : null">
+      <div *ngIf="cardContent.length > 0" style="display: flex; flex-wrap: wrap;" [ngStyle]="(cardContent.length > 0) ? secondaryContainerStyle : null">
         <ng-container *ngFor="let media of cardContent; let i=index;" >
           <div
             *ngIf="media._id !== (cardContent[0] && cardContent[0]._id)"
@@ -192,7 +192,8 @@
           </div>
         </ng-container>
         <!-- new media card -->
-        <div [ngStyle]="{padding: (cardContent.length === 1) ? (cardContent[0].type === 'VIDEO' || cardContent[0]['cloudinary'].width / cardContent[0]['cloudinary'].height > 4/3) ? '8px 0 0 0' : '0 0 0 8px' : null}">
+        <div>
+<!--         [ngStyle]="{padding: (cardContent.length === 1) ? (cardContent[0].type === 'VIDEO' || cardContent[0]['cloudinary'].width / cardContent[0]['cloudinary'].height > 4/3) ? '8px 0 0 0' : '0 0 0 8px' : null}"-->
           <file-drop class="drop-container media-card text-center justify-center align-center" (click)="toggleDisplayUploadOverlay()">
             <div class="icon-container is-overlay">
                   <span class="tooltip" data-tooltip="Add new media" (click)="setEditedMediaIndex(undefined)">
