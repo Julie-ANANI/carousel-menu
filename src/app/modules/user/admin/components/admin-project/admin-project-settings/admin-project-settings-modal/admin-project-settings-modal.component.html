@@ -14,6 +14,11 @@
         Those are marked in red.
       </div>
     </div>
+    <div *ngIf="projectError" class="m-bottom-30">
+      <div class="bg-alert-light text-medium text-alert label text-center">
+        WARNING : there isn’t any english version for this project !
+      </div>
+    </div>
     <!-- /if errors -->
 
     <!-- publication type | circle -->
@@ -202,7 +207,7 @@
 
     <button
       (click)="publishCommunity($event)"
-      [disabled]="isPublishingCommunity || !canBePublished || tagsError.length"
+      [disabled]="isPublishingCommunity || projectError || !canBePublished || tagsError.length "
       [id]="'modal-confirm-publish-community'"
       class="button is-primary">
       <ng-container *ngIf="isPublishingCommunity; else modalPublishDefText">is publishing...</ng-container>

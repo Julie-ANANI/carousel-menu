@@ -80,6 +80,8 @@ export class AdminProjectSettingsModalComponent implements OnInit {
 
   private _tagsError: Array<Tag> = [];
 
+  private _projectError: Array<any> = [];
+
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _translateNotificationsService: TranslateNotificationsService,
               private _langEntryService: LangEntryService,
@@ -91,6 +93,7 @@ export class AdminProjectSettingsModalComponent implements OnInit {
     this._community.owner = 'community@umi.us';
     this._community.sectors = this._community.sectors || this.innovation.tags;
     this._checkTagsError();
+    this._checkProjectError();
     this._initDefaultMedias();
     this._setCommunityMedias();
   }
@@ -99,6 +102,10 @@ export class AdminProjectSettingsModalComponent implements OnInit {
     this._tagsError = this._community.sectors.filter((tag) => {
       return !this._langEntryService.tagEntry(tag, 'label', 'en', false);
     });
+  }
+
+  private _checkProjectError() {
+    this._projectError = this.innovation.innovationCards.filter((lang) => lang.lang === 'en');
   }
 
   public _initPublicationType() {
@@ -359,4 +366,7 @@ export class AdminProjectSettingsModalComponent implements OnInit {
     return this._tagsError;
   }
 
+  get projectError(): boolean {
+    return this._projectError.length === 0;
+  }
 }

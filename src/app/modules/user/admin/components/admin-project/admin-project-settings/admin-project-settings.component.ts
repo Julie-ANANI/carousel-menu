@@ -207,7 +207,6 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
   }
 
   private _fillProjectLanguage(){
-    console.log(this._projectLanguages.length);
     if(this._projectLanguages.length === 0){
       for (let card of this._innovation.innovationCards){
         let element = <any>card;
