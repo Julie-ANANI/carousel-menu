@@ -197,7 +197,7 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
       this._quizLink = InnovationFrontService.quizLink(this._innovation);
       this._isLoading = false;
       this._innovationFrontService.innovation().pipe(takeUntil(this._ngUnsubscribe)).subscribe((innovation) => {
-        if (innovation && innovation._id) {
+        if (innovation?._id) {
           this._innovation = innovation;
           this._fillProjectLanguage();
           this._initFields();
@@ -207,13 +207,16 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
   }
 
   private _fillProjectLanguage(){
-    for (let card of this._innovation.innovationCards){
-      let element = <any>card;
-      element.selected = false;
-      this._projectLanguages.push(element);
-    }
-    if(this._projectLanguages.every((lang)=> lang.shotSent === true)){
-     this._notAllEdited = false;
+    console.log(this._projectLanguages.length);
+    if(this._projectLanguages.length === 0){
+      for (let card of this._innovation.innovationCards){
+        let element = <any>card;
+        element.selected = false;
+        this._projectLanguages.push(element);
+      }
+      if(this._projectLanguages.every((lang)=> lang.shotSent === true)){
+        this._notAllEdited = false;
+      }
     }
   }
 
