@@ -44,7 +44,10 @@
         <div class="form-group" *ngIf="editedMediaIndex === 0 || cardContent.length === 0">
           <app-shared-upload-zone-video
             (cbFn)="onUploadMedia($event, 'VIDEO')"
-            [isUploading]="isUploadingVideo">
+            [isUploading]="isUploadingVideo"
+            [innovationId]="innovationId"
+            [activeInnovCardId]="activeInnovCardId"
+            [mediaId]="editedMediaId">
           </app-shared-upload-zone-video>
         </div>
         <!-- /video -->
