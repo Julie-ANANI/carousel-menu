@@ -286,7 +286,7 @@
                                   <i class="fa fa-eye c-hand text-primary text-lg m-right-10" (click)="changeVisibility(inno, $event)"></i>
                                 </div>
                                 <div  [ngClass]="statusClass(inno.status)" class=" w-100text-capitalize text-center status">
-                                  {{ inno.status | titlecase }}
+                                  {{ inno.status | status | titlecase }}
                                 </div>
                               </div>
                               <div class=" w-100 text-center">
@@ -312,7 +312,7 @@
                               <i class="fa fa-eye c-hand text-primary text-lg m-right-10" (click)="changeVisibility(inno, $event)"></i>
                             </div>
                             <div  [ngClass]="statusClass(inno.status)" class=" w-100text-capitalize text-center status">
-                              {{inno.status | titlecase }}
+                              {{inno.status | status | titlecase }}
                             </div>
                             <div class="w-100 text-center tooltip is-multiline" data-tooltip="This language can't be deleted because workflows have already been sent in this language.">
                               <i  class="fa fa-trash is-outlined text-lg text-meta"></i>
