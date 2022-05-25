@@ -113,7 +113,7 @@
     "jest-preset-angular": "^8.4.0",
     "eslint-plugin-import": "2.22.1",
     "eslint-plugin-jsdoc": "30.7.6",
-    "eslint-plugin-prefer-arrow": "1.2.2",
+    "eslint-plugin-prefer-arrow": "1.2.3",
     "node-sass": "^4.14.1",
     "protractor": "^5.4.1",
     "ts-loader": "^6.2.0",
