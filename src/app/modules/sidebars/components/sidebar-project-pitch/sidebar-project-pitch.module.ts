@@ -14,6 +14,7 @@ import {SharedEditorsModule} from '../../../shared/components/shared-editors/sha
 import {CleanHtmlModule} from '../../../../pipe/cleanHtml/cleanHtml.module';
 import {PipeModule} from '../../../../pipe/pipe.module';
 import {ModalModule} from '@umius/umi-common-component';
+import {FileDropModule} from "ngx-file-drop";
 
 @NgModule({
   imports: [
@@ -28,7 +29,8 @@ import {ModalModule} from '@umius/umi-common-component';
     SharedEditorsModule,
     CleanHtmlModule,
     PipeModule,
-    ModalModule
+    ModalModule,
+    FileDropModule
   ],
   declarations: [
     SidebarProjectPitchComponent

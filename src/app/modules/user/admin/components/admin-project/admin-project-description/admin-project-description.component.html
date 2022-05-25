@@ -802,7 +802,7 @@
               <div style="justify-content: center;display: flex;height: 90%;width: 100%;">
                 <iframe
                   *ngIf="activeInnovCard.media[slideToShow].type === 'VIDEO'"
-                  style="height: auto; width: 100%; object-fit: contain; border: none"
+                  style="height: auto; width: 90%; object-fit: contain; border: none"
                   [src]="mediaSrc(activeInnovCard.media[slideToShow], 'VIDEO')" >
                 </iframe>
                 <img *ngIf="activeInnovCard.media[slideToShow].type === 'PHOTO' && (activeInnovCard.media[slideToShow].cloudinary.width / activeInnovCard.media[slideToShow].cloudinary.height) < 4/3" [src]="activeInnovCard.media[slideToShow].url + '?a=' + activeInnovCard.media[slideToShow].cloudinary.version" style="height: 100%; width: auto; object-fit: contain">

@@ -1,4 +1,4 @@
-import {Component, Inject, OnDestroy, OnInit, PLATFORM_ID} from '@angular/core';
+import {Component, Inject, OnDestroy, OnInit, AfterViewChecked, PLATFORM_ID} from '@angular/core';
 import {Innovation} from '../../../../../../../../../models/innovation';
 import {PitchHelpFields} from '../../../../../../../../../models/static-data/project-pitch';
 import {InnovationFrontService} from '../../../../../../../../../services/innovation/innovation-front.service';
@@ -18,14 +18,16 @@ import {isPlatformBrowser} from '@angular/common';
 import {EtherpadService} from '../../../../../../../../../services/etherpad/etherpad.service';
 import {MediaFrontService} from '../../../../../../../../../services/media/media-front.service';
 import {TranslateService} from '@ngx-translate/core';
-import {UmiusMediaInterface, UmiusModalMedia, UmiusSidebarInterface, UmiusVideoInterface} from '@umius/umi-common-component';
+import {UmiusMediaInterface, UmiusModalMedia, UmiusSidebarInterface} from '@umius/umi-common-component';
+import {MediaService} from "../../../../../../../../../services/media/media.service";
+
 
 @Component({
   templateUrl: './pitch.component.html',
   styleUrls: ['./pitch.component.scss']
 })
 
-export class PitchComponent implements OnInit, OnDestroy {
+export class PitchComponent implements OnInit, OnDestroy, AfterViewChecked {
 
   private _ngUnsubscribe: Subject<any> = new Subject();
 
@@ -69,7 +71,25 @@ export class PitchComponent implements OnInit, OnDestroy {
 
   private _modalMedia = false;
 
+  private _mainContainerStyle: any = {};
+
+  private _mainMediaContainerStyle: any = {};
+
+  private _secondaryContainerStyle: any = {};
+
+  private _secondaryMedia: any = {};
+
+  private _mediaFilter: any[];
+
   private _selectedMedia: UmiusModalMedia = <UmiusModalMedia>{};
+
+  private _slideToShow: number = 0;
+
+  private _displayMediaSlider = false;
+
+  private _editedMediaIndex: number | undefined  = undefined;
+
+  private _isMediaAdjusted = false;
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _etherpadService: EtherpadService,
@@ -77,7 +97,8 @@ export class PitchComponent implements OnInit, OnDestroy {
               private _translateService: TranslateService,
               private _etherpadFrontService: EtherpadFrontService,
               private _translateNotificationsService: TranslateNotificationsService,
-              private _innovationFrontService: InnovationFrontService) {
+              private _innovationFrontService: InnovationFrontService,
+              private _mediaService: MediaService) {
   }
 
   ngOnInit() {
@@ -102,7 +123,68 @@ export class PitchComponent implements OnInit, OnDestroy {
       this._activeCardIndex = cardIndex;
       this._initDefaultSections();
     });
+
   }
+
+  ngAfterViewChecked() {
+    if (this.activeInnovCard.principalMedia) {
+      if (this.activeInnovCard.media[0].type !== 'VIDEO' && (this.activeInnovCard.media[0].cloudinary.width / this.activeInnovCard.media[0].cloudinary.height) < 4/3) {
+        this._mainContainerStyle = {
+          height: '408px',
+          'align-content': 'flex-start',
+          'align-items': 'flex-start',
+          'row-gap': '8px'
+        };
+        this._mainMediaContainerStyle = {
+          width: '272px',
+          height: '100%'
+        };
+        if (this.activeInnovCard.media.length > 1) {
+          this._secondaryContainerStyle = {
+            'flex-direction': 'column',
+            height: '100%',
+            'padding-left': '8px'
+          };
+        };
+        this._secondaryMedia = {
+          width: '160px',
+          height: '120px'
+        }
+      } else if (this.activeInnovCard.media[0].type === 'VIDEO' || (this.activeInnovCard.media[0].cloudinary.width / this.activeInnovCard.media[0].cloudinary.height) > 4/3) {
+        this._mainContainerStyle = {
+          height: 'auto',
+          'place-items': 'center',
+          'box-sizing': 'border-box',
+          'column-gap': '8px'
+        };
+        this._mainMediaContainerStyle = {
+          width: '100%',
+          height: '272px'
+        };
+        if (this.activeInnovCard.media.length > 1) {
+          this._secondaryContainerStyle = {
+            'flex-direction': 'row',
+            width: '100%',
+            'padding-top': '8px'
+          };
+        };
+        this._secondaryMedia = {
+          width: 'calc(424px/3)',
+          height: '104px'
+        }
+      }
+      this._mediaFilter = this.activeInnovCard.media.slice(1, 4);
+    }
+
+  }
+
+  public updateMedias(data: any){
+    this.activeInnovCard.media = data;
+    this._cardContent = data;
+    this._mediaFilter = data.slice(1, 4);
+    this._innovationFrontService.setInnovation(this._innovation);
+  }
+
 
   public sectionCommentLabel(section: string, etherpadElementId = ''): boolean {
     let comments;
@@ -154,6 +236,7 @@ export class PitchComponent implements OnInit, OnDestroy {
     return this._translateService.currentLang === 'fr' ? 'Éditer' : 'Edit';
   }
 
+
   public openSidebar(section: InnovCardSection, index: number) {
     if (!this._toBeSaved) {
       this._activeSectionIndex = index;
@@ -196,8 +279,16 @@ export class PitchComponent implements OnInit, OnDestroy {
       });
   }
 
-  public mediaSrc(media: UmiusMediaInterface) {
-    return MediaFrontService.getMedia(media);
+  public mediaSrc(media: UmiusMediaInterface, type: 'IMAGE' | 'VIDEO') {
+    if (media && type === 'IMAGE') {
+      if (media.cloudinary.version) {
+        return media.url + '?a=' + media.cloudinary.version;
+      } else {
+        return MediaFrontService.imageSrc(media);
+      }
+    } else if (media && type === 'VIDEO') {
+      return this._innovationFrontService.videoSrc(media);
+    }
   }
 
   public onRequestProofreading(event: Event) {
@@ -258,9 +349,16 @@ export class PitchComponent implements OnInit, OnDestroy {
     return this._etherpadFrontService.buildPadIdOldInnovation(sectionType, _sectionIndex, this.activeInnovCard.lang);
   }
 
+  public getMediaIndex(event: number) {
+    this._editedMediaIndex = event;
+  }
+
+  public saveAdjustedMedia(event: boolean) {
+    this._isMediaAdjusted = event;
+  }
+
   public onSaveProject(event: { type: string, content: any }) {
     if (event.type && this.isEditable && this._isSaving && !this._isSubmitting) {
-
       switch (event.type) {
 
         case 'OTHER':
@@ -300,7 +398,11 @@ export class PitchComponent implements OnInit, OnDestroy {
           break;
 
         case 'IMAGE':
-          this._innovation.innovationCards[this._activeCardIndex].media.push(event.content);
+          if (this._editedMediaIndex === 0 || this._editedMediaIndex > 0) {
+            this._innovation.innovationCards[this._activeCardIndex].media[this._editedMediaIndex] = event.content;
+          } else {
+            this._innovation.innovationCards[this._activeCardIndex].media.push(event.content);
+          }
           if (!this._innovation.innovationCards[this._activeCardIndex].principalMedia) {
             this._innovation.innovationCards[this._activeCardIndex].principalMedia = event.content;
           }
@@ -318,6 +420,8 @@ export class PitchComponent implements OnInit, OnDestroy {
 
         case 'DELETE_MEDIA':
           this._deleteMedia(event.content);
+          this._cardContent = this._cardContent.filter((media: UmiusMediaInterface) => media.id !== event.content.id);
+          this._mediaFilter = this._cardContent.slice(1, 4);
           break;
       }
     }
@@ -400,6 +504,40 @@ export class PitchComponent implements OnInit, OnDestroy {
     };
   }
 
+  public toggleDisplayMediaSlider(action?: string, index?: number) {
+    if (action && index) {
+      this.slideMedia('showSelected', index);
+    }
+    if (action === 'closeSlider') {
+      this._slideToShow = 0;
+    }
+    this._displayMediaSlider = !this._displayMediaSlider;
+  }
+
+  public slideMedia(action: string, index?: number, event?: KeyboardEvent) {
+    if (event && event.key === 'ArrowLeft') {
+      action = 'showPrevious';
+    } else if (event && event.key === 'ArrowRight') {
+      action = 'showNext';
+    }
+    if (action === 'showSelected') {
+      this._slideToShow = index;
+    } else if (action === 'showPrevious') {
+      if (!this.activeInnovCard.media[this._slideToShow - 1]) {
+        this._slideToShow = this.activeInnovCard.media.length - 1;
+      } else {
+        this._slideToShow = this._slideToShow - 1;
+      }
+    } else if (action === 'showNext') {
+      if (!this.activeInnovCard.media[this._slideToShow + 1]) {
+        this._slideToShow = 0;
+      } else {
+        this._slideToShow = this._slideToShow + 1;
+      }
+    }
+  }
+
+
   private _changesToSave() {
     if (this._toBeSaved) {
       const _msg = this.activeInnovCard.lang === 'fr'
@@ -462,30 +600,24 @@ export class PitchComponent implements OnInit, OnDestroy {
     this._innovationFrontService.setInnovation(JSON.parse(JSON.stringify(this._innovation)));
   }
 
-  private _uploadVideo(video: UmiusVideoInterface) {
-    this._isUploadingVideo = true;
-    this._innovationService.addNewMediaVideoToInnovationCard(this._innovation._id, this.activeInnovCard._id, video)
-      .pipe(first())
-      .subscribe((_video) => {
-        this._isUploadingVideo = false;
-        this._innovation.innovationCards[this._activeCardIndex].media.push(_video);
+  private _uploadVideo(video: UmiusMediaInterface) {
+     if (this._editedMediaIndex === 0) {
+          this._innovation.innovationCards[this._activeCardIndex].media[0] = video;
+        } else {
+          this._innovation.innovationCards[this._activeCardIndex].media.push(video);
+        }
+
         this._cardContent = this._innovation.innovationCards[this._activeCardIndex].media;
 
         if (!this._innovation.innovationCards[this._activeCardIndex].principalMedia) {
-          this._innovation.innovationCards[this._activeCardIndex].principalMedia = _video;
-          this._setMainMedia(_video);
+          this._innovation.innovationCards[this._activeCardIndex].principalMedia = video;
+          this._setMainMedia(video);
         } else {
           this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.UPDATED_TEXT');
           this._resetVariables();
         }
 
         this._emitUpdatedInnovation();
-      }, (err: HttpErrorResponse) => {
-        this._isUploadingVideo = false;
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
-        this._resetVariables();
-        console.error(err);
-      });
   }
 
   private _setMainMedia(media: UmiusMediaInterface) {
@@ -593,6 +725,15 @@ export class PitchComponent implements OnInit, OnDestroy {
       this._sidebarValue = value;
       if (this._sidebarValue.animate_state === 'inactive') {
         this._activeSection = <InnovCardSection>{};
+        if (this._sidebarValue.type === 'MEDIA' && this.activeInnovCard.principalMedia)
+          this.activeInnovCard.principalMedia.isMediaAdjusted = this._isMediaAdjusted;
+          this._mediaService.update(this.activeInnovCard.principalMedia.id, this.activeInnovCard.principalMedia).subscribe((data: any) => {
+              console.log(data);
+            }, (err: HttpErrorResponse) => {
+              console.error(err);
+            });
+
+          this._isMediaAdjusted = false;
       }
     } else if (this._toBeSaved) {
       this._changesToSave();
@@ -649,6 +790,42 @@ export class PitchComponent implements OnInit, OnDestroy {
 
   get mission(): Mission {
     return this._mission;
+  }
+
+  get mainContainerStyle(): any {
+    return this._mainContainerStyle;
+  }
+
+  get mainMediaContainerStyle(): any {
+    return this._mainMediaContainerStyle;
+  }
+
+  get secondaryContainerStyle(): any {
+    return this._secondaryContainerStyle;
+  }
+
+  get secondaryMedia(): any {
+    return this._secondaryMedia;
+  }
+
+  get mediaFilter(): Array<UmiusMediaInterface> {
+    return this._mediaFilter;
+  }
+
+  get slideToShow(): number {
+    return this._slideToShow;
+  }
+
+  get displayMediaSlider(): boolean {
+    return this._displayMediaSlider;
+  }
+
+  get editedMediaIndex(): number  {
+    return this._editedMediaIndex;
+  }
+
+  get isMediaAdjusted(): boolean {
+    return this._isMediaAdjusted;
   }
 
   ngOnDestroy(): void {

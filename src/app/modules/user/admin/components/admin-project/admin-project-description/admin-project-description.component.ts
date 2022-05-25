@@ -173,7 +173,6 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
         };
         if (this.activeInnovCard.media.length > 1) {
           this._secondaryContainerStyle = {
-            //'row-gap': '8px',
             'flex-direction': 'column',
             height: '100%',
             'padding-left': '8px'
@@ -193,7 +192,6 @@ export class AdminProjectDescriptionComponent implements OnInit, OnDestroy {
         };
         if (this.activeInnovCard.media.length > 1) {
           this._secondaryContainerStyle = {
-            //'column-gap': '8px',
             'flex-direction': 'row',
             width: '100%',
             'padding-top': '8px'
