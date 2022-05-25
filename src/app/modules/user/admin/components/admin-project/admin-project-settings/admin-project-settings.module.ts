@@ -15,6 +15,7 @@ import {AdminProjectDoneModule} from '../../admin-project-done-modal/admin-proje
 import {LangEntryPipeModule} from '../../../../../../pipe/lang-entry/langEntryPipe.module';
 import {ModalModule, SidebarFullModule, TextInputModule} from '@umius/umi-common-component';
 import {TranslateModule} from "@ngx-translate/core";
+import {StatusModule} from "../../../../../../pipe/status/status.module";
 
 @NgModule({
     imports: [
@@ -32,7 +33,8 @@ import {TranslateModule} from "@ngx-translate/core";
         SidebarFullModule,
         ModalModule,
         TextInputModule,
-        TranslateModule
+        TranslateModule,
+        StatusModule
     ],
   declarations: [
     AdminProjectSettingsComponent,

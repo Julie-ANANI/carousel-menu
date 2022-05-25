@@ -1,0 +1,51 @@
+<section class="sticky header-wrapper carousel-wrapper m-left-100">
+  <div class="d-flex justify-space flex-wrap-nowrap relative wrapper__item">
+
+    <!-- previous button -->
+    <div (click)="prev()"
+         *ngIf="currentPagination !== 1"
+         class="icon-container is-lg is-overlay"><i class="btn__prev icon icon-arrow-left is-lg"></i>
+    </div>
+    <!-- /previous button -->
+
+    <!-- menu items -->
+    <div class="d-flex align-center text-capitalize carousel__container__button">
+      <ng-container *ngFor="let item of displayedItems; let i = index">
+        <button class="button is-link"
+                [ngStyle]="{'margin-right': btnRight}"
+                [ngClass]="item[identifier] === itemSelected? 'primary-color' : 'text-draft'"
+                (click)="clickOnMenu($event, item[identifier])"
+                *ngIf="displayedItems.length">
+
+          <!-- menu items - content -->
+          <ng-container [ngSwitch]="type">
+
+            <!-- menu items - content - type is languages -->
+          <ng-container *ngSwitchCase="'lang'">
+            {{('COMMON.LANG.' + item[identifier] | uppercase | translate)}}
+          </ng-container>
+            <!-- /menu items - content - type is languages -->
+
+            <!-- menu items - content - type by fault -->
+          <ng-container *ngSwitchDefault>
+            {{item[identifier]}}
+          </ng-container>
+            <!-- /menu items - content - type by fault -->
+
+        </ng-container>
+          <!-- /menu items - content  -->
+
+        </button>
+      </ng-container>
+    </div>
+    <!-- /menu items -->
+
+    <!-- next button  -->
+    <div (click)="next()"
+         *ngIf="currentPagination !== maxPagination"
+         class="btn__next icon-container is-overlay is-lg"><i class="icon icon-arrow-right is-lg"></i>
+    </div>
+    <!-- /next button -->
+
+  </div>
+</section>

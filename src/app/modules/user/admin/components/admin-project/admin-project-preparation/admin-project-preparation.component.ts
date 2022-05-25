@@ -21,6 +21,7 @@ import { ErrorFrontService } from '../../../../../../services/error/error-front.
 import { NotificationService } from '../../../../../../services/notification/notification.service';
 import { NotificationTrigger } from '../../../../../../models/notification';
 import { lang, Language } from "../../../../../../models/static-data/language";
+import { CarouselConfig } from "../../../../../utility/menu-carousel/menu-carousel.component";
 
 @Component({
   templateUrl: './admin-project-preparation.component.html',
@@ -28,9 +29,7 @@ import { lang, Language } from "../../../../../../models/static-data/language";
 })
 
 export class AdminProjectPreparationComponent implements OnInit, AfterViewChecked, OnDestroy {
-
   private _languages: Array<Language> = lang;
-
   private _languagesToAdd: Array<Language> = [];
 
   private _defaultTabs: Array<string> = ['description', 'questionnaire', 'targeting', 'campaigns', 'statistics'];
@@ -78,6 +77,8 @@ export class AdminProjectPreparationComponent implements OnInit, AfterViewChecke
   private _innoCardLanguages: Array<Language> = [];
 
   private _languageSelected: string = '';
+
+  private _languagesCarouselConfig: CarouselConfig = <CarouselConfig>{};
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _routeFrontService: RouteFrontService,
@@ -187,6 +188,20 @@ export class AdminProjectPreparationComponent implements OnInit, AfterViewChecke
   private initInnoCardLanguagesList() {
     this._innoCardLanguages = this._innovationFrontService.formateInnovationCardLanguages(this._project.innovationCards) || [];
     this._languageSelected = this._innoCardLanguages.length > 0 && this._innoCardLanguages[0].type;
+    this._setupCarouselConfig();
+  }
+
+  /**
+   * configuration on carousel menu for languages list
+   * @private
+   */
+  private _setupCarouselConfig(){
+    this._languagesCarouselConfig = {
+      quantity: 8,
+      sources: this._innoCardLanguages,
+      identifier: 'type',
+      type: 'lang'
+    }
   }
 
   /**
@@ -305,11 +320,21 @@ export class AdminProjectPreparationComponent implements OnInit, AfterViewChecke
     }
   }
 
-  public setCardLang(value: string) {
+  getMenuClicked(lang: any) {
+    if (lang) {
+      this.setCardLangSelected(lang);
+    }
+  }
+
+  public setCardLangSelected(lang: string){
+    this._languageSelected = lang;
+    this._activeCardIndex = InnovationFrontService.currentLangInnovationCard(this._project, lang, 'INDEX');
+    this._setActiveCardIndex();
+  }
+
+  public setCardLang(event: Event, value: string) {
     if (this.activeCard && !(this._cardToDelete._id)) {
-      this._languageSelected = value;
-      this._activeCardIndex = InnovationFrontService.currentLangInnovationCard(this._project, value, 'INDEX');
-      this._setActiveCardIndex();
+      this.setCardLangSelected(value);
     }
   }
 
@@ -586,9 +611,12 @@ export class AdminProjectPreparationComponent implements OnInit, AfterViewChecke
     return this._languageSelected;
   }
 
+  get languagesCarouselConfig(): CarouselConfig {
+    return this._languagesCarouselConfig;
+  }
+
   ngOnDestroy(): void {
     this._ngUnsubscribe.next();
     this._ngUnsubscribe.complete();
   }
-
 }
