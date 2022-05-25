@@ -24,6 +24,10 @@
     border-right: 0;
   }
 
+  .icon-container.is-overlay::before {
+    width:0;
+  }
+
   .btn__next, .btn__prev {
     width: fit-content;
   }
