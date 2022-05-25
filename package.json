@@ -108,7 +108,7 @@
     "@typescript-eslint/parser": "4.3.0",
     "codelyzer": "^5.1.2",
     "compression": "^1.7.4",
-    "eslint": "^7.6.0",
+    "eslint": "^8.16.0",
     "jest": "^26.0.0",
     "jest-preset-angular": "^8.4.0",
     "eslint-plugin-import": "2.22.1",
