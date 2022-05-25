@@ -211,7 +211,6 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
       for (let card of this._innovation.innovationCards){
         let element = <any>card;
         element.selected = false;
-        element.shotSent=true;
         this._projectLanguages.push(element);
       }
       if(this._projectLanguages.every((lang)=> lang.shotSent === true && lang.status === "DONE")){
