@@ -23,10 +23,6 @@
           <div style="display: inline-flex; justify-content: flex-end; width: 100%; margin-top: -32px; margin-bottom: 8px"><button class="modal-close" (click)="toggleDisplayUploadOverlay()" style="color: #505D6B;"></button></div>
           <!-- image -->
         <div class="form-group">
-        <!--  <app-shared-upload-zone-photo
-            [uri]="imagePostUri"
-            (cbFn)="onUploadMedia($event, 'IMAGE')">
-          </app-shared-upload-zone-photo>-->
           <app-shared-upload-zone-photo
             [mediaId]="editedMediaId"
             [uri]="imagePostUri"
@@ -90,11 +86,6 @@
   <!-- /fields -->
 
   <!-- show media -->
- <!-- <section
-    *ngIf="type && type === 'MEDIA' && cardContent.length > 0"
-    [ngClass]="{ 'p-top-50': isEditable, 'p-top-10': !isEditable }"
-    class="d-flex flex-wrap-wrap justify-center p-bottom-50">-->
-  <!-- set main media display // choose between 'cropped' or 'adjusted' -->
   <div *ngIf="cardContent.length > 0 && cardContent[0].type === 'PHOTO'" style="display: flex; flex-direction: row; margin-left: 16px;">
     <div>
       <input type="radio" id="crop" name="radios" value="crop" (change)="adjustMedia(cardContent[0], 'crop')" checked>
@@ -108,8 +99,6 @@
   <!-- /set main media display -->
 
     <section *ngIf="type && type === 'MEDIA' && cardContent.length > 0" [ngStyle]=mainContainerStyle style="padding: 16px; display: flex; flex-wrap: wrap; position: relative;">
-
-<!--    <div *ngFor="let media of cardContent" class="text-center media-wrapper animate-fade is-2">-->
 
       <!-- main media -->
       <div *ngIf="cardContent[0]" class="text-center" [ngStyle]=mainMediaContainerStyle style="object-fit: cover; position: relative;">
@@ -131,7 +120,6 @@
             alt=" "
             class="img-responsive">
         </figure>
-<!--        (click)="toggleDisplayMediaSlider('showSelected', 0)"-->
         <!-- /if type === 'PHOTO' -->
 
         <!-- if type === 'VIDEO' -->
@@ -170,7 +158,7 @@
             <figure *ngIf="media.type === 'PHOTO'" style="width: 160px; height: 120px; object-fit: cover; background-color: #ececec; display: flex; place-content: center;">
               <img
                 style="cursor: pointer; width: 100%; height: 100%; object-fit: cover; background-color: #ececec"
-                [src]="media.url + '?a=' + cardContent[i]['cloudinary'].version"
+                [src]="cardContent[i].url + '?a=' + cardContent[i]['cloudinary'].version"
                 alt=" "
                 class="img-responsive" >
             </figure>
@@ -193,7 +181,6 @@
         </ng-container>
         <!-- new media card -->
         <div>
-<!--         [ngStyle]="{padding: (cardContent.length === 1) ? (cardContent[0].type === 'VIDEO' || cardContent[0]['cloudinary'].width / cardContent[0]['cloudinary'].height > 4/3) ? '8px 0 0 0' : '0 0 0 8px' : null}"-->
           <file-drop class="drop-container media-card text-center justify-center align-center" (click)="toggleDisplayUploadOverlay()">
             <div class="icon-container is-overlay">
                   <span class="tooltip" data-tooltip="Add new media" (click)="setEditedMediaIndex(undefined)">
@@ -205,58 +192,6 @@
         <!-- /new media card -->
       </div>
       <!-- /secondary medias -->
-
-
-      <!-- if type === 'PHOTO' -->
-      <!--<figure *ngIf="media['type'] && media['type'] === 'PHOTO' && mediaSrc(media, 'IMAGE')">
-        <img
-          [src]="mediaSrc(media, 'IMAGE')"
-          style="cursor: pointer"
-          (click)="mediaToShow(mediaSrc(media, 'IMAGE'))"
-          alt=" "
-          class="img-responsive"
-          height="159"
-          width="180">
-      </figure>-->
-      <!-- /if type === 'PHOTO' -->
-
-      <!-- if type === 'VIDEO' -->
-    <!--  <iframe
-        *ngIf="media['type'] && media['type'] === 'VIDEO' && mediaSrc(media, 'VIDEO')"
-        [src]="mediaSrc(media, 'VIDEO')"
-        height="119.25"
-        width="180">
-      </iframe>-->
-      <!-- /if type === 'VIDEO' -->
-
-      <!-- set principal -->
-     <!-- <div *ngIf="isNotMainMedia(media) && isEditable" class="text-sm p-top-2">
-        <span
-          (click)="onSetPrincipal(media)"
-          [ngClass]="isSaving ? 'text-disabled' : 'c-hand text-hover-underline'"
-          class="text-primary"
-          id="sidebarProjectPitch-btn-principal-media">
-          {{ 'SIDEBAR.PROJECT_PITCH.SET_PRINCIPAL' | translate }}
-        </span>
-      </div>-->
-      <!-- /set principal -->
-
-      <!-- delete button -->
-      <!--<div
-        *ngIf="(mediaSrc(media, 'VIDEO') || mediaSrc(media, 'IMAGE')) && isEditable"
-        [ngClass]="{'p-top-2': !isNotMainMedia(media)}"
-        class="text-sm">
-          <span
-            (click)="onDeleteMedia(media)"
-            [ngClass]="isSaving ? 'text-disabled' : 'c-hand text-hover-underline'"
-            class="text-alert"
-            id="sidebarProjectPitch-btn-delete-media">
-            {{ 'COMMON.BUTTON.DELETE' | translate }}
-          </span>
-      </div>-->
-      <!-- /delete button -->
-
-<!--    </div>-->
   </section>
 
   <!-- new media card -->

@@ -16,7 +16,6 @@ import {ErrorFrontService} from "../../../../services/error/error-front.service"
 import { InnovationService } from '../../../../services/innovation/innovation.service';
 import {TranslateNotificationsService} from "../../../../services/translate-notifications/translate-notifications.service";
 import {Innovation} from "../../../../models/innovation";
-// import {HttpErrorResponse} from "@angular/common/http";
 
 /***
  * It involves the edition of the Innovation Card fields.
@@ -188,7 +187,7 @@ export class SidebarProjectPitchComponent implements OnInit, OnChanges, OnDestro
     if (this.cardContent[0]) {
       if (this.cardContent[0].type !== 'VIDEO' && (this.cardContent[0].cloudinary.width / this.cardContent[0].cloudinary.height) < 4/3) {
         this._mainContainerStyle = {
-          width: 'fit-content',
+          'overflow-x': 'scroll',
           height: '408px',
           'align-content': 'flex-start',
           'align-items': 'flex-start',
@@ -202,8 +201,7 @@ export class SidebarProjectPitchComponent implements OnInit, OnChanges, OnDestro
           this._secondaryContainerStyle = {
             'flex-direction': 'column',
             height: '100%',
-            'row-gap': '8px'
-            //'padding-left': '8px'
+            'gap': '8px'
           };
         }
       } else if (this.cardContent[0].type === 'VIDEO' || (this.cardContent[0].cloudinary.width / this.cardContent[0].cloudinary.height) > 4/3) {
@@ -222,8 +220,7 @@ export class SidebarProjectPitchComponent implements OnInit, OnChanges, OnDestro
           this._secondaryContainerStyle = {
             'flex-direction': 'row',
             width: '100%',
-            'column-gap': '8px'
-            //'padding-top': '8px'
+            'gap': '8px'
           };
         }
       }
@@ -239,52 +236,6 @@ export class SidebarProjectPitchComponent implements OnInit, OnChanges, OnDestro
       this._padID = this._etherpadFrontService.buildPadID('pitch', this.sectionId);
     }
   }
-
-
-  /*public addNewMedia(uploadedMedia: UmiusMediaInterface): void {
-    if (this.cardContent.length > 0) {
-      if (this._editedMediaIndex > 0) { // we are editing a secondary media
-        console.log(1)
-        this.cardContent[this._editedMediaIndex] = uploadedMedia;
-      } else if (this._editedMediaIndex === undefined) { // we are creating a secondary media
-        console.log(2)
-        this.cardContent.push(uploadedMedia);
-      } else if (this._editedMediaIndex === 0) {
-        console.log(3)
-        this.cardContent[0] = uploadedMedia;
-        this.onSetPrincipal(uploadedMedia);
-      }
-    } else if (!this.cardContent.length || this._editedMediaIndex === 0){  // there are no main media or the main media is being edited
-      console.log(4)
-      this.cardContent[0] = uploadedMedia;
-      this.onSetPrincipal(uploadedMedia);
-    }
-
-    console.log('medias', this.cardContent)
-
-    this._updateMediaFilter();
-    console.log('media filter', this.mediaFilter)
-    this.isSavingChange.emit(true);
-    const mediaType = (uploadedMedia.type === 'PHOTO') ? 'IMAGE' : 'VIDEO';
-    this.saveProject.emit({type: mediaType, content: uploadedMedia});
-    //this._emitUpdatedInnovation();
-    //this._translateNotificationsService.success('Success', 'The new media has been added.');
-    this.toggleDisplayUploadOverlay();
-
-    if (this.cardContent[0].type !== 'VIDEO' && ((this.cardContent[0].cloudinary.width / this.cardContent[0].cloudinary.height) < 4/3) && this.cardContent.length > 1) {
-      this._secondaryContainerStyle = {
-        'flex-direction': 'column',
-        height: '100%',
-        'padding-left': '8px'
-      };
-    } else if (this.cardContent[0].type === 'VIDEO' || ((this.cardContent[0].cloudinary.width / this.cardContent[0].cloudinary.height) > 4/3) && this.cardContent.length > 1) {
-      this._secondaryContainerStyle = {
-        'flex-direction': 'row',
-        width: '100%',
-        'padding-top': '8px'
-      };
-    }
-  }*/
 
   /***
    * when the user clicks on the Save button
@@ -332,12 +283,15 @@ export class SidebarProjectPitchComponent implements OnInit, OnChanges, OnDestro
     }
     if (this._editedMediaIndex === 0 || this._editedMediaIndex > 0) {
       this.cardContent[this._editedMediaIndex] = media;
+    } else if (this.cardContent.length === 1){
+      this.cardContent.push(media)
     }
     this.toggleDisplayUploadOverlay();
     this._updateMediaFilter();
     if (type !== 'VIDEO' && (this.cardContent[0]['cloudinary'].width / this.cardContent[0]['cloudinary'].height) < 4/3) {
       this._mainContainerStyle = {
-        width: 'fit-content',
+        //width: 'fit-content',
+        'overflow-x': 'scroll',
         height: '408px',
         'align-content': 'flex-start',
         'align-items': 'flex-start',
@@ -351,7 +305,7 @@ export class SidebarProjectPitchComponent implements OnInit, OnChanges, OnDestro
         this._secondaryContainerStyle = {
           'flex-direction': 'column',
           height: '100%',
-          'row-gap': '8px'
+          'gap': '8px'
         };
       }
     } else if (type === 'VIDEO' || (this.cardContent[0]['cloudinary'].width / this.cardContent[0]['cloudinary'].height) > 4/3) {
@@ -370,7 +324,7 @@ export class SidebarProjectPitchComponent implements OnInit, OnChanges, OnDestro
         this._secondaryContainerStyle = {
           'flex-direction': 'row',
           width: '100%',
-          'column-gap': '8px'
+          'gap': '8px'
         };
       }
     }
@@ -414,7 +368,7 @@ export class SidebarProjectPitchComponent implements OnInit, OnChanges, OnDestro
   public onSetPrincipal(media: UmiusMediaInterface, index?: number) {
     if (media.type !== 'VIDEO' && (media.cloudinary.width / media.cloudinary.height) < 4/3) {
       this._mainContainerStyle = {
-        width: 'fit-content',
+        'overflow-x': 'scroll',
         height: '408px',
         'align-content': 'flex-start',
         'align-items': 'flex-start',
@@ -426,10 +380,9 @@ export class SidebarProjectPitchComponent implements OnInit, OnChanges, OnDestro
       };
       if (this.cardContent.length > 1) {
         this._secondaryContainerStyle = {
-          'row-gap': '8px',
+          'gap': '8px',
           'flex-direction': 'column',
           height: '100%',
-          //'padding-left': '8px'
         };
       }
     } else if (media.type === 'VIDEO' || (media.cloudinary.width / media.cloudinary.height) > 4/3) {
@@ -446,10 +399,9 @@ export class SidebarProjectPitchComponent implements OnInit, OnChanges, OnDestro
       };
       if (this.cardContent.length > 1) {
         this._secondaryContainerStyle = {
-          'column-gap': '8px',
+          'gap': '8px',
           'flex-direction': 'row',
           width: '100%',
-          //'padding-top': '8px'
         };
       }
     }
@@ -457,14 +409,6 @@ export class SidebarProjectPitchComponent implements OnInit, OnChanges, OnDestro
       this._innovationService.setPrincipalMediaOfInnovationCard(this.innovationId, this.activeInnovCardId, media._id, index)
         .pipe(first())
         .subscribe((data: any) => {
-         /* if (index) {   // when a secondary media is set as main media, switch their places in the medias array
-            this.cardContent[0] = media; // place new media at index 0
-            // delete video if main media was a video because videos can't be secondary medias
-            if (this.mainMedia && this.mainMedia.type === 'VIDEO' && media.type !== 'VIDEO') {
-              const mainVideoId = this.mainMedia._id;
-              this._innovationService.deleteMediaOfInnovationCard(this.innovationId, this.activeInnovCardId, mainVideoId)
-                .pipe(first())
-                .subscribe(() => {*/
                   const previousMainMedia = this.mainMedia;
                   this.cardContent = data.innovationCards[0].media;
                   this.mainMedia = media;
@@ -476,76 +420,11 @@ export class SidebarProjectPitchComponent implements OnInit, OnChanges, OnDestro
                   if (previousMainMedia['type'] === 'VIDEO' && media['type'] !== 'VIDEO') {
                     this._translateNotificationsService.success('Success', 'The video has been deleted.');
                   }
-                 /* this.cardContent = this.cardContent.filter((_media: UmiusMediaInterface) => _media._id !== mainVideoId);
-                  this.cardContent.splice(index, 1);
-                  this.innovation.innovationCards[this.activeCardIndex].media = this.cardContent;
-                  this._translateNotificationsService.success('Success', 'The video has been deleted.');
-                }, (err: HttpErrorResponse) => {
-                  this._translateNotificationsService.error('Media Deleting Error...', ErrorFrontService.getErrorKey(err.error));
-                  console.error(err);
-                });*/
-           /* } else {
-              this.cardContent[index] = this.cardContent[0];
-            }
-          }
-          this.cardContent[0] = media;
-          this._updateMediaFilter();
-          this.isSavingChange.emit(true);
-          this.saveProject.emit({type: 'MAIN_MEDIA', content: <UmiusMediaInterface>media});
-          //this._emitUpdatedInnovation();
-          this._translateNotificationsService.success('Success', 'The media has been set as a principal media.');*/
         }, (err: HttpErrorResponse) => {
           this._translateNotificationsService.error('Principal Media Error...', ErrorFrontService.getErrorKey(err.error));
           console.error(err);
         });
     }
-
-  /*public onSetPrincipal(media: any, index?: number) {
-    if (media && this.isNotMainMedia(media) && !this._isSaving && this.isEditable) {
-      const previousMainMedia = this.cardContent[0];
-      this.cardContent[0] = media;
-      this.cardContent[index] = previousMainMedia;
-      this.isSavingChange.emit(true);
-      this.saveProject.emit({type: 'MAIN_MEDIA', content: <UmiusMediaInterface>media});
-      if (media.type !== 'VIDEO' && (media.cloudinary.width / media.cloudinary.height) < 4/3) {
-        this._mainContainerStyle = {
-          width: 'fit-content',
-          height: '408px',
-          'align-content': 'flex-start',
-          'align-items': 'flex-start',
-          'gap': '8px'
-        };
-        this._mainMediaContainerStyle = {
-          width: '290px',
-          height: '100%'
-        };
-        if (this.cardContent.length > 1) {
-          this._secondaryContainerStyle = {
-            'flex-direction': 'column',
-            height: '100%',
-          };
-        }
-      } else if (media.type === 'VIDEO' || (media.cloudinary.width / media.cloudinary.height) > 4/3) {
-        this._mainContainerStyle = {
-          width: '528px',
-          height: 'auto',
-          'place-items': 'center',
-          'box-sizing': 'border-box',
-          'gap': '8px'
-        };
-        this._mainMediaContainerStyle = {
-          width: '100%',
-          height: '290px'
-        };
-        if (this.cardContent.length > 1) {
-          this._secondaryContainerStyle = {
-            'flex-direction': 'row',
-            width: '100%',
-          };
-        }
-      }
-    }
-  }*/
 
   /***
    * when the user clicks on the Delete media button
@@ -553,10 +432,11 @@ export class SidebarProjectPitchComponent implements OnInit, OnChanges, OnDestro
    */
   public onDeleteMedia(media: any) {
     if (media && !this._isSaving && this.isEditable) {
+      this.cardContent = this.cardContent.filter((_media:UmiusMediaInterface) => _media.id !== media.id)
       this.isSavingChange.emit(true);
       this.saveProject.emit({type: 'DELETE_MEDIA', content: <UmiusMediaInterface>media});
+      this.updateCardContent();
     }
-    this.cardContent = this.cardContent.filter((_media:UmiusMediaInterface) => _media.id !== media.id)
   }
 
   /***
@@ -652,13 +532,6 @@ export class SidebarProjectPitchComponent implements OnInit, OnChanges, OnDestro
       this.saveAdjustedMedia.emit(true);
     }
     this.cardContent[0].isMediaAdjusted = this._isMediaAdjusted;
-    /* if (!this._isBeingEdited && this.activeInnovCard.principalMedia) {
-       this._mediaService.update(this.activeInnovCard.principalMedia.id, this.activeInnovCard.principalMedia).subscribe((data: any) => {
-         console.log(data);
-       }, (err: HttpErrorResponse) => {
-         console.error(err);
-       });
-     }*/
   }
 
   public setEditedMediaIndex(index: any) {

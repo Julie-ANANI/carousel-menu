@@ -180,8 +180,9 @@ export class PitchComponent implements OnInit, OnDestroy, AfterViewChecked {
 
   public updateMedias(data: any){
     this.activeInnovCard.media = data;
+    this._cardContent = data;
     this._mediaFilter = data.slice(1, 4);
-    console.log('new media array', this.activeInnovCard.media, 'filter', this._mediaFilter);
+    this._innovationFrontService.setInnovation(this._innovation);
   }
 
 
@@ -278,10 +279,6 @@ export class PitchComponent implements OnInit, OnDestroy, AfterViewChecked {
       });
   }
 
-/*  public mediaSrc(media: UmiusMediaInterface) {
-    console.log('media', media)
-    return MediaFrontService.getMedia(media);
-  }*/
   public mediaSrc(media: UmiusMediaInterface, type: 'IMAGE' | 'VIDEO') {
     if (media && type === 'IMAGE') {
       if (media.cloudinary.version) {
@@ -424,8 +421,7 @@ export class PitchComponent implements OnInit, OnDestroy, AfterViewChecked {
         case 'DELETE_MEDIA':
           this._deleteMedia(event.content);
           this._cardContent = this._cardContent.filter((media: UmiusMediaInterface) => media.id !== event.content.id);
-          this._mediaFilter = this.cardContent.slice(1, 4);
-          console.log('card content on delete pitch', this.cardContent, 'filter', this._mediaFilter);
+          this._mediaFilter = this._cardContent.slice(1, 4);
           break;
       }
     }
@@ -605,13 +601,7 @@ export class PitchComponent implements OnInit, OnDestroy, AfterViewChecked {
   }
 
   private _uploadVideo(video: UmiusMediaInterface) {
-    //this._isUploadingVideo = true;
-    /*this._innovationService.addNewMediaVideoToInnovationCard(this._innovation._id, this.activeInnovCard._id, video)
-      .pipe(first())
-      .subscribe((_video) => {*/
-        //this._isUploadingVideo = false;
-
-        if (this._editedMediaIndex === 0) {
+     if (this._editedMediaIndex === 0) {
           this._innovation.innovationCards[this._activeCardIndex].media[0] = video;
         } else {
           this._innovation.innovationCards[this._activeCardIndex].media.push(video);
@@ -628,12 +618,6 @@ export class PitchComponent implements OnInit, OnDestroy, AfterViewChecked {
         }
 
         this._emitUpdatedInnovation();
-     /* }, (err: HttpErrorResponse) => {
-        this._isUploadingVideo = false;
-        this._translateNotificationsService.error('ERROR.ERROR', ErrorFrontService.getErrorKey(err.error));
-        this._resetVariables();
-        console.error(err);
-      });*/
   }
 
   private _setMainMedia(media: UmiusMediaInterface) {
@@ -655,7 +639,6 @@ export class PitchComponent implements OnInit, OnDestroy, AfterViewChecked {
       .subscribe(() => {
         this.activeInnovCard.media = this.activeInnovCard.media.filter((_media) => _media._id !== media._id);
         this._cardContent = this.activeInnovCard.media;
-        console.log('card content after delete', this._cardContent)
         this._verifyPrincipal(media);
         this._resetVariables();
         this._translateNotificationsService.success('ERROR.SUCCESS', 'ERROR.PROJECT.UPDATED_TEXT');
@@ -751,7 +734,6 @@ export class PitchComponent implements OnInit, OnDestroy, AfterViewChecked {
             });
 
           this._isMediaAdjusted = false;
-          //this._updateMediaFilter();
       }
     } else if (this._toBeSaved) {
       this._changesToSave();

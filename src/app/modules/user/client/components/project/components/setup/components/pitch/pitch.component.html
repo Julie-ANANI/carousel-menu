@@ -106,10 +106,6 @@
           <!-- /content -->
 
           <!-- content for section === 'MEDIA' -->
-         <!-- <div
-            *ngIf="section.type === 'MEDIA'"
-            style="margin-left: -10px; margin-right: -15px"
-            class="m-top-10 d-flex flex-wrap-wrap">-->
             <div *ngIf="activeInnovCard.media.length && section.type === 'MEDIA'" [ngStyle]= mainContainerStyle
           style="padding: 16px; display: flex; flex-wrap: wrap; position: relative; background-color: white; margin-top: 12px;">
 
@@ -119,23 +115,6 @@
               </div>
               <!-- /zoom button -->
 
-                     <!-- principal media -->
-                    <!-- <div
-                       *ngIf="activeInnovCard.principalMedia && mediaSrc(activeInnovCard.principalMedia)"
-                       class="text-center media-wrapper">
-                       <figure>
-                         <img
-                           [src]="mediaSrc(activeInnovCard.principalMedia)"
-                           (click)="mediaToShow(mediaSrc(activeInnovCard.principalMedia))"
-                           alt="NA"
-                           style="cursor: pointer"
-                           class="img-responsive"
-                           height="79.5"
-                           width="120">
-                       </figure>
-                       <span class="text-xs p-top-1">{{ 'PROJECT_PITCH.DESCRIPTION.MAIN_MEDIA' | translate }}</span>
-            </div>-->
-            <!-- /principal media -->
               <!-- main media -->
               <div *ngIf="activeInnovCard.principalMedia" class="text-center" [ngStyle]=mainMediaContainerStyle style="object-fit: cover; position: relative; width: 472px;">
 
@@ -161,27 +140,6 @@
               </div>
               <!-- /main media -->
 
-            <!-- secondary medias -->
-       <!--     <ng-container *ngIf="activeInnovCard.media && activeInnovCard.media.length > 0">
-              <ng-container *ngFor="let media of activeInnovCard.media">
-                <div
-                  *ngIf="mediaSrc(media) &&
-                  media._id !== (activeInnovCard.principalMedia && activeInnovCard.principalMedia._id)"
-                  class="media-wrapper">
-                  <figure>
-                    <img
-                      style="cursor: pointer"
-                      [src]="mediaSrc(media)"
-                      (click)="mediaToShow(mediaSrc(media))"
-                      alt="NA"
-                      class="img-responsive"
-                      height="79.5"
-                      width="120">
-                  </figure>
-                </div>
-              </ng-container>
-            </ng-container>-->
-            <!-- /secondary medias -->
               <!-- secondary medias -->
               <div *ngIf="activeInnovCard.media.length > 0" style="display: flex; flex-wrap: wrap; gap: 8px" [ngStyle]="(activeInnovCard.media.length > 1) ? secondaryContainerStyle : null">
                 <ng-container *ngFor="let media of mediaFilter; let i=index;" >
