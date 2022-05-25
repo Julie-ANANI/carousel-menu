@@ -1,8 +1,7 @@
 <section class="sticky header-wrapper carousel-wrapper m-left-100">
   <div class="d-flex flex-wrap-nowrap relative wrapper__item">
 
-    <div id="btn__prev"
-         (click)="prev()"
+    <div (click)="prev()"
          *ngIf="currentPagination !== 1"
          class="icon-container is-lg is-overlay"><i class="btn__prev icon icon-arrow-left is-lg"></i>
     </div>
@@ -13,13 +12,13 @@
              [ngClass]="{ 'primary-color': item.type === itemSelected, 'text-sm' : item.type !== itemSelected}"
              [ngStyle]="{'margin-right': btnRight}"
              (click)="clickOnMenu($event, item.type)"
-             *ngIf="displayedItems.length">{{('COMMON.LANG.' + item?.type.toUpperCase()) | translate}}
+             *ngIf="displayedItems.length">{{('COMMON.LANG.' + item?.type | uppercase | translate)}}
         </div>
       </ng-container>
     </div>
 
     <div (click)="next()"
-         *ngIf="currentPagination !== maxPagination && showControls && quantity !== sources.length"
+         *ngIf="currentPagination !== maxPagination && quantity !== sources.length"
          class="btn__next icon-container is-overlay is-lg"><i class="icon icon-arrow-right is-lg"></i>
     </div>
 

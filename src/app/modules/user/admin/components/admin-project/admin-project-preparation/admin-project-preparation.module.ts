@@ -9,7 +9,7 @@ import {AdminProjectDescriptionModule} from '../admin-project-description/admin-
 import {AdminCampaignsModule} from '../../admin-campaigns/admin-campaigns.module';
 import {AdminProjectStatisticsModule} from '../admin-project-statistics/admin-project-statistics.module';
 import {ModalModule} from '@umius/umi-common-component';
-import {MenuCarouselModule} from '../../../../../utility/menu-kebab/menu-carousel.module';
+import {MenuCarouselModule} from '../../../../../utility/menu-carousel/menu-carousel.module';
 import {FormsModule} from '@angular/forms';
 import {TranslateModule} from '@ngx-translate/core';
 

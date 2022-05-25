@@ -1,5 +1,4 @@
 import { Component, Inject, Input, PLATFORM_ID, OnInit, EventEmitter, Output } from '@angular/core';
-import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-utility-carousel-menu',
@@ -9,8 +8,6 @@ import { Subject } from 'rxjs';
 })
 
 export class MenuCarouselComponent implements OnInit {
-  //button controls
-  @Input() showControls = true;
   //Size
   @Input() minWidthItem = '6em'
   //margin
@@ -27,9 +24,6 @@ export class MenuCarouselComponent implements OnInit {
     if (value) {
       //quantity it's for to choose the number of items you want between the next and prev buttons
       this._quantity = value.quantity || 10;
-      //initQuantity it's for choose items display by default button view more
-      this._initQuantity = value.initQuantity || 0;
-      this._initIndex = value.initIndex || 0;
       this._sources = value.sources || [];
       this._identifier = value.identifier || '';
       this.setUpMenu();
@@ -37,16 +31,12 @@ export class MenuCarouselComponent implements OnInit {
   }
 
   //Config Template
-  private _displaySuiteItems = true;
-  private _ngUnsubscribe: Subject<any> = new Subject<any>();
   private _quantity: number = 0;
   private _identifier: string = '';
   private _type: string = '';
   private _sources: Array<any> = [];
   private _displayedItems: Array<any> = [];
   private _itemSelected: any;
-  private _initQuantity: number;
-  private _initIndex: number = 0;
   private _currentPagination = 1;
   private _maxPagination = 0;
 
@@ -88,19 +78,6 @@ export class MenuCarouselComponent implements OnInit {
     }
   }
 
-  ngOnDestroy(): void {
-    this._ngUnsubscribe.next();
-    this._ngUnsubscribe.complete();
-  }
-
-  get displaySuiteItems(): boolean {
-    return this._displaySuiteItems;
-  }
-
-  set displaySuiteItems(value: boolean) {
-    this._displaySuiteItems = value;
-  }
-
   get quantity(): number {
     return this._quantity;
   }
@@ -123,14 +100,6 @@ export class MenuCarouselComponent implements OnInit {
 
   get itemSelected(): string {
     return this._itemSelected;
-  }
-
-  get initIndex(): number {
-    return this._initIndex;
-  }
-
-  get initQuantity(): number {
-    return this._initQuantity;
   }
 
   get currentPagination(): number {
