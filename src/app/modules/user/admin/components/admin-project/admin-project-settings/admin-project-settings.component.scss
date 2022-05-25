@@ -3,6 +3,64 @@
 #admin-project-settings {
   padding-bottom: 40px;
 
+  .tooltip.is-multiline::before {
+      width: 150px !important;
+      max-width: 250px;
+      z-index: 35;
+  }
+  .not-table::after
+  {
+    position: absolute;
+    left: 12px;
+  }
+  .text-lang{
+    float: right;
+    margin-right: 0;
+    text-decoration: none;
+    border-radius: 4px;
+    min-width: 125px;
+    font-size: 14px;
+    padding: 13px 0;
+    font-weight: 400;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -ms-flex-align: center;
+    align-items: center;
+    color: #FFFFFF;
+    text-align: center;
+    outline: none;
+    position: relative;
+    right:0;
+    cursor: pointer;
+    white-space: nowrap;
+    line-height: 1;
+    box-sizing: border-box;
+  }
+
+  .is-table::after
+  {
+    overflow-x: visible;
+    overflow-y: visible;
+    position: absolute;
+    left: 12px;
+  }
+  td:not(.cell-checkbox) {
+    height: auto;
+  }
+  table{
+    border-collapse: separate !important;
+    border-radius: 4px;
+    border-color: #eef0f3;
+    box-shadow: 0 4px 10px 0 #eef0f3;
+  }
+
+  .accordion input:checked ~ .accordion-body, .accordion[open] .accordion-body {
+    max-height: 1500px;
+    border-radius: 4px;
+  }
+
   .text-meta{
     opacity: 33%;
   }

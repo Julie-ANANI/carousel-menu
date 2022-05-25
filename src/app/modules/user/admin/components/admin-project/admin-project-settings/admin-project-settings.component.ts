@@ -213,7 +213,7 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
         element.selected = false;
         this._projectLanguages.push(element);
       }
-      if(this._projectLanguages.every((lang)=> lang.shotSent === true)){
+      if(this._projectLanguages.every((lang)=> lang.shotSent === true && lang.status === "DONE")){
         this._notAllEdited = false;
       }
     }
@@ -618,6 +618,7 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
           }
         );
     }
+    this.bulkEditReset();
   }
 
   public bulkEditReset(){
@@ -627,10 +628,19 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
   }
 
   public checkActions(){ // this is hell.
+    this.bulkEditReset();
     let lang = this._projectLanguages.filter((card)=> card.selected === true);
     if(lang.find(la => la.shotSent === true)){
-      // NO ACTIONS
-      this.bulkEditReset();
+        if(lang.every(la => la.status === "WAITING")){
+          this._canBeValidated = true;
+          this._canBeEdited = true;
+        }
+        if(lang.every(la => la.status === "EDITING" && la.hidden === true)){
+          this._canBeValidated = true;
+        }
+        if(lang.find(la => la.status === "EDITING" && la.hidden === true) &&lang.every(la => la.status === "WAITING")){
+          this._canBeValidated = true;
+        }
     } else {
       if(lang.length < 2) {
         this.setAction(lang);
@@ -715,6 +725,9 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
           }
         );
     });
+    if(this._projectLanguages.every((card)=> card.shotSent === true)){
+      this._notAllEdited = false;
+    }
     this.bulkEditReset();
     this.closeModal(event);
   }
@@ -745,6 +758,7 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
     if(isReEditAll){
       this._notAllEdited = true;
     }
+    this.bulkEditReset();
   }
 
   public validateLang(event: Event){
@@ -765,6 +779,7 @@ export class AdminProjectSettingsComponent implements OnInit, OnDestroy {
           }
         );
     });
+    this.bulkEditReset();
   }
 
   public statusClass(status: string) {
