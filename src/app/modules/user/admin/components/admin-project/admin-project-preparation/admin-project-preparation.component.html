@@ -122,13 +122,14 @@
                *ngIf="activeTab === 'description'">
         <div class="d-flex">
 
-          <app-utility-carousel-menu
-            (menuItemClicked)="getMenuClicked($event)"
-            [config]="{
-                   quantity: 8,
-                   identifier: 'alias',
-                   sources: innoCardLanguages}">
-          </app-utility-carousel-menu>
+          <!-- languages carousel menu -->
+          <ng-container *ngIf="languagesCarouselConfig">
+            <app-utility-carousel-menu
+              (menuItemClicked)="getMenuClicked($event)"
+              [config]="languagesCarouselConfig">
+            </app-utility-carousel-menu>
+          </ng-container>
+          <!-- /languages carousel menu -->
 
           <!-- add languages button -->
           <button class="button is-link text-highlight is-sm text-no-underline"

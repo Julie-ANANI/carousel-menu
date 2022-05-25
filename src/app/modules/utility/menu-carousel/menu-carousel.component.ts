@@ -1,4 +1,14 @@
-import { Component, Inject, Input, PLATFORM_ID, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, Inject, Input, PLATFORM_ID, EventEmitter, Output } from '@angular/core';
+
+/**
+ * Configuration for carousel menu
+ */
+export interface CarouselConfig{
+  quantity: number; // how many item we want to display
+  sources: Array<any>; // the data source for the menu
+  identifier: string; // identifier pour display good value in the menu
+  type: 'lang' | ''; // type of menu: lang => languages
+}
 
 @Component({
   selector: 'app-utility-carousel-menu',
@@ -7,28 +17,26 @@ import { Component, Inject, Input, PLATFORM_ID, OnInit, EventEmitter, Output } f
   styleUrls: ['./menu-carousel.scss']
 })
 
-export class MenuCarouselComponent implements OnInit {
-  //Size
-  @Input() minWidthItem = '6em'
-  //margin
-  @Input() btnRight = '5em';
-
-  @Output() menuItemClicked: EventEmitter<any> = new EventEmitter();
-
+export class MenuCarouselComponent {
   /**
    * get configuration for the menu
    * @param value
    * quantity
    */
-  @Input() set config(value: any) {
+  @Input() set config(value: CarouselConfig) {
     if (value) {
       //quantity it's for to choose the number of items you want between the next and prev buttons
       this._quantity = value.quantity || 10;
       this._sources = value.sources || [];
       this._identifier = value.identifier || '';
+      this._type = value.type || '';
       this.setUpMenu();
     }
   }
+  //margin
+  @Input() btnRight = '15px';
+
+  @Output() menuItemClicked: EventEmitter<any> = new EventEmitter();
 
   //Config Template
   private _quantity: number = 0;
@@ -42,12 +50,11 @@ export class MenuCarouselComponent implements OnInit {
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object) {}
 
-  ngOnInit() {}
-
   setUpMenu() {
-    this._displayedItems = this._sources.slice(0, this._quantity);
     if (this._sources && this._sources.length > 0) {
       this._maxPagination = Math.ceil(this._sources.length / this._quantity);
+      this._displayedItems = this._sources.slice(0, this._quantity);
+      this._itemSelected = this._displayedItems[0][this.identifier];
     }
   }
 

@@ -8,8 +8,8 @@
     color: #4F5D6B;
   }
 
-  .wrapper__item{
-    margin-top: 8px;
+  .button:hover{
+    text-decoration: none;
   }
 
   //buttons controls
@@ -33,24 +33,11 @@
   }
 
   .btn__next{
-    margin-top: -0.5em;
     margin-right: 1.5em;
-  }
-
-  .btn__prev{
-    margin-top: -1em;
   }
 
   //buttons items
   .carousel__container__button {
-
-    &.button__item{
-      width: fit-content;
-
-      &:hover {
-        cursor: pointer;
-      }
-    }
 
     .primary-color{
       color: $primary-color;

@@ -21,6 +21,7 @@ import { ErrorFrontService } from '../../../../../../services/error/error-front.
 import { NotificationService } from '../../../../../../services/notification/notification.service';
 import { NotificationTrigger } from '../../../../../../models/notification';
 import { lang, Language } from "../../../../../../models/static-data/language";
+import { CarouselConfig } from "../../../../../utility/menu-carousel/menu-carousel.component";
 
 @Component({
   templateUrl: './admin-project-preparation.component.html',
@@ -76,6 +77,8 @@ export class AdminProjectPreparationComponent implements OnInit, AfterViewChecke
   private _innoCardLanguages: Array<Language> = [];
 
   private _languageSelected: string = '';
+
+  private _languagesCarouselConfig: CarouselConfig = <CarouselConfig>{};
 
   constructor(@Inject(PLATFORM_ID) protected _platformId: Object,
               private _routeFrontService: RouteFrontService,
@@ -185,6 +188,20 @@ export class AdminProjectPreparationComponent implements OnInit, AfterViewChecke
   private initInnoCardLanguagesList() {
     this._innoCardLanguages = this._innovationFrontService.formateInnovationCardLanguages(this._project.innovationCards) || [];
     this._languageSelected = this._innoCardLanguages.length > 0 && this._innoCardLanguages[0].type;
+    this._setupCarouselConfig();
+  }
+
+  /**
+   * configuration on carousel menu for languages list
+   * @private
+   */
+  private _setupCarouselConfig(){
+    this._languagesCarouselConfig = {
+      quantity: 8,
+      sources: this._innoCardLanguages,
+      identifier: 'type',
+      type: 'lang'
+    }
   }
 
   /**
@@ -592,6 +609,10 @@ export class AdminProjectPreparationComponent implements OnInit, AfterViewChecke
 
   get languageSelected(): string {
     return this._languageSelected;
+  }
+
+  get languagesCarouselConfig(): CarouselConfig {
+    return this._languagesCarouselConfig;
   }
 
   ngOnDestroy(): void {
